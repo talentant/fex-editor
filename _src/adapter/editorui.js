@@ -46,7 +46,6 @@
     edittable: "~/dialogs/table/edittable.html",
     edittd: "~/dialogs/table/edittd.html",
     webapp: "~/dialogs/webapp/webapp.html",
-    snapscreen: "~/dialogs/snapscreen/snapscreen.html",
     scrawl: "~/dialogs/scrawl/scrawl.html",
     music: "~/dialogs/music/music.html",
     template: "~/dialogs/template/template.html",
@@ -363,58 +362,6 @@
       }
     })(p, dialogBtns[p]);
   }
-
-  editorui.snapscreen = function(editor, iframeUrl, title) {
-    title =
-      editor.options.labelMap["snapscreen"] ||
-      editor.getLang("labelMap.snapscreen") ||
-      "";
-    var ui = new editorui.Button({
-      className: "edui-for-snapscreen",
-      title: title,
-      onclick: function() {
-        editor.execCommand("snapscreen");
-      },
-      theme: editor.options.theme
-    });
-    editorui.buttons["snapscreen"] = ui;
-    iframeUrl =
-      iframeUrl ||
-      (editor.options.iframeUrlMap || {})["snapscreen"] ||
-      iframeUrlMap["snapscreen"];
-    if (iframeUrl) {
-      var dialog = new editorui.Dialog({
-        iframeUrl: editor.ui.mapUrl(iframeUrl),
-        editor: editor,
-        className: "edui-for-snapscreen",
-        title: title,
-        buttons: [
-          {
-            className: "edui-okbutton",
-            label: editor.getLang("ok"),
-            editor: editor,
-            onclick: function() {
-              dialog.close(true);
-            }
-          },
-          {
-            className: "edui-cancelbutton",
-            label: editor.getLang("cancel"),
-            editor: editor,
-            onclick: function() {
-              dialog.close(false);
-            }
-          }
-        ]
-      });
-      dialog.render();
-      editor.ui._dialogs["snapscreenDialog"] = dialog;
-    }
-    editor.addListener("selectionchange", function() {
-      ui.setDisabled(editor.queryCommandState("snapscreen") == -1);
-    });
-    return ui;
-  };
 
   editorui.insertcode = function(editor, list, title) {
     list = editor.options["insertcode"] || [];

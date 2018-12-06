@@ -7,7 +7,7 @@
  */
 UE.I18N['en'] = {
     'labelMap':{
-        'anchor':'Anchor', 'undo':'Undo', 'redo':'Redo', 'bold':'Bold', 'indent':'Indent', 'snapscreen':'SnapScreen',
+        'anchor':'Anchor', 'undo':'Undo', 'redo':'Redo', 'bold':'Bold', 'indent':'Indent',
         'italic':'Italic', 'underline':'Underline', 'strikethrough':'Strikethrough', 'subscript':'SubScript','fontborder':'text border',
         'superscript':'SuperScript', 'formatmatch':'Format Match', 'source':'Source', 'blockquote':'BlockQuote',
         'pasteplain':'PastePlain', 'selectall':'SelectAll', 'print':'Print', 'preview':'Preview',
@@ -592,14 +592,6 @@ UE.I18N['en'] = {
         getEnd:"Has the search to the bottom!",
         getStart:"Has the search to the top!",
         countMsg:"Altogether replaced {#count} character(s)!"
-    },
-    snapscreen:{
-        'static':{
-            lang_showMsg:"You should install the UEditor screenshots program first!",
-            lang_download:"Download!",
-            lang_step1:"Step1:Download the program and then run it",
-            lang_step2:"Step2:After complete install,try to click the button again"
-        }
     },
     spechars:{
         'static':{},
