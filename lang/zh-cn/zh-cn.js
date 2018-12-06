@@ -95,11 +95,6 @@ UE.I18N['zh-cn'] = {
     'loadconfigError': '获取后台配置项请求出错，上传功能将不能正常使用！',
     'loadconfigFormatError': '后台配置项返回格式出错，上传功能将不能正常使用！',
     'loadconfigHttpError': '请求后台配置项http错误，上传功能将不能正常使用！',
-    'snapScreen_plugin':{
-        'browserMsg':"仅支持IE浏览器！",
-        'callBackErrorMsg':"服务器返回数据有误，请检查配置项之后重试。",
-        'uploadErrorMsg':"截图上传失败，请检查服务器端环境! "
-    },
     'insertcode':{
         'as3':'ActionScript 3',
         'bash':'Bash/Shell',
