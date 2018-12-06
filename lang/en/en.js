@@ -24,7 +24,7 @@ UE.I18N['en'] = {
         'rowspacingtop':'RowSpacingTop', 'rowspacingbottom':'RowSpacingBottom', 'pagebreak':'PageBreak', 'insertframe':'Iframe', 'imagenone':'Default',
         'imageleft':'ImageLeft', 'imageright':'ImageRight', 'attachment':'Attachment', 'imagecenter':'ImageCenter', 'wordimage':'WordImage',
         'lineheight':'LineHeight','edittip':'EditTip','customstyle':'CustomStyle', 'scrawl':'Scrawl', 'autotypeset':'AutoTypeset',
-        'webapp':'WebAPP', 'touppercase':'UpperCase', 'tolowercase':'LowerCase','template':'Template','background':'Background','inserttable':'InsertTable',
+        'touppercase':'UpperCase', 'tolowercase':'LowerCase','template':'Template','background':'Background','inserttable':'InsertTable',
         'music':'Music', 'charts': 'charts','drafts': 'Load from Drafts'
     },
     'insertorderedlist':{
@@ -425,12 +425,6 @@ UE.I18N['en'] = {
         'errorUploadRetry':'Upload Error, Please Retry.',
         'errorHttp':'Http Error',
         'errorServerUpload':'Server Result Error.'
-    },
-    'webapp':{
-        'tip1':"This function provided by Baidu APP,please apply for baidu APPKey webmaster first!",
-        'tip2':"And then open the file ueditor.config.js to set it! ",
-        'applyFor':"APPLY FOR",
-        'anthorApi':"Baidu API"
     },
     'template':{
         'static':{

@@ -100,7 +100,6 @@
         "gmap",
         "insertframe",
         "insertcode",
-        "webapp",
         "pagebreak",
         "template",
         "background",
@@ -440,9 +439,6 @@
 
     //allowLinkProtocol 允许的链接地址，有这些前缀的链接地址不会自动添加http
     //, allowLinkProtocols: ['http:', 'https:', '#', '/', 'ftp:', 'mailto:', 'tel:', 'git:', 'svn:']
-
-    //webAppKey 百度应用的APIkey，每个站长必须首先去百度官网注册一个key后方能正常使用app功能，注册介绍，http://app.baidu.com/static/cms/getapikey.html
-    //, webAppKey: ""
 
     //默认过滤规则相关配置项目
     //,disabledTableInTable:true  //禁止表格嵌套

@@ -297,9 +297,6 @@
             ) {
               dialogName = "insertvideoDialog";
             }
-            if (img.className.indexOf("edui-faked-webapp") != -1) {
-              dialogName = "webappDialog";
-            }
             if (img.src.indexOf("http://api.map.baidu.com") != -1) {
               dialogName = "mapDialog";
             }

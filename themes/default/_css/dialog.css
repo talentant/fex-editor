@@ -196,13 +196,6 @@
     height: 400px;
     overflow: hidden;
 }
-/*webapp-dialog*/
-.edui-default .edui-for-webapp .edui-dialog-content {
-    width: 560px;
-    _width: 565px;
-    height: 450px;
-    overflow: hidden;
-}
 
 /*image-insertframe*/
 .edui-default .edui-for-insertframe .edui-dialog-content {
