@@ -24,7 +24,7 @@ UE.I18N['zh-cn'] = {
         'rowspacingtop':'段前距', 'rowspacingbottom':'段后距',  'pagebreak':'分页', 'insertframe':'插入Iframe', 'imagenone':'默认',
         'imageleft':'左浮动', 'imageright':'右浮动', 'attachment':'附件', 'imagecenter':'居中', 'wordimage':'图片转存',
         'lineheight':'行间距','edittip' :'编辑提示','customstyle':'自定义标题', 'autotypeset':'自动排版',
-        'webapp':'百度应用','touppercase':'字母大写', 'tolowercase':'字母小写','background':'背景','template':'模板','scrawl':'涂鸦',
+        'touppercase':'字母大写', 'tolowercase':'字母小写','background':'背景','template':'模板','scrawl':'涂鸦',
         'music':'音乐','inserttable':'插入表格','drafts': '从草稿箱加载', 'charts': '图表'
     },
     'insertorderedlist':{
@@ -425,12 +425,6 @@ UE.I18N['zh-cn'] = {
         'errorUploadRetry':'上传失败，请重试',
         'errorHttp':'http请求错误',
         'errorServerUpload':'服务器返回出错'
-    },
-    'webapp':{
-        'tip1':"本功能由百度APP提供，如看到此页面，请各位站长首先申请百度APPKey!",
-        'tip2':"申请完成之后请至ueditor.config.js中配置获得的appkey! ",
-        'applyFor':"点此申请",
-        'anthorApi':"百度API"
     },
     'template':{
         'static':{
