@@ -859,10 +859,6 @@ div.edui-box {
     background-position: -700px -40px;
 }
 
-.edui-default  .edui-for-snapscreen .edui-icon {
-    background-position: -581px -40px
-}
-
 .edui-default  .edui-for-scrawl .edui-icon {
     background-position: -801px -41px
 }
@@ -1451,11 +1447,6 @@ div.edui-box {
 .edui-default .edui-for-edittd .edui-dialog-content {
     width: 240px;
     height: 50px;
-}
-/*snapscreen-dialog*/
-.edui-default .edui-for-snapscreen .edui-dialog-content {
-    width: 400px;
-    height: 220px;
 }
 
 /*music-dialog*/

@@ -109,7 +109,6 @@
         "date",
         "time",
         "spechars",
-        "snapscreen",
         "wordimage",
         "|",
         "inserttable",
