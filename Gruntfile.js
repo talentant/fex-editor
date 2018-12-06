@@ -253,7 +253,7 @@ module.exports = (grunt) => {
   grunt.loadNpmTasks("grunt-contrib-uglify");
   grunt.loadNpmTasks("grunt-contrib-copy");
 
-  grunt.registerTask("default", "build all", function() {
+  grunt.registerTask("default", "build all", () => {
     updateConfigFile(grunt);
     grunt.task.run([
       "concat",
