@@ -1,0 +1,44 @@
+{
+  "name": "fex-editor",
+  "description": "Rich Text Editor",
+  "version": "2.0.0",
+  "main": "dist/fex-editor.all.min.js",
+  "unpkg": "dist/fex-editor.all.min.js",
+  "jsdelivr": "dist/fex-editor.all.min.js",
+  "files": [
+    "dist"
+  ],
+  "homepage": "http://ueditor.baidu.com/",
+  "author": {
+    "name": "f-cube @ FEX",
+    "url": "http://fex.baidu.com"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/talentant/fex-editor.git"
+  },
+  "keywords": [
+    "Rich",
+    "Text",
+    "Editor"
+  ],
+  "bugs": {
+    "url": "https://github.com/talentant/fex-editor/issues"
+  },
+  "scripts": {
+    "prepack": "prepack dist/fex-editor.parse.js --output dist/fex-editor.parse.js",
+    "uglify": "uglifyjs --output dist/fex-editor.parse.js dist/fex-editor.parse.js"
+  },
+  "devDependencies": {
+    "grunt": "^1.0.3",
+    "prepack": "^0.2.54",
+    "grunt-contrib-clean": "^2.0.0",
+    "grunt-contrib-concat": "^1.0.1",
+    "grunt-contrib-copy": "^1.0.0",
+    "grunt-contrib-cssmin": "^3.0.0",
+    "grunt-contrib-uglify": "^4.0.0",
+    "grunt-text-replace": "^0.4.0",
+    "grunt-transcoding": "^0.1.3"
+  }
+}
