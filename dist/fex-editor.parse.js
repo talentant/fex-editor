@@ -1,7 +1,7 @@
 /*!
  * fex-editor
  * version: 2.0.0
- * build: 2018-12-05
+ * build: 2018-12-06
  */
 (function(){
 
