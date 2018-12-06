@@ -26,10 +26,6 @@
   "bugs": {
     "url": "https://github.com/talentant/fex-editor/issues"
   },
-  "scripts": {
-    "prepack": "prepack dist/fex-editor.parse.js --output dist/fex-editor.parse.js",
-    "uglify": "uglifyjs --output dist/fex-editor.parse.js dist/fex-editor.parse.js"
-  },
   "devDependencies": {
     "grunt": "^1.0.3",
     "grunt-contrib-clean": "^2.0.0",
