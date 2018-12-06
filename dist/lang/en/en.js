@@ -95,11 +95,6 @@ UE.I18N['en'] = {
     'loadconfigError': 'Get server config error.',
     'loadconfigFormatError': 'Server config format error.',
     'loadconfigHttpError': 'Get server config http error.',
-    'snapScreen_plugin':{
-        'browserMsg':"Only IE supported!",
-        'callBackErrorMsg':"The callback data is wrong,please check the config!",
-        'uploadErrorMsg':"Upload error,please check your server environment! "
-    },
     'insertcode':{
         'as3':'ActionScript 3',
         'bash':'Bash/Shell',
