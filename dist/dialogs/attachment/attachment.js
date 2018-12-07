@@ -160,7 +160,7 @@
                     id: '#filePickerReady',
                     label: lang.uploadSelectFile
                 },
-                swf: '../../third-party/webuploader/Uploader.swf',
+                swf: 'https://cdn.jsdelivr.net/npm/fex-editor@2.1.1/dist/third-party/webuploader/Uploader.swf',
                 server: actionUrl,
                 fileVal: editor.getOpt('fileFieldName'),
                 duplicate: true,
