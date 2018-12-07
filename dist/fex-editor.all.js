@@ -7563,7 +7563,7 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
 
         var html =
           (ie && browser.version < 9 ? "" : "<!DOCTYPE html>") +
-          '<html lang="en" class="view">' +
+          "<html lang='en' class='view'>" +
           "<head>" +
           "<style type='text/css'>" +
           //设置四周的留边
