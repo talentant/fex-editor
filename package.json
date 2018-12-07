@@ -27,7 +27,8 @@
     "url": "https://github.com/talentant/fex-editor/issues"
   },
   "scripts": {
-    "reformat": "prettier \"{_src,_parse,dialogs}/**/**/**/**/*.{js,css,html}\" --write"
+    "reformat": "prettier \"{_src,_parse,dialogs}/**/**/**/**/*.{js,css,html}\" --write",
+    "transform": "lebab --replace '_parse/*.js' --transform arrow,arrow-return,for-of,for-each,arg-rest,arg-spread,obj-method,obj-shorthand,no-strict,exponent,multi-var"
   },
   "devDependencies": {
     "grunt": "^1.0.3",
