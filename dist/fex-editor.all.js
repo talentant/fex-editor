@@ -7563,7 +7563,7 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
 
         var html =
           (ie && browser.version < 9 ? "" : "<!DOCTYPE html>") +
-          "<html xmlns='http://www.w3.org/1999/xhtml' class='view' >" +
+          '<html lang="en" class="view">' +
           "<head>" +
           "<style type='text/css'>" +
           //设置四周的留边
@@ -7955,7 +7955,7 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
         });
       }
       return (
-        "<html><head>" +
+        '<html lang="en"><head>' +
         (me.options.charset
           ? '<meta http-equiv="Content-Type" content="text/html; charset=' +
               me.options.charset +
@@ -13680,7 +13680,7 @@ UE.commands["preview"] = {
       d = w.document;
     d.open();
     d.write(
-      '<!DOCTYPE html><html><head><meta charset="utf-8"/><script src="' +
+      '<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><script src="' +
         this.options.UEDITOR_HOME_URL +
         'ueditor.parse.js"></script><script>' +
         "setTimeout(function(){uParse('div',{rootPath: '" +
