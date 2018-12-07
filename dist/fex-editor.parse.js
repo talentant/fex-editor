@@ -745,7 +745,7 @@ UE.parse.register("charts", function(utils) {
       utils.loadFile(
         document,
         {
-          src: resourceRoot + "/third-party/highcharts/highcharts.js",
+          src: "https://code.highcharts.com/3.0.6/highcharts.js",
           tag: "script",
           type: "text/javascript",
           defer: "defer"
