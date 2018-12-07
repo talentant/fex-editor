@@ -29,8 +29,9 @@ var htmlparser = (UE.htmlparser = function(htmlstr, ignoreBlank) {
   //var re_tag = /<(?:(?:\/([^>]+)>)|(?:!--([\S|\s]*?)-->)|(?:([^\s\/<>]+)\s*((?:(?:"[^"]*")|(?:'[^']*')|[^"'<>])*)\/?>))/g,
   //以上的正则表达式无法匹配:<div style="text-align:center;font-family:" font-size:14px;"=""><img src="http://hs-album.oss.aliyuncs.com/static/27/78/35/image/20161206/20161206174331_41105.gif" alt="" /><br /></div>
   //修改为如下正则表达式:
-  var re_tag = /<(?:(?:\/([^>]+)>)|(?:!--([\S|\s]*?)-->)|(?:([^\/\s>]+)((?:\s+[\w\-:.]+(?:\s*=\s*?(?:(?:"[^"]*")|(?:'[^']*')|[^\s"'\/>]+))?)*)[\S\s]*?(\/?)>))/g,
-    re_attr = /([\w\-:.]+)(?:(?:\s*=\s*(?:(?:"([^"]*)")|(?:'([^']*)')|([^\s>]+)))|(?=\s|$))/g;
+  var re_tag = /<(?:(?:\/([^>]+)>)|(?:!--([\S|\s]*?)-->)|(?:([^\/\s>]+)((?:\s+[\w\-:.]+(?:\s*=\s*?(?:(?:"[^"]*")|(?:'[^']*')|[^\s"'\/>]+))?)*)[\S\s]*?(\/?)>))/g;
+
+  var re_attr = /([\w\-:.]+)(?:(?:\s*=\s*(?:(?:"([^"]*)")|(?:'([^']*)')|([^\s>]+)))|(?=\s|$))/g;
 
   //ie下取得的html可能会有\n存在，要去掉，在处理replace(/[\t\r\n]*/g,'');代码高量的\n不能去除
   var allowEmptyTags = {
@@ -85,24 +86,26 @@ var htmlparser = (UE.htmlparser = function(htmlstr, ignoreBlank) {
     src: 1
   };
 
-  var uNode = UE.uNode,
-    needParentNode = {
-      td: "tr",
-      tr: ["tbody", "thead", "tfoot"],
-      tbody: "table",
-      th: "tr",
-      thead: "table",
-      tfoot: "table",
-      caption: "table",
-      li: ["ul", "ol"],
-      dt: "dl",
-      dd: "dl",
-      option: "select"
-    },
-    needChild = {
-      ol: "li",
-      ul: "li"
-    };
+  var uNode = UE.uNode;
+
+  var needParentNode = {
+    td: "tr",
+    tr: ["tbody", "thead", "tfoot"],
+    tbody: "table",
+    th: "tr",
+    thead: "table",
+    tfoot: "table",
+    caption: "table",
+    li: ["ul", "ol"],
+    dt: "dl",
+    dd: "dl",
+    option: "select"
+  };
+
+  var needChild = {
+    ol: "li",
+    ul: "li"
+  };
 
   function text(parent, data) {
     if (needChild[parent.tagName]) {
@@ -118,8 +121,8 @@ var htmlparser = (UE.htmlparser = function(htmlstr, ignoreBlank) {
   function element(parent, tagName, htmlattr) {
     var needParentTag;
     if ((needParentTag = needParentNode[tagName])) {
-      var tmpParent = parent,
-        hasParent;
+      var tmpParent = parent;
+      var hasParent;
       while (tmpParent.type != "root") {
         if (
           utils.isArray(needParentTag)
@@ -148,8 +151,8 @@ var htmlparser = (UE.htmlparser = function(htmlstr, ignoreBlank) {
     });
     //如果属性存在，处理属性
     if (htmlattr) {
-      var attrs = {},
-        match;
+      var attrs = {};
+      var match;
       while ((match = re_attr.exec(htmlattr))) {
         attrs[match[1].toLowerCase()] = notTransAttrs[match[1].toLowerCase()]
           ? match[2] || match[3] || match[4]
@@ -178,9 +181,9 @@ var htmlparser = (UE.htmlparser = function(htmlstr, ignoreBlank) {
     );
   }
 
-  var match,
-    currentIndex = 0,
-    nextIndex = 0;
+  var match;
+  var currentIndex = 0;
+  var nextIndex = 0;
   //设置根节点
   var root = new uNode({
     type: "root",

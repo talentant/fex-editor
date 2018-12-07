@@ -20,9 +20,9 @@
  */
 
 (function() {
-  var guid = 0,
-    fillChar = domUtils.fillChar,
-    fillData;
+  var guid = 0;
+  var fillChar = domUtils.fillChar;
+  var fillData;
 
   /**
    * 更新range的collapse状态
@@ -70,14 +70,15 @@
   function execContentsAction(range, action) {
     //调整边界
     //range.includeBookmark();
-    var start = range.startContainer,
-      end = range.endContainer,
-      startOffset = range.startOffset,
-      endOffset = range.endOffset,
-      doc = range.document,
-      frag = doc.createDocumentFragment(),
-      tmpStart,
-      tmpEnd;
+    var start = range.startContainer;
+
+    var end = range.endContainer;
+    var startOffset = range.startOffset;
+    var endOffset = range.endOffset;
+    var doc = range.document;
+    var frag = doc.createDocumentFragment();
+    var tmpStart;
+    var tmpEnd;
     if (start.nodeType == 1) {
       start = start.childNodes[startOffset] || (tmpStart = start.appendChild(doc.createTextNode("")));
     }
@@ -93,11 +94,11 @@
       }
       return frag;
     }
-    var current,
-      currentLevel,
-      clone = frag,
-      startParents = domUtils.findParents(start, true),
-      endParents = domUtils.findParents(end, true);
+    var current;
+    var currentLevel;
+    var clone = frag;
+    var startParents = domUtils.findParents(start, true);
+    var endParents = domUtils.findParents(end, true);
     for (var i = 0; startParents[i] == endParents[i]; ) {
       i++;
     }
@@ -745,9 +746,9 @@
      * @see UE.dom.domUtils.Range:shrinkBoundary()
      */
     shrinkBoundary: function(ignoreEnd) {
-      var me = this,
-        child,
-        collapsed = me.collapsed;
+      var me = this;
+      var child;
+      var collapsed = me.collapsed;
       function check(node) {
         return (
           node.nodeType == 1 &&
@@ -860,9 +861,9 @@
      * ```
      */
     getCommonAncestor: function(includeSelf, ignoreTextNode) {
-      var me = this,
-        start = me.startContainer,
-        end = me.endContainer;
+      var me = this;
+      var start = me.startContainer;
+      var end = me.endContainer;
       if (start === end) {
         if (includeSelf && selectOneNode(this)) {
           start = start.childNodes[me.startOffset];
@@ -921,10 +922,10 @@
      */
     trimBoundary: function(ignoreEnd) {
       this.txtToElmBoundary();
-      var start = this.startContainer,
-        offset = this.startOffset,
-        collapsed = this.collapsed,
-        end = this.endContainer;
+      var start = this.startContainer;
+      var offset = this.startOffset;
+      var collapsed = this.collapsed;
+      var end = this.endContainer;
       if (start.nodeType == 3) {
         if (offset == 0) {
           this.setStartBefore(start);
@@ -978,8 +979,8 @@
      */
     txtToElmBoundary: function(ignoreCollapsed) {
       function adjust(r, c) {
-        var container = r[c + "Container"],
-          offset = r[c + "Offset"];
+        var container = r[c + "Container"];
+        var offset = r[c + "Offset"];
         if (container.nodeType == 3) {
           if (!offset) {
             r[
@@ -1016,15 +1017,15 @@
      * @return { UE.dom.Range } 当前range对象
      */
     insertNode: function(node) {
-      var first = node,
-        length = 1;
+      var first = node;
+      var length = 1;
       if (node.nodeType == 11) {
         first = node.firstChild;
         length = node.childNodes.length;
       }
       this.trimBoundary(true);
-      var start = this.startContainer,
-        offset = this.startOffset;
+      var start = this.startContainer;
+      var offset = this.startOffset;
       var nextNode = start.childNodes[offset];
       if (nextNode) {
         start.insertBefore(node, nextNode);
@@ -1066,8 +1067,8 @@
      *                          返回的记录的类型为ID， 反之则为引用
      */
     createBookmark: function(serialize, same) {
-      var endNode,
-        startNode = this.document.createElement("span");
+      var endNode;
+      var startNode = this.document.createElement("span");
       startNode.style.cssText = "display:none;line-height:0px;";
       startNode.appendChild(this.document.createTextNode("\u200D"));
       startNode.id = "_baidu_bookmark_start_" + (same ? "" : guid++);
@@ -1098,8 +1099,8 @@
      *  @see UE.dom.Range:createBookmark(Boolean)
      */
     moveToBookmark: function(bookmark) {
-      var start = bookmark.id ? this.document.getElementById(bookmark.start) : bookmark.start,
-        end = bookmark.end && bookmark.id ? this.document.getElementById(bookmark.end) : bookmark.end;
+      var start = bookmark.id ? this.document.getElementById(bookmark.start) : bookmark.start;
+      var end = bookmark.end && bookmark.id ? this.document.getElementById(bookmark.end) : bookmark.end;
       this.setStartBefore(start);
       domUtils.remove(start);
       if (end) {
@@ -1126,10 +1127,10 @@
      * @return { UE.dom.Range } 当前range对象
      */
     enlarge: function(toBlock, stopFn) {
-      var isBody = domUtils.isBody,
-        pre,
-        node,
-        tmp = this.document.createTextNode("");
+      var isBody = domUtils.isBody;
+      var pre;
+      var node;
+      var tmp = this.document.createTextNode("");
       if (toBlock) {
         node = this.startContainer;
         if (node.nodeType == 1) {
@@ -1284,15 +1285,17 @@
           return node.nodeType == 1 && domUtils.isBlockElm(node);
         })
         .adjustmentBoundary();
-      var bookmark = this.createBookmark(),
-        end = bookmark.end,
-        filterFn = function(node) {
-          return node.nodeType == 1 ? node.tagName.toLowerCase() != "br" : !domUtils.isWhitespace(node);
-        },
-        current = domUtils.getNextDomNode(bookmark.start, false, filterFn),
-        node,
-        pre,
-        range = this.cloneRange();
+      var bookmark = this.createBookmark();
+      var end = bookmark.end;
+
+      var filterFn = function(node) {
+        return node.nodeType == 1 ? node.tagName.toLowerCase() != "br" : !domUtils.isWhitespace(node);
+      };
+
+      var current = domUtils.getNextDomNode(bookmark.start, false, filterFn);
+      var node;
+      var pre;
+      var range = this.cloneRange();
       while (current && domUtils.getPosition(current, end) & domUtils.POSITION_PRECEDING) {
         if (current.nodeType == 3 || dtd[tagName][current.tagName]) {
           range.setStartBefore(current);
@@ -1303,10 +1306,11 @@
               return dtd[tagName][parent.tagName];
             });
           }
-          var frag = range.setEndAfter(pre).extractContents(),
-            elm;
+          var frag = range.setEndAfter(pre).extractContents();
+          var elm;
           if (list && list.length > 0) {
-            var level, top;
+            var level;
+            var top;
             top = level = list[0].cloneNode(false);
             for (var i = 1, ci; (ci = list[i++]); ) {
               level.appendChild(ci.cloneNode(false));
@@ -1378,8 +1382,8 @@
       if (this.collapsed) return this;
       tagNames = utils.isArray(tagNames) ? tagNames : [tagNames];
       this.shrinkBoundary().adjustmentBoundary();
-      var start = this.startContainer,
-        end = this.endContainer;
+      var start = this.startContainer;
+      var end = this.endContainer;
       while (1) {
         if (start.nodeType == 1) {
           if (utils.indexOf(tagNames, start.tagName.toLowerCase()) > -1) {
@@ -1404,9 +1408,9 @@
         }
         end = end.parentNode;
       }
-      var bookmark = this.createBookmark(),
-        frag,
-        tmpRange;
+      var bookmark = this.createBookmark();
+      var frag;
+      var tmpRange;
       if (start) {
         tmpRange = this.cloneRange()
           .setEndBefore(bookmark.start)
@@ -1425,10 +1429,12 @@
         domUtils.clearEmptySibling(end, false, true);
         end.parentNode.insertBefore(bookmark.end, end.nextSibling);
       }
+
       var current = domUtils.getNextDomNode(bookmark.start, false, function(node) {
           return node.nodeType == 1;
-        }),
-        next;
+        });
+
+      var next;
       while (current && current !== bookmark.end) {
         next = domUtils.getNextDomNode(current, true, function(node) {
           return node.nodeType == 1;
@@ -1470,135 +1476,137 @@
     //这里不区分ie9以上，trace:3824
     select: browser.ie
       ? function(noFillData, textRange) {
-          var nativeRange;
-          if (!this.collapsed) this.shrinkBoundary();
-          var node = this.getClosedNode();
-          if (node && !textRange) {
-            try {
-              nativeRange = this.document.body.createControlRange();
-              nativeRange.addElement(node);
-              nativeRange.select();
-            } catch (e) {}
-            return this;
-          }
-          var bookmark = this.createBookmark(),
-            start = bookmark.start,
-            end;
-          nativeRange = this.document.body.createTextRange();
-          nativeRange.moveToElementText(start);
-          nativeRange.moveStart("character", 1);
-          if (!this.collapsed) {
-            var nativeRangeEnd = this.document.body.createTextRange();
-            end = bookmark.end;
-            nativeRangeEnd.moveToElementText(end);
-            nativeRange.setEndPoint("EndToEnd", nativeRangeEnd);
-          } else {
-            if (!noFillData && this.startContainer.nodeType != 3) {
-              //使用<span>|x<span>固定住光标
-              var tmpText = this.document.createTextNode(fillChar),
-                tmp = this.document.createElement("span");
-              tmp.appendChild(this.document.createTextNode(fillChar));
-              start.parentNode.insertBefore(tmp, start);
-              start.parentNode.insertBefore(tmpText, start);
-              //当点b,i,u时，不能清除i上边的b
-              removeFillData(this.document, tmpText);
-              fillData = tmpText;
-              mergeSibling(tmp, "previousSibling");
-              mergeSibling(start, "nextSibling");
-              nativeRange.moveStart("character", -1);
-              nativeRange.collapse(true);
-            }
-          }
-          this.moveToBookmark(bookmark);
-          tmp && domUtils.remove(tmp);
-          //IE在隐藏状态下不支持range操作，catch一下
-          try {
-            nativeRange.select();
-          } catch (e) {}
-          return this;
+      var nativeRange;
+      if (!this.collapsed) this.shrinkBoundary();
+      var node = this.getClosedNode();
+      if (node && !textRange) {
+        try {
+          nativeRange = this.document.body.createControlRange();
+          nativeRange.addElement(node);
+          nativeRange.select();
+        } catch (e) {}
+        return this;
+      }
+      var bookmark = this.createBookmark();
+      var start = bookmark.start;
+      var end;
+      nativeRange = this.document.body.createTextRange();
+      nativeRange.moveToElementText(start);
+      nativeRange.moveStart("character", 1);
+      if (!this.collapsed) {
+        var nativeRangeEnd = this.document.body.createTextRange();
+        end = bookmark.end;
+        nativeRangeEnd.moveToElementText(end);
+        nativeRange.setEndPoint("EndToEnd", nativeRangeEnd);
+      } else {
+        if (!noFillData && this.startContainer.nodeType != 3) {
+          //使用<span>|x<span>固定住光标
+          var tmpText = this.document.createTextNode(fillChar);
+
+          var tmp = this.document.createElement("span");
+          tmp.appendChild(this.document.createTextNode(fillChar));
+          start.parentNode.insertBefore(tmp, start);
+          start.parentNode.insertBefore(tmpText, start);
+          //当点b,i,u时，不能清除i上边的b
+          removeFillData(this.document, tmpText);
+          fillData = tmpText;
+          mergeSibling(tmp, "previousSibling");
+          mergeSibling(start, "nextSibling");
+          nativeRange.moveStart("character", -1);
+          nativeRange.collapse(true);
         }
+      }
+      this.moveToBookmark(bookmark);
+      tmp && domUtils.remove(tmp);
+      //IE在隐藏状态下不支持range操作，catch一下
+      try {
+        nativeRange.select();
+      } catch (e) {}
+      return this;
+    }
       : function(notInsertFillData) {
-          function checkOffset(rng) {
-            function check(node, offset, dir) {
-              if (node.nodeType == 3 && node.nodeValue.length < offset) {
-                rng[dir + "Offset"] = node.nodeValue.length;
-              }
-            }
-            check(rng.startContainer, rng.startOffset, "start");
-            check(rng.endContainer, rng.endOffset, "end");
+      function checkOffset(rng) {
+        function check(node, offset, dir) {
+          if (node.nodeType == 3 && node.nodeValue.length < offset) {
+            rng[dir + "Offset"] = node.nodeValue.length;
           }
-          var win = domUtils.getWindow(this.document),
-            sel = win.getSelection(),
-            txtNode;
-          //FF下关闭自动长高时滚动条在关闭dialog时会跳
-          //ff下如果不body.focus将不能定位闭合光标到编辑器内
-          browser.gecko ? this.document.body.focus() : win.focus();
-          if (sel) {
-            sel.removeAllRanges();
-            // trace:870 chrome/safari后边是br对于闭合得range不能定位 所以去掉了判断
-            // this.startContainer.nodeType != 3 &&! ((child = this.startContainer.childNodes[this.startOffset]) && child.nodeType == 1 && child.tagName == 'BR'
-            if (this.collapsed && !notInsertFillData) {
-              //                    //opear如果没有节点接着，原生的不能够定位,不能在body的第一级插入空白节点
-              //                    if (notInsertFillData && browser.opera && !domUtils.isBody(this.startContainer) && this.startContainer.nodeType == 1) {
-              //                        var tmp = this.document.createTextNode('');
-              //                        this.insertNode(tmp).setStart(tmp, 0).collapse(true);
-              //                    }
-              //
-              //处理光标落在文本节点的情况
-              //处理以下的情况
-              //<b>|xxxx</b>
-              //<b>xxxx</b>|xxxx
-              //xxxx<b>|</b>
-              var start = this.startContainer,
-                child = start;
-              if (start.nodeType == 1) {
-                child = start.childNodes[this.startOffset];
-              }
-              if (
-                !(start.nodeType == 3 && this.startOffset) &&
-                (child
-                  ? !child.previousSibling || child.previousSibling.nodeType != 3
-                  : !start.lastChild || start.lastChild.nodeType != 3)
-              ) {
-                txtNode = this.document.createTextNode(fillChar);
-                //跟着前边走
-                this.insertNode(txtNode);
-                removeFillData(this.document, txtNode);
-                mergeSibling(txtNode, "previousSibling");
-                mergeSibling(txtNode, "nextSibling");
-                fillData = txtNode;
-                this.setStart(txtNode, browser.webkit ? 1 : 0).collapse(true);
-              }
+        }
+        check(rng.startContainer, rng.startOffset, "start");
+        check(rng.endContainer, rng.endOffset, "end");
+      }
+      var win = domUtils.getWindow(this.document);
+      var sel = win.getSelection();
+      var txtNode;
+      //FF下关闭自动长高时滚动条在关闭dialog时会跳
+      //ff下如果不body.focus将不能定位闭合光标到编辑器内
+      browser.gecko ? this.document.body.focus() : win.focus();
+      if (sel) {
+        sel.removeAllRanges();
+        // trace:870 chrome/safari后边是br对于闭合得range不能定位 所以去掉了判断
+        // this.startContainer.nodeType != 3 &&! ((child = this.startContainer.childNodes[this.startOffset]) && child.nodeType == 1 && child.tagName == 'BR'
+        if (this.collapsed && !notInsertFillData) {
+          //                    //opear如果没有节点接着，原生的不能够定位,不能在body的第一级插入空白节点
+          //                    if (notInsertFillData && browser.opera && !domUtils.isBody(this.startContainer) && this.startContainer.nodeType == 1) {
+          //                        var tmp = this.document.createTextNode('');
+          //                        this.insertNode(tmp).setStart(tmp, 0).collapse(true);
+          //                    }
+          //
+          //处理光标落在文本节点的情况
+          //处理以下的情况
+          //<b>|xxxx</b>
+          //<b>xxxx</b>|xxxx
+          //xxxx<b>|</b>
+          var start = this.startContainer;
+
+          var child = start;
+          if (start.nodeType == 1) {
+            child = start.childNodes[this.startOffset];
+          }
+          if (
+            !(start.nodeType == 3 && this.startOffset) &&
+            (child
+              ? !child.previousSibling || child.previousSibling.nodeType != 3
+              : !start.lastChild || start.lastChild.nodeType != 3)
+          ) {
+            txtNode = this.document.createTextNode(fillChar);
+            //跟着前边走
+            this.insertNode(txtNode);
+            removeFillData(this.document, txtNode);
+            mergeSibling(txtNode, "previousSibling");
+            mergeSibling(txtNode, "nextSibling");
+            fillData = txtNode;
+            this.setStart(txtNode, browser.webkit ? 1 : 0).collapse(true);
+          }
+        }
+        var nativeRange = this.document.createRange();
+        if (this.collapsed && browser.opera && this.startContainer.nodeType == 1) {
+          var child = this.startContainer.childNodes[this.startOffset];
+          if (!child) {
+            //往前靠拢
+            child = this.startContainer.lastChild;
+            if (child && domUtils.isBr(child)) {
+              this.setStartBefore(child).collapse(true);
             }
-            var nativeRange = this.document.createRange();
-            if (this.collapsed && browser.opera && this.startContainer.nodeType == 1) {
-              var child = this.startContainer.childNodes[this.startOffset];
-              if (!child) {
-                //往前靠拢
-                child = this.startContainer.lastChild;
-                if (child && domUtils.isBr(child)) {
-                  this.setStartBefore(child).collapse(true);
-                }
+          } else {
+            //向后靠拢
+            while (child && domUtils.isBlockElm(child)) {
+              if (child.nodeType == 1 && child.childNodes[0]) {
+                child = child.childNodes[0];
               } else {
-                //向后靠拢
-                while (child && domUtils.isBlockElm(child)) {
-                  if (child.nodeType == 1 && child.childNodes[0]) {
-                    child = child.childNodes[0];
-                  } else {
-                    break;
-                  }
-                }
-                child && this.setStartBefore(child).collapse(true);
+                break;
               }
             }
-            //是createAddress最后一位算的不准，现在这里进行微调
-            checkOffset(this);
-            nativeRange.setStart(this.startContainer, this.startOffset);
-            nativeRange.setEnd(this.endContainer, this.endOffset);
-            sel.addRange(nativeRange);
+            child && this.setStartBefore(child).collapse(true);
           }
-          return this;
-        },
+        }
+        //是createAddress最后一位算的不准，现在这里进行微调
+        checkOffset(this);
+        nativeRange.setStart(this.startContainer, this.startOffset);
+        nativeRange.setEnd(this.endContainer, this.endOffset);
+        sel.addRange(nativeRange);
+      }
+      return this;
+    },
 
     /**
      * 滚动到当前range开始的位置
@@ -1616,8 +1624,8 @@
      */
     scrollToView: function(win, offset) {
       win = win ? window : domUtils.getWindow(this.document);
-      var me = this,
-        span = me.document.createElement("span");
+      var me = this;
+      var span = me.document.createElement("span");
       //trace:717
       span.innerHTML = "&nbsp;";
       me.cloneRange().insertNode(span);
@@ -1669,15 +1677,17 @@
      * ```
      */
     createAddress: function(ignoreEnd, ignoreTxt) {
-      var addr = {},
-        me = this;
+      var addr = {};
+      var me = this;
 
       function getAddress(isStart) {
         var node = isStart ? me.startContainer : me.endContainer;
+
         var parents = domUtils.findParents(node, true, function(node) {
             return !domUtils.isBody(node);
-          }),
-          addrs = [];
+          });
+
+        var addrs = [];
         for (var i = 0, ci; (ci = parents[i++]); ) {
           addrs.push(domUtils.getNodeIndex(ci, ignoreTxt));
         }
@@ -1760,9 +1770,9 @@
     moveToAddress: function(addr, ignoreEnd) {
       var me = this;
       function getNode(address, isStart) {
-        var tmpNode = me.document.body,
-          parentNode,
-          offset;
+        var tmpNode = me.document.body;
+        var parentNode;
+        var offset;
         for (var i = 0, ci, l = address.length; i < l; i++) {
           ci = address[i];
           parentNode = tmpNode;
@@ -1888,9 +1898,9 @@
      */
     traversal: function(doFn, filterFn) {
       if (this.collapsed) return this;
-      var bookmark = this.createBookmark(),
-        end = bookmark.end,
-        current = domUtils.getNextDomNode(bookmark.start, false, filterFn);
+      var bookmark = this.createBookmark();
+      var end = bookmark.end;
+      var current = domUtils.getNextDomNode(bookmark.start, false, filterFn);
       while (current && current !== end && domUtils.getPosition(current, end) & domUtils.POSITION_PRECEDING) {
         var tmpNode = domUtils.getNextDomNode(current, false, filterFn);
         doFn(current);

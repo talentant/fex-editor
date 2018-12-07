@@ -403,13 +403,15 @@
       percentages = {};
 
       var supportTransition = (function() {
-        var s = document.createElement("p").style,
-          r =
-            "transition" in s ||
-            "WebkitTransition" in s ||
-            "MozTransition" in s ||
-            "msTransition" in s ||
-            "OTransition" in s;
+        var s = document.createElement("p").style;
+
+        var r =
+          "transition" in s ||
+          "WebkitTransition" in s ||
+          "MozTransition" in s ||
+          "msTransition" in s ||
+          "OTransition" in s;
+
         s = null;
         return r;
       })();

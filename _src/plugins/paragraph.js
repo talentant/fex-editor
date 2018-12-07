@@ -37,19 +37,21 @@ UE.plugins["paragraph"] = function() {
   var notExchange = ["TD", "LI", "PRE"];
 
   var doParagraph = function(range, style, attrs, sourceCmdName) {
-    var bookmark = range.createBookmark(),
-      filterFn = function(node) {
-        return node.nodeType == 1
-          ? node.tagName.toLowerCase() != "br" && !domUtils.isBookmarkNode(node)
-          : !domUtils.isWhitespace(node);
-      },
-      para;
+    var bookmark = range.createBookmark();
+
+    var filterFn = function(node) {
+      return node.nodeType == 1
+        ? node.tagName.toLowerCase() != "br" && !domUtils.isBookmarkNode(node)
+        : !domUtils.isWhitespace(node);
+    };
+
+    var para;
 
     range.enlarge(true);
-    var bookmark2 = range.createBookmark(),
-      current = domUtils.getNextDomNode(bookmark2.start, false, filterFn),
-      tmpRange = range.cloneRange(),
-      tmpNode;
+    var bookmark2 = range.createBookmark();
+    var current = domUtils.getNextDomNode(bookmark2.start, false, filterFn);
+    var tmpRange = range.cloneRange();
+    var tmpNode;
     while (current && !(domUtils.getPosition(current, bookmark2.end) & domUtils.POSITION_FOLLOWING)) {
       if (current.nodeType == 3 || !block(current)) {
         tmpRange.setStartBefore(current);

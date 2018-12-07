@@ -11,8 +11,8 @@
  * @module UE.dom.domUtils
  */
 function getDomNode(node, start, ltr, startFromChild, fn, guard) {
-  var tmpNode = startFromChild && node[start],
-    parent;
+  var tmpNode = startFromChild && node[start];
+  var parent;
   !tmpNode && (tmpNode = node[ltr]);
   while (!tmpNode && (parent = (parent || node).parentNode)) {
     if (parent.tagName == "BODY" || (guard && !guard(parent))) {
@@ -25,6 +25,7 @@ function getDomNode(node, start, ltr, startFromChild, fn, guard) {
   }
   return tmpNode;
 }
+
 var attrFix =
     ie && browser.version < 9
       ? {
@@ -43,22 +44,24 @@ var attrFix =
       : {
           tabindex: "tabIndex",
           readonly: "readOnly"
-        },
-  styleBlock = utils.listToMap([
-    "-webkit-box",
-    "-moz-box",
-    "block",
-    "list-item",
-    "table",
-    "table-row-group",
-    "table-header-group",
-    "table-footer-group",
-    "table-row",
-    "table-column-group",
-    "table-column",
-    "table-cell",
-    "table-caption"
-  ]);
+        };
+
+var styleBlock = utils.listToMap([
+  "-webkit-box",
+  "-moz-box",
+  "block",
+  "list-item",
+  "table",
+  "table-row-group",
+  "table-header-group",
+  "table-footer-group",
+  "table-row",
+  "table-column-group",
+  "table-column",
+  "table-cell",
+  "table-caption"
+]);
+
 var domUtils = (dom.domUtils = {
   //节点常量
   NODE_ELEMENT: 1,
@@ -142,9 +145,9 @@ var domUtils = (dom.domUtils = {
       // domUtils.POSITION_IDENTICAL
       return 0;
     }
-    var node,
-      parentsA = [nodeA],
-      parentsB = [nodeB];
+    var node;
+    var parentsA = [nodeA];
+    var parentsB = [nodeB];
     node = nodeA;
     while ((node = node.parentNode)) {
       // 如果nodeB是nodeA的祖先节点
@@ -215,8 +218,8 @@ var domUtils = (dom.domUtils = {
    * ```
    */
   getNodeIndex: function(node, ignoreTextNode) {
-    var preNode = node,
-      i = 0;
+    var preNode = node;
+    var i = 0;
     while ((preNode = preNode.previousSibling)) {
       if (ignoreTextNode && preNode.nodeType == 3) {
         if (preNode.nodeType != preNode.nextSibling.nodeType) {
@@ -442,8 +445,8 @@ var domUtils = (dom.domUtils = {
    * ```
    */
   remove: function(node, keepChildren) {
-    var parent = node.parentNode,
-      child;
+    var parent = node.parentNode;
+    var child;
     if (parent) {
       if (keepChildren && node.hasChildNodes()) {
         while ((child = node.firstChild)) {
@@ -561,10 +564,10 @@ var domUtils = (dom.domUtils = {
    */
   getCommonAncestor: function(nodeA, nodeB) {
     if (nodeA === nodeB) return nodeA;
-    var parentsA = [nodeA],
-      parentsB = [nodeB],
-      parent = nodeA,
-      i = -1;
+    var parentsA = [nodeA];
+    var parentsB = [nodeB];
+    var parent = nodeA;
+    var i = -1;
     while ((parent = parent.parentNode)) {
       if (parent === nodeB) {
         return parent;
@@ -713,8 +716,8 @@ var domUtils = (dom.domUtils = {
    * ```
    */
   getXY: function(element) {
-    var x = 0,
-      y = 0;
+    var x = 0;
+    var y = 0;
     while (element.offsetParent) {
       y += element.offsetTop;
       x += element.offsetLeft;
@@ -750,8 +753,8 @@ var domUtils = (dom.domUtils = {
    * ```
    */
   on: function(element, type, handler) {
-    var types = utils.isArray(type) ? type : utils.trim(type).split(/\s+/),
-      k = types.length;
+    var types = utils.isArray(type) ? type : utils.trim(type).split(/\s+/);
+    var k = types.length;
     if (k)
       while (k--) {
         type = types[k];
@@ -763,8 +766,8 @@ var domUtils = (dom.domUtils = {
               els: []
             };
           }
-          var key = type + handler.toString(),
-            index = utils.indexOf(handler._d.els, element);
+          var key = type + handler.toString();
+          var index = utils.indexOf(handler._d.els, element);
           if (!handler._d[key] || index == -1) {
             if (index == -1) {
               handler._d.els.push(element);
@@ -809,8 +812,8 @@ var domUtils = (dom.domUtils = {
    * ```
    */
   un: function(element, type, handler) {
-    var types = utils.isArray(type) ? type : utils.trim(type).split(/\s+/),
-      k = types.length;
+    var types = utils.isArray(type) ? type : utils.trim(type).split(/\s+/);
+    var k = types.length;
     if (k)
       while (k--) {
         type = types[k];
@@ -862,15 +865,15 @@ var domUtils = (dom.domUtils = {
     if (nodeA.tagName != nodeB.tagName) {
       return false;
     }
-    var thisAttrs = nodeA.attributes,
-      otherAttrs = nodeB.attributes;
+    var thisAttrs = nodeA.attributes;
+    var otherAttrs = nodeB.attributes;
     if (!ie && thisAttrs.length != otherAttrs.length) {
       return false;
     }
-    var attrA,
-      attrB,
-      al = 0,
-      bl = 0;
+    var attrA;
+    var attrB;
+    var al = 0;
+    var bl = 0;
     for (var i = 0; (attrA = thisAttrs[i++]); ) {
       if (attrA.nodeName == "style") {
         if (attrA.specified) {
@@ -937,8 +940,8 @@ var domUtils = (dom.domUtils = {
    * ```
    */
   isSameStyle: function(nodeA, nodeB) {
-    var styleA = nodeA.style.cssText.replace(/( ?; ?)/g, ";").replace(/( ?: ?)/g, ":"),
-      styleB = nodeB.style.cssText.replace(/( ?; ?)/g, ";").replace(/( ?: ?)/g, ":");
+    var styleA = nodeA.style.cssText.replace(/( ?; ?)/g, ";").replace(/( ?: ?)/g, ":");
+    var styleB = nodeB.style.cssText.replace(/( ?; ?)/g, ";").replace(/( ?: ?)/g, ":");
     if (browser.opera) {
       styleA = nodeA.style;
       styleB = nodeB.style;
@@ -1046,11 +1049,11 @@ var domUtils = (dom.domUtils = {
    * ```
    */
   breakParent: function(node, parent) {
-    var tmpNode,
-      parentClone = node,
-      clone = node,
-      leftNodes,
-      rightNodes;
+    var tmpNode;
+    var parentClone = node;
+    var clone = node;
+    var leftNodes;
+    var rightNodes;
     do {
       parentClone = parentClone.parentNode;
       if (leftNodes) {
@@ -1975,8 +1978,8 @@ var domUtils = (dom.domUtils = {
    * ```
    */
   getChildCount: function(node, fn) {
-    var count = 0,
-      first = node.firstChild;
+    var count = 0;
+    var first = node.firstChild;
     fn =
       fn ||
       function() {
@@ -2030,23 +2033,25 @@ var domUtils = (dom.domUtils = {
           width: (mode ? doc.documentElement.clientWidth : doc.body.clientWidth) || 0,
           height: (mode ? doc.documentElement.clientHeight : doc.body.clientHeight) || 0
         };
-      },
-      getScrollPosition = function(win) {
-        if ("pageXOffset" in win) {
-          return {
-            x: win.pageXOffset || 0,
-            y: win.pageYOffset || 0
-          };
-        } else {
-          var doc = win.document;
-          return {
-            x: doc.documentElement.scrollLeft || doc.body.scrollLeft || 0,
-            y: doc.documentElement.scrollTop || doc.body.scrollTop || 0
-          };
-        }
       };
-    var winHeight = getViewPaneSize().height,
-      offset = winHeight * -1 + offsetTop;
+
+    var getScrollPosition = function(win) {
+      if ("pageXOffset" in win) {
+        return {
+          x: win.pageXOffset || 0,
+          y: win.pageYOffset || 0
+        };
+      } else {
+        var doc = win.document;
+        return {
+          x: doc.documentElement.scrollLeft || doc.body.scrollLeft || 0,
+          y: doc.documentElement.scrollTop || doc.body.scrollTop || 0
+        };
+      }
+    };
+
+    var winHeight = getViewPaneSize().height;
+    var offset = winHeight * -1 + offsetTop;
     offset += node.offsetHeight || 0;
     var elementPosition = domUtils.getXY(node);
     offset += elementPosition.y;
@@ -2082,10 +2087,10 @@ var domUtils = (dom.domUtils = {
     return !text.replace(new RegExp(domUtils.fillChar, "g"), "").length;
   },
   isStartInblock: function(range) {
-    var tmpRange = range.cloneRange(),
-      flag = 0,
-      start = tmpRange.startContainer,
-      tmp;
+    var tmpRange = range.cloneRange();
+    var flag = 0;
+    var start = tmpRange.startContainer;
+    var tmp;
     if (start.nodeType == 1 && start.childNodes[tmpRange.startOffset]) {
       start = start.childNodes[tmpRange.startOffset];
       var pre = start.previousSibling;
@@ -2116,8 +2121,8 @@ var domUtils = (dom.domUtils = {
         flag = 1;
         break;
       }
-      var pre = tmpRange.startContainer.previousSibling,
-        tmpNode;
+      var pre = tmpRange.startContainer.previousSibling;
+      var tmpNode;
       if (!pre) {
         tmpRange.setStartBefore(tmpRange.startContainer);
       } else {

@@ -21,8 +21,8 @@
       this._dialogs = {};
       this.initUIBase();
       this._initToolbars();
-      var editor = this.editor,
-        me = this;
+      var editor = this.editor;
+      var me = this;
 
       editor.addListener("ready", function() {
         //提供getDialog方法
@@ -83,9 +83,9 @@
         editor.getDialog("edittip").open();
       });
 
-      var pastePop,
-        isPaste = false,
-        timer;
+      var pastePop;
+      var isPaste = false;
+      var timer;
       editor.addListener("afterpaste", function() {
         if (editor.queryCommandState("pasteplain")) return;
         if (baidu.editor.ui.PastePicker) {
