@@ -208,12 +208,24 @@ module.exports = (grunt) => {
         ext: ".min.css"
       }
     },
+    babel: {
+      options: {
+        sourceMap: false,
+        presets: ['@babel/preset-env']
+      },
+      dist: {
+        files: {
+          "dist/<%= pkg.name %>.all.es5.js": distDir + "<%= pkg.name %>.all.js",
+          "dist/<%= pkg.name %>.parse.es5.js": distDir + "<%= pkg.name %>.parse.js"
+        }
+      }
+    },
     uglify: {
       dist: {
         options: {
           banner
         },
-        src: distDir + "<%= pkg.name %>.all.js",
+        src: distDir + "<%= pkg.name %>.all.es5.js",
         dest: distDir + "<%= pkg.name %>.all.min.js"
       },
       dist2: {
@@ -221,14 +233,14 @@ module.exports = (grunt) => {
           banner,
           beautify: true
         },
-        src: distDir + "<%= pkg.name %>.all.js",
+        src: distDir + "<%= pkg.name %>.all.es5.js",
         dest: distDir + "<%= pkg.name %>.all.beautify.js"
       },
       parse: {
         options: {
           banner
         },
-        src: distDir + "<%= pkg.name %>.parse.js",
+        src: distDir + "<%= pkg.name %>.parse.es5.js",
         dest: distDir + "<%= pkg.name %>.parse.min.js"
       },
       parse2: {
@@ -236,7 +248,7 @@ module.exports = (grunt) => {
           banner,
           beautify: true
         },
-        src: distDir + "<%= pkg.name %>.parse.js",
+        src: distDir + "<%= pkg.name %>.parse.es5.js",
         dest: distDir + "<%= pkg.name %>.parse.beautify.js"
       }
     },
@@ -262,6 +274,7 @@ module.exports = (grunt) => {
   grunt.loadNpmTasks("grunt-text-replace");
   grunt.loadNpmTasks("grunt-contrib-concat");
   grunt.loadNpmTasks("grunt-contrib-cssmin");
+  grunt.loadNpmTasks("grunt-babel");
   grunt.loadNpmTasks("grunt-contrib-uglify");
   grunt.loadNpmTasks("grunt-contrib-copy");
 
@@ -270,6 +283,7 @@ module.exports = (grunt) => {
     grunt.task.run([
       "concat",
       "cssmin",
+      "babel",
       "uglify",
       "copy:base",
     ]);

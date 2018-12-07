@@ -28,10 +28,13 @@
   },
   "scripts": {
     "reformat": "prettier \"{_src,_parse,dialogs,lang,themes}/**/**/**/**/*.{js,css,html}\" --write",
-    "transform": "lebab --replace '_parse/*.js' --transform arrow,arrow-return,for-of,for-each,arg-rest,arg-spread,obj-method,obj-shorthand,no-strict,exponent,multi-var"
+    "transform": "lebab --replace '{_src,_parse,dialogs,lang}/*.js' --transform arrow,arrow-return,for-of,for-each,arg-rest,arg-spread,obj-method,obj-shorthand,no-strict,exponent,multi-var"
   },
   "devDependencies": {
+    "@babel/core": "^7.2.0",
+    "@babel/preset-env": "^7.2.0",
     "grunt": "^1.0.3",
+    "grunt-babel": "^8.0.0",
     "grunt-contrib-clean": "^2.0.0",
     "grunt-contrib-concat": "^1.0.1",
     "grunt-contrib-copy": "^1.0.0",
