@@ -24,7 +24,7 @@ UEditor是由百度web前端研发部开发所见即所得富文本web编辑器�
 解压下载的包，在解压后的目录创建demo.html文件，填入下面的html代码
 
 ```html
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html lang="en-US">
 <head>
 	<meta charset="UTF-8">
