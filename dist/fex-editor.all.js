@@ -4162,8 +4162,8 @@ var domUtils = (dom.domUtils = {
    */
   scrollToView: function(node, win, offsetTop) {
     var getViewPaneSize = function() {
-      var doc = win.document,
-        mode = doc.compatMode == "CSS1Compat";
+      var doc = win.document;
+      var mode = doc.compatMode == "CSS1Compat";
       return {
         width: (mode ? doc.documentElement.clientWidth : doc.body.clientWidth) || 0,
         height: (mode ? doc.documentElement.clientHeight : doc.body.clientHeight) || 0
