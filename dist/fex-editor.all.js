@@ -15818,9 +15818,7 @@ UE.plugin.register("copy", function() {
   function initZeroClipboard() {
     ZeroClipboard.config({
       debug: false,
-      swfPath:
-        me.options.UEDITOR_HOME_URL +
-          "third-party/zeroclipboard/ZeroClipboard.swf"
+      swfPath: "https://cdn.jsdelivr.net/npm/fex-editor@2.1.1/dist/third-party/zeroclipboard/ZeroClipboard.swf"
     });
 
     var client = (me.zeroclipboard = new ZeroClipboard());
@@ -15866,9 +15864,7 @@ UE.plugin.register("copy", function() {
             utils.loadFile(
               document,
               {
-                src:
-                  me.options.UEDITOR_HOME_URL +
-                    "third-party/zeroclipboard/ZeroClipboard.js",
+                src: "https://cdn.jsdelivr.net/npm/fex-editor@2.1.1/dist/third-party/zeroclipboard/ZeroClipboard.js",
                 tag: "script",
                 type: "text/javascript",
                 defer: "defer"
