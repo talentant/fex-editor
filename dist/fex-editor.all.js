@@ -18122,7 +18122,7 @@ UE.plugins["list"] = function() {
           {
             src:
               opt.codeMirrorJsUrl ||
-                opt.UEDITOR_HOME_URL + "third-party/codemirror/codemirror.js",
+                "https://cdn.jsdelivr.net/npm/codemirror@2.33.0/lib/codemirror.js",
             tag: "script",
             type: "text/javascript",
             defer: "defer"
@@ -18141,7 +18141,7 @@ UE.plugins["list"] = function() {
           type: "text/css",
           href:
             opt.codeMirrorCssUrl ||
-              opt.UEDITOR_HOME_URL + "third-party/codemirror/codemirror.css"
+              "https://cdn.jsdelivr.net/npm/codemirror@2.33.0/lib/codemirror.css"
         });
       });
     }
