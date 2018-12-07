@@ -120,22 +120,22 @@ function autoHeight(index) {
 
 function createTab(tabName) {
   var //版本号
-  faceVersion = "?v=1.1";
+    faceVersion = "?v=1.1";
 
   var //获取将要生成的Div句柄
-  tab = $G(tabName);
+    tab = $G(tabName);
 
   var //获取显示表情和预览表情的路径
-  imagePath = emotion.SmileyPath + emotion.imageFolders[tabName];
+    imagePath = emotion.SmileyPath + emotion.imageFolders[tabName];
 
   var //中间数
-  positionLine = 11 / 2;
+    positionLine = 11 / 2;
 
   var //图片长宽
-  iWidth = (iHeight = 35);
+    iWidth = (iHeight = 35);
 
   var //表格剩余空间的显示比例
-  iColWidth = 3;
+    iColWidth = 3;
 
   var tableCss = emotion.imageCss[tabName];
   var cssOffset = emotion.imageCssOffset[tabName];

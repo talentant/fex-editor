@@ -27,24 +27,24 @@ function getDomNode(node, start, ltr, startFromChild, fn, guard) {
 }
 
 var attrFix =
-    ie && browser.version < 9
-      ? {
-          tabindex: "tabIndex",
-          readonly: "readOnly",
-          for: "htmlFor",
-          class: "className",
-          maxlength: "maxLength",
-          cellspacing: "cellSpacing",
-          cellpadding: "cellPadding",
-          rowspan: "rowSpan",
-          colspan: "colSpan",
-          usemap: "useMap",
-          frameborder: "frameBorder"
-        }
-      : {
-          tabindex: "tabIndex",
-          readonly: "readOnly"
-        };
+  ie && browser.version < 9
+    ? {
+        tabindex: "tabIndex",
+        readonly: "readOnly",
+        for: "htmlFor",
+        class: "className",
+        maxlength: "maxLength",
+        cellspacing: "cellSpacing",
+        cellpadding: "cellPadding",
+        rowspan: "rowSpan",
+        colspan: "colSpan",
+        usemap: "useMap",
+        frameborder: "frameBorder"
+      }
+    : {
+        tabindex: "tabIndex",
+        readonly: "readOnly"
+      };
 
 var styleBlock = utils.listToMap([
   "-webkit-box",
@@ -2027,13 +2027,13 @@ var domUtils = (dom.domUtils = {
    */
   scrollToView: function(node, win, offsetTop) {
     var getViewPaneSize = function() {
-        var doc = win.document,
-          mode = doc.compatMode == "CSS1Compat";
-        return {
-          width: (mode ? doc.documentElement.clientWidth : doc.body.clientWidth) || 0,
-          height: (mode ? doc.documentElement.clientHeight : doc.body.clientHeight) || 0
-        };
+      var doc = win.document,
+        mode = doc.compatMode == "CSS1Compat";
+      return {
+        width: (mode ? doc.documentElement.clientWidth : doc.body.clientWidth) || 0,
+        height: (mode ? doc.documentElement.clientHeight : doc.body.clientHeight) || 0
       };
+    };
 
     var getScrollPosition = function(win) {
       if ("pageXOffset" in win) {

@@ -1056,21 +1056,21 @@
         },
         isSameElement: function(e, t) {
             if (e.tagName != t.tagName) return !1;
-            var i = e.attributes, n = t.attributes;
-            if (!ie && i.length != n.length) return !1;
-            for (var o, r, a = 0, s = 0, l = 0; o = i[l++]; ) {
-                if ("style" == o.nodeName) {
-                    if (o.specified && a++, domUtils.isSameStyle(e, t)) continue;
+            var i, n, o = e.attributes, r = t.attributes;
+            if (!ie && o.length != r.length) return !1;
+            for (var a = 0, s = 0, l = 0; i = o[l++]; ) {
+                if ("style" == i.nodeName) {
+                    if (i.specified && a++, domUtils.isSameStyle(e, t)) continue;
                     return !1;
                 }
                 if (ie) {
-                    if (!o.specified) continue;
-                    a++, r = n.getNamedItem(o.nodeName);
-                } else r = t.attributes[o.nodeName];
-                if (!r.specified || o.nodeValue != r.nodeValue) return !1;
+                    if (!i.specified) continue;
+                    a++, n = r.getNamedItem(i.nodeName);
+                } else n = t.attributes[i.nodeName];
+                if (!n.specified || i.nodeValue != n.nodeValue) return !1;
             }
             if (ie) {
-                for (l = 0; r = n[l++]; ) r.specified && s++;
+                for (l = 0; n = r[l++]; ) n.specified && s++;
                 if (a != s) return !1;
             }
             return !0;
@@ -1420,29 +1420,29 @@
             n;
         }
         function t(e, t) {
-            var i, n, o = e.startContainer, r = e.endContainer, a = e.startOffset, s = e.endOffset, l = e.document, d = l.createDocumentFragment();
-            if (1 == o.nodeType && (o = o.childNodes[a] || (i = o.appendChild(l.createTextNode("")))), 
-            1 == r.nodeType && (r = r.childNodes[s] || (n = r.appendChild(l.createTextNode("")))), 
-            o === r && 3 == o.nodeType) return d.appendChild(l.createTextNode(o.substringData(a, s - a))), 
-            t && (o.deleteData(a, s - a), e.collapse(!0)), d;
-            for (var c, u, m = d, f = domUtils.findParents(o, !0), h = domUtils.findParents(r, !0), p = 0; f[p] == h[p]; ) p++;
+            var i, n, o, r, a = e.startContainer, s = e.endContainer, l = e.startOffset, d = e.endOffset, c = e.document, u = c.createDocumentFragment();
+            if (1 == a.nodeType && (a = a.childNodes[l] || (i = a.appendChild(c.createTextNode("")))), 
+            1 == s.nodeType && (s = s.childNodes[d] || (n = s.appendChild(c.createTextNode("")))), 
+            a === s && 3 == a.nodeType) return u.appendChild(c.createTextNode(a.substringData(l, d - l))), 
+            t && (a.deleteData(l, d - l), e.collapse(!0)), u;
+            for (var m = u, f = domUtils.findParents(a, !0), h = domUtils.findParents(s, !0), p = 0; f[p] == h[p]; ) p++;
             for (var g, v = p; g = f[v]; v++) {
-                for (c = g.nextSibling, g == o ? i || (3 == e.startContainer.nodeType ? (m.appendChild(l.createTextNode(o.nodeValue.slice(a))), 
-                t && o.deleteData(a, o.nodeValue.length - a)) : m.appendChild(t ? o : o.cloneNode(!0))) : (u = g.cloneNode(!1), 
-                m.appendChild(u)); c && c !== r && c !== h[v]; ) g = c.nextSibling, m.appendChild(t ? c : c.cloneNode(!0)), 
-                c = g;
-                m = u;
+                for (o = g.nextSibling, g == a ? i || (3 == e.startContainer.nodeType ? (m.appendChild(c.createTextNode(a.nodeValue.slice(l))), 
+                t && a.deleteData(l, a.nodeValue.length - l)) : m.appendChild(t ? a : a.cloneNode(!0))) : (r = g.cloneNode(!1), 
+                m.appendChild(r)); o && o !== s && o !== h[v]; ) g = o.nextSibling, m.appendChild(t ? o : o.cloneNode(!0)), 
+                o = g;
+                m = r;
             }
-            m = d, f[p] || (m.appendChild(f[p - 1].cloneNode(!1)), m = m.firstChild);
+            m = u, f[p] || (m.appendChild(f[p - 1].cloneNode(!1)), m = m.firstChild);
             var b;
             for (v = p; b = h[v]; v++) {
-                if (c = b.previousSibling, b == r ? n || 3 != e.endContainer.nodeType || (m.appendChild(l.createTextNode(r.substringData(0, s))), 
-                t && r.deleteData(0, s)) : (u = b.cloneNode(!1), m.appendChild(u)), v != p || !f[p]) for (;c && c !== o; ) b = c.previousSibling, 
-                m.insertBefore(t ? c : c.cloneNode(!0), m.firstChild), c = b;
-                m = u;
+                if (o = b.previousSibling, b == s ? n || 3 != e.endContainer.nodeType || (m.appendChild(c.createTextNode(s.substringData(0, d))), 
+                t && s.deleteData(0, d)) : (r = b.cloneNode(!1), m.appendChild(r)), v != p || !f[p]) for (;o && o !== a; ) b = o.previousSibling, 
+                m.insertBefore(t ? o : o.cloneNode(!0), m.firstChild), o = b;
+                m = r;
             }
             return t && e.setStartBefore(h[p] ? f[p] ? h[p] : f[p - 1] : h[p - 1]).collapse(!0), 
-            i && domUtils.remove(i), n && domUtils.remove(n), d;
+            i && domUtils.remove(i), n && domUtils.remove(n), u;
         }
         var n = dom.Range = function(e) {
             var t = this;
@@ -2837,7 +2837,7 @@
         e = e.replace(new RegExp(domUtils.fillChar, "g"), ""), i || (e = e.replace(new RegExp("[\\r\\t\\n" + (i ? "" : " ") + "]*</?(\\w+)\\s*(?:[^>]*)>[\\r\\t\\n" + (i ? "" : " ") + "]*", "g"), function(e, t) {
             return t && n[t.toLowerCase()] ? e.replace(/(^[\n\r]+)|([\n\r]+$)/g, "") : e.replace(new RegExp("^[\\r\\n" + (i ? "" : " ") + "]+"), "").replace(new RegExp("[\\r\\n" + (i ? "" : " ") + "]+$"), "");
         }));
-        var c = {
+        var o, c = {
             href: 1,
             src: 1
         }, u = UE.uNode, m = {
@@ -2852,13 +2852,13 @@
             dt: "dl",
             dd: "dl",
             option: "select"
-        }, o = {
+        }, r = {
             ol: "li",
             ul: "li"
         };
-        function r(e, t) {
-            if (o[e.tagName]) {
-                var i = u.createElement(o[e.tagName]);
+        function a(e, t) {
+            if (r[e.tagName]) {
+                var i = u.createElement(r[e.tagName]);
                 e.appendChild(i), i.appendChild(u.createText(t)), e = i;
             } else e.appendChild(u.createText(t));
         }
@@ -2886,19 +2886,19 @@
             }
             return e.children.push(a), dtd.$empty[t] ? e : a;
         }
-        for (var a, s, l, h = 0, p = 0, g = new u({
+        for (var s, l, h = 0, p = 0, g = new u({
             type: "root",
             children: []
-        }), v = g; a = t.exec(e); ) {
-            h = a.index;
+        }), v = g; o = t.exec(e); ) {
+            h = o.index;
             try {
-                if (p < h && r(v, e.slice(p, h)), a[3]) dtd.$cdata[v.tagName] ? r(v, a[0]) : v = f(v, a[3].toLowerCase(), a[4]); else if (a[1]) {
-                    if ("root" != v.type) if (dtd.$cdata[v.tagName] && !dtd.$cdata[a[1]]) r(v, a[0]); else {
-                        for (var b = v; "element" == v.type && v.tagName != a[1].toLowerCase(); ) if ("root" == (v = v.parentNode).type) throw v = b, 
+                if (p < h && a(v, e.slice(p, h)), o[3]) dtd.$cdata[v.tagName] ? a(v, o[0]) : v = f(v, o[3].toLowerCase(), o[4]); else if (o[1]) {
+                    if ("root" != v.type) if (dtd.$cdata[v.tagName] && !dtd.$cdata[o[1]]) a(v, o[0]); else {
+                        for (var b = v; "element" == v.type && v.tagName != o[1].toLowerCase(); ) if ("root" == (v = v.parentNode).type) throw v = b, 
                         "break";
                         v = v.parentNode;
                     }
-                } else a[2] && (s = v, l = a[2], s.children.push(new u({
+                } else o[2] && (s = v, l = o[2], s.children.push(new u({
                     type: "comment",
                     data: l,
                     parentNode: s
@@ -2906,7 +2906,7 @@
             } catch (e) {}
             p = t.lastIndex;
         }
-        return p < e.length && r(v, e.slice(p)), g;
+        return p < e.length && a(v, e.slice(p)), g;
     }, filterNode = UE.filterNode = function() {
         function m(i, e) {
             switch (i.type) {
@@ -11044,7 +11044,7 @@
             uiName: "editor",
             initEditorUI: function() {
                 (this.editor.ui = this)._dialogs = {}, this.initUIBase(), this._initToolbars();
-                var c = this.editor, t = this;
+                var n, c = this.editor, t = this;
                 c.addListener("ready", function() {
                     if (c.getDialog = function(e) {
                         return c.ui._dialogs[e + "Dialog"];
@@ -11067,7 +11067,7 @@
                 }), c.addListener("delcells", function() {
                     UE.ui.edittip && new UE.ui.edittip(c), c.getDialog("edittip").open();
                 });
-                var n, e, i = !1;
+                var e, i = !1;
                 function o(e, t) {
                     e.setOpt({
                         wordCount: !0,

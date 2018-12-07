@@ -289,13 +289,13 @@ UE.plugins["list"] = function() {
     });
     if (me.options.autoTransWordToList) {
       var orderlisttype = {
-          num1: /^\d+\)/,
-          decimal: /^\d+\./,
-          "lower-alpha": /^[a-z]+\)/,
-          "upper-alpha": /^[A-Z]+\./,
-          cn: /^[\u4E00\u4E8C\u4E09\u56DB\u516d\u4e94\u4e03\u516b\u4e5d]+[\u3001]/,
-          cn2: /^\([\u4E00\u4E8C\u4E09\u56DB\u516d\u4e94\u4e03\u516b\u4e5d]+\)/
-        };
+        num1: /^\d+\)/,
+        decimal: /^\d+\./,
+        "lower-alpha": /^[a-z]+\)/,
+        "upper-alpha": /^[A-Z]+\./,
+        cn: /^[\u4E00\u4E8C\u4E09\u56DB\u516d\u4e94\u4e03\u516b\u4e5d]+[\u3001]/,
+        cn2: /^\([\u4E00\u4E8C\u4E09\u56DB\u516d\u4e94\u4e03\u516b\u4e5d]+\)/
+      };
 
       var unorderlisttype = {
         square: "n"

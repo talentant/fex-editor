@@ -223,7 +223,7 @@ UE.parse.register("charts", function(utils) {
     var series = [];
 
     var //数据类别
-    categories = [];
+      categories = [];
 
     var result = [];
     var data = config.data;

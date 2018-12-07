@@ -145,9 +145,9 @@ UE.plugins["link"] = function() {
         range.shrinkBoundary();
 
         var start =
-            range.startContainer.nodeType == 3 || !range.startContainer.childNodes[range.startOffset]
-              ? range.startContainer
-              : range.startContainer.childNodes[range.startOffset];
+          range.startContainer.nodeType == 3 || !range.startContainer.childNodes[range.startOffset]
+            ? range.startContainer
+            : range.startContainer.childNodes[range.startOffset];
 
         var end =
           range.endContainer.nodeType == 3 || range.endOffset == 0

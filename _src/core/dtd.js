@@ -162,7 +162,7 @@ var dtd = (dom.dtd = (function() {
   });
 
   var //a不能被切开，所以把他
-  L = X(_({a: 0}), J);
+    L = X(_({a: 0}), J);
 
   var M = _({tr: 1});
   var N = _({"#": 1});
@@ -176,30 +176,30 @@ var dtd = (dom.dtd = (function() {
   var V = _({html: 1});
 
   var block = _({
-      address: 1,
-      blockquote: 1,
-      center: 1,
-      dir: 1,
-      div: 1,
-      dl: 1,
-      fieldset: 1,
-      form: 1,
-      h1: 1,
-      h2: 1,
-      h3: 1,
-      h4: 1,
-      h5: 1,
-      h6: 1,
-      hr: 1,
-      isindex: 1,
-      menu: 1,
-      noframes: 1,
-      ol: 1,
-      p: 1,
-      pre: 1,
-      table: 1,
-      ul: 1
-    });
+    address: 1,
+    blockquote: 1,
+    center: 1,
+    dir: 1,
+    div: 1,
+    dl: 1,
+    fieldset: 1,
+    form: 1,
+    h1: 1,
+    h2: 1,
+    h3: 1,
+    h4: 1,
+    h5: 1,
+    h6: 1,
+    hr: 1,
+    isindex: 1,
+    menu: 1,
+    noframes: 1,
+    ol: 1,
+    p: 1,
+    pre: 1,
+    table: 1,
+    ul: 1
+  });
 
   var empty = _({
     area: 1,

@@ -77,11 +77,11 @@ UE.plugins["basestyle"] = function() {
    * ```
    */
   var basestyles = {
-      bold: ["strong", "b"],
-      italic: ["em", "i"],
-      subscript: ["sub"],
-      superscript: ["sup"]
-    };
+    bold: ["strong", "b"],
+    italic: ["em", "i"],
+    subscript: ["sub"],
+    superscript: ["sup"]
+  };
 
   var getObj = function(editor, tagNames) {
     return domUtils.filterNodeList(editor.selection.getStartElementPath(), tagNames);

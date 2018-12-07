@@ -23,8 +23,8 @@
   editTable.prototype = {
     init: function() {
       var colorPiker = new UE.ui.ColorPicker({
-          editor: editor
-        });
+        editor: editor
+      });
 
       var colorPop = new UE.ui.Popup({
         editor: editor,

@@ -13,7 +13,7 @@ var scrawl = function(options) {
   var context = canvas.getContext("2d");
 
   var //undo redo存储
-  drawStep = [];
+    drawStep = [];
 
   var drawStepIndex = 0;
 

@@ -116,10 +116,10 @@
 
   UETable.getDefaultValue = function(editor, table) {
     var borderMap = {
-        thin: "0px",
-        medium: "1px",
-        thick: "2px"
-      };
+      thin: "0px",
+      medium: "1px",
+      thick: "2px"
+    };
 
     var tableBorder;
     var tdPadding;

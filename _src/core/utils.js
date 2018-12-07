@@ -918,71 +918,71 @@ var utils = (UE.utils = {
   cssRule:
     browser.ie && browser.version != 11
       ? function(key, style, doc) {
-      var indexList;
-      var index;
-      if (style === undefined || (style && style.nodeType && style.nodeType == 9)) {
-        //获取样式
-        doc = style && style.nodeType && style.nodeType == 9 ? style : doc || document;
-        indexList = doc.indexList || (doc.indexList = {});
-        index = indexList[key];
-        if (index !== undefined) {
-          return doc.styleSheets[index].cssText;
-        }
-        return undefined;
-      }
-      doc = doc || document;
-      indexList = doc.indexList || (doc.indexList = {});
-      index = indexList[key];
-      //清除样式
-      if (style === "") {
-        if (index !== undefined) {
-          doc.styleSheets[index].cssText = "";
-          delete indexList[key];
-          return true;
-        }
-        return false;
-      }
+          var indexList;
+          var index;
+          if (style === undefined || (style && style.nodeType && style.nodeType == 9)) {
+            //获取样式
+            doc = style && style.nodeType && style.nodeType == 9 ? style : doc || document;
+            indexList = doc.indexList || (doc.indexList = {});
+            index = indexList[key];
+            if (index !== undefined) {
+              return doc.styleSheets[index].cssText;
+            }
+            return undefined;
+          }
+          doc = doc || document;
+          indexList = doc.indexList || (doc.indexList = {});
+          index = indexList[key];
+          //清除样式
+          if (style === "") {
+            if (index !== undefined) {
+              doc.styleSheets[index].cssText = "";
+              delete indexList[key];
+              return true;
+            }
+            return false;
+          }
 
-      //添加样式
-      if (index !== undefined) {
-        sheetStyle = doc.styleSheets[index];
-      } else {
-        sheetStyle = doc.createStyleSheet("", (index = doc.styleSheets.length));
-        indexList[key] = index;
-      }
-      sheetStyle.cssText = style;
-    }
+          //添加样式
+          if (index !== undefined) {
+            sheetStyle = doc.styleSheets[index];
+          } else {
+            sheetStyle = doc.createStyleSheet("", (index = doc.styleSheets.length));
+            indexList[key] = index;
+          }
+          sheetStyle.cssText = style;
+        }
       : function(key, style, doc) {
-      var head;
-      var node;
-      if (style === undefined || (style && style.nodeType && style.nodeType == 9)) {
-        //获取样式
-        doc = style && style.nodeType && style.nodeType == 9 ? style : doc || document;
-        node = doc.getElementById(key);
-        return node ? node.innerHTML : undefined;
-      }
-      doc = doc || document;
-      node = doc.getElementById(key);
+          var head;
+          var node;
+          if (style === undefined || (style && style.nodeType && style.nodeType == 9)) {
+            //获取样式
+            doc = style && style.nodeType && style.nodeType == 9 ? style : doc || document;
+            node = doc.getElementById(key);
+            return node ? node.innerHTML : undefined;
+          }
+          doc = doc || document;
+          node = doc.getElementById(key);
 
-      //清除样式
-      if (style === "") {
-        if (node) {
-          node.parentNode.removeChild(node);
-          return true;
-        }
-        return false;
-      }
+          //清除样式
+          if (style === "") {
+            if (node) {
+              node.parentNode.removeChild(node);
+              return true;
+            }
+            return false;
+          }
 
-      //添加样式
-      if (node) {
-        node.innerHTML = style;
-      } else {
-        node = doc.createElement("style");
-        node.id = key;
-        node.innerHTML = style;
-        doc.getElementsByTagName("head")[0].appendChild(node);
-      }
-    },
+          //添加样式
+          if (node) {
+            node.innerHTML = style;
+          } else {
+            node = doc.createElement("style");
+            node.id = key;
+            node.innerHTML = style;
+            doc.getElementsByTagName("head")[0].appendChild(node);
+          }
+        },
   sort: function(array, compareFn) {
     compareFn =
       compareFn ||

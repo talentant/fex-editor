@@ -2,13 +2,13 @@ UE.plugin.register("autosave", function() {
   var me = this;
 
   var //无限循环保护
-  lastSaveTime = new Date();
+    lastSaveTime = new Date();
 
   var //最小保存间隔时间
-  MIN_TIME = 20;
+    MIN_TIME = 20;
 
   var //auto save key
-  saveKey = null;
+    saveKey = null;
 
   function save(editor) {
     var saveData;

@@ -37,239 +37,239 @@ var dom = (UE.dom = {});
  * @module UE.browser
  */
 var browser = (UE.browser = (function() {
- var agent = navigator.userAgent.toLowerCase();
- var opera = window.opera;
+  var agent = navigator.userAgent.toLowerCase();
+  var opera = window.opera;
 
- var browser = {
-   /**
-    * @property {boolean} ie 检测当前浏览器是否为IE
-    * @example
-    * ```javascript
-    * if ( UE.browser.ie ) {
-    *     console.log( '当前浏览器是IE' );
-    * }
-    * ```
-    */
-   ie: /(msie\s|trident.*rv:)([\w.]+)/i.test(agent),
+  var browser = {
+    /**
+     * @property {boolean} ie 检测当前浏览器是否为IE
+     * @example
+     * ```javascript
+     * if ( UE.browser.ie ) {
+     *     console.log( '当前浏览器是IE' );
+     * }
+     * ```
+     */
+    ie: /(msie\s|trident.*rv:)([\w.]+)/i.test(agent),
 
-   /**
-    * @property {boolean} opera 检测当前浏览器是否为Opera
-    * @example
-    * ```javascript
-    * if ( UE.browser.opera ) {
-    *     console.log( '当前浏览器是Opera' );
-    * }
-    * ```
-    */
-   opera: !!opera && opera.version,
+    /**
+     * @property {boolean} opera 检测当前浏览器是否为Opera
+     * @example
+     * ```javascript
+     * if ( UE.browser.opera ) {
+     *     console.log( '当前浏览器是Opera' );
+     * }
+     * ```
+     */
+    opera: !!opera && opera.version,
 
-   /**
-    * @property {boolean} webkit 检测当前浏览器是否是webkit内核的浏览器
-    * @example
-    * ```javascript
-    * if ( UE.browser.webkit ) {
-    *     console.log( '当前浏览器是webkit内核浏览器' );
-    * }
-    * ```
-    */
-   webkit: agent.indexOf(" applewebkit/") > -1,
+    /**
+     * @property {boolean} webkit 检测当前浏览器是否是webkit内核的浏览器
+     * @example
+     * ```javascript
+     * if ( UE.browser.webkit ) {
+     *     console.log( '当前浏览器是webkit内核浏览器' );
+     * }
+     * ```
+     */
+    webkit: agent.indexOf(" applewebkit/") > -1,
 
-   /**
-    * @property {boolean} mac 检测当前浏览器是否是运行在mac平台下
-    * @example
-    * ```javascript
-    * if ( UE.browser.mac ) {
-    *     console.log( '当前浏览器运行在mac平台下' );
-    * }
-    * ```
-    */
-   mac: agent.indexOf("macintosh") > -1,
+    /**
+     * @property {boolean} mac 检测当前浏览器是否是运行在mac平台下
+     * @example
+     * ```javascript
+     * if ( UE.browser.mac ) {
+     *     console.log( '当前浏览器运行在mac平台下' );
+     * }
+     * ```
+     */
+    mac: agent.indexOf("macintosh") > -1,
 
-   /**
-    * @property {boolean} quirks 检测当前浏览器是否处于“怪异模式”下
-    * @example
-    * ```javascript
-    * if ( UE.browser.quirks ) {
-    *     console.log( '当前浏览器运行处于“怪异模式”' );
-    * }
-    * ```
-    */
-   quirks: document.compatMode == "BackCompat"
- };
+    /**
+     * @property {boolean} quirks 检测当前浏览器是否处于“怪异模式”下
+     * @example
+     * ```javascript
+     * if ( UE.browser.quirks ) {
+     *     console.log( '当前浏览器运行处于“怪异模式”' );
+     * }
+     * ```
+     */
+    quirks: document.compatMode == "BackCompat"
+  };
 
- /**
-  * @property {boolean} gecko 检测当前浏览器内核是否是gecko内核
-  * @example
-  * ```javascript
-  * if ( UE.browser.gecko ) {
-  *     console.log( '当前浏览器内核是gecko内核' );
-  * }
-  * ```
-  */
- browser.gecko = navigator.product == "Gecko" && !browser.webkit && !browser.opera && !browser.ie;
+  /**
+   * @property {boolean} gecko 检测当前浏览器内核是否是gecko内核
+   * @example
+   * ```javascript
+   * if ( UE.browser.gecko ) {
+   *     console.log( '当前浏览器内核是gecko内核' );
+   * }
+   * ```
+   */
+  browser.gecko = navigator.product == "Gecko" && !browser.webkit && !browser.opera && !browser.ie;
 
- var version = 0;
+  var version = 0;
 
- // Internet Explorer 6.0+
- if (browser.ie) {
-   var v1 = agent.match(/(?:msie\s([\w.]+))/);
-   var v2 = agent.match(/(?:trident.*rv:([\w.]+))/);
-   if (v1 && v2 && v1[1] && v2[1]) {
-     version = Math.max(v1[1] * 1, v2[1] * 1);
-   } else if (v1 && v1[1]) {
-     version = v1[1] * 1;
-   } else if (v2 && v2[1]) {
-     version = v2[1] * 1;
-   } else {
-     version = 0;
-   }
+  // Internet Explorer 6.0+
+  if (browser.ie) {
+    var v1 = agent.match(/(?:msie\s([\w.]+))/);
+    var v2 = agent.match(/(?:trident.*rv:([\w.]+))/);
+    if (v1 && v2 && v1[1] && v2[1]) {
+      version = Math.max(v1[1] * 1, v2[1] * 1);
+    } else if (v1 && v1[1]) {
+      version = v1[1] * 1;
+    } else if (v2 && v2[1]) {
+      version = v2[1] * 1;
+    } else {
+      version = 0;
+    }
 
-   browser.ie11Compat = document.documentMode == 11;
-   /**
-    * @property { boolean } ie9Compat 检测浏览器模式是否为 IE9 兼容模式
-    * @warning 如果浏览器不是IE， 则该值为undefined
-    * @example
-    * ```javascript
-    * if ( UE.browser.ie9Compat ) {
-    *     console.log( '当前浏览器运行在IE9兼容模式下' );
-    * }
-    * ```
-    */
-   browser.ie9Compat = document.documentMode == 9;
+    browser.ie11Compat = document.documentMode == 11;
+    /**
+     * @property { boolean } ie9Compat 检测浏览器模式是否为 IE9 兼容模式
+     * @warning 如果浏览器不是IE， 则该值为undefined
+     * @example
+     * ```javascript
+     * if ( UE.browser.ie9Compat ) {
+     *     console.log( '当前浏览器运行在IE9兼容模式下' );
+     * }
+     * ```
+     */
+    browser.ie9Compat = document.documentMode == 9;
 
-   /**
-    * @property { boolean } ie8 检测浏览器是否是IE8浏览器
-    * @warning 如果浏览器不是IE， 则该值为undefined
-    * @example
-    * ```javascript
-    * if ( UE.browser.ie8 ) {
-    *     console.log( '当前浏览器是IE8浏览器' );
-    * }
-    * ```
-    */
-   browser.ie8 = !!document.documentMode;
+    /**
+     * @property { boolean } ie8 检测浏览器是否是IE8浏览器
+     * @warning 如果浏览器不是IE， 则该值为undefined
+     * @example
+     * ```javascript
+     * if ( UE.browser.ie8 ) {
+     *     console.log( '当前浏览器是IE8浏览器' );
+     * }
+     * ```
+     */
+    browser.ie8 = !!document.documentMode;
 
-   /**
-    * @property { boolean } ie8Compat 检测浏览器模式是否为 IE8 兼容模式
-    * @warning 如果浏览器不是IE， 则该值为undefined
-    * @example
-    * ```javascript
-    * if ( UE.browser.ie8Compat ) {
-    *     console.log( '当前浏览器运行在IE8兼容模式下' );
-    * }
-    * ```
-    */
-   browser.ie8Compat = document.documentMode == 8;
+    /**
+     * @property { boolean } ie8Compat 检测浏览器模式是否为 IE8 兼容模式
+     * @warning 如果浏览器不是IE， 则该值为undefined
+     * @example
+     * ```javascript
+     * if ( UE.browser.ie8Compat ) {
+     *     console.log( '当前浏览器运行在IE8兼容模式下' );
+     * }
+     * ```
+     */
+    browser.ie8Compat = document.documentMode == 8;
 
-   /**
-    * @property { boolean } ie7Compat 检测浏览器模式是否为 IE7 兼容模式
-    * @warning 如果浏览器不是IE， 则该值为undefined
-    * @example
-    * ```javascript
-    * if ( UE.browser.ie7Compat ) {
-    *     console.log( '当前浏览器运行在IE7兼容模式下' );
-    * }
-    * ```
-    */
-   browser.ie7Compat = (version == 7 && !document.documentMode) || document.documentMode == 7;
+    /**
+     * @property { boolean } ie7Compat 检测浏览器模式是否为 IE7 兼容模式
+     * @warning 如果浏览器不是IE， 则该值为undefined
+     * @example
+     * ```javascript
+     * if ( UE.browser.ie7Compat ) {
+     *     console.log( '当前浏览器运行在IE7兼容模式下' );
+     * }
+     * ```
+     */
+    browser.ie7Compat = (version == 7 && !document.documentMode) || document.documentMode == 7;
 
-   /**
-    * @property { boolean } ie6Compat 检测浏览器模式是否为 IE6 模式 或者怪异模式
-    * @warning 如果浏览器不是IE， 则该值为undefined
-    * @example
-    * ```javascript
-    * if ( UE.browser.ie6Compat ) {
-    *     console.log( '当前浏览器运行在IE6模式或者怪异模式下' );
-    * }
-    * ```
-    */
-   browser.ie6Compat = version < 7 || browser.quirks;
+    /**
+     * @property { boolean } ie6Compat 检测浏览器模式是否为 IE6 模式 或者怪异模式
+     * @warning 如果浏览器不是IE， 则该值为undefined
+     * @example
+     * ```javascript
+     * if ( UE.browser.ie6Compat ) {
+     *     console.log( '当前浏览器运行在IE6模式或者怪异模式下' );
+     * }
+     * ```
+     */
+    browser.ie6Compat = version < 7 || browser.quirks;
 
-   browser.ie9above = version > 8;
+    browser.ie9above = version > 8;
 
-   browser.ie9below = version < 9;
+    browser.ie9below = version < 9;
 
-   browser.ie11above = version > 10;
+    browser.ie11above = version > 10;
 
-   browser.ie11below = version < 11;
- }
+    browser.ie11below = version < 11;
+  }
 
- // Gecko.
- if (browser.gecko) {
-   var geckoRelease = agent.match(/rv:([\d\.]+)/);
-   if (geckoRelease) {
-     geckoRelease = geckoRelease[1].split(".");
-     version = geckoRelease[0] * 10000 + (geckoRelease[1] || 0) * 100 + (geckoRelease[2] || 0) * 1;
-   }
- }
+  // Gecko.
+  if (browser.gecko) {
+    var geckoRelease = agent.match(/rv:([\d\.]+)/);
+    if (geckoRelease) {
+      geckoRelease = geckoRelease[1].split(".");
+      version = geckoRelease[0] * 10000 + (geckoRelease[1] || 0) * 100 + (geckoRelease[2] || 0) * 1;
+    }
+  }
 
- /**
-  * @property { Number } chrome 检测当前浏览器是否为Chrome, 如果是，则返回Chrome的大版本号
-  * @warning 如果浏览器不是chrome， 则该值为undefined
-  * @example
-  * ```javascript
-  * if ( UE.browser.chrome ) {
-  *     console.log( '当前浏览器是Chrome' );
-  * }
-  * ```
-  */
- if (/chrome\/(\d+\.\d)/i.test(agent)) {
-   browser.chrome = +RegExp["\x241"];
- }
+  /**
+   * @property { Number } chrome 检测当前浏览器是否为Chrome, 如果是，则返回Chrome的大版本号
+   * @warning 如果浏览器不是chrome， 则该值为undefined
+   * @example
+   * ```javascript
+   * if ( UE.browser.chrome ) {
+   *     console.log( '当前浏览器是Chrome' );
+   * }
+   * ```
+   */
+  if (/chrome\/(\d+\.\d)/i.test(agent)) {
+    browser.chrome = +RegExp["\x241"];
+  }
 
- /**
-  * @property { Number } safari 检测当前浏览器是否为Safari, 如果是，则返回Safari的大版本号
-  * @warning 如果浏览器不是safari， 则该值为undefined
-  * @example
-  * ```javascript
-  * if ( UE.browser.safari ) {
-  *     console.log( '当前浏览器是Safari' );
-  * }
-  * ```
-  */
- if (/(\d+\.\d)?(?:\.\d)?\s+safari\/?(\d+\.\d+)?/i.test(agent) && !/chrome/i.test(agent)) {
-   browser.safari = +(RegExp["\x241"] || RegExp["\x242"]);
- }
+  /**
+   * @property { Number } safari 检测当前浏览器是否为Safari, 如果是，则返回Safari的大版本号
+   * @warning 如果浏览器不是safari， 则该值为undefined
+   * @example
+   * ```javascript
+   * if ( UE.browser.safari ) {
+   *     console.log( '当前浏览器是Safari' );
+   * }
+   * ```
+   */
+  if (/(\d+\.\d)?(?:\.\d)?\s+safari\/?(\d+\.\d+)?/i.test(agent) && !/chrome/i.test(agent)) {
+    browser.safari = +(RegExp["\x241"] || RegExp["\x242"]);
+  }
 
- // Opera 9.50+
- if (browser.opera) version = parseFloat(opera.version());
+  // Opera 9.50+
+  if (browser.opera) version = parseFloat(opera.version());
 
- // WebKit 522+ (Safari 3+)
- if (browser.webkit) version = parseFloat(agent.match(/ applewebkit\/(\d+)/)[1]);
+  // WebKit 522+ (Safari 3+)
+  if (browser.webkit) version = parseFloat(agent.match(/ applewebkit\/(\d+)/)[1]);
 
- /**
-  * @property { Number } version 检测当前浏览器版本号
-  * @remind
-  * <ul>
-  *     <li>IE系列返回值为5,6,7,8,9,10等</li>
-  *     <li>gecko系列会返回10900，158900等</li>
-  *     <li>webkit系列会返回其build号 (如 522等)</li>
-  * </ul>
-  * @example
-  * ```javascript
-  * console.log( '当前浏览器版本号是： ' + UE.browser.version );
-  * ```
-  */
- browser.version = version;
+  /**
+   * @property { Number } version 检测当前浏览器版本号
+   * @remind
+   * <ul>
+   *     <li>IE系列返回值为5,6,7,8,9,10等</li>
+   *     <li>gecko系列会返回10900，158900等</li>
+   *     <li>webkit系列会返回其build号 (如 522等)</li>
+   * </ul>
+   * @example
+   * ```javascript
+   * console.log( '当前浏览器版本号是： ' + UE.browser.version );
+   * ```
+   */
+  browser.version = version;
 
- /**
-  * @property { boolean } isCompatible 检测当前浏览器是否能够与UEditor良好兼容
-  * @example
-  * ```javascript
-  * if ( UE.browser.isCompatible ) {
-  *     console.log( '浏览器与UEditor能够良好兼容' );
-  * }
-  * ```
-  */
- browser.isCompatible =
-   !browser.mobile &&
-   ((browser.ie && version >= 6) ||
-     (browser.gecko && version >= 10801) ||
-     (browser.opera && version >= 9.5) ||
-     (browser.air && version >= 1) ||
-     (browser.webkit && version >= 522) ||
-     false);
- return browser;
+  /**
+   * @property { boolean } isCompatible 检测当前浏览器是否能够与UEditor良好兼容
+   * @example
+   * ```javascript
+   * if ( UE.browser.isCompatible ) {
+   *     console.log( '浏览器与UEditor能够良好兼容' );
+   * }
+   * ```
+   */
+  browser.isCompatible =
+    !browser.mobile &&
+    ((browser.ie && version >= 6) ||
+      (browser.gecko && version >= 10801) ||
+      (browser.opera && version >= 9.5) ||
+      (browser.air && version >= 1) ||
+      (browser.webkit && version >= 522) ||
+      false);
+  return browser;
 })());
 
 //快捷方式
@@ -1201,71 +1201,71 @@ var utils = (UE.utils = {
   cssRule:
     browser.ie && browser.version != 11
       ? function(key, style, doc) {
-      var indexList;
-      var index;
-      if (style === undefined || (style && style.nodeType && style.nodeType == 9)) {
-        //获取样式
-        doc = style && style.nodeType && style.nodeType == 9 ? style : doc || document;
-        indexList = doc.indexList || (doc.indexList = {});
-        index = indexList[key];
-        if (index !== undefined) {
-          return doc.styleSheets[index].cssText;
-        }
-        return undefined;
-      }
-      doc = doc || document;
-      indexList = doc.indexList || (doc.indexList = {});
-      index = indexList[key];
-      //清除样式
-      if (style === "") {
-        if (index !== undefined) {
-          doc.styleSheets[index].cssText = "";
-          delete indexList[key];
-          return true;
-        }
-        return false;
-      }
+          var indexList;
+          var index;
+          if (style === undefined || (style && style.nodeType && style.nodeType == 9)) {
+            //获取样式
+            doc = style && style.nodeType && style.nodeType == 9 ? style : doc || document;
+            indexList = doc.indexList || (doc.indexList = {});
+            index = indexList[key];
+            if (index !== undefined) {
+              return doc.styleSheets[index].cssText;
+            }
+            return undefined;
+          }
+          doc = doc || document;
+          indexList = doc.indexList || (doc.indexList = {});
+          index = indexList[key];
+          //清除样式
+          if (style === "") {
+            if (index !== undefined) {
+              doc.styleSheets[index].cssText = "";
+              delete indexList[key];
+              return true;
+            }
+            return false;
+          }
 
-      //添加样式
-      if (index !== undefined) {
-        sheetStyle = doc.styleSheets[index];
-      } else {
-        sheetStyle = doc.createStyleSheet("", (index = doc.styleSheets.length));
-        indexList[key] = index;
-      }
-      sheetStyle.cssText = style;
-    }
+          //添加样式
+          if (index !== undefined) {
+            sheetStyle = doc.styleSheets[index];
+          } else {
+            sheetStyle = doc.createStyleSheet("", (index = doc.styleSheets.length));
+            indexList[key] = index;
+          }
+          sheetStyle.cssText = style;
+        }
       : function(key, style, doc) {
-      var head;
-      var node;
-      if (style === undefined || (style && style.nodeType && style.nodeType == 9)) {
-        //获取样式
-        doc = style && style.nodeType && style.nodeType == 9 ? style : doc || document;
-        node = doc.getElementById(key);
-        return node ? node.innerHTML : undefined;
-      }
-      doc = doc || document;
-      node = doc.getElementById(key);
+          var head;
+          var node;
+          if (style === undefined || (style && style.nodeType && style.nodeType == 9)) {
+            //获取样式
+            doc = style && style.nodeType && style.nodeType == 9 ? style : doc || document;
+            node = doc.getElementById(key);
+            return node ? node.innerHTML : undefined;
+          }
+          doc = doc || document;
+          node = doc.getElementById(key);
 
-      //清除样式
-      if (style === "") {
-        if (node) {
-          node.parentNode.removeChild(node);
-          return true;
-        }
-        return false;
-      }
+          //清除样式
+          if (style === "") {
+            if (node) {
+              node.parentNode.removeChild(node);
+              return true;
+            }
+            return false;
+          }
 
-      //添加样式
-      if (node) {
-        node.innerHTML = style;
-      } else {
-        node = doc.createElement("style");
-        node.id = key;
-        node.innerHTML = style;
-        doc.getElementsByTagName("head")[0].appendChild(node);
-      }
-    },
+          //添加样式
+          if (node) {
+            node.innerHTML = style;
+          } else {
+            node = doc.createElement("style");
+            node.id = key;
+            node.innerHTML = style;
+            doc.getElementsByTagName("head")[0].appendChild(node);
+          }
+        },
   sort: function(array, compareFn) {
     compareFn =
       compareFn ||
@@ -1850,7 +1850,7 @@ var dtd = (dom.dtd = (function() {
   });
 
   var //a不能被切开，所以把他
-  L = X(_({a: 0}), J);
+    L = X(_({a: 0}), J);
 
   var M = _({tr: 1});
   var N = _({"#": 1});
@@ -1864,30 +1864,30 @@ var dtd = (dom.dtd = (function() {
   var V = _({html: 1});
 
   var block = _({
-      address: 1,
-      blockquote: 1,
-      center: 1,
-      dir: 1,
-      div: 1,
-      dl: 1,
-      fieldset: 1,
-      form: 1,
-      h1: 1,
-      h2: 1,
-      h3: 1,
-      h4: 1,
-      h5: 1,
-      h6: 1,
-      hr: 1,
-      isindex: 1,
-      menu: 1,
-      noframes: 1,
-      ol: 1,
-      p: 1,
-      pre: 1,
-      table: 1,
-      ul: 1
-    });
+    address: 1,
+    blockquote: 1,
+    center: 1,
+    dir: 1,
+    div: 1,
+    dl: 1,
+    fieldset: 1,
+    form: 1,
+    h1: 1,
+    h2: 1,
+    h3: 1,
+    h4: 1,
+    h5: 1,
+    h6: 1,
+    hr: 1,
+    isindex: 1,
+    menu: 1,
+    noframes: 1,
+    ol: 1,
+    p: 1,
+    pre: 1,
+    table: 1,
+    ul: 1
+  });
 
   var empty = _({
     area: 1,
@@ -2146,8 +2146,8 @@ var dtd = (dom.dtd = (function() {
  * @module UE.dom.domUtils
  */
 function getDomNode(node, start, ltr, startFromChild, fn, guard) {
-  var tmpNode = startFromChild && node[start],
-    parent;
+  var tmpNode = startFromChild && node[start];
+  var parent;
   !tmpNode && (tmpNode = node[ltr]);
   while (!tmpNode && (parent = (parent || node).parentNode)) {
     if (parent.tagName == "BODY" || (guard && !guard(parent))) {
@@ -2160,40 +2160,43 @@ function getDomNode(node, start, ltr, startFromChild, fn, guard) {
   }
   return tmpNode;
 }
+
 var attrFix =
-    ie && browser.version < 9
-      ? {
-          tabindex: "tabIndex",
-          readonly: "readOnly",
-          for: "htmlFor",
-          class: "className",
-          maxlength: "maxLength",
-          cellspacing: "cellSpacing",
-          cellpadding: "cellPadding",
-          rowspan: "rowSpan",
-          colspan: "colSpan",
-          usemap: "useMap",
-          frameborder: "frameBorder"
-        }
-      : {
-          tabindex: "tabIndex",
-          readonly: "readOnly"
-        },
-  styleBlock = utils.listToMap([
-    "-webkit-box",
-    "-moz-box",
-    "block",
-    "list-item",
-    "table",
-    "table-row-group",
-    "table-header-group",
-    "table-footer-group",
-    "table-row",
-    "table-column-group",
-    "table-column",
-    "table-cell",
-    "table-caption"
-  ]);
+  ie && browser.version < 9
+    ? {
+        tabindex: "tabIndex",
+        readonly: "readOnly",
+        for: "htmlFor",
+        class: "className",
+        maxlength: "maxLength",
+        cellspacing: "cellSpacing",
+        cellpadding: "cellPadding",
+        rowspan: "rowSpan",
+        colspan: "colSpan",
+        usemap: "useMap",
+        frameborder: "frameBorder"
+      }
+    : {
+        tabindex: "tabIndex",
+        readonly: "readOnly"
+      };
+
+var styleBlock = utils.listToMap([
+  "-webkit-box",
+  "-moz-box",
+  "block",
+  "list-item",
+  "table",
+  "table-row-group",
+  "table-header-group",
+  "table-footer-group",
+  "table-row",
+  "table-column-group",
+  "table-column",
+  "table-cell",
+  "table-caption"
+]);
+
 var domUtils = (dom.domUtils = {
   //节点常量
   NODE_ELEMENT: 1,
@@ -2277,9 +2280,9 @@ var domUtils = (dom.domUtils = {
       // domUtils.POSITION_IDENTICAL
       return 0;
     }
-    var node,
-      parentsA = [nodeA],
-      parentsB = [nodeB];
+    var node;
+    var parentsA = [nodeA];
+    var parentsB = [nodeB];
     node = nodeA;
     while ((node = node.parentNode)) {
       // 如果nodeB是nodeA的祖先节点
@@ -2350,8 +2353,8 @@ var domUtils = (dom.domUtils = {
    * ```
    */
   getNodeIndex: function(node, ignoreTextNode) {
-    var preNode = node,
-      i = 0;
+    var preNode = node;
+    var i = 0;
     while ((preNode = preNode.previousSibling)) {
       if (ignoreTextNode && preNode.nodeType == 3) {
         if (preNode.nodeType != preNode.nextSibling.nodeType) {
@@ -2577,8 +2580,8 @@ var domUtils = (dom.domUtils = {
    * ```
    */
   remove: function(node, keepChildren) {
-    var parent = node.parentNode,
-      child;
+    var parent = node.parentNode;
+    var child;
     if (parent) {
       if (keepChildren && node.hasChildNodes()) {
         while ((child = node.firstChild)) {
@@ -2696,10 +2699,10 @@ var domUtils = (dom.domUtils = {
    */
   getCommonAncestor: function(nodeA, nodeB) {
     if (nodeA === nodeB) return nodeA;
-    var parentsA = [nodeA],
-      parentsB = [nodeB],
-      parent = nodeA,
-      i = -1;
+    var parentsA = [nodeA];
+    var parentsB = [nodeB];
+    var parent = nodeA;
+    var i = -1;
     while ((parent = parent.parentNode)) {
       if (parent === nodeB) {
         return parent;
@@ -2848,8 +2851,8 @@ var domUtils = (dom.domUtils = {
    * ```
    */
   getXY: function(element) {
-    var x = 0,
-      y = 0;
+    var x = 0;
+    var y = 0;
     while (element.offsetParent) {
       y += element.offsetTop;
       x += element.offsetLeft;
@@ -2885,8 +2888,8 @@ var domUtils = (dom.domUtils = {
    * ```
    */
   on: function(element, type, handler) {
-    var types = utils.isArray(type) ? type : utils.trim(type).split(/\s+/),
-      k = types.length;
+    var types = utils.isArray(type) ? type : utils.trim(type).split(/\s+/);
+    var k = types.length;
     if (k)
       while (k--) {
         type = types[k];
@@ -2898,8 +2901,8 @@ var domUtils = (dom.domUtils = {
               els: []
             };
           }
-          var key = type + handler.toString(),
-            index = utils.indexOf(handler._d.els, element);
+          var key = type + handler.toString();
+          var index = utils.indexOf(handler._d.els, element);
           if (!handler._d[key] || index == -1) {
             if (index == -1) {
               handler._d.els.push(element);
@@ -2944,8 +2947,8 @@ var domUtils = (dom.domUtils = {
    * ```
    */
   un: function(element, type, handler) {
-    var types = utils.isArray(type) ? type : utils.trim(type).split(/\s+/),
-      k = types.length;
+    var types = utils.isArray(type) ? type : utils.trim(type).split(/\s+/);
+    var k = types.length;
     if (k)
       while (k--) {
         type = types[k];
@@ -2997,15 +3000,15 @@ var domUtils = (dom.domUtils = {
     if (nodeA.tagName != nodeB.tagName) {
       return false;
     }
-    var thisAttrs = nodeA.attributes,
-      otherAttrs = nodeB.attributes;
+    var thisAttrs = nodeA.attributes;
+    var otherAttrs = nodeB.attributes;
     if (!ie && thisAttrs.length != otherAttrs.length) {
       return false;
     }
-    var attrA,
-      attrB,
-      al = 0,
-      bl = 0;
+    var attrA;
+    var attrB;
+    var al = 0;
+    var bl = 0;
     for (var i = 0; (attrA = thisAttrs[i++]); ) {
       if (attrA.nodeName == "style") {
         if (attrA.specified) {
@@ -3072,8 +3075,8 @@ var domUtils = (dom.domUtils = {
    * ```
    */
   isSameStyle: function(nodeA, nodeB) {
-    var styleA = nodeA.style.cssText.replace(/( ?; ?)/g, ";").replace(/( ?: ?)/g, ":"),
-      styleB = nodeB.style.cssText.replace(/( ?; ?)/g, ";").replace(/( ?: ?)/g, ":");
+    var styleA = nodeA.style.cssText.replace(/( ?; ?)/g, ";").replace(/( ?: ?)/g, ":");
+    var styleB = nodeB.style.cssText.replace(/( ?; ?)/g, ";").replace(/( ?: ?)/g, ":");
     if (browser.opera) {
       styleA = nodeA.style;
       styleB = nodeB.style;
@@ -3181,11 +3184,11 @@ var domUtils = (dom.domUtils = {
    * ```
    */
   breakParent: function(node, parent) {
-    var tmpNode,
-      parentClone = node,
-      clone = node,
-      leftNodes,
-      rightNodes;
+    var tmpNode;
+    var parentClone = node;
+    var clone = node;
+    var leftNodes;
+    var rightNodes;
     do {
       parentClone = parentClone.parentNode;
       if (leftNodes) {
@@ -4110,8 +4113,8 @@ var domUtils = (dom.domUtils = {
    * ```
    */
   getChildCount: function(node, fn) {
-    var count = 0,
-      first = node.firstChild;
+    var count = 0;
+    var first = node.firstChild;
     fn =
       fn ||
       function() {
@@ -4159,29 +4162,31 @@ var domUtils = (dom.domUtils = {
    */
   scrollToView: function(node, win, offsetTop) {
     var getViewPaneSize = function() {
-        var doc = win.document,
-          mode = doc.compatMode == "CSS1Compat";
-        return {
-          width: (mode ? doc.documentElement.clientWidth : doc.body.clientWidth) || 0,
-          height: (mode ? doc.documentElement.clientHeight : doc.body.clientHeight) || 0
-        };
-      },
-      getScrollPosition = function(win) {
-        if ("pageXOffset" in win) {
-          return {
-            x: win.pageXOffset || 0,
-            y: win.pageYOffset || 0
-          };
-        } else {
-          var doc = win.document;
-          return {
-            x: doc.documentElement.scrollLeft || doc.body.scrollLeft || 0,
-            y: doc.documentElement.scrollTop || doc.body.scrollTop || 0
-          };
-        }
+      var doc = win.document,
+        mode = doc.compatMode == "CSS1Compat";
+      return {
+        width: (mode ? doc.documentElement.clientWidth : doc.body.clientWidth) || 0,
+        height: (mode ? doc.documentElement.clientHeight : doc.body.clientHeight) || 0
       };
-    var winHeight = getViewPaneSize().height,
-      offset = winHeight * -1 + offsetTop;
+    };
+
+    var getScrollPosition = function(win) {
+      if ("pageXOffset" in win) {
+        return {
+          x: win.pageXOffset || 0,
+          y: win.pageYOffset || 0
+        };
+      } else {
+        var doc = win.document;
+        return {
+          x: doc.documentElement.scrollLeft || doc.body.scrollLeft || 0,
+          y: doc.documentElement.scrollTop || doc.body.scrollTop || 0
+        };
+      }
+    };
+
+    var winHeight = getViewPaneSize().height;
+    var offset = winHeight * -1 + offsetTop;
     offset += node.offsetHeight || 0;
     var elementPosition = domUtils.getXY(node);
     offset += elementPosition.y;
@@ -4217,10 +4222,10 @@ var domUtils = (dom.domUtils = {
     return !text.replace(new RegExp(domUtils.fillChar, "g"), "").length;
   },
   isStartInblock: function(range) {
-    var tmpRange = range.cloneRange(),
-      flag = 0,
-      start = tmpRange.startContainer,
-      tmp;
+    var tmpRange = range.cloneRange();
+    var flag = 0;
+    var start = tmpRange.startContainer;
+    var tmp;
     if (start.nodeType == 1 && start.childNodes[tmpRange.startOffset]) {
       start = start.childNodes[tmpRange.startOffset];
       var pre = start.previousSibling;
@@ -4251,8 +4256,8 @@ var domUtils = (dom.domUtils = {
         flag = 1;
         break;
       }
-      var pre = tmpRange.startContainer.previousSibling,
-        tmpNode;
+      var pre = tmpRange.startContainer.previousSibling;
+      var tmpNode;
       if (!pre) {
         tmpRange.setStartBefore(tmpRange.startContainer);
       } else {
@@ -4651,9 +4656,9 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
  */
 
 (function() {
-  var guid = 0,
-    fillChar = domUtils.fillChar,
-    fillData;
+  var guid = 0;
+  var fillChar = domUtils.fillChar;
+  var fillData;
 
   /**
    * 更新range的collapse状态
@@ -4701,14 +4706,15 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
   function execContentsAction(range, action) {
     //调整边界
     //range.includeBookmark();
-    var start = range.startContainer,
-      end = range.endContainer,
-      startOffset = range.startOffset,
-      endOffset = range.endOffset,
-      doc = range.document,
-      frag = doc.createDocumentFragment(),
-      tmpStart,
-      tmpEnd;
+    var start = range.startContainer;
+
+    var end = range.endContainer;
+    var startOffset = range.startOffset;
+    var endOffset = range.endOffset;
+    var doc = range.document;
+    var frag = doc.createDocumentFragment();
+    var tmpStart;
+    var tmpEnd;
     if (start.nodeType == 1) {
       start = start.childNodes[startOffset] || (tmpStart = start.appendChild(doc.createTextNode("")));
     }
@@ -4724,11 +4730,11 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
       }
       return frag;
     }
-    var current,
-      currentLevel,
-      clone = frag,
-      startParents = domUtils.findParents(start, true),
-      endParents = domUtils.findParents(end, true);
+    var current;
+    var currentLevel;
+    var clone = frag;
+    var startParents = domUtils.findParents(start, true);
+    var endParents = domUtils.findParents(end, true);
     for (var i = 0; startParents[i] == endParents[i]; ) {
       i++;
     }
@@ -5376,9 +5382,9 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
      * @see UE.dom.domUtils.Range:shrinkBoundary()
      */
     shrinkBoundary: function(ignoreEnd) {
-      var me = this,
-        child,
-        collapsed = me.collapsed;
+      var me = this;
+      var child;
+      var collapsed = me.collapsed;
       function check(node) {
         return (
           node.nodeType == 1 &&
@@ -5491,9 +5497,9 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
      * ```
      */
     getCommonAncestor: function(includeSelf, ignoreTextNode) {
-      var me = this,
-        start = me.startContainer,
-        end = me.endContainer;
+      var me = this;
+      var start = me.startContainer;
+      var end = me.endContainer;
       if (start === end) {
         if (includeSelf && selectOneNode(this)) {
           start = start.childNodes[me.startOffset];
@@ -5552,10 +5558,10 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
      */
     trimBoundary: function(ignoreEnd) {
       this.txtToElmBoundary();
-      var start = this.startContainer,
-        offset = this.startOffset,
-        collapsed = this.collapsed,
-        end = this.endContainer;
+      var start = this.startContainer;
+      var offset = this.startOffset;
+      var collapsed = this.collapsed;
+      var end = this.endContainer;
       if (start.nodeType == 3) {
         if (offset == 0) {
           this.setStartBefore(start);
@@ -5609,8 +5615,8 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
      */
     txtToElmBoundary: function(ignoreCollapsed) {
       function adjust(r, c) {
-        var container = r[c + "Container"],
-          offset = r[c + "Offset"];
+        var container = r[c + "Container"];
+        var offset = r[c + "Offset"];
         if (container.nodeType == 3) {
           if (!offset) {
             r[
@@ -5647,15 +5653,15 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
      * @return { UE.dom.Range } 当前range对象
      */
     insertNode: function(node) {
-      var first = node,
-        length = 1;
+      var first = node;
+      var length = 1;
       if (node.nodeType == 11) {
         first = node.firstChild;
         length = node.childNodes.length;
       }
       this.trimBoundary(true);
-      var start = this.startContainer,
-        offset = this.startOffset;
+      var start = this.startContainer;
+      var offset = this.startOffset;
       var nextNode = start.childNodes[offset];
       if (nextNode) {
         start.insertBefore(node, nextNode);
@@ -5697,8 +5703,8 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
      *                          返回的记录的类型为ID， 反之则为引用
      */
     createBookmark: function(serialize, same) {
-      var endNode,
-        startNode = this.document.createElement("span");
+      var endNode;
+      var startNode = this.document.createElement("span");
       startNode.style.cssText = "display:none;line-height:0px;";
       startNode.appendChild(this.document.createTextNode("\u200D"));
       startNode.id = "_baidu_bookmark_start_" + (same ? "" : guid++);
@@ -5729,8 +5735,8 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
      *  @see UE.dom.Range:createBookmark(Boolean)
      */
     moveToBookmark: function(bookmark) {
-      var start = bookmark.id ? this.document.getElementById(bookmark.start) : bookmark.start,
-        end = bookmark.end && bookmark.id ? this.document.getElementById(bookmark.end) : bookmark.end;
+      var start = bookmark.id ? this.document.getElementById(bookmark.start) : bookmark.start;
+      var end = bookmark.end && bookmark.id ? this.document.getElementById(bookmark.end) : bookmark.end;
       this.setStartBefore(start);
       domUtils.remove(start);
       if (end) {
@@ -5757,10 +5763,10 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
      * @return { UE.dom.Range } 当前range对象
      */
     enlarge: function(toBlock, stopFn) {
-      var isBody = domUtils.isBody,
-        pre,
-        node,
-        tmp = this.document.createTextNode("");
+      var isBody = domUtils.isBody;
+      var pre;
+      var node;
+      var tmp = this.document.createTextNode("");
       if (toBlock) {
         node = this.startContainer;
         if (node.nodeType == 1) {
@@ -5915,15 +5921,17 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
           return node.nodeType == 1 && domUtils.isBlockElm(node);
         })
         .adjustmentBoundary();
-      var bookmark = this.createBookmark(),
-        end = bookmark.end,
-        filterFn = function(node) {
-          return node.nodeType == 1 ? node.tagName.toLowerCase() != "br" : !domUtils.isWhitespace(node);
-        },
-        current = domUtils.getNextDomNode(bookmark.start, false, filterFn),
-        node,
-        pre,
-        range = this.cloneRange();
+      var bookmark = this.createBookmark();
+      var end = bookmark.end;
+
+      var filterFn = function(node) {
+        return node.nodeType == 1 ? node.tagName.toLowerCase() != "br" : !domUtils.isWhitespace(node);
+      };
+
+      var current = domUtils.getNextDomNode(bookmark.start, false, filterFn);
+      var node;
+      var pre;
+      var range = this.cloneRange();
       while (current && domUtils.getPosition(current, end) & domUtils.POSITION_PRECEDING) {
         if (current.nodeType == 3 || dtd[tagName][current.tagName]) {
           range.setStartBefore(current);
@@ -5934,10 +5942,11 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
               return dtd[tagName][parent.tagName];
             });
           }
-          var frag = range.setEndAfter(pre).extractContents(),
-            elm;
+          var frag = range.setEndAfter(pre).extractContents();
+          var elm;
           if (list && list.length > 0) {
-            var level, top;
+            var level;
+            var top;
             top = level = list[0].cloneNode(false);
             for (var i = 1, ci; (ci = list[i++]); ) {
               level.appendChild(ci.cloneNode(false));
@@ -6009,8 +6018,8 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
       if (this.collapsed) return this;
       tagNames = utils.isArray(tagNames) ? tagNames : [tagNames];
       this.shrinkBoundary().adjustmentBoundary();
-      var start = this.startContainer,
-        end = this.endContainer;
+      var start = this.startContainer;
+      var end = this.endContainer;
       while (1) {
         if (start.nodeType == 1) {
           if (utils.indexOf(tagNames, start.tagName.toLowerCase()) > -1) {
@@ -6035,9 +6044,9 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
         }
         end = end.parentNode;
       }
-      var bookmark = this.createBookmark(),
-        frag,
-        tmpRange;
+      var bookmark = this.createBookmark();
+      var frag;
+      var tmpRange;
       if (start) {
         tmpRange = this.cloneRange()
           .setEndBefore(bookmark.start)
@@ -6056,10 +6065,12 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
         domUtils.clearEmptySibling(end, false, true);
         end.parentNode.insertBefore(bookmark.end, end.nextSibling);
       }
+
       var current = domUtils.getNextDomNode(bookmark.start, false, function(node) {
-          return node.nodeType == 1;
-        }),
-        next;
+        return node.nodeType == 1;
+      });
+
+      var next;
       while (current && current !== bookmark.end) {
         next = domUtils.getNextDomNode(current, true, function(node) {
           return node.nodeType == 1;
@@ -6112,9 +6123,9 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
             } catch (e) {}
             return this;
           }
-          var bookmark = this.createBookmark(),
-            start = bookmark.start,
-            end;
+          var bookmark = this.createBookmark();
+          var start = bookmark.start;
+          var end;
           nativeRange = this.document.body.createTextRange();
           nativeRange.moveToElementText(start);
           nativeRange.moveStart("character", 1);
@@ -6126,8 +6137,9 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
           } else {
             if (!noFillData && this.startContainer.nodeType != 3) {
               //使用<span>|x<span>固定住光标
-              var tmpText = this.document.createTextNode(fillChar),
-                tmp = this.document.createElement("span");
+              var tmpText = this.document.createTextNode(fillChar);
+
+              var tmp = this.document.createElement("span");
               tmp.appendChild(this.document.createTextNode(fillChar));
               start.parentNode.insertBefore(tmp, start);
               start.parentNode.insertBefore(tmpText, start);
@@ -6158,9 +6170,9 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
             check(rng.startContainer, rng.startOffset, "start");
             check(rng.endContainer, rng.endOffset, "end");
           }
-          var win = domUtils.getWindow(this.document),
-            sel = win.getSelection(),
-            txtNode;
+          var win = domUtils.getWindow(this.document);
+          var sel = win.getSelection();
+          var txtNode;
           //FF下关闭自动长高时滚动条在关闭dialog时会跳
           //ff下如果不body.focus将不能定位闭合光标到编辑器内
           browser.gecko ? this.document.body.focus() : win.focus();
@@ -6180,8 +6192,9 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
               //<b>|xxxx</b>
               //<b>xxxx</b>|xxxx
               //xxxx<b>|</b>
-              var start = this.startContainer,
-                child = start;
+              var start = this.startContainer;
+
+              var child = start;
               if (start.nodeType == 1) {
                 child = start.childNodes[this.startOffset];
               }
@@ -6247,8 +6260,8 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
      */
     scrollToView: function(win, offset) {
       win = win ? window : domUtils.getWindow(this.document);
-      var me = this,
-        span = me.document.createElement("span");
+      var me = this;
+      var span = me.document.createElement("span");
       //trace:717
       span.innerHTML = "&nbsp;";
       me.cloneRange().insertNode(span);
@@ -6300,15 +6313,17 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
      * ```
      */
     createAddress: function(ignoreEnd, ignoreTxt) {
-      var addr = {},
-        me = this;
+      var addr = {};
+      var me = this;
 
       function getAddress(isStart) {
         var node = isStart ? me.startContainer : me.endContainer;
+
         var parents = domUtils.findParents(node, true, function(node) {
-            return !domUtils.isBody(node);
-          }),
-          addrs = [];
+          return !domUtils.isBody(node);
+        });
+
+        var addrs = [];
         for (var i = 0, ci; (ci = parents[i++]); ) {
           addrs.push(domUtils.getNodeIndex(ci, ignoreTxt));
         }
@@ -6391,9 +6406,9 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
     moveToAddress: function(addr, ignoreEnd) {
       var me = this;
       function getNode(address, isStart) {
-        var tmpNode = me.document.body,
-          parentNode,
-          offset;
+        var tmpNode = me.document.body;
+        var parentNode;
+        var offset;
         for (var i = 0, ci, l = address.length; i < l; i++) {
           ci = address[i];
           parentNode = tmpNode;
@@ -6519,9 +6534,9 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
      */
     traversal: function(doFn, filterFn) {
       if (this.collapsed) return this;
-      var bookmark = this.createBookmark(),
-        end = bookmark.end,
-        current = domUtils.getNextDomNode(bookmark.start, false, filterFn);
+      var bookmark = this.createBookmark();
+      var end = bookmark.end;
+      var current = domUtils.getNextDomNode(bookmark.start, false, filterFn);
       while (current && current !== end && domUtils.getPosition(current, end) & domUtils.POSITION_PRECEDING) {
         var tmpNode = domUtils.getNextDomNode(current, false, filterFn);
         doFn(current);
@@ -8689,17 +8704,17 @@ UE.ajax = (function() {
     var xhr = creatAjaxRequest();
 
     var //是否超时
-    timeIsOut = false;
+      timeIsOut = false;
 
     var //默认参数
-    defaultAjaxOptions = {
-      method: "POST",
-      timeout: 5000,
-      async: true,
-      data: {}, //需要传递对象的话只能覆盖
-      onsuccess: function() {},
-      onerror: function() {}
-    };
+      defaultAjaxOptions = {
+        method: "POST",
+        timeout: 5000,
+        async: true,
+        data: {}, //需要传递对象的话只能覆盖
+        onsuccess: function() {},
+        onerror: function() {}
+      };
 
     if (typeof url === "object") {
       ajaxOptions = url;
@@ -8933,155 +8948,157 @@ var filterWord = (UE.filterWord = (function() {
   }
 
   function filterPasteWord(str) {
-    return str
-      .replace(/[\t\r\n]+/g, " ")
-      .replace(/<!--[\s\S]*?-->/gi, "")
-      //转换图片
-      .replace(/<v:shape [^>]*>[\s\S]*?.<\/v:shape>/gi, function(str) {
-        //opera能自己解析出image所这里直接返回空
-        if (browser.opera) {
-          return "";
-        }
-        try {
-          //有可能是bitmap占为图，无用，直接过滤掉，主要体现在粘贴excel表格中
-          if (/Bitmap/i.test(str)) {
+    return (
+      str
+        .replace(/[\t\r\n]+/g, " ")
+        .replace(/<!--[\s\S]*?-->/gi, "")
+        //转换图片
+        .replace(/<v:shape [^>]*>[\s\S]*?.<\/v:shape>/gi, function(str) {
+          //opera能自己解析出image所这里直接返回空
+          if (browser.opera) {
             return "";
           }
-          var width = str.match(/width:([ \d.]*p[tx])/i)[1];
-          var height = str.match(/height:([ \d.]*p[tx])/i)[1];
-          var src = str.match(/src=\s*"([^"]*)"/i)[1];
-          return '<img width="' + transUnit(width) + '" height="' + transUnit(height) + '" src="' + src + '" />';
-        } catch (e) {
-          return "";
-        }
-      })
-      //针对wps添加的多余标签处理
-      .replace(/<\/?div[^>]*>/g, "")
-      //去掉多余的属性
-      .replace(/v:\w+=(["']?)[^'"]+\1/g, "")
-      .replace(
-        /<(!|script[^>]*>.*?<\/script(?=[>\s])|\/?(\?xml(:\w+)?|xml|meta|link|style|\w+:\w+)(?=[\s\/>]))[^>]*>/gi,
-        ""
-      )
-      .replace(/<p [^>]*class="?MsoHeading"?[^>]*>(.*?)<\/p>/gi, "<p><strong>$1</strong></p>")
-      //去掉多余的属性
-      .replace(/\s+(class|lang|align)\s*=\s*(['"]?)([\w-]+)\2/gi, function(str, name, marks, val) {
-        //保留list的标示
-        return name == "class" && val == "MsoListParagraph" ? str : "";
-      })
-      //清除多余的font/span不能匹配&nbsp;有可能是空格
-      .replace(/<(font|span)[^>]*>(\s*)<\/\1>/gi, function(a, b, c) {
-        return c.replace(/[\t\r\n ]+/g, " ");
-      })
-      //处理style的问题
-      .replace(/(<[a-z][^>]*)\sstyle=(["'])([^\2]*?)\2/gi, function(str, tag, tmp, style) {
-      var n = [];
-
-      var s = style
-        .replace(/^\s+|\s+$/, "")
-        .replace(/&#39;/g, "'")
-        .replace(/&quot;/gi, "'")
-        .replace(/[\d.]+(cm|pt)/g, function(str) {
-          return utils.transUnitToPx(str);
-        })
-        .split(/;\s*/g);
-
-      for (var i = 0, v; (v = s[i]); i++) {
-        var name;
-        var value;
-        var parts = v.split(":");
-
-        if (parts.length == 2) {
-          name = parts[0].toLowerCase();
-          value = parts[1].toLowerCase();
-          if (
-            (/^(background)\w*/.test(name) && value.replace(/(initial|\s)/g, "").length == 0) ||
-            (/^(margin)\w*/.test(name) && /^0\w+$/.test(value))
-          ) {
-            continue;
+          try {
+            //有可能是bitmap占为图，无用，直接过滤掉，主要体现在粘贴excel表格中
+            if (/Bitmap/i.test(str)) {
+              return "";
+            }
+            var width = str.match(/width:([ \d.]*p[tx])/i)[1];
+            var height = str.match(/height:([ \d.]*p[tx])/i)[1];
+            var src = str.match(/src=\s*"([^"]*)"/i)[1];
+            return '<img width="' + transUnit(width) + '" height="' + transUnit(height) + '" src="' + src + '" />';
+          } catch (e) {
+            return "";
           }
+        })
+        //针对wps添加的多余标签处理
+        .replace(/<\/?div[^>]*>/g, "")
+        //去掉多余的属性
+        .replace(/v:\w+=(["']?)[^'"]+\1/g, "")
+        .replace(
+          /<(!|script[^>]*>.*?<\/script(?=[>\s])|\/?(\?xml(:\w+)?|xml|meta|link|style|\w+:\w+)(?=[\s\/>]))[^>]*>/gi,
+          ""
+        )
+        .replace(/<p [^>]*class="?MsoHeading"?[^>]*>(.*?)<\/p>/gi, "<p><strong>$1</strong></p>")
+        //去掉多余的属性
+        .replace(/\s+(class|lang|align)\s*=\s*(['"]?)([\w-]+)\2/gi, function(str, name, marks, val) {
+          //保留list的标示
+          return name == "class" && val == "MsoListParagraph" ? str : "";
+        })
+        //清除多余的font/span不能匹配&nbsp;有可能是空格
+        .replace(/<(font|span)[^>]*>(\s*)<\/\1>/gi, function(a, b, c) {
+          return c.replace(/[\t\r\n ]+/g, " ");
+        })
+        //处理style的问题
+        .replace(/(<[a-z][^>]*)\sstyle=(["'])([^\2]*?)\2/gi, function(str, tag, tmp, style) {
+          var n = [];
 
-          switch (name) {
-            case "mso-padding-alt":
-            case "mso-padding-top-alt":
-            case "mso-padding-right-alt":
-            case "mso-padding-bottom-alt":
-            case "mso-padding-left-alt":
-            case "mso-margin-alt":
-            case "mso-margin-top-alt":
-            case "mso-margin-right-alt":
-            case "mso-margin-bottom-alt":
-            case "mso-margin-left-alt":
-            //ie下会出现挤到一起的情况
-            //case "mso-table-layout-alt":
-            case "mso-height":
-            case "mso-width":
-            case "mso-vertical-align-alt":
-              //trace:1819 ff下会解析出padding在table上
-              if (!/<table/.test(tag)) n[i] = name.replace(/^mso-|-alt$/g, "") + ":" + transUnit(value);
-              continue;
-            case "horiz-align":
-              n[i] = "text-align:" + value;
-              continue;
+          var s = style
+            .replace(/^\s+|\s+$/, "")
+            .replace(/&#39;/g, "'")
+            .replace(/&quot;/gi, "'")
+            .replace(/[\d.]+(cm|pt)/g, function(str) {
+              return utils.transUnitToPx(str);
+            })
+            .split(/;\s*/g);
 
-            case "vert-align":
-              n[i] = "vertical-align:" + value;
-              continue;
+          for (var i = 0, v; (v = s[i]); i++) {
+            var name;
+            var value;
+            var parts = v.split(":");
 
-            case "font-color":
-            case "mso-foreground":
-              n[i] = "color:" + value;
-              continue;
-
-            case "mso-background":
-            case "mso-highlight":
-              n[i] = "background:" + value;
-              continue;
-
-            case "mso-default-height":
-              n[i] = "min-height:" + transUnit(value);
-              continue;
-
-            case "mso-default-width":
-              n[i] = "min-width:" + transUnit(value);
-              continue;
-
-            case "mso-padding-between-alt":
-              n[i] = "border-collapse:separate;border-spacing:" + transUnit(value);
-              continue;
-
-            case "text-line-through":
-              if (value == "single" || value == "double") {
-                n[i] = "text-decoration:line-through";
-              }
-              continue;
-            case "mso-zero-height":
-              if (value == "yes") {
-                n[i] = "display:none";
-              }
-              continue;
-            //                                case 'background':
-            //                                    break;
-            case "margin":
-              if (!/[1-9]/.test(value)) {
+            if (parts.length == 2) {
+              name = parts[0].toLowerCase();
+              value = parts[1].toLowerCase();
+              if (
+                (/^(background)\w*/.test(name) && value.replace(/(initial|\s)/g, "").length == 0) ||
+                (/^(margin)\w*/.test(name) && /^0\w+$/.test(value))
+              ) {
                 continue;
               }
-          }
 
-          if (
-            /^(mso|column|font-emph|lang|layout|line-break|list-image|nav|panose|punct|row|ruby|sep|size|src|tab-|table-border|text-(?:decor|trans)|top-bar|version|vnd|word-break)/.test(
-              name
-            ) ||
-            (/text\-indent|padding|margin/.test(name) && /\-[\d.]+/.test(value))
-          ) {
-            continue;
-          }
+              switch (name) {
+                case "mso-padding-alt":
+                case "mso-padding-top-alt":
+                case "mso-padding-right-alt":
+                case "mso-padding-bottom-alt":
+                case "mso-padding-left-alt":
+                case "mso-margin-alt":
+                case "mso-margin-top-alt":
+                case "mso-margin-right-alt":
+                case "mso-margin-bottom-alt":
+                case "mso-margin-left-alt":
+                //ie下会出现挤到一起的情况
+                //case "mso-table-layout-alt":
+                case "mso-height":
+                case "mso-width":
+                case "mso-vertical-align-alt":
+                  //trace:1819 ff下会解析出padding在table上
+                  if (!/<table/.test(tag)) n[i] = name.replace(/^mso-|-alt$/g, "") + ":" + transUnit(value);
+                  continue;
+                case "horiz-align":
+                  n[i] = "text-align:" + value;
+                  continue;
 
-          n[i] = name + ":" + parts[1];
-        }
-      }
-      return tag + (n.length ? ' style="' + n.join(";").replace(/;{2,}/g, ";") + '"' : "");
-    });
+                case "vert-align":
+                  n[i] = "vertical-align:" + value;
+                  continue;
+
+                case "font-color":
+                case "mso-foreground":
+                  n[i] = "color:" + value;
+                  continue;
+
+                case "mso-background":
+                case "mso-highlight":
+                  n[i] = "background:" + value;
+                  continue;
+
+                case "mso-default-height":
+                  n[i] = "min-height:" + transUnit(value);
+                  continue;
+
+                case "mso-default-width":
+                  n[i] = "min-width:" + transUnit(value);
+                  continue;
+
+                case "mso-padding-between-alt":
+                  n[i] = "border-collapse:separate;border-spacing:" + transUnit(value);
+                  continue;
+
+                case "text-line-through":
+                  if (value == "single" || value == "double") {
+                    n[i] = "text-decoration:line-through";
+                  }
+                  continue;
+                case "mso-zero-height":
+                  if (value == "yes") {
+                    n[i] = "display:none";
+                  }
+                  continue;
+                //                                case 'background':
+                //                                    break;
+                case "margin":
+                  if (!/[1-9]/.test(value)) {
+                    continue;
+                  }
+              }
+
+              if (
+                /^(mso|column|font-emph|lang|layout|line-break|list-image|nav|panose|punct|row|ruby|sep|size|src|tab-|table-border|text-(?:decor|trans)|top-bar|version|vnd|word-break)/.test(
+                  name
+                ) ||
+                (/text\-indent|padding|margin/.test(name) && /\-[\d.]+/.test(value))
+              ) {
+                continue;
+              }
+
+              n[i] = name + ":" + parts[1];
+            }
+          }
+          return tag + (n.length ? ' style="' + n.join(";").replace(/;{2,}/g, ";") + '"' : "");
+        })
+    );
   }
 
   return function(html) {
@@ -9875,8 +9892,9 @@ var htmlparser = (UE.htmlparser = function(htmlstr, ignoreBlank) {
   //var re_tag = /<(?:(?:\/([^>]+)>)|(?:!--([\S|\s]*?)-->)|(?:([^\s\/<>]+)\s*((?:(?:"[^"]*")|(?:'[^']*')|[^"'<>])*)\/?>))/g,
   //以上的正则表达式无法匹配:<div style="text-align:center;font-family:" font-size:14px;"=""><img src="http://hs-album.oss.aliyuncs.com/static/27/78/35/image/20161206/20161206174331_41105.gif" alt="" /><br /></div>
   //修改为如下正则表达式:
-  var re_tag = /<(?:(?:\/([^>]+)>)|(?:!--([\S|\s]*?)-->)|(?:([^\/\s>]+)((?:\s+[\w\-:.]+(?:\s*=\s*?(?:(?:"[^"]*")|(?:'[^']*')|[^\s"'\/>]+))?)*)[\S\s]*?(\/?)>))/g,
-    re_attr = /([\w\-:.]+)(?:(?:\s*=\s*(?:(?:"([^"]*)")|(?:'([^']*)')|([^\s>]+)))|(?=\s|$))/g;
+  var re_tag = /<(?:(?:\/([^>]+)>)|(?:!--([\S|\s]*?)-->)|(?:([^\/\s>]+)((?:\s+[\w\-:.]+(?:\s*=\s*?(?:(?:"[^"]*")|(?:'[^']*')|[^\s"'\/>]+))?)*)[\S\s]*?(\/?)>))/g;
+
+  var re_attr = /([\w\-:.]+)(?:(?:\s*=\s*(?:(?:"([^"]*)")|(?:'([^']*)')|([^\s>]+)))|(?=\s|$))/g;
 
   //ie下取得的html可能会有\n存在，要去掉，在处理replace(/[\t\r\n]*/g,'');代码高量的\n不能去除
   var allowEmptyTags = {
@@ -9931,24 +9949,26 @@ var htmlparser = (UE.htmlparser = function(htmlstr, ignoreBlank) {
     src: 1
   };
 
-  var uNode = UE.uNode,
-    needParentNode = {
-      td: "tr",
-      tr: ["tbody", "thead", "tfoot"],
-      tbody: "table",
-      th: "tr",
-      thead: "table",
-      tfoot: "table",
-      caption: "table",
-      li: ["ul", "ol"],
-      dt: "dl",
-      dd: "dl",
-      option: "select"
-    },
-    needChild = {
-      ol: "li",
-      ul: "li"
-    };
+  var uNode = UE.uNode;
+
+  var needParentNode = {
+    td: "tr",
+    tr: ["tbody", "thead", "tfoot"],
+    tbody: "table",
+    th: "tr",
+    thead: "table",
+    tfoot: "table",
+    caption: "table",
+    li: ["ul", "ol"],
+    dt: "dl",
+    dd: "dl",
+    option: "select"
+  };
+
+  var needChild = {
+    ol: "li",
+    ul: "li"
+  };
 
   function text(parent, data) {
     if (needChild[parent.tagName]) {
@@ -9964,8 +9984,8 @@ var htmlparser = (UE.htmlparser = function(htmlstr, ignoreBlank) {
   function element(parent, tagName, htmlattr) {
     var needParentTag;
     if ((needParentTag = needParentNode[tagName])) {
-      var tmpParent = parent,
-        hasParent;
+      var tmpParent = parent;
+      var hasParent;
       while (tmpParent.type != "root") {
         if (
           utils.isArray(needParentTag)
@@ -9994,8 +10014,8 @@ var htmlparser = (UE.htmlparser = function(htmlstr, ignoreBlank) {
     });
     //如果属性存在，处理属性
     if (htmlattr) {
-      var attrs = {},
-        match;
+      var attrs = {};
+      var match;
       while ((match = re_attr.exec(htmlattr))) {
         attrs[match[1].toLowerCase()] = notTransAttrs[match[1].toLowerCase()]
           ? match[2] || match[3] || match[4]
@@ -10024,9 +10044,9 @@ var htmlparser = (UE.htmlparser = function(htmlstr, ignoreBlank) {
     );
   }
 
-  var match,
-    currentIndex = 0,
-    nextIndex = 0;
+  var match;
+  var currentIndex = 0;
+  var nextIndex = 0;
   //设置根节点
   var root = new uNode({
     type: "root",
@@ -11808,18 +11828,19 @@ UE.plugins["justify"] = function() {
   };
 
   var doJustify = function(range, style) {
-    var bookmark = range.createBookmark(),
-      filterFn = function(node) {
-        return node.nodeType == 1
-          ? node.tagName.toLowerCase() != "br" && !domUtils.isBookmarkNode(node)
-          : !domUtils.isWhitespace(node);
-      };
+    var bookmark = range.createBookmark();
+
+    var filterFn = function(node) {
+      return node.nodeType == 1
+        ? node.tagName.toLowerCase() != "br" && !domUtils.isBookmarkNode(node)
+        : !domUtils.isWhitespace(node);
+    };
 
     range.enlarge(true);
-    var bookmark2 = range.createBookmark(),
-      current = domUtils.getNextDomNode(bookmark2.start, false, filterFn),
-      tmpRange = range.cloneRange(),
-      tmpNode;
+    var bookmark2 = range.createBookmark();
+    var current = domUtils.getNextDomNode(bookmark2.start, false, filterFn);
+    var tmpRange = range.cloneRange();
+    var tmpNode;
     while (current && !(domUtils.getPosition(current, bookmark2.end) & domUtils.POSITION_FOLLOWING)) {
       if (current.nodeType == 3 || !block(current)) {
         tmpRange.setStartBefore(current);
@@ -12565,9 +12586,9 @@ UE.plugins["link"] = function() {
         range.shrinkBoundary();
 
         var start =
-            range.startContainer.nodeType == 3 || !range.startContainer.childNodes[range.startOffset]
-              ? range.startContainer
-              : range.startContainer.childNodes[range.startOffset];
+          range.startContainer.nodeType == 3 || !range.startContainer.childNodes[range.startOffset]
+            ? range.startContainer
+            : range.startContainer.childNodes[range.startOffset];
 
         var end =
           range.endContainer.nodeType == 3 || range.endOffset == 0
@@ -13234,19 +13255,21 @@ UE.plugins["paragraph"] = function() {
   var notExchange = ["TD", "LI", "PRE"];
 
   var doParagraph = function(range, style, attrs, sourceCmdName) {
-    var bookmark = range.createBookmark(),
-      filterFn = function(node) {
-        return node.nodeType == 1
-          ? node.tagName.toLowerCase() != "br" && !domUtils.isBookmarkNode(node)
-          : !domUtils.isWhitespace(node);
-      },
-      para;
+    var bookmark = range.createBookmark();
+
+    var filterFn = function(node) {
+      return node.nodeType == 1
+        ? node.tagName.toLowerCase() != "br" && !domUtils.isBookmarkNode(node)
+        : !domUtils.isWhitespace(node);
+    };
+
+    var para;
 
     range.enlarge(true);
-    var bookmark2 = range.createBookmark(),
-      current = domUtils.getNextDomNode(bookmark2.start, false, filterFn),
-      tmpRange = range.cloneRange(),
-      tmpNode;
+    var bookmark2 = range.createBookmark();
+    var current = domUtils.getNextDomNode(bookmark2.start, false, filterFn);
+    var tmpRange = range.cloneRange();
+    var tmpNode;
     while (current && !(domUtils.getPosition(current, bookmark2.end) & domUtils.POSITION_FOLLOWING)) {
       if (current.nodeType == 3 || !block(current)) {
         tmpRange.setStartBefore(current);
@@ -13399,11 +13422,13 @@ UE.plugins["paragraph"] = function() {
   };
 
   var doDirectionality = function(range, editor, forward) {
-    var bookmark,
-      filterFn = function(node) {
-        return node.nodeType == 1 ? !domUtils.isBookmarkNode(node) : !domUtils.isWhitespace(node);
-      },
-      obj = getObj(editor);
+    var bookmark;
+
+    var filterFn = function(node) {
+      return node.nodeType == 1 ? !domUtils.isBookmarkNode(node) : !domUtils.isWhitespace(node);
+    };
+
+    var obj = getObj(editor);
 
     if (obj && range.collapsed) {
       obj.setAttribute("dir", forward);
@@ -13411,10 +13436,10 @@ UE.plugins["paragraph"] = function() {
     }
     bookmark = range.createBookmark();
     range.enlarge(true);
-    var bookmark2 = range.createBookmark(),
-      current = domUtils.getNextDomNode(bookmark2.start, false, filterFn),
-      tmpRange = range.cloneRange(),
-      tmpNode;
+    var bookmark2 = range.createBookmark();
+    var current = domUtils.getNextDomNode(bookmark2.start, false, filterFn);
+    var tmpRange = range.cloneRange();
+    var tmpNode;
     while (current && !(domUtils.getPosition(current, bookmark2.end) & domUtils.POSITION_FOLLOWING)) {
       if (current.nodeType == 3 || !block(current)) {
         tmpRange.setStartBefore(current);
@@ -13691,8 +13716,8 @@ UE.plugins["rowspacing"] = function() {
     },
     queryCommandValue: function(cmdName, dir) {
       var pN = domUtils.filterNodeList(this.selection.getStartElementPath(), function(node) {
-          return domUtils.isBlockElm(node);
-        });
+        return domUtils.isBlockElm(node);
+      });
 
       var value;
       //trace:1026
@@ -14465,15 +14490,15 @@ UE.plugins["wordcount"] = function() {
       var code = evt.keyCode || evt.which;
 
       var //忽略的按键,ctr,alt,shift,方向键
-      ignores = {
-        "16": 1,
-        "18": 1,
-        "20": 1,
-        "37": 1,
-        "38": 1,
-        "39": 1,
-        "40": 1
-      };
+        ignores = {
+          "16": 1,
+          "18": 1,
+          "20": 1,
+          "37": 1,
+          "38": 1,
+          "39": 1,
+          "40": 1
+        };
 
       if (code in ignores) return;
       clearTimeout(timer);
@@ -14991,15 +15016,15 @@ UE.plugins["undo"] = function() {
   };
 
   var keys = {
-      //  /*Backspace*/ 8:1, /*Delete*/ 46:1,
-      /*Shift*/ 16: 1,
-      /*Ctrl*/ 17: 1,
-      /*Alt*/ 18: 1,
-      37: 1,
-      38: 1,
-      39: 1,
-      40: 1
-    };
+    //  /*Backspace*/ 8:1, /*Delete*/ 46:1,
+    /*Shift*/ 16: 1,
+    /*Ctrl*/ 17: 1,
+    /*Alt*/ 18: 1,
+    37: 1,
+    38: 1,
+    39: 1,
+    40: 1
+  };
 
   var keycont = 0;
   var lastKeyCode;
@@ -15179,7 +15204,7 @@ UE.plugins["paste"] = function() {
     var bk = range.createBookmark();
 
     var //创建剪贴的容器div
-    pastebin = doc.createElement("div");
+      pastebin = doc.createElement("div");
 
     pastebin.id = "baidu_pastebin";
     // Safari 要求div必须有内容，才能粘贴内容进来
@@ -15869,13 +15894,13 @@ UE.plugins["list"] = function() {
     });
     if (me.options.autoTransWordToList) {
       var orderlisttype = {
-          num1: /^\d+\)/,
-          decimal: /^\d+\./,
-          "lower-alpha": /^[a-z]+\)/,
-          "upper-alpha": /^[A-Z]+\./,
-          cn: /^[\u4E00\u4E8C\u4E09\u56DB\u516d\u4e94\u4e03\u516b\u4e5d]+[\u3001]/,
-          cn2: /^\([\u4E00\u4E8C\u4E09\u56DB\u516d\u4e94\u4e03\u516b\u4e5d]+\)/
-        };
+        num1: /^\d+\)/,
+        decimal: /^\d+\./,
+        "lower-alpha": /^[a-z]+\)/,
+        "upper-alpha": /^[A-Z]+\./,
+        cn: /^[\u4E00\u4E8C\u4E09\u56DB\u516d\u4e94\u4e03\u516b\u4e5d]+[\u3001]/,
+        cn2: /^\([\u4E00\u4E8C\u4E09\u56DB\u516d\u4e94\u4e03\u516b\u4e5d]+\)/
+      };
 
       var unorderlisttype = {
         square: "n"
@@ -17955,13 +17980,13 @@ UE.plugins["fiximgclick"] = (function() {
             me.ui.getDom().appendChild(imageScale.resizer);
 
             var _keyDownHandler = function(e) {
-                imageScale.hide();
-                if (imageScale.target)
-                  me.selection
-                    .getRange()
-                    .selectNode(imageScale.target)
-                    .select();
-              };
+              imageScale.hide();
+              if (imageScale.target)
+                me.selection
+                  .getRange()
+                  .selectNode(imageScale.target)
+                  .select();
+            };
 
             var _mouseDownHandler = function(e) {
               var ele = e.target || e.srcElement;
@@ -18832,10 +18857,10 @@ UE.plugins["video"] = function() {
 
   UETable.getDefaultValue = function(editor, table) {
     var borderMap = {
-        thin: "0px",
-        medium: "1px",
-        thick: "2px"
-      };
+      thin: "0px",
+      medium: "1px",
+      thick: "2px"
+    };
 
     var tableBorder;
     var tdPadding;
@@ -20981,29 +21006,29 @@ UE.plugins["table"] = function() {
   var tabTimer = null;
 
   var //拖动计时器
-  tableDragTimer = null;
+    tableDragTimer = null;
 
   var //双击计时器
-  tableResizeTimer = null;
+    tableResizeTimer = null;
 
   var //单元格最小宽度
-  cellMinWidth = 5;
+    cellMinWidth = 5;
 
   var isInResizeBuffer = false;
 
   var //单元格边框大小
-  cellBorderWidth = 5;
+    cellBorderWidth = 5;
 
   var //鼠标偏移距离
-  offsetOfTableCell = 10;
+    offsetOfTableCell = 10;
 
   var //记录在有限时间内的点击状态， 共有3个取值， 0, 1, 2。 0代表未初始化， 1代表单击了1次，2代表2次
-  singleClickState = 0;
+    singleClickState = 0;
 
   var userActionStatus = null;
 
   var //双击允许的时间范围
-  dblclickTime = 360;
+    dblclickTime = 360;
 
   var UT = UE.UETable;
 
@@ -21045,28 +21070,28 @@ UE.plugins["table"] = function() {
 
   //处理拖动及框选相关方法
   var //鼠标按下时的锚点td
-  startTd = null; //发生拖动的目标td
+    startTd = null; //发生拖动的目标td
 
   var //当前鼠标经过时的td
-  currentTd = null;
+    currentTd = null;
 
   var //指示当前拖动状态，其值可为"","h","v" ,分别表示未拖动状态，横向拖动状态，纵向拖动状态，用于鼠标移动过程中的判断
-  onDrag = "";
+    onDrag = "";
 
   var //检测鼠标按下时是否处在单元格边缘位置
-  onBorder = false;
+    onBorder = false;
 
   var dragButton = null;
   var dragOver = false;
 
   var //模拟的拖动线
-  dragLine = null;
+    dragLine = null;
 
   var dragTd = null;
   var mousedown = false;
 
   var //todo 判断混乱模式
-  needIEHack = true;
+    needIEHack = true;
 
   me.setOpt({
     maxColNum: 20,
@@ -22515,7 +22540,7 @@ UE.plugins["table"] = function() {
       var cells = ut.getSameEndPosCells(td, "y");
 
       var //备份需要连带变化的td的原始高度，否则后期无法获取正确的值
-      backHeight = cells[0] ? cells[0].offsetHeight : 0;
+        backHeight = cells[0] ? cells[0].offsetHeight : 0;
 
       for (var i = 0, cell; (cell = cells[i++]); ) {
         setCellHeight(cell, changeValue, backHeight);
@@ -22633,7 +22658,7 @@ UE.plugins["table"] = function() {
     var width = 0;
 
     var //偏移纠正量
-    offset = 0;
+      offset = 0;
 
     var width = cell.offsetWidth - getTabcellSpace();
 
@@ -23695,11 +23720,11 @@ UE.plugins["basestyle"] = function() {
    * ```
    */
   var basestyles = {
-      bold: ["strong", "b"],
-      italic: ["em", "i"],
-      subscript: ["sub"],
-      superscript: ["sup"]
-    };
+    bold: ["strong", "b"],
+    italic: ["em", "i"],
+    subscript: ["sub"],
+    superscript: ["sup"]
+  };
 
   var getObj = function(editor, tagNames) {
     return domUtils.filterNodeList(editor.selection.getStartElementPath(), tagNames);
@@ -24854,13 +24879,13 @@ UE.plugin.register("autosave", function() {
   var me = this;
 
   var //无限循环保护
-  lastSaveTime = new Date();
+    lastSaveTime = new Date();
 
   var //最小保存间隔时间
-  MIN_TIME = 20;
+    MIN_TIME = 20;
 
   var //auto save key
-  saveKey = null;
+    saveKey = null;
 
   function save(editor) {
     var saveData;
@@ -25204,9 +25229,9 @@ UE.plugin.register("section", function() {
               level = getSectionLevel(child);
               if (level >= 0) {
                 var address = me.selection
-                    .getRange()
-                    .selectNode(child)
-                    .createAddress(true).startAddress;
+                  .getRange()
+                  .selectNode(child)
+                  .createAddress(true).startAddress;
 
                 var current = getSection({
                   tag: child.tagName,
@@ -27406,18 +27431,18 @@ UE.ui = baidu.editor.ui = {};
     //初始化选中状态， 该方法将根据传递进来的参数获取到应该选中的对齐方式图标的索引
     initSelected: function() {
       var status = {
-          valign: {
-            top: 0,
-            middle: 1,
-            bottom: 2
-          },
-          align: {
-            left: 0,
-            center: 1,
-            right: 2
-          },
-          count: 3
-        };
+        valign: {
+          top: 0,
+          middle: 1,
+          bottom: 2
+        },
+        align: {
+          left: 0,
+          center: 1,
+          right: 2
+        },
+        count: 3
+      };
 
       var result = -1;
 
@@ -28531,7 +28556,7 @@ UE.ui = baidu.editor.ui = {};
   var domUtils = baidu.editor.dom.domUtils;
 
   var //存储所有快捷菜单
-  allMenus = []; //是否有子pop显示
+    allMenus = []; //是否有子pop显示
 
   var timeID;
   var isSubMenuShow = false;
@@ -28568,13 +28593,13 @@ UE.ui = baidu.editor.ui = {};
           var ht = el.offsetHeight;
 
           var //距离中心X标准
-          distanceX = wt / 2 + me.SPACE;
+            distanceX = wt / 2 + me.SPACE;
 
           var //距离中心Y标准
-          distanceY = ht / 2;
+            distanceY = ht / 2;
 
           var //离中心距离横坐标
-          x = Math.abs(e.screenX - me.left);
+            x = Math.abs(e.screenX - me.left);
 
           var y = Math.abs(e.screenY - me.top);
 
@@ -29781,8 +29806,8 @@ UE.ui = baidu.editor.ui = {};
       this._dialogs = {};
       this.initUIBase();
       this._initToolbars();
-      var editor = this.editor,
-        me = this;
+      var editor = this.editor;
+      var me = this;
 
       editor.addListener("ready", function() {
         //提供getDialog方法
@@ -29843,9 +29868,9 @@ UE.ui = baidu.editor.ui = {};
         editor.getDialog("edittip").open();
       });
 
-      var pastePop,
-        isPaste = false,
-        timer;
+      var pastePop;
+      var isPaste = false;
+      var timer;
       editor.addListener("afterpaste", function() {
         if (editor.queryCommandState("pasteplain")) return;
         if (baidu.editor.ui.PastePicker) {
@@ -29865,9 +29890,9 @@ UE.ui = baidu.editor.ui = {};
           if (pastePop && (isPaste || editor.ui._isTransfer)) {
             if (pastePop.isHidden()) {
               var span = domUtils.createElement(editor.document, "span", {
-                  style: "line-height:0px;",
-                  innerHTML: "\ufeff"
-                });
+                style: "line-height:0px;",
+                innerHTML: "\ufeff"
+              });
 
               var range = editor.selection.getRange();
               range.insertNode(span);
@@ -30717,12 +30742,12 @@ UE.registerUI("message", function(editor) {
       : opt;
 
     var message = new Message({
-        timeout: opt.timeout,
-        type: opt.type,
-        content: opt.content,
-        keepshow: opt.keepshow,
-        editor: me
-      });
+      timeout: opt.timeout,
+      type: opt.type,
+      content: opt.content,
+      keepshow: opt.keepshow,
+      editor: me
+    });
 
     var mid = opt.id || "msg_" + (+new Date()).toString(36);
     message.render(holder);

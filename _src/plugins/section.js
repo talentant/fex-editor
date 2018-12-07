@@ -105,9 +105,9 @@ UE.plugin.register("section", function() {
               level = getSectionLevel(child);
               if (level >= 0) {
                 var address = me.selection
-                    .getRange()
-                    .selectNode(child)
-                    .createAddress(true).startAddress;
+                  .getRange()
+                  .selectNode(child)
+                  .createAddress(true).startAddress;
 
                 var current = getSection({
                   tag: child.tagName,

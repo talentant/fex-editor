@@ -6,7 +6,7 @@
   var domUtils = baidu.editor.dom.domUtils;
 
   var //存储所有快捷菜单
-  allMenus = []; //是否有子pop显示
+    allMenus = []; //是否有子pop显示
 
   var timeID;
   var isSubMenuShow = false;
@@ -43,13 +43,13 @@
           var ht = el.offsetHeight;
 
           var //距离中心X标准
-          distanceX = wt / 2 + me.SPACE;
+            distanceX = wt / 2 + me.SPACE;
 
           var //距离中心Y标准
-          distanceY = ht / 2;
+            distanceY = ht / 2;
 
           var //离中心距离横坐标
-          x = Math.abs(e.screenX - me.left);
+            x = Math.abs(e.screenX - me.left);
 
           var y = Math.abs(e.screenY - me.top);
 

@@ -293,13 +293,13 @@ UE.plugins["fiximgclick"] = (function() {
             me.ui.getDom().appendChild(imageScale.resizer);
 
             var _keyDownHandler = function(e) {
-                imageScale.hide();
-                if (imageScale.target)
-                  me.selection
-                    .getRange()
-                    .selectNode(imageScale.target)
-                    .select();
-              };
+              imageScale.hide();
+              if (imageScale.target)
+                me.selection
+                  .getRange()
+                  .selectNode(imageScale.target)
+                  .select();
+            };
 
             var _mouseDownHandler = function(e) {
               var ele = e.target || e.srcElement;

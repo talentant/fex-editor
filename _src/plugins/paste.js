@@ -19,7 +19,7 @@ UE.plugins["paste"] = function() {
     var bk = range.createBookmark();
 
     var //创建剪贴的容器div
-    pastebin = doc.createElement("div");
+      pastebin = doc.createElement("div");
 
     pastebin.id = "baidu_pastebin";
     // Safari 要求div必须有内容，才能粘贴内容进来

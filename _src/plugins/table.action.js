@@ -10,29 +10,29 @@ UE.plugins["table"] = function() {
   var tabTimer = null;
 
   var //拖动计时器
-  tableDragTimer = null;
+    tableDragTimer = null;
 
   var //双击计时器
-  tableResizeTimer = null;
+    tableResizeTimer = null;
 
   var //单元格最小宽度
-  cellMinWidth = 5;
+    cellMinWidth = 5;
 
   var isInResizeBuffer = false;
 
   var //单元格边框大小
-  cellBorderWidth = 5;
+    cellBorderWidth = 5;
 
   var //鼠标偏移距离
-  offsetOfTableCell = 10;
+    offsetOfTableCell = 10;
 
   var //记录在有限时间内的点击状态， 共有3个取值， 0, 1, 2。 0代表未初始化， 1代表单击了1次，2代表2次
-  singleClickState = 0;
+    singleClickState = 0;
 
   var userActionStatus = null;
 
   var //双击允许的时间范围
-  dblclickTime = 360;
+    dblclickTime = 360;
 
   var UT = UE.UETable;
 
@@ -74,28 +74,28 @@ UE.plugins["table"] = function() {
 
   //处理拖动及框选相关方法
   var //鼠标按下时的锚点td
-  startTd = null; //发生拖动的目标td
+    startTd = null; //发生拖动的目标td
 
   var //当前鼠标经过时的td
-  currentTd = null;
+    currentTd = null;
 
   var //指示当前拖动状态，其值可为"","h","v" ,分别表示未拖动状态，横向拖动状态，纵向拖动状态，用于鼠标移动过程中的判断
-  onDrag = "";
+    onDrag = "";
 
   var //检测鼠标按下时是否处在单元格边缘位置
-  onBorder = false;
+    onBorder = false;
 
   var dragButton = null;
   var dragOver = false;
 
   var //模拟的拖动线
-  dragLine = null;
+    dragLine = null;
 
   var dragTd = null;
   var mousedown = false;
 
   var //todo 判断混乱模式
-  needIEHack = true;
+    needIEHack = true;
 
   me.setOpt({
     maxColNum: 20,
@@ -1544,7 +1544,7 @@ UE.plugins["table"] = function() {
       var cells = ut.getSameEndPosCells(td, "y");
 
       var //备份需要连带变化的td的原始高度，否则后期无法获取正确的值
-      backHeight = cells[0] ? cells[0].offsetHeight : 0;
+        backHeight = cells[0] ? cells[0].offsetHeight : 0;
 
       for (var i = 0, cell; (cell = cells[i++]); ) {
         setCellHeight(cell, changeValue, backHeight);
@@ -1662,7 +1662,7 @@ UE.plugins["table"] = function() {
     var width = 0;
 
     var //偏移纠正量
-    offset = 0;
+      offset = 0;
 
     var width = cell.offsetWidth - getTabcellSpace();
 

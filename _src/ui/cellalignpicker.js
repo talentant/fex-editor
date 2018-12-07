@@ -20,18 +20,18 @@
     //初始化选中状态， 该方法将根据传递进来的参数获取到应该选中的对齐方式图标的索引
     initSelected: function() {
       var status = {
-          valign: {
-            top: 0,
-            middle: 1,
-            bottom: 2
-          },
-          align: {
-            left: 0,
-            center: 1,
-            right: 2
-          },
-          count: 3
-        };
+        valign: {
+          top: 0,
+          middle: 1,
+          bottom: 2
+        },
+        align: {
+          left: 0,
+          center: 1,
+          right: 2
+        },
+        count: 3
+      };
 
       var result = -1;
 

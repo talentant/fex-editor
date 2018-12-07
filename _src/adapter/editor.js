@@ -105,9 +105,9 @@
           if (pastePop && (isPaste || editor.ui._isTransfer)) {
             if (pastePop.isHidden()) {
               var span = domUtils.createElement(editor.document, "span", {
-                  style: "line-height:0px;",
-                  innerHTML: "\ufeff"
-                });
+                style: "line-height:0px;",
+                innerHTML: "\ufeff"
+              });
 
               var range = editor.selection.getRange();
               range.insertNode(span);

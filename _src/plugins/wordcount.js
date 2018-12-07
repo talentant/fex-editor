@@ -23,15 +23,15 @@ UE.plugins["wordcount"] = function() {
       var code = evt.keyCode || evt.which;
 
       var //忽略的按键,ctr,alt,shift,方向键
-      ignores = {
-        "16": 1,
-        "18": 1,
-        "20": 1,
-        "37": 1,
-        "38": 1,
-        "39": 1,
-        "40": 1
-      };
+        ignores = {
+          "16": 1,
+          "18": 1,
+          "20": 1,
+          "37": 1,
+          "38": 1,
+          "39": 1,
+          "40": 1
+        };
 
       if (code in ignores) return;
       clearTimeout(timer);

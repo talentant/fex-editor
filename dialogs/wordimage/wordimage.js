@@ -75,7 +75,7 @@ function showLocalPath(id) {
   var path = images[0];
 
   var //不同版本的doc和浏览器都可能影响到这个符号，故直接判断两种
-  leftSlashIndex = path.lastIndexOf("/") || 0;
+    leftSlashIndex = path.lastIndexOf("/") || 0;
 
   var rightSlashIndex = path.lastIndexOf("\\") || 0;
   var separater = leftSlashIndex > rightSlashIndex ? "/" : "\\";

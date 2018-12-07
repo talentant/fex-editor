@@ -32,8 +32,8 @@ UE.plugins["rowspacing"] = function() {
     },
     queryCommandValue: function(cmdName, dir) {
       var pN = domUtils.filterNodeList(this.selection.getStartElementPath(), function(node) {
-          return domUtils.isBlockElm(node);
-        });
+        return domUtils.isBlockElm(node);
+      });
 
       var value;
       //trace:1026

@@ -322,68 +322,70 @@
       var _this = this;
 
       var // just in case. Make sure it's not an other libaray.
-      $ = jQuery;
+        $ = jQuery;
 
       var $wrap = _this.$wrap;
 
       var // 图片容器
-      $queue = $wrap.find(".filelist");
+        $queue = $wrap.find(".filelist");
 
       var // 状态栏，包括进度和控制按钮
-      $statusBar = $wrap.find(".statusBar");
+        $statusBar = $wrap.find(".statusBar");
 
       var // 文件总体选择信息。
-      $info = $statusBar.find(".info");
+        $info = $statusBar.find(".info");
 
       var // 上传按钮
-      $upload = $wrap.find(".uploadBtn");
+        $upload = $wrap.find(".uploadBtn");
 
       var // 上传按钮
-      $filePickerBtn = $wrap.find(".filePickerBtn");
+        $filePickerBtn = $wrap.find(".filePickerBtn");
 
       var // 上传按钮
-      $filePickerBlock = $wrap.find(".filePickerBlock");
+        $filePickerBlock = $wrap.find(".filePickerBlock");
 
       var // 没选择文件之前的内容。
-      $placeHolder = $wrap.find(".placeholder");
+        $placeHolder = $wrap.find(".placeholder");
 
       var // 总体进度条
-      $progress = $statusBar.find(".progress").hide();
+        $progress = $statusBar.find(".progress").hide();
 
       var // 添加的文件数量
-      fileCount = 0;
+        fileCount = 0;
 
       var // 添加的文件总大小
-      fileSize = 0;
+        fileSize = 0;
 
       var // 优化retina, 在retina下这个值是2
-      ratio = window.devicePixelRatio || 1;
+        ratio = window.devicePixelRatio || 1;
 
       var // 缩略图大小
-      thumbnailWidth = 113 * ratio;
+        thumbnailWidth = 113 * ratio;
 
       var thumbnailHeight = 113 * ratio;
 
       var // 可能有pedding, ready, uploading, confirm, done.
-      state = "";
+        state = "";
 
       var // 所有文件的进度信息，key为file id
-      percentages = {};
+        percentages = {};
 
       var supportTransition = (function() {
-        var s = document.createElement("p").style,
-          r =
-            "transition" in s ||
-            "WebkitTransition" in s ||
-            "MozTransition" in s ||
-            "msTransition" in s ||
-            "OTransition" in s;
+        var s = document.createElement("p").style;
+
+        var r =
+          "transition" in s ||
+          "WebkitTransition" in s ||
+          "MozTransition" in s ||
+          "msTransition" in s ||
+          "OTransition" in s;
+
         s = null;
         return r;
       })();
 
       var // WebUploader实例
-      uploader;
+        uploader;
 
       var actionUrl = editor.getActionUrl(editor.getOpt("imageActionName"));
 
@@ -450,16 +452,16 @@
       // 当有文件添加进来时执行，负责view的创建
       function addFile(file) {
         var $li = $(
-            '<li id="' +
-              file.id +
-              '">' +
-              '<p class="title">' +
-              file.name +
-              "</p>" +
-              '<p class="imgWrap"></p>' +
-              '<p class="progress"><span></span></p>' +
-              "</li>"
-          );
+          '<li id="' +
+            file.id +
+            '">' +
+            '<p class="title">' +
+            file.name +
+            "</p>" +
+            '<p class="imgWrap"></p>' +
+            '<p class="progress"><span></span></p>' +
+            "</li>"
+        );
 
         var $btns = $(
           '<div class="file-panel">' +
@@ -777,7 +779,9 @@
             /* 添加额外的GET参数 */
             var params = utils.serializeParam(editor.queryCommandValue("serverparam")) || "";
 
-            var url = utils.formatUrl(actionUrl + (actionUrl.indexOf("?") == -1 ? "?" : "&") + "encode=utf-8&" + params);
+            var url = utils.formatUrl(
+              actionUrl + (actionUrl.indexOf("?") == -1 ? "?" : "&") + "encode=utf-8&" + params
+            );
             uploader.option("server", url);
             setState("uploading", files);
             break;

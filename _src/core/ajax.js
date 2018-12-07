@@ -50,17 +50,17 @@ UE.ajax = (function() {
     var xhr = creatAjaxRequest();
 
     var //是否超时
-    timeIsOut = false;
+      timeIsOut = false;
 
     var //默认参数
-    defaultAjaxOptions = {
-      method: "POST",
-      timeout: 5000,
-      async: true,
-      data: {}, //需要传递对象的话只能覆盖
-      onsuccess: function() {},
-      onerror: function() {}
-    };
+      defaultAjaxOptions = {
+        method: "POST",
+        timeout: 5000,
+        async: true,
+        data: {}, //需要传递对象的话只能覆盖
+        onsuccess: function() {},
+        onerror: function() {}
+      };
 
     if (typeof url === "object") {
       ajaxOptions = url;

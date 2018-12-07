@@ -23,50 +23,50 @@
     isIE: isIE,
     cssRule: isIE
       ? function(key, style, doc) {
-      var indexList;
-      var index;
-      doc = doc || document;
-      if (doc.indexList) {
-        indexList = doc.indexList;
-      } else {
-        indexList = doc.indexList = {};
-      }
-      var sheetStyle;
-      if (!indexList[key]) {
-        if (style === undefined) {
-          return "";
+          var indexList;
+          var index;
+          doc = doc || document;
+          if (doc.indexList) {
+            indexList = doc.indexList;
+          } else {
+            indexList = doc.indexList = {};
+          }
+          var sheetStyle;
+          if (!indexList[key]) {
+            if (style === undefined) {
+              return "";
+            }
+            sheetStyle = doc.createStyleSheet("", (index = doc.styleSheets.length));
+            indexList[key] = index;
+          } else {
+            sheetStyle = doc.styleSheets[indexList[key]];
+          }
+          if (style === undefined) {
+            return sheetStyle.cssText;
+          }
+          sheetStyle.cssText = sheetStyle.cssText + "\n" + (style || "");
         }
-        sheetStyle = doc.createStyleSheet("", (index = doc.styleSheets.length));
-        indexList[key] = index;
-      } else {
-        sheetStyle = doc.styleSheets[indexList[key]];
-      }
-      if (style === undefined) {
-        return sheetStyle.cssText;
-      }
-      sheetStyle.cssText = sheetStyle.cssText + "\n" + (style || "");
-    }
       : function(key, style, doc) {
-      doc = doc || document;
-      var head = doc.getElementsByTagName("head")[0];
-      var node;
-      if (!(node = doc.getElementById(key))) {
-        if (style === undefined) {
-          return "";
-        }
-        node = doc.createElement("style");
-        node.id = key;
-        head.appendChild(node);
-      }
-      if (style === undefined) {
-        return node.innerHTML;
-      }
-      if (style !== "") {
-        node.innerHTML = node.innerHTML + "\n" + style;
-      } else {
-        head.removeChild(node);
-      }
-    },
+          doc = doc || document;
+          var head = doc.getElementsByTagName("head")[0];
+          var node;
+          if (!(node = doc.getElementById(key))) {
+            if (style === undefined) {
+              return "";
+            }
+            node = doc.createElement("style");
+            node.id = key;
+            head.appendChild(node);
+          }
+          if (style === undefined) {
+            return node.innerHTML;
+          }
+          if (style !== "") {
+            node.innerHTML = node.innerHTML + "\n" + style;
+          } else {
+            head.removeChild(node);
+          }
+        },
     domReady: function(onready) {
       var doc = window.document;
       if (doc.readyState === "complete") {

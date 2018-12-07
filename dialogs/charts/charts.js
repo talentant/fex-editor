@@ -5,13 +5,13 @@
 var tableData = [];
 
 var //编辑器页面table
-editorTable = null;
+  editorTable = null;
 
 var chartsConfig = window.typeConfig;
 var resizeTimer = null;
 
 var //初始默认图表类型
-currentChartType = 0;
+  currentChartType = 0;
 
 window.onload = function() {
   editorTable = domUtils.findParentByTagName(editor.selection.getRange().startContainer, "table", true);
@@ -113,7 +113,7 @@ function initEvent() {
   var cacheValue = null;
 
   var //图表类型数
-  typeViewCount = chartsConfig.length - 1;
+    typeViewCount = chartsConfig.length - 1;
 
   var $chartsTypeViewBox = $("#scrollBed .view-box");
 
@@ -361,10 +361,10 @@ function updateConfigItem(value) {
  **/
 function getSeriesForPieChart() {
   var series = {
-      type: "pie",
-      name: $("#tipInput").val(),
-      data: []
-    };
+    type: "pie",
+    name: $("#tipInput").val(),
+    data: []
+  };
 
   var tableData = getTableData();
 
