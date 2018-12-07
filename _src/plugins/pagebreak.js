@@ -23,7 +23,7 @@ UE.plugins["pagebreak"] = function() {
   }
   //分页符样式添加
 
-  me.ready(function() {
+  me.ready(() => {
     utils.cssRule(
       "pagebreak",
       ".pagebreak{display:block;clear:both !important;cursor:default !important;width: 100% !important;margin:0;}",
@@ -33,8 +33,8 @@ UE.plugins["pagebreak"] = function() {
   function isHr(node) {
     return node && node.nodeType == 1 && node.tagName == "HR" && node.className == "pagebreak";
   }
-  me.addInputRule(function(root) {
-    root.traversal(function(node) {
+  me.addInputRule(root => {
+    root.traversal(node => {
       if (node.type == "text" && node.data == me.options.pageBreakTag) {
         var hr = UE.uNode.createElement(
           '<hr class="pagebreak" noshade="noshade" size="5" style="-webkit-user-select: none;">'
@@ -44,8 +44,8 @@ UE.plugins["pagebreak"] = function() {
       }
     });
   });
-  me.addOutputRule(function(node) {
-    utils.each(node.getNodesByTagName("hr"), function(n) {
+  me.addOutputRule(node => {
+    utils.each(node.getNodesByTagName("hr"), n => {
       if (n.getAttr("class") == "pagebreak") {
         var txt = UE.uNode.createText(me.options.pageBreakTag);
         n.parentNode.insertBefore(txt, n);
@@ -69,7 +69,7 @@ UE.plugins["pagebreak"] = function() {
    */
 
   me.commands["pagebreak"] = {
-    execCommand: function() {
+    execCommand() {
       var range = me.selection.getRange();
       var hr = me.document.createElement("hr");
       domUtils.setAttributes(hr, {

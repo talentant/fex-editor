@@ -24,16 +24,14 @@ UE.plugins["rowspacing"] = function() {
     rowspacingbottom: ["5", "10", "15", "20", "25"]
   });
   me.commands["rowspacing"] = {
-    execCommand: function(cmdName, value, dir) {
+    execCommand(cmdName, value, dir) {
       this.execCommand("paragraph", "p", {
         style: "margin-" + dir + ":" + value + "px"
       });
       return true;
     },
-    queryCommandValue: function(cmdName, dir) {
-      var pN = domUtils.filterNodeList(this.selection.getStartElementPath(), function(node) {
-        return domUtils.isBlockElm(node);
-      });
+    queryCommandValue(cmdName, dir) {
+      var pN = domUtils.filterNodeList(this.selection.getStartElementPath(), node => domUtils.isBlockElm(node));
 
       var value;
       //trace:1026

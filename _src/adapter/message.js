@@ -1,4 +1,4 @@
-UE.registerUI("message", function(editor) {
+UE.registerUI("message", editor => {
   var editorui = baidu.editor.ui;
   var Message = editorui.Message;
   var holder;
@@ -10,15 +10,15 @@ UE.registerUI("message", function(editor) {
     return;
   }
 
-  me.addListener("ready", function() {
+  me.addListener("ready", () => {
     holder = document.getElementById(me.ui.id + "_message_holder");
     updateHolderPos();
-    setTimeout(function() {
+    setTimeout(() => {
       updateHolderPos();
     }, 500);
   });
 
-  me.addListener("showmessage", function(type, opt) {
+  me.addListener("showmessage", (type, opt) => {
     opt = utils.isString(opt)
       ? {
           content: opt
@@ -41,7 +41,7 @@ UE.registerUI("message", function(editor) {
     return mid;
   });
 
-  me.addListener("updatemessage", function(type, id, opt) {
+  me.addListener("updatemessage", (type, id, opt) => {
     opt = utils.isString(opt)
       ? {
           content: opt
@@ -52,7 +52,7 @@ UE.registerUI("message", function(editor) {
     message && message.reset(opt);
   });
 
-  me.addListener("hidemessage", function(type, id) {
+  me.addListener("hidemessage", (type, id) => {
     var message = _messageItems[id];
     message && message.hide();
   });

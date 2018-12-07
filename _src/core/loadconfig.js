@@ -1,7 +1,7 @@
-(function() {
+(() => {
   UE.Editor.prototype.loadServerConfig = function() {
     var me = this;
-    setTimeout(function() {
+    setTimeout(() => {
       try {
         me.options.imageUrl &&
           me.setOpt("serverUrl", me.options.imageUrl.replace(/^(.*[\/]).+([\.].+)$/, "$1controller$2"));
@@ -16,7 +16,7 @@
           UE.ajax.request(configUrl, {
             method: "GET",
             dataType: isJsonp ? "jsonp" : "",
-            onsuccess: function(r) {
+            onsuccess(r) {
               try {
                 var config = isJsonp ? r : eval("(" + r.responseText + ")");
                 utils.extend(me.options, config);
@@ -26,7 +26,7 @@
                 showErrorMsg(me.getLang("loadconfigFormatError"));
               }
             },
-            onerror: function() {
+            onerror() {
               showErrorMsg(me.getLang("loadconfigHttpError"));
             }
           });
@@ -52,8 +52,8 @@
   UE.Editor.prototype.afterConfigReady = function(handler) {
     if (!handler || !utils.isFunction(handler)) return;
     var me = this;
-    var readyHandler = function() {
-      handler.apply(me, arguments);
+    var readyHandler = function(...args) {
+      handler.apply(me, args);
       me.removeListener("serverConfigLoaded", readyHandler);
     };
 

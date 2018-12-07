@@ -1,10 +1,10 @@
-UE.registerUI("autosave", function(editor) {
+UE.registerUI("autosave", editor => {
   var timer = null;
   var uid = null;
-  editor.on("afterautosave", function() {
+  editor.on("afterautosave", () => {
     clearTimeout(timer);
 
-    timer = setTimeout(function() {
+    timer = setTimeout(() => {
       if (uid) {
         editor.trigger("hidemessage", uid);
       }

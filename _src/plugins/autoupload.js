@@ -5,7 +5,7 @@
  * @author Jinqn
  * @date 2013-10-14
  */
-UE.plugin.register("autoupload", function() {
+UE.plugin.register("autoupload", () => {
   function sendAndInsertFile(file, editor) {
     var me = editor;
 
@@ -27,7 +27,7 @@ UE.plugin.register("autoupload", function() {
     maxSize = me.getOpt(filetype + "MaxSize");
     allowFiles = me.getOpt(filetype + "AllowFiles");
     actionUrl = me.getActionUrl(me.getOpt(filetype + "ActionName"));
-    errorHandler = function(title) {
+    errorHandler = title => {
       var loader = me.document.getElementById(loadingId);
       loader && domUtils.remove(loader);
       me.fireEvent("showmessage", {
@@ -46,7 +46,7 @@ UE.plugin.register("autoupload", function() {
         me.options.themePath +
         me.options.theme +
         '/images/spacer.gif">';
-      successHandler = function(data) {
+      successHandler = data => {
         var link = urlPrefix + data.url;
         var loader = me.document.getElementById(loadingId);
         if (loader) {
@@ -68,7 +68,7 @@ UE.plugin.register("autoupload", function() {
         me.options.theme +
         '/images/spacer.gif">' +
         "</p>";
-      successHandler = function(data) {
+      successHandler = data => {
         var link = urlPrefix + data.url;
         var loader = me.document.getElementById(loadingId);
         var rng = me.selection.getRange();
@@ -112,7 +112,7 @@ UE.plugin.register("autoupload", function() {
     fd.append("type", "ajax");
     xhr.open("post", url, true);
     xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
-    xhr.addEventListener("load", function(e) {
+    xhr.addEventListener("load", e => {
       try {
         var json = new Function("return " + utils.trim(e.target.response))();
         if (json.state == "SUCCESS" && json.url) {
@@ -140,13 +140,13 @@ UE.plugin.register("autoupload", function() {
   }
 
   return {
-    outputRule: function(root) {
-      utils.each(root.getNodesByTagName("img"), function(n) {
+    outputRule(root) {
+      utils.each(root.getNodesByTagName("img"), n => {
         if (/\b(loaderrorclass)|(bloaderrorclass)\b/.test(n.getAttr("class"))) {
           n.parentNode.removeChild(n);
         }
       });
-      utils.each(root.getNodesByTagName("p"), function(n) {
+      utils.each(root.getNodesByTagName("p"), n => {
         if (/\bloadpara\b/.test(n.getAttr("class"))) {
           n.parentNode.removeChild(n);
         }
@@ -159,10 +159,10 @@ UE.plugin.register("autoupload", function() {
         enablePasteUpload: true
       },
       //插入粘贴板的图片，拖放插入图片
-      ready: function(e) {
+      ready(e) {
         var me = this;
         if (window.FormData && window.FileReader) {
-          var handler = function(e) {
+          var handler = e => {
             var hasImg = false;
             var items;
             //获取粘贴板文件列表或者拖放文件列表
@@ -188,14 +188,14 @@ UE.plugin.register("autoupload", function() {
           if (me.getOpt("enableDragUpload") !== false) {
             domUtils.on(me.body, "drop", handler);
             //取消拖放图片时出现的文字光标位置提示
-            domUtils.on(me.body, "dragover", function(e) {
+            domUtils.on(me.body, "dragover", e => {
               if (e.dataTransfer.types[0] == "Files") {
                 e.preventDefault();
               }
             });
           } else {
             if (browser.gecko) {
-              domUtils.on(me.body, "drop", function(e) {
+              domUtils.on(me.body, "drop", e => {
                 if (getDropImage(e)) {
                   e.preventDefault();
                 }

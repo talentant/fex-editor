@@ -1,6 +1,6 @@
 ///import core
 ///import uicore
-(function() {
+(() => {
   var utils = baidu.editor.utils;
   var uiUtils = baidu.editor.ui.uiUtils;
   var UIBase = baidu.editor.ui.UIBase;
@@ -17,10 +17,10 @@
     numRows: 10,
     numCols: 10,
     lengthOfCellSide: 22,
-    initTablePicker: function() {
+    initTablePicker() {
       this.initUIBase();
     },
-    getHtmlTpl: function() {
+    getHtmlTpl() {
       var me = this;
       return (
         '<div id="##" class="edui-tablepicker %%">' +
@@ -41,11 +41,11 @@
       );
     },
     _UIBase_render: UIBase.prototype.render,
-    render: function(holder) {
+    render(holder) {
       this._UIBase_render(holder);
       this.getDom("label").innerHTML = "0" + this.editor.getLang("t_row") + " x 0" + this.editor.getLang("t_col");
     },
-    _track: function(numCols, numRows) {
+    _track(numCols, numRows) {
       var style = this.getDom("overlay").style;
       var sideLen = this.lengthOfCellSide;
       style.width = numCols * sideLen + "px";
@@ -55,21 +55,21 @@
       this.numCols = numCols;
       this.numRows = numRows;
     },
-    _onMouseOver: function(evt, el) {
+    _onMouseOver(evt, el) {
       var rel = evt.relatedTarget || evt.fromElement;
       if (!uiUtils.contains(el, rel) && el !== rel) {
         this.getDom("label").innerHTML = "0" + this.editor.getLang("t_col") + " x 0" + this.editor.getLang("t_row");
         this.getDom("overlay").style.visibility = "";
       }
     },
-    _onMouseOut: function(evt, el) {
+    _onMouseOut(evt, el) {
       var rel = evt.relatedTarget || evt.toElement;
       if (!uiUtils.contains(el, rel) && el !== rel) {
         this.getDom("label").innerHTML = "0" + this.editor.getLang("t_col") + " x 0" + this.editor.getLang("t_row");
         this.getDom("overlay").style.visibility = "hidden";
       }
     },
-    _onMouseMove: function(evt, el) {
+    _onMouseMove(evt, el) {
       var style = this.getDom("overlay").style;
       var offset = uiUtils.getEventOffset(evt);
       var sideLen = this.lengthOfCellSide;
@@ -77,7 +77,7 @@
       var numRows = Math.ceil(offset.top / sideLen);
       this._track(numCols, numRows);
     },
-    _onClick: function() {
+    _onClick() {
       this.fireEvent("picktable", this.numCols, this.numRows);
     }
   };

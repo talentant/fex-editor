@@ -71,7 +71,7 @@ UE.plugins["list"] = function() {
     }
   }
 
-  me.ready(function() {
+  me.ready(() => {
     var customCss = [];
     for (var p in customStyle) {
       if (p == "dash" || p == "dot") {
@@ -147,9 +147,9 @@ UE.plugins["list"] = function() {
     );
   });
   //单独处理剪切的问题
-  me.ready(function() {
-    domUtils.on(me.body, "cut", function() {
-      setTimeout(function() {
+  me.ready(() => {
+    domUtils.on(me.body, "cut", () => {
+      setTimeout(() => {
         var rng = me.selection.getRange();
         var li;
         //trace:3416
@@ -197,7 +197,7 @@ UE.plugins["list"] = function() {
     if ((li = domUtils.findParentByTagName(rng.startContainer, "li", true))) {
       var list = li.parentNode;
       var tagName = list.tagName == "OL" ? "ul" : "ol";
-      utils.each(root.getNodesByTagName(tagName), function(n) {
+      utils.each(root.getNodesByTagName(tagName), n => {
         n.tagName = list.tagName;
         n.setAttr();
         if (n.parentNode === root) {
@@ -228,11 +228,11 @@ UE.plugins["list"] = function() {
   });
   //导出时，去掉p标签
   me.getOpt("disablePInList") === true &&
-    me.addOutputRule(function(root) {
-      utils.each(root.getNodesByTagName("li"), function(li) {
+    me.addOutputRule(root => {
+      utils.each(root.getNodesByTagName("li"), li => {
         var newChildrens = [];
         var index = 0;
-        utils.each(li.children, function(n) {
+        utils.each(li.children, n => {
           if (n.tagName == "p") {
             var tmpNode;
             while ((tmpNode = n.children.pop())) {
@@ -256,8 +256,8 @@ UE.plugins["list"] = function() {
       });
     });
   //进入编辑器的li要套p标签
-  me.addInputRule(function(root) {
-    utils.each(root.getNodesByTagName("li"), function(li) {
+  me.addInputRule(root => {
+    utils.each(root.getNodesByTagName("li"), li => {
       var tmpP = UE.uNode.createElement("p");
       for (var i = 0, ci; (ci = li.children[i]); ) {
         if (ci.type == "text" || dtd.p[ci.tagName]) {
@@ -322,7 +322,7 @@ UE.plugins["list"] = function() {
           }
         }
       }
-      utils.each(root.getNodesByTagName("p"), function(node) {
+      utils.each(root.getNodesByTagName("p"), node => {
         if (node.getAttr("class") != "MsoListParagraph") {
           return;
         }
@@ -382,12 +382,12 @@ UE.plugins["list"] = function() {
   });
 
   //调整索引标签
-  me.addListener("contentchange", function() {
+  me.addListener("contentchange", () => {
     adjustListStyle(me.document);
   });
 
   function adjustListStyle(doc, ignore) {
-    utils.each(domUtils.getElementsByTagName(doc, "ol ul"), function(node) {
+    utils.each(domUtils.getElementsByTagName(doc, "ol ul"), node => {
       if (!domUtils.inDoc(node, doc)) return;
 
       var parent = node.parentNode;
@@ -415,7 +415,7 @@ UE.plugins["list"] = function() {
       var style = domUtils.getStyle(node, "list-style-type");
       style && (node.style.cssText = "list-style-type:" + style);
       node.className = utils.trim(node.className.replace(/list-paddingleft-\w+/, "")) + " list-paddingleft-" + type;
-      utils.each(domUtils.getElementsByTagName(node, "li"), function(li) {
+      utils.each(domUtils.getElementsByTagName(node, "li"), li => {
         li.style.cssText && (li.style.cssText = "");
         if (!li.firstChild) {
           domUtils.remove(li);
@@ -530,7 +530,7 @@ UE.plugins["list"] = function() {
     }
   }
 
-  me.addListener("keydown", function(type, evt) {
+  me.addListener("keydown", (type, evt) => {
     function preventAndSave() {
       evt.preventDefault ? evt.preventDefault() : (evt.returnValue = false);
       me.fireEvent("contentchange");
@@ -553,13 +553,7 @@ UE.plugins["list"] = function() {
       //回车
       var rng = me.selection.getRange();
 
-      var parent = domUtils.findParent(
-        rng.startContainer,
-        function(node) {
-          return domUtils.isBlockElm(node);
-        },
-        true
-      );
+      var parent = domUtils.findParent(rng.startContainer, node => domUtils.isBlockElm(node), true);
 
       var li = domUtils.findParentByTagName(rng.startContainer, "li", true);
       if (parent && parent.tagName != "PRE" && !li) {
@@ -577,15 +571,9 @@ UE.plugins["list"] = function() {
       }
       var range = me.selection.getRange();
 
-      var start = findList(range.startContainer, function(node) {
-        return node.tagName == "TABLE";
-      });
+      var start = findList(range.startContainer, node => node.tagName == "TABLE");
 
-      var end = range.collapsed
-        ? start
-        : findList(range.endContainer, function(node) {
-            return node.tagName == "TABLE";
-          });
+      var end = range.collapsed ? start : findList(range.endContainer, node => node.tagName == "TABLE");
 
       if (start && end && start === end) {
         if (!range.collapsed) {
@@ -823,7 +811,7 @@ UE.plugins["list"] = function() {
     }
   });
 
-  me.addListener("keyup", function(type, evt) {
+  me.addListener("keyup", (type, evt) => {
     var keyCode = evt.keyCode || evt.which;
     if (keyCode == 8) {
       var rng = me.selection.getRange();
@@ -839,7 +827,7 @@ UE.plugins["list"] = function() {
     }
   });
   //处理tab键
-  me.addListener("tabkeydown", function() {
+  me.addListener("tabkeydown", () => {
     var range = me.selection.getRange();
 
     //控制级数
@@ -897,9 +885,7 @@ UE.plugins["list"] = function() {
         if (bk.end) {
           while (current && !(domUtils.getPosition(current, bk.end) & domUtils.POSITION_FOLLOWING)) {
             if (checkLevel(current)) {
-              current = domUtils.getNextDomNode(current, false, null, function(node) {
-                return node !== closeList;
-              });
+              current = domUtils.getNextDomNode(current, false, null, node => node !== closeList);
               continue;
             }
             var parentLi = current.parentNode;
@@ -925,9 +911,7 @@ UE.plugins["list"] = function() {
                     }
                   }
                 } else {
-                  li = domUtils.getNextDomNode(current, false, null, function(node) {
-                    return node !== closeList;
-                  });
+                  li = domUtils.getNextDomNode(current, false, null, node => node !== closeList);
                 }
                 break;
               }
@@ -1024,16 +1008,14 @@ UE.plugins["list"] = function() {
    */
 
   me.commands["insertorderedlist"] = me.commands["insertunorderedlist"] = {
-    execCommand: function(command, style) {
+    execCommand(command, style) {
       if (!style) {
         style = command.toLowerCase() == "insertorderedlist" ? "decimal" : "disc";
       }
       var me = this;
       var range = this.selection.getRange();
 
-      var filterFn = function(node) {
-        return node.nodeType == 1 ? node.tagName.toLowerCase() != "br" : !domUtils.isWhitespace(node);
-      };
+      var filterFn = node => (node.nodeType == 1 ? node.tagName.toLowerCase() != "br" : !domUtils.isWhitespace(node));
 
       var tag = command.toLowerCase() == "insertorderedlist" ? "ol" : "ul";
       var frag = me.document.createDocumentFragment();
@@ -1209,9 +1191,7 @@ UE.plugins["list"] = function() {
       if (bko.end && !modifyEnd) {
         range.setEndAfter(me.document.getElementById(bko.end));
       }
-      range.enlarge(true, function(node) {
-        return notExchange[node.tagName];
-      });
+      range.enlarge(true, node => notExchange[node.tagName]);
 
       frag = me.document.createDocumentFragment();
 
@@ -1237,9 +1217,7 @@ UE.plugins["list"] = function() {
 
           while (current && current !== bk.end && (!block(current) || domUtils.isBookmarkNode(current))) {
             tmpNode = current;
-            current = domUtils.getNextDomNode(current, false, null, function(node) {
-              return !notExchange[node.tagName];
-            });
+            current = domUtils.getNextDomNode(current, false, null, node => !notExchange[node.tagName]);
           }
 
           if (current && block(current)) {
@@ -1283,7 +1261,7 @@ UE.plugins["list"] = function() {
       }
       range.moveToBookmark(bko).select();
     },
-    queryCommandState: function(command) {
+    queryCommandState(command) {
       var tag = command.toLowerCase() == "insertorderedlist" ? "ol" : "ul";
       var path = this.selection.getStartElementPath();
       for (var i = 0, ci; (ci = path[i++]); ) {
@@ -1296,7 +1274,7 @@ UE.plugins["list"] = function() {
       }
       return 0;
     },
-    queryCommandValue: function(command) {
+    queryCommandValue(command) {
       var tag = command.toLowerCase() == "insertorderedlist" ? "ol" : "ul";
       var path = this.selection.getStartElementPath();
       var node;

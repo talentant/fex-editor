@@ -1,6 +1,6 @@
 ///import core
 ///import uicore
-(function() {
+(() => {
   var utils = baidu.editor.utils;
   var Popup = baidu.editor.ui.Popup;
   var Stateful = baidu.editor.ui.Stateful;
@@ -18,7 +18,7 @@
   });
   CellAlignPicker.prototype = {
     //初始化选中状态， 该方法将根据传递进来的参数获取到应该选中的对齐方式图标的索引
-    initSelected: function() {
+    initSelected() {
       var status = {
         valign: {
           top: 0,
@@ -39,11 +39,11 @@
         this.selectedIndex = status.valign[this.selected.valign] * status.count + status.align[this.selected.align];
       }
     },
-    initCellAlignPicker: function() {
+    initCellAlignPicker() {
       this.initUIBase();
       this.Stateful_init();
     },
-    getHtmlTpl: function() {
+    getHtmlTpl() {
       var alignType = ["left", "center", "right"];
       var COUNT = 9;
       var tempClassName = null;
@@ -79,10 +79,10 @@
         "</div>"
       );
     },
-    getStateDom: function() {
+    getStateDom() {
       return this.target;
     },
-    _onClick: function(evt) {
+    _onClick(evt) {
       var target = evt.target || evt.srcElement;
       if (/icon/.test(target.className)) {
         this.items[target.parentNode.getAttribute("index")].onclick();

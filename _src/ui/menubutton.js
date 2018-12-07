@@ -2,7 +2,7 @@
 ///import uicore
 ///import ui/menu.js
 ///import ui/splitbutton.js
-(function() {
+(() => {
   var utils = baidu.editor.utils;
   var Menu = baidu.editor.ui.Menu;
   var SplitButton = baidu.editor.ui.SplitButton;
@@ -13,7 +13,7 @@
   });
 
   MenuButton.prototype = {
-    initMenuButton: function() {
+    initMenuButton() {
       var me = this;
       this.uiName = "menubutton";
       this.popup = new Menu({
@@ -33,7 +33,7 @@
       });
       this.initSplitButton();
     },
-    setValue: function(value) {
+    setValue(value) {
       this._value = value;
     }
   };

@@ -59,7 +59,7 @@ var typeConfig = [
           enabled: true,
           color: "#000000",
           connectorColor: "#000000",
-          formatter: function() {
+          formatter() {
             return "<b>" + this.point.name + "</b>: " + Math.round(this.point.percentage * 100) / 100 + " %";
           }
         }

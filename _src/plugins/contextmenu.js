@@ -25,7 +25,7 @@ UE.plugins["contextmenu"] = function() {
     {
       label: lang.cleardoc,
       cmdName: "cleardoc",
-      exec: function() {
+      exec() {
         if (confirm(lang.confirmclear)) {
           this.execCommand("cleardoc");
         }
@@ -165,7 +165,7 @@ UE.plugins["contextmenu"] = function() {
         {
           label: lang.edittd,
           cmdName: "edittd",
-          exec: function() {
+          exec() {
             if (UE.ui["edittd"]) {
               new UE.ui["edittd"](this);
             }
@@ -175,7 +175,7 @@ UE.plugins["contextmenu"] = function() {
         {
           label: lang.edittable,
           cmdName: "edittable",
-          exec: function() {
+          exec() {
             if (UE.ui["edittable"]) {
               new UE.ui["edittable"](this);
             }
@@ -235,21 +235,21 @@ UE.plugins["contextmenu"] = function() {
         {
           label: lang.setcolor,
           cmdName: "interlacetable",
-          exec: function() {
+          exec() {
             this.execCommand("interlacetable");
           }
         },
         {
           label: lang.unsetcolor,
           cmdName: "uninterlacetable",
-          exec: function() {
+          exec() {
             this.execCommand("uninterlacetable");
           }
         },
         {
           label: lang.setbackground,
           cmdName: "settablebackground",
-          exec: function() {
+          exec() {
             this.execCommand("settablebackground", {
               repeat: true,
               colorList: ["#bbb", "#ccc"]
@@ -259,14 +259,14 @@ UE.plugins["contextmenu"] = function() {
         {
           label: lang.unsetbackground,
           cmdName: "cleartablebackground",
-          exec: function() {
+          exec() {
             this.execCommand("cleartablebackground");
           }
         },
         {
           label: lang.redandblue,
           cmdName: "settablebackground",
-          exec: function() {
+          exec() {
             this.execCommand("settablebackground", {
               repeat: true,
               colorList: ["red", "blue"]
@@ -276,7 +276,7 @@ UE.plugins["contextmenu"] = function() {
         {
           label: lang.threecolorgradient,
           cmdName: "settablebackground",
-          exec: function() {
+          exec() {
             this.execCommand("settablebackground", {
               repeat: true,
               colorList: ["#aaa", "#bbb", "#ccc"]
@@ -376,7 +376,7 @@ UE.plugins["contextmenu"] = function() {
   }
   var uiUtils = UE.ui.uiUtils;
 
-  me.addListener("contextmenu", function(type, evt) {
+  me.addListener("contextmenu", (type, evt) => {
     var offset = uiUtils.getViewportOffsetByEvent(evt);
     me.fireEvent("beforeselectionchange");
     if (menu) {
@@ -384,14 +384,14 @@ UE.plugins["contextmenu"] = function() {
     }
     for (var i = 0, ti, contextItems = []; (ti = items[i]); i++) {
       var last;
-      (function(item) {
+      (item => {
         if (item == "-") {
           if ((last = contextItems[contextItems.length - 1]) && last !== "-") {
             contextItems.push("-");
           }
         } else if (item.hasOwnProperty("group")) {
           for (var j = 0, cj, subMenu = []; (cj = item.subMenu[j]); j++) {
-            (function(subItem) {
+            (subItem => {
               if (subItem == "-") {
                 if ((last = subMenu[subMenu.length - 1]) && last !== "-") {
                   subMenu.push("-");
@@ -410,10 +410,10 @@ UE.plugins["contextmenu"] = function() {
                       subItem.cmdName +
                       (subItem.className ? " edui-for-" + subItem.cmdName + "-" + subItem.className : ""),
                     onclick: subItem.exec
-                      ? function() {
+                      ? () => {
                           subItem.exec.call(me);
                         }
-                      : function() {
+                      : () => {
                           me.execCommand(subItem.cmdName, subItem.value);
                         }
                   });
@@ -460,10 +460,10 @@ UE.plugins["contextmenu"] = function() {
               label: item.label || me.getLang("contextMenu." + item.cmdName),
               className: "edui-for-" + (item.icon ? item.icon : item.cmdName + (item.value || "")),
               onclick: item.exec
-                ? function() {
+                ? () => {
                     item.exec.call(me);
                   }
-                : function() {
+                : () => {
                     me.execCommand(item.cmdName, item.value);
                   }
             });
@@ -501,7 +501,7 @@ UE.plugins["contextmenu"] = function() {
   });
 
   // 添加复制的flash按钮
-  me.addListener("aftershowcontextmenu", function(type, menu) {
+  me.addListener("aftershowcontextmenu", (type, menu) => {
     if (me.zeroclipboard) {
       var items = menu.items;
       for (var key in items) {

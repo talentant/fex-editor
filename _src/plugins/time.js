@@ -26,7 +26,7 @@
  * ```
  */
 UE.commands["time"] = UE.commands["date"] = {
-  execCommand: function(cmd, format) {
+  execCommand(cmd, format) {
     var date = new Date();
 
     function formatTime(date, format) {

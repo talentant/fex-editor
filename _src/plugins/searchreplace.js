@@ -64,8 +64,8 @@ UE.plugin.register("searchreplace", function() {
       first = 0;
       if (index != -1) {
         return {
-          node: node,
-          index: index
+          node,
+          index
         };
       }
       node = domUtils[methodName](node);
@@ -158,7 +158,7 @@ UE.plugin.register("searchreplace", function() {
   return {
     commands: {
       searchreplace: {
-        execCommand: function(cmdName, opt) {
+        execCommand(cmdName, opt) {
           utils.extend(
             opt,
             {
@@ -211,7 +211,7 @@ UE.plugin.register("searchreplace", function() {
       }
     },
     bindEvents: {
-      clearlastSearchResult: function() {
+      clearlastSearchResult() {
         lastRng = null;
       }
     }

@@ -1,4 +1,4 @@
-(function() {
+(() => {
   var utils = baidu.editor.utils;
   var uiUtils = baidu.editor.ui.uiUtils;
   var UIBase = baidu.editor.ui.UIBase;
@@ -10,18 +10,18 @@
 
   Toolbar.prototype = {
     items: null,
-    initToolbar: function() {
+    initToolbar() {
       this.items = this.items || [];
       this.initUIBase();
     },
-    add: function(item, index) {
+    add(item, index) {
       if (index === undefined) {
         this.items.push(item);
       } else {
         this.items.splice(index, 0, item);
       }
     },
-    getHtmlTpl: function() {
+    getHtmlTpl() {
       var buff = [];
       for (var i = 0; i < this.items.length; i++) {
         buff[i] = this.items[i].renderHtml();
@@ -32,14 +32,14 @@
         "</div>"
       );
     },
-    postRender: function() {
+    postRender() {
       var box = this.getDom();
       for (var i = 0; i < this.items.length; i++) {
         this.items[i].postRender();
       }
       uiUtils.makeUnselectable(box);
     },
-    _onMouseDown: function(e) {
+    _onMouseDown(e) {
       var target = e.target || e.srcElement;
       var tagName = target && target.tagName && target.tagName.toLowerCase();
       if (tagName == "input" || tagName == "object" || tagName == "object") {

@@ -3,11 +3,11 @@ UE.plugin.register("charts", function() {
 
   return {
     bindEvents: {
-      chartserror: function() {}
+      chartserror() {}
     },
     commands: {
       charts: {
-        execCommand: function(cmd, data) {
+        execCommand(cmd, data) {
           var tableNode = domUtils.findParentByTagName(this.selection.getRange().startContainer, "table", true);
           var flagText = [];
           var config = {};
@@ -43,21 +43,21 @@ UE.plugin.register("charts", function() {
           tableNode.setAttribute("data-chart", flagText.join(";"));
           domUtils.addClass(tableNode, "edui-charts-table");
         },
-        queryCommandState: function(cmd, name) {
+        queryCommandState(cmd, name) {
           var tableNode = domUtils.findParentByTagName(this.selection.getRange().startContainer, "table", true);
           return tableNode && validData(tableNode) ? 0 : -1;
         }
       }
     },
-    inputRule: function(root) {
-      utils.each(root.getNodesByTagName("table"), function(tableNode) {
+    inputRule(root) {
+      utils.each(root.getNodesByTagName("table"), tableNode => {
         if (tableNode.getAttr("data-chart") !== undefined) {
           tableNode.setAttr("style");
         }
       });
     },
-    outputRule: function(root) {
-      utils.each(root.getNodesByTagName("table"), function(tableNode) {
+    outputRule(root) {
+      utils.each(root.getNodesByTagName("table"), tableNode => {
         if (tableNode.getAttr("data-chart") !== undefined) {
           tableNode.setAttr("style", "display: none;");
         }

@@ -15,7 +15,7 @@
  * ```
  */
 UE.commands["preview"] = {
-  execCommand: function() {
+  execCommand() {
     var w = window.open("", "_blank", "");
     var d = w.document;
     d.open();

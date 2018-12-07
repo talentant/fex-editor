@@ -36,7 +36,7 @@ UE.plugins["paste"] = function() {
 
     range.selectNodeContents(pastebin).select(true);
 
-    setTimeout(function() {
+    setTimeout(() => {
       if (browser.webkit) {
         for (var i = 0, pastebins = doc.querySelectorAll("#baidu_pastebin"), pi; (pi = pastebins[i++]); ) {
           if (domUtils.isEmptyNode(pi)) {
@@ -66,12 +66,12 @@ UE.plugins["paste"] = function() {
   var address;
 
   function getPureHtml(html) {
-    return html.replace(/<(\/?)([\w\-]+)([^>]*)>/gi, function(a, b, tagName, attrs) {
+    return html.replace(/<(\/?)([\w\-]+)([^>]*)>/gi, (a, b, tagName, attrs) => {
       tagName = tagName.toLowerCase();
       if ({img: 1}[tagName]) {
         return a;
       }
-      attrs = attrs.replace(/([\w\-]*?)\s*=\s*(("([^"]*)")|('([^']*)')|([^\s>]+))/gi, function(str, atr, val) {
+      attrs = attrs.replace(/([\w\-]*?)\s*=\s*(("([^"]*)")|('([^']*)')|([^\s>]+))/gi, (str, atr, val) => {
         if (
           {
             src: 1,
@@ -169,7 +169,7 @@ UE.plugins["paste"] = function() {
         if (br && br.type == "element" && br.tagName == "br") {
           root.removeChild(br);
         }
-        utils.each(me.body.querySelectorAll("div"), function(node) {
+        utils.each(me.body.querySelectorAll("div"), node => {
           if (domUtils.isEmptyBlock(node)) {
             domUtils.remove(node, true);
           }
@@ -203,7 +203,7 @@ UE.plugins["paste"] = function() {
     }
   }
 
-  me.addListener("pasteTransfer", function(cmd, plainType) {
+  me.addListener("pasteTransfer", (cmd, plainType) => {
     if (address && txtContent && htmlContent && txtContent != htmlContent) {
       var range = me.selection.getRange();
       range.moveToAddress(address, true);
@@ -276,8 +276,8 @@ UE.plugins["paste"] = function() {
     }
   });
 
-  me.addListener("ready", function() {
-    domUtils.on(me.body, "cut", function() {
+  me.addListener("ready", () => {
+    domUtils.on(me.body, "cut", () => {
       var range = me.selection.getRange();
       if (!range.collapsed && me.undoManger) {
         me.undoManger.save();
@@ -285,20 +285,20 @@ UE.plugins["paste"] = function() {
     });
 
     //ie下beforepaste在点击右键时也会触发，所以用监控键盘才处理
-    domUtils.on(me.body, browser.ie || browser.opera ? "keydown" : "paste", function(e) {
+    domUtils.on(me.body, browser.ie || browser.opera ? "keydown" : "paste", e => {
       if ((browser.ie || browser.opera) && ((!e.ctrlKey && !e.metaKey) || e.keyCode != "86")) {
         return;
       }
-      getClipboardData.call(me, function(div) {
+      getClipboardData.call(me, div => {
         filter(div);
       });
     });
   });
 
   me.commands["paste"] = {
-    execCommand: function(cmd) {
+    execCommand(cmd) {
       if (browser.ie) {
-        getClipboardData.call(me, function(div) {
+        getClipboardData.call(me, div => {
           filter(div);
         });
         me.document.execCommand("paste");

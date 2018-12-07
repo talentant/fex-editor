@@ -3,11 +3,12 @@
  * @file
  * @since 1.2.6.1
  */
-(function() {
+(() => {
   var block = domUtils.isBlockElm;
 
-  var getObj = function(editor) {
-    //            var startNode = editor.selection.getStart(),
+  var getObj = (
+    editor //            var startNode = editor.selection.getStart(),
+  ) =>
     //                parents;
     //            if ( startNode ) {
     //                //查找所有的是block的父亲节点
@@ -18,17 +19,12 @@
     //                    }
     //                }
     //            }
-    return domUtils.filterNodeList(editor.selection.getStartElementPath(), function(n) {
-      return n && n.nodeType == 1 && n.getAttribute("dir");
-    });
-  };
+    domUtils.filterNodeList(editor.selection.getStartElementPath(), n => n && n.nodeType == 1 && n.getAttribute("dir"));
 
-  var doDirectionality = function(range, editor, forward) {
+  var doDirectionality = (range, editor, forward) => {
     var bookmark;
 
-    var filterFn = function(node) {
-      return node.nodeType == 1 ? !domUtils.isBookmarkNode(node) : !domUtils.isWhitespace(node);
-    };
+    var filterFn = node => (node.nodeType == 1 ? !domUtils.isBookmarkNode(node) : !domUtils.isWhitespace(node));
 
     var obj = getObj(editor);
 
@@ -47,9 +43,7 @@
         tmpRange.setStartBefore(current);
         while (current && current !== bookmark2.end && !block(current)) {
           tmpNode = current;
-          current = domUtils.getNextDomNode(current, false, null, function(node) {
-            return !block(node);
-          });
+          current = domUtils.getNextDomNode(current, false, null, node => !block(node));
         }
         tmpRange.setEndAfter(tmpNode);
         var common = tmpRange.getCommonAncestor();
@@ -99,7 +93,7 @@
    * ```
    */
   UE.commands["directionality"] = {
-    execCommand: function(cmdName, forward) {
+    execCommand(cmdName, forward) {
       var range = this.selection.getRange();
       //闭合时单独处理
       if (range.collapsed) {
@@ -115,7 +109,7 @@
       range.select();
       return true;
     },
-    queryCommandValue: function() {
+    queryCommandValue() {
       var node = getObj(this);
       return node ? node.getAttribute("dir") : "ltr";
     }

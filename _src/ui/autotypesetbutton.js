@@ -3,7 +3,7 @@
 ///import ui/popup.js
 ///import ui/autotypesetpicker.js
 ///import ui/splitbutton.js
-(function() {
+(() => {
   var utils = baidu.editor.utils;
   var Popup = baidu.editor.ui.Popup;
   var AutoTypeSetPicker = baidu.editor.ui.AutoTypeSetPicker;
@@ -63,13 +63,13 @@
   }
 
   AutoTypeSetButton.prototype = {
-    initAutoTypeSetButton: function() {
+    initAutoTypeSetButton() {
       var me = this;
       this.popup = new Popup({
         //传入配置参数
         content: new AutoTypeSetPicker({editor: me.editor}),
         editor: me.editor,
-        hide: function() {
+        hide() {
           if (!this._hidden && this.getDom()) {
             getPara(this);
             this.getDom().style.display = "none";
@@ -85,13 +85,13 @@
         var cont = this.getDom();
         var btn = cont.getElementsByTagName("button")[0];
 
-        btn.onclick = function() {
+        btn.onclick = () => {
           getPara(popupUI);
           me.editor.execCommand("autotypeset");
           popupUI.hide();
         };
 
-        domUtils.on(cont, "click", function(e) {
+        domUtils.on(cont, "click", e => {
           var target = e.target || e.srcElement;
           var editorId = me.editor.uid;
           if (target && target.tagName == "INPUT") {

@@ -46,10 +46,10 @@ UE.parse.register("table", function(utils) {
     );
     //填充空的单元格
 
-    utils.each("td th caption".split(" "), function(tag) {
+    utils.each("td th caption".split(" "), tag => {
       var cells = root.getElementsByTagName(tag);
       cells.length &&
-        utils.each(cells, function(node) {
+        utils.each(cells, node => {
           if (!node.firstChild) {
             node.innerHTML = "&nbsp;";
           }
@@ -58,9 +58,9 @@ UE.parse.register("table", function(utils) {
 
     //表格可排序
     var tables = root.getElementsByTagName("table");
-    utils.each(tables, function(table) {
+    utils.each(tables, table => {
       if (/\bsortEnabled\b/.test(table.className)) {
-        utils.on(table, "click", function(e) {
+        utils.on(table, "click", e => {
           var target = e.target || e.srcElement;
           var cell = findParentByTagName(target, ["td", "th"]);
           var table = findParentByTagName(target, "table");
@@ -99,27 +99,27 @@ UE.parse.register("table", function(utils) {
       }
 
       var Fn = {
-        reversecurrent: function(td1, td2) {
+        reversecurrent(td1, td2) {
           return 1;
         },
-        orderbyasc: function(td1, td2) {
+        orderbyasc(td1, td2) {
           var value1 = td1.innerText || td1.textContent;
           var value2 = td2.innerText || td2.textContent;
           return value1.localeCompare(value2);
         },
-        reversebyasc: function(td1, td2) {
+        reversebyasc(td1, td2) {
           var value1 = td1.innerHTML;
           var value2 = td2.innerHTML;
           return value2.localeCompare(value1);
         },
-        orderbynum: function(td1, td2) {
+        orderbynum(td1, td2) {
           var value1 = td1[utils.isIE ? "innerText" : "textContent"].match(/\d+/);
           var value2 = td2[utils.isIE ? "innerText" : "textContent"].match(/\d+/);
           if (value1) value1 = +value1[0];
           if (value2) value2 = +value2[0];
           return (value1 || 0) - (value2 || 0);
         },
-        reversebynum: function(td1, td2) {
+        reversebynum(td1, td2) {
           var value1 = td1[utils.isIE ? "innerText" : "textContent"].match(/\d+/);
           var value2 = td2[utils.isIE ? "innerText" : "textContent"].match(/\d+/);
           if (value1) value1 = +value1[0];
@@ -162,11 +162,7 @@ UE.parse.register("table", function(utils) {
     }
     //冒泡排序
     function sort(array, compareFn) {
-      compareFn =
-        compareFn ||
-        function(item1, item2) {
-          return item1.localeCompare(item2);
-        };
+      compareFn = compareFn || ((item1, item2) => item1.localeCompare(item2));
       for (var i = 0, len = array.length; i < len; i++) {
         for (var j = i, length = array.length; j < length; j++) {
           if (compareFn(array[i], array[j]) > 0) {

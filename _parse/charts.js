@@ -67,7 +67,7 @@ UE.parse.register("charts", function(utils) {
     return {
       table: tableNode,
       meta: metaConfig,
-      data: data
+      data
     };
   }
 
@@ -87,7 +87,7 @@ UE.parse.register("charts", function(utils) {
           type: "text/javascript",
           defer: "defer"
         },
-        function() {
+        () => {
           loadHighcharts();
         }
       );
@@ -107,7 +107,7 @@ UE.parse.register("charts", function(utils) {
           type: "text/javascript",
           defer: "defer"
         },
-        function() {
+        () => {
           loadTypeConfig();
         }
       );
@@ -126,7 +126,7 @@ UE.parse.register("charts", function(utils) {
         type: "text/javascript",
         defer: "defer"
       },
-      function() {
+      () => {
         render();
       }
     );

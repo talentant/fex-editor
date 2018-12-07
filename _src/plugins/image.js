@@ -31,7 +31,7 @@
  */
 
 UE.commands["imagefloat"] = {
-  execCommand: function(cmd, align) {
+  execCommand(cmd, align) {
     var me = this;
     var range = me.selection.getRange();
     if (!range.collapsed) {
@@ -52,9 +52,7 @@ UE.commands["imagefloat"] = {
             if (tmpNode.tagName == "P" && domUtils.getStyle(tmpNode, "text-align") == "center") {
               if (
                 !domUtils.isBody(tmpNode) &&
-                domUtils.getChildCount(tmpNode, function(node) {
-                  return !domUtils.isBr(node) && !domUtils.isWhitespace(node);
-                }) == 1
+                domUtils.getChildCount(tmpNode, node => !domUtils.isBr(node) && !domUtils.isWhitespace(node)) == 1
               ) {
                 pre = tmpNode.previousSibling;
                 next = tmpNode.nextSibling;
@@ -93,9 +91,7 @@ UE.commands["imagefloat"] = {
               tmpNode = img;
               while (
                 pN &&
-                domUtils.getChildCount(pN, function(node) {
-                  return !domUtils.isBr(node) && !domUtils.isWhitespace(node);
-                }) == 1 &&
+                domUtils.getChildCount(pN, node => !domUtils.isBr(node) && !domUtils.isWhitespace(node)) == 1 &&
                 (dtd.$inline[pN.tagName] || pN.tagName == "A")
               ) {
                 tmpNode = pN;
@@ -127,7 +123,7 @@ UE.commands["imagefloat"] = {
       }
     }
   },
-  queryCommandValue: function() {
+  queryCommandValue() {
     var range = this.selection.getRange();
     var startNode;
     var floatStyle;
@@ -151,7 +147,7 @@ UE.commands["imagefloat"] = {
     }
     return "none";
   },
-  queryCommandState: function() {
+  queryCommandState() {
     var range = this.selection.getRange();
     var startNode;
 
@@ -196,7 +192,7 @@ UE.commands["imagefloat"] = {
  */
 
 UE.commands["insertimage"] = {
-  execCommand: function(cmd, opt) {
+  execCommand(cmd, opt) {
     opt = utils.isArray(opt) ? opt : [opt];
     if (!opt.length) {
       return;

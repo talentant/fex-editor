@@ -15,11 +15,11 @@ UE.plugins["catchremoteimage"] = function() {
     catchRemoteImageEnable: false
   });
 
-  me.addListener("afterpaste", function() {
+  me.addListener("afterpaste", () => {
     me.fireEvent("catchRemoteImage");
   });
 
-  me.addListener("catchRemoteImage", function() {
+  me.addListener("catchRemoteImage", () => {
     var catcherLocalDomain = me.getOpt("catcherLocalDomain");
     var catcherActionUrl = me.getActionUrl(me.getOpt("catcherActionName"));
     var catcherUrlPrefix = me.getOpt("catcherUrlPrefix");
@@ -28,7 +28,7 @@ UE.plugins["catchremoteimage"] = function() {
     var loadingIMG = me.options.themePath + me.options.theme + "/images/spacer.gif";
     var imgs = me.document.querySelectorAll('[style*="url"],img');
 
-    var test = function(src, urls) {
+    var test = (src, urls) => {
       if (src.indexOf(location.host) != -1 || /(^\.)|(^\/)/.test(src)) {
         return true;
       }
@@ -73,7 +73,7 @@ UE.plugins["catchremoteimage"] = function() {
     if (remoteImages.length) {
       catchremoteimage(remoteImages, {
         //成功抓取
-        success: function(r) {
+        success(r) {
           try {
             var info = r.state !== undefined ? r : eval("(" + r.responseText + ")");
           } catch (e) {
@@ -146,7 +146,7 @@ UE.plugins["catchremoteimage"] = function() {
           me.fireEvent("catchremotesuccess", catchSuccessList, catchFailList);
         },
         //回调失败，本次请求超时
-        error: function() {
+        error() {
           me.fireEvent("catchremoteerror");
         }
       });

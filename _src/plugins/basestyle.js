@@ -83,9 +83,7 @@ UE.plugins["basestyle"] = function() {
     superscript: ["sup"]
   };
 
-  var getObj = function(editor, tagNames) {
-    return domUtils.filterNodeList(editor.selection.getStartElementPath(), tagNames);
-  };
+  var getObj = (editor, tagNames) => domUtils.filterNodeList(editor.selection.getStartElementPath(), tagNames);
 
   var me = this;
   //添加快捷键
@@ -94,8 +92,8 @@ UE.plugins["basestyle"] = function() {
     Italic: "ctrl+73", //^I
     Underline: "ctrl+85" //^U
   });
-  me.addInputRule(function(root) {
-    utils.each(root.getNodesByTagName("b i"), function(node) {
+  me.addInputRule(root => {
+    utils.each(root.getNodesByTagName("b i"), node => {
       switch (node.tagName) {
         case "b":
           node.tagName = "strong";
@@ -106,9 +104,9 @@ UE.plugins["basestyle"] = function() {
     });
   });
   for (var style in basestyles) {
-    (function(cmd, tagNames) {
+    ((cmd, tagNames) => {
       me.commands[cmd] = {
-        execCommand: function(cmdName) {
+        execCommand(cmdName) {
           var range = me.selection.getRange();
           var obj = getObj(this, tagNames);
           if (range.collapsed) {
@@ -140,7 +138,7 @@ UE.plugins["basestyle"] = function() {
           }
           range.select();
         },
-        queryCommandState: function() {
+        queryCommandState() {
           return getObj(this, tagNames) ? 1 : 0;
         }
       };

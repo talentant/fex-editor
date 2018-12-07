@@ -5,13 +5,13 @@
  * Time: 下午2:09
  * To change this template use File | Settings | File Templates.
  */
-(function() {
+(() => {
   var me = editor;
   var preview = $G("preview");
   var preitem = $G("preitem");
   var tmps = templates;
   var currentTmp;
-  var initPre = function() {
+  var initPre = () => {
     var str = "";
     for (var i = 0, tmp; (tmp = tmps[i++]); ) {
       str +=
@@ -26,7 +26,7 @@
     }
     preitem.innerHTML = str;
   };
-  var pre = function(n) {
+  var pre = n => {
     var tmp = tmps[n - 1];
     currentTmp = tmp;
     clearItem();
@@ -36,7 +36,7 @@
     });
     preview.innerHTML = tmp.preHtml ? tmp.preHtml : "";
   };
-  var clearItem = function() {
+  var clearItem = () => {
     var items = preitem.children;
     for (var i = 0, item; (item = items[i++]); ) {
       domUtils.setStyles(item, {
@@ -45,7 +45,7 @@
       });
     }
   };
-  dialog.onok = function() {
+  dialog.onok = () => {
     if (!$G("issave").checked) {
       me.execCommand("cleardoc");
     }

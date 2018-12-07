@@ -13,13 +13,13 @@
 UE.plugins["wordcount"] = function() {
   var me = this;
   me.setOpt("wordCount", true);
-  me.addListener("contentchange", function() {
+  me.addListener("contentchange", () => {
     me.fireEvent("wordcount");
   });
   var timer;
   me.addListener("ready", function() {
     var me = this;
-    domUtils.on(me.body, "keyup", function(evt) {
+    domUtils.on(me.body, "keyup", evt => {
       var code = evt.keyCode || evt.which;
 
       var //忽略的按键,ctr,alt,shift,方向键
@@ -35,7 +35,7 @@ UE.plugins["wordcount"] = function() {
 
       if (code in ignores) return;
       clearTimeout(timer);
-      timer = setTimeout(function() {
+      timer = setTimeout(() => {
         me.fireEvent("wordcount");
       }, 200);
     });

@@ -10,7 +10,7 @@ UE.plugin.register("wordimage", function() {
   return {
     commands: {
       wordimage: {
-        execCommand: function() {
+        execCommand() {
           var images = domUtils.getElementsByTagName(me.body, "img");
           var urlList = [];
           for (var i = 0, ci; (ci = images[i++]); ) {
@@ -19,7 +19,7 @@ UE.plugin.register("wordimage", function() {
           }
           return urlList;
         },
-        queryCommandState: function() {
+        queryCommandState() {
           images = domUtils.getElementsByTagName(me.body, "img");
           for (var i = 0, ci; (ci = images[i++]); ) {
             if (ci.getAttribute("word_img")) {
@@ -31,8 +31,8 @@ UE.plugin.register("wordimage", function() {
         notNeedUndo: true
       }
     },
-    inputRule: function(root) {
-      utils.each(root.getNodesByTagName("img"), function(img) {
+    inputRule(root) {
+      utils.each(root.getNodesByTagName("img"), img => {
         var attrs = img.attrs;
         var flag = parseInt(attrs.width) < 128 || parseInt(attrs.height) < 43;
         var opt = me.options;
@@ -43,7 +43,7 @@ UE.plugin.register("wordimage", function() {
             height: attrs.height,
             alt: attrs.alt,
             word_img: attrs.src,
-            src: src,
+            src,
             style:
               "background:url(" +
               (flag

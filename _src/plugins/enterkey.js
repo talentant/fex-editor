@@ -11,7 +11,7 @@ UE.plugins["enterkey"] = function() {
   var hTag;
   var me = this;
   var tag = me.options.enterTag;
-  me.addListener("keyup", function(type, evt) {
+  me.addListener("keyup", (type, evt) => {
     var keyCode = evt.keyCode || evt.which;
     if (keyCode == 13) {
       var range = me.selection.getRange();
@@ -64,7 +64,7 @@ UE.plugins["enterkey"] = function() {
     }
   });
 
-  me.addListener("keydown", function(type, evt) {
+  me.addListener("keydown", (type, evt) => {
     var keyCode = evt.keyCode || evt.which;
     if (keyCode == 13) {
       //回车

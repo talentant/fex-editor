@@ -12,7 +12,7 @@
  * @module UE.dom
  * @class Selection
  */
-(function() {
+(() => {
   function getBoundaryInformation(range, start) {
     var getIndex = domUtils.getNodeIndex;
     range = range.duplicate();
@@ -134,10 +134,10 @@
     me.document = doc;
     if (browser.ie9below) {
       iframe = domUtils.getWindow(doc).frameElement;
-      domUtils.on(iframe, "beforedeactivate", function() {
+      domUtils.on(iframe, "beforedeactivate", () => {
         me._bakIERange = me.getIERange();
       });
-      domUtils.on(iframe, "activate", function() {
+      domUtils.on(iframe, "activate", () => {
         try {
           if (!_getIERange(me) && me._bakIERange) {
             me._bakIERange.select();
@@ -150,7 +150,7 @@
   });
 
   Selection.prototype = {
-    rangeInBody: function(rng, txtRange) {
+    rangeInBody(rng, txtRange) {
       var node = browser.ie9below || txtRange ? (rng.item ? rng.item() : rng.parentElement()) : rng.startContainer;
 
       return node === this.document.body || domUtils.inDoc(node, this.document);
@@ -165,7 +165,7 @@
      * editor.selection.getNative();
      * ```
      */
-    getNative: function() {
+    getNative() {
       var doc = this.document;
       try {
         return !doc ? null : browser.ie9below ? doc.selection : domUtils.getWindow(doc).getSelection();
@@ -183,7 +183,7 @@
      * editor.selection.getIERange();
      * ```
      */
-    getIERange: function() {
+    getIERange() {
       var ieRange = _getIERange(this);
       if (!ieRange) {
         if (this._bakIERange) {
@@ -197,7 +197,7 @@
      * 缓存当前选区的range和选区的开始节点
      * @method cache
      */
-    cache: function() {
+    cache() {
       this.clear();
       this._cachedRange = this.getRange();
       this._cachedStartElement = this.getStart();
@@ -213,7 +213,7 @@
      * editor.selection.getStartElementPath();
      * ```
      */
-    getStartElementPath: function() {
+    getStartElementPath() {
       if (this._cachedStartElementPath) {
         return this._cachedStartElementPath;
       }
@@ -228,7 +228,7 @@
      * 清空缓存
      * @method clear
      */
-    clear: function() {
+    clear() {
       this._cachedStartElementPath = this._cachedRange = this._cachedStartElement = null;
     },
 
@@ -236,7 +236,7 @@
      * 编辑器是否得到了选区
      * @method isFocus
      */
-    isFocus: function() {
+    isFocus() {
       try {
         if (browser.ie9below) {
           var nativeRange = _getIERange(this);
@@ -258,7 +258,7 @@
      * editor.selection.getRange();
      * ```
      */
-    getRange: function() {
+    getRange() {
       var me = this;
       function optimze(range) {
         var child = me.document.body.firstChild;
@@ -323,7 +323,7 @@
      * editor.selection.getStart();
      * ```
      */
-    getStart: function() {
+    getStart() {
       if (this._cachedStartElement) {
         return this._cachedStartElement;
       }
@@ -375,7 +375,7 @@
      * editor.selection.getText();
      * ```
      */
-    getText: function() {
+    getText() {
       var nativeSel;
       var nativeRange;
       if (this.isFocus() && (nativeSel = this.getNative())) {
@@ -393,7 +393,7 @@
      * editor.selection.clearRange();
      * ```
      */
-    clearRange: function() {
+    clearRange() {
       this.getNative()[browser.ie9below ? "empty" : "removeAllRanges"]();
     }
   };

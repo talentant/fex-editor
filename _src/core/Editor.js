@@ -19,7 +19,7 @@
  * @class Editor
  */
 
-(function() {
+(() => {
   var uid = 0;
   var _selectionChangeTimer;
 
@@ -257,7 +257,7 @@
           type: "text/javascript",
           defer: "defer"
         },
-        function() {
+        () => {
           UE.plugin.load(me);
           langReadied(me);
         }
@@ -267,7 +267,7 @@
     UE.instants["ueditorInstant" + me.uid] = me;
   });
   Editor.prototype = {
-    registerCommand: function(name, obj) {
+    registerCommand(name, obj) {
       this.commands[name] = obj;
     },
     /**
@@ -284,7 +284,7 @@
      * ```
      * @see UE.Editor.event:ready
      */
-    ready: function(fn) {
+    ready(fn) {
       var me = this;
       if (fn) {
         me.isReady ? fn.apply(me) : me.addListener("ready", fn);
@@ -317,7 +317,7 @@
      * } );
      * ```
      */
-    setOpt: function(key, val) {
+    setOpt(key, val) {
       var obj = {};
       if (utils.isString(key)) {
         obj[key] = val;
@@ -326,7 +326,7 @@
       }
       utils.extend(this.options, obj, true);
     },
-    getOpt: function(key) {
+    getOpt(key) {
       return this.options[key];
     },
     /**
@@ -337,7 +337,7 @@
      * editor.destroy();
      * ```
      */
-    destroy: function() {
+    destroy() {
       var me = this;
       me.fireEvent("destroy");
       var container = me.container.parentNode;
@@ -380,13 +380,11 @@
      * @remind 执行该方法,会触发ready事件
      * @warning 必须且只能调用一次
      */
-    render: function(container) {
+    render(container) {
       var me = this;
       var options = me.options;
 
-      var getStyleValue = function(attr) {
-        return parseInt(domUtils.getComputedStyle(container, attr));
-      };
+      var getStyleValue = attr => parseInt(domUtils.getComputedStyle(container, attr));
 
       if (utils.isString(container)) {
         container = document.getElementById(container);
@@ -463,7 +461,7 @@
         );
         container.style.overflow = "hidden";
         //解决如果是给定的百分比，会导致高度算不对的问题
-        setTimeout(function() {
+        setTimeout(() => {
           if (/%$/.test(options.initialFrameWidth)) {
             options.minFrameWidth = options.initialFrameWidth = container.offsetWidth;
             //如果这里给定宽度，会导致ie在拖动窗口大小时，编辑区域不随着变化
@@ -483,7 +481,7 @@
      * @private
      * @param { Element } doc 编辑器Iframe中的文档对象
      */
-    _setup: function(doc) {
+    _setup(doc) {
       var me = this;
       var options = me.options;
       if (ie) {
@@ -510,7 +508,7 @@
         if (form.tagName == "FORM") {
           me.form = form;
           if (me.options.autoSyncData) {
-            domUtils.on(me.window, "blur", function() {
+            domUtils.on(me.window, "blur", () => {
               setValue(form, me);
             });
           } else {
@@ -524,9 +522,9 @@
       if (options.initialContent) {
         if (options.autoClearinitialContent) {
           var oldExecCommand = me.execCommand;
-          me.execCommand = function() {
+          me.execCommand = function(...args) {
             me.fireEvent("firstBeforeExecCommand");
-            return oldExecCommand.apply(me, arguments);
+            return oldExecCommand.apply(me, args);
           };
           this._setDefaultContent(options.initialContent);
         } else this.setContent(options.initialContent, false, true);
@@ -539,7 +537,7 @@
       }
       //如果要求focus, 就把光标定位到内容开始
       if (options.focus) {
-        setTimeout(function() {
+        setTimeout(() => {
           me.focus(me.options.focusInEnd);
           //如果自动清除开着，就不需要做selectionchange;
           !me.options.autoClearinitialContent && me._selectionChange();
@@ -568,7 +566,7 @@
       me.fireEvent("ready");
       options.onready && options.onready.call(me);
       if (!browser.ie9below) {
-        domUtils.on(me.window, ["blur", "focus"], function(e) {
+        domUtils.on(me.window, ["blur", "focus"], e => {
           //chrome下会出现alt+tab切换时，导致选区位置不对
           if (e.type == "blur") {
             me._bakRange = me.selection.getRange();
@@ -589,10 +587,10 @@
       if (browser.gecko && browser.version <= 10902) {
         //修复ff3.6初始化进来，不能点击获得焦点
         me.body.contentEditable = false;
-        setTimeout(function() {
+        setTimeout(() => {
           me.body.contentEditable = true;
         }, 100);
-        setInterval(function() {
+        setInterval(() => {
           me.body.style.height = me.iframe.offsetHeight - 20 + "px";
         }, 100);
       }
@@ -619,18 +617,12 @@
      * @method sync
      * @param { String } formID 指定一个要同步数据的form的id,编辑器的数据会同步到你指定form下
      */
-    sync: function(formId) {
+    sync(formId) {
       var me = this;
 
       var form = formId
         ? document.getElementById(formId)
-        : domUtils.findParent(
-            me.iframe.parentNode,
-            function(node) {
-              return node.tagName == "FORM";
-            },
-            true
-          );
+        : domUtils.findParent(me.iframe.parentNode, node => node.tagName == "FORM", true);
 
       form && setValue(form, me);
     },
@@ -645,7 +637,7 @@
      * editor.setHeight(number);
      * ```
      */
-    setHeight: function(height, notSetHeight) {
+    setHeight(height, notSetHeight) {
       if (height !== parseInt(this.iframe.parentNode.style.height)) {
         this.iframe.parentNode.style.height = height + "px";
       }
@@ -677,7 +669,7 @@
      * editor.addshortcutkey("Underline", "ctrl+85"); //^U
      * ```
      */
-    addshortcutkey: function(cmd, keys) {
+    addshortcutkey(cmd, keys) {
       var obj = {};
       if (keys) {
         obj[cmd] = keys;
@@ -692,10 +684,10 @@
      * @method _bindshortcutKeys
      * @private
      */
-    _bindshortcutKeys: function() {
+    _bindshortcutKeys() {
       var me = this;
       var shortcutkeys = this.shortcutkeys;
-      me.addListener("keydown", function(type, e) {
+      me.addListener("keydown", (type, e) => {
         var keyCode = e.keyCode || e.which;
         for (var i in shortcutkeys) {
           var tmp = shortcutkeys[i].split(",");
@@ -749,7 +741,7 @@
      * } );
      * ```
      */
-    getContent: function(cmd, fn, notSetCursor, ignoreBlank, formatter) {
+    getContent(cmd, fn, notSetCursor, ignoreBlank, formatter) {
       var me = this;
       if (cmd && utils.isFunction(cmd)) {
         fn = cmd;
@@ -774,19 +766,19 @@
      * editor.getAllHtml(); //返回格式大致是: <html><head>...</head><body>...</body></html>
      * ```
      */
-    getAllHtml: function() {
+    getAllHtml() {
       var me = this;
       var headHtml = [];
       var html = "";
       me.fireEvent("getAllHtml", headHtml);
       if (browser.ie && browser.version > 8) {
         var headHtmlForIE9 = "";
-        utils.each(me.document.styleSheets, function(si) {
+        utils.each(me.document.styleSheets, si => {
           headHtmlForIE9 += si.href
             ? '<link rel="stylesheet" type="text/css" href="' + si.href + '" />'
             : "<style>" + si.cssText + "</style>";
         });
-        utils.each(me.document.getElementsByTagName("script"), function(si) {
+        utils.each(me.document.getElementsByTagName("script"), si => {
           headHtmlForIE9 += si.outerHTML;
         });
       }
@@ -816,16 +808,14 @@
      * console.log(editor.getPlainTxt()); //输出:"1\n2\n
      * ```
      */
-    getPlainTxt: function() {
+    getPlainTxt() {
       var reg = new RegExp(domUtils.fillChar, "g"); //ie要先去了\n在处理
       var html = this.body.innerHTML.replace(/[\n\r]/g, "");
       html = html
         .replace(/<(p|div)[^>]*>(<br\/?>|&nbsp;)<\/\1>/gi, "\n")
         .replace(/<br\/?>/gi, "\n")
         .replace(/<[^>/]+>/g, "")
-        .replace(/(\n)?<\/([^>]+)>/g, function(a, b, c) {
-          return dtd.$block[c] ? "\n" : b ? b : "";
-        });
+        .replace(/(\n)?<\/([^>]+)>/g, (a, b, c) => (dtd.$block[c] ? "\n" : b ? b : ""));
       //取出来的空格会有c2a0会变成乱码，处理这种情况\u00a0
       return html
         .replace(reg, "")
@@ -843,7 +833,7 @@
      * console.log(editor.getPlainTxt()); //输出:"12
      * ```
      */
-    getContentTxt: function() {
+    getContentTxt() {
       var reg = new RegExp(domUtils.fillChar, "g");
       //取出来的空格会有c2a0会变成乱码，处理这种情况\u00a0
       return this.body[browser.ie ? "innerText" : "textContent"].replace(reg, "").replace(/\u00a0/g, " ");
@@ -874,7 +864,7 @@
      * editor.setContent('<p>new text</p>', true); //插入的结果是<p>old text</p><p>new text</p>
      * ```
      */
-    setContent: function(html, isAppendTo, notFireSelectionchange) {
+    setContent(html, isAppendTo, notFireSelectionchange) {
       var me = this;
 
       me.fireEvent("beforesetcontent", html);
@@ -956,7 +946,7 @@
      * editor.focus(true)
      * ```
      */
-    focus: function(toEnd) {
+    focus(toEnd) {
       try {
         var me = this;
         var rng = me.selection.getRange();
@@ -984,10 +974,10 @@
         this.fireEvent("focus selectionchange");
       } catch (e) {}
     },
-    isFocus: function() {
+    isFocus() {
       return this.selection.isFocus();
     },
-    blur: function() {
+    blur() {
       var sel = this.selection.getNative();
       if (sel.empty && browser.ie) {
         var nativeRng = document.body.createTextRange();
@@ -1006,7 +996,7 @@
      * @method _initEvents
      * @private
      */
-    _initEvents: function() {
+    _initEvents() {
       var me = this;
       var doc = me.document;
       var win = me.window;
@@ -1028,14 +1018,14 @@
         me._proxyDomEvent
       );
       domUtils.on(win, ["focus", "blur"], me._proxyDomEvent);
-      domUtils.on(me.body, "drop", function(e) {
+      domUtils.on(me.body, "drop", e => {
         //阻止ff下默认的弹出新页面打开图片
         if (browser.gecko && e.stopPropagation) {
           e.stopPropagation();
         }
         me.fireEvent("contentchange");
       });
-      domUtils.on(doc, ["mouseup", "keydown"], function(evt) {
+      domUtils.on(doc, ["mouseup", "keydown"], evt => {
         //特殊键不触发selectionchange
         if (evt.type == "keydown" && (evt.ctrlKey || evt.metaKey || evt.shiftKey || evt.altKey)) {
           return;
@@ -1051,7 +1041,7 @@
      * @return { * } fireEvent的返回值
      * @see UE.EventBase:fireEvent(String)
      */
-    _proxyDomEvent: function(evt) {
+    _proxyDomEvent(evt) {
       if (this.fireEvent("before" + evt.type.replace(/^on/, "").toLowerCase()) === false) {
         return false;
       }
@@ -1065,7 +1055,7 @@
      * @method _selectionChange
      * @private
      */
-    _selectionChange: function(delay, evt) {
+    _selectionChange(delay, evt) {
       var me = this;
       //有光标才做selectionchange 为了解决未focus时点击source不能触发更改工具栏状态的问题（source命令notNeedUndo=1）
       //            if ( !me.selection.isFocus() ){
@@ -1084,7 +1074,7 @@
         }
       }
       clearTimeout(_selectionChangeTimer);
-      _selectionChangeTimer = setTimeout(function() {
+      _selectionChangeTimer = setTimeout(() => {
         if (!me.selection || !me.selection.getNative()) {
           return;
         }
@@ -1102,9 +1092,7 @@
         var bakGetIERange;
         if (ieRange) {
           bakGetIERange = me.selection.getIERange;
-          me.selection.getIERange = function() {
-            return ieRange;
-          };
+          me.selection.getIERange = () => ieRange;
         }
         me.selection.cache();
         if (bakGetIERange) {
@@ -1128,7 +1116,7 @@
      * @param { * } args 传给命令函数的参数
      * @return { * } 返回命令函数运行的返回值
      */
-    _callCmdFn: function(fnName, args) {
+    _callCmdFn(fnName, args) {
       var cmdName = args[0].toLowerCase();
       var cmd;
       var cmdFn;
@@ -1153,7 +1141,7 @@
      * editor.execCommand(cmdName);
      * ```
      */
-    execCommand: function(cmdName) {
+    execCommand(cmdName) {
       cmdName = cmdName.toLowerCase();
       var me = this;
       var result;
@@ -1163,13 +1151,13 @@
       }
       if (!cmd.notNeedUndo && !me.__hasEnterExecCommand) {
         me.__hasEnterExecCommand = true;
-        if (me.queryCommandState.apply(me, arguments) != -1) {
+        if (me.queryCommandState(...arguments) != -1) {
           me.fireEvent("saveScene");
-          me.fireEvent.apply(me, ["beforeexeccommand", cmdName].concat(arguments));
+          me.fireEvent(...["beforeexeccommand", cmdName].concat(arguments));
           result = this._callCmdFn("execCommand", arguments);
           //保存场景时，做了内容对比，再看是否进行contentchange触发，这里多触发了一次，去掉
           //                    (!cmd.ignoreContentChange && !me._ignoreContentChange) && me.fireEvent('contentchange');
-          me.fireEvent.apply(me, ["afterexeccommand", cmdName].concat(arguments));
+          me.fireEvent(...["afterexeccommand", cmdName].concat(arguments));
           me.fireEvent("saveScene");
         }
         me.__hasEnterExecCommand = false;
@@ -1196,7 +1184,7 @@
      * ```
      * @see COMMAND.LIST
      */
-    queryCommandState: function(cmdName) {
+    queryCommandState(cmdName) {
       return this._callCmdFn("queryCommandState", arguments);
     },
 
@@ -1210,7 +1198,7 @@
      * @grammar editor.queryCommandValue(cmdName)  =>  {*}
      * @see COMMAND.LIST
      */
-    queryCommandValue: function(cmdName) {
+    queryCommandValue(cmdName) {
       return this._callCmdFn("queryCommandValue", arguments);
     },
 
@@ -1236,7 +1224,7 @@
      * editor.hasContents(['span']);
      * ```
      */
-    hasContents: function(tags) {
+    hasContents(tags) {
       if (tags) {
         for (var i = 0, ci; (ci = tags[i++]); ) {
           if (this.document.getElementsByTagName(ci).length > 0) {
@@ -1269,7 +1257,7 @@
      * editor.reset()
      * ```
      */
-    reset: function() {
+    reset() {
       this.fireEvent("reset");
     },
 
@@ -1281,7 +1269,7 @@
      * editor.setEnabled()
      * ```
      */
-    setEnabled: function() {
+    setEnabled() {
       var me = this;
       var range;
       if (me.body.contentEditable == "false") {
@@ -1306,7 +1294,7 @@
         me.fireEvent("selectionchange");
       }
     },
-    enable: function() {
+    enable() {
       return this.setEnabled();
     },
 
@@ -1333,7 +1321,7 @@
      * editor.setDisabled(['bold','insertimage']); //禁用工具栏中除加粗和插入图片之外的所有功能
      * ```
      */
-    setDisabled: function(except) {
+    setDisabled(except) {
       var me = this;
       except = except ? (utils.isArray(except) ? except : [except]) : [];
       if (me.body.contentEditable == "true") {
@@ -1345,20 +1333,20 @@
         me.bkqueryCommandValue = me.queryCommandValue;
         me.queryCommandState = function(type) {
           if (utils.indexOf(except, type) != -1) {
-            return me.bkqueryCommandState.apply(me, arguments);
+            return me.bkqueryCommandState(...arguments);
           }
           return -1;
         };
         me.queryCommandValue = function(type) {
           if (utils.indexOf(except, type) != -1) {
-            return me.bkqueryCommandValue.apply(me, arguments);
+            return me.bkqueryCommandValue(...arguments);
           }
           return null;
         };
         me.fireEvent("selectionchange");
       }
     },
-    disable: function(except) {
+    disable(except) {
       return this.setDisabled(except);
     },
 
@@ -1368,13 +1356,13 @@
      * @private
      * @param  { String } cont 要存入的内容
      */
-    _setDefaultContent: (function() {
+    _setDefaultContent: (() => {
       function clear() {
         var me = this;
         if (me.document.getElementById("initContent")) {
           me.body.innerHTML = "<p>" + (ie ? "" : "<br/>") + "</p>";
           me.removeListener("firstBeforeExecCommand focus", clear);
-          setTimeout(function() {
+          setTimeout(() => {
             me.focus();
             me._selectionChange();
           }, 0);
@@ -1397,7 +1385,7 @@
      * editor.setShow()
      * ```
      */
-    setShow: function() {
+    setShow() {
       var me = this;
       var range = me.selection.getRange();
       if (me.container.style.display == "none") {
@@ -1409,13 +1397,13 @@
           range.setStartAtFirst(me.body).collapse(true);
         }
         //ie下focus实效，所以做了个延迟
-        setTimeout(function() {
+        setTimeout(() => {
           range.select(true);
         }, 100);
         me.container.style.display = "";
       }
     },
-    show: function() {
+    show() {
       return this.setShow();
     },
     /**
@@ -1426,14 +1414,14 @@
      * editor.setHide()
      * ```
      */
-    setHide: function() {
+    setHide() {
       var me = this;
       if (!me.lastBk) {
         me.lastBk = me.selection.getRange().createBookmark(true);
       }
       me.container.style.display = "none";
     },
-    hide: function() {
+    hide() {
       return this.setHide();
     },
 
@@ -1447,7 +1435,7 @@
      * editor.getLang('contextMenu.delete'); //如果当前是中文，那返回是的是'删除'
      * ```
      */
-    getLang: function(path) {
+    getLang(path) {
       var lang = UE.I18N[this.options.lang];
       if (!lang) {
         throw Error("not import language file");
@@ -1481,7 +1469,7 @@
      * editor.getContentLength() //返回3
      * ```
      */
-    getContentLength: function(ingoneHtml, tagNames) {
+    getContentLength(ingoneHtml, tagNames) {
       var count = this.getContent(false, false, true).length;
       if (ingoneHtml) {
         tagNames = (tagNames || []).concat(["hr", "img", "iframe"]);
@@ -1506,7 +1494,7 @@
      * });
      * ```
      */
-    addInputRule: function(rule) {
+    addInputRule(rule) {
       this.inputRules.push(rule);
     },
 
@@ -1521,7 +1509,7 @@
      * ```
      * @see UE.Editor:addInputRule
      */
-    filterInputRule: function(root) {
+    filterInputRule(root) {
       for (var i = 0, ci; (ci = this.inputRules[i++]); ) {
         ci.call(this, root);
       }
@@ -1540,7 +1528,7 @@
      * });
      * ```
      */
-    addOutputRule: function(rule) {
+    addOutputRule(rule) {
       this.outputRules.push(rule);
     },
 
@@ -1555,7 +1543,7 @@
      * ```
      * @see UE.Editor:addOutputRule
      */
-    filterOutputRule: function(root) {
+    filterOutputRule(root) {
       for (var i = 0, ci; (ci = this.outputRules[i++]); ) {
         ci.call(this, root);
       }
@@ -1574,7 +1562,7 @@
      * editor.getActionUrl('imageManager'); //返回 "/ueditor/php/controller.php?action=listimage"
      * ```
      */
-    getActionUrl: function(action) {
+    getActionUrl(action) {
       var actionName = this.getOpt(action) || action;
       var imageUrl = this.getOpt("imageUrl");
       var serverUrl = this.getOpt("serverUrl");

@@ -10,7 +10,7 @@ UE.plugin.register("copy", function() {
     var client = (me.zeroclipboard = new ZeroClipboard());
 
     // 复制内容
-    client.on("copy", function(e) {
+    client.on("copy", e => {
       var client = e.client;
       var rng = me.selection.getRange();
       var div = document.createElement("div");
@@ -21,7 +21,7 @@ UE.plugin.register("copy", function() {
       rng.select();
     });
     // hover事件传递到target
-    client.on("mouseover mouseout", function(e) {
+    client.on("mouseover mouseout", e => {
       var target = e.target;
       if (target) {
         if (e.type == "mouseover") {
@@ -32,7 +32,7 @@ UE.plugin.register("copy", function() {
       }
     });
     // flash加载不成功
-    client.on("wrongflash noflash", function() {
+    client.on("wrongflash noflash", () => {
       ZeroClipboard.destroy();
     });
 
@@ -42,7 +42,7 @@ UE.plugin.register("copy", function() {
 
   return {
     bindEvents: {
-      ready: function() {
+      ready() {
         if (!browser.ie) {
           if (window.ZeroClipboard) {
             initZeroClipboard();
@@ -55,7 +55,7 @@ UE.plugin.register("copy", function() {
                 type: "text/javascript",
                 defer: "defer"
               },
-              function() {
+              () => {
                 initZeroClipboard();
               }
             );
@@ -65,7 +65,7 @@ UE.plugin.register("copy", function() {
     },
     commands: {
       copy: {
-        execCommand: function(cmd) {
+        execCommand(cmd) {
           if (!me.document.execCommand("copy")) {
             alert(me.getLang("copymsg"));
           }

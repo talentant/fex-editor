@@ -38,14 +38,13 @@ UE.plugins["justify"] = function() {
     justify: 1
   };
 
-  var doJustify = function(range, style) {
+  var doJustify = (range, style) => {
     var bookmark = range.createBookmark();
 
-    var filterFn = function(node) {
-      return node.nodeType == 1
+    var filterFn = node =>
+      node.nodeType == 1
         ? node.tagName.toLowerCase() != "br" && !domUtils.isBookmarkNode(node)
         : !domUtils.isWhitespace(node);
-    };
 
     range.enlarge(true);
     var bookmark2 = range.createBookmark();
@@ -57,9 +56,7 @@ UE.plugins["justify"] = function() {
         tmpRange.setStartBefore(current);
         while (current && current !== bookmark2.end && !block(current)) {
           tmpNode = current;
-          current = domUtils.getNextDomNode(current, false, null, function(node) {
-            return !block(node);
-          });
+          current = domUtils.getNextDomNode(current, false, null, node => !block(node));
         }
         tmpRange.setEndAfter(tmpNode);
         var common = tmpRange.getCommonAncestor();
@@ -83,7 +80,7 @@ UE.plugins["justify"] = function() {
   };
 
   UE.commands["justify"] = {
-    execCommand: function(cmdName, align) {
+    execCommand(cmdName, align) {
       var range = this.selection.getRange();
       var txt;
 
@@ -102,12 +99,12 @@ UE.plugins["justify"] = function() {
 
       return true;
     },
-    queryCommandValue: function() {
+    queryCommandValue() {
       var startNode = this.selection.getStart();
       var value = domUtils.getComputedStyle(startNode, "text-align");
       return defaultValue[value] ? value : "left";
     },
-    queryCommandState: function() {
+    queryCommandState() {
       var start = this.selection.getStart();
       var cell = start && domUtils.findParentByTagName(start, ["td", "th", "caption"], true);
 

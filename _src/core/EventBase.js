@@ -28,7 +28,7 @@
  * UE.EventBase.call(editor);
  * ```
  */
-var EventBase = (UE.EventBase = function() {});
+var EventBase = (UE.EventBase = () => {});
 
 EventBase.prototype = {
   /**
@@ -53,21 +53,21 @@ EventBase.prototype = {
    * ```
    * @see UE.EventBase:fireEvent(String)
    */
-  addListener: function(types, listener) {
+  addListener(types, listener) {
     types = utils.trim(types).split(/\s+/);
     for (var i = 0, ti; (ti = types[i++]); ) {
       getListener(this, ti, true).push(listener);
     }
   },
 
-  on: function(types, listener) {
+  on(types, listener) {
     return this.addListener(types, listener);
   },
-  off: function(types, listener) {
+  off(types, listener) {
     return this.removeListener(types, listener);
   },
-  trigger: function() {
-    return this.fireEvent.apply(this, arguments);
+  trigger(...args) {
+    return this.fireEvent(...args);
   },
   /**
    * 移除事件监听器
@@ -80,7 +80,7 @@ EventBase.prototype = {
    * editor.removeListener("selectionchange",changeCallback);
    * ```
    */
-  removeListener: function(types, listener) {
+  removeListener(types, listener) {
     types = utils.trim(types).split(/\s+/);
     for (var i = 0, ti; (ti = types[i++]); ) {
       utils.removeItem(getListener(this, ti) || [], listener);
@@ -119,8 +119,8 @@ EventBase.prototype = {
    * editor.fireEvent("selectionchange", "Hello", "World");
    * ```
    */
-  fireEvent: function() {
-    var types = arguments[0];
+  fireEvent(...args) {
+    var types = args[0];
     types = utils.trim(types).split(" ");
     for (var i = 0, ti; (ti = types[i++]); ) {
       var listeners = getListener(this, ti);
@@ -131,7 +131,7 @@ EventBase.prototype = {
         k = listeners.length;
         while (k--) {
           if (!listeners[k]) continue;
-          t = listeners[k].apply(this, arguments);
+          t = listeners[k].apply(this, args);
           if (t === true) {
             return t;
           }
@@ -141,7 +141,7 @@ EventBase.prototype = {
         }
       }
       if ((t = this["on" + ti.toLowerCase()])) {
-        r = t.apply(this, arguments);
+        r = t.apply(this, args);
       }
     }
     return r;

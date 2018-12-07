@@ -1,6 +1,6 @@
 ///import core
 ///import uicore
-(function() {
+(() => {
   var utils = baidu.editor.utils;
   var UIBase = baidu.editor.ui.UIBase;
 
@@ -11,27 +11,27 @@
   });
 
   ColorPicker.prototype = {
-    getHtmlTpl: function() {
+    getHtmlTpl() {
       return genColorPicker(this.noColorText, this.editor);
     },
-    _onTableClick: function(evt) {
+    _onTableClick(evt) {
       var tgt = evt.target || evt.srcElement;
       var color = tgt.getAttribute("data-color");
       if (color) {
         this.fireEvent("pickcolor", color);
       }
     },
-    _onTableOver: function(evt) {
+    _onTableOver(evt) {
       var tgt = evt.target || evt.srcElement;
       var color = tgt.getAttribute("data-color");
       if (color) {
         this.getDom("preview").style.backgroundColor = color;
       }
     },
-    _onTableOut: function() {
+    _onTableOut() {
       this.getDom("preview").style.backgroundColor = "";
     },
-    _onPickNoColor: function() {
+    _onPickNoColor() {
       this.fireEvent("picknocolor");
     }
   };

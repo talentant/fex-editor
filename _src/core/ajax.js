@@ -8,7 +8,7 @@
  * 提供对ajax请求的支持
  * @module UE.ajax
  */
-UE.ajax = (function() {
+UE.ajax = (() => {
   //创建一个ajaxRequest对象
   var fnStr = "XMLHttpRequest()";
   try {
@@ -58,8 +58,8 @@ UE.ajax = (function() {
         timeout: 5000,
         async: true,
         data: {}, //需要传递对象的话只能覆盖
-        onsuccess: function() {},
-        onerror: function() {}
+        onsuccess() {},
+        onerror() {}
       };
 
     if (typeof url === "object") {
@@ -75,7 +75,7 @@ UE.ajax = (function() {
       submitStr += (submitStr ? "&" : "") + json2str(ajaxOpts.data);
     }
     //超时检测
-    var timerID = setTimeout(function() {
+    var timerID = setTimeout(() => {
       if (xhr.readyState != 4) {
         timeIsOut = true;
         xhr.abort();
@@ -87,7 +87,7 @@ UE.ajax = (function() {
     var str =
       url + (url.indexOf("?") == -1 ? "?" : "&") + (method == "POST" ? "" : submitStr + "&noCache=" + +new Date());
     xhr.open(method, str, ajaxOpts.async);
-    xhr.onreadystatechange = function() {
+    xhr.onreadystatechange = () => {
       if (xhr.readyState == 4) {
         if (!timeIsOut && xhr.status == 200) {
           ajaxOpts.onsuccess(xhr);
@@ -105,7 +105,7 @@ UE.ajax = (function() {
   }
 
   function doJsonp(url, opts) {
-    var successhandler = opts.onsuccess || function() {};
+    var successhandler = opts.onsuccess || (() => {});
     var scr = document.createElement("SCRIPT");
     var options = opts || {};
     var charset = options["charset"];
@@ -157,20 +157,20 @@ UE.ajax = (function() {
     }
 
     function getCallBack(onTimeOut) {
-      return function() {
+      return function(...args) {
         try {
           if (onTimeOut) {
             options.onerror && options.onerror();
           } else {
             try {
               clearTimeout(timer);
-              successhandler.apply(window, arguments);
+              successhandler.apply(window, args);
             } catch (e) {}
           }
         } catch (exception) {
           options.onerror && options.onerror.call(window, exception);
         } finally {
-          options.oncomplete && options.oncomplete.apply(window, arguments);
+          options.oncomplete && options.oncomplete.apply(window, args);
           scr.parentNode && scr.parentNode.removeChild(scr);
           window[callbackFnName] = null;
           try {
@@ -239,16 +239,16 @@ UE.ajax = (function() {
      * } );
      * ```
      */
-    request: function(url, opts) {
+    request(url, opts) {
       if (opts && opts.dataType == "jsonp") {
         doJsonp(url, opts);
       } else {
         doAjax(url, opts);
       }
     },
-    getJSONP: function(url, data, fn) {
+    getJSONP(url, data, fn) {
       var opts = {
-        data: data,
+        data,
         oncomplete: fn
       };
       doJsonp(url, opts);

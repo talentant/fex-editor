@@ -22,7 +22,7 @@ UE.plugins["shortcutmenu"] = function() {
     var me = this;
 
     var customEvt = {
-      type: type,
+      type,
       target: e.target || e.srcElement,
       screenX: e.screenX,
       screenY: e.screenY,
@@ -30,13 +30,13 @@ UE.plugins["shortcutmenu"] = function() {
       clientY: e.clientY
     };
 
-    setTimeout(function() {
+    setTimeout(() => {
       var rng = me.selection.getRange();
       if (rng.collapsed === false || type == "contextmenu") {
         if (!menu) {
           menu = new baidu.editor.ui.ShortCutMenu({
             editor: me,
-            items: items,
+            items,
             theme: me.options.theme,
             className: "edui-shortcutmenu"
           });
@@ -66,7 +66,7 @@ UE.plugins["shortcutmenu"] = function() {
     }
   });
 
-  me.addListener("keydown", function(type) {
+  me.addListener("keydown", type => {
     if (type == "keydown") {
       menu && !menu.isHidden && menu.hide();
     }

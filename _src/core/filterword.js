@@ -20,16 +20,14 @@
  * UE.filterWord(html);
  * ```
  */
-var filterWord = (UE.filterWord = (function() {
+var filterWord = (UE.filterWord = (() => {
   //是否是word过来的内容
   function isWordDocument(str) {
     return /(class="?Mso|style="[^"]*\bmso\-|w:WordDocument|<(v|o):|lang=)/gi.test(str);
   }
   //去掉小数
   function transUnit(v) {
-    v = v.replace(/[\d.]+\w+/g, function(m) {
-      return utils.transUnitToPx(m);
-    });
+    v = v.replace(/[\d.]+\w+/g, m => utils.transUnitToPx(m));
     return v;
   }
 
@@ -39,7 +37,7 @@ var filterWord = (UE.filterWord = (function() {
         .replace(/[\t\r\n]+/g, " ")
         .replace(/<!--[\s\S]*?-->/gi, "")
         //转换图片
-        .replace(/<v:shape [^>]*>[\s\S]*?.<\/v:shape>/gi, function(str) {
+        .replace(/<v:shape [^>]*>[\s\S]*?.<\/v:shape>/gi, str => {
           //opera能自己解析出image所这里直接返回空
           if (browser.opera) {
             return "";
@@ -67,25 +65,23 @@ var filterWord = (UE.filterWord = (function() {
         )
         .replace(/<p [^>]*class="?MsoHeading"?[^>]*>(.*?)<\/p>/gi, "<p><strong>$1</strong></p>")
         //去掉多余的属性
-        .replace(/\s+(class|lang|align)\s*=\s*(['"]?)([\w-]+)\2/gi, function(str, name, marks, val) {
-          //保留list的标示
-          return name == "class" && val == "MsoListParagraph" ? str : "";
-        })
+        .replace(/\s+(class|lang|align)\s*=\s*(['"]?)([\w-]+)\2/gi, (
+          str,
+          name,
+          marks,
+          val //保留list的标示
+        ) => (name == "class" && val == "MsoListParagraph" ? str : ""))
         //清除多余的font/span不能匹配&nbsp;有可能是空格
-        .replace(/<(font|span)[^>]*>(\s*)<\/\1>/gi, function(a, b, c) {
-          return c.replace(/[\t\r\n ]+/g, " ");
-        })
+        .replace(/<(font|span)[^>]*>(\s*)<\/\1>/gi, (a, b, c) => c.replace(/[\t\r\n ]+/g, " "))
         //处理style的问题
-        .replace(/(<[a-z][^>]*)\sstyle=(["'])([^\2]*?)\2/gi, function(str, tag, tmp, style) {
+        .replace(/(<[a-z][^>]*)\sstyle=(["'])([^\2]*?)\2/gi, (str, tag, tmp, style) => {
           var n = [];
 
           var s = style
             .replace(/^\s+|\s+$/, "")
             .replace(/&#39;/g, "'")
             .replace(/&quot;/gi, "'")
-            .replace(/[\d.]+(cm|pt)/g, function(str) {
-              return utils.transUnitToPx(str);
-            })
+            .replace(/[\d.]+(cm|pt)/g, str => utils.transUnitToPx(str))
             .split(/;\s*/g);
 
           for (var i = 0, v; (v = s[i]); i++) {
@@ -187,7 +183,5 @@ var filterWord = (UE.filterWord = (function() {
     );
   }
 
-  return function(html) {
-    return isWordDocument(html) ? filterPasteWord(html) : html;
-  };
+  return html => (isWordDocument(html) ? filterPasteWord(html) : html);
 })());

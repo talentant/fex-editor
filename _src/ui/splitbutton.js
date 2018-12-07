@@ -1,7 +1,7 @@
 ///import core
 ///import uicore
 ///import ui/stateful.js
-(function() {
+(() => {
   var utils = baidu.editor.utils;
   var uiUtils = baidu.editor.ui.uiUtils;
   var domUtils = baidu.editor.dom.domUtils;
@@ -17,7 +17,7 @@
     popup: null,
     uiName: "splitbutton",
     title: "",
-    initSplitButton: function() {
+    initSplitButton() {
       this.initUIBase();
       this.Stateful_init();
       var me = this;
@@ -28,11 +28,11 @@
       }
     },
     _UIBase_postRender: UIBase.prototype.postRender,
-    postRender: function() {
+    postRender() {
       this.Stateful_postRender();
       this._UIBase_postRender();
     },
-    setPopup: function(popup) {
+    setPopup(popup) {
       if (this.popup === popup) return;
       if (this.popup != null) {
         this.popup.dispose();
@@ -58,13 +58,13 @@
       );
       this.popup = popup;
     },
-    _onPopupShow: function() {
+    _onPopupShow() {
       this.addState("opened");
     },
-    _onPopupHide: function() {
+    _onPopupHide() {
       this.removeState("opened");
     },
-    getHtmlTpl: function() {
+    getHtmlTpl() {
       return (
         '<div id="##" class="edui-box %%">' +
         "<div " +
@@ -78,19 +78,19 @@
         "</div></div></div>"
       );
     },
-    showPopup: function() {
+    showPopup() {
       // 当popup往上弹出的时候，做特殊处理
       var rect = uiUtils.getClientRect(this.getDom());
       rect.top -= this.popup.SHADOW_RADIUS;
       rect.height += this.popup.SHADOW_RADIUS;
       this.popup.showAnchorRect(rect);
     },
-    _onArrowClick: function(event, el) {
+    _onArrowClick(event, el) {
       if (!this.isDisabled()) {
         this.showPopup();
       }
     },
-    _onButtonClick: function() {
+    _onButtonClick() {
       if (!this.isDisabled()) {
         this.fireEvent("buttonclick");
       }

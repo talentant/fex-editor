@@ -1,6 +1,6 @@
 ///import core
 ///import uicore
-(function() {
+(() => {
   var utils = baidu.editor.utils;
   var UIBase = baidu.editor.ui.UIBase;
 
@@ -9,10 +9,10 @@
     this.initAutoTypeSetPicker();
   });
   AutoTypeSetPicker.prototype = {
-    initAutoTypeSetPicker: function() {
+    initAutoTypeSetPicker() {
       this.initUIBase();
     },
-    getHtmlTpl: function() {
+    getHtmlTpl() {
       var me = this.editor;
       var opt = me.options.autotypeset;
       var lang = me.getLang("autoTypeSet");

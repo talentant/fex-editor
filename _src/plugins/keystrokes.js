@@ -2,7 +2,7 @@
 UE.plugins["keystrokes"] = function() {
   var me = this;
   var collapsed = true;
-  me.addListener("keydown", function(type, evt) {
+  me.addListener("keydown", (type, evt) => {
     var keyCode = evt.keyCode || evt.which;
     var rng = me.selection.getRange();
 
@@ -127,9 +127,7 @@ UE.plugins["keystrokes"] = function() {
       if (range.collapsed) {
         range.insertNode(span.cloneNode(true).firstChild).setCursor(true);
       } else {
-        var filterFn = function(node) {
-          return domUtils.isBlockElm(node) && !excludeTagNameForTabKey[node.tagName.toLowerCase()];
-        };
+        var filterFn = node => domUtils.isBlockElm(node) && !excludeTagNameForTabKey[node.tagName.toLowerCase()];
         //普通的情况
         start = domUtils.findParent(range.startContainer, filterFn, true);
         end = domUtils.findParent(range.endContainer, filterFn, true);
@@ -173,7 +171,7 @@ UE.plugins["keystrokes"] = function() {
 
     /* 修复在编辑区域快捷键 (Mac:meta+alt+I; Win:ctrl+shift+I) 打不开 chrome 控制台的问题 */
     browser.chrome &&
-      me.on("keydown", function(type, e) {
+      me.on("keydown", (type, e) => {
         var keyCode = e.keyCode || e.which;
         if (((e.metaKey && e.altKey) || (e.ctrlKey && e.shiftKey)) && keyCode == 73) {
           return true;

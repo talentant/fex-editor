@@ -23,7 +23,7 @@ UE.plugins["formatmatch"] = function() {
   var img;
   var flag = 0;
 
-  me.addListener("reset", function() {
+  me.addListener("reset", () => {
     list = [];
     flag = 0;
   });
@@ -88,7 +88,7 @@ UE.plugins["formatmatch"] = function() {
   }
 
   me.commands["formatmatch"] = {
-    execCommand: function(cmdName) {
+    execCommand(cmdName) {
       if (flag) {
         flag = 0;
         list = [];
@@ -101,9 +101,7 @@ UE.plugins["formatmatch"] = function() {
       if (!img || img.tagName != "IMG") {
         range.collapse(true).shrinkBoundary();
         var start = range.startContainer;
-        list = domUtils.findParents(start, true, function(node) {
-          return !domUtils.isBlockElm(node) && node.nodeType == 1;
-        });
+        list = domUtils.findParents(start, true, node => !domUtils.isBlockElm(node) && node.nodeType == 1);
         //a不能加入格式刷, 并且克隆节点
         for (var i = 0, ci; (ci = list[i]); i++) {
           if (ci.tagName == "A") {
@@ -116,7 +114,7 @@ UE.plugins["formatmatch"] = function() {
       me.addListener("mouseup", addList);
       flag = 1;
     },
-    queryCommandState: function() {
+    queryCommandState() {
       return flag;
     },
     notNeedUndo: 1

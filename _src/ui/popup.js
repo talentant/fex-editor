@@ -1,6 +1,6 @@
 ///import core
 ///import uicore
-(function() {
+(() => {
   var utils = baidu.editor.utils;
   var uiUtils = baidu.editor.ui.uiUtils;
   var domUtils = baidu.editor.dom.domUtils;
@@ -41,11 +41,11 @@
     autoRender: true,
     canSideLeft: true,
     canSideUp: true,
-    initPopup: function() {
+    initPopup() {
       this.initUIBase();
       allPopups.push(this);
     },
-    getHtmlTpl: function() {
+    getHtmlTpl() {
       return (
         '<div id="##" class="edui-popup %%" onmousedown="return false;">' +
         ' <div id="##_body" class="edui-popup-body">' +
@@ -58,7 +58,7 @@
         "</div>"
       );
     },
-    getContentHtmlTpl: function() {
+    getContentHtmlTpl() {
       if (this.content) {
         if (typeof this.content == "string") {
           return this.content;
@@ -69,7 +69,7 @@
       }
     },
     _UIBase_postRender: UIBase.prototype.postRender,
-    postRender: function() {
+    postRender() {
       if (this.content instanceof UIBase) {
         this.content.postRender();
       }
@@ -96,7 +96,7 @@
 
         //阻止在combox上的鼠标滚轮事件, 防止用户的正常操作被误解
         if (window.XMLHttpRequest) {
-          domUtils.on(content, "onmousewheel" in document.body ? "mousewheel" : "DOMMouseScroll", function(e) {
+          domUtils.on(content, "onmousewheel" in document.body ? "mousewheel" : "DOMMouseScroll", e => {
             if (e.preventDefault) {
               e.preventDefault();
             } else {
@@ -111,7 +111,7 @@
           });
         } else {
           //ie6
-          domUtils.on(this.getDom(), "mousewheel", function(e) {
+          domUtils.on(this.getDom(), "mousewheel", e => {
             e.returnValue = false;
 
             me.getDom("content").scrollTop -= (e.wheelDelta / 120) * 60;
@@ -122,16 +122,16 @@
       this.hide(true);
       this._UIBase_postRender();
     },
-    _doAutoRender: function() {
+    _doAutoRender() {
       if (!this.getDom() && this.autoRender) {
         this.render();
       }
     },
-    mesureSize: function() {
+    mesureSize() {
       var box = this.getDom("content");
       return uiUtils.getClientRect(box);
     },
-    fitSize: function() {
+    fitSize() {
       if (this.captureWheel && this.sized) {
         return this.__size;
       }
@@ -152,10 +152,10 @@
       this.captureWheel && (this.getDom("content").style.overflow = "auto");
       return size;
     },
-    showAnchor: function(element, hoz) {
+    showAnchor(element, hoz) {
       this.showAnchorRect(uiUtils.getClientRect(element), hoz);
     },
-    showAnchorRect: function(rect, hoz, adj) {
+    showAnchorRect(rect, hoz, adj) {
       this._doAutoRender();
       var vpRect = uiUtils.getViewportRect();
       this.getDom().style.visibility = "hidden";
@@ -180,8 +180,8 @@
 
       var popEl = this.getDom();
       uiUtils.setViewportOffset(popEl, {
-        left: left,
-        top: top
+        left,
+        top
       });
       domUtils.removeClasses(popEl, ANCHOR_CLASSES);
       popEl.className += " " + ANCHOR_CLASSES[(sideUp ? 1 : 0) * 2 + (sideLeft ? 1 : 0)];
@@ -191,12 +191,12 @@
       }
       this.getDom().style.visibility = "visible";
     },
-    showAt: function(offset) {
+    showAt(offset) {
       var left = offset.left;
       var top = offset.top;
       var rect = {
-        left: left,
-        top: top,
+        left,
+        top,
         right: left,
         bottom: top,
         height: 0,
@@ -204,7 +204,7 @@
       };
       this.showAnchorRect(rect, false, true);
     },
-    _show: function() {
+    _show() {
       if (this._hidden) {
         var box = this.getDom();
         box.style.display = "";
@@ -215,14 +215,14 @@
         this.fireEvent("show");
       }
     },
-    isHidden: function() {
+    isHidden() {
       return this._hidden;
     },
-    show: function() {
+    show() {
       this._doAutoRender();
       this._show();
     },
-    hide: function(notNofity) {
+    hide(notNofity) {
       if (!this._hidden && this.getDom()) {
         this.getDom().style.display = "none";
         this._hidden = true;
@@ -231,17 +231,17 @@
         }
       }
     },
-    queryAutoHide: function(el) {
+    queryAutoHide(el) {
       return !el || !uiUtils.contains(this.getDom(), el);
     }
   };
   utils.inherits(Popup, UIBase);
 
-  domUtils.on(document, "mousedown", function(evt) {
+  domUtils.on(document, "mousedown", evt => {
     var el = evt.target || evt.srcElement;
     closeAllPopup(evt, el);
   });
-  domUtils.on(window, "scroll", function(evt, el) {
+  domUtils.on(window, "scroll", (evt, el) => {
     closeAllPopup(evt, el);
   });
 })();

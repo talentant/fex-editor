@@ -52,7 +52,7 @@ function switchTab(tabParentId) {
     };
   }
 }
-$G("searchtab").onmousedown = function() {
+$G("searchtab").onmousedown = () => {
   $G("search-msg").innerHTML = "";
   $G("replace-msg").innerHTML = "";
 };
@@ -61,7 +61,7 @@ function getMatchCase(id) {
   return $G(id).checked ? true : false;
 }
 //查找
-$G("nextFindBtn").onclick = function(txt, dir, mcase) {
+$G("nextFindBtn").onclick = (txt, dir, mcase) => {
   var findtxt = $G("findtxt").value;
   var obj;
   if (!findtxt) {
@@ -81,7 +81,7 @@ $G("nextFindBtn").onclick = function(txt, dir, mcase) {
       .select();
   }
 };
-$G("nextReplaceBtn").onclick = function(txt, dir, mcase) {
+$G("nextReplaceBtn").onclick = (txt, dir, mcase) => {
   var findtxt = $G("findtxt1").value;
   var obj;
   if (!findtxt) {
@@ -94,7 +94,7 @@ $G("nextReplaceBtn").onclick = function(txt, dir, mcase) {
   };
   frCommond(obj);
 };
-$G("preFindBtn").onclick = function(txt, dir, mcase) {
+$G("preFindBtn").onclick = (txt, dir, mcase) => {
   var findtxt = $G("findtxt").value;
   var obj;
   if (!findtxt) {
@@ -109,7 +109,7 @@ $G("preFindBtn").onclick = function(txt, dir, mcase) {
     $G("search-msg").innerHTML = lang.getStart;
   }
 };
-$G("preReplaceBtn").onclick = function(txt, dir, mcase) {
+$G("preReplaceBtn").onclick = (txt, dir, mcase) => {
   var findtxt = $G("findtxt1").value;
   var obj;
   if (!findtxt) {
@@ -123,7 +123,7 @@ $G("preReplaceBtn").onclick = function(txt, dir, mcase) {
   frCommond(obj);
 };
 //替换
-$G("repalceBtn").onclick = function() {
+$G("repalceBtn").onclick = () => {
   editor.trigger("clearLastSearchResult");
   var findtxt = $G("findtxt1").value.replace(/^\s|\s$/g, "");
   var obj;
@@ -143,7 +143,7 @@ $G("repalceBtn").onclick = function() {
   frCommond(obj);
 };
 //全部替换
-$G("repalceAllBtn").onclick = function() {
+$G("repalceAllBtn").onclick = () => {
   var findtxt = $G("findtxt1").value.replace(/^\s|\s$/g, "");
   var obj;
   var replacetxt = $G("replacetxt").value.replace(/^\s|\s$/g, "");
@@ -165,11 +165,9 @@ $G("repalceAllBtn").onclick = function() {
   }
 };
 //执行
-var frCommond = function(obj) {
-  return editor.execCommand("searchreplace", obj);
-};
+var frCommond = obj => editor.execCommand("searchreplace", obj);
 switchTab("searchtab");
 
-dialog.onclose = function() {
+dialog.onclose = () => {
   editor.trigger("clearLastSearchResult");
 };

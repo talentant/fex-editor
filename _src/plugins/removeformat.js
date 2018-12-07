@@ -25,7 +25,7 @@ UE.plugins["removeformat"] = function() {
     removeFormatAttributes: "class,style,lang,width,height,align,hspace,valign"
   });
   me.commands["removeformat"] = {
-    execCommand: function(cmdName, tags, style, attrs, notIncludeA) {
+    execCommand(cmdName, tags, style, attrs, notIncludeA) {
       var tagReg = new RegExp("^(?:" + (tags || this.options.removeFormatTags).replace(/,/g, "|") + ")$", "i");
       var removeFormatAttributes = style ? [] : (attrs || this.options.removeFormatAttributes).split(",");
       var range = new dom.Range(this.document);
@@ -33,9 +33,7 @@ UE.plugins["removeformat"] = function() {
       var node;
       var parent;
 
-      var filter = function(node) {
-        return node.nodeType == 1;
-      };
+      var filter = node => node.nodeType == 1;
 
       function isRedundantSpan(node) {
         if (node.nodeType == 3 || node.tagName.toLowerCase() != "span") {

@@ -5,10 +5,10 @@
  * Time: 6:15 PM
  * To change this template use File | Settings | File Templates.
  */
-UE.plugin = (function() {
+UE.plugin = (() => {
   var _plugins = {};
   return {
-    register: function(pluginName, fn, oldOptionName, afterDisabled) {
+    register(pluginName, fn, oldOptionName, afterDisabled) {
       if (oldOptionName && utils.isFunction(oldOptionName)) {
         afterDisabled = oldOptionName;
         oldOptionName = null;
@@ -17,35 +17,35 @@ UE.plugin = (function() {
         optionName: oldOptionName || pluginName,
         execFn: fn,
         //当插件被禁用时执行
-        afterDisabled: afterDisabled
+        afterDisabled
       };
     },
-    load: function(editor) {
-      utils.each(_plugins, function(plugin) {
+    load(editor) {
+      utils.each(_plugins, plugin => {
         var _export = plugin.execFn.call(editor);
         if (editor.options[plugin.optionName] !== false) {
           if (_export) {
             //后边需要再做扩展
-            utils.each(_export, function(v, k) {
+            utils.each(_export, (v, k) => {
               switch (k.toLowerCase()) {
                 case "shortcutkey":
                   editor.addshortcutkey(v);
                   break;
                 case "bindevents":
-                  utils.each(v, function(fn, eventName) {
+                  utils.each(v, (fn, eventName) => {
                     editor.addListener(eventName, fn);
                   });
                   break;
                 case "bindmultievents":
-                  utils.each(utils.isArray(v) ? v : [v], function(event) {
+                  utils.each(utils.isArray(v) ? v : [v], event => {
                     var types = utils.trim(event.type).split(/\s+/);
-                    utils.each(types, function(eventName) {
+                    utils.each(types, eventName => {
                       editor.addListener(eventName, event.handler);
                     });
                   });
                   break;
                 case "commands":
-                  utils.each(v, function(execFn, execName) {
+                  utils.each(v, (execFn, execName) => {
                     editor.commands[execName] = execFn;
                   });
                   break;
@@ -65,11 +65,11 @@ UE.plugin = (function() {
         }
       });
       //向下兼容
-      utils.each(UE.plugins, function(plugin) {
+      utils.each(UE.plugins, plugin => {
         plugin.call(editor);
       });
     },
-    run: function(pluginName, editor) {
+    run(pluginName, editor) {
       var plugin = _plugins[pluginName];
       if (plugin) {
         plugin.exeFn.call(editor);

@@ -4,6 +4,35 @@
  * build: 2018-12-07
  */
 
+"use strict";
+
+function _toConsumableArray(e) {
+    return _arrayWithoutHoles(e) || _iterableToArray(e) || _nonIterableSpread();
+}
+
+function _nonIterableSpread() {
+    throw new TypeError("Invalid attempt to spread non-iterable instance");
+}
+
+function _iterableToArray(e) {
+    if (Symbol.iterator in Object(e) || "[object Arguments]" === Object.prototype.toString.call(e)) return Array.from(e);
+}
+
+function _arrayWithoutHoles(e) {
+    if (Array.isArray(e)) {
+        for (var t = 0, i = new Array(e.length); t < e.length; t++) i[t] = e[t];
+        return i;
+    }
+}
+
+function _typeof(e) {
+    return (_typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(e) {
+        return typeof e;
+    } : function(e) {
+        return e && "function" == typeof Symbol && e.constructor === Symbol && e !== Symbol.prototype ? "symbol" : typeof e;
+    })(e);
+}
+
 !function() {
     UEDITOR_CONFIG = window.UEDITOR_CONFIG || {};
     var baidu = window.baidu || {};
@@ -66,9 +95,10 @@
             var i = e.prototype, n = utils.makeInstance(t.prototype);
             return utils.extend(n, i, !0), (e.prototype = n).constructor = e;
         },
-        bind: function(e, t) {
+        bind: function(n, o) {
             return function() {
-                return e.apply(t, arguments);
+                for (var e = arguments.length, t = new Array(e), i = 0; i < e; i++) t[i] = arguments[i];
+                return n.apply(o, t);
             };
         },
         defer: function(e, t, i) {
@@ -122,10 +152,10 @@
                 }[e];
             }) : "";
         },
-        cssStyleToDomStyle: (ea = document.createElement("div").style, fa = {
-            float: null != ea.cssFloat ? "cssFloat" : null != ea.styleFloat ? "styleFloat" : "float"
+        cssStyleToDomStyle: (Ea = document.createElement("div").style, Fa = {
+            float: null != Ea.cssFloat ? "cssFloat" : null != Ea.styleFloat ? "styleFloat" : "float"
         }, function(e) {
-            return fa[e] || (fa[e] = e.toLowerCase().replace(/-./g, function(e) {
+            return Fa[e] || (Fa[e] = e.toLowerCase().replace(/-./g, function(e) {
                 return e.charAt(1).toUpperCase();
             }));
         }),
@@ -209,7 +239,7 @@
         },
         clone: function(e, t) {
             var i;
-            for (var n in t = t || {}, e) e.hasOwnProperty(n) && ("object" == typeof (i = e[n]) ? (t[n] = utils.isArray(i) ? [] : {}, 
+            for (var n in t = t || {}, e) e.hasOwnProperty(n) && ("object" == _typeof(i = e[n]) ? (t[n] = utils.isArray(i) ? [] : {}, 
             utils.clone(e[n], t[n])) : t[n] = i);
             return t;
         },
@@ -229,28 +259,30 @@
             return n + (n ? "px" : "");
         },
         domReady: function() {
-            var n = [];
-            function o(e) {
+            var i = [];
+            function r(e) {
                 e.isReady = !0;
-                for (var t; t = n.pop(); t()) ;
+                for (var t; t = i.pop(); t()) ;
             }
             return function(e, t) {
-                var i = (t = t || window).document;
-                e && n.push(e), "complete" === i.readyState ? o(i) : (i.isReady && o(i), browser.ie && 11 != browser.version ? (!function() {
-                    if (!i.isReady) {
+                var o = (t = t || window).document;
+                e && i.push(e), "complete" === o.readyState ? r(o) : (o.isReady && r(o), browser.ie && 11 != browser.version ? (!function() {
+                    if (!o.isReady) {
                         try {
-                            i.documentElement.doScroll("left");
+                            o.documentElement.doScroll("left");
                         } catch (e) {
-                            return setTimeout(arguments.callee, 0);
+                            for (var t = arguments.length, i = new Array(t), n = 0; n < t; n++) i[n] = arguments[n];
+                            return setTimeout(i.callee, 0);
                         }
-                        o(i);
+                        r(o);
                     }
                 }(), t.attachEvent("onload", function() {
-                    o(i);
-                })) : (i.addEventListener("DOMContentLoaded", function() {
-                    i.removeEventListener("DOMContentLoaded", arguments.callee, !1), o(i);
+                    r(o);
+                })) : (o.addEventListener("DOMContentLoaded", function() {
+                    for (var e = arguments.length, t = new Array(e), i = 0; i < e; i++) t[i] = arguments[i];
+                    o.removeEventListener("DOMContentLoaded", t.callee, !1), r(o);
                 }, !1), t.addEventListener("load", function() {
-                    o(i);
+                    r(o);
                 }, !1)));
             };
         }(),
@@ -277,7 +309,7 @@
         },
         serializeParam: function(e) {
             var t = [];
-            for (var i in e) if ("method" != i && "timeout" != i && "async" != i) if ("function" != (typeof e[i]).toLowerCase() && "object" != (typeof e[i]).toLowerCase()) t.push(encodeURIComponent(i) + "=" + encodeURIComponent(e[i])); else if (utils.isArray(e[i])) for (var n = 0; n < e[i].length; n++) t.push(encodeURIComponent(i) + "[]=" + encodeURIComponent(e[i][n]));
+            for (var i in e) if ("method" != i && "timeout" != i && "async" != i) if ("function" != _typeof(e[i]).toLowerCase() && "object" != _typeof(e[i]).toLowerCase()) t.push(encodeURIComponent(i) + "=" + encodeURIComponent(e[i])); else if (utils.isArray(e[i])) for (var n = 0; n < e[i].length; n++) t.push(encodeURIComponent(i) + "[]=" + encodeURIComponent(e[i][n]));
             return t.join("&");
         },
         formatUrl: function(e) {
@@ -297,7 +329,9 @@
         },
         json2str: function() {
             if (window.JSON) return JSON.stringify;
-            var l = {
+            var l = function(e) {
+                return e < 10 ? "0" + e : e;
+            }, d = {
                 "\b": "\\b",
                 "\t": "\\t",
                 "\n": "\\n",
@@ -306,11 +340,8 @@
                 '"': '\\"',
                 "\\": "\\\\"
             };
-            function d(e) {
-                return e < 10 ? "0" + e : e;
-            }
             return function(e) {
-                switch (typeof e) {
+                switch (_typeof(e)) {
                   case "undefined":
                     return "undefined";
 
@@ -319,7 +350,7 @@
 
                   case "string":
                     return /["\\\x00-\x1f]/.test(s = e) && (s = s.replace(/["\\\x00-\x1f]/g, function(e) {
-                        var t = l[e];
+                        var t = d[e];
                         return t || (t = e.charCodeAt(), "\\u00" + Math.floor(t / 16).toString(16) + (t % 16).toString(16));
                     })), '"' + s + '"';
 
@@ -330,7 +361,7 @@
                     if (null === e) return "null";
                     if (utils.isArray(e)) return function(e) {
                         var t, i, n, o = [ "[" ], r = e.length;
-                        for (i = 0; i < r; i++) switch (typeof (n = e[i])) {
+                        for (i = 0; i < r; i++) switch (_typeof(n = e[i])) {
                           case "undefined":
                           case "function":
                           case "unknown":
@@ -341,9 +372,9 @@
                         }
                         return o.push("]"), o.join("");
                     }(e);
-                    if (utils.isDate(e)) return '"' + (a = e).getFullYear() + "-" + d(a.getMonth() + 1) + "-" + d(a.getDate()) + "T" + d(a.getHours()) + ":" + d(a.getMinutes()) + ":" + d(a.getSeconds()) + '"';
+                    if (utils.isDate(e)) return '"' + (a = e).getFullYear() + "-" + l(a.getMonth() + 1) + "-" + l(a.getDate()) + "T" + l(a.getHours()) + ":" + l(a.getMinutes()) + ":" + l(a.getSeconds()) + '"';
                     var t, i, n = [ "{" ], o = utils.json2str;
-                    for (var r in e) if (Object.prototype.hasOwnProperty.call(e, r)) switch (typeof (i = e[r])) {
+                    for (var r in e) if (Object.prototype.hasOwnProperty.call(e, r)) switch (_typeof(i = e[r])) {
                       case "undefined":
                       case "unknown":
                       case "function":
@@ -357,7 +388,7 @@
                 var a, s;
             };
         }()
-    }, ea, fa;
+    }, Ea, Fa;
     utils.each([ "String", "Function", "Array", "Number", "RegExp", "Object", "Date" ], function(t) {
         UE.utils["is" + t] = function(e) {
             return Object.prototype.toString.apply(e) == "[object " + t + "]";
@@ -387,17 +418,18 @@
             for (var i, n = 0; i = e[n++]; ) utils.removeItem(getListener(this, i) || [], t);
         },
         fireEvent: function() {
-            var e = arguments[0];
-            e = utils.trim(e).split(" ");
-            for (var t, i = 0; t = e[i++]; ) {
-                var n, o, r, a = getListener(this, t);
-                if (a) for (r = a.length; r--; ) if (a[r]) {
-                    if (!0 === (o = a[r].apply(this, arguments))) return o;
-                    void 0 !== o && (n = o);
+            for (var e = arguments.length, t = new Array(e), i = 0; i < e; i++) t[i] = arguments[i];
+            var n = t[0];
+            n = utils.trim(n).split(" ");
+            for (var o, r = 0; o = n[r++]; ) {
+                var a, s, l, d = getListener(this, o);
+                if (d) for (l = d.length; l--; ) if (d[l]) {
+                    if (!0 === (s = d[l].apply(this, t))) return s;
+                    void 0 !== s && (a = s);
                 }
-                (o = this["on" + t.toLowerCase()]) && (n = o.apply(this, arguments));
+                (s = this["on" + o.toLowerCase()]) && (a = s.apply(this, t));
             }
-            return n;
+            return a;
         }
     };
     var dtd = dom.dtd = function() {
@@ -2062,55 +2094,57 @@
                 }
             },
             _setup: function(e) {
-                var t, i = this, n = i.options;
+                var t, n = this, i = n.options;
                 ie ? (e.body.disabled = !0, e.body.contentEditable = !0, e.body.disabled = !1) : e.body.contentEditable = !0, 
-                e.body.spellcheck = !1, i.document = e, i.window = e.defaultView || e.parentWindow, 
-                i.iframe = i.window.frameElement, i.body = e.body, i.selection = new dom.Selection(e), 
+                e.body.spellcheck = !1, n.document = e, n.window = e.defaultView || e.parentWindow, 
+                n.iframe = n.window.frameElement, n.body = e.body, n.selection = new dom.Selection(e), 
                 browser.gecko && (t = this.selection.getNative()) && t.removeAllRanges(), this._initEvents();
                 for (var o = this.iframe.parentNode; !domUtils.isBody(o); o = o.parentNode) if ("FORM" == o.tagName) {
-                    i.form = o, i.options.autoSyncData ? domUtils.on(i.window, "blur", function() {
-                        c(o, i);
+                    n.form = o, n.options.autoSyncData ? domUtils.on(n.window, "blur", function() {
+                        c(o, n);
                     }) : domUtils.on(o, "submit", function() {
-                        c(this, i);
+                        c(this, n);
                     });
                     break;
                 }
-                if (n.initialContent) if (n.autoClearinitialContent) {
-                    var r = i.execCommand;
-                    i.execCommand = function() {
-                        return i.fireEvent("firstBeforeExecCommand"), r.apply(i, arguments);
-                    }, this._setDefaultContent(n.initialContent);
-                } else this.setContent(n.initialContent, !1, !0);
-                domUtils.isEmptyNode(i.body) && (i.body.innerHTML = "<p>" + (browser.ie ? "" : "<br/>") + "</p>"), 
-                n.focus && setTimeout(function() {
-                    i.focus(i.options.focusInEnd), !i.options.autoClearinitialContent && i._selectionChange();
-                }, 0), i.container || (i.container = this.iframe.parentNode), n.fullscreen && i.ui && i.ui.setFullScreen(!0);
+                if (i.initialContent) if (i.autoClearinitialContent) {
+                    var r = n.execCommand;
+                    n.execCommand = function() {
+                        n.fireEvent("firstBeforeExecCommand");
+                        for (var e = arguments.length, t = new Array(e), i = 0; i < e; i++) t[i] = arguments[i];
+                        return r.apply(n, t);
+                    }, this._setDefaultContent(i.initialContent);
+                } else this.setContent(i.initialContent, !1, !0);
+                domUtils.isEmptyNode(n.body) && (n.body.innerHTML = "<p>" + (browser.ie ? "" : "<br/>") + "</p>"), 
+                i.focus && setTimeout(function() {
+                    n.focus(n.options.focusInEnd), !n.options.autoClearinitialContent && n._selectionChange();
+                }, 0), n.container || (n.container = this.iframe.parentNode), i.fullscreen && n.ui && n.ui.setFullScreen(!0);
                 try {
-                    i.document.execCommand("2D-position", !1, !1);
+                    n.document.execCommand("2D-position", !1, !1);
                 } catch (e) {}
                 try {
-                    i.document.execCommand("enableInlineTableEditing", !1, !1);
+                    n.document.execCommand("enableInlineTableEditing", !1, !1);
                 } catch (e) {}
                 try {
-                    i.document.execCommand("enableObjectResizing", !1, !1);
+                    n.document.execCommand("enableObjectResizing", !1, !1);
                 } catch (e) {}
-                i._bindshortcutKeys(), i.isReady = 1, i.fireEvent("ready"), n.onready && n.onready.call(i), 
-                browser.ie9below || domUtils.on(i.window, [ "blur", "focus" ], function(e) {
+                n._bindshortcutKeys(), n.isReady = 1, n.fireEvent("ready"), i.onready && i.onready.call(n), 
+                browser.ie9below || domUtils.on(n.window, [ "blur", "focus" ], function(e) {
                     if ("blur" == e.type) {
-                        i._bakRange = i.selection.getRange();
+                        n._bakRange = n.selection.getRange();
                         try {
-                            i._bakNativeRange = i.selection.getNative().getRangeAt(0), i.selection.getNative().removeAllRanges();
+                            n._bakNativeRange = n.selection.getNative().getRangeAt(0), n.selection.getNative().removeAllRanges();
                         } catch (e) {
-                            i._bakNativeRange = null;
+                            n._bakNativeRange = null;
                         }
                     } else try {
-                        i._bakRange && i._bakRange.select();
+                        n._bakRange && n._bakRange.select();
                     } catch (e) {}
-                }), browser.gecko && browser.version <= 10902 && (i.body.contentEditable = !1, setTimeout(function() {
-                    i.body.contentEditable = !0;
+                }), browser.gecko && browser.version <= 10902 && (n.body.contentEditable = !1, setTimeout(function() {
+                    n.body.contentEditable = !0;
                 }, 100), setInterval(function() {
-                    i.body.style.height = i.iframe.offsetHeight - 20 + "px";
-                }, 100)), !n.isShow && i.setHide(), n.readonly && i.setDisabled();
+                    n.body.style.height = n.iframe.offsetHeight - 20 + "px";
+                }, 100)), !i.isShow && n.setHide(), i.readonly && n.setDisabled();
             },
             sync: function(e) {
                 var t = e ? document.getElementById(e) : domUtils.findParent(this.iframe.parentNode, function(e) {
@@ -2257,8 +2291,8 @@
                 var t, i = this, n = i.commands[e] || UE.commands[e];
                 return n && n.execCommand ? (n.notNeedUndo || i.__hasEnterExecCommand ? (t = this._callCmdFn("execCommand", arguments), 
                 !i.__hasEnterExecCommand && !n.ignoreContentChange && !i._ignoreContentChange && i.fireEvent("contentchange")) : (i.__hasEnterExecCommand = !0, 
-                -1 != i.queryCommandState.apply(i, arguments) && (i.fireEvent("saveScene"), i.fireEvent.apply(i, [ "beforeexeccommand", e ].concat(arguments)), 
-                t = this._callCmdFn("execCommand", arguments), i.fireEvent.apply(i, [ "afterexeccommand", e ].concat(arguments)), 
+                -1 != i.queryCommandState.apply(i, arguments) && (i.fireEvent("saveScene"), i.fireEvent.apply(i, _toConsumableArray([ "beforeexeccommand", e ].concat(arguments))), 
+                t = this._callCmdFn("execCommand", arguments), i.fireEvent.apply(i, _toConsumableArray([ "afterexeccommand", e ].concat(arguments))), 
                 i.fireEvent("saveScene")), i.__hasEnterExecCommand = !1), !i.__hasEnterExecCommand && !n.ignoreContentChange && !i._ignoreContentChange && i._selectionChange(), 
                 t) : null;
             },
@@ -2415,7 +2449,7 @@
                     me._serverConfigLoaded = !1, configUrl && UE.ajax.request(configUrl, {
                         method: "GET",
                         dataType: isJsonp ? "jsonp" : "",
-                        onsuccess: function(r) {
+                        onsuccess: function onsuccess(r) {
                             try {
                                 var config = isJsonp ? r : eval("(" + r.responseText + ")");
                                 utils.extend(me.options, config), me.fireEvent("serverConfigLoaded"), me._serverConfigLoaded = !0;
@@ -2433,12 +2467,13 @@
             });
         }, UE.Editor.prototype.isServerConfigLoaded = function() {
             return this._serverConfigLoaded || !1;
-        }, UE.Editor.prototype.afterConfigReady = function(e) {
-            if (e && utils.isFunction(e)) {
-                var t = this, i = function() {
-                    e.apply(t, arguments), t.removeListener("serverConfigLoaded", i);
-                };
-                t.isServerConfigLoaded() ? e.call(t, "serverConfigLoaded") : t.addListener("serverConfigLoaded", i);
+        }, UE.Editor.prototype.afterConfigReady = function(o) {
+            if (o && utils.isFunction(o)) {
+                var r = this;
+                r.isServerConfigLoaded() ? o.call(r, "serverConfigLoaded") : r.addListener("serverConfigLoaded", function e() {
+                    for (var t = arguments.length, i = new Array(t), n = 0; n < t; n++) i[n] = arguments[n];
+                    o.apply(r, i), r.removeListener("serverConfigLoaded", e);
+                });
             }
         };
     }(), UE.ajax = function() {
@@ -2453,33 +2488,34 @@
         var c = new Function("return new " + t);
         function v(e) {
             var t = [];
-            for (var i in e) if ("method" != i && "timeout" != i && "async" != i && "dataType" != i && "callback" != i && null != e[i] && null != e[i]) if ("function" != (typeof e[i]).toLowerCase() && "object" != (typeof e[i]).toLowerCase()) t.push(encodeURIComponent(i) + "=" + encodeURIComponent(e[i])); else if (utils.isArray(e[i])) for (var n = 0; n < e[i].length; n++) t.push(encodeURIComponent(i) + "[]=" + encodeURIComponent(e[i][n]));
+            for (var i in e) if ("method" != i && "timeout" != i && "async" != i && "dataType" != i && "callback" != i && null != e[i] && null != e[i]) if ("function" != _typeof(e[i]).toLowerCase() && "object" != _typeof(e[i]).toLowerCase()) t.push(encodeURIComponent(i) + "=" + encodeURIComponent(e[i])); else if (utils.isArray(e[i])) for (var n = 0; n < e[i].length; n++) t.push(encodeURIComponent(i) + "[]=" + encodeURIComponent(e[i][n]));
             return t.join("&");
         }
         function n(e, t) {
-            var i, n, o, r = t.onsuccess || function() {}, a = document.createElement("SCRIPT"), s = t || {}, l = s.charset, d = s.jsonp || "callback", c = s.timeOut || 0, u = new RegExp("(\\?|&)" + d + "=([^&]*)");
-            utils.isFunction(r) ? (i = "bd__editor__" + Math.floor(2147483648 * Math.random()).toString(36), 
-            window[i] = g(0)) : utils.isString(r) ? i = r : (o = u.exec(e)) && (i = o[2]), (e = e.replace(u, "$1" + d + "=" + i)).search(u) < 0 && (e += (e.indexOf("?") < 0 ? "?" : "&") + d + "=" + i);
+            var o, r, i, a = t.onsuccess || function() {}, s = document.createElement("SCRIPT"), l = t || {}, n = l.charset, d = l.jsonp || "callback", c = l.timeOut || 0, u = new RegExp("(\\?|&)" + d + "=([^&]*)");
+            utils.isFunction(a) ? (o = "bd__editor__" + Math.floor(2147483648 * Math.random()).toString(36), 
+            window[o] = g(0)) : utils.isString(a) ? o = a : (i = u.exec(e)) && (o = i[2]), (e = e.replace(u, "$1" + d + "=" + o)).search(u) < 0 && (e += (e.indexOf("?") < 0 ? "?" : "&") + d + "=" + o);
             var m, f, h, p = v(t);
-            function g(e) {
+            function g(n) {
                 return function() {
+                    for (var e = arguments.length, t = new Array(e), i = 0; i < e; i++) t[i] = arguments[i];
                     try {
-                        if (e) s.onerror && s.onerror(); else try {
-                            clearTimeout(n), r.apply(window, arguments);
+                        if (n) l.onerror && l.onerror(); else try {
+                            clearTimeout(r), a.apply(window, t);
                         } catch (e) {}
                     } catch (e) {
-                        s.onerror && s.onerror.call(window, e);
+                        l.onerror && l.onerror.call(window, e);
                     } finally {
-                        s.oncomplete && s.oncomplete.apply(window, arguments), a.parentNode && a.parentNode.removeChild(a), 
-                        window[i] = null;
+                        l.oncomplete && l.oncomplete.apply(window, t), s.parentNode && s.parentNode.removeChild(s), 
+                        window[o] = null;
                         try {
-                            delete window[i];
+                            delete window[o];
                         } catch (e) {}
                     }
                 };
             }
             utils.isEmptyObject(t.data) || (p += (p ? "&" : "") + v(t.data)), p && (e = e.replace(/\?/, "?" + p + "&")), 
-            a.onerror = g(1), c && (n = setTimeout(g(1), c)), f = e, h = l, (m = a).setAttribute("type", "text/javascript"), 
+            s.onerror = g(1), c && (r = setTimeout(g(1), c)), f = e, h = n, (m = s).setAttribute("type", "text/javascript"), 
             m.setAttribute("defer", "defer"), h && m.setAttribute("charset", h), m.setAttribute("src", f), 
             document.getElementsByTagName("head")[0].appendChild(m);
         }
@@ -2494,7 +2530,7 @@
                         onsuccess: function() {},
                         onerror: function() {}
                     };
-                    if ("object" == typeof e && (e = (t = e).url), i && e) {
+                    if ("object" === _typeof(e) && (e = (t = e).url), i && e) {
                         var r = t ? utils.extend(o, t) : o, a = v(r);
                         utils.isEmptyObject(r.data) || (a += (a ? "&" : "") + v(r.data));
                         var s = setTimeout(function() {
@@ -2958,17 +2994,17 @@
             for (var n, o = 0; n = e.children[o]; ) m(n, t), n.parentNode && o++;
             return e;
         };
-    }(), Av;
-    UE.plugin = (Av = {}, {
+    }(), fA;
+    UE.plugin = (fA = {}, {
         register: function(e, t, i, n) {
-            i && utils.isFunction(i) && (n = i, i = null), Av[e] = {
+            i && utils.isFunction(i) && (n = i, i = null), fA[e] = {
                 optionName: i || e,
                 execFn: t,
                 afterDisabled: n
             };
         },
         load: function(i) {
-            utils.each(Av, function(e) {
+            utils.each(fA, function(e) {
                 var t = e.execFn.call(i);
                 !1 !== i.options[e.optionName] ? t && utils.each(t, function(e, t) {
                     switch (t.toLowerCase()) {
@@ -3014,7 +3050,7 @@
             });
         },
         run: function(e, t) {
-            var i = Av[e];
+            var i = fA[e];
             i && i.exeFn.call(t);
         }
     });
@@ -3050,43 +3086,43 @@
         x: 88,
         s: 83,
         n: 78
-    }, LocalStorage = UE.LocalStorage = (Vv = window.localStorage || ((aw = document.createElement("div")).style.display = "none", 
-    aw.addBehavior ? (aw.addBehavior("#default#userdata"), {
+    }, LocalStorage = UE.LocalStorage = (DA = window.localStorage || ((NA = document.createElement("div")).style.display = "none", 
+    NA.addBehavior ? (NA.addBehavior("#default#userdata"), {
         getItem: function(e) {
             var t = null;
             try {
-                document.body.appendChild(aw), aw.load(Wv), t = aw.getAttribute(e), document.body.removeChild(aw);
+                document.body.appendChild(NA), NA.load(EA), t = NA.getAttribute(e), document.body.removeChild(NA);
             } catch (e) {}
             return t;
         },
         setItem: function(e, t) {
-            document.body.appendChild(aw), aw.setAttribute(e, t), aw.save(Wv), document.body.removeChild(aw);
+            document.body.appendChild(NA), NA.setAttribute(e, t), NA.save(EA), document.body.removeChild(NA);
         },
         removeItem: function(e) {
-            document.body.appendChild(aw), aw.removeAttribute(e), aw.save(Wv), document.body.removeChild(aw);
+            document.body.appendChild(NA), NA.removeAttribute(e), NA.save(EA), document.body.removeChild(NA);
         }
-    }) : null) || null, Wv = "localStorage", {
+    }) : null) || null, EA = "localStorage", {
         saveLocalData: function(e, t) {
-            return !(!Vv || !t || (Vv.setItem(e, t), 0));
+            return !(!DA || !t || (DA.setItem(e, t), 0));
         },
         getLocalData: function(e) {
-            return Vv ? Vv.getItem(e) : null;
+            return DA ? DA.getItem(e) : null;
         },
         removeItem: function(e) {
-            Vv && Vv.removeItem(e);
+            DA && DA.removeItem(e);
         }
-    }), aw, Vv, Wv, hw, YC, ZC, TM, LR;
-    hw = "ueditor_preference", UE.Editor.prototype.setPreferences = function(e, t) {
+    }), NA, DA, EA, XA, EI, FI, kT, LY;
+    XA = "ueditor_preference", UE.Editor.prototype.setPreferences = function(e, t) {
         var i = {};
         utils.isString(e) ? i[e] = t : i = e;
-        var n = LocalStorage.getLocalData(hw);
-        n && (n = utils.str2json(n)) ? utils.extend(n, i) : n = i, n && LocalStorage.saveLocalData(hw, utils.json2str(n));
+        var n = LocalStorage.getLocalData(XA);
+        n && (n = utils.str2json(n)) ? utils.extend(n, i) : n = i, n && LocalStorage.saveLocalData(XA, utils.json2str(n));
     }, UE.Editor.prototype.getPreferences = function(e) {
-        var t = LocalStorage.getLocalData(hw);
+        var t = LocalStorage.getLocalData(XA);
         return t && (t = utils.str2json(t)) ? e ? t[e] : t : null;
     }, UE.Editor.prototype.removePreferences = function(e) {
-        var t = LocalStorage.getLocalData(hw);
-        t && (t = utils.str2json(t)) && (t[e] = void 0, delete t[e]), t && LocalStorage.saveLocalData(hw, utils.json2str(t));
+        var t = LocalStorage.getLocalData(XA);
+        t && (t = utils.str2json(t)) && (t[e] = void 0, delete t[e]), t && LocalStorage.saveLocalData(XA, utils.json2str(t));
     }, UE.plugins.defaultfilter = function() {
         var s = this;
         s.setOpt({
@@ -3469,9 +3505,11 @@
                 utils.cssRule(n, t.length ? "body{" + t.join("") + "}" : "", l.document);
             } else utils.cssRule(n, "", l.document);
         }
-        var e = l.hasContents;
+        var s = l.hasContents;
         return l.hasContents = function() {
-            return !!l.queryCommandValue("background") || e.apply(l, arguments);
+            if (l.queryCommandValue("background")) return !0;
+            for (var e = arguments.length, t = new Array(e), i = 0; i < e; i++) t[i] = arguments[i];
+            return s.apply(l, t);
         }, {
             bindEvents: {
                 getAllHtml: function(e, t) {
@@ -4077,7 +4115,7 @@
                 return e ? e.tagName.toLowerCase() : "";
             }
         };
-    }, YC = domUtils.isBlockElm, ZC = function(e) {
+    }, EI = domUtils.isBlockElm, FI = function(e) {
         return domUtils.filterNodeList(e.selection.getStartElementPath(), function(e) {
             return e && 1 == e.nodeType && e.getAttribute("dir");
         });
@@ -4091,16 +4129,16 @@
             return function(e, t, i) {
                 var n, o = function(e) {
                     return 1 == e.nodeType ? !domUtils.isBookmarkNode(e) : !domUtils.isWhitespace(e);
-                }, r = ZC(t);
+                }, r = FI(t);
                 if (r && e.collapsed) return r.setAttribute("dir", i);
                 n = e.createBookmark(), e.enlarge(!0);
-                for (var a, s = e.createBookmark(), l = domUtils.getNextDomNode(s.start, !1, o), d = e.cloneRange(); l && !(domUtils.getPosition(l, s.end) & domUtils.POSITION_FOLLOWING); ) if (3 != l.nodeType && YC(l)) l = domUtils.getNextDomNode(l, !0, o); else {
-                    for (d.setStartBefore(l); l && l !== s.end && !YC(l); ) a = l, l = domUtils.getNextDomNode(l, !1, null, function(e) {
-                        return !YC(e);
+                for (var a, s = e.createBookmark(), l = domUtils.getNextDomNode(s.start, !1, o), d = e.cloneRange(); l && !(domUtils.getPosition(l, s.end) & domUtils.POSITION_FOLLOWING); ) if (3 != l.nodeType && EI(l)) l = domUtils.getNextDomNode(l, !0, o); else {
+                    for (d.setStartBefore(l); l && l !== s.end && !EI(l); ) a = l, l = domUtils.getNextDomNode(l, !1, null, function(e) {
+                        return !EI(e);
                     });
                     d.setEndAfter(a);
                     var c = d.getCommonAncestor();
-                    if (!domUtils.isBody(c) && YC(c)) c.setAttribute("dir", i), l = c; else {
+                    if (!domUtils.isBody(c) && EI(c)) c.setAttribute("dir", i), l = c; else {
                         var u = e.document.createElement("p");
                         u.setAttribute("dir", i);
                         var m = d.extractContents();
@@ -4113,7 +4151,7 @@
             !0;
         },
         queryCommandValue: function() {
-            var e = ZC(this);
+            var e = FI(this);
             return e ? e.getAttribute("dir") : "ltr";
         }
     }, UE.plugins.horizontal = function() {
@@ -4663,8 +4701,8 @@
                 f = 0, null;
             };
         }(), (s.undoManger.editor = s).addListener("saveScene", function() {
-            var e = Array.prototype.splice.call(arguments, 1);
-            this.undoManger.save.apply(this.undoManger, e);
+            var e, t = Array.prototype.splice.call(arguments, 1);
+            (e = this.undoManger).save.apply(e, _toConsumableArray(t));
         }), s.addListener("reset", function(e, t) {
             t || this.undoManger.reset();
         }), s.commands.redo = s.commands.undo = {
@@ -4699,11 +4737,11 @@
         s.addListener("keydown", function(e, t) {
             var i = this, n = t.keyCode || t.which;
             if (!(m[n] || t.ctrlKey || t.metaKey || t.shiftKey || t.altKey)) {
+                var o = function(e) {
+                    e.undoManger.save(!1, !0), e.fireEvent("selectionchange");
+                };
                 if (h) return;
                 if (!i.selection.getRange().collapsed) return i.undoManger.save(!1, !0), void (p = !1);
-                function o(e) {
-                    e.undoManger.save(!1, !0), e.fireEvent("selectionchange");
-                }
                 0 == i.undoManger.list.length && i.undoManger.save(!0), clearTimeout(a), a = setTimeout(function() {
                     if (h) var e = setInterval(function() {
                         h || (o(i), clearInterval(e));
@@ -5009,7 +5047,7 @@
             UL: e(C.options.insertunorderedlist)
         }, n = C.options.listiconpath;
         for (var t in d) C.options.insertorderedlist.hasOwnProperty(t) || C.options.insertunorderedlist.hasOwnProperty(t) || delete d[t];
-        function R(e) {
+        function L(e) {
             var t = e.className;
             return domUtils.hasClass(e, /custom_/) ? t.match(/custom_(\w+)/)[1] : domUtils.getStyle(e, "list-style-type");
         }
@@ -5018,8 +5056,8 @@
                 if (domUtils.inDoc(o, s)) {
                     var e = o.parentNode;
                     if (e.tagName == o.tagName) {
-                        var t = R(o) || ("OL" == o.tagName ? "decimal" : "disc");
-                        if (t == (R(e) || ("OL" == e.tagName ? "decimal" : "disc"))) {
+                        var t = L(o) || ("OL" == o.tagName ? "decimal" : "disc");
+                        if (t == (L(e) || ("OL" == e.tagName ? "decimal" : "disc"))) {
                             var i = utils.indexOf(h[o.tagName], t);
                             i = i + 1 == h[o.tagName].length ? 0 : i + 1, D(o, h[o.tagName][i]);
                         }
@@ -5032,7 +5070,7 @@
                         if (e.style.cssText && (e.style.cssText = ""), e.firstChild) {
                             if (e.parentNode === o) {
                                 if (r++, domUtils.hasClass(o, /custom_/)) {
-                                    var t = 1, i = R(o);
+                                    var t = 1, i = L(o);
                                     if ("OL" == o.tagName) {
                                         if (i) switch (i) {
                                           case "cn":
@@ -5051,18 +5089,18 @@
                                 null === n || n.replace(/\s/g, "") || domUtils.removeAttributes(e, "class");
                             }
                         } else domUtils.remove(e);
-                    }), !l && A(o, o.tagName.toLowerCase(), R(o) || domUtils.getStyle(o, "list-style-type"), !0);
+                    }), !l && R(o, o.tagName.toLowerCase(), L(o) || domUtils.getStyle(o, "list-style-type"), !0);
                 }
             });
         }
-        function A(e, t, i, n) {
+        function R(e, t, i, n) {
             var o = e.nextSibling;
-            o && 1 == o.nodeType && o.tagName.toLowerCase() == t && (R(o) || domUtils.getStyle(o, "list-style-type") || ("ol" == t ? "decimal" : "disc")) == i && (domUtils.moveChild(o, e), 
+            o && 1 == o.nodeType && o.tagName.toLowerCase() == t && (L(o) || domUtils.getStyle(o, "list-style-type") || ("ol" == t ? "decimal" : "disc")) == i && (domUtils.moveChild(o, e), 
             0 == o.childNodes.length && domUtils.remove(o)), o && domUtils.isFillChar(o) && domUtils.remove(o);
             var r = e.previousSibling;
-            r && 1 == r.nodeType && r.tagName.toLowerCase() == t && (R(r) || domUtils.getStyle(r, "list-style-type") || ("ol" == t ? "decimal" : "disc")) == i && domUtils.moveChild(e, r), 
+            r && 1 == r.nodeType && r.tagName.toLowerCase() == t && (L(r) || domUtils.getStyle(r, "list-style-type") || ("ol" == t ? "decimal" : "disc")) == i && domUtils.moveChild(e, r), 
             r && domUtils.isFillChar(r) && domUtils.remove(r), !n && domUtils.isEmptyBlock(e) && domUtils.remove(e), 
-            R(e) && a(e.ownerDocument, !0);
+            L(e) && a(e.ownerDocument, !0);
         }
         function D(e, t) {
             d[t] && (e.className = "custom_" + t);
@@ -5146,7 +5184,7 @@
             if (t = domUtils.findParentByTagName(i.startContainer, "li", !0)) {
                 var a = t.parentNode, n = "OL" == a.tagName ? "ul" : "ol";
                 utils.each(r.getNodesByTagName(n), function(e) {
-                    if (e.tagName = a.tagName, e.setAttr(), e.parentNode === r) o = R(a) || ("OL" == a.tagName ? "decimal" : "disc"); else {
+                    if (e.tagName = a.tagName, e.setAttr(), e.parentNode === r) o = L(a) || ("OL" == a.tagName ? "decimal" : "disc"); else {
                         var t = e.parentNode.getAttr("class");
                         (o = t && /custom_/.test(t) ? t.match(/custom_(\w+)/)[1] : e.parentNode.getStyle("list-style-type")) || (o = "OL" == a.tagName ? "decimal" : "disc");
                     }
@@ -5179,7 +5217,14 @@
                 var o = e.firstChild(), r = o.lastChild();
                 r && "text" == r.type && /^\s*$/.test(r.data) && o.removeChild(r);
             }), C.options.autoTransWordToList) {
-                var s = {
+                var s = function(e, t) {
+                    var i = t.firstChild();
+                    if (i && "element" == i.type && "span" == i.tagName && /Wingdings|Symbol/.test(i.getStyle("font-family"))) {
+                        for (var n in o) if (o[n] == i.data) return n;
+                        return "disc";
+                    }
+                    for (var n in l) if (l[n].test(e)) return n;
+                }, l = {
                     num1: /^\d+\)/,
                     decimal: /^\d+\./,
                     "lower-alpha": /^[a-z]+\)/,
@@ -5189,21 +5234,13 @@
                 }, o = {
                     square: "n"
                 };
-                function l(e, t) {
-                    var i = t.firstChild();
-                    if (i && "element" == i.type && "span" == i.tagName && /Wingdings|Symbol/.test(i.getStyle("font-family"))) {
-                        for (var n in o) if (o[n] == i.data) return n;
-                        return "disc";
-                    }
-                    for (var n in s) if (s[n].test(e)) return n;
-                }
                 utils.each(e.getNodesByTagName("p"), function(e) {
                     if ("MsoListParagraph" == e.getAttr("class")) {
                         e.setStyle("margin", ""), e.setStyle("margin-left", ""), e.setAttr("class", "");
                         var t, i = e, n = e;
-                        if ("li" != e.parentNode.tagName && (t = l(e.innerText(), e))) {
+                        if ("li" != e.parentNode.tagName && (t = s(e.innerText(), e))) {
                             var o = UE.uNode.createElement(C.options.insertorderedlist.hasOwnProperty(t) ? "ol" : "ul");
-                            for (d[t] ? o.setAttr("class", "custom_" + t) : o.setStyle("list-style-type", t); e && "li" != e.parentNode.tagName && l(e.innerText(), e); ) (i = e.nextSibling()) || e.parentNode.insertBefore(o, e), 
+                            for (d[t] ? o.setAttr("class", "custom_" + t) : o.setStyle("list-style-type", t); e && "li" != e.parentNode.tagName && s(e.innerText(), e); ) (i = e.nextSibling()) || e.parentNode.insertBefore(o, e), 
                             a(o, e, t), e = i;
                             !o.parentNode && e && e.parentNode && e.parentNode.insertBefore(o, e);
                         }
@@ -5213,8 +5250,8 @@
                     function a(e, t, i) {
                         if ("ol" == e.tagName) if (browser.ie) {
                             var n = t.firstChild();
-                            "element" == n.type && "span" == n.tagName && s[i].test(n.innerText()) && t.removeChild(n);
-                        } else t.innerHTML(t.innerHTML().replace(s[i], "")); else t.removeChild(t.firstChild());
+                            "element" == n.type && "span" == n.tagName && l[i].test(n.innerText()) && t.removeChild(n);
+                        } else t.innerHTML(t.innerHTML().replace(l[i], "")); else t.removeChild(t.firstChild());
                         var o = UE.uNode.createElement("li");
                         o.appendChild(t), e.appendChild(o);
                     }
@@ -5327,7 +5364,7 @@
         }), C.addListener("keyup", function(e, t) {
             if (8 == (t.keyCode || t.which)) {
                 var i, n = C.selection.getRange();
-                (i = domUtils.findParentByTagName(n.startContainer, [ "ol", "ul" ], !0)) && A(i, i.tagName.toLowerCase(), R(i) || domUtils.getComputedStyle(i, "list-style-type"), !0);
+                (i = domUtils.findParentByTagName(n.startContainer, [ "ol", "ul" ], !0)) && R(i, i.tagName.toLowerCase(), L(i) || domUtils.getComputedStyle(i, "list-style-type"), !0);
             }
         }), C.addListener("tabkeydown", function() {
             var e = C.selection.getRange();
@@ -5351,7 +5388,7 @@
                         return e !== o;
                     }); else {
                         m = l.parentNode, f = C.document.createElement(m.tagName);
-                        var d = (c = utils.indexOf(h[f.tagName], R(m) || domUtils.getComputedStyle(m, "list-style-type"))) + 1 == h[f.tagName].length ? 0 : c + 1;
+                        var d = (c = utils.indexOf(h[f.tagName], L(m) || domUtils.getComputedStyle(m, "list-style-type"))) + 1 == h[f.tagName].length ? 0 : c + 1;
                         for (D(f, u = h[f.tagName][d]), m.insertBefore(f, l); l && !(domUtils.getPosition(l, n.end) & domUtils.POSITION_FOLLOWING); ) {
                             if (i = l.nextSibling, f.appendChild(l), !i || domUtils.isTagNode(i, "ol ul")) {
                                 if (i) for (;(i = i.firstChild) && "LI" != i.tagName; ) ; else i = domUtils.getNextDomNode(l, !1, null, function(e) {
@@ -5361,15 +5398,15 @@
                             }
                             l = i;
                         }
-                        A(f, f.tagName.toLowerCase(), u), l = i;
+                        R(f, f.tagName.toLowerCase(), u), l = i;
                     }
                     return C.fireEvent("contentchange"), e.moveToBookmark(n).select(), !0;
                 }
                 if (t(i)) return !0;
                 var c, u, m = i.parentNode, f = C.document.createElement(m.tagName);
-                if (c = (c = utils.indexOf(h[f.tagName], R(m) || domUtils.getComputedStyle(m, "list-style-type"))) + 1 == h[f.tagName].length ? 0 : c + 1, 
+                if (c = (c = utils.indexOf(h[f.tagName], L(m) || domUtils.getComputedStyle(m, "list-style-type"))) + 1 == h[f.tagName].length ? 0 : c + 1, 
                 D(f, u = h[f.tagName][c]), domUtils.isStartInblock(e)) return C.fireEvent("saveScene"), 
-                n = e.createBookmark(), m.insertBefore(f, i), f.appendChild(i), A(f, f.tagName.toLowerCase(), u), 
+                n = e.createBookmark(), m.insertBefore(f, i), f.appendChild(i), R(f, f.tagName.toLowerCase(), u), 
                 C.fireEvent("contentchange"), e.moveToBookmark(n).select(!0), !0;
             }
         }), C.commands.insertorderedlist = C.commands.insertunorderedlist = {
@@ -5395,13 +5432,13 @@
                         }
                         a.appendChild(h), domUtils.breakParent(c, s), domUtils.isEmptyNode(c.previousSibling) && domUtils.remove(c.previousSibling), 
                         domUtils.isEmptyNode(c.nextSibling) && domUtils.remove(c.nextSibling);
-                        var v = R(s) || domUtils.getComputedStyle(s, "list-style-type") || ("insertorderedlist" == e.toLowerCase() ? "decimal" : "disc");
+                        var v = L(s) || domUtils.getComputedStyle(s, "list-style-type") || ("insertorderedlist" == e.toLowerCase() ? "decimal" : "disc");
                         if (s.tagName.toLowerCase() == r && v == t) {
-                            for (var b = 0, y = i.document.createDocumentFragment(); I = a.firstChild; ) if (domUtils.isTagNode(I, "ol ul")) y.appendChild(I); else for (;I.firstChild; ) y.appendChild(I.firstChild), 
-                            domUtils.remove(I);
+                            for (var b = 0, y = i.document.createDocumentFragment(); A = a.firstChild; ) if (domUtils.isTagNode(A, "ol ul")) y.appendChild(A); else for (;A.firstChild; ) y.appendChild(A.firstChild), 
+                            domUtils.remove(A);
                             c.parentNode.insertBefore(y, c);
                         } else D(d = i.document.createElement(r), t), d.appendChild(a), c.parentNode.insertBefore(d, c);
-                        return domUtils.remove(c), d && A(d, r, t), void n.moveToBookmark(u).select();
+                        return domUtils.remove(c), d && R(d, r, t), void n.moveToBookmark(u).select();
                     }
                     if (m) {
                         for (;m; ) {
@@ -5460,9 +5497,9 @@
                     a.appendChild(k);
                 } else E = domUtils.getNextDomNode(E, !0, o);
                 n.moveToBookmark(U).collapse(!0), D(d = i.document.createElement(r), t), d.appendChild(a), 
-                n.insertNode(d), A(d, r, t);
+                n.insertNode(d), R(d, r, t);
                 b = 0;
-                for (var I, L = domUtils.getElementsByTagName(d, "div"); I = L[b++]; ) I.getAttribute("tmpDiv") && domUtils.remove(I, !0);
+                for (var A, I = domUtils.getElementsByTagName(d, "div"); A = I[b++]; ) A.getAttribute("tmpDiv") && domUtils.remove(A, !0);
                 n.moveToBookmark(u).select();
             },
             queryCommandState: function(e) {
@@ -5483,10 +5520,10 @@
                         break;
                     }
                 }
-                return t ? R(t) || domUtils.getComputedStyle(t, "list-style-type") : null;
+                return t ? L(t) || domUtils.getComputedStyle(t, "list-style-type") : null;
             }
         };
-    }, TM = {
+    }, kT = {
         textarea: function(e, t) {
             var i = t.ownerDocument.createElement("textarea");
             return i.style.cssText = "position:absolute;resize:none;width:100%;height:100%;border:0;padding:0;margin:0;overflow-y:auto;", 
@@ -5573,7 +5610,7 @@
                         }
                     }), f.fireEvent("aftergetcontent");
                     var t = e.toHtml(!0);
-                    r = f.iframe.parentNode, (a = TM["codemirror" == h.sourceEditor && window.CodeMirror ? "codemirror" : "textarea"](f, r)).setContent(t), 
+                    r = f.iframe.parentNode, (a = kT["codemirror" == h.sourceEditor && window.CodeMirror ? "codemirror" : "textarea"](f, r)).setContent(t), 
                     s = f.setContent, f.setContent = function(e) {
                         var t = UE.htmlparser(e);
                         f.filterInputRule(t), e = t.toHtml(), a.setContent(e);
@@ -6177,25 +6214,25 @@
                 return e && ("edui-faked-video" == e.className || -1 != e.className.indexOf("edui-upload-video")) ? 1 : 0;
             }
         };
-    }, LR = UE.UETable = function(e) {
+    }, LY = UE.UETable = function(e) {
         this.table = e, this.indexTable = [], this.selectedTds = [], this.cellsRange = {}, 
         this.update(e);
-    }, LR.removeSelectedClass = function(e) {
+    }, LY.removeSelectedClass = function(e) {
         utils.each(e, function(e) {
             domUtils.removeClasses(e, "selectTdClass");
         });
-    }, LR.addSelectedClass = function(e) {
+    }, LY.addSelectedClass = function(e) {
         utils.each(e, function(e) {
             domUtils.addClass(e, "selectTdClass");
         });
-    }, LR.isEmptyBlock = function(e) {
+    }, LY.isEmptyBlock = function(e) {
         var t = new RegExp(domUtils.fillChar, "g");
         if (0 < e[browser.ie ? "innerText" : "textContent"].replace(/^\s*$/, "").replace(t, "").length) return 0;
         for (var i in dtd.$isNotEmpty) if (dtd.$isNotEmpty.hasOwnProperty(i) && e.getElementsByTagName(i).length) return 0;
         return 1;
-    }, LR.getWidth = function(e) {
+    }, LY.getWidth = function(e) {
         return e ? parseInt(domUtils.getComputedStyle(e, "width"), 10) : 0;
-    }, LR.getTableCellAlignState = function(e) {
+    }, LY.getTableCellAlignState = function(e) {
         !utils.isArray(e) && (e = [ e ]);
         var i = {}, n = [ "align", "valign" ], o = null, r = !0;
         return utils.each(e, function(t) {
@@ -6203,7 +6240,7 @@
                 if (o = t.getAttribute(e), !i[e] && o) i[e] = o; else if (!i[e] || o !== i[e]) return r = !1;
             }), r;
         }), r ? i : null;
-    }, LR.getTableItemsByRange = function(e) {
+    }, LY.getTableItemsByRange = function(e) {
         var t = e.selection.getStart();
         t && t.id && 0 === t.id.indexOf("_baidu_bookmark_start_") && t.nextSibling && (t = t.nextSibling);
         var i = t && domUtils.findParentByTagName(t, [ "td", "th" ], !0), n = i && i.parentNode, o = n && domUtils.findParentByTagName(n, [ "table" ]), r = o && o.getElementsByTagName("caption")[0];
@@ -6213,10 +6250,10 @@
             table: o,
             caption: r
         };
-    }, LR.getUETableBySelected = function(e) {
-        var t = LR.getTableItemsByRange(e).table;
+    }, LY.getUETableBySelected = function(e) {
+        var t = LY.getTableItemsByRange(e).table;
         return t && t.ueTable && t.ueTable.selectedTds.length ? t.ueTable : null;
-    }, LR.getDefaultValue = function(e, t) {
+    }, LY.getDefaultValue = function(e, t) {
         var i, n, o, r, a = {
             thin: "0px",
             medium: "1px",
@@ -6239,11 +6276,11 @@
             tdPadding: n,
             tdBorder: o
         };
-    }, LR.getUETable = function(e) {
+    }, LY.getUETable = function(e) {
         var t = e.tagName.toLowerCase();
-        return (e = "td" == t || "th" == t || "caption" == t ? domUtils.findParentByTagName(e, "table", !0) : e).ueTable || (e.ueTable = new LR(e)), 
+        return (e = "td" == t || "th" == t || "caption" == t ? domUtils.findParentByTagName(e, "table", !0) : e).ueTable || (e.ueTable = new LY(e)), 
         e.ueTable;
-    }, LR.cloneCell = function(e, t, i) {
+    }, LY.cloneCell = function(e, t, i) {
         if (!e || utils.isString(e)) return this.table.ownerDocument.createElement(e || "td");
         var n = domUtils.hasClass(e, "selectTdClass");
         n && domUtils.removeClasses(e, "selectTdClass");
@@ -6253,7 +6290,7 @@
         o.style.borderLeftColor = e.style.borderRightColor, o.style.borderLeftWidth = e.style.borderRightWidth, 
         o.style.borderTopColor = e.style.borderBottomColor, o.style.borderTopWidth = e.style.borderBottomWidth, 
         n && domUtils.addClass(e, "selectTdClass"), o;
-    }, LR.prototype = {
+    }, LY.prototype = {
         getMaxRows: function() {
             for (var e, t = this.table.rows, i = 1, n = 0; e = t[n]; n++) {
                 for (var o, r = 1, a = 0; o = e.cells[a++]; ) r = Math.max(o.rowSpan || 1, r);
@@ -6311,7 +6348,7 @@
         setCellContent: function(e, t) {
             e.innerHTML = t || (browser.ie ? domUtils.fillChar : "<br />");
         },
-        cloneCell: LR.cloneCell,
+        cloneCell: LY.cloneCell,
         getSameStartPosXCells: function(e) {
             try {
                 for (var t, i = domUtils.getXY(e).x + e.offsetWidth, n = this.table.rows, o = [], r = 0; r < this.rowsNum; r++) {
@@ -6417,11 +6454,11 @@
             return d;
         },
         clearSelected: function() {
-            LR.removeSelectedClass(this.selectedTds), this.selectedTds = [], this.cellsRange = {};
+            LY.removeSelectedClass(this.selectedTds), this.selectedTds = [], this.cellsRange = {};
         },
         setSelected: function(e) {
             var t = this.getCells(e);
-            LR.addSelectedClass(t), this.selectedTds = t, this.cellsRange = e;
+            LY.addSelectedClass(t), this.selectedTds = t, this.cellsRange = e;
         },
         isFullRow: function() {
             var e = this.cellsRange;
@@ -6447,7 +6484,7 @@
             } catch (e) {}
         },
         moveContent: function(e, t) {
-            if (!LR.isEmptyBlock(t)) if (LR.isEmptyBlock(e)) e.innerHTML = t.innerHTML; else {
+            if (!LY.isEmptyBlock(t)) if (LY.isEmptyBlock(e)) e.innerHTML = t.innerHTML; else {
                 var i = e.lastChild;
                 for (3 != i.nodeType && dtd.$block[i.tagName] || e.appendChild(e.ownerDocument.createElement("br")); i = t.firstChild; ) e.appendChild(i);
             }
@@ -6556,7 +6593,7 @@
             });
         },
         updateWidth: function(t, e) {
-            var i = this.table, n = LR.getWidth(i) - 2 * e.tdPadding - e.tdBorder + t;
+            var i = this.table, n = LY.getWidth(i) - 2 * e.tdPadding - e.tdBorder + t;
             if (n < i.ownerDocument.body.offsetWidth) i.setAttribute("width", n); else {
                 var o = domUtils.getElementsByTagName(this.table, "td th");
                 utils.each(o, function(e) {
@@ -6641,7 +6678,7 @@
         setBackground: function(e, t) {
             if ("string" == typeof t) utils.each(e, function(e) {
                 e.style.backgroundColor = t;
-            }); else if ("object" == typeof t) {
+            }); else if ("object" === _typeof(t)) {
                 t = utils.extend({
                     repeat: !0,
                     colorList: [ "#ddd", "#fff" ]
@@ -7166,7 +7203,7 @@
             tableDragable: !1,
             classList: [ "ue-table-interlace-color-single", "ue-table-interlace-color-double" ]
         }), u.getUETable = S;
-        var I = {
+        var A = {
             deletetable: 1,
             inserttable: 1,
             cellvalign: 1,
@@ -7194,7 +7231,7 @@
             averagedistributecol: 1,
             averagedistributerow: 1
         };
-        function L(e, t) {
+        function I(e, t) {
             i(e, "width", !0), i(e, "height", !0);
         }
         function i(e, t, i) {
@@ -7204,7 +7241,7 @@
             return "TD" == e.tagName || "TH" == e.tagName ? e : (t = domUtils.findParentByTagName(e, "td", !0) || domUtils.findParentByTagName(e, "th", !0)) ? t : null;
             var t;
         }
-        function R(e) {
+        function L(e) {
             var t = new RegExp(domUtils.fillChar, "g");
             if (0 < e[browser.ie ? "innerText" : "textContent"].replace(/^\s*$/, "").replace(t, "").length) return 0;
             for (var i in dtd.$isNotEmpty) if (e.getElementsByTagName(i).length) return 0;
@@ -7220,10 +7257,10 @@
             };
         }
         function t(e) {
-            if (!q()) try {
+            if (!$()) try {
                 var t, i = _(e.target || e.srcElement);
                 if (f && (u.body.style.webkitUserSelect = "none", (Math.abs(p.x - e.clientX) > a || Math.abs(p.y - e.clientY) > a) && (E(), 
-                f = !1, h = 0, M(e))), b && N) return h = 0, u.body.style.webkitUserSelect = "none", 
+                f = !1, h = 0, P(e))), b && N) return h = 0, u.body.style.webkitUserSelect = "none", 
                 u.selection.getNative()[browser.ie9below ? "empty" : "removeAllRanges"](), t = w(e), 
                 D(u, !0, b, t, i), void ("h" == b ? C.style.left = function(e, t) {
                     var i = S(e);
@@ -7240,10 +7277,10 @@
                 if (i) {
                     if (!0 === u.fireEvent("excludetable", i)) return;
                     var n = U(i, t = w(e)), o = domUtils.findParentByTagName(i, "table", !0);
-                    if (A(o, i, e, !0)) {
+                    if (R(o, i, e, !0)) {
                         if (!0 === u.fireEvent("excludetable", o)) return;
                         u.body.style.cursor = "url(" + u.options.cursorpath + "h.png),pointer";
-                    } else if (A(o, i, e)) {
+                    } else if (R(o, i, e)) {
                         if (!0 === u.fireEvent("excludetable", o)) return;
                         u.body.style.cursor = "url(" + u.options.cursorpath + "v.png),pointer";
                     } else {
@@ -7284,7 +7321,7 @@
                 }, 2e3);
             }
         }
-        function A(e, t, i, n) {
+        function R(e, t, i, n) {
             var o = w(i), r = U(t, o);
             if (n) {
                 var a = e.getElementsByTagName("caption")[0], s = a ? a.offsetHeight : 0;
@@ -7303,13 +7340,13 @@
             return i ? i.x + e.offsetWidth - t.x < n ? "h" : t.x - i.x < n ? "h1" : i.y + e.offsetHeight - t.y < n ? "v" : t.y - i.y < n ? "v1" : "" : "";
         }
         function O(e, t) {
-            if (!q()) if (p = {
+            if (!$()) if (p = {
                 x: t.clientX,
                 y: t.clientY
             }, 2 == t.button) {
                 var i = k(u), n = !1;
                 if (i) {
-                    var o = G(u, t);
+                    var o = X(u, t);
                     utils.each(i.selectedTds, function(e) {
                         e === o && (n = !0);
                     }), n ? (o = i.selectedTds[0], setTimeout(function() {
@@ -7319,7 +7356,7 @@
             } else !function(e) {
                 if (s(domUtils.getElementsByTagName(u.body, "td th")), utils.each(u.document.getElementsByTagName("table"), function(e) {
                     e.ueTable = null;
-                }), !(v = G(u, e))) return;
+                }), !(v = X(u, e))) return;
                 var t = domUtils.findParentByTagName(v, "table", !0);
                 ut = S(t), ut && ut.clearSelected(), y ? function(e) {
                     browser.ie && (e = function(e) {
@@ -7328,7 +7365,7 @@
                         return i;
                     }(e));
                     E(), f = !0, r = setTimeout(function() {
-                        M(e);
+                        P(e);
                     }, g);
                 }(e) : (u.document.body.style.webkitUserSelect = "", x = !0, u.addListener("mouseover", H));
             }(t);
@@ -7336,15 +7373,15 @@
         function E() {
             r && clearTimeout(r), r = null;
         }
-        function M(e) {
+        function P(e) {
             if (f = !1, v = e.target || e.srcElement) {
                 var t = U(v, w(e));
                 /\d/.test(t) && (t = t.replace(/\d/, ""), v = S(v).getPreviewCell(v, "v" == t)), 
                 j(u), W(u, u.document), u.fireEvent("saveScene"), Y(t, v), x = !0, b = t, N = v;
             }
         }
-        function P(e, t) {
-            if (!q()) {
+        function M(e, t) {
+            if (!$()) {
                 if (E(), f = !1, y && (h = ++h % 3, p = {
                     x: t.clientX,
                     y: t.clientY
@@ -7353,9 +7390,9 @@
                 }, g), 2 === h)) return h = 0, void function(e) {
                     h = 0;
                     var t, i = _((e = e || u.window.event).target || e.srcElement);
-                    if (i && (t = U(i, w(e))) && (j(u), "h1" == t && (t = "h", A(domUtils.findParentByTagName(i, "table"), i, e) ? u.execCommand("adaptbywindow") : (i = S(i).getPreviewCell(i)) && u.selection.getRange().selectNodeContents(i).setCursor(!0, !0)), 
+                    if (i && (t = U(i, w(e))) && (j(u), "h1" == t && (t = "h", R(domUtils.findParentByTagName(i, "table"), i, e) ? u.execCommand("adaptbywindow") : (i = S(i).getPreviewCell(i)) && u.selection.getRange().selectNodeContents(i).setCursor(!0, !0)), 
                     "h" == t)) {
-                        var n = S(i), o = $(i, n.table, !0);
+                        var n = S(i), o = q(i, n.table, !0);
                         o = function(e, t) {
                             for (var i = [], n = null, o = 0, r = e.length; o < r; o++) (n = e[o][t]) && i.push(n);
                             return i;
@@ -7374,7 +7411,7 @@
                             });
                             var i = n ? a : r;
                             utils.each(o, function(e, t) {
-                                e.width = i[t] - z();
+                                e.width = i[t] - V();
                             });
                         }, 0);
                     }
@@ -7390,13 +7427,13 @@
                             !function(e, t) {
                                 var i = S(e);
                                 if (i) {
-                                    var n = i.table, o = $(e, n);
+                                    var n = i.table, o = q(e, n);
                                     if (n.style.width = "", n.removeAttribute("width"), t = function(i, e, t) {
-                                        if ((i -= z()) < 0) return 0;
-                                        var n = (i -= V(e)) < 0 ? "left" : "right";
+                                        if ((i -= V()) < 0) return 0;
+                                        var n = (i -= z(e)) < 0 ? "left" : "right";
                                         return i = Math.abs(i), utils.each(t, function(e) {
                                             var t = e[n];
-                                            t && (i = Math.min(i, V(t) - m));
+                                            t && (i = Math.min(i, z(t) - m));
                                         }), i = i < 0 ? 0 : i, "left" === n ? -i : i;
                                     }(t, e, o), e.nextSibling) {
                                         utils.each(o, function(e) {
@@ -7438,7 +7475,7 @@
             }
         }
         function H(e, t) {
-            if (!q()) {
+            if (!$()) {
                 var i = t.target || t.srcElement;
                 if (l = domUtils.findParentByTagName(i, "td", !0) || domUtils.findParentByTagName(i, "th", !0), 
                 v && l && ("TD" == v.tagName && "TD" == l.tagName || "TH" == v.tagName && "TH" == l.tagName) && domUtils.findParentByTagName(v, "table") == domUtils.findParentByTagName(l, "table")) {
@@ -7456,10 +7493,10 @@
             var n = parseInt(domUtils.getComputedStyle(e, "line-height"), 10), o = i + t;
             t = o < n ? n : o, e.style.height && (e.style.height = ""), 1 == e.rowSpan ? e.setAttribute("height", t) : e.removeAttribute && e.removeAttribute("height");
         }
-        function q() {
+        function $() {
             return "false" === u.body.contentEditable;
         }
-        function $(e, t, n) {
+        function q(e, t, n) {
             if (t || (t = domUtils.findParentByTagName(e, "table")), !t) return null;
             domUtils.getNodeIndex(e);
             for (var i = e, o = t.rows, r = 0; i; ) 1 === i.nodeType && (r += i.colSpan || 1), 
@@ -7478,9 +7515,9 @@
                 });
             }), a;
         }
-        function V(e) {
+        function z(e) {
             var t = 0;
-            t = e.offsetWidth - z();
+            t = e.offsetWidth - V();
             e.nextSibling || (t -= function(e) {
                 if (tab = domUtils.findParentByTagName(e, "table", !1), void 0 === tab.offsetVal) {
                     var t = e.previousSibling;
@@ -7493,7 +7530,7 @@
             } catch (e) {}
             return t;
         }
-        function z() {
+        function V() {
             if (void 0 === T.tabcellSpace) {
                 var e = u.document.createElement("table"), t = u.document.createElement("tbody"), i = u.document.createElement("tr"), n = u.document.createElement("td"), o = null;
                 n.style.cssText = "border: 0;", n.width = 1, i.appendChild(n), i.appendChild(o = n.cloneNode(!1)), 
@@ -7503,7 +7540,7 @@
                 n.style.cssText = "", o.style.cssText = "", T.borderWidth = (e.offsetWidth - r) / 3, 
                 T.tabcellSpace = T.paddingSpace + T.borderWidth, u.body.removeChild(e);
             }
-            return z = function() {
+            return V = function() {
                 return T.tabcellSpace;
             }, T.tabcellSpace;
         }
@@ -7535,13 +7572,13 @@
                 }
             }
         }
-        function X(e, t) {
+        function G(e, t) {
             for (var i, n, o = domUtils.getElementsByTagName(e.body, "table"), r = 0; n = o[r++]; ) {
                 var a = domUtils.getElementsByTagName(n, "td");
                 a[0] && (t ? (i = a[0].style.borderColor.replace(/\s/g, ""), /(#ffffff)|(rgb\(255,255,255\))/gi.test(i) && domUtils.addClass(n, "noBorderTable")) : domUtils.removeClasses(n, "noBorderTable"));
             }
         }
-        function G(e, t) {
+        function X(e, t) {
             var i, n = domUtils.findParentByTagName(t.target || t.srcElement, [ "td", "th" ], !0);
             if (!n) return null;
             if (i = U(n, w(t)), !n) return null;
@@ -7565,7 +7602,7 @@
                     (o = k(i)) && o.selectedTds.length && (o.isFullCol() ? i.execCommand("deletecol") : o.isFullRow() ? i.execCommand("deleterow") : i.fireEvent("delcells"), 
                     domUtils.preventDefault(t));
                     var r = domUtils.findParentByTagName(i.selection.getStart(), "caption", !0), a = i.selection.getRange();
-                    if (a.collapsed && r && R(r)) {
+                    if (a.collapsed && r && L(r)) {
                         i.fireEvent("saveScene");
                         var s = r.parentNode;
                         domUtils.remove(r), s && a.setStart(s.rows[0].cells[0], 0).setCursor(!1, !0), i.fireEvent("saveScene");
@@ -7669,8 +7706,8 @@
                 domUtils.findParentByTagName(i.selection.getStart(), "table") ? (utils.each(r, function(e) {
                     domUtils.remove(e);
                 }), domUtils.findParentByTagName(i.selection.getStart(), "caption", !0) && (o.innerHTML = o[browser.ie ? "innerText" : "textContent"])) : utils.each(r, function(e) {
-                    L(e, !0), domUtils.removeAttributes(e, [ "style", "border" ]), utils.each(domUtils.getElementsByTagName(e, "td"), function(e) {
-                        R(e) && domUtils.fillNode(i.document, e), L(e, !0);
+                    I(e, !0), domUtils.removeAttributes(e, [ "style", "border" ]), utils.each(domUtils.getElementsByTagName(e, "td"), function(e) {
+                        L(e) && domUtils.fillNode(i.document, e), I(e, !0);
                     });
                 }), t.html = o.innerHTML;
             }), u.addListener("afterpaste", function() {
@@ -7709,12 +7746,12 @@
                             var t = _((e = d.window.event || e).target || e.srcElement);
                             if (t) {
                                 var i, n = S(t), o = n.table, r = n.getCellInfo(t), a = d.selection.getRange();
-                                if (A(o, t, e, !0)) {
+                                if (R(o, t, e, !0)) {
                                     var s = n.getCell(n.indexTable[n.rowsNum - 1][r.colIndex].rowIndex, n.indexTable[n.rowsNum - 1][r.colIndex].cellIndex);
                                     e.shiftKey && n.selectedTds.length ? n.selectedTds[0] !== s ? (i = n.getCellsRange(n.selectedTds[0], s), 
                                     n.setSelected(i)) : a && a.selectNodeContents(s).select() : t !== s ? (i = n.getCellsRange(t, s), 
                                     n.setSelected(i)) : a && a.selectNodeContents(s).select();
-                                } else if (A(o, t, e)) {
+                                } else if (R(o, t, e)) {
                                     var l = n.getCell(n.indexTable[r.rowIndex][n.colsNum - 1].rowIndex, n.indexTable[r.rowIndex][n.colsNum - 1].cellIndex);
                                     e.shiftKey && n.selectedTds.length ? n.selectedTds[0] !== l ? (i = n.getCellsRange(n.selectedTds[0], l), 
                                     n.setSelected(i)) : a && a.selectNodeContents(l).select() : t !== l ? (i = n.getCellsRange(t, l), 
@@ -7722,7 +7759,7 @@
                                 }
                             }
                         });
-                    }), X(d, !0);
+                    }), G(d, !0);
                 }
             }), domUtils.on(u.document, "mousemove", t), domUtils.on(u.document, "mouseout", function(e) {
                 "TABLE" == (e.target || e.srcElement).tagName && D(u, !1, "", null);
@@ -7731,8 +7768,8 @@
                 r = !0, n[o = l] ? n[o] : r ? n[o % n.length] : "");
             }), u.addListener("uninterlacetable", function(e, t) {
                 if (t) for (var i = t.rows, n = this.options.classList, o = i.length, r = 0; r < o; r++) domUtils.removeClasses(i[r], n);
-            }), u.addListener("mousedown", O), u.addListener("mouseup", P), domUtils.on(u.body, "dragstart", function(e) {
-                P.call(u, "dragstart", e);
+            }), u.addListener("mousedown", O), u.addListener("mouseup", M), domUtils.on(u.body, "dragstart", function(e) {
+                M.call(u, "dragstart", e);
             }), u.addOutputRule(function(e) {
                 utils.each(e.getNodesByTagName("div"), function(e) {
                     "ue_tableDragLine" == e.getAttr("id") && e.parentNode.removeChild(e);
@@ -7750,7 +7787,7 @@
                         var n = domUtils.findParentByTagName(t, [ "td", "th" ], !0), o = S(n);
                         a = 1 < n.rowSpan ? a : o.getCellInfo(n).rowIndex;
                         var r = o.getTabNextCell(n, a);
-                        r ? R(r) ? e.setStart(r, 0).setCursor(!1, !0) : e.selectNodeContents(r).select() : (u.fireEvent("saveScene"), 
+                        r ? L(r) ? e.setStart(r, 0).setCursor(!1, !0) : e.selectNodeContents(r).select() : (u.fireEvent("saveScene"), 
                         u.__hasEnterExecCommand = !0, this.execCommand("insertrownext"), u.__hasEnterExecCommand = !1, 
                         (e = this.selection.getRange()).setStart(i.rows[i.rows.length - 1].cells[0], 0).setCursor(), 
                         u.fireEvent("saveScene"));
@@ -7768,11 +7805,11 @@
                     o && n && o.clearSelected();
                 }
             }), u.addListener("beforegetcontent", function() {
-                X(this, !1), browser.ie && utils.each(this.document.getElementsByTagName("caption"), function(e) {
+                G(this, !1), browser.ie && utils.each(this.document.getElementsByTagName("caption"), function(e) {
                     domUtils.isEmptyNode(e) && (e.innerHTML = "&nbsp;");
                 });
             }), u.addListener("aftergetcontent", function() {
-                X(this, !0);
+                G(this, !0);
             }), u.addListener("getAllHtml", function() {
                 s(u.document.getElementsByTagName("td"));
             }), u.addListener("fullscreenchanged", function(e, t) {
@@ -7795,9 +7832,9 @@
                 e = e.toLowerCase();
                 var n, o, r = k(i), a = new dom.Range(i.document), s = i.commands[e] || UE.commands[e];
                 if (s) {
-                    if (!r || I[e] || s.notNeedUndo || i.__hasEnterExecCommand) o = h.apply(i, arguments); else {
+                    if (!r || A[e] || s.notNeedUndo || i.__hasEnterExecCommand) o = h.apply(i, arguments); else {
                         i.__hasEnterExecCommand = !0, i.fireEvent("beforeexeccommand", e), n = r.selectedTds;
-                        for (var l, d, c, u = -2, m = -2, f = 0; c = n[f]; f++) R(c) ? a.setStart(c, 0).setCursor(!1, !0) : a.selectNode(c).select(!0), 
+                        for (var l, d, c, u = -2, m = -2, f = 0; c = n[f]; f++) L(c) ? a.setStart(c, 0).setCursor(!1, !0) : a.selectNode(c).select(!0), 
                         d = i.queryCommandState(e), l = i.queryCommandValue(e), -1 != d && (u === d && m === l || (i._ignoreContentChange = !0, 
                         o = h.apply(i, arguments), i._ignoreContentChange = !1), u = i.queryCommandState(e), 
                         m = i.queryCommandValue(e), domUtils.isEmptyBlock(c) && domUtils.fillNode(i.document, c));
@@ -8610,7 +8647,7 @@
                 o[catcherFieldName] = e, ajax.request(n, o);
             }
             remoteImages.length && catchremoteimage(remoteImages, {
-                success: function(r) {
+                success: function success(r) {
                     try {
                         var info = void 0 !== r.state ? r : eval("(" + r.responseText + ")");
                     } catch (e) {
@@ -9153,23 +9190,23 @@
             }
         };
     });
-    var baidu = baidu || {}, Fka, Gka, Hka, Ika, Zka, $ka, _ka, bla, cla, dla, ela, fla, xma, yma, zma, Ama, Wma, Xma, Yma, Zma, sna, tna, una, vna, Ena, Fna, Hna, Ina, Jna, Rna, Sna, Tna, Una, Vna, Wna, eoa, foa, goa, hoa, ioa, qoa, roa, soa, jpa, kpa, lpa, mpa, npa, zpa, Apa, Bpa, Cpa, Dpa, Kpa, Lpa, Mpa, Npa, Kqa, Lqa, Mqa, Nqa, Oqa, hra, ira, jra, ara, bra, cra, dra, era, fra, gra, qsa, rsa, ssa, tsa, zsa, Asa, Bsa, Csa, Kta, Lta, Mta, Ota, Pta, Qta, Rta;
+    var baidu = baidu || {}, Bva, Cva, Dva, Eva, cwa, dwa, ewa, iwa, jwa, kwa, lwa, mwa, eya, fya, gya, hya, Lya, Mya, Nya, Oya, yza, zza, Aza, Bza, Qza, Rza, Tza, Uza, Vza, kAa, lAa, mAa, nAa, oAa, pAa, GAa, HAa, IAa, JAa, KAa, VAa, WAa, XAa, SBa, TBa, UBa, VBa, WBa, lCa, mCa, nCa, oCa, pCa, BCa, CCa, DCa, ECa, cEa, dEa, eEa, fEa, gEa, MEa, NEa, OEa, FEa, GEa, HEa, IEa, JEa, KEa, LEa, sGa, tGa, uGa, vGa, DGa, EGa, FGa, GGa, ZHa, $Ha, _Ha, dIa, eIa, fIa, gIa;
     baidu.editor = baidu.editor || {}, UE.ui = baidu.editor.ui = {}, function() {
         var r = baidu.editor.browser, a = baidu.editor.dom.domUtils, i = "$EDITORUI", n = window[i] = {}, t = "ID" + i, o = 0, s = baidu.editor.ui.uiUtils = {
             uid: function(e) {
                 return e ? e[t] || (e[t] = ++o) : ++o;
             },
-            hook: function(o, e) {
-                var r;
-                return o && o._callbacks ? r = o : (r = function() {
-                    var e;
-                    o && (e = o.apply(this, arguments));
-                    for (var t = r._callbacks, i = t.length; i--; ) {
-                        var n = t[i].apply(this, arguments);
-                        void 0 === e && (e = n);
+            hook: function(s, e) {
+                var l;
+                return s && s._callbacks ? l = s : (l = function() {
+                    for (var e, t = arguments.length, i = new Array(t), n = 0; n < t; n++) i[n] = arguments[n];
+                    s && (e = s.apply(this, i));
+                    for (var o = l._callbacks, r = o.length; r--; ) {
+                        var a = o[r].apply(this, i);
+                        void 0 === e && (e = a);
                     }
                     return e;
-                })._callbacks = [], r._callbacks.push(e), r;
+                })._callbacks = [], l._callbacks.push(e), l;
             },
             createElementByHtml: function(e) {
                 var t = document.createElement("div");
@@ -9254,28 +9291,27 @@
             contains: function(e, t) {
                 return e && t && e !== t && (e.contains ? e.contains(t) : 16 & e.compareDocumentPosition(t));
             },
-            startDrag: function(e, n, t) {
-                t = t || document;
+            startDrag: function(e, n, i) {
+                i = i || document;
                 var o = e.clientX, r = e.clientY;
-                function i(e) {
+                function a(e) {
                     var t = e.clientX - o, i = e.clientY - r;
                     n.ondragmove(t, i, e), e.stopPropagation ? e.stopPropagation() : e.cancelBubble = !0;
                 }
-                if (t.addEventListener) {
-                    function a(e) {
-                        t.removeEventListener("mousemove", i, !0), t.removeEventListener("mouseup", a, !0), 
-                        window.removeEventListener("mouseup", a, !0), n.ondragstop();
-                    }
-                    t.addEventListener("mousemove", i, !0), t.addEventListener("mouseup", a, !0), window.addEventListener("mouseup", a, !0), 
+                if (i.addEventListener) {
+                    var t = function e(t) {
+                        i.removeEventListener("mousemove", a, !0), i.removeEventListener("mouseup", e, !0), 
+                        window.removeEventListener("mouseup", e, !0), n.ondragstop();
+                    };
+                    i.addEventListener("mousemove", a, !0), i.addEventListener("mouseup", t, !0), window.addEventListener("mouseup", t, !0), 
                     e.preventDefault();
                 } else {
-                    var s = e.srcElement;
-                    function l() {
-                        s.releaseCapture(), s.detachEvent("onmousemove", i), s.detachEvent("onmouseup", l), 
-                        s.detachEvent("onlosecaptrue", l), n.ondragstop();
-                    }
-                    s.setCapture(), s.attachEvent("onmousemove", i), s.attachEvent("onmouseup", l), 
-                    s.attachEvent("onlosecaptrue", l), e.returnValue = !1;
+                    var s = function e() {
+                        l.releaseCapture(), l.detachEvent("onmousemove", a), l.detachEvent("onmouseup", e), 
+                        l.detachEvent("onlosecaptrue", e), n.ondragstop();
+                    }, l = e.srcElement;
+                    l.setCapture(), l.attachEvent("onmousemove", a), l.attachEvent("onmouseup", s), 
+                    l.attachEvent("onlosecaptrue", s), e.returnValue = !1;
                 }
                 n.ondragstart();
             },
@@ -9300,23 +9336,23 @@
                 top: 0
             });
         }
-    }(), Fka = baidu.editor.utils, Gka = baidu.editor.ui.uiUtils, Hka = baidu.editor.EventBase, 
-    Ika = baidu.editor.ui.UIBase = function() {}, Ika.prototype = {
+    }(), Bva = baidu.editor.utils, Cva = baidu.editor.ui.uiUtils, Dva = baidu.editor.EventBase, 
+    Eva = baidu.editor.ui.UIBase = function() {}, Eva.prototype = {
         className: "",
         uiName: "",
         initOptions: function(e) {
             for (var t in e) this[t] = e[t];
-            this.id = this.id || "edui" + Gka.uid();
+            this.id = this.id || "edui" + Cva.uid();
         },
         initUIBase: function() {
-            this._globalKey = Fka.unhtml(Gka.setGlobal(this.id, this));
+            this._globalKey = Bva.unhtml(Cva.setGlobal(this.id, this));
         },
         render: function(e) {
-            for (var t, i = this.renderHtml(), n = Gka.createElementByHtml(i), o = domUtils.getElementsByTagName(n, "*"), r = "edui-" + (this.theme || this.editor.options.theme), a = document.getElementById("edui_fixedlayer"), s = 0; t = o[s++]; ) domUtils.addClass(t, r);
+            for (var t, i = this.renderHtml(), n = Cva.createElementByHtml(i), o = domUtils.getElementsByTagName(n, "*"), r = "edui-" + (this.theme || this.editor.options.theme), a = document.getElementById("edui_fixedlayer"), s = 0; t = o[s++]; ) domUtils.addClass(t, r);
             domUtils.addClass(n, r), a && (a.className = "", domUtils.addClass(a, r));
             var l = this.getDom();
-            null != l ? (l.parentNode.replaceChild(n, l), Gka.copyAttributes(n, l)) : ("string" == typeof e && (e = document.getElementById(e)), 
-            e = e || Gka.getFixedLayer(), domUtils.addClass(e, r), e.appendChild(n)), this.postRender();
+            null != l ? (l.parentNode.replaceChild(n, l), Cva.copyAttributes(n, l)) : ("string" == typeof e && (e = document.getElementById(e)), 
+            e = e || Cva.getFixedLayer(), domUtils.addClass(e, r), e.appendChild(n)), this.postRender();
         },
         getDom: function(e) {
             return e ? document.getElementById(this.id + "_" + e) : document.getElementById(this.id);
@@ -9336,12 +9372,12 @@
         },
         dispose: function() {
             var e = this.getDom();
-            e && baidu.editor.dom.domUtils.remove(e), Gka.unsetGlobal(this.id);
+            e && baidu.editor.dom.domUtils.remove(e), Cva.unsetGlobal(this.id);
         }
-    }, Fka.inherits(Ika, Hka), Zka = baidu.editor.utils, $ka = baidu.editor.ui.UIBase, 
-    _ka = baidu.editor.ui.Separator = function(e) {
+    }, Bva.inherits(Eva, Dva), cwa = baidu.editor.utils, dwa = baidu.editor.ui.UIBase, 
+    ewa = baidu.editor.ui.Separator = function(e) {
         this.initOptions(e), this.initSeparator();
-    }, _ka.prototype = {
+    }, ewa.prototype = {
         uiName: "separator",
         initSeparator: function() {
             this.initUIBase();
@@ -9349,16 +9385,16 @@
         getHtmlTpl: function() {
             return '<div id="##" class="edui-box %%"></div>';
         }
-    }, Zka.inherits(_ka, $ka), bla = baidu.editor.utils, cla = baidu.editor.dom.domUtils, 
-    dla = baidu.editor.ui.UIBase, ela = baidu.editor.ui.uiUtils, fla = baidu.editor.ui.Mask = function(e) {
+    }, cwa.inherits(ewa, dwa), iwa = baidu.editor.utils, jwa = baidu.editor.dom.domUtils, 
+    kwa = baidu.editor.ui.UIBase, lwa = baidu.editor.ui.uiUtils, mwa = baidu.editor.ui.Mask = function(e) {
         this.initOptions(e), this.initUIBase();
-    }, fla.prototype = {
+    }, mwa.prototype = {
         getHtmlTpl: function() {
             return '<div id="##" class="edui-mask %%" onclick="return $$._onClick(event, this);" onmousedown="return $$._onMouseDown(event, this);"></div>';
         },
         postRender: function() {
             var e = this;
-            cla.on(window, "resize", function() {
+            jwa.on(window, "resize", function() {
                 setTimeout(function() {
                     e.isHidden() || e._fill();
                 });
@@ -9380,10 +9416,10 @@
             this.fireEvent("click", e, t);
         },
         _fill: function() {
-            var e = this.getDom(), t = ela.getViewportRect();
+            var e = this.getDom(), t = lwa.getViewportRect();
             e.style.width = t.width + "px", e.style.height = t.height + "px";
         }
-    }, bla.inherits(fla, dla), function() {
+    }, iwa.inherits(mwa, kwa), function() {
         var e = baidu.editor.utils, c = baidu.editor.ui.uiUtils, u = baidu.editor.dom.domUtils, a = baidu.editor.ui.UIBase, t = baidu.editor.ui.Popup = function(e) {
             this.initOptions(e), this.initPopup();
         }, o = [];
@@ -9532,10 +9568,10 @@
             }
         }, e.inherits(i, t);
         var o = "ffffff,000000,eeece1,1f497d,4f81bd,c0504d,9bbb59,8064a2,4bacc6,f79646,f2f2f2,7f7f7f,ddd9c3,c6d9f0,dbe5f1,f2dcdb,ebf1dd,e5e0ec,dbeef3,fdeada,d8d8d8,595959,c4bd97,8db3e2,b8cce4,e5b9b7,d7e3bc,ccc1d9,b7dde8,fbd5b5,bfbfbf,3f3f3f,938953,548dd4,95b3d7,d99694,c3d69b,b2a2c7,92cddc,fac08f,a5a5a5,262626,494429,17365d,366092,953734,76923c,5f497a,31859b,e36c09,7f7f7f,0c0c0c,1d1b10,0f243e,244061,632423,4f6128,3f3151,205867,974806,c00000,ff0000,ffc000,ffff00,92d050,00b050,00b0f0,0070c0,002060,7030a0,".split(",");
-    }(), xma = baidu.editor.utils, yma = baidu.editor.ui.uiUtils, zma = baidu.editor.ui.UIBase, 
-    Ama = baidu.editor.ui.TablePicker = function(e) {
+    }(), eya = baidu.editor.utils, fya = baidu.editor.ui.uiUtils, gya = baidu.editor.ui.UIBase, 
+    hya = baidu.editor.ui.TablePicker = function(e) {
         this.initOptions(e), this.initTablePicker();
-    }, Ama.prototype = {
+    }, hya.prototype = {
         defaultNumRows: 10,
         defaultNumCols: 10,
         maxNumRows: 20,
@@ -9549,7 +9585,7 @@
         getHtmlTpl: function() {
             return '<div id="##" class="edui-tablepicker %%"><div class="edui-tablepicker-body"><div class="edui-infoarea"><span id="##_label" class="edui-label"></span></div><div class="edui-pickarea" onmousemove="$$._onMouseMove(event, this);" onmouseover="$$._onMouseOver(event, this);" onmouseout="$$._onMouseOut(event, this);" onclick="$$._onClick(event, this);"><div id="##_overlay" class="edui-overlay"></div></div></div></div>';
         },
-        _UIBase_render: zma.prototype.render,
+        _UIBase_render: gya.prototype.render,
         render: function(e) {
             this._UIBase_render(e), this.getDom("label").innerHTML = "0" + this.editor.getLang("t_row") + " x 0" + this.editor.getLang("t_col");
         },
@@ -9560,24 +9596,24 @@
         },
         _onMouseOver: function(e, t) {
             var i = e.relatedTarget || e.fromElement;
-            yma.contains(t, i) || t === i || (this.getDom("label").innerHTML = "0" + this.editor.getLang("t_col") + " x 0" + this.editor.getLang("t_row"), 
+            fya.contains(t, i) || t === i || (this.getDom("label").innerHTML = "0" + this.editor.getLang("t_col") + " x 0" + this.editor.getLang("t_row"), 
             this.getDom("overlay").style.visibility = "");
         },
         _onMouseOut: function(e, t) {
             var i = e.relatedTarget || e.toElement;
-            yma.contains(t, i) || t === i || (this.getDom("label").innerHTML = "0" + this.editor.getLang("t_col") + " x 0" + this.editor.getLang("t_row"), 
+            fya.contains(t, i) || t === i || (this.getDom("label").innerHTML = "0" + this.editor.getLang("t_col") + " x 0" + this.editor.getLang("t_row"), 
             this.getDom("overlay").style.visibility = "hidden");
         },
         _onMouseMove: function(e, t) {
             this.getDom("overlay").style;
-            var i = yma.getEventOffset(e), n = this.lengthOfCellSide, o = Math.ceil(i.left / n), r = Math.ceil(i.top / n);
+            var i = fya.getEventOffset(e), n = this.lengthOfCellSide, o = Math.ceil(i.left / n), r = Math.ceil(i.top / n);
             this._track(o, r);
         },
         _onClick: function() {
             this.fireEvent("picktable", this.numCols, this.numRows);
         }
-    }, xma.inherits(Ama, zma), Wma = baidu.editor.browser, Xma = baidu.editor.dom.domUtils, 
-    Yma = baidu.editor.ui.uiUtils, Zma = 'onmousedown="$$.Stateful_onMouseDown(event, this);" onmouseup="$$.Stateful_onMouseUp(event, this);"' + (Wma.ie ? ' onmouseenter="$$.Stateful_onMouseEnter(event, this);" onmouseleave="$$.Stateful_onMouseLeave(event, this);"' : ' onmouseover="$$.Stateful_onMouseOver(event, this);" onmouseout="$$.Stateful_onMouseOut(event, this);"'), 
+    }, eya.inherits(hya, gya), Lya = baidu.editor.browser, Mya = baidu.editor.dom.domUtils, 
+    Nya = baidu.editor.ui.uiUtils, Oya = 'onmousedown="$$.Stateful_onMouseDown(event, this);" onmouseup="$$.Stateful_onMouseUp(event, this);"' + (Lya.ie ? ' onmouseenter="$$.Stateful_onMouseEnter(event, this);" onmouseleave="$$.Stateful_onMouseLeave(event, this);"' : ' onmouseover="$$.Stateful_onMouseOver(event, this);" onmouseout="$$.Stateful_onMouseOut(event, this);"'), 
     baidu.editor.ui.Stateful = {
         alwalysHoverable: !1,
         target: null,
@@ -9586,7 +9622,7 @@
         },
         Stateful_getHtmlTpl: function() {
             return this._Stateful_dGetHtmlTpl().replace(/stateful/g, function() {
-                return Zma;
+                return Oya;
             });
         },
         Stateful_onMouseEnter: function(e, t) {
@@ -9599,11 +9635,11 @@
         },
         Stateful_onMouseOver: function(e, t) {
             var i = e.relatedTarget;
-            Yma.contains(t, i) || t === i || this.Stateful_onMouseEnter(e, t);
+            Nya.contains(t, i) || t === i || this.Stateful_onMouseEnter(e, t);
         },
         Stateful_onMouseOut: function(e, t) {
             var i = e.relatedTarget;
-            Yma.contains(t, i) || t === i || this.Stateful_onMouseLeave(e, t);
+            Nya.contains(t, i) || t === i || this.Stateful_onMouseLeave(e, t);
         },
         Stateful_onMouseDown: function(e, t) {
             this.isDisabled() || this.addState("active");
@@ -9615,13 +9651,13 @@
             this.disabled && !this.hasState("disabled") && this.addState("disabled");
         },
         hasState: function(e) {
-            return Xma.hasClass(this.getStateDom(), "edui-state-" + e);
+            return Mya.hasClass(this.getStateDom(), "edui-state-" + e);
         },
         addState: function(e) {
             this.hasState(e) || (this.getStateDom().className += " edui-state-" + e);
         },
         removeState: function(e) {
-            this.hasState(e) && Xma.removeClasses(this.getStateDom(), [ "edui-state-" + e ]);
+            this.hasState(e) && Mya.removeClasses(this.getStateDom(), [ "edui-state-" + e ]);
         },
         getStateDom: function() {
             return this.getDom("state");
@@ -9639,14 +9675,14 @@
             e ? (this.removeState("hover"), this.removeState("checked"), this.removeState("active"), 
             this.addState("disabled")) : this.removeState("disabled");
         }
-    }, sna = baidu.editor.utils, tna = baidu.editor.ui.UIBase, una = baidu.editor.ui.Stateful, 
-    vna = baidu.editor.ui.Button = function(e) {
+    }, yza = baidu.editor.utils, zza = baidu.editor.ui.UIBase, Aza = baidu.editor.ui.Stateful, 
+    Bza = baidu.editor.ui.Button = function(e) {
         if (e.name) {
             var t = e.name, i = e.cssRules;
             e.className || (e.className = "edui-for-" + t), e.cssRules = ".edui-" + (e.theme || "default") + " .edui-toolbar .edui-button.edui-for-" + t + " .edui-icon {" + i + "}";
         }
         this.initOptions(e), this.initButton();
-    }, vna.prototype = {
+    }, Bza.prototype = {
         uiName: "button",
         label: "",
         title: "",
@@ -9654,7 +9690,7 @@
         showText: !0,
         cssRules: "",
         initButton: function() {
-            this.initUIBase(), this.Stateful_init(), this.cssRules && sna.cssRule("edui-customize-" + this.name + "-style", this.cssRules);
+            this.initUIBase(), this.Stateful_init(), this.cssRules && yza.cssRule("edui-customize-" + this.name + "-style", this.cssRules);
         },
         getHtmlTpl: function() {
             return '<div id="##" class="edui-box %%"><div id="##_state" stateful><div class="%%-wrap"><div id="##_body" unselectable="on" ' + (this.title ? 'title="' + this.title + '"' : "") + ' class="%%-body" onmousedown="return $$._onMouseDown(event, this);" onclick="return $$._onClick(event, this);">' + (this.showIcon ? '<div class="edui-box edui-icon"></div>' : "") + (this.showText ? '<div class="edui-box edui-label">' + this.label + "</div>" : "") + "</div></div></div></div>";
@@ -9672,11 +9708,11 @@
         setTitle: function(e) {
             this.getDom("label").innerHTML = e;
         }
-    }, sna.inherits(vna, tna), sna.extend(vna.prototype, una), Ena = baidu.editor.utils, 
-    Fna = baidu.editor.ui.uiUtils, baidu.editor.dom.domUtils, Hna = baidu.editor.ui.UIBase, 
-    Ina = baidu.editor.ui.Stateful, Jna = baidu.editor.ui.SplitButton = function(e) {
+    }, yza.inherits(Bza, zza), yza.extend(Bza.prototype, Aza), Qza = baidu.editor.utils, 
+    Rza = baidu.editor.ui.uiUtils, baidu.editor.dom.domUtils, Tza = baidu.editor.ui.UIBase, 
+    Uza = baidu.editor.ui.Stateful, Vza = baidu.editor.ui.SplitButton = function(e) {
         this.initOptions(e), this.initSplitButton();
-    }, Jna.prototype = {
+    }, Vza.prototype = {
         popup: null,
         uiName: "splitbutton",
         title: "",
@@ -9686,14 +9722,14 @@
                 this.popup = null, this.setPopup(e);
             }
         },
-        _UIBase_postRender: Hna.prototype.postRender,
+        _UIBase_postRender: Tza.prototype.postRender,
         postRender: function() {
             this.Stateful_postRender(), this._UIBase_postRender();
         },
         setPopup: function(e) {
-            this.popup !== e && (null != this.popup && this.popup.dispose(), e.addListener("show", Ena.bind(this._onPopupShow, this)), 
-            e.addListener("hide", Ena.bind(this._onPopupHide, this)), e.addListener("postrender", Ena.bind(function() {
-                e.getDom("body").appendChild(Fna.createElementByHtml('<div id="' + this.popup.id + '_bordereraser" class="edui-bordereraser edui-background" style="width:' + (Fna.getClientRect(this.getDom()).width + 20) + 'px"></div>')), 
+            this.popup !== e && (null != this.popup && this.popup.dispose(), e.addListener("show", Qza.bind(this._onPopupShow, this)), 
+            e.addListener("hide", Qza.bind(this._onPopupHide, this)), e.addListener("postrender", Qza.bind(function() {
+                e.getDom("body").appendChild(Rza.createElementByHtml('<div id="' + this.popup.id + '_bordereraser" class="edui-bordereraser edui-background" style="width:' + (Rza.getClientRect(this.getDom()).width + 20) + 'px"></div>')), 
                 e.getDom().className += " " + this.className;
             }, this)), this.popup = e);
         },
@@ -9707,7 +9743,7 @@
             return '<div id="##" class="edui-box %%"><div ' + (this.title ? 'title="' + this.title + '"' : "") + ' id="##_state" stateful><div class="%%-body"><div id="##_button_body" class="edui-box edui-button-body" onclick="$$._onButtonClick(event, this);"><div class="edui-box edui-icon"></div></div><div class="edui-box edui-splitborder"></div><div class="edui-box edui-arrow" onclick="$$._onArrowClick();"></div></div></div></div>';
         },
         showPopup: function() {
-            var e = Fna.getClientRect(this.getDom());
+            var e = Rza.getClientRect(this.getDom());
             e.top -= this.popup.SHADOW_RADIUS, e.height += this.popup.SHADOW_RADIUS, this.popup.showAnchorRect(e);
         },
         _onArrowClick: function(e, t) {
@@ -9716,15 +9752,15 @@
         _onButtonClick: function() {
             this.isDisabled() || this.fireEvent("buttonclick");
         }
-    }, Ena.inherits(Jna, Hna), Ena.extend(Jna.prototype, Ina, !0), Rna = baidu.editor.utils, 
-    Sna = baidu.editor.ui.uiUtils, Tna = baidu.editor.ui.ColorPicker, Una = baidu.editor.ui.Popup, 
-    Vna = baidu.editor.ui.SplitButton, Wna = baidu.editor.ui.ColorButton = function(e) {
+    }, Qza.inherits(Vza, Tza), Qza.extend(Vza.prototype, Uza, !0), kAa = baidu.editor.utils, 
+    lAa = baidu.editor.ui.uiUtils, mAa = baidu.editor.ui.ColorPicker, nAa = baidu.editor.ui.Popup, 
+    oAa = baidu.editor.ui.SplitButton, pAa = baidu.editor.ui.ColorButton = function(e) {
         this.initOptions(e), this.initColorButton();
-    }, Wna.prototype = {
+    }, pAa.prototype = {
         initColorButton: function() {
             var i = this;
-            this.popup = new Una({
-                content: new Tna({
+            this.popup = new nAa({
+                content: new mAa({
                     noColorText: i.editor.getLang("clearColor"),
                     editor: i.editor,
                     onpickcolor: function(e, t) {
@@ -9737,9 +9773,9 @@
                 editor: i.editor
             }), this.initSplitButton();
         },
-        _SplitButton_postRender: Vna.prototype.postRender,
+        _SplitButton_postRender: oAa.prototype.postRender,
         postRender: function() {
-            this._SplitButton_postRender(), this.getDom("button_body").appendChild(Sna.createElementByHtml('<div id="' + this.id + '_colorlump" class="edui-colorlump"></div>')), 
+            this._SplitButton_postRender(), this.getDom("button_body").appendChild(lAa.createElementByHtml('<div id="' + this.id + '_colorlump" class="edui-colorlump"></div>')), 
             this.getDom().className += " edui-colorbutton";
         },
         setColor: function(e) {
@@ -9751,14 +9787,14 @@
         _onPickNoColor: function(e) {
             !1 !== this.fireEvent("picknocolor") && this.popup.hide();
         }
-    }, Rna.inherits(Wna, Vna), eoa = baidu.editor.utils, foa = baidu.editor.ui.Popup, 
-    goa = baidu.editor.ui.TablePicker, hoa = baidu.editor.ui.SplitButton, ioa = baidu.editor.ui.TableButton = function(e) {
+    }, kAa.inherits(pAa, oAa), GAa = baidu.editor.utils, HAa = baidu.editor.ui.Popup, 
+    IAa = baidu.editor.ui.TablePicker, JAa = baidu.editor.ui.SplitButton, KAa = baidu.editor.ui.TableButton = function(e) {
         this.initOptions(e), this.initTableButton();
-    }, ioa.prototype = {
+    }, KAa.prototype = {
         initTableButton: function() {
             var n = this;
-            this.popup = new foa({
-                content: new goa({
+            this.popup = new HAa({
+                content: new IAa({
                     editor: n.editor,
                     onpicktable: function(e, t, i) {
                         n._onPickTable(t, i);
@@ -9770,10 +9806,10 @@
         _onPickTable: function(e, t) {
             !1 !== this.fireEvent("picktable", e, t) && this.popup.hide();
         }
-    }, eoa.inherits(ioa, hoa), qoa = baidu.editor.utils, roa = baidu.editor.ui.UIBase, 
-    soa = baidu.editor.ui.AutoTypeSetPicker = function(e) {
+    }, GAa.inherits(KAa, JAa), VAa = baidu.editor.utils, WAa = baidu.editor.ui.UIBase, 
+    XAa = baidu.editor.ui.AutoTypeSetPicker = function(e) {
         this.initOptions(e), this.initAutoTypeSetPicker();
-    }, soa.prototype = {
+    }, XAa.prototype = {
         initAutoTypeSetPicker: function() {
             this.initUIBase();
         },
@@ -9781,8 +9817,8 @@
             var e = this.editor, t = e.options.autotypeset, i = e.getLang("autoTypeSet"), n = "textAlignValue" + e.uid, o = "imageBlockLineValue" + e.uid, r = "symbolConverValue" + e.uid;
             return '<div id="##" class="edui-autotypesetpicker %%"><div class="edui-autotypesetpicker-body"><table ><tr><td nowrap><input type="checkbox" name="mergeEmptyline" ' + (t.mergeEmptyline ? "checked" : "") + ">" + i.mergeLine + '</td><td colspan="2"><input type="checkbox" name="removeEmptyline" ' + (t.removeEmptyline ? "checked" : "") + ">" + i.delLine + '</td></tr><tr><td nowrap><input type="checkbox" name="removeClass" ' + (t.removeClass ? "checked" : "") + ">" + i.removeFormat + '</td><td colspan="2"><input type="checkbox" name="indent" ' + (t.indent ? "checked" : "") + ">" + i.indent + '</td></tr><tr><td nowrap><input type="checkbox" name="textAlign" ' + (t.textAlign ? "checked" : "") + ">" + i.alignment + '</td><td colspan="2" id="' + n + '"><input type="radio" name="' + n + '" value="left" ' + (t.textAlign && "left" == t.textAlign ? "checked" : "") + ">" + e.getLang("justifyleft") + '<input type="radio" name="' + n + '" value="center" ' + (t.textAlign && "center" == t.textAlign ? "checked" : "") + ">" + e.getLang("justifycenter") + '<input type="radio" name="' + n + '" value="right" ' + (t.textAlign && "right" == t.textAlign ? "checked" : "") + ">" + e.getLang("justifyright") + '</td></tr><tr><td nowrap><input type="checkbox" name="imageBlockLine" ' + (t.imageBlockLine ? "checked" : "") + ">" + i.imageFloat + '</td><td nowrap id="' + o + '"><input type="radio" name="' + o + '" value="none" ' + (t.imageBlockLine && "none" == t.imageBlockLine ? "checked" : "") + ">" + e.getLang("default") + '<input type="radio" name="' + o + '" value="left" ' + (t.imageBlockLine && "left" == t.imageBlockLine ? "checked" : "") + ">" + e.getLang("justifyleft") + '<input type="radio" name="' + o + '" value="center" ' + (t.imageBlockLine && "center" == t.imageBlockLine ? "checked" : "") + ">" + e.getLang("justifycenter") + '<input type="radio" name="' + o + '" value="right" ' + (t.imageBlockLine && "right" == t.imageBlockLine ? "checked" : "") + ">" + e.getLang("justifyright") + '</td></tr><tr><td nowrap><input type="checkbox" name="clearFontSize" ' + (t.clearFontSize ? "checked" : "") + ">" + i.removeFontsize + '</td><td colspan="2"><input type="checkbox" name="clearFontFamily" ' + (t.clearFontFamily ? "checked" : "") + ">" + i.removeFontFamily + '</td></tr><tr><td nowrap colspan="3"><input type="checkbox" name="removeEmptyNode" ' + (t.removeEmptyNode ? "checked" : "") + ">" + i.removeHtml + '</td></tr><tr><td nowrap colspan="3"><input type="checkbox" name="pasteFilter" ' + (t.pasteFilter ? "checked" : "") + ">" + i.pasteFilter + '</td></tr><tr><td nowrap><input type="checkbox" name="symbolConver" ' + (t.bdc2sb || t.tobdc ? "checked" : "") + ">" + i.symbol + '</td><td id="' + r + '"><input type="radio" name="bdc" value="bdc2sb" ' + (t.bdc2sb ? "checked" : "") + ">" + i.bdc2sb + '<input type="radio" name="bdc" value="tobdc" ' + (t.tobdc ? "checked" : "") + ">" + i.tobdc + '</td><td nowrap align="right"><button >' + i.run + "</button></td></tr></table></div></div>";
         },
-        _UIBase_render: roa.prototype.render
-    }, qoa.inherits(soa, roa), function() {
+        _UIBase_render: WAa.prototype.render
+    }, VAa.inherits(XAa, WAa), function() {
         var p = baidu.editor.utils, e = baidu.editor.ui.Popup, i = baidu.editor.ui.AutoTypeSetPicker, t = baidu.editor.ui.SplitButton, n = baidu.editor.ui.AutoTypeSetButton = function(e) {
             this.initOptions(e), this.initAutoTypeSetButton();
         };
@@ -9843,10 +9879,10 @@
                 }), this.initSplitButton();
             }
         }, p.inherits(n, t);
-    }(), jpa = baidu.editor.utils, kpa = baidu.editor.ui.Popup, lpa = baidu.editor.ui.Stateful, 
-    mpa = baidu.editor.ui.UIBase, npa = baidu.editor.ui.CellAlignPicker = function(e) {
+    }(), SBa = baidu.editor.utils, TBa = baidu.editor.ui.Popup, UBa = baidu.editor.ui.Stateful, 
+    VBa = baidu.editor.ui.UIBase, WBa = baidu.editor.ui.CellAlignPicker = function(e) {
         this.initOptions(e), this.initSelected(), this.initCellAlignPicker();
-    }, npa.prototype = {
+    }, WBa.prototype = {
         initSelected: function() {
             var e = {
                 top: 0,
@@ -9874,14 +9910,14 @@
         _onClick: function(e) {
             var t = e.target || e.srcElement;
             /icon/.test(t.className) && (this.items[t.parentNode.getAttribute("index")].onclick(), 
-            kpa.postHide(e));
+            TBa.postHide(e));
         },
-        _UIBase_render: mpa.prototype.render
-    }, jpa.inherits(npa, mpa), jpa.extend(npa.prototype, lpa, !0), zpa = baidu.editor.utils, 
-    Apa = baidu.editor.ui.Stateful, Bpa = baidu.editor.ui.uiUtils, Cpa = baidu.editor.ui.UIBase, 
-    Dpa = baidu.editor.ui.PastePicker = function(e) {
+        _UIBase_render: VBa.prototype.render
+    }, SBa.inherits(WBa, VBa), SBa.extend(WBa.prototype, UBa, !0), lCa = baidu.editor.utils, 
+    mCa = baidu.editor.ui.Stateful, nCa = baidu.editor.ui.uiUtils, oCa = baidu.editor.ui.UIBase, 
+    pCa = baidu.editor.ui.PastePicker = function(e) {
         this.initOptions(e), this.initPastePicker();
-    }, Dpa.prototype = {
+    }, pCa.prototype = {
         initPastePicker: function() {
             this.initUIBase(), this.Stateful_init();
         },
@@ -9895,16 +9931,16 @@
             this.editor.ui._isTransfer = !0, this.editor.fireEvent("pasteTransfer", e);
         },
         _onClick: function(e) {
-            var t = domUtils.getNextDomNode(e), i = Bpa.getViewportRect().height, n = Bpa.getClientRect(t);
+            var t = domUtils.getNextDomNode(e), i = nCa.getViewportRect().height, n = nCa.getClientRect(t);
             n.top + n.height > i ? t.style.top = -n.height - e.offsetHeight + "px" : t.style.top = "", 
             /hidden/gi.test(domUtils.getComputedStyle(t, "visibility")) ? (t.style.visibility = "visible", 
             domUtils.addClass(e, "edui-state-opened")) : (t.style.visibility = "hidden", domUtils.removeClasses(e, "edui-state-opened"));
         },
-        _UIBase_render: Cpa.prototype.render
-    }, zpa.inherits(Dpa, Cpa), zpa.extend(Dpa.prototype, Apa, !0), Kpa = baidu.editor.utils, 
-    Lpa = baidu.editor.ui.uiUtils, Mpa = baidu.editor.ui.UIBase, Npa = baidu.editor.ui.Toolbar = function(e) {
+        _UIBase_render: oCa.prototype.render
+    }, lCa.inherits(pCa, oCa), lCa.extend(pCa.prototype, mCa, !0), BCa = baidu.editor.utils, 
+    CCa = baidu.editor.ui.uiUtils, DCa = baidu.editor.ui.UIBase, ECa = baidu.editor.ui.Toolbar = function(e) {
         this.initOptions(e), this.initToolbar();
-    }, Npa.prototype = {
+    }, ECa.prototype = {
         items: null,
         initToolbar: function() {
             this.items = this.items || [], this.initUIBase();
@@ -9918,13 +9954,13 @@
         },
         postRender: function() {
             for (var e = this.getDom(), t = 0; t < this.items.length; t++) this.items[t].postRender();
-            Lpa.makeUnselectable(e);
+            CCa.makeUnselectable(e);
         },
         _onMouseDown: function(e) {
             var t = e.target || e.srcElement, i = t && t.tagName && t.tagName.toLowerCase();
             if ("input" == i || "object" == i || "object" == i) return !1;
         }
-    }, Kpa.inherits(Npa, Mpa), function() {
+    }, BCa.inherits(ECa, DCa), function() {
         var e = baidu.editor.utils, i = baidu.editor.dom.domUtils, o = baidu.editor.ui.uiUtils, t = baidu.editor.ui.UIBase, n = baidu.editor.ui.Popup, r = baidu.editor.ui.Stateful, a = baidu.editor.ui.CellAlignPicker, s = baidu.editor.ui.Menu = function(e) {
             this.initOptions(e), this.initMenu();
         }, l = {
@@ -10074,10 +10110,10 @@
                 this.subMenu.hide();
             }
         }, e.inherits(d, t), e.extend(d.prototype, r, !0);
-    }(), Kqa = baidu.editor.utils, Lqa = baidu.editor.ui.uiUtils, Mqa = baidu.editor.ui.Menu, 
-    Nqa = baidu.editor.ui.SplitButton, Oqa = baidu.editor.ui.Combox = function(e) {
+    }(), cEa = baidu.editor.utils, dEa = baidu.editor.ui.uiUtils, eEa = baidu.editor.ui.Menu, 
+    fEa = baidu.editor.ui.SplitButton, gEa = baidu.editor.ui.Combox = function(e) {
         this.initOptions(e), this.initCombox();
-    }, Oqa.prototype = {
+    }, gEa.prototype = {
         uiName: "combox",
         onbuttonclick: function() {
             this.showPopup();
@@ -10091,7 +10127,7 @@
                     e.selectByIndex(this.index);
                 };
             }
-            this.popup = new Mqa({
+            this.popup = new eEa({
                 items: this.items,
                 uiName: "list",
                 editor: this.editor,
@@ -10099,12 +10135,12 @@
                 combox: this
             }), this.initSplitButton();
         },
-        _SplitButton_postRender: Nqa.prototype.postRender,
+        _SplitButton_postRender: fEa.prototype.postRender,
         postRender: function() {
             this._SplitButton_postRender(), this.setLabel(this.label || ""), this.setValue(this.initValue || "");
         },
         showPopup: function() {
-            var e = Lqa.getClientRect(this.getDom());
+            var e = dEa.getClientRect(this.getDom());
             e.top += 1, e.bottom -= 1, e.height -= 2, this.popup.showAnchorRect(e);
         },
         getValue: function() {
@@ -10133,14 +10169,14 @@
             e < this.items.length && !1 !== this.fireEvent("select", e) && (this.selectedIndex = e, 
             this.value = this.items[e].value, this.setLabel(this.items[e].label));
         }
-    }, Kqa.inherits(Oqa, Nqa), ara = baidu.editor.utils, bra = baidu.editor.dom.domUtils, 
-    cra = baidu.editor.ui.uiUtils, dra = baidu.editor.ui.Mask, era = baidu.editor.ui.UIBase, 
-    fra = baidu.editor.ui.Button, gra = baidu.editor.ui.Dialog = function(e) {
+    }, cEa.inherits(gEa, fEa), FEa = baidu.editor.utils, GEa = baidu.editor.dom.domUtils, 
+    HEa = baidu.editor.ui.uiUtils, IEa = baidu.editor.ui.Mask, JEa = baidu.editor.ui.UIBase, 
+    KEa = baidu.editor.ui.Button, LEa = baidu.editor.ui.Dialog = function(e) {
         if (e.name) {
             var t = e.name, i = e.cssRules;
             e.className || (e.className = "edui-for-" + t), i && (e.cssRules = ".edui-for-" + t + " .edui-dialog-content  {" + i + "}");
         }
-        this.initOptions(ara.extend({
+        this.initOptions(FEa.extend({
             autoReset: !0,
             draggable: !0,
             onok: function() {},
@@ -10150,39 +10186,39 @@
             },
             holdScroll: !1
         }, e)), this.initDialog();
-    }, gra.prototype = {
+    }, LEa.prototype = {
         draggable: !1,
         uiName: "dialog",
         initDialog: function() {
             var e = this, t = this.editor.options.theme;
-            if (this.cssRules && (this.cssRules = ".edui-" + t + " " + this.cssRules, ara.cssRule("edui-customize-" + this.name + "-style", this.cssRules)), 
-            this.initUIBase(), this.modalMask = hra || (hra = new dra({
+            if (this.cssRules && (this.cssRules = ".edui-" + t + " " + this.cssRules, FEa.cssRule("edui-customize-" + this.name + "-style", this.cssRules)), 
+            this.initUIBase(), this.modalMask = MEa || (MEa = new IEa({
                 className: "edui-dialog-modalmask",
                 theme: t,
                 onclick: function() {
-                    jra && jra.close(!1);
+                    OEa && OEa.close(!1);
                 }
-            })), this.dragMask = ira || (ira = new dra({
+            })), this.dragMask = NEa || (NEa = new IEa({
                 className: "edui-dialog-dragmask",
                 theme: t
-            })), this.closeButton = new fra({
+            })), this.closeButton = new KEa({
                 className: "edui-dialog-closebutton",
                 title: e.closeDialog,
                 theme: t,
                 onclick: function() {
                     e.close(!1);
                 }
-            }), this.fullscreen && this.initResizeEvent(), this.buttons) for (var i = 0; i < this.buttons.length; i++) this.buttons[i] instanceof fra || (this.buttons[i] = new fra(ara.extend(this.buttons[i], {
+            }), this.fullscreen && this.initResizeEvent(), this.buttons) for (var i = 0; i < this.buttons.length; i++) this.buttons[i] instanceof KEa || (this.buttons[i] = new KEa(FEa.extend(this.buttons[i], {
                 editor: this.editor
             }, !0)));
         },
         initResizeEvent: function() {
             var r = this;
-            bra.on(window, "resize", function() {
+            GEa.on(window, "resize", function() {
                 r._hidden || void 0 === r._hidden || (r.__resizeTimer && window.clearTimeout(r.__resizeTimer), 
                 r.__resizeTimer = window.setTimeout(function() {
                     r.__resizeTimer = null;
-                    var e = r.getDom(), t = r.getDom("content"), i = UE.ui.uiUtils.getClientRect(e), n = UE.ui.uiUtils.getClientRect(t), o = cra.getViewportRect();
+                    var e = r.getDom(), t = r.getDom("content"), i = UE.ui.uiUtils.getClientRect(e), n = UE.ui.uiUtils.getClientRect(t), o = HEa.getViewportRect();
                     t.style.width = o.width - i.width + n.width + "px", t.style.height = o.height - i.height + n.height + "px", 
                     e.style.width = o.width + "px", e.style.height = o.height + "px", r.fireEvent("resize");
                 }, 100));
@@ -10193,14 +10229,14 @@
             return e.style.width = t.width + "px", e.style.height = t.height + "px", t;
         },
         safeSetOffset: function(e) {
-            var t = this.getDom(), i = cra.getViewportRect(), n = cra.getClientRect(t), o = e.left;
+            var t = this.getDom(), i = HEa.getViewportRect(), n = HEa.getClientRect(t), o = e.left;
             o + n.width > i.right && (o = i.right - n.width);
             var r = e.top;
             r + n.height > i.bottom && (r = i.bottom - n.height), t.style.left = Math.max(o, 0) + "px", 
             t.style.top = Math.max(r, 0) + "px";
         },
         showAtCenter: function() {
-            var e = cra.getViewportRect();
+            var e = HEa.getViewportRect();
             if (this.fullscreen) {
                 var t = this.getDom(), i = this.getDom("content");
                 t.style.display = "block";
@@ -10224,7 +10260,7 @@
                 this.safeSetOffset({
                     left: Math.max(0 | s, 0),
                     top: Math.max(0 | l, 0)
-                }), bra.hasClass(d, "edui-state-centered") || (d.className += " edui-state-centered");
+                }), GEa.hasClass(d, "edui-state-centered") || (d.className += " edui-state-centered");
             }
             this._show();
         },
@@ -10250,23 +10286,23 @@
             }), this.addListener("hide", function() {
                 e.modalMask.hide();
             }), this.buttons) for (var t = 0; t < this.buttons.length; t++) this.buttons[t].postRender();
-            bra.on(window, "resize", function() {
+            GEa.on(window, "resize", function() {
                 setTimeout(function() {
-                    e.isHidden() || e.safeSetOffset(cra.getClientRect(e.getDom()));
+                    e.isHidden() || e.safeSetOffset(HEa.getClientRect(e.getDom()));
                 });
             }), this._hide();
         },
         mesureSize: function() {
-            var e = this.getDom("body"), t = cra.getClientRect(this.getDom("content")).width;
-            return e.style.width = t, cra.getClientRect(e);
+            var e = this.getDom("body"), t = HEa.getClientRect(this.getDom("content")).width;
+            return e.style.width = t, HEa.getClientRect(e);
         },
         _onTitlebarMouseDown: function(e, t) {
             if (this.draggable) {
-                cra.getViewportRect();
+                HEa.getViewportRect();
                 var o, r = this;
-                cra.startDrag(e, {
+                HEa.startDrag(e, {
                     ondragstart: function() {
-                        o = cra.getClientRect(r.getDom()), r.getDom("contmask").style.visibility = "visible", 
+                        o = HEa.getClientRect(r.getDom()), r.getDom("contmask").style.visibility = "visible", 
                         r.dragMask.show(r.getDom().style.zIndex - 1);
                     },
                     ondragmove: function(e, t) {
@@ -10277,7 +10313,7 @@
                         });
                     },
                     ondragstop: function() {
-                        r.getDom("contmask").style.visibility = "hidden", bra.removeClasses(r.getDom(), [ "edui-state-centered" ]), 
+                        r.getDom("contmask").style.visibility = "hidden", GEa.removeClasses(r.getDom(), [ "edui-state-centered" ]), 
                         r.dragMask.hide();
                     }
                 });
@@ -10309,7 +10345,7 @@
             if (this.showAtCenter(), this.iframeUrl) try {
                 this.getDom("iframe").focus();
             } catch (e) {}
-            jra = this;
+            OEa = this;
         },
         _onCloseButtonClick: function(e, t) {
             this.close(!1);
@@ -10323,17 +10359,17 @@
                 var t = this.getDom("content"), i = this.getDom("iframe");
                 if (t && i) {
                     var n = i.contentDocument || i.contentWindow.document;
-                    n && (n.body.innerHTML = ""), bra.remove(t);
+                    n && (n.body.innerHTML = ""), GEa.remove(t);
                 }
             }
         }
-    }, ara.inherits(gra, era), qsa = baidu.editor.utils, rsa = baidu.editor.ui.Menu, 
-    ssa = baidu.editor.ui.SplitButton, tsa = baidu.editor.ui.MenuButton = function(e) {
+    }, FEa.inherits(LEa, JEa), sGa = baidu.editor.utils, tGa = baidu.editor.ui.Menu, 
+    uGa = baidu.editor.ui.SplitButton, vGa = baidu.editor.ui.MenuButton = function(e) {
         this.initOptions(e), this.initMenuButton();
-    }, tsa.prototype = {
+    }, vGa.prototype = {
         initMenuButton: function() {
             var t = this;
-            this.uiName = "menubutton", this.popup = new rsa({
+            this.uiName = "menubutton", this.popup = new tGa({
                 items: t.items,
                 className: t.className,
                 editor: t.editor
@@ -10345,13 +10381,13 @@
         setValue: function(e) {
             this._value = e;
         }
-    }, qsa.inherits(tsa, ssa), zsa = baidu.editor.utils, Asa = baidu.editor.ui.Popup, 
-    Bsa = baidu.editor.ui.SplitButton, Csa = baidu.editor.ui.MultiMenuPop = function(e) {
+    }, sGa.inherits(vGa, uGa), DGa = baidu.editor.utils, EGa = baidu.editor.ui.Popup, 
+    FGa = baidu.editor.ui.SplitButton, GGa = baidu.editor.ui.MultiMenuPop = function(e) {
         this.initOptions(e), this.initMultiMenu();
-    }, Csa.prototype = {
+    }, GGa.prototype = {
         initMultiMenu: function() {
             var e = this;
-            this.popup = new Asa({
+            this.popup = new EGa({
                 content: "",
                 editor: e.editor,
                 iframe_rendered: !1,
@@ -10363,7 +10399,7 @@
                 this.showPopup();
             }, this.initSplitButton();
         }
-    }, zsa.inherits(Csa, Bsa), function() {
+    }, DGa.inherits(GGa, FGa), function() {
         var c, n = baidu.editor.ui, e = n.UIBase, d = n.uiUtils, o = baidu.editor.utils, u = baidu.editor.dom.domUtils, r = [], a = !1, t = n.ShortCutMenu = function(e) {
             this.initOptions(e), this.initShortCutMenu();
         };
@@ -10453,9 +10489,9 @@
         }), u.on(window, "scroll", function(e) {
             i(e);
         });
-    }(), Kta = baidu.editor.utils, Lta = baidu.editor.ui.UIBase, Mta = baidu.editor.ui.Breakline = function(e) {
+    }(), ZHa = baidu.editor.utils, $Ha = baidu.editor.ui.UIBase, _Ha = baidu.editor.ui.Breakline = function(e) {
         this.initOptions(e), this.initSeparator();
-    }, Mta.prototype = {
+    }, _Ha.prototype = {
         uiName: "Breakline",
         initSeparator: function() {
             this.initUIBase();
@@ -10463,10 +10499,10 @@
         getHtmlTpl: function() {
             return "<br/>";
         }
-    }, Kta.inherits(Mta, Lta), Ota = baidu.editor.utils, Pta = baidu.editor.dom.domUtils, 
-    Qta = baidu.editor.ui.UIBase, Rta = baidu.editor.ui.Message = function(e) {
+    }, ZHa.inherits(_Ha, $Ha), dIa = baidu.editor.utils, eIa = baidu.editor.dom.domUtils, 
+    fIa = baidu.editor.ui.UIBase, gIa = baidu.editor.ui.Message = function(e) {
         this.initOptions(e), this.initMessage();
-    }, Rta.prototype = {
+    }, gIa.prototype = {
         initMessage: function() {
             this.initUIBase();
         },
@@ -10482,7 +10518,7 @@
         },
         postRender: function() {
             var e = this, t = this.getDom("closer");
-            t && Pta.on(t, "click", function() {
+            t && eIa.on(t, "click", function() {
                 e.hide();
             });
         },
@@ -10508,7 +10544,7 @@
             var e = this.getDom();
             e && (e.style.display = "none", e.parentNode && e.parentNode.removeChild(e));
         }
-    }, Ota.inherits(Rta, Qta), function() {
+    }, dIa.inherits(gIa, fIa), function() {
         var c = baidu.editor.utils, u = baidu.editor.ui, t = u.Dialog;
         u.buttons = {}, u.Dialog = function(e) {
             var n = new t(e);
@@ -11044,7 +11080,7 @@
             uiName: "editor",
             initEditorUI: function() {
                 (this.editor.ui = this)._dialogs = {}, this.initUIBase(), this._initToolbars();
-                var n, c = this.editor, t = this;
+                var n, c = this.editor, o = this;
                 c.addListener("ready", function() {
                     if (c.getDialog = function(e) {
                         return c.ui._dialogs[e + "Dialog"];
@@ -11054,11 +11090,13 @@
                     c.options.elementPathEnabled && (c.ui.getDom("elementpath").innerHTML = '<div class="edui-editor-breadcrumb">' + c.getLang("elementPathTip") + ":</div>"), 
                     c.options.wordCount) {
                         N.on(c.document, "click", function() {
-                            o(c, t), N.un(c.document, "click", arguments.callee);
+                            r(c, o);
+                            for (var e = arguments.length, t = new Array(e), i = 0; i < e; i++) t[i] = arguments[i];
+                            N.un(c.document, "click", t.callee);
                         }), c.ui.getDom("wordcount").innerHTML = c.getLang("wordCountTip");
                     }
                     c.ui._scale(), c.options.scaleEnabled ? (c.autoHeightEnabled && c.disableAutoHeight(), 
-                    t.enableScale()) : t.disableScale(), c.options.elementPathEnabled || c.options.wordCount || c.options.scaleEnabled || (c.ui.getDom("elementpath").style.display = "none", 
+                    o.enableScale()) : o.disableScale(), c.options.elementPathEnabled || c.options.wordCount || c.options.scaleEnabled || (c.ui.getDom("elementpath").style.display = "none", 
                     c.ui.getDom("wordcount").style.display = "none", c.ui.getDom("scale").style.display = "none"), 
                     c.selection.isFocus() && c.fireEvent("selectionchange", !1, !0);
                 }), c.addListener("mousedown", function(e, t) {
@@ -11068,7 +11106,7 @@
                     UE.ui.edittip && new UE.ui.edittip(c), c.getDialog("edittip").open();
                 });
                 var e, i = !1;
-                function o(e, t) {
+                function r(e, t) {
                     e.setOpt({
                         wordCount: !0,
                         maximumWords: 1e4,
@@ -11111,10 +11149,10 @@
                     var i = t.keyCode || t.which;
                     t.altKey && 90 == i && UE.ui.buttons.fullscreen.onclick();
                 }), c.addListener("wordcount", function(e) {
-                    o(this, t);
+                    r(this, o);
                 }), c.addListener("selectionchange", function() {
-                    c.options.elementPathEnabled && t[(-1 == c.queryCommandState("elementpath") ? "dis" : "en") + "ableElementPath"](), 
-                    c.options.scaleEnabled && t[(-1 == c.queryCommandState("scale") ? "dis" : "en") + "ableScale"]();
+                    c.options.elementPathEnabled && o[(-1 == c.queryCommandState("elementpath") ? "dis" : "en") + "ableElementPath"](), 
+                    c.options.scaleEnabled && o[(-1 == c.queryCommandState("scale") ? "dis" : "en") + "ableScale"]();
                 });
                 var u = new baidu.editor.ui.Popup({
                     editor: c,

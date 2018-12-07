@@ -9,16 +9,16 @@
 
 UE.plugin.register(
   "autolink",
-  function() {
+  () => {
     var cont = 0;
 
     return !browser.ie
       ? {
           bindEvents: {
-            reset: function() {
+            reset() {
               cont = 0;
             },
-            keydown: function(type, evt) {
+            keydown(type, evt) {
               var me = this;
               var keyCode = evt.keyCode || evt.which;
 

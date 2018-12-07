@@ -1,6 +1,6 @@
 ///import core
 ///import uicore
-(function() {
+(() => {
   var utils = baidu.editor.utils;
   var domUtils = baidu.editor.dom.domUtils;
   var UIBase = baidu.editor.ui.UIBase;
@@ -11,10 +11,10 @@
   });
 
   Message.prototype = {
-    initMessage: function() {
+    initMessage() {
       this.initUIBase();
     },
-    getHtmlTpl: function() {
+    getHtmlTpl() {
       return (
         '<div id="##" class="edui-message %%">' +
         ' <div id="##_closer" class="edui-message-closer">×</div>' +
@@ -27,11 +27,11 @@
         "</div>"
       );
     },
-    reset: function(opt) {
+    reset(opt) {
       var me = this;
       if (!opt.keepshow) {
         clearTimeout(this.timer);
-        me.timer = setTimeout(function() {
+        me.timer = setTimeout(() => {
           me.hide();
         }, opt.timeout || 4000);
       }
@@ -41,33 +41,33 @@
 
       me.show();
     },
-    postRender: function() {
+    postRender() {
       var me = this;
       var closer = this.getDom("closer");
       closer &&
-        domUtils.on(closer, "click", function() {
+        domUtils.on(closer, "click", () => {
           me.hide();
         });
     },
-    setContent: function(content) {
+    setContent(content) {
       this.getDom("content").innerHTML = content;
     },
-    setType: function(type) {
+    setType(type) {
       type = type || "info";
       var body = this.getDom("body");
       body.className = body.className.replace(/edui-message-type-[\w-]+/, "edui-message-type-" + type);
     },
-    getContent: function() {
+    getContent() {
       return this.getDom("content").innerHTML;
     },
-    getType: function() {
+    getType() {
       var arr = this.getDom("body").match(/edui-message-type-([\w-]+)/);
       return arr ? arr[1] : "";
     },
-    show: function() {
+    show() {
       this.getDom().style.display = "block";
     },
-    hide: function() {
+    hide() {
       var dom = this.getDom();
       if (dom) {
         dom.style.display = "none";

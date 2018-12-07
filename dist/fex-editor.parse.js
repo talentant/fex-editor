@@ -5,15 +5,15 @@
  */
 (function(){
 
-(function() {
+(() => {
   UE = window.UE || {};
   var isIE = !!window.ActiveXObject;
   //定义utils工具
   var utils = {
-    removeLastbs: function(url) {
+    removeLastbs(url) {
       return url.replace(/\/$/, "");
     },
-    extend: function(t, s) {
+    extend(t, s) {
       var a = arguments;
       var notCover = this.isBoolean(a[a.length - 1]) ? a[a.length - 1] : false;
       var len = this.isBoolean(a[a.length - 1]) ? a.length - 1 : a.length;
@@ -27,9 +27,9 @@
       }
       return t;
     },
-    isIE: isIE,
+    isIE,
     cssRule: isIE
-      ? function(key, style, doc) {
+      ? (key, style, doc) => {
           var indexList;
           var index;
           doc = doc || document;
@@ -53,7 +53,7 @@
           }
           sheetStyle.cssText = sheetStyle.cssText + "\n" + (style || "");
         }
-      : function(key, style, doc) {
+      : (key, style, doc) => {
           doc = doc || document;
           var head = doc.getElementsByTagName("head")[0];
           var node;
@@ -74,37 +74,37 @@
             head.removeChild(node);
           }
         },
-    domReady: function(onready) {
+    domReady(onready) {
       var doc = window.document;
       if (doc.readyState === "complete") {
         onready();
       } else {
         if (isIE) {
-          (function() {
+          (function(...args) {
             if (doc.isReady) return;
             try {
               doc.documentElement.doScroll("left");
             } catch (error) {
-              setTimeout(arguments.callee, 0);
+              setTimeout(args.callee, 0);
               return;
             }
             onready();
           })();
-          window.attachEvent("onload", function() {
+          window.attachEvent("onload", () => {
             onready();
           });
         } else {
           doc.addEventListener(
             "DOMContentLoaded",
-            function() {
-              doc.removeEventListener("DOMContentLoaded", arguments.callee, false);
+            function(...args) {
+              doc.removeEventListener("DOMContentLoaded", args.callee, false);
               onready();
             },
             false
           );
           window.addEventListener(
             "load",
-            function() {
+            () => {
               onready();
             },
             false
@@ -112,7 +112,7 @@
         }
       }
     },
-    each: function(obj, iterator, context) {
+    each(obj, iterator, context) {
       if (obj == null) return;
       if (obj.length === +obj.length) {
         for (var i = 0, l = obj.length; i < l; i++) {
@@ -126,9 +126,9 @@
         }
       }
     },
-    inArray: function(arr, item) {
+    inArray(arr, item) {
       var index = -1;
-      this.each(arr, function(v, i) {
+      this.each(arr, (v, i) => {
         if (v === item) {
           index = i;
           return false;
@@ -136,18 +136,18 @@
       });
       return index;
     },
-    pushItem: function(arr, item) {
+    pushItem(arr, item) {
       if (this.inArray(arr, item) == -1) {
         arr.push(item);
       }
     },
-    trim: function(str) {
+    trim(str) {
       return str.replace(/(^[ \t\n\r]+)|([ \t\n\r]+$)/g, "");
     },
-    indexOf: function(array, item, start) {
+    indexOf(array, item, start) {
       var index = -1;
       start = this.isNumber(start) ? start : 0;
-      this.each(array, function(v, i) {
+      this.each(array, (v, i) => {
         if (i >= start && v === item) {
           index = i;
           return false;
@@ -155,7 +155,7 @@
       });
       return index;
     },
-    hasClass: function(element, className) {
+    hasClass(element, className) {
       className = className
         .replace(/(^[ ]+)|([ ]+$)/g, "")
         .replace(/[ ]{2,}/g, " ")
@@ -167,7 +167,7 @@
       }
       return i - 1 == className.length;
     },
-    addClass: function(elm, classNames) {
+    addClass(elm, classNames) {
       if (!elm) return;
       classNames = this.trim(classNames)
         .replace(/[ ]{2,}/g, " ")
@@ -179,7 +179,7 @@
       }
       elm.className = utils.trim(cls);
     },
-    removeClass: function(elm, classNames) {
+    removeClass(elm, classNames) {
       classNames = this.isArray(classNames)
         ? classNames
         : this.trim(classNames)
@@ -192,7 +192,7 @@
       elm.className = cls;
       !cls && elm.removeAttribute("className");
     },
-    on: function(element, type, handler) {
+    on(element, type, handler) {
       var types = this.isArray(type) ? type : type.split(/\s+/);
       var k = types.length;
       if (k)
@@ -213,9 +213,7 @@
                 handler._d.els.push(element);
               }
               if (!handler._d[key]) {
-                handler._d[key] = function(evt) {
-                  return handler.call(evt.srcElement, evt || window.event);
-                };
+                handler._d[key] = evt => handler.call(evt.srcElement, evt || window.event);
               }
 
               element.attachEvent("on" + type, handler._d[key]);
@@ -224,7 +222,7 @@
         }
       element = null;
     },
-    off: function(element, type, handler) {
+    off(element, type, handler) {
       var types = this.isArray(type) ? type : type.split(/\s+/);
       var k = types.length;
       if (k)
@@ -247,7 +245,7 @@
           }
         }
     },
-    loadFile: (function() {
+    loadFile: (() => {
       var tmpList = [];
       function getItem(doc, obj) {
         try {
@@ -260,7 +258,7 @@
           return null;
         }
       }
-      return function(doc, obj, fn) {
+      return (doc, obj, fn) => {
         var item = getItem(doc, obj);
         if (item) {
           if (item.ready) {
@@ -271,7 +269,7 @@
           return;
         }
         tmpList.push({
-          doc: doc,
+          doc,
           url: obj.src || obj.href,
           funs: [fn]
         });
@@ -304,31 +302,29 @@
             element.onload = element.onreadystatechange = null;
           }
         };
-        element.onerror = function() {
+        element.onerror = () => {
           throw Error("The load " + (obj.href || obj.src) + " fails,check the url");
         };
         doc.getElementsByTagName("head")[0].appendChild(element);
       };
     })()
   };
-  utils.each(["String", "Function", "Array", "Number", "RegExp", "Object", "Boolean"], function(v) {
-    utils["is" + v] = function(obj) {
-      return Object.prototype.toString.apply(obj) == "[object " + v + "]";
-    };
+  utils.each(["String", "Function", "Array", "Number", "RegExp", "Object", "Boolean"], v => {
+    utils["is" + v] = obj => Object.prototype.toString.apply(obj) == "[object " + v + "]";
   });
   var parselist = {};
   UE.parse = {
-    register: function(parseName, fn) {
+    register(parseName, fn) {
       parselist[parseName] = fn;
     },
-    load: function(opt) {
-      utils.each(parselist, function(v) {
+    load(opt) {
+      utils.each(parselist, v => {
         v.call(opt, utils);
       });
     }
   };
-  uParse = function(selector, opt) {
-    utils.domReady(function() {
+  uParse = (selector, opt) => {
+    utils.domReady(() => {
       var contents;
       if (document.querySelectorAll) {
         contents = document.querySelectorAll(selector);
@@ -337,7 +333,7 @@
           contents = [document.getElementById(selector.replace(/^#/, ""))];
         } else if (/^\./.test(selector)) {
           var contents = [];
-          utils.each(document.getElementsByTagName("*"), function(node) {
+          utils.each(document.getElementsByTagName("*"), node => {
             if (node.className && new RegExp("\\b" + selector.replace(/^\./, "") + "\\b", "i").test(node.className)) {
               contents.push(node);
             }
@@ -346,8 +342,8 @@
           contents = document.getElementsByTagName(selector);
         }
       }
-      utils.each(contents, function(v) {
-        UE.parse.load(utils.extend({root: v, selector: selector}, opt));
+      utils.each(contents, v => {
+        UE.parse.load(utils.extend({root: v, selector}, opt));
       });
     });
   };
@@ -382,8 +378,8 @@ UE.parse.register("insertcode", function(utils) {
           type: "text/javascript",
           defer: "defer"
         },
-        function() {
-          utils.each(pres, function(pi) {
+        () => {
+          utils.each(pres, pi => {
             if (pi && /brush/i.test(pi.className)) {
               SyntaxHighlighter.highlight(pi);
             }
@@ -391,7 +387,7 @@ UE.parse.register("insertcode", function(utils) {
         }
       );
     } else {
-      utils.each(pres, function(pi) {
+      utils.each(pres, pi => {
         if (pi && /brush/i.test(pi.className)) {
           SyntaxHighlighter.highlight(pi);
         }
@@ -448,10 +444,10 @@ UE.parse.register("table", function(utils) {
     );
     //填充空的单元格
 
-    utils.each("td th caption".split(" "), function(tag) {
+    utils.each("td th caption".split(" "), tag => {
       var cells = root.getElementsByTagName(tag);
       cells.length &&
-        utils.each(cells, function(node) {
+        utils.each(cells, node => {
           if (!node.firstChild) {
             node.innerHTML = "&nbsp;";
           }
@@ -460,9 +456,9 @@ UE.parse.register("table", function(utils) {
 
     //表格可排序
     var tables = root.getElementsByTagName("table");
-    utils.each(tables, function(table) {
+    utils.each(tables, table => {
       if (/\bsortEnabled\b/.test(table.className)) {
-        utils.on(table, "click", function(e) {
+        utils.on(table, "click", e => {
           var target = e.target || e.srcElement;
           var cell = findParentByTagName(target, ["td", "th"]);
           var table = findParentByTagName(target, "table");
@@ -501,27 +497,27 @@ UE.parse.register("table", function(utils) {
       }
 
       var Fn = {
-        reversecurrent: function(td1, td2) {
+        reversecurrent(td1, td2) {
           return 1;
         },
-        orderbyasc: function(td1, td2) {
+        orderbyasc(td1, td2) {
           var value1 = td1.innerText || td1.textContent;
           var value2 = td2.innerText || td2.textContent;
           return value1.localeCompare(value2);
         },
-        reversebyasc: function(td1, td2) {
+        reversebyasc(td1, td2) {
           var value1 = td1.innerHTML;
           var value2 = td2.innerHTML;
           return value2.localeCompare(value1);
         },
-        orderbynum: function(td1, td2) {
+        orderbynum(td1, td2) {
           var value1 = td1[utils.isIE ? "innerText" : "textContent"].match(/\d+/);
           var value2 = td2[utils.isIE ? "innerText" : "textContent"].match(/\d+/);
           if (value1) value1 = +value1[0];
           if (value2) value2 = +value2[0];
           return (value1 || 0) - (value2 || 0);
         },
-        reversebynum: function(td1, td2) {
+        reversebynum(td1, td2) {
           var value1 = td1[utils.isIE ? "innerText" : "textContent"].match(/\d+/);
           var value2 = td2[utils.isIE ? "innerText" : "textContent"].match(/\d+/);
           if (value1) value1 = +value1[0];
@@ -564,11 +560,7 @@ UE.parse.register("table", function(utils) {
     }
     //冒泡排序
     function sort(array, compareFn) {
-      compareFn =
-        compareFn ||
-        function(item1, item2) {
-          return item1.localeCompare(item2);
-        };
+      compareFn = compareFn || ((item1, item2) => item1.localeCompare(item2));
       for (var i = 0, len = array.length; i < len; i++) {
         for (var j = i, length = array.length; j < length; j++) {
           if (compareFn(array[i], array[j]) > 0) {
@@ -662,7 +654,7 @@ UE.parse.register("charts", function(utils) {
     return {
       table: tableNode,
       meta: metaConfig,
-      data: data
+      data
     };
   }
 
@@ -682,7 +674,7 @@ UE.parse.register("charts", function(utils) {
           type: "text/javascript",
           defer: "defer"
         },
-        function() {
+        () => {
           loadHighcharts();
         }
       );
@@ -702,7 +694,7 @@ UE.parse.register("charts", function(utils) {
           type: "text/javascript",
           defer: "defer"
         },
-        function() {
+        () => {
           loadTypeConfig();
         }
       );
@@ -721,7 +713,7 @@ UE.parse.register("charts", function(utils) {
         type: "text/javascript",
         defer: "defer"
       },
-      function() {
+      () => {
         render();
       }
     );
@@ -950,7 +942,7 @@ UE.parse.register("list", function(utils) {
   }
   function applyStyle(nodes) {
     var T = this;
-    utils.each(nodes, function(list) {
+    utils.each(nodes, list => {
       if (list.className && /custom_/i.test(list.className)) {
         var listStyle = list.className.match(/custom_(\w+)/)[1];
         if (listStyle == "dash" || listStyle == "dot") {
@@ -977,7 +969,7 @@ UE.parse.register("list", function(utils) {
           );
         } else {
           var index = 1;
-          utils.each(list.childNodes, function(li) {
+          utils.each(list.childNodes, li => {
             if (li.tagName == "LI") {
               utils.pushItem(
                 customCss,
@@ -1071,7 +1063,7 @@ UE.parse.register("vedio", function(utils) {
           tag: "script",
           type: "text/javascript"
         },
-        function() {
+        () => {
           videojs.options.flash.swf = swfUrl;
           videojs.autoSetup();
         }

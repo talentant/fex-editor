@@ -190,9 +190,7 @@ UE.plugins["autotypeset"] = function() {
               if (tmpNode.tagName == "P" && domUtils.getStyle(tmpNode, "text-align") == "center") {
                 if (
                   !domUtils.isBody(tmpNode) &&
-                  domUtils.getChildCount(tmpNode, function(node) {
-                    return !domUtils.isBr(node) && !domUtils.isWhitespace(node);
-                  }) == 1
+                  domUtils.getChildCount(tmpNode, node => !domUtils.isBr(node) && !domUtils.isWhitespace(node)) == 1
                 ) {
                   pre = tmpNode.previousSibling;
                   next = tmpNode.nextSibling;
@@ -224,9 +222,7 @@ UE.plugins["autotypeset"] = function() {
                 tmpNode = img;
                 while (
                   pN &&
-                  domUtils.getChildCount(pN, function(node) {
-                    return !domUtils.isBr(node) && !domUtils.isWhitespace(node);
-                  }) == 1 &&
+                  domUtils.getChildCount(pN, node => !domUtils.isBr(node) && !domUtils.isWhitespace(node)) == 1 &&
                   (dtd.$inline[pN.tagName] || pN.tagName == "A")
                 ) {
                   tmpNode = pN;
@@ -257,7 +253,7 @@ UE.plugins["autotypeset"] = function() {
     }
     if (opt.tobdc) {
       var root = UE.htmlparser(cont.innerHTML);
-      root.traversal(function(node) {
+      root.traversal(node => {
         if (node.type == "text") {
           node.data = ToDBC(node.data);
         }
@@ -266,7 +262,7 @@ UE.plugins["autotypeset"] = function() {
     }
     if (opt.bdc2sb) {
       var root = UE.htmlparser(cont.innerHTML);
-      root.traversal(function(node) {
+      root.traversal(node => {
         if (node.type == "text") {
           node.data = DBC2SB(node.data);
         }
@@ -319,7 +315,7 @@ UE.plugins["autotypeset"] = function() {
   }
 
   me.commands["autotypeset"] = {
-    execCommand: function() {
+    execCommand() {
       me.removeListener("beforepaste", autotype);
       if (opt.pasteFilter) {
         me.addListener("beforepaste", autotype);

@@ -1,4 +1,4 @@
-window.onload = function() {
+window.onload = () => {
   editor.setOpt({
     emotionLocalization: false
   });
@@ -35,10 +35,8 @@ function initEvtHandler(conId) {
       domUtils.on(
         tabObj,
         "click",
-        (function(index) {
-          return function() {
-            switchTab(index);
-          };
+        (index => () => {
+          switchTab(index);
         })(j)
       );
       j++;

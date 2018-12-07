@@ -6,13 +6,13 @@
  * To change this template use File | Settings | File Templates.
  */
 
-(function() {
+(() => {
   var video = {};
   var uploadVideoList = [];
   var isModifyUploadVideo = false;
   var uploadFile;
 
-  window.onload = function() {
+  window.onload = () => {
     $focus($G("videoUrl"));
     initTabs();
     initVideo();
@@ -23,7 +23,7 @@
   function initTabs() {
     var tabs = $G("tabHeads").children;
     for (var i = 0; i < tabs.length; i++) {
-      domUtils.on(tabs[i], "click", function(e) {
+      domUtils.on(tabs[i], "click", e => {
         var j;
         var bodyId;
         var target = e.target || e.srcElement;
@@ -47,7 +47,7 @@
     addOkListener();
 
     //编辑视频时初始化相关信息
-    (function() {
+    (() => {
       var img = editor.selection.getRange().getClosedNode();
       var url;
       if (img && img.className) {
@@ -73,7 +73,7 @@
    * 监听确认和取消两个按钮事件，用户执行插入或者清空正在播放的视频实例操作
    */
   function addOkListener() {
-    dialog.onok = function() {
+    dialog.onok = () => {
       $G("preview").innerHTML = "";
       var currentTab = findFocus("tabHeads", "tabSrc");
       switch (currentTab) {
@@ -88,7 +88,7 @@
           break;
       }
     };
-    dialog.oncancel = function() {
+    dialog.oncancel = () => {
       $G("preview").innerHTML = "";
     };
   }
@@ -128,7 +128,7 @@
         url: convert_url(url),
         width: width.value,
         height: height.value,
-        align: align
+        align
       },
       isModifyUploadVideo ? "upload" : null
     );
@@ -313,9 +313,9 @@
       var file = uploadVideoList[key];
       videoObjs.push({
         url: uploadDir + file.url,
-        width: width,
-        height: height,
-        align: align
+        width,
+        height,
+        align
       });
     }
 
@@ -341,16 +341,16 @@
     this.init();
   }
   UploadFile.prototype = {
-    init: function() {
+    init() {
       this.fileList = [];
       this.initContainer();
       this.initUploader();
     },
-    initContainer: function() {
+    initContainer() {
       this.$queue = this.$wrap.find(".filelist");
     },
     /* 初始化容器 */
-    initUploader: function() {
+    initUploader() {
       var _this = this;
 
       var // just in case. Make sure it's not an other libaray.
@@ -402,7 +402,7 @@
       var // 所有文件的进度信息，key为file id
         percentages = {};
 
-      var supportTransition = (function() {
+      var supportTransition = (() => {
         var s = document.createElement("p").style;
 
         var r =
@@ -495,7 +495,7 @@
           .hide()
           .appendTo($li);
 
-        var showError = function(code) {
+        var showError = code => {
           switch (code) {
             case "exceed_size":
               text = lang.errorExceedSize;
@@ -538,13 +538,13 @@
             } else {
               uploader.makeThumb(
                 file,
-                function(error, src) {
+                (error, src) => {
                   if (error || !src || (/^data:/.test(src) && browser.ie && browser.version <= 7)) {
                     $wrap.text(lang.uploadNoPreview);
                   } else {
                     var $img = $('<img src="' + src + '">');
                     $wrap.empty().append($img);
-                    $img.on("error", function() {
+                    $img.on("error", () => {
                       $wrap.text(lang.uploadNoPreview);
                     });
                   }
@@ -564,7 +564,7 @@
           }
         }
 
-        file.on("statuschange", function(cur, prev) {
+        file.on("statuschange", (cur, prev) => {
           if (prev === "progress") {
             $prgress.hide().width(0);
           } else if (prev === "queued") {
@@ -588,10 +588,10 @@
           $li.removeClass("state-" + prev).addClass("state-" + cur);
         });
 
-        $li.on("mouseenter", function() {
+        $li.on("mouseenter", () => {
           $btns.stop().animate({height: 30});
         });
-        $li.on("mouseleave", function() {
+        $li.on("mouseleave", () => {
           $btns.stop().animate({height: 0});
         });
 
@@ -649,7 +649,7 @@
         var spans = $progress.children();
         var percent;
 
-        $.each(percentages, function(k, v) {
+        $.each(percentages, (k, v) => {
           total += v[0];
           loaded += v[0] * v[1];
         });
@@ -764,7 +764,7 @@
         $info.html(text);
       }
 
-      uploader.on("fileQueued", function(file) {
+      uploader.on("fileQueued", file => {
         fileCount++;
         fileSize += file.size;
 
@@ -776,7 +776,7 @@
         addFile(file);
       });
 
-      uploader.on("fileDequeued", function(file) {
+      uploader.on("fileDequeued", file => {
         fileCount--;
         fileSize -= file.size;
 
@@ -784,7 +784,7 @@
         updateTotalProgress();
       });
 
-      uploader.on("filesQueued", function(file) {
+      uploader.on("filesQueued", file => {
         if (
           !uploader.isInProgress() &&
           (state == "pedding" || state == "finish" || state == "confirm" || state == "ready")
@@ -794,7 +794,7 @@
         updateTotalProgress();
       });
 
-      uploader.on("all", function(type, files) {
+      uploader.on("all", (type, files) => {
         switch (type) {
           case "uploadFinished":
             setState("confirm", files);
@@ -815,14 +815,14 @@
         }
       });
 
-      uploader.on("uploadBeforeSend", function(file, data, header) {
+      uploader.on("uploadBeforeSend", (file, data, header) => {
         //这里可以通过data对象添加POST参数
         if (actionUrl.toLowerCase().indexOf("jsp") != -1) {
           header["X_Requested_With"] = "XMLHttpRequest";
         }
       });
 
-      uploader.on("uploadProgress", function(file, percentage) {
+      uploader.on("uploadProgress", (file, percentage) => {
         var $li = $("#" + file.id);
         var $percent = $li.find(".progress span");
 
@@ -831,7 +831,7 @@
         updateTotalProgress();
       });
 
-      uploader.on("uploadSuccess", function(file, ret) {
+      uploader.on("uploadSuccess", (file, ret) => {
         var $file = $("#" + file.id);
         try {
           var responseText = ret._raw || ret;
@@ -857,13 +857,13 @@
         }
       });
 
-      uploader.on("uploadError", function(file, code) {});
-      uploader.on("error", function(code, file) {
+      uploader.on("uploadError", (file, code) => {});
+      uploader.on("error", (code, file) => {
         if (code == "Q_TYPE_DENIED" || code == "F_EXCEED_SIZE") {
           addFile(file);
         }
       });
-      uploader.on("uploadComplete", function(file, ret) {});
+      uploader.on("uploadComplete", (file, ret) => {});
 
       $upload.on("click", function() {
         if ($(this).hasClass("disabled")) {
@@ -882,7 +882,7 @@
       $upload.addClass("state-" + state);
       updateTotalProgress();
     },
-    getQueueCount: function() {
+    getQueueCount() {
       var file;
       var i;
       var status;
@@ -894,7 +894,7 @@
       }
       return readyFile;
     },
-    refresh: function() {
+    refresh() {
       this.uploader.refresh();
     }
   };

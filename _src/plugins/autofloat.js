@@ -88,19 +88,19 @@ UE.plugins["autofloat"] = function() {
     }
   }
   var defer_updateFloating = utils.defer(
-    function() {
+    () => {
       updateFloating();
     },
     browser.ie ? 200 : 100,
     true
   );
 
-  me.addListener("destroy", function() {
+  me.addListener("destroy", () => {
     domUtils.un(window, ["scroll", "resize"], updateFloating);
     me.removeListener("keydown", defer_updateFloating);
   });
 
-  me.addListener("ready", function() {
+  me.addListener("ready", () => {
     if (checkHasUI(me)) {
       //加载了ui组件，但在new时，没有加载ui，导致编辑器实例上没有ui类，所以这里做判断
       if (!me.ui) {
@@ -117,23 +117,23 @@ UE.plugins["autofloat"] = function() {
       domUtils.on(window, ["scroll", "resize"], updateFloating);
       me.addListener("keydown", defer_updateFloating);
 
-      me.addListener("beforefullscreenchange", function(t, enabled) {
+      me.addListener("beforefullscreenchange", (t, enabled) => {
         if (enabled) {
           unsetFloating();
         }
       });
-      me.addListener("fullscreenchanged", function(t, enabled) {
+      me.addListener("fullscreenchanged", (t, enabled) => {
         if (!enabled) {
           updateFloating();
         }
       });
-      me.addListener("sourcemodechanged", function(t, enabled) {
-        setTimeout(function() {
+      me.addListener("sourcemodechanged", (t, enabled) => {
+        setTimeout(() => {
           updateFloating();
         }, 0);
       });
-      me.addListener("clearDoc", function() {
-        setTimeout(function() {
+      me.addListener("clearDoc", () => {
+        setTimeout(() => {
           updateFloating();
         }, 0);
       });

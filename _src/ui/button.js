@@ -1,7 +1,7 @@
 ///import core
 ///import uicore
 ///import ui/stateful.js
-(function() {
+(() => {
   var utils = baidu.editor.utils;
   var UIBase = baidu.editor.ui.UIBase;
   var Stateful = baidu.editor.ui.Stateful;
@@ -33,14 +33,14 @@
     showIcon: true,
     showText: true,
     cssRules: "",
-    initButton: function() {
+    initButton() {
       this.initUIBase();
       this.Stateful_init();
       if (this.cssRules) {
         utils.cssRule("edui-customize-" + this.name + "-style", this.cssRules);
       }
     },
-    getHtmlTpl: function() {
+    getHtmlTpl() {
       return (
         '<div id="##" class="edui-box %%">' +
         '<div id="##_state" stateful>' +
@@ -54,23 +54,23 @@
         "</div></div>"
       );
     },
-    postRender: function() {
+    postRender() {
       this.Stateful_postRender();
       this.setDisabled(this.disabled);
     },
-    _onMouseDown: function(e) {
+    _onMouseDown(e) {
       var target = e.target || e.srcElement;
       var tagName = target && target.tagName && target.tagName.toLowerCase();
       if (tagName == "input" || tagName == "object" || tagName == "object") {
         return false;
       }
     },
-    _onClick: function() {
+    _onClick() {
       if (!this.isDisabled()) {
         this.fireEvent("click");
       }
     },
-    setTitle: function(text) {
+    setTitle(text) {
       var label = this.getDom("label");
       label.innerHTML = text;
     }

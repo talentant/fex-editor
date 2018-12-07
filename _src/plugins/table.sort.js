@@ -27,27 +27,27 @@ UE.UETable.prototype.sortTable = function(sortByCellIndex, compareFn) {
   }
 
   var Fn = {
-    reversecurrent: function(td1, td2) {
+    reversecurrent(td1, td2) {
       return 1;
     },
-    orderbyasc: function(td1, td2) {
+    orderbyasc(td1, td2) {
       var value1 = td1.innerText || td1.textContent;
       var value2 = td2.innerText || td2.textContent;
       return value1.localeCompare(value2);
     },
-    reversebyasc: function(td1, td2) {
+    reversebyasc(td1, td2) {
       var value1 = td1.innerHTML;
       var value2 = td2.innerHTML;
       return value2.localeCompare(value1);
     },
-    orderbynum: function(td1, td2) {
+    orderbynum(td1, td2) {
       var value1 = td1[browser.ie ? "innerText" : "textContent"].match(/\d+/);
       var value2 = td2[browser.ie ? "innerText" : "textContent"].match(/\d+/);
       if (value1) value1 = +value1[0];
       if (value2) value2 = +value2[0];
       return (value1 || 0) - (value2 || 0);
     },
-    reversebynum: function(td1, td2) {
+    reversebynum(td1, td2) {
       var value1 = td1[browser.ie ? "innerText" : "textContent"].match(/\d+/);
       var value2 = td2[browser.ie ? "innerText" : "textContent"].match(/\d+/);
       if (value1) value1 = +value1[0];
@@ -90,15 +90,11 @@ UE.plugins["tablesort"] = function() {
   var me = this;
   var UT = UE.UETable;
 
-  var getUETable = function(tdOrTable) {
-    return UT.getUETable(tdOrTable);
-  };
+  var getUETable = tdOrTable => UT.getUETable(tdOrTable);
 
-  var getTableItemsByRange = function(editor) {
-    return UT.getTableItemsByRange(editor);
-  };
+  var getTableItemsByRange = editor => UT.getTableItemsByRange(editor);
 
-  me.ready(function() {
+  me.ready(() => {
     //添加表格可排序的样式
     utils.cssRule(
       "tablesort",
@@ -120,7 +116,7 @@ UE.plugins["tablesort"] = function() {
 
   //表格排序
   UE.commands["sorttable"] = {
-    queryCommandState: function() {
+    queryCommandState() {
       var me = this;
       var tableItems = getTableItemsByRange(me);
       if (!tableItems.cell) return -1;
@@ -131,7 +127,7 @@ UE.plugins["tablesort"] = function() {
       }
       return 0;
     },
-    execCommand: function(cmd, fn) {
+    execCommand(cmd, fn) {
       var me = this;
       var range = me.selection.getRange();
       var bk = range.createBookmark(true);
@@ -149,7 +145,7 @@ UE.plugins["tablesort"] = function() {
 
   //设置表格可排序,清除表格可排序
   UE.commands["enablesort"] = UE.commands["disablesort"] = {
-    queryCommandState: function(cmd) {
+    queryCommandState(cmd) {
       var table = getTableItemsByRange(this).table;
       if (table && cmd == "enablesort") {
         var cells = domUtils.getElementsByTagName(table, "th td");
@@ -160,7 +156,7 @@ UE.plugins["tablesort"] = function() {
 
       return !table ? -1 : (cmd == "enablesort") ^ (table.getAttribute("data-sort") != "sortEnabled") ? -1 : 0;
     },
-    execCommand: function(cmd) {
+    execCommand(cmd) {
       var table = getTableItemsByRange(this).table;
       table.setAttribute("data-sort", cmd == "enablesort" ? "sortEnabled" : "sortDisabled");
       cmd == "enablesort" ? domUtils.addClass(table, "sortEnabled") : domUtils.removeClasses(table, "sortEnabled");

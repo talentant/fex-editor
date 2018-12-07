@@ -17,7 +17,7 @@
 UE.plugins["horizontal"] = function() {
   var me = this;
   me.commands["horizontal"] = {
-    execCommand: function(cmdName) {
+    execCommand(cmdName) {
       var me = this;
       if (me.queryCommandState(cmdName) !== -1) {
         me.execCommand("insertHtml", "<hr>");
@@ -43,7 +43,7 @@ UE.plugins["horizontal"] = function() {
       }
     },
     //边界在table里不能加分隔线
-    queryCommandState: function() {
+    queryCommandState() {
       return domUtils.filterNodeList(this.selection.getStartElementPath(), "table") ? -1 : 0;
     }
   };

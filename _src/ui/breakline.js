@@ -1,4 +1,4 @@
-(function() {
+(() => {
   var utils = baidu.editor.utils;
   var UIBase = baidu.editor.ui.UIBase;
 
@@ -9,10 +9,10 @@
 
   Breakline.prototype = {
     uiName: "Breakline",
-    initSeparator: function() {
+    initSeparator() {
       this.initUIBase();
     },
-    getHtmlTpl: function() {
+    getHtmlTpl() {
       return "<br/>";
     }
   };

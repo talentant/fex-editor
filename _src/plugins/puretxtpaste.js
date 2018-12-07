@@ -8,7 +8,7 @@ UE.plugins["pasteplain"] = function() {
   var me = this;
   me.setOpt({
     pasteplain: false,
-    filterTxtRules: (function() {
+    filterTxtRules: (() => {
       function transP(node) {
         node.tagName = "p";
         node.setStyle();
@@ -21,7 +21,7 @@ UE.plugins["pasteplain"] = function() {
         "-": "script style object iframe embed input select",
         p: {$: {}},
         br: {$: {}},
-        div: function(node) {
+        div(node) {
           var tmpNode;
           var p = UE.uNode.createElement("p");
           while ((tmpNode = node.firstChild())) {
@@ -56,7 +56,7 @@ UE.plugins["pasteplain"] = function() {
         h4: transP,
         h5: transP,
         h6: transP,
-        td: function(node) {
+        td(node) {
           //没有内容的td直接删掉
           var txt = !!node.innerText();
           if (txt) {
@@ -93,10 +93,10 @@ UE.plugins["pasteplain"] = function() {
    * ```
    */
   me.commands["pasteplain"] = {
-    queryCommandState: function() {
+    queryCommandState() {
       return pasteplain ? 1 : 0;
     },
-    execCommand: function() {
+    execCommand() {
       pasteplain = !pasteplain | 0;
     },
     notNeedUndo: 1

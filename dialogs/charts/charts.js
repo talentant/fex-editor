@@ -13,7 +13,7 @@ var resizeTimer = null;
 var //初始默认图表类型
   currentChartType = 0;
 
-window.onload = function() {
+window.onload = () => {
   editorTable = domUtils.findParentByTagName(editor.selection.getRange().startContainer, "table", true);
 
   //未找到表格， 显示错误页面
@@ -30,12 +30,12 @@ window.onload = function() {
   $("#scrollBed .view-box:eq(" + currentChartType + ")").trigger("click");
   updateViewType(currentChartType);
 
-  dialog.addListener("resize", function() {
+  dialog.addListener("resize", () => {
     if (resizeTimer != null) {
       window.clearTimeout(resizeTimer);
     }
 
-    resizeTimer = window.setTimeout(function() {
+    resizeTimer = window.setTimeout(() => {
       resizeTimer = null;
 
       renderCharts();
@@ -101,7 +101,7 @@ function initUserConfig(config) {
 
   config = config.split(";");
 
-  $.each(config, function(index, item) {
+  $.each(config, (index, item) => {
     item = item.split(":");
     parsedConfig[item[0]] = item[1];
   });
@@ -117,7 +117,7 @@ function initEvent() {
 
   var $chartsTypeViewBox = $("#scrollBed .view-box");
 
-  $(".charts-format").delegate(".format-ctrl", "change", function() {
+  $(".charts-format").delegate(".format-ctrl", "change", () => {
     renderCharts();
   });
 
@@ -310,8 +310,8 @@ function getSeriesAndCategories() {
   }
 
   return {
-    series: series,
-    categories: categories
+    series,
+    categories
   };
 }
 
@@ -411,7 +411,7 @@ function getCellValue(cell) {
 }
 
 //dialog确认事件
-dialog.onok = function() {
+dialog.onok = () => {
   //收集信息
   var form = document.forms["data-form"];
 

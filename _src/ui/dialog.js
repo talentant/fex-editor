@@ -2,7 +2,7 @@
 ///import uicore
 ///import ui/mask.js
 ///import ui/button.js
-(function() {
+(() => {
   var utils = baidu.editor.utils;
   var domUtils = baidu.editor.dom.domUtils;
   var uiUtils = baidu.editor.ui.uiUtils;
@@ -26,9 +26,9 @@
         {
           autoReset: true,
           draggable: true,
-          onok: function() {},
-          oncancel: function() {},
-          onclose: function(t, ok) {
+          onok() {},
+          oncancel() {},
+          onclose(t, ok) {
             return ok ? this.onok() : this.oncancel();
           },
           //是否控制dialog中的scroll事件， 默认为不阻止
@@ -46,7 +46,7 @@
   Dialog.prototype = {
     draggable: false,
     uiName: "dialog",
-    initDialog: function() {
+    initDialog() {
       var me = this;
       var theme = this.editor.options.theme;
       if (this.cssRules) {
@@ -58,8 +58,8 @@
         modalMask ||
         (modalMask = new Mask({
           className: "edui-dialog-modalmask",
-          theme: theme,
-          onclick: function() {
+          theme,
+          onclick() {
             activeDialog && activeDialog.close(false);
           }
         }));
@@ -67,13 +67,13 @@
         dragMask ||
         (dragMask = new Mask({
           className: "edui-dialog-dragmask",
-          theme: theme
+          theme
         }));
       this.closeButton = new Button({
         className: "edui-dialog-closebutton",
         title: me.closeDialog,
-        theme: theme,
-        onclick: function() {
+        theme,
+        onclick() {
           me.close(false);
         }
       });
@@ -96,10 +96,10 @@
         }
       }
     },
-    initResizeEvent: function() {
+    initResizeEvent() {
       var me = this;
 
-      domUtils.on(window, "resize", function() {
+      domUtils.on(window, "resize", () => {
         if (me._hidden || me._hidden === undefined) {
           return;
         }
@@ -108,7 +108,7 @@
           window.clearTimeout(me.__resizeTimer);
         }
 
-        me.__resizeTimer = window.setTimeout(function() {
+        me.__resizeTimer = window.setTimeout(() => {
           me.__resizeTimer = null;
 
           var dialogWrapNode = me.getDom();
@@ -127,7 +127,7 @@
         }, 100);
       });
     },
-    fitSize: function() {
+    fitSize() {
       var popBodyEl = this.getDom("body");
       //            if (!(baidu.editor.browser.ie && baidu.editor.browser.version == 7)) {
       //                uiUtils.removeStyle(popBodyEl, 'width');
@@ -138,7 +138,7 @@
       popBodyEl.style.height = size.height + "px";
       return size;
     },
-    safeSetOffset: function(offset) {
+    safeSetOffset(offset) {
       var me = this;
       var el = me.getDom();
       var vpRect = uiUtils.getViewportRect();
@@ -154,7 +154,7 @@
       el.style.left = Math.max(left, 0) + "px";
       el.style.top = Math.max(top, 0) + "px";
     },
-    showAtCenter: function() {
+    showAtCenter() {
       var vpRect = uiUtils.getViewportRect();
 
       if (!this.fullscreen) {
@@ -208,7 +208,7 @@
 
       this._show();
     },
-    getContentHtml: function() {
+    getContentHtml() {
       var contentHtml = "";
       if (typeof this.content == "string") {
         contentHtml = this.content;
@@ -224,7 +224,7 @@
       }
       return contentHtml;
     },
-    getHtmlTpl: function() {
+    getHtmlTpl() {
       var footHtml = "";
 
       if (this.buttons) {
@@ -256,7 +256,7 @@
         "</div></div></div>"
       );
     },
-    postRender: function() {
+    postRender() {
       // todo: 保持居中/记住上次关闭位置选项
       if (!this.modalMask.getDom()) {
         this.modalMask.render();
@@ -270,7 +270,7 @@
       this.addListener("show", function() {
         me.modalMask.show(this.getDom().style.zIndex - 2);
       });
-      this.addListener("hide", function() {
+      this.addListener("hide", () => {
         me.modalMask.hide();
       });
       if (this.buttons) {
@@ -278,8 +278,8 @@
           this.buttons[i].postRender();
         }
       }
-      domUtils.on(window, "resize", function() {
-        setTimeout(function() {
+      domUtils.on(window, "resize", () => {
+        setTimeout(() => {
           if (!me.isHidden()) {
             me.safeSetOffset(uiUtils.getClientRect(me.getDom()));
           }
@@ -325,33 +325,33 @@
       //            }
       this._hide();
     },
-    mesureSize: function() {
+    mesureSize() {
       var body = this.getDom("body");
       var width = uiUtils.getClientRect(this.getDom("content")).width;
       var dialogBodyStyle = body.style;
       dialogBodyStyle.width = width;
       return uiUtils.getClientRect(body);
     },
-    _onTitlebarMouseDown: function(evt, el) {
+    _onTitlebarMouseDown(evt, el) {
       if (this.draggable) {
         var rect;
         var vpRect = uiUtils.getViewportRect();
         var me = this;
         uiUtils.startDrag(evt, {
-          ondragstart: function() {
+          ondragstart() {
             rect = uiUtils.getClientRect(me.getDom());
             me.getDom("contmask").style.visibility = "visible";
             me.dragMask.show(me.getDom().style.zIndex - 1);
           },
-          ondragmove: function(x, y) {
+          ondragmove(x, y) {
             var left = rect.left + x;
             var top = rect.top + y;
             me.safeSetOffset({
-              left: left,
-              top: top
+              left,
+              top
             });
           },
-          ondragstop: function() {
+          ondragstop() {
             me.getDom("contmask").style.visibility = "hidden";
             domUtils.removeClasses(me.getDom(), ["edui-state-centered"]);
             me.dragMask.hide();
@@ -359,11 +359,11 @@
         });
       }
     },
-    reset: function() {
+    reset() {
       this.getDom("content").innerHTML = this.getContentHtml();
       this.fireEvent("dialogafterreset");
     },
-    _show: function() {
+    _show() {
       if (this._hidden) {
         this.getDom().style.display = "";
 
@@ -375,10 +375,10 @@
         baidu.editor.ui.uiUtils.getFixedLayer().style.zIndex = this.getDom().style.zIndex - 4;
       }
     },
-    isHidden: function() {
+    isHidden() {
       return this._hidden;
     },
-    _hide: function() {
+    _hide() {
       if (!this._hidden) {
         var wrapNode = this.getDom();
         wrapNode.style.display = "none";
@@ -389,7 +389,7 @@
         this.fireEvent("hide");
       }
     },
-    open: function() {
+    open() {
       if (this.autoReset) {
         //有可能还没有渲染
         try {
@@ -407,10 +407,10 @@
       }
       activeDialog = this;
     },
-    _onCloseButtonClick: function(evt, el) {
+    _onCloseButtonClick(evt, el) {
       this.close(false);
     },
-    close: function(ok) {
+    close(ok) {
       if (this.fireEvent("close", ok) !== false) {
         //还原环境
         if (this.fullscreen) {

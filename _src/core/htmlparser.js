@@ -23,7 +23,7 @@
  * ```
  */
 
-var htmlparser = (UE.htmlparser = function(htmlstr, ignoreBlank) {
+var htmlparser = (UE.htmlparser = (htmlstr, ignoreBlank) => {
   //todo 原来的方式  [^"'<>\/] 有\/就不能配对上 <TD vAlign=top background=../AAA.JPG> 这样的标签了
   //先去掉了，加上的原因忘了，这里先记录
   //var re_tag = /<(?:(?:\/([^>]+)>)|(?:!--([\S|\s]*?)-->)|(?:([^\s\/<>]+)\s*((?:(?:"[^"]*")|(?:'[^']*')|[^"'<>])*)\/?>))/g,
@@ -69,7 +69,7 @@ var htmlparser = (UE.htmlparser = function(htmlstr, ignoreBlank) {
           "]*",
         "g"
       ),
-      function(a, b) {
+      (a, b) => {
         //br暂时单独处理
         if (b && allowEmptyTags[b.toLowerCase()]) {
           return a.replace(/(^[\n\r]+)|([\n\r]+$)/g, "");
@@ -175,7 +175,7 @@ var htmlparser = (UE.htmlparser = function(htmlstr, ignoreBlank) {
     parent.children.push(
       new uNode({
         type: "comment",
-        data: data,
+        data,
         parentNode: parent
       })
     );

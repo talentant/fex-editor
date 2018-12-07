@@ -49,7 +49,7 @@ UE.parse.register("list", function(utils) {
   }
   function applyStyle(nodes) {
     var T = this;
-    utils.each(nodes, function(list) {
+    utils.each(nodes, list => {
       if (list.className && /custom_/i.test(list.className)) {
         var listStyle = list.className.match(/custom_(\w+)/)[1];
         if (listStyle == "dash" || listStyle == "dot") {
@@ -76,7 +76,7 @@ UE.parse.register("list", function(utils) {
           );
         } else {
           var index = 1;
-          utils.each(list.childNodes, function(li) {
+          utils.each(list.childNodes, li => {
             if (li.tagName == "LI") {
               utils.pushItem(
                 customCss,

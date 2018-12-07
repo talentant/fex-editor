@@ -83,7 +83,7 @@ UE.plugins["video"] = function() {
   }
 
   function switchImgAndVideo(root, img2video) {
-    utils.each(root.getNodesByTagName(img2video ? "img" : "embed video"), function(node) {
+    utils.each(root.getNodesByTagName(img2video ? "img" : "embed video"), node => {
       var className = node.getAttr("class");
       if (className && className.indexOf("edui-faked-video") != -1) {
         var html = creatInsertStr(
@@ -112,10 +112,10 @@ UE.plugins["video"] = function() {
     });
   }
 
-  me.addOutputRule(function(root) {
+  me.addOutputRule(root => {
     switchImgAndVideo(root, true);
   });
-  me.addInputRule(function(root) {
+  me.addInputRule(root => {
     switchImgAndVideo(root);
   });
 
@@ -186,7 +186,7 @@ UE.plugins["video"] = function() {
    * ```
    */
   me.commands["insertvideo"] = {
-    execCommand: function(cmd, videoObjs, type) {
+    execCommand(cmd, videoObjs, type) {
       videoObjs = utils.isArray(videoObjs) ? videoObjs : [videoObjs];
 
       if (me.fireEvent("beforeinsertvideo", videoObjs) === true) {
@@ -212,7 +212,7 @@ UE.plugins["video"] = function() {
 
       me.fireEvent("afterinsertvideo", videoObjs);
     },
-    queryCommandState: function() {
+    queryCommandState() {
       var img = me.selection.getRange().getClosedNode();
       var flag = img && (img.className == "edui-faked-video" || img.className.indexOf("edui-upload-video") != -1);
       return flag ? 1 : 0;

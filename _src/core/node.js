@@ -12,7 +12,7 @@
  * @module UE
  */
 
-(function() {
+(() => {
   /**
    * 编辑器模拟的节点类
    * @unfile
@@ -72,7 +72,7 @@
 
   //创建uNode的静态方法
   //支持标签和html
-  uNode.createElement = function(html) {
+  uNode.createElement = html => {
     if (/[<>]/.test(html)) {
       return UE.htmlparser(html).children[0];
     } else {
@@ -83,12 +83,11 @@
       });
     }
   };
-  uNode.createText = function(data, noTrans) {
-    return new UE.uNode({
+  uNode.createText = (data, noTrans) =>
+    new UE.uNode({
       type: "text",
       data: noTrans ? data : utils.unhtml(data || "")
     });
-  };
   function nodeToHtml(node, arr, formatter, current) {
     switch (node.type) {
       case "root":
@@ -138,11 +137,7 @@
           a +
             (attrs[a] !== undefined
               ? '="' +
-                (notTransAttrs[a]
-                  ? utils.html(attrs[a]).replace(/["]/g, function(a) {
-                      return "&quot;";
-                    })
-                  : utils.unhtml(attrs[a])) +
+                (notTransAttrs[a] ? utils.html(attrs[a]).replace(/["]/g, a => "&quot;") : utils.unhtml(attrs[a])) +
                 '"'
               : "")
         );
@@ -242,7 +237,7 @@
      * node.toHtml( true );
      * ```
      */
-    toHtml: function(formatter) {
+    toHtml(formatter) {
       var arr = [];
       nodeToHtml(this, arr, formatter, 0);
       return arr.join("");
@@ -270,7 +265,7 @@
      * node.innerHTML('<span>text</span>');
      * ```
      */
-    innerHTML: function(htmlstr) {
+    innerHTML(htmlstr) {
       if (this.type != "element" || dtd.$empty[this.tagName]) {
         return this;
       }
@@ -318,7 +313,7 @@
      * node.innerText('<span>text</span>');
      * ```
      */
-    innerText: function(textStr, noTrans) {
+    innerText(textStr, noTrans) {
       if (this.type != "element" || dtd.$empty[this.tagName]) {
         return this;
       }
@@ -345,7 +340,7 @@
      * node.getData();
      * ```
      */
-    getData: function() {
+    getData() {
       if (this.type == "element") return "";
       return this.data;
     },
@@ -359,7 +354,7 @@
      * node.firstChild(); //返回第一个子节点
      * ```
      */
-    firstChild: function() {
+    firstChild() {
       //            if (this.type != 'element' || dtd.$empty[this.tagName]) {
       //                return this;
       //            }
@@ -375,7 +370,7 @@
      * node.lastChild(); //返回最后一个子节点
      * ```
      */
-    lastChild: function() {
+    lastChild() {
       //            if (this.type != 'element' || dtd.$empty[this.tagName] ) {
       //                return this;
       //            }
@@ -391,7 +386,7 @@
      * node.children[2].previousSibling(); //返回子节点node.children[1]
      * ```
      */
-    previousSibling: function() {
+    previousSibling() {
       var parent = this.parentNode;
       for (var i = 0, ci; (ci = parent.children[i]); i++) {
         if (ci === this) {
@@ -409,7 +404,7 @@
      * node.children[2].nextSibling(); //如果有，返回子节点node.children[3]
      * ```
      */
-    nextSibling: function() {
+    nextSibling() {
       var parent = this.parentNode;
       for (var i = 0, ci; (ci = parent.children[i++]); ) {
         if (ci === this) {
@@ -429,7 +424,7 @@
      * node.replaceChild(newNode, childNode); //用newNode替换childNode,childNode是node的子节点
      * ```
      */
-    replaceChild: function(target, source) {
+    replaceChild(target, source) {
       if (this.children) {
         if (target.parentNode) {
           target.parentNode.removeChild(target);
@@ -455,7 +450,7 @@
      * node.appendChild( newNode ); //在node内插入子节点newNode
      * ```
      */
-    appendChild: function(node) {
+    appendChild(node) {
       if (this.type == "root" || (this.type == "element" && !dtd.$empty[this.tagName])) {
         if (!this.children) {
           this.children = [];
@@ -486,7 +481,7 @@
      * node.parentNode.insertBefore(newNode, node); //在node节点后面插入newNode
      * ```
      */
-    insertBefore: function(target, source) {
+    insertBefore(target, source) {
       if (this.children) {
         if (target.parentNode) {
           target.parentNode.removeChild(target);
@@ -512,7 +507,7 @@
      * node.parentNode.insertAfter(newNode, node); //在node节点后面插入newNode
      * ```
      */
-    insertAfter: function(target, source) {
+    insertAfter(target, source) {
       if (this.children) {
         if (target.parentNode) {
           target.parentNode.removeChild(target);
@@ -538,7 +533,7 @@
      * node.removeChild(childNode,true); //在node的子节点列表中移除child节点，并且吧child的子节点插入到移除的位置
      * ```
      */
-    removeChild: function(node, keepChildren) {
+    removeChild(node, keepChildren) {
       if (this.children) {
         for (var i = 0, ci; (ci = this.children[i]); i++) {
           if (ci === node) {
@@ -566,7 +561,7 @@
      * node.getAttr('title');
      * ```
      */
-    getAttr: function(attrName) {
+    getAttr(attrName) {
       return this.attrs && this.attrs[attrName.toLowerCase()];
     },
 
@@ -581,7 +576,7 @@
      * node.setAttr('title','标题');
      * ```
      */
-    setAttr: function(attrName, attrVal) {
+    setAttr(attrName, attrVal) {
       if (!attrName) {
         delete this.attrs;
         return;
@@ -615,7 +610,7 @@
      * node.getIndex();
      * ```
      */
-    getIndex: function() {
+    getIndex() {
       var parent = this.parentNode;
       for (var i = 0, ci; (ci = parent.children[i]); i++) {
         if (ci === this) {
@@ -635,7 +630,7 @@
      * node.getNodeById('textId');
      * ```
      */
-    getNodeById: function(id) {
+    getNodeById(id) {
       var node;
       if (this.children && this.children.length) {
         for (var i = 0, ci; (ci = this.children[i++]); ) {
@@ -656,14 +651,14 @@
      * node.getNodesByTagName('span');
      * ```
      */
-    getNodesByTagName: function(tagNames) {
+    getNodesByTagName(tagNames) {
       tagNames = utils
         .trim(tagNames)
         .replace(/[ ]{2,}/g, " ")
         .split(" ");
       var arr = [];
       var me = this;
-      utils.each(tagNames, function(tagName) {
+      utils.each(tagNames, tagName => {
         if (me.children && me.children.length) {
           for (var i = 0, ci; (ci = me.children[i++]); ) {
             getNodesByTagName(ci, tagName, arr);
@@ -683,7 +678,7 @@
      * node.getStyle('font-size');
      * ```
      */
-    getStyle: function(name) {
+    getStyle(name) {
       var cssStyle = this.getAttr("style");
       if (!cssStyle) {
         return "";
@@ -706,7 +701,7 @@
      * node.setStyle('font-size', '12px');
      * ```
      */
-    setStyle: function(name, val) {
+    setStyle(name, val) {
       function exec(name, val) {
         var reg = new RegExp("(^|;)\\s*" + name + ":([^;]+;?)", "gi");
         cssStyle = cssStyle.replace(reg, "$1");
@@ -740,7 +735,7 @@
      * });
      * ```
      */
-    traversal: function(fn) {
+    traversal(fn) {
       if (this.children && this.children.length) {
         nodeTraversal(this, fn);
       }

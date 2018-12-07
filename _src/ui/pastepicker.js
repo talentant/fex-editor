@@ -1,6 +1,6 @@
 ///import core
 ///import uicore
-(function() {
+(() => {
   var utils = baidu.editor.utils;
   var Stateful = baidu.editor.ui.Stateful;
   var uiUtils = baidu.editor.ui.uiUtils;
@@ -11,11 +11,11 @@
     this.initPastePicker();
   });
   PastePicker.prototype = {
-    initPastePicker: function() {
+    initPastePicker() {
       this.initUIBase();
       this.Stateful_init();
     },
-    getHtmlTpl: function() {
+    getHtmlTpl() {
       return (
         '<div class="edui-pasteicon" onclick="$$._onClick(this)"></div>' +
         '<div class="edui-pastecontainer">' +
@@ -40,14 +40,14 @@
         "</div>"
       );
     },
-    getStateDom: function() {
+    getStateDom() {
       return this.target;
     },
-    format: function(param) {
+    format(param) {
       this.editor.ui._isTransfer = true;
       this.editor.fireEvent("pasteTransfer", param);
     },
-    _onClick: function(cur) {
+    _onClick(cur) {
       var node = domUtils.getNextDomNode(cur);
       var screenHt = uiUtils.getViewportRect().height;
       var subPop = uiUtils.getClientRect(node);

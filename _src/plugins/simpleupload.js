@@ -21,7 +21,7 @@ UE.plugin.register("simpleupload", function() {
       h +
       "px;overflow:hidden;border:0;margin:0;padding:0;position:absolute;top:0;left:0;filter:alpha(opacity=0);-moz-opacity:0;-khtml-opacity: 0;opacity: 0;cursor:pointer;";
 
-    domUtils.on(btnIframe, "load", function() {
+    domUtils.on(btnIframe, "load", () => {
       var timestrap = (+new Date()).toString(36);
       var wrapper;
       var btnIframeDoc;
@@ -73,7 +73,7 @@ UE.plugin.register("simpleupload", function() {
       var input = btnIframeDoc.getElementById("edui_input_" + timestrap);
       var iframe = btnIframeDoc.getElementById("edui_iframe_" + timestrap);
 
-      domUtils.on(input, "change", function() {
+      domUtils.on(input, "change", () => {
         if (!input.value) return;
         var loadingId = "loading_" + (+new Date()).toString(36);
         var params = utils.serializeParam(me.queryCommandValue("serverparam")) || "";
@@ -152,9 +152,9 @@ UE.plugin.register("simpleupload", function() {
       });
 
       var stateTimer;
-      me.addListener("selectionchange", function() {
+      me.addListener("selectionchange", () => {
         clearTimeout(stateTimer);
-        stateTimer = setTimeout(function() {
+        stateTimer = setTimeout(() => {
           var state = me.queryCommandState("simpleupload");
           if (state == -1) {
             input.disabled = "disabled";
@@ -172,7 +172,7 @@ UE.plugin.register("simpleupload", function() {
 
   return {
     bindEvents: {
-      ready: function() {
+      ready() {
         //设置loading的样式
         utils.cssRule(
           "loading",
@@ -189,13 +189,13 @@ UE.plugin.register("simpleupload", function() {
         );
       },
       /* 初始化简单上传按钮 */
-      simpleuploadbtnready: function(type, container) {
+      simpleuploadbtnready(type, container) {
         containerBtn = container;
         me.afterConfigReady(initUploadBtn);
       }
     },
-    outputRule: function(root) {
-      utils.each(root.getNodesByTagName("img"), function(n) {
+    outputRule(root) {
+      utils.each(root.getNodesByTagName("img"), n => {
         if (/\b(loaderrorclass)|(bloaderrorclass)\b/.test(n.getAttr("class"))) {
           n.parentNode.removeChild(n);
         }
@@ -203,7 +203,7 @@ UE.plugin.register("simpleupload", function() {
     },
     commands: {
       simpleupload: {
-        queryCommandState: function() {
+        queryCommandState() {
           return isLoaded ? 0 : -1;
         }
       }

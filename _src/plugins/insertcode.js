@@ -6,7 +6,7 @@
 
 UE.plugins["insertcode"] = function() {
   var me = this;
-  me.ready(function() {
+  me.ready(() => {
     utils.cssRule("pre", "pre{margin:.5em 0;padding:.4em .6em;border-radius:8px;background:#f8f8f8;}", me.document);
   });
   me.setOpt("insertcode", {
@@ -61,7 +61,7 @@ UE.plugins["insertcode"] = function() {
    */
 
   me.commands["insertcode"] = {
-    execCommand: function(cmd, lang) {
+    execCommand(cmd, lang) {
       var me = this;
       var rng = me.selection.getRange();
       var pre = domUtils.findParentByTagName(rng.startContainer, "pre", true);
@@ -78,13 +78,13 @@ UE.plugins["insertcode"] = function() {
 
           utils.each(
             UE.filterNode(UE.htmlparser(div.innerHTML.replace(/[\r\t]/g, "")), me.options.filterTxtRules).children,
-            function(node) {
+            node => {
               if (browser.ie && browser.ie11below && browser.version > 8) {
                 if (node.type == "element") {
                   if (node.tagName == "br") {
                     code += "\n";
                   } else if (!dtd.$empty[node.tagName]) {
-                    utils.each(node.children, function(cn) {
+                    utils.each(node.children, cn => {
                       if (cn.type == "element") {
                         if (cn.tagName == "br") {
                           code += "\n";
@@ -111,7 +111,7 @@ UE.plugins["insertcode"] = function() {
                     if (node.tagName == "br") {
                       code += "<br>";
                     } else if (!dtd.$empty[node.tagName]) {
-                      utils.each(node.children, function(cn) {
+                      utils.each(node.children, cn => {
                         if (cn.type == "element") {
                           if (cn.tagName == "br") {
                             code += "<br>";
@@ -168,10 +168,10 @@ UE.plugins["insertcode"] = function() {
         }
       }
     },
-    queryCommandValue: function() {
+    queryCommandValue() {
       var path = this.selection.getStartElementPath();
       var lang = "";
-      utils.each(path, function(node) {
+      utils.each(path, node => {
         if (node.nodeName == "PRE") {
           var match = node.className.match(/brush:([^;]+)/);
           lang = match && match[1] ? match[1] : "";
@@ -182,14 +182,14 @@ UE.plugins["insertcode"] = function() {
     }
   };
 
-  me.addInputRule(function(root) {
-    utils.each(root.getNodesByTagName("pre"), function(pre) {
+  me.addInputRule(root => {
+    utils.each(root.getNodesByTagName("pre"), pre => {
       var brs = pre.getNodesByTagName("br");
       if (brs.length) {
         browser.ie &&
           browser.ie11below &&
           browser.version > 8 &&
-          utils.each(brs, function(br) {
+          utils.each(brs, br => {
             var txt = UE.uNode.createText("\n");
             br.parentNode.insertBefore(txt, br);
             br.parentNode.removeChild(br);
@@ -199,7 +199,7 @@ UE.plugins["insertcode"] = function() {
       if (browser.ie && browser.ie11below && browser.version > 8) return;
       var code = pre.innerText().split(/\n/);
       pre.innerHTML("");
-      utils.each(code, function(c) {
+      utils.each(code, c => {
         if (c.length) {
           pre.appendChild(UE.uNode.createText(c));
         }
@@ -207,10 +207,10 @@ UE.plugins["insertcode"] = function() {
       });
     });
   });
-  me.addOutputRule(function(root) {
-    utils.each(root.getNodesByTagName("pre"), function(pre) {
+  me.addOutputRule(root => {
+    utils.each(root.getNodesByTagName("pre"), pre => {
       var code = "";
-      utils.each(pre.children, function(n) {
+      utils.each(pre.children, n => {
         if (n.type == "text") {
           //在ie下文本内容有可能末尾带有\n要去掉
           //trace:3396
@@ -253,7 +253,7 @@ UE.plugins["insertcode"] = function() {
     }
     return UE.Editor.prototype.queryCommandState.apply(this, arguments);
   };
-  me.addListener("beforeenterkeydown", function() {
+  me.addListener("beforeenterkeydown", () => {
     var rng = me.selection.getRange();
     var pre = domUtils.findParentByTagName(rng.startContainer, "pre", true);
     if (pre) {
@@ -370,7 +370,7 @@ UE.plugins["insertcode"] = function() {
     }
   });
 
-  me.addListener("tabkeydown", function(cmd, evt) {
+  me.addListener("tabkeydown", (cmd, evt) => {
     var rng = me.selection.getRange();
     var pre = domUtils.findParentByTagName(rng.startContainer, "pre", true);
     if (pre) {
@@ -435,12 +435,12 @@ UE.plugins["insertcode"] = function() {
       }
       var htmlstr = "";
       if (browser.ie && browser.version > 8) {
-        utils.each(UE.filterNode(UE.htmlparser(html), me.options.filterTxtRules).children, function(node) {
+        utils.each(UE.filterNode(UE.htmlparser(html), me.options.filterTxtRules).children, node => {
           if (node.type == "element") {
             if (node.tagName == "br") {
               htmlstr += "\n";
             } else if (!dtd.$empty[node.tagName]) {
-              utils.each(node.children, function(cn) {
+              utils.each(node.children, cn => {
                 if (cn.type == "element") {
                   if (cn.tagName == "br") {
                     htmlstr += "\n";
@@ -470,12 +470,12 @@ UE.plugins["insertcode"] = function() {
       } else {
         var frag = me.document.createDocumentFragment();
 
-        utils.each(UE.filterNode(UE.htmlparser(html), me.options.filterTxtRules).children, function(node) {
+        utils.each(UE.filterNode(UE.htmlparser(html), me.options.filterTxtRules).children, node => {
           if (node.type == "element") {
             if (node.tagName == "br") {
               frag.appendChild(me.document.createElement("br"));
             } else if (!dtd.$empty[node.tagName]) {
-              utils.each(node.children, function(cn) {
+              utils.each(node.children, cn => {
                 if (cn.type == "element") {
                   if (cn.tagName == "br") {
                     frag.appendChild(me.document.createElement("br"));

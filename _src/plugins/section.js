@@ -33,26 +33,26 @@ UE.plugin.register("section", function() {
   return {
     bindMultiEvents: {
       type: "aftersetcontent afterscencerestore",
-      handler: function() {
+      handler() {
         me.fireEvent("updateSections");
       }
     },
     bindEvents: {
       /* 初始化、拖拽、粘贴、执行setcontent之后 */
-      ready: function() {
+      ready() {
         me.fireEvent("updateSections");
-        domUtils.on(me.body, "drop paste", function() {
+        domUtils.on(me.body, "drop paste", () => {
           me.fireEvent("updateSections");
         });
       },
       /* 执行paragraph命令之后 */
-      afterexeccommand: function(type, cmd) {
+      afterexeccommand(type, cmd) {
         if (cmd == "paragraph") {
           me.fireEvent("updateSections");
         }
       },
       /* 部分键盘操作，触发updateSections事件 */
-      keyup: function(type, e) {
+      keyup(type, e) {
         var me = this;
         var range = me.selection.getRange();
         if (range.collapsed != true) {
@@ -67,20 +67,14 @@ UE.plugin.register("section", function() {
     },
     commands: {
       getsections: {
-        execCommand: function(cmd, levels) {
+        execCommand(cmd, levels) {
           var levelFn = levels || ["h1", "h2", "h3", "h4", "h5", "h6"];
 
           for (var i = 0; i < levelFn.length; i++) {
             if (typeof levelFn[i] == "string") {
-              levelFn[i] = (function(fn) {
-                return function(node) {
-                  return node.tagName == fn.toUpperCase();
-                };
-              })(levelFn[i]);
+              levelFn[i] = (fn => node => node.tagName == fn.toUpperCase())(levelFn[i]);
             } else if (typeof levelFn[i] != "function") {
-              levelFn[i] = function(node) {
-                return null;
-              };
+              levelFn[i] = node => null;
             }
           }
           function getSectionLevel(node) {
@@ -112,7 +106,7 @@ UE.plugin.register("section", function() {
                 var current = getSection({
                   tag: child.tagName,
                   title: child.innerText || child.textContent || "",
-                  level: level,
+                  level,
                   dom: child,
                   startAddress: utils.clone(address, []),
                   endAddress: utils.clone(address, []),
@@ -140,7 +134,7 @@ UE.plugin.register("section", function() {
         notNeedUndo: true
       },
       movesection: {
-        execCommand: function(cmd, sourceSection, targetSection, isAfter) {
+        execCommand(cmd, sourceSection, targetSection, isAfter) {
           var me = this;
           var targetAddress;
           var target;
@@ -210,7 +204,7 @@ UE.plugin.register("section", function() {
         }
       },
       deletesection: {
-        execCommand: function(cmd, section, keepChildren) {
+        execCommand(cmd, section, keepChildren) {
           var me = this;
 
           if (!section) return;
@@ -247,7 +241,7 @@ UE.plugin.register("section", function() {
         }
       },
       selectsection: {
-        execCommand: function(cmd, section) {
+        execCommand(cmd, section) {
           if (!section && !section.dom) return false;
           var me = this;
           var range = me.selection.getRange();
@@ -267,7 +261,7 @@ UE.plugin.register("section", function() {
         notNeedUndo: true
       },
       scrolltosection: {
-        execCommand: function(cmd, section) {
+        execCommand(cmd, section) {
           if (!section && !section.dom) return false;
           var me = this;
           var range = me.selection.getRange();

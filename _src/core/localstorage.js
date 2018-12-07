@@ -1,10 +1,10 @@
 //存储媒介封装
-var LocalStorage = (UE.LocalStorage = (function() {
+var LocalStorage = (UE.LocalStorage = (() => {
   var storage = window.localStorage || getUserData() || null;
   var LOCAL_FILE = "localStorage";
 
   return {
-    saveLocalData: function(key, data) {
+    saveLocalData(key, data) {
       if (storage && data) {
         storage.setItem(key, data);
         return true;
@@ -13,7 +13,7 @@ var LocalStorage = (UE.LocalStorage = (function() {
       return false;
     },
 
-    getLocalData: function(key) {
+    getLocalData(key) {
       if (storage) {
         return storage.getItem(key);
       }
@@ -21,7 +21,7 @@ var LocalStorage = (UE.LocalStorage = (function() {
       return null;
     },
 
-    removeItem: function(key) {
+    removeItem(key) {
       storage && storage.removeItem(key);
     }
   };
@@ -37,7 +37,7 @@ var LocalStorage = (UE.LocalStorage = (function() {
     container.addBehavior("#default#userdata");
 
     return {
-      getItem: function(key) {
+      getItem(key) {
         var result = null;
 
         try {
@@ -50,7 +50,7 @@ var LocalStorage = (UE.LocalStorage = (function() {
         return result;
       },
 
-      setItem: function(key, value) {
+      setItem(key, value) {
         document.body.appendChild(container);
         container.setAttribute(key, value);
         container.save(LOCAL_FILE);
@@ -69,7 +69,7 @@ var LocalStorage = (UE.LocalStorage = (function() {
       //
       //},
 
-      removeItem: function(key) {
+      removeItem(key) {
         document.body.appendChild(container);
         container.removeAttribute(key);
         container.save(LOCAL_FILE);
@@ -79,10 +79,10 @@ var LocalStorage = (UE.LocalStorage = (function() {
   }
 })());
 
-(function() {
+(() => {
   var ROOTKEY = "ueditor_preference";
 
-  UE.Editor.prototype.setPreferences = function(key, value) {
+  UE.Editor.prototype.setPreferences = (key, value) => {
     var obj = {};
     if (utils.isString(key)) {
       obj[key] = value;
@@ -98,7 +98,7 @@ var LocalStorage = (UE.LocalStorage = (function() {
     data && LocalStorage.saveLocalData(ROOTKEY, utils.json2str(data));
   };
 
-  UE.Editor.prototype.getPreferences = function(key) {
+  UE.Editor.prototype.getPreferences = key => {
     var data = LocalStorage.getLocalData(ROOTKEY);
     if (data && (data = utils.str2json(data))) {
       return key ? data[key] : data;
@@ -106,7 +106,7 @@ var LocalStorage = (UE.LocalStorage = (function() {
     return null;
   };
 
-  UE.Editor.prototype.removePreferences = function(key) {
+  UE.Editor.prototype.removePreferences = key => {
     var data = LocalStorage.getLocalData(ROOTKEY);
     if (data && (data = utils.str2json(data))) {
       data[key] = undefined;

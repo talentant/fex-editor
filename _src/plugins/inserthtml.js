@@ -27,7 +27,7 @@
  */
 
 UE.commands["inserthtml"] = {
-  execCommand: function(command, html, notNeedFilter) {
+  execCommand(command, html, notNeedFilter) {
     var me = this;
     var range;
     var div;
@@ -175,9 +175,7 @@ UE.commands["inserthtml"] = {
         range.insertNode(child);
         nextNode = child.nextSibling;
         if (!hadBreak && child.nodeType == domUtils.NODE_ELEMENT && domUtils.isBlockElm(child)) {
-          parent = domUtils.findParent(child, function(node) {
-            return domUtils.isBlockElm(node);
-          });
+          parent = domUtils.findParent(child, node => domUtils.isBlockElm(node));
           if (
             parent &&
             parent.tagName.toLowerCase() != "body" &&
@@ -252,7 +250,7 @@ UE.commands["inserthtml"] = {
       } catch (e) {}
     }
 
-    setTimeout(function() {
+    setTimeout(() => {
       range = me.selection.getRange();
       range.scrollToView(me.autoHeightEnabled, me.autoHeightEnabled ? domUtils.getXY(me.iframe).y : 0);
       me.fireEvent("afterinserthtml", html);

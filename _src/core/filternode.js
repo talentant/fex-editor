@@ -20,7 +20,7 @@
  * UE.filterNode(root,editor.options.filterRules);
  * ```
  */
-var filterNode = (UE.filterNode = (function() {
+var filterNode = (UE.filterNode = (() => {
   function filterNode(node, rules) {
     switch (node.type) {
       case "text":
@@ -61,7 +61,7 @@ var filterNode = (UE.filterNode = (function() {
                 //todo 只先对style单独处理
                 if (a == "style" && utils.isArray(attrs[a])) {
                   var tmpCssStyle = [];
-                  utils.each(attrs[a], function(v) {
+                  utils.each(attrs[a], v => {
                     var tmp;
                     if ((tmp = node.getStyle(v))) {
                       tmpCssStyle.push(v + ":" + tmp);
@@ -105,13 +105,13 @@ var filterNode = (UE.filterNode = (function() {
         node.parentNode.removeChild(node);
     }
   }
-  return function(root, rules) {
+  return (root, rules) => {
     if (utils.isEmptyObject(rules)) {
       return root;
     }
     var val;
     if ((val = rules["-"])) {
-      utils.each(val.split(" "), function(k) {
+      utils.each(val.split(" "), k => {
         rules[k] = "-";
       });
     }

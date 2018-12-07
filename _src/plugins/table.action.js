@@ -36,21 +36,13 @@ UE.plugins["table"] = function() {
 
   var UT = UE.UETable;
 
-  var getUETable = function(tdOrTable) {
-    return UT.getUETable(tdOrTable);
-  };
+  var getUETable = tdOrTable => UT.getUETable(tdOrTable);
 
-  var getUETableBySelected = function(editor) {
-    return UT.getUETableBySelected(editor);
-  };
+  var getUETableBySelected = editor => UT.getUETableBySelected(editor);
 
-  var getDefaultValue = function(editor, table) {
-    return UT.getDefaultValue(editor, table);
-  };
+  var getDefaultValue = (editor, table) => UT.getDefaultValue(editor, table);
 
-  var removeSelectedClass = function(cells) {
-    return UT.removeSelectedClass(cells);
-  };
+  var removeSelectedClass = cells => UT.removeSelectedClass(cells);
 
   function showError(e) {
     //        throw e;
@@ -58,11 +50,11 @@ UE.plugins["table"] = function() {
   me.ready(function() {
     var me = this;
     var orgGetText = me.selection.getText;
-    me.selection.getText = function() {
+    me.selection.getText = () => {
       var table = getUETableBySelected(me);
       if (table) {
         var str = "";
-        utils.each(table.selectedTds, function(td) {
+        utils.each(table.selectedTds, td => {
           str += td[browser.ie ? "innerText" : "textContent"];
         });
         return str;
@@ -136,7 +128,7 @@ UE.plugins["table"] = function() {
     averagedistributecol: 1,
     averagedistributerow: 1
   };
-  me.ready(function() {
+  me.ready(() => {
     utils.cssRule(
       "table",
       //选中的td上的样式
@@ -225,13 +217,7 @@ UE.plugins["table"] = function() {
               (!preNode || (preNode.nodeType == 1 && preNode.tagName == "TABLE")) &&
               domUtils.isStartInblock(rng)
             ) {
-              var first = domUtils.findParent(
-                me.selection.getStart(),
-                function(n) {
-                  return domUtils.isBlockElm(n);
-                },
-                true
-              );
+              var first = domUtils.findParent(me.selection.getStart(), n => domUtils.isBlockElm(n), true);
               if (first && (/t(h|d)/i.test(first.tagName) || first === start.firstChild)) {
                 me.execCommand("insertparagraphbeforetable");
                 domUtils.preventDefault(evt);
@@ -398,17 +384,17 @@ UE.plugins["table"] = function() {
         div.innerHTML = html.html;
         tables = div.getElementsByTagName("table");
         if (domUtils.findParentByTagName(me.selection.getStart(), "table")) {
-          utils.each(tables, function(t) {
+          utils.each(tables, t => {
             domUtils.remove(t);
           });
           if (domUtils.findParentByTagName(me.selection.getStart(), "caption", true)) {
             div.innerHTML = div[browser.ie ? "innerText" : "textContent"];
           }
         } else {
-          utils.each(tables, function(table) {
+          utils.each(tables, table => {
             removeStyleSize(table, true);
             domUtils.removeAttributes(table, ["style", "border"]);
-            utils.each(domUtils.getElementsByTagName(table, "td"), function(td) {
+            utils.each(domUtils.getElementsByTagName(table, "td"), td => {
               if (isEmptyBlock(td)) {
                 domUtils.fillNode(me.document, td);
               }
@@ -421,8 +407,8 @@ UE.plugins["table"] = function() {
       }
     });
 
-    me.addListener("afterpaste", function() {
-      utils.each(domUtils.getElementsByTagName(me.body, "table"), function(table) {
+    me.addListener("afterpaste", () => {
+      utils.each(domUtils.getElementsByTagName(me.body, "table"), table => {
         if (table.offsetWidth > me.body.offsetWidth) {
           var defaultValue = getDefaultValue(me, table);
           table.style.width =
@@ -434,13 +420,13 @@ UE.plugins["table"] = function() {
         }
       });
     });
-    me.addListener("blur", function() {
+    me.addListener("blur", () => {
       tableCopyList = null;
     });
     var timer;
-    me.addListener("keydown", function() {
+    me.addListener("keydown", () => {
       clearTimeout(timer);
-      timer = setTimeout(function() {
+      timer = setTimeout(() => {
         var rng = me.selection.getRange();
         var cell = domUtils.findParentByTagName(rng.startContainer, ["th", "td"], true);
         if (cell) {
@@ -451,7 +437,7 @@ UE.plugins["table"] = function() {
         }
       }, 100);
     });
-    me.addListener("selectionchange", function() {
+    me.addListener("selectionchange", () => {
       toggleDraggableState(me, false, "", null);
     });
 
@@ -465,7 +451,7 @@ UE.plugins["table"] = function() {
       var rng = me.selection.getRange();
       var start = rng.startContainer;
       start = domUtils.findParentByTagName(start, ["td", "th"], true);
-      utils.each(domUtils.getElementsByTagName(me.document, "table"), function(table) {
+      utils.each(domUtils.getElementsByTagName(me.document, "table"), table => {
         if (me.fireEvent("excludetable", table) === true) return;
         table.ueTable = new UT(table);
         //trace:3742
@@ -486,22 +472,22 @@ UE.plugins["table"] = function() {
         //                        }
         //                    }
         //                });
-        table.onmouseover = function() {
+        table.onmouseover = () => {
           me.fireEvent("tablemouseover", table);
         };
         table.onmousemove = function() {
           me.fireEvent("tablemousemove", table);
           me.options.tableDragable && toggleDragButton(true, this, me);
-          utils.defer(function() {
+          utils.defer(() => {
             me.fireEvent("contentchange", 50);
           }, true);
         };
-        table.onmouseout = function() {
+        table.onmouseout = () => {
           me.fireEvent("tablemouseout", table);
           toggleDraggableState(me, false, "", null);
           hideDragLine(me);
         };
-        table.onclick = function(evt) {
+        table.onclick = evt => {
           evt = me.window.event || evt;
           var target = getParentTdOrTh(evt.target || evt.srcElement);
           if (!target) return;
@@ -570,7 +556,7 @@ UE.plugins["table"] = function() {
 
     domUtils.on(me.document, "mousemove", mouseMoveEvent);
 
-    domUtils.on(me.document, "mouseout", function(evt) {
+    domUtils.on(me.document, "mouseout", evt => {
       var target = evt.target || evt.srcElement;
       if (target.tagName == "TABLE") {
         toggleDraggableState(me, false, "", null);
@@ -585,9 +571,7 @@ UE.plugins["table"] = function() {
       var rows = table.rows;
       var len = rows.length;
 
-      var getClass = function(list, index, repeat) {
-        return list[index] ? list[index] : repeat ? list[index % list.length] : "";
-      };
+      var getClass = (list, index, repeat) => (list[index] ? list[index] : repeat ? list[index % list.length] : "");
 
       for (var i = 0; i < len; i++) {
         rows[i].className = getClass(classList || me.options.classList, i, true);
@@ -607,11 +591,11 @@ UE.plugins["table"] = function() {
     me.addListener("mousedown", mouseDownEvent);
     me.addListener("mouseup", mouseUpEvent);
     //拖动的时候触发mouseup
-    domUtils.on(me.body, "dragstart", function(evt) {
+    domUtils.on(me.body, "dragstart", evt => {
       mouseUpEvent.call(me, "dragstart", evt);
     });
-    me.addOutputRule(function(root) {
-      utils.each(root.getNodesByTagName("div"), function(n) {
+    me.addOutputRule(root => {
+      utils.each(root.getNodesByTagName("div"), n => {
         if (n.getAttr("id") == "ue_tableDragLine") {
           n.parentNode.removeChild(n);
         }
@@ -619,7 +603,7 @@ UE.plugins["table"] = function() {
     });
 
     var currentRowIndex = 0;
-    me.addListener("mousedown", function() {
+    me.addListener("mousedown", () => {
       currentRowIndex = 0;
     });
     me.addListener("tabkeydown", function() {
@@ -677,7 +661,7 @@ UE.plugins["table"] = function() {
     me.addListener("beforegetcontent", function() {
       switchBorderColor(this, false);
       browser.ie &&
-        utils.each(this.document.getElementsByTagName("caption"), function(ci) {
+        utils.each(this.document.getElementsByTagName("caption"), ci => {
           if (domUtils.isEmptyNode(ci)) {
             ci.innerHTML = "&nbsp;";
           }
@@ -686,7 +670,7 @@ UE.plugins["table"] = function() {
     me.addListener("aftergetcontent", function() {
       switchBorderColor(this, true);
     });
-    me.addListener("getAllHtml", function() {
+    me.addListener("getAllHtml", () => {
       removeSelectedClass(me.document.getElementsByTagName("td"));
     });
     //修正全屏状态下插入的表格宽度在非全屏状态下撑开编辑器的情况
@@ -694,11 +678,11 @@ UE.plugins["table"] = function() {
       if (!fullscreen) {
         var ratio = this.body.offsetWidth / document.body.offsetWidth;
         var tables = domUtils.getElementsByTagName(this.body, "table");
-        utils.each(tables, function(table) {
+        utils.each(tables, table => {
           if (table.offsetWidth < me.body.offsetWidth) return false;
           var tds = domUtils.getElementsByTagName(table, "td");
           var backWidths = [];
-          utils.each(tds, function(td) {
+          utils.each(tds, td => {
             backWidths.push(td.offsetWidth);
           });
           for (var i = 0, td; (td = tds[i]); i++) {
@@ -891,7 +875,7 @@ UE.plugins["table"] = function() {
   function toggleDragButton(show, table, editor) {
     if (!show) {
       if (dragOver) return;
-      dragButtonTimer = setTimeout(function() {
+      dragButtonTimer = setTimeout(() => {
         !dragOver && dragButton && dragButton.parentNode && dragButton.parentNode.removeChild(dragButton);
       }, 2000);
     } else {
@@ -915,19 +899,19 @@ UE.plugins["table"] = function() {
       pos.x +
       "px;";
     domUtils.unSelectable(dragButton);
-    dragButton.onmouseover = function(evt) {
+    dragButton.onmouseover = evt => {
       dragOver = true;
     };
-    dragButton.onmouseout = function(evt) {
+    dragButton.onmouseout = evt => {
       dragOver = false;
     };
     domUtils.on(dragButton, "click", function(type, evt) {
       doClick(evt, this);
     });
-    domUtils.on(dragButton, "dblclick", function(type, evt) {
+    domUtils.on(dragButton, "dblclick", (type, evt) => {
       doDblClick(evt);
     });
-    domUtils.on(dragButton, "dragstart", function(type, evt) {
+    domUtils.on(dragButton, "dragstart", (type, evt) => {
       domUtils.preventDefault(evt);
     });
     var timer;
@@ -935,7 +919,7 @@ UE.plugins["table"] = function() {
     function doClick(evt, button) {
       // 部分浏览器下需要清理
       clearTimeout(timer);
-      timer = setTimeout(function() {
+      timer = setTimeout(() => {
         editor.fireEvent("tableClicked", table, button);
       }, 300);
     }
@@ -1143,7 +1127,7 @@ UE.plugins["table"] = function() {
 
       if (ut) {
         var td = getTargetTd(me, evt);
-        utils.each(ut.selectedTds, function(ti) {
+        utils.each(ut.selectedTds, ti => {
           if (ti === td) {
             flag = true;
           }
@@ -1153,7 +1137,7 @@ UE.plugins["table"] = function() {
           ut.clearSelected();
         } else {
           td = ut.selectedTds[0];
-          setTimeout(function() {
+          setTimeout(() => {
             me.selection
               .getRange()
               .setStart(td, 0)
@@ -1206,19 +1190,19 @@ UE.plugins["table"] = function() {
           var oldWidth = [];
           var newWidth = [];
 
-          utils.each(cells, function(cell) {
+          utils.each(cells, cell => {
             oldWidth.push(cell.offsetWidth);
           });
 
-          utils.each(cells, function(cell) {
+          utils.each(cells, cell => {
             cell.removeAttribute("width");
           });
 
-          window.setTimeout(function() {
+          window.setTimeout(() => {
             //是否允许改变
             var changeable = true;
 
-            utils.each(cells, function(cell, index) {
+            utils.each(cells, (cell, index) => {
               var width = cell.offsetWidth;
 
               if (width > oldWidth[index]) {
@@ -1231,7 +1215,7 @@ UE.plugins["table"] = function() {
 
             var change = changeable ? newWidth : oldWidth;
 
-            utils.each(cells, function(cell, index) {
+            utils.each(cells, (cell, index) => {
               cell.width = change[index] - getTabcellSpace();
             });
           }, 0);
@@ -1252,7 +1236,7 @@ UE.plugins["table"] = function() {
     removeSelectedClass(domUtils.getElementsByTagName(me.body, "td th"));
     //trace:3113
     //选中单元格，点击table外部，不会清掉table上挂的ueTable,会引起getUETableBySelected方法返回值
-    utils.each(me.document.getElementsByTagName("table"), function(t) {
+    utils.each(me.document.getElementsByTagName("table"), t => {
       t.ueTable = null;
     });
     startTd = getTargetTd(me, evt);
@@ -1283,7 +1267,7 @@ UE.plugins["table"] = function() {
     //是否正在等待resize的缓冲中
     isInResizeBuffer = true;
 
-    tableDragTimer = setTimeout(function() {
+    tableDragTimer = setTimeout(() => {
       tableBorderDrag(evt);
     }, dblclickTime);
   }
@@ -1360,7 +1344,7 @@ UE.plugins["table"] = function() {
         y: evt.clientY
       };
 
-      tableResizeTimer = setTimeout(function() {
+      tableResizeTimer = setTimeout(() => {
         singleClickState > 0 && singleClickState--;
       }, dblclickTime);
 
@@ -1521,12 +1505,12 @@ UE.plugins["table"] = function() {
       if (cell.nextSibling) {
         var i = 0;
 
-        utils.each(cells, function(cellGroup) {
+        utils.each(cells, cellGroup => {
           cellGroup.left.width = +cellGroup.left.width + changeValue;
           cellGroup.right && (cellGroup.right.width = +cellGroup.right.width - changeValue);
         });
       } else {
-        utils.each(cells, function(cellGroup) {
+        utils.each(cells, cellGroup => {
           cellGroup.left.width -= -changeValue;
         });
       }
@@ -1585,11 +1569,11 @@ UE.plugins["table"] = function() {
     //记录想关的单元格
     var borderCells = [];
 
-    utils.each(rows, function(tabRow) {
+    utils.each(rows, tabRow => {
       var cells = tabRow.cells;
       var currIndex = 0;
 
-      utils.each(cells, function(tabCell) {
+      utils.each(cells, tabCell => {
         currIndex += tabCell.colSpan || 1;
 
         if (currIndex === colIndex) {
@@ -1643,7 +1627,7 @@ UE.plugins["table"] = function() {
     changeValue = Math.abs(changeValue);
 
     //只关心非最后一个单元格就可以
-    utils.each(cells, function(cellGroup) {
+    utils.each(cells, cellGroup => {
       var curCell = cellGroup[direction];
 
       //为单元格保留最小空间
@@ -1737,9 +1721,7 @@ UE.plugins["table"] = function() {
       me.body.removeChild(tab);
     }
 
-    getTabcellSpace = function() {
-      return UT.tabcellSpace;
-    };
+    getTabcellSpace = () => UT.tabcellSpace;
 
     return UT.tabcellSpace;
   }

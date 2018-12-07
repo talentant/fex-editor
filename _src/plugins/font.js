@@ -173,9 +173,7 @@ UE.plugins["font"] = function() {
     while ((parent = node.parentNode)) {
       if (
         parent.tagName == "SPAN" &&
-        domUtils.getChildCount(parent, function(child) {
-          return !domUtils.isBookmarkNode(child) && !domUtils.isBr(child);
-        }) == 1
+        domUtils.getChildCount(parent, child => !domUtils.isBookmarkNode(child) && !domUtils.isBr(child)) == 1
       ) {
         parent.style.cssText += node.style.cssText;
         domUtils.remove(node, true);
@@ -192,7 +190,7 @@ UE.plugins["font"] = function() {
         var start = rng.startContainer.childNodes[rng.startOffset];
         if (start && domUtils.isTagNode(start, "span")) {
           var bk = rng.createBookmark();
-          utils.each(domUtils.getElementsByTagName(start, "span"), function(span) {
+          utils.each(domUtils.getElementsByTagName(start, "span"), span => {
             if (!span.parentNode || domUtils.isBookmarkNode(span)) return;
             if (cmdName == "backcolor" && domUtils.getComputedStyle(span, "background-color").toLowerCase() === value) {
               return;
@@ -219,7 +217,7 @@ UE.plugins["font"] = function() {
     } else {
       common = domUtils.getCommonAncestor(bk.start, bk.end);
     }
-    utils.each(domUtils.getElementsByTagName(common, "span"), function(span) {
+    utils.each(domUtils.getElementsByTagName(common, "span"), span => {
       if (!span.parentNode || domUtils.isBookmarkNode(span)) return;
       if (/\s*border\s*:\s*none;?\s*/i.test(span.style.cssText)) {
         if (/^\s*border\s*:\s*none;?\s*$/.test(span.style.cssText)) {
@@ -256,9 +254,7 @@ UE.plugins["font"] = function() {
       mergeWithParent(span);
       if (browser.ie && browser.version > 8) {
         //拷贝父亲们的特别的属性,这里只做背景颜色的处理
-        var parent = domUtils.findParent(span, function(n) {
-          return n.tagName == "SPAN" && /background-color/.test(n.style.cssText);
-        });
+        var parent = domUtils.findParent(span, n => n.tagName == "SPAN" && /background-color/.test(n.style.cssText));
         if (parent && !/background-color/.test(span.style.cssText)) {
           span.style.backgroundColor = parent.style.backgroundColor;
         }
@@ -268,8 +264,8 @@ UE.plugins["font"] = function() {
     mergeChild(rng, cmdName, value);
   }
 
-  me.addInputRule(function(root) {
-    utils.each(root.getNodesByTagName("u s del font strike"), function(node) {
+  me.addInputRule(root => {
+    utils.each(root.getNodesByTagName("u s del font strike"), node => {
       if (node.tagName == "font") {
         var cssStyle = [];
         for (var p in node.attrs) {
@@ -361,9 +357,9 @@ UE.plugins["font"] = function() {
   //        });
   //    });
   for (var p in fonts) {
-    (function(cmd, style) {
+    ((cmd, style) => {
       UE.commands[cmd] = {
-        execCommand: function(cmdName, value) {
+        execCommand(cmdName, value) {
           value =
             value ||
             (this.queryCommandState(cmdName)
@@ -449,7 +445,7 @@ UE.plugins["font"] = function() {
                 }
 
                 if (opera) {
-                  setTimeout(function() {
+                  setTimeout(() => {
                     range.setStart(span, 0).collapse(true);
                     mergesibling(range, cmdName, value);
                     range.select();
@@ -468,7 +464,7 @@ UE.plugins["font"] = function() {
           }
           return true;
         },
-        queryCommandValue: function(cmdName) {
+        queryCommandValue(cmdName) {
           var startNode = this.selection.getStart();
 
           //trace:946
@@ -514,7 +510,7 @@ UE.plugins["font"] = function() {
 
           return domUtils.getComputedStyle(startNode, style);
         },
-        queryCommandState: function(cmdName) {
+        queryCommandState(cmdName) {
           if (!needCmd[cmdName]) return 0;
           var val = this.queryCommandValue(cmdName);
           if (cmdName == "fontborder") {

@@ -1,4 +1,4 @@
-(function() {
+(() => {
   var UI = baidu.editor.ui;
   var UIBase = UI.UIBase;
   var uiUtils = UI.uiUtils;
@@ -21,18 +21,18 @@
   ShortCutMenu.prototype = {
     isHidden: true,
     SPACE: 5,
-    initShortCutMenu: function() {
+    initShortCutMenu() {
       this.items = this.items || [];
       this.initUIBase();
       this.initItems();
       this.initEvent();
       allMenus.push(this);
     },
-    initEvent: function() {
+    initEvent() {
       var me = this;
       var doc = me.editor.document;
 
-      domUtils.on(doc, "mousemove", function(e) {
+      domUtils.on(doc, "mousemove", e => {
         if (me.isHidden === false) {
           //有pop显示就不隐藏快捷菜单
           if (me.getSubMenuMark() || me.eventType == "contextmenu") return;
@@ -54,7 +54,7 @@
           var y = Math.abs(e.screenY - me.top);
 
           clearTimeout(timeID);
-          timeID = setTimeout(function() {
+          timeID = setTimeout(() => {
             if (y > 0 && y < distanceY) {
               me.setOpacity(el, "1");
             } else if (y > distanceY && y < distanceY + 70) {
@@ -77,7 +77,7 @@
 
       //ie\ff下 mouseout不准
       if (browser.chrome) {
-        domUtils.on(doc, "mouseout", function(e) {
+        domUtils.on(doc, "mouseout", e => {
           var relatedTgt = e.relatedTarget || e.toElement;
 
           if (relatedTgt == null || relatedTgt.tagName == "HTML") {
@@ -86,13 +86,13 @@
         });
       }
 
-      me.editor.addListener("afterhidepop", function() {
+      me.editor.addListener("afterhidepop", () => {
         if (!me.isHidden) {
           isSubMenuShow = true;
         }
       });
     },
-    initItems: function() {
+    initItems() {
       if (utils.isArray(this.items)) {
         for (var i = 0, len = this.items.length; i < len; i++) {
           var item = this.items[i].toLowerCase();
@@ -104,19 +104,19 @@
         }
       }
     },
-    setOpacity: function(el, value) {
+    setOpacity(el, value) {
       if (browser.ie && browser.version < 9) {
         el.style.filter = "alpha(opacity = " + parseFloat(value) * 100 + ");";
       } else {
         el.style.opacity = value;
       }
     },
-    getSubMenuMark: function() {
+    getSubMenuMark() {
       isSubMenuShow = false;
       var layerEle = uiUtils.getFixedLayer();
-      var list = domUtils.getElementsByTagName(layerEle, "div", function(node) {
-        return domUtils.hasClass(node, "edui-shortcutsubmenu edui-popup");
-      });
+      var list = domUtils.getElementsByTagName(layerEle, "div", node =>
+        domUtils.hasClass(node, "edui-shortcutsubmenu edui-popup")
+      );
 
       for (var i = 0, node; (node = list[i++]); ) {
         if (node.style.display != "none") {
@@ -125,7 +125,7 @@
       }
       return isSubMenuShow;
     },
-    show: function(e, hasContextmenu) {
+    show(e, hasContextmenu) {
       var me = this;
       var offset = {};
       var el = this.getDom();
@@ -159,7 +159,7 @@
         if (menu) {
           setPosByCxtMenu(menu);
         } else {
-          me.editor.addListener("aftershowcontextmenu", function(type, menu) {
+          me.editor.addListener("aftershowcontextmenu", (type, menu) => {
             setPosByCxtMenu(menu);
           });
         }
@@ -180,20 +180,20 @@
         fixedlayer.style.zIndex = el.style.zIndex - 1;
       }
     },
-    hide: function() {
+    hide() {
       if (this.getDom()) {
         this.getDom().style.display = "none";
       }
       this.isHidden = true;
     },
-    postRender: function() {
+    postRender() {
       if (utils.isArray(this.items)) {
         for (var i = 0, item; (item = this.items[i++]); ) {
           item.postRender();
         }
       }
     },
-    getHtmlTpl: function() {
+    getHtmlTpl() {
       var buff;
       if (utils.isArray(this.items)) {
         buff = [];
@@ -220,9 +220,7 @@
 
     var cur = domUtils.findParent(
       tgt,
-      function(node) {
-        return domUtils.hasClass(node, "edui-shortcutmenu") || domUtils.hasClass(node, "edui-popup");
-      },
+      node => domUtils.hasClass(node, "edui-shortcutmenu") || domUtils.hasClass(node, "edui-popup"),
       true
     );
 
@@ -233,11 +231,11 @@
     }
   }
 
-  domUtils.on(document, "mousedown", function(e) {
+  domUtils.on(document, "mousedown", e => {
     hideAllMenu(e);
   });
 
-  domUtils.on(window, "scroll", function(e) {
+  domUtils.on(window, "scroll", e => {
     hideAllMenu(e);
   });
 })();

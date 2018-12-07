@@ -2,7 +2,7 @@
 ///import uicore
 ///import ui/menu.js
 ///import ui/splitbutton.js
-(function() {
+(() => {
   // todo: menu和item提成通用list
   var utils = baidu.editor.utils;
 
@@ -17,10 +17,10 @@
 
   Combox.prototype = {
     uiName: "combox",
-    onbuttonclick: function() {
+    onbuttonclick() {
       this.showPopup();
     },
-    initCombox: function() {
+    initCombox() {
       var me = this;
       this.items = this.items || [];
       for (var i = 0; i < this.items.length; i++) {
@@ -42,22 +42,22 @@
       this.initSplitButton();
     },
     _SplitButton_postRender: SplitButton.prototype.postRender,
-    postRender: function() {
+    postRender() {
       this._SplitButton_postRender();
       this.setLabel(this.label || "");
       this.setValue(this.initValue || "");
     },
-    showPopup: function() {
+    showPopup() {
       var rect = uiUtils.getClientRect(this.getDom());
       rect.top += 1;
       rect.bottom -= 1;
       rect.height -= 2;
       this.popup.showAnchorRect(rect);
     },
-    getValue: function() {
+    getValue() {
       return this.value;
     },
-    setValue: function(value) {
+    setValue(value) {
       var index = this.indexByValue(value);
       if (index != -1) {
         this.selectedIndex = index;
@@ -69,14 +69,14 @@
         this.value = value;
       }
     },
-    setLabel: function(label) {
+    setLabel(label) {
       this.getDom("button_body").innerHTML = label;
       this.label = label;
     },
-    getLabelForUnknowValue: function(value) {
+    getLabelForUnknowValue(value) {
       return value;
     },
-    indexByValue: function(value) {
+    indexByValue(value) {
       for (var i = 0; i < this.items.length; i++) {
         if (value == this.items[i].value) {
           return i;
@@ -84,10 +84,10 @@
       }
       return -1;
     },
-    getItem: function(index) {
+    getItem(index) {
       return this.items[index];
     },
-    selectByIndex: function(index) {
+    selectByIndex(index) {
       if (index < this.items.length && this.fireEvent("select", index) !== false) {
         this.selectedIndex = index;
         this.value = this.items[index].value;

@@ -36,14 +36,13 @@ UE.plugins["paragraph"] = function() {
   var block = domUtils.isBlockElm;
   var notExchange = ["TD", "LI", "PRE"];
 
-  var doParagraph = function(range, style, attrs, sourceCmdName) {
+  var doParagraph = (range, style, attrs, sourceCmdName) => {
     var bookmark = range.createBookmark();
 
-    var filterFn = function(node) {
-      return node.nodeType == 1
+    var filterFn = node =>
+      node.nodeType == 1
         ? node.tagName.toLowerCase() != "br" && !domUtils.isBookmarkNode(node)
         : !domUtils.isWhitespace(node);
-    };
 
     var para;
 
@@ -57,9 +56,7 @@ UE.plugins["paragraph"] = function() {
         tmpRange.setStartBefore(current);
         while (current && current !== bookmark2.end && !block(current)) {
           tmpNode = current;
-          current = domUtils.getNextDomNode(current, false, null, function(node) {
-            return !block(node);
-          });
+          current = domUtils.getNextDomNode(current, false, null, node => !block(node));
         }
         tmpRange.setEndAfter(tmpNode);
 
@@ -128,7 +125,7 @@ UE.plugins["paragraph"] = function() {
     h6: ""
   });
   me.commands["paragraph"] = {
-    execCommand: function(cmdName, style, attrs, sourceCmdName) {
+    execCommand(cmdName, style, attrs, sourceCmdName) {
       var range = this.selection.getRange();
       //闭合时单独处理
       if (range.collapsed) {
@@ -169,7 +166,7 @@ UE.plugins["paragraph"] = function() {
 
       return true;
     },
-    queryCommandValue: function() {
+    queryCommandValue() {
       var node = domUtils.filterNodeList(this.selection.getStartElementPath(), "p h1 h2 h3 h4 h5 h6");
       return node ? node.tagName.toLowerCase() : "";
     }

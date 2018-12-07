@@ -5,13 +5,13 @@
  * 上传图片对话框逻辑代码,包括tab: 远程图片/上传图片/在线图片/搜索图片
  */
 
-(function() {
+(() => {
   var remoteImage;
   var uploadImage;
   var onlineImage;
   var searchImage;
 
-  window.onload = function() {
+  window.onload = () => {
     initTabs();
     initAlign();
     initButtons();
@@ -21,7 +21,7 @@
   function initTabs() {
     var tabs = $G("tabhead").children;
     for (var i = 0; i < tabs.length; i++) {
-      domUtils.on(tabs[i], "click", function(e) {
+      domUtils.on(tabs[i], "click", e => {
         var target = e.target || e.srcElement;
         setTabFocus(target.getAttribute("data-content-id"));
       });
@@ -73,7 +73,7 @@
 
   /* 初始化onok事件 */
   function initButtons() {
-    dialog.onok = function() {
+    dialog.onok = () => {
       var remote = false;
       var list = [];
       var id;
@@ -118,7 +118,7 @@
   /* 初始化对其方式的点击事件 */
   function initAlign() {
     /* 点击align图标 */
-    domUtils.on($G("alignIcon"), "click", function(e) {
+    domUtils.on($G("alignIcon"), "click", e => {
       var target = e.target || e.srcElement;
       if (target.className && target.className.indexOf("-align") != -1) {
         setAlign(target.getAttribute("data-align"));
@@ -151,11 +151,11 @@
     this.init();
   }
   RemoteImage.prototype = {
-    init: function() {
+    init() {
       this.initContainer();
       this.initEvents();
     },
-    initContainer: function() {
+    initContainer() {
       this.dom = {
         url: $G("url"),
         width: $G("width"),
@@ -170,7 +170,7 @@
         this.setImage(img);
       }
     },
-    initEvents: function() {
+    initEvents() {
       var _this = this;
       var locker = $G("lock");
 
@@ -197,7 +197,7 @@
         }
         updatePreview();
       });
-      domUtils.on($G("lock"), "change", function() {
+      domUtils.on($G("lock"), "change", () => {
         var proportion = parseInt($G("width").value) / parseInt($G("height").value);
         locker.setAttribute("data-proportion", proportion);
       });
@@ -206,7 +206,7 @@
         _this.setPreview();
       }
     },
-    updateLocker: function() {
+    updateLocker() {
       var width = $G("width").value;
       var height = $G("height").value;
       var locker = $G("lock");
@@ -219,7 +219,7 @@
         locker.title = lang.remoteLockError;
       }
     },
-    setImage: function(img) {
+    setImage(img) {
       /* 不是正常的图片 */
       if (!img.tagName || (img.tagName.toLowerCase() != "img" && !img.getAttribute("src")) || !img.src) return;
 
@@ -245,14 +245,14 @@
         this.updateLocker();
       }
     },
-    getData: function() {
+    getData() {
       var data = {};
       for (var k in this.dom) {
         data[k] = this.dom[k].value;
       }
       return data;
     },
-    setPreview: function() {
+    setPreview() {
       var url = $G("url").value;
       var ow = $G("width").value;
       var oh = $G("height").value;
@@ -281,7 +281,7 @@
           '" />';
       }
     },
-    getInsertList: function() {
+    getInsertList() {
       var data = this.getData();
       if (data["url"]) {
         return [
@@ -309,16 +309,16 @@
     this.init();
   }
   UploadImage.prototype = {
-    init: function() {
+    init() {
       this.imageList = [];
       this.initContainer();
       this.initUploader();
     },
-    initContainer: function() {
+    initContainer() {
       this.$queue = this.$wrap.find(".filelist");
     },
     /* 初始化容器 */
-    initUploader: function() {
+    initUploader() {
       var _this = this;
 
       var // just in case. Make sure it's not an other libaray.
@@ -370,7 +370,7 @@
       var // 所有文件的进度信息，key为file id
         percentages = {};
 
-      var supportTransition = (function() {
+      var supportTransition = (() => {
         var s = document.createElement("p").style;
 
         var r =
@@ -483,7 +483,7 @@
           .hide()
           .appendTo($li);
 
-        var showError = function(code) {
+        var showError = code => {
           switch (code) {
             case "exceed_size":
               text = lang.errorExceedSize;
@@ -513,13 +513,13 @@
           } else {
             uploader.makeThumb(
               file,
-              function(error, src) {
+              (error, src) => {
                 if (error || !src) {
                   $wrap.text(lang.uploadNoPreview);
                 } else {
                   var $img = $('<img src="' + src + '">');
                   $wrap.empty().append($img);
-                  $img.on("error", function() {
+                  $img.on("error", () => {
                     $wrap.text(lang.uploadNoPreview);
                   });
                 }
@@ -538,7 +538,7 @@
           }
         }
 
-        file.on("statuschange", function(cur, prev) {
+        file.on("statuschange", (cur, prev) => {
           if (prev === "progress") {
             $prgress.hide().width(0);
           } else if (prev === "queued") {
@@ -562,10 +562,10 @@
           $li.removeClass("state-" + prev).addClass("state-" + cur);
         });
 
-        $li.on("mouseenter", function() {
+        $li.on("mouseenter", () => {
           $btns.stop().animate({height: 30});
         });
-        $li.on("mouseleave", function() {
+        $li.on("mouseleave", () => {
           $btns.stop().animate({height: 0});
         });
 
@@ -623,7 +623,7 @@
         var spans = $progress.children();
         var percent;
 
-        $.each(percentages, function(k, v) {
+        $.each(percentages, (k, v) => {
           total += v[0];
           loaded += v[0] * v[1];
         });
@@ -738,7 +738,7 @@
         $info.html(text);
       }
 
-      uploader.on("fileQueued", function(file) {
+      uploader.on("fileQueued", file => {
         fileCount++;
         fileSize += file.size;
 
@@ -750,7 +750,7 @@
         addFile(file);
       });
 
-      uploader.on("fileDequeued", function(file) {
+      uploader.on("fileDequeued", file => {
         if (file.ext && acceptExtensions.indexOf(file.ext.toLowerCase()) != -1 && file.size <= imageMaxSize) {
           fileCount--;
           fileSize -= file.size;
@@ -760,7 +760,7 @@
         updateTotalProgress();
       });
 
-      uploader.on("filesQueued", function(file) {
+      uploader.on("filesQueued", file => {
         if (
           !uploader.isInProgress() &&
           (state == "pedding" || state == "finish" || state == "confirm" || state == "ready")
@@ -770,7 +770,7 @@
         updateTotalProgress();
       });
 
-      uploader.on("all", function(type, files) {
+      uploader.on("all", (type, files) => {
         switch (type) {
           case "uploadFinished":
             setState("confirm", files);
@@ -791,14 +791,14 @@
         }
       });
 
-      uploader.on("uploadBeforeSend", function(file, data, header) {
+      uploader.on("uploadBeforeSend", (file, data, header) => {
         //这里可以通过data对象添加POST参数
         if (actionUrl.toLowerCase().indexOf("jsp") != -1) {
           header["X-Requested-With"] = "XMLHttpRequest";
         }
       });
 
-      uploader.on("uploadProgress", function(file, percentage) {
+      uploader.on("uploadProgress", (file, percentage) => {
         var $li = $("#" + file.id);
         var $percent = $li.find(".progress span");
 
@@ -807,7 +807,7 @@
         updateTotalProgress();
       });
 
-      uploader.on("uploadSuccess", function(file, ret) {
+      uploader.on("uploadSuccess", (file, ret) => {
         var $file = $("#" + file.id);
         try {
           var responseText = ret._raw || ret;
@@ -829,13 +829,13 @@
         }
       });
 
-      uploader.on("uploadError", function(file, code) {});
-      uploader.on("error", function(code, file) {
+      uploader.on("uploadError", (file, code) => {});
+      uploader.on("error", (code, file) => {
         if (code == "Q_TYPE_DENIED" || code == "F_EXCEED_SIZE") {
           addFile(file);
         }
       });
-      uploader.on("uploadComplete", function(file, ret) {});
+      uploader.on("uploadComplete", (file, ret) => {});
 
       $upload.on("click", function() {
         if ($(this).hasClass("disabled")) {
@@ -854,7 +854,7 @@
       $upload.addClass("state-" + state);
       updateTotalProgress();
     },
-    getQueueCount: function() {
+    getQueueCount() {
       var file;
       var i;
       var status;
@@ -866,10 +866,10 @@
       }
       return readyFile;
     },
-    destroy: function() {
+    destroy() {
       this.$wrap.remove();
     },
-    getInsertList: function() {
+    getInsertList() {
       var i;
       var data;
       var list = [];
@@ -894,12 +894,12 @@
     this.init();
   }
   OnlineImage.prototype = {
-    init: function() {
+    init() {
       this.reset();
       this.initEvents();
     },
     /* 初始化容器 */
-    initContainer: function() {
+    initContainer() {
       this.container.innerHTML = "";
       this.list = document.createElement("ul");
       this.clearFloat = document.createElement("li");
@@ -911,7 +911,7 @@
       this.container.appendChild(this.list);
     },
     /* 初始化滚动事件,滚动到地步自动拉取数据 */
-    initEvents: function() {
+    initEvents() {
       var _this = this;
 
       /* 滚动拉取图片 */
@@ -922,7 +922,7 @@
         }
       });
       /* 选中图片 */
-      domUtils.on(this.container, "click", function(e) {
+      domUtils.on(this.container, "click", e => {
         var target = e.target || e.srcElement;
         var li = target.parentNode;
 
@@ -936,7 +936,7 @@
       });
     },
     /* 初始化第一次的数据 */
-    initData: function() {
+    initData() {
       /* 拉取数据需要使用的值 */
       this.state = 0;
       this.listSize = editor.getOpt("imageManagerListSize");
@@ -947,12 +947,12 @@
       this.getImageData();
     },
     /* 重置界面 */
-    reset: function() {
+    reset() {
       this.initContainer();
       this.initData();
     },
     /* 向后台拉取图片列表数据 */
-    getImageData: function() {
+    getImageData() {
       var _this = this;
 
       if (!_this.listEnd && !this.isLoadingData) {
@@ -970,7 +970,7 @@
             editor.queryCommandValue("serverparam")
           ),
           method: "get",
-          onsuccess: function(r) {
+          onsuccess(r) {
             try {
               var json = isJsonp ? r : eval("(" + r.responseText + ")");
               if (json.state == "SUCCESS") {
@@ -991,14 +991,14 @@
               }
             }
           },
-          onerror: function() {
+          onerror() {
             _this.isLoadingData = false;
           }
         });
       }
     },
     /* 添加图片到列表界面上 */
-    pushData: function(list) {
+    pushData(list) {
       var i;
       var item;
       var img;
@@ -1014,10 +1014,8 @@
           domUtils.on(
             img,
             "load",
-            (function(image) {
-              return function() {
-                _this.scale(image, image.parentNode.offsetWidth, image.parentNode.offsetHeight);
-              };
+            (image => () => {
+              _this.scale(image, image.parentNode.offsetWidth, image.parentNode.offsetHeight);
             })(img)
           );
           img.width = 113;
@@ -1038,7 +1036,7 @@
       }
     },
     /* 改变图片大小 */
-    scale: function(img, w, h, type) {
+    scale(img, w, h, type) {
       var ow = img.width;
       var oh = img.height;
 
@@ -1064,7 +1062,7 @@
         }
       }
     },
-    getInsertList: function() {
+    getInsertList() {
       var i;
       var lis = this.list.children;
       var list = [];
@@ -1074,7 +1072,7 @@
           var img = lis[i].firstChild;
           var src = img.getAttribute("_src");
           list.push({
-            src: src,
+            src,
             _src: src,
             alt: src.substr(src.lastIndexOf("/") + 1),
             floatStyle: align
@@ -1090,34 +1088,34 @@
     this.init();
   }
   SearchImage.prototype = {
-    init: function() {
+    init() {
       this.initEvents();
     },
-    initEvents: function() {
+    initEvents() {
       var _this = this;
 
       /* 点击搜索按钮 */
-      domUtils.on($G("searchBtn"), "click", function() {
+      domUtils.on($G("searchBtn"), "click", () => {
         var key = $G("searchTxt").value;
         if (key && key != lang.searchRemind) {
           _this.getImageData();
         }
       });
       /* 点击清除妞 */
-      domUtils.on($G("searchReset"), "click", function() {
+      domUtils.on($G("searchReset"), "click", () => {
         $G("searchTxt").value = lang.searchRemind;
         $G("searchListUl").innerHTML = "";
         $G("searchType").selectedIndex = 0;
       });
       /* 搜索框聚焦 */
-      domUtils.on($G("searchTxt"), "focus", function() {
+      domUtils.on($G("searchTxt"), "focus", () => {
         var key = $G("searchTxt").value;
         if (key && key == lang.searchRemind) {
           $G("searchTxt").value = "";
         }
       });
       /* 搜索框回车键搜索 */
-      domUtils.on($G("searchTxt"), "keydown", function(e) {
+      domUtils.on($G("searchTxt"), "keydown", e => {
         var keyCode = e.keyCode || e.which;
         if (keyCode == 13) {
           $G("searchBtn").click();
@@ -1125,7 +1123,7 @@
       });
 
       /* 选中图片 */
-      domUtils.on($G("searchList"), "click", function(e) {
+      domUtils.on($G("searchList"), "click", e => {
         var target = e.target || e.srcElement;
         var li = target.parentNode.parentNode;
 
@@ -1139,7 +1137,7 @@
       });
     },
     /* 改变图片大小 */
-    scale: function(img, w, h) {
+    scale(img, w, h) {
       var ow = img.width;
       var oh = img.height;
 
@@ -1153,7 +1151,7 @@
         img.style.marginTop = "-" + parseInt((img.height - h) / 2) + "px";
       }
     },
-    getImageData: function() {
+    getImageData() {
       var _this = this;
       var key = $G("searchTxt").value;
       var type = $G("searchType").value;
@@ -1172,7 +1170,7 @@
       ajax.request(url, {
         dataType: "jsonp",
         charset: "GB18030",
-        onsuccess: function(json) {
+        onsuccess(json) {
           var list = [];
           if (json && json.data) {
             for (var i = 0; i < json.data.length; i++) {
@@ -1187,13 +1185,13 @@
           }
           _this.setList(list);
         },
-        onerror: function() {
+        onerror() {
           $G("searchListUl").innerHTML = lang.searchRetry;
         }
       });
     },
     /* 添加图片到列表界面上 */
-    setList: function(list) {
+    setList(list) {
       var i;
       var item;
       var p;
@@ -1230,7 +1228,7 @@
         listUl.innerHTML = lang.searchRetry;
       }
     },
-    getInsertList: function() {
+    getInsertList() {
       var child;
       var src;
       var align = getAlign();
@@ -1241,7 +1239,7 @@
         if (child.tagName && child.tagName.toLowerCase() == "img" && domUtils.hasClass(items[i], "selected")) {
           src = child.src;
           list.push({
-            src: src,
+            src,
             _src: src,
             alt: src.substr(src.lastIndexOf("/") + 1),
             floatStyle: align

@@ -5,11 +5,11 @@
  * 上传图片对话框逻辑代码,包括tab: 远程图片/上传图片/在线图片/搜索图片
  */
 
-(function() {
+(() => {
   var uploadFile;
   var onlineFile;
 
-  window.onload = function() {
+  window.onload = () => {
     initTabs();
     initButtons();
   };
@@ -18,7 +18,7 @@
   function initTabs() {
     var tabs = $G("tabhead").children;
     for (var i = 0; i < tabs.length; i++) {
-      domUtils.on(tabs[i], "click", function(e) {
+      domUtils.on(tabs[i], "click", e => {
         var target = e.target || e.srcElement;
         setTabFocus(target.getAttribute("data-content-id"));
       });
@@ -55,7 +55,7 @@
 
   /* 初始化onok事件 */
   function initButtons() {
-    dialog.onok = function() {
+    dialog.onok = () => {
       var list = [];
       var id;
       var tabs = $G("tabhead").children;
@@ -92,16 +92,16 @@
     this.init();
   }
   UploadFile.prototype = {
-    init: function() {
+    init() {
       this.fileList = [];
       this.initContainer();
       this.initUploader();
     },
-    initContainer: function() {
+    initContainer() {
       this.$queue = this.$wrap.find(".filelist");
     },
     /* 初始化容器 */
-    initUploader: function() {
+    initUploader() {
       var _this = this;
 
       var // just in case. Make sure it's not an other libaray.
@@ -153,7 +153,7 @@
       var // 所有文件的进度信息，key为file id
         percentages = {};
 
-      var supportTransition = (function() {
+      var supportTransition = (() => {
         var s = document.createElement("p").style;
 
         var r =
@@ -246,7 +246,7 @@
           .hide()
           .appendTo($li);
 
-        var showError = function(code) {
+        var showError = code => {
           switch (code) {
             case "exceed_size":
               text = lang.errorExceedSize;
@@ -291,13 +291,13 @@
             } else {
               uploader.makeThumb(
                 file,
-                function(error, src) {
+                (error, src) => {
                   if (error || !src) {
                     $wrap.text(lang.uploadNoPreview);
                   } else {
                     var $img = $('<img src="' + src + '">');
                     $wrap.empty().append($img);
-                    $img.on("error", function() {
+                    $img.on("error", () => {
                       $wrap.text(lang.uploadNoPreview);
                     });
                   }
@@ -317,7 +317,7 @@
           }
         }
 
-        file.on("statuschange", function(cur, prev) {
+        file.on("statuschange", (cur, prev) => {
           if (prev === "progress") {
             $prgress.hide().width(0);
           } else if (prev === "queued") {
@@ -341,10 +341,10 @@
           $li.removeClass("state-" + prev).addClass("state-" + cur);
         });
 
-        $li.on("mouseenter", function() {
+        $li.on("mouseenter", () => {
           $btns.stop().animate({height: 30});
         });
-        $li.on("mouseleave", function() {
+        $li.on("mouseleave", () => {
           $btns.stop().animate({height: 0});
         });
 
@@ -402,7 +402,7 @@
         var spans = $progress.children();
         var percent;
 
-        $.each(percentages, function(k, v) {
+        $.each(percentages, (k, v) => {
           total += v[0];
           loaded += v[0] * v[1];
         });
@@ -517,7 +517,7 @@
         $info.html(text);
       }
 
-      uploader.on("fileQueued", function(file) {
+      uploader.on("fileQueued", file => {
         if (file.ext && acceptExtensions.indexOf(file.ext.toLowerCase()) != -1 && file.size <= fileMaxSize) {
           fileCount++;
           fileSize += file.size;
@@ -531,7 +531,7 @@
         addFile(file);
       });
 
-      uploader.on("fileDequeued", function(file) {
+      uploader.on("fileDequeued", file => {
         if (file.ext && acceptExtensions.indexOf(file.ext.toLowerCase()) != -1 && file.size <= fileMaxSize) {
           fileCount--;
           fileSize -= file.size;
@@ -541,7 +541,7 @@
         updateTotalProgress();
       });
 
-      uploader.on("filesQueued", function(file) {
+      uploader.on("filesQueued", file => {
         if (
           !uploader.isInProgress() &&
           (state == "pedding" || state == "finish" || state == "confirm" || state == "ready")
@@ -551,7 +551,7 @@
         updateTotalProgress();
       });
 
-      uploader.on("all", function(type, files) {
+      uploader.on("all", (type, files) => {
         switch (type) {
           case "uploadFinished":
             setState("confirm", files);
@@ -572,14 +572,14 @@
         }
       });
 
-      uploader.on("uploadBeforeSend", function(file, data, header) {
+      uploader.on("uploadBeforeSend", (file, data, header) => {
         //这里可以通过data对象添加POST参数
         if (actionUrl.toLowerCase().indexOf("jsp") != -1) {
           header["X_Requested_With"] = "XMLHttpRequest";
         }
       });
 
-      uploader.on("uploadProgress", function(file, percentage) {
+      uploader.on("uploadProgress", (file, percentage) => {
         var $li = $("#" + file.id);
         var $percent = $li.find(".progress span");
 
@@ -588,7 +588,7 @@
         updateTotalProgress();
       });
 
-      uploader.on("uploadSuccess", function(file, ret) {
+      uploader.on("uploadSuccess", (file, ret) => {
         var $file = $("#" + file.id);
         try {
           var responseText = ret._raw || ret;
@@ -610,13 +610,13 @@
         }
       });
 
-      uploader.on("uploadError", function(file, code) {});
-      uploader.on("error", function(code, file) {
+      uploader.on("uploadError", (file, code) => {});
+      uploader.on("error", (code, file) => {
         if (code == "Q_TYPE_DENIED" || code == "F_EXCEED_SIZE") {
           addFile(file);
         }
       });
-      uploader.on("uploadComplete", function(file, ret) {});
+      uploader.on("uploadComplete", (file, ret) => {});
 
       $upload.on("click", function() {
         if ($(this).hasClass("disabled")) {
@@ -635,7 +635,7 @@
       $upload.addClass("state-" + state);
       updateTotalProgress();
     },
-    getQueueCount: function() {
+    getQueueCount() {
       var file;
       var i;
       var status;
@@ -647,7 +647,7 @@
       }
       return readyFile;
     },
-    getInsertList: function() {
+    getInsertList() {
       var i;
       var link;
       var data;
@@ -671,13 +671,13 @@
     this.init();
   }
   OnlineFile.prototype = {
-    init: function() {
+    init() {
       this.initContainer();
       this.initEvents();
       this.initData();
     },
     /* 初始化容器 */
-    initContainer: function() {
+    initContainer() {
       this.container.innerHTML = "";
       this.list = document.createElement("ul");
       this.clearFloat = document.createElement("li");
@@ -689,7 +689,7 @@
       this.container.appendChild(this.list);
     },
     /* 初始化滚动事件,滚动到地步自动拉取数据 */
-    initEvents: function() {
+    initEvents() {
       var _this = this;
 
       /* 滚动拉取图片 */
@@ -700,7 +700,7 @@
         }
       });
       /* 选中图片 */
-      domUtils.on(this.list, "click", function(e) {
+      domUtils.on(this.list, "click", e => {
         var target = e.target || e.srcElement;
         var li = target.parentNode;
 
@@ -714,7 +714,7 @@
       });
     },
     /* 初始化第一次的数据 */
-    initData: function() {
+    initData() {
       /* 拉取数据需要使用的值 */
       this.state = 0;
       this.listSize = editor.getOpt("fileManagerListSize");
@@ -725,7 +725,7 @@
       this.getFileData();
     },
     /* 向后台拉取图片列表数据 */
-    getFileData: function() {
+    getFileData() {
       var _this = this;
 
       if (!_this.listEnd && !this.isLoadingData) {
@@ -740,7 +740,7 @@
             editor.queryCommandValue("serverparam")
           ),
           method: "get",
-          onsuccess: function(r) {
+          onsuccess(r) {
             try {
               var json = eval("(" + r.responseText + ")");
               if (json.state == "SUCCESS") {
@@ -761,14 +761,14 @@
               }
             }
           },
-          onerror: function() {
+          onerror() {
             _this.isLoadingData = false;
           }
         });
       }
     },
     /* 添加图片到列表界面上 */
-    pushData: function(list) {
+    pushData(list) {
       var i;
       var item;
       var img;
@@ -788,10 +788,8 @@
             domUtils.on(
               preview,
               "load",
-              (function(image) {
-                return function() {
-                  _this.scale(image, image.parentNode.offsetWidth, image.parentNode.offsetHeight);
-                };
+              (image => () => {
+                _this.scale(image, image.parentNode.offsetWidth, image.parentNode.offsetHeight);
               })(preview)
             );
             preview.width = 113;
@@ -827,7 +825,7 @@
       }
     },
     /* 改变图片大小 */
-    scale: function(img, w, h, type) {
+    scale(img, w, h, type) {
       var ow = img.width;
       var oh = img.height;
 
@@ -853,7 +851,7 @@
         }
       }
     },
-    getInsertList: function() {
+    getInsertList() {
       var i;
       var lis = this.list.children;
       var list = [];
@@ -862,8 +860,8 @@
           var url = lis[i].getAttribute("data-url");
           var title = lis[i].getAttribute("data-title") || url.substr(url.lastIndexOf("/") + 1);
           list.push({
-            title: title,
-            url: url
+            title,
+            url
           });
         }
       }

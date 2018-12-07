@@ -4,7 +4,7 @@
 ///commandsTitle  修复chrome下图片不能点击的问题，出现八个角可改变大小
 //修复chrome下图片不能点击的问题，出现八个角可改变大小
 
-UE.plugins["fiximgclick"] = (function() {
+UE.plugins["fiximgclick"] = (() => {
   var elementUpdated = false;
   function Scale() {
     this.editor = null;
@@ -15,7 +15,7 @@ UE.plugins["fiximgclick"] = (function() {
     this.startPos = {x: 0, y: 0};
   }
 
-  (function() {
+  (() => {
     var rect = [
       //[left, top, width, height]
       [0, 0, -1, -1],
@@ -29,7 +29,7 @@ UE.plugins["fiximgclick"] = (function() {
     ];
 
     Scale.prototype = {
-      init: function(editor) {
+      init(editor) {
         var me = this;
         me.editor = editor;
         me.startPos = this.prePos = {x: 0, y: 0};
@@ -44,7 +44,7 @@ UE.plugins["fiximgclick"] = (function() {
           "position:absolute;display:none;z-index:" +
           me.editor.options.zIndex +
           ";filter:alpha(opacity=0); opacity:0;background:#CCC;";
-        domUtils.on(cover, "mousedown click", function() {
+        domUtils.on(cover, "mousedown click", () => {
           me.hide();
         });
 
@@ -62,7 +62,7 @@ UE.plugins["fiximgclick"] = (function() {
         me.initStyle();
         me.initEvents();
       },
-      initStyle: function() {
+      initStyle() {
         utils.cssRule(
           "imagescale",
           ".edui-editor-imagescale{display:none;position:absolute;border:1px solid #38B2CE;cursor:hand;-webkit-box-sizing: content-box;-moz-box-sizing: content-box;box-sizing: content-box;}" +
@@ -77,13 +77,13 @@ UE.plugins["fiximgclick"] = (function() {
             ".edui-editor-imagescale .edui-editor-imagescale-hand7{cursor:se-resize;top:100%;margin-top:-3px;left:100%;margin-left:-3px;}"
         );
       },
-      initEvents: function() {
+      initEvents() {
         var me = this;
 
         me.startPos.x = me.startPos.y = 0;
         me.isDraging = false;
       },
-      _eventHandler: function(e) {
+      _eventHandler(e) {
         var me = this;
         switch (e.type) {
           case "mousedown":
@@ -130,7 +130,7 @@ UE.plugins["fiximgclick"] = (function() {
             break;
         }
       },
-      updateTargetElement: function() {
+      updateTargetElement() {
         var me = this;
         domUtils.setStyles(me.target, {
           width: me.resizer.style.width,
@@ -140,7 +140,7 @@ UE.plugins["fiximgclick"] = (function() {
         me.target.height = parseInt(me.resizer.style.height);
         me.attachTo(me.target);
       },
-      updateContainerStyle: function(dir, offset) {
+      updateContainerStyle(dir, offset) {
         var me = this;
         var dom = me.resizer;
         var tmp;
@@ -162,7 +162,7 @@ UE.plugins["fiximgclick"] = (function() {
           dom.style.height = me._validScaledProp("height", tmp) + "px";
         }
       },
-      _validScaledProp: function(prop, value) {
+      _validScaledProp(prop, value) {
         var ele = this.resizer;
         var wrap = document;
 
@@ -194,10 +194,10 @@ UE.plugins["fiximgclick"] = (function() {
               : value;
         }
       },
-      hideCover: function() {
+      hideCover() {
         this.cover.style.display = "none";
       },
-      showCover: function() {
+      showCover() {
         var me = this;
         var editorPos = domUtils.getXY(me.editor.ui.getDom());
         var iframePos = domUtils.getXY(me.editor.iframe);
@@ -211,7 +211,7 @@ UE.plugins["fiximgclick"] = (function() {
           display: ""
         });
       },
-      show: function(targetObj) {
+      show(targetObj) {
         var me = this;
         me.resizer.style.display = "block";
         if (targetObj) me.attachTo(targetObj);
@@ -223,7 +223,7 @@ UE.plugins["fiximgclick"] = (function() {
         me.editor.fireEvent("afterscaleshow", me);
         me.editor.fireEvent("saveScene");
       },
-      hide: function() {
+      hide() {
         var me = this;
         me.hideCover();
         me.resizer.style.display = "none";
@@ -232,12 +232,12 @@ UE.plugins["fiximgclick"] = (function() {
         domUtils.un(me.doc, "mouseup", me.proxy(me._eventHandler, me));
         me.editor.fireEvent("afterscalehide", me);
       },
-      proxy: function(fn, context) {
+      proxy(fn, context) {
         return function(e) {
           return fn.apply(context || this, arguments);
         };
       },
-      attachTo: function(targetObj) {
+      attachTo(targetObj) {
         var me = this;
         var target = (me.target = targetObj);
         var resizer = this.resizer;
@@ -274,7 +274,7 @@ UE.plugins["fiximgclick"] = (function() {
     me.setOpt("imageScaleEnabled", true);
 
     if (!browser.ie && me.options.imageScaleEnabled) {
-      me.addListener("click", function(type, e) {
+      me.addListener("click", (type, e) => {
         var range = me.selection.getRange();
         var img = range.getClosedNode();
 
@@ -292,7 +292,7 @@ UE.plugins["fiximgclick"] = (function() {
             imageScale.init(me);
             me.ui.getDom().appendChild(imageScale.resizer);
 
-            var _keyDownHandler = function(e) {
+            var _keyDownHandler = e => {
               imageScale.hide();
               if (imageScale.target)
                 me.selection
@@ -301,7 +301,7 @@ UE.plugins["fiximgclick"] = (function() {
                   .select();
             };
 
-            var _mouseDownHandler = function(e) {
+            var _mouseDownHandler = e => {
               var ele = e.target || e.srcElement;
               if (ele && (ele.className === undefined || ele.className.indexOf("edui-editor-imagescale") == -1)) {
                 _keyDownHandler(e);
@@ -310,14 +310,14 @@ UE.plugins["fiximgclick"] = (function() {
 
             var timer;
 
-            me.addListener("afterscaleshow", function(e) {
+            me.addListener("afterscaleshow", e => {
               me.addListener("beforekeydown", _keyDownHandler);
               me.addListener("beforemousedown", _mouseDownHandler);
               domUtils.on(document, "keydown", _keyDownHandler);
               domUtils.on(document, "mousedown", _mouseDownHandler);
               me.selection.getNative().removeAllRanges();
             });
-            me.addListener("afterscalehide", function(e) {
+            me.addListener("afterscalehide", e => {
               me.removeListener("beforekeydown", _keyDownHandler);
               me.removeListener("beforemousedown", _mouseDownHandler);
               domUtils.un(document, "keydown", _keyDownHandler);
@@ -331,11 +331,11 @@ UE.plugins["fiximgclick"] = (function() {
               }
             });
             //TODO 有iframe的情况，mousedown不能往下传。。
-            domUtils.on(imageScale.resizer, "mousedown", function(e) {
+            domUtils.on(imageScale.resizer, "mousedown", e => {
               me.selection.getNative().removeAllRanges();
               var ele = e.target || e.srcElement;
               if (ele && ele.className.indexOf("edui-editor-imagescale-hand") == -1) {
-                timer = setTimeout(function() {
+                timer = setTimeout(() => {
                   imageScale.hide();
                   if (imageScale.target)
                     me.selection
@@ -345,7 +345,7 @@ UE.plugins["fiximgclick"] = (function() {
                 }, 200);
               }
             });
-            domUtils.on(imageScale.resizer, "mouseup", function(e) {
+            domUtils.on(imageScale.resizer, "mouseup", e => {
               var ele = e.target || e.srcElement;
               if (ele && ele.className.indexOf("edui-editor-imagescale-hand") == -1) {
                 clearTimeout(timer);
@@ -360,7 +360,7 @@ UE.plugins["fiximgclick"] = (function() {
     }
 
     if (browser.webkit) {
-      me.addListener("click", function(type, e) {
+      me.addListener("click", (type, e) => {
         if (e.target.tagName == "IMG" && me.body.contentEditable != "false") {
           var range = new dom.Range(me.document);
           range.selectNode(e.target).select();

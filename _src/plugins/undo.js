@@ -107,7 +107,7 @@ UE.plugins["undo"] = function() {
       me.fireEvent("afterscencerestore");
       //处理undo后空格不展位的问题
       if (browser.ie) {
-        utils.each(domUtils.getElementsByTagName(me.document, "td th caption p"), function(node) {
+        utils.each(domUtils.getElementsByTagName(me.document, "td th caption p"), node => {
           if (domUtils.isEmptyNode(node)) {
             domUtils.fillNode(me.document, node);
           }
@@ -183,7 +183,7 @@ UE.plugins["undo"] = function() {
       this.hasRedo = false;
       this.clearKey();
     };
-    this.clearKey = function() {
+    this.clearKey = () => {
       keycont = 0;
       lastKeyCode = null;
     };
@@ -197,7 +197,7 @@ UE.plugins["undo"] = function() {
 
   me.addListener("saveScene", function() {
     var args = Array.prototype.splice.call(arguments, 1);
-    this.undoManger.save.apply(this.undoManger, args);
+    this.undoManger.save(...args);
   });
 
   //    me.addListener('beforeexeccommand', saveScene);
@@ -209,10 +209,10 @@ UE.plugins["undo"] = function() {
     }
   });
   me.commands["redo"] = me.commands["undo"] = {
-    execCommand: function(cmdName) {
+    execCommand(cmdName) {
       this.undoManger[cmdName]();
     },
-    queryCommandState: function(cmdName) {
+    queryCommandState(cmdName) {
       return this.undoManger["has" + (cmdName.toLowerCase() == "undo" ? "Undo" : "Redo")] ? 0 : -1;
     },
     notNeedUndo: 1
@@ -234,10 +234,10 @@ UE.plugins["undo"] = function() {
   //输入法状态下不计算字符数
   var inputType = false;
   me.addListener("ready", function() {
-    domUtils.on(this.body, "compositionstart", function() {
+    domUtils.on(this.body, "compositionstart", () => {
       inputType = true;
     });
-    domUtils.on(this.body, "compositionend", function() {
+    domUtils.on(this.body, "compositionend", () => {
       inputType = false;
     });
   });
@@ -266,9 +266,9 @@ UE.plugins["undo"] = function() {
         cont.undoManger.save(false, true);
         cont.fireEvent("selectionchange");
       }
-      saveSceneTimer = setTimeout(function() {
+      saveSceneTimer = setTimeout(() => {
         if (inputType) {
-          var interalTimer = setInterval(function() {
+          var interalTimer = setInterval(() => {
             if (!inputType) {
               save(me);
               clearInterval(interalTimer);
@@ -297,10 +297,10 @@ UE.plugins["undo"] = function() {
     }
   });
   //扩展实例，添加关闭和开启命令undo
-  me.stopCmdUndo = function() {
+  me.stopCmdUndo = () => {
     me.__hasEnterExecCommand = true;
   };
-  me.startCmdUndo = function() {
+  me.startCmdUndo = () => {
     me.__hasEnterExecCommand = false;
   };
 };

@@ -11,7 +11,7 @@ UE.plugins["insertframe"] = function() {
     me._iframe && delete me._iframe;
   }
 
-  me.addListener("selectionchange", function() {
+  me.addListener("selectionchange", () => {
     deleteIframe();
   });
 };

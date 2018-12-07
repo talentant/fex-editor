@@ -15,7 +15,7 @@
  * ```
  */
 UE.commands["print"] = {
-  execCommand: function() {
+  execCommand() {
     this.window.print();
   },
   notNeedUndo: 1

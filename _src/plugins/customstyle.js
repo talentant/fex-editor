@@ -43,17 +43,11 @@ UE.plugins["customstyle"] = function() {
     ]
   });
   me.commands["customstyle"] = {
-    execCommand: function(cmdName, obj) {
+    execCommand(cmdName, obj) {
       var me = this;
       var tagName = obj.tag;
 
-      var node = domUtils.findParent(
-        me.selection.getStart(),
-        function(node) {
-          return node.getAttribute("label");
-        },
-        true
-      );
+      var node = domUtils.findParent(me.selection.getStart(), node => node.getAttribute("label"), true);
 
       var range;
       var bk;
@@ -97,13 +91,7 @@ UE.plugins["customstyle"] = function() {
               domUtils.remove(ni, true);
             }
           }
-          node = domUtils.findParent(
-            common,
-            function(node) {
-              return node.getAttribute("label") == obj.label;
-            },
-            true
-          );
+          node = domUtils.findParent(common, node => node.getAttribute("label") == obj.label, true);
           if (node) {
             domUtils.remove(node, true);
           }
@@ -115,13 +103,7 @@ UE.plugins["customstyle"] = function() {
           range = me.selection.getRange();
           if (!range.collapsed) {
             range.collapse();
-            node = domUtils.findParent(
-              me.selection.getStart(),
-              function(node) {
-                return node.getAttribute("label") == obj.label;
-              },
-              true
-            );
+            node = domUtils.findParent(me.selection.getStart(), node => node.getAttribute("label") == obj.label, true);
             var pNode = me.document.createElement("p");
             domUtils.insertAfter(node, pNode);
             domUtils.fillNode(me.document, pNode);
@@ -148,27 +130,19 @@ UE.plugins["customstyle"] = function() {
         }
       }
     },
-    queryCommandValue: function() {
-      var parent = domUtils.filterNodeList(this.selection.getStartElementPath(), function(node) {
-        return node.getAttribute("label");
-      });
+    queryCommandValue() {
+      var parent = domUtils.filterNodeList(this.selection.getStartElementPath(), node => node.getAttribute("label"));
       return parent ? parent.getAttribute("label") : "";
     }
   };
   //当去掉customstyle是，如果是块元素，用p代替
-  me.addListener("keyup", function(type, evt) {
+  me.addListener("keyup", (type, evt) => {
     var keyCode = evt.keyCode || evt.which;
 
     if (keyCode == 32 || keyCode == 13) {
       var range = me.selection.getRange();
       if (range.collapsed) {
-        var node = domUtils.findParent(
-          me.selection.getStart(),
-          function(node) {
-            return node.getAttribute("label");
-          },
-          true
-        );
+        var node = domUtils.findParent(me.selection.getStart(), node => node.getAttribute("label"), true);
         if (node && dtd.$block[node.tagName] && domUtils.isEmptyNode(node)) {
           var p = me.document.createElement("p");
           domUtils.insertAfter(node, p);

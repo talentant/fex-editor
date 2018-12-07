@@ -17,7 +17,7 @@
  */
 
 UE.commands["cleardoc"] = {
-  execCommand: function(cmdName) {
+  execCommand(cmdName) {
     var me = this;
     var enterTag = me.options.enterTag;
     var range = me.selection.getRange();
@@ -28,7 +28,7 @@ UE.commands["cleardoc"] = {
       me.body.innerHTML = "<p>" + (ie ? "" : "<br/>") + "</p>";
       range.setStart(me.body.firstChild, 0).setCursor(false, true);
     }
-    setTimeout(function() {
+    setTimeout(() => {
       me.fireEvent("clearDoc");
     }, 0);
   }

@@ -51,7 +51,7 @@ UE.plugin.register("autosave", function() {
       enableAutoSave: true
     },
     bindEvents: {
-      ready: function() {
+      ready() {
         var _suffix = "-drafts-data";
         var key = null;
 
@@ -65,7 +65,7 @@ UE.plugin.register("autosave", function() {
         saveKey = (location.protocol + location.host + location.pathname).replace(/[.:\/]/g, "_") + key;
       },
 
-      contentchange: function() {
+      contentchange() {
         if (!me.getOpt("enableAutoSave")) {
           return;
         }
@@ -79,7 +79,7 @@ UE.plugin.register("autosave", function() {
         }
 
         if (me.options.saveInterval > 0) {
-          me._saveFlag = window.setTimeout(function() {
+          me._saveFlag = window.setTimeout(() => {
             save(me);
           }, me.options.saveInterval);
         } else {
@@ -89,7 +89,7 @@ UE.plugin.register("autosave", function() {
     },
     commands: {
       clearlocaldata: {
-        execCommand: function(cmd, name) {
+        execCommand(cmd, name) {
           if (saveKey && me.getPreferences(saveKey)) {
             me.removePreferences(saveKey);
           }
@@ -99,7 +99,7 @@ UE.plugin.register("autosave", function() {
       },
 
       getlocaldata: {
-        execCommand: function(cmd, name) {
+        execCommand(cmd, name) {
           return saveKey ? me.getPreferences(saveKey) || "" : "";
         },
         notNeedUndo: true,
@@ -107,13 +107,13 @@ UE.plugin.register("autosave", function() {
       },
 
       drafts: {
-        execCommand: function(cmd, name) {
+        execCommand(cmd, name) {
           if (saveKey) {
             me.body.innerHTML = me.getPreferences(saveKey) || "<p>" + domUtils.fillHtml + "</p>";
             me.focus(true);
           }
         },
-        queryCommandState: function() {
+        queryCommandState() {
           return saveKey ? (me.getPreferences(saveKey) === null ? -1 : 0) : -1;
         },
         notNeedUndo: true,

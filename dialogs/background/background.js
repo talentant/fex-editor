@@ -1,8 +1,8 @@
-(function() {
+(() => {
   var onlineImage;
   var backupStyle = editor.queryCommandValue("background");
 
-  window.onload = function() {
+  window.onload = () => {
     initTabs();
     initColorSelector();
   };
@@ -11,7 +11,7 @@
   function initTabs() {
     var tabs = $G("tabHeads").children;
     for (var i = 0; i < tabs.length; i++) {
-      domUtils.on(tabs[i], "click", function(e) {
+      domUtils.on(tabs[i], "click", e => {
         var target = e.target || e.srcElement;
         for (var j = 0; j < tabs.length; j++) {
           if (tabs[j] == target) {
@@ -51,15 +51,15 @@
       updateFormState();
     }
 
-    var updateHandler = function() {
+    var updateHandler = () => {
       updateFormState();
       updateBackground();
     };
     domUtils.on($G("nocolorRadio"), "click", updateBackground);
     domUtils.on($G("coloredRadio"), "click", updateHandler);
-    domUtils.on($G("url"), "keyup", function() {
+    domUtils.on($G("url"), "keyup", () => {
       if ($G("url").value && $G("alignment").style.display == "none") {
-        utils.each($G("repeatType").children, function(item) {
+        utils.each($G("repeatType").children, item => {
           item.selected = "repeat" == item.getAttribute("value") ? "selected" : false;
         });
       }
@@ -82,30 +82,30 @@
       content: new UE.ui.ColorPicker({
         noColorText: me.getLang("clearColor"),
         editor: me,
-        onpickcolor: function(t, color) {
+        onpickcolor(t, color) {
           updateFormState("colored", color);
           updateBackground();
           UE.ui.Popup.postHide();
         },
-        onpicknocolor: function(t, color) {
+        onpicknocolor(t, color) {
           updateFormState("colored", "transparent");
           updateBackground();
           UE.ui.Popup.postHide();
         }
       }),
       editor: me,
-      onhide: function() {}
+      onhide() {}
     });
 
     /* 设置颜色选择器 */
     domUtils.on(cp, "click", function() {
       popup.showAnchor(this);
     });
-    domUtils.on(document, "mousedown", function(evt) {
+    domUtils.on(document, "mousedown", evt => {
       var el = evt.target || evt.srcElement;
       UE.ui.Popup.postHide(el);
     });
-    domUtils.on(window, "scroll", function() {
+    domUtils.on(window, "scroll", () => {
       UE.ui.Popup.postHide();
     });
   }
@@ -139,7 +139,7 @@
       $G("url").value = url;
     }
     if (align) {
-      utils.each($G("repeatType").children, function(item) {
+      utils.each($G("repeatType").children, item => {
         item.selected = align == item.getAttribute("value") ? "selected" : false;
       });
     }
@@ -185,12 +185,12 @@
     this.init();
   }
   OnlineImage.prototype = {
-    init: function() {
+    init() {
       this.reset();
       this.initEvents();
     },
     /* 初始化容器 */
-    initContainer: function() {
+    initContainer() {
       this.container.innerHTML = "";
       this.list = document.createElement("ul");
       this.clearFloat = document.createElement("li");
@@ -203,7 +203,7 @@
       this.container.appendChild(this.list);
     },
     /* 初始化滚动事件,滚动到地步自动拉取数据 */
-    initEvents: function() {
+    initEvents() {
       var _this = this;
 
       /* 滚动拉取图片 */
@@ -214,7 +214,7 @@
         }
       });
       /* 选中图片 */
-      domUtils.on(this.container, "click", function(e) {
+      domUtils.on(this.container, "click", e => {
         var target = e.target || e.srcElement;
         var li = target.parentNode;
         var nodes = $G("imageListUl").childNodes;
@@ -234,7 +234,7 @@
       });
     },
     /* 初始化第一次的数据 */
-    initData: function() {
+    initData() {
       /* 拉取数据需要使用的值 */
       this.state = 0;
       this.listSize = editor.getOpt("imageManagerListSize");
@@ -245,12 +245,12 @@
       this.getImageData();
     },
     /* 重置界面 */
-    reset: function() {
+    reset() {
       this.initContainer();
       this.initData();
     },
     /* 向后台拉取图片列表数据 */
-    getImageData: function() {
+    getImageData() {
       var _this = this;
 
       if (!_this.listEnd && !this.isLoadingData) {
@@ -268,7 +268,7 @@
             editor.queryCommandValue("serverparam")
           ),
           method: "get",
-          onsuccess: function(r) {
+          onsuccess(r) {
             try {
               var json = isJsonp ? r : eval("(" + r.responseText + ")");
               if (json.state == "SUCCESS") {
@@ -289,14 +289,14 @@
               }
             }
           },
-          onerror: function() {
+          onerror() {
             _this.isLoadingData = false;
           }
         });
       }
     },
     /* 添加图片到列表界面上 */
-    pushData: function(list) {
+    pushData(list) {
       var i;
       var item;
       var img;
@@ -312,10 +312,8 @@
           domUtils.on(
             img,
             "load",
-            (function(image) {
-              return function() {
-                _this.scale(image, image.parentNode.offsetWidth, image.parentNode.offsetHeight);
-              };
+            (image => () => {
+              _this.scale(image, image.parentNode.offsetWidth, image.parentNode.offsetHeight);
             })(img)
           );
           img.width = 113;
@@ -336,7 +334,7 @@
       }
     },
     /* 改变图片大小 */
-    scale: function(img, w, h, type) {
+    scale(img, w, h, type) {
       var ow = img.width;
       var oh = img.height;
 
@@ -362,7 +360,7 @@
         }
       }
     },
-    getInsertList: function() {
+    getInsertList() {
       var i;
       var lis = this.list.children;
       var list = [];
@@ -372,7 +370,7 @@
           var img = lis[i].firstChild;
           var src = img.getAttribute("_src");
           list.push({
-            src: src,
+            src,
             _src: src,
             floatStyle: align
           });
@@ -382,11 +380,11 @@
     }
   };
 
-  dialog.onok = function() {
+  dialog.onok = () => {
     updateBackground();
     editor.fireEvent("saveScene");
   };
-  dialog.oncancel = function() {
+  dialog.oncancel = () => {
     editor.execCommand("background", backupStyle);
   };
 })();

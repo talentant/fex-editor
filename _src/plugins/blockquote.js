@@ -35,7 +35,7 @@ UE.plugins["blockquote"] = function() {
     return domUtils.filterNodeList(editor.selection.getStartElementPath(), "blockquote");
   }
   me.commands["blockquote"] = {
-    execCommand: function(cmdName, attrs) {
+    execCommand(cmdName, attrs) {
       var range = this.selection.getRange();
       var obj = getObj(this);
       var blockquote = dtd.blockquote;
@@ -46,17 +46,11 @@ UE.plugins["blockquote"] = function() {
 
         var startBlock = domUtils.isBlockElm(start)
           ? start
-          : domUtils.findParent(start, function(node) {
-              return domUtils.isBlockElm(node);
-            });
+          : domUtils.findParent(start, node => domUtils.isBlockElm(node));
 
         var end = range.endContainer;
 
-        var endBlock = domUtils.isBlockElm(end)
-          ? end
-          : domUtils.findParent(end, function(node) {
-              return domUtils.isBlockElm(node);
-            });
+        var endBlock = domUtils.isBlockElm(end) ? end : domUtils.findParent(end, node => domUtils.isBlockElm(node));
 
         //处理一下li
         startBlock = domUtils.findParentByTagName(startBlock, "li", true) || startBlock;
@@ -168,7 +162,7 @@ UE.plugins["blockquote"] = function() {
       }
       range.moveToBookmark(bookmark).select();
     },
-    queryCommandState: function() {
+    queryCommandState() {
       return getObj(this) ? 1 : 0;
     }
   };

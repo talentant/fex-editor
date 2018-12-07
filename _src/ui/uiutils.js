@@ -1,4 +1,4 @@
-(function() {
+(() => {
   var browser = baidu.editor.browser;
   var domUtils = baidu.editor.dom.domUtils;
 
@@ -8,23 +8,23 @@
   var uidCount = 0;
 
   var uiUtils = (baidu.editor.ui.uiUtils = {
-    uid: function(obj) {
+    uid(obj) {
       return obj ? obj[uidMagic] || (obj[uidMagic] = ++uidCount) : ++uidCount;
     },
-    hook: function(fn, callback) {
+    hook(fn, callback) {
       var dg;
       if (fn && fn._callbacks) {
         dg = fn;
       } else {
-        dg = function() {
+        dg = function(...args) {
           var q;
           if (fn) {
-            q = fn.apply(this, arguments);
+            q = fn.apply(this, args);
           }
           var callbacks = dg._callbacks;
           var k = callbacks.length;
           while (k--) {
-            var r = callbacks[k].apply(this, arguments);
+            var r = callbacks[k].apply(this, args);
             if (q === undefined) {
               q = r;
             }
@@ -36,17 +36,17 @@
       dg._callbacks.push(callback);
       return dg;
     },
-    createElementByHtml: function(html) {
+    createElementByHtml(html) {
       var el = document.createElement("div");
       el.innerHTML = html;
       el = el.firstChild;
       el.parentNode.removeChild(el);
       return el;
     },
-    getViewportElement: function() {
+    getViewportElement() {
       return browser.ie && browser.quirks ? document.body : document.documentElement;
     },
-    getClientRect: function(element) {
+    getClientRect(element) {
       var bcr;
       //trace  IE6下在控制编辑器显隐时可能会报错，catch一下
       try {
@@ -70,20 +70,20 @@
       rect.right = rect.left + rect.width;
       return rect;
     },
-    getViewportRect: function() {
+    getViewportRect() {
       var viewportEl = uiUtils.getViewportElement();
       var width = (window.innerWidth || viewportEl.clientWidth) | 0;
       var height = (window.innerHeight || viewportEl.clientHeight) | 0;
       return {
         left: 0,
         top: 0,
-        height: height,
-        width: width,
+        height,
+        width,
         bottom: height,
         right: width
       };
     },
-    setViewportOffset: function(element, offset) {
+    setViewportOffset(element, offset) {
       var rect;
       var fixedLayer = uiUtils.getFixedLayer();
       if (element.parentNode === fixedLayer) {
@@ -93,7 +93,7 @@
         domUtils.setViewportOffset(element, offset);
       }
     },
-    getEventOffset: function(evt) {
+    getEventOffset(evt) {
       var el = evt.target || evt.srcElement;
       var rect = uiUtils.getClientRect(el);
       var offset = uiUtils.getViewportOffsetByEvent(evt);
@@ -102,7 +102,7 @@
         top: offset.top - rect.top
       };
     },
-    getViewportOffsetByEvent: function(evt) {
+    getViewportOffsetByEvent(evt) {
       var el = evt.target || evt.srcElement;
       var frameEl = domUtils.getWindow(el).frameElement;
       var offset = {
@@ -116,14 +116,14 @@
       }
       return offset;
     },
-    setGlobal: function(id, obj) {
+    setGlobal(id, obj) {
       root[id] = obj;
       return magic + '["' + id + '"]';
     },
-    unsetGlobal: function(id) {
+    unsetGlobal(id) {
       delete root[id];
     },
-    copyAttributes: function(tgt, src) {
+    copyAttributes(tgt, src) {
       var attributes = src.attributes;
       var k = attributes.length;
       while (k--) {
@@ -139,19 +139,19 @@
         tgt.style.cssText += ";" + src.style.cssText;
       }
     },
-    removeStyle: function(el, styleName) {
+    removeStyle(el, styleName) {
       if (el.style.removeProperty) {
         el.style.removeProperty(styleName);
       } else if (el.style.removeAttribute) {
         el.style.removeAttribute(styleName);
       } else throw "";
     },
-    contains: function(elA, elB) {
+    contains(elA, elB) {
       return (
         elA && elB && (elA === elB ? false : elA.contains ? elA.contains(elB) : elA.compareDocumentPosition(elB) & 16)
       );
     },
-    startDrag: function(evt, callbacks, doc) {
+    startDrag(evt, callbacks, doc) {
       var doc = doc || document;
       var startX = evt.clientX;
       var startY = evt.clientY;
@@ -194,7 +194,7 @@
       }
       callbacks.ondragstart();
     },
-    getFixedLayer: function() {
+    getFixedLayer() {
       var layer = document.getElementById("edui_fixedlayer");
       if (layer == null) {
         layer = document.createElement("div");
@@ -214,7 +214,7 @@
       }
       return layer;
     },
-    makeUnselectable: function(element) {
+    makeUnselectable(element) {
       if (browser.opera || (browser.ie && browser.version < 9)) {
         element.unselectable = "on";
         if (element.hasChildNodes()) {

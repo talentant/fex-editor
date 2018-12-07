@@ -14,7 +14,7 @@ var g = baidu.g;
 var flashObj;
 var flashContainer;
 
-wordImage.init = function(opt, callbacks) {
+wordImage.init = (opt, callbacks) => {
   showLocalPath("localPath");
   //createCopyButton("clipboard","localPath");
   createFlashUploader(opt, callbacks);
@@ -27,7 +27,7 @@ function hideFlash() {
   flashContainer.innerHTML = "";
 }
 function addOkListener() {
-  dialog.onok = function() {
+  dialog.onok = () => {
     if (!imageUrls.length) return;
     var urlPrefix = editor.getOpt("imageUrlPrefix");
     var images = domUtils.getElementsByTagName(editor.document, "img");
@@ -49,7 +49,7 @@ function addOkListener() {
     editor.fireEvent("saveScene");
     hideFlash();
   };
-  dialog.oncancel = function() {
+  dialog.oncancel = () => {
     hideFlash();
   };
 }
@@ -126,7 +126,7 @@ function extendProperty(fromObj, toObj) {
 
 function getPasteData(id) {
   baidu.g("msg").innerHTML = lang.copySuccess + "</br>";
-  setTimeout(function() {
+  setTimeout(() => {
     baidu.g("msg").innerHTML = "";
   }, 5000);
   return baidu.g(id).value;
@@ -151,7 +151,7 @@ function createCopyButton(id, dataFrom) {
   );
 
   var clipboard = baidu.swf.getMovie("copyFlash");
-  var clipinterval = setInterval(function() {
+  var clipinterval = setInterval(() => {
     if (clipboard && clipboard.flashInit) {
       clearInterval(clipinterval);
       clipboard.setHandCursor(true);

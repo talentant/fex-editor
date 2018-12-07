@@ -27,7 +27,7 @@ UE.parse.register("vedio", function(utils) {
           tag: "script",
           type: "text/javascript"
         },
-        function() {
+        () => {
           videojs.options.flash.swf = swfUrl;
           videojs.autoSetup();
         }

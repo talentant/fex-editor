@@ -12,7 +12,7 @@ UE.plugin.register("background", function() {
   function stringToObj(str) {
     var obj = {};
     var styles = str.split(";");
-    utils.each(styles, function(v) {
+    utils.each(styles, v => {
       var index = v.indexOf(":");
       var key = utils.trim(v.substr(0, index)).toLowerCase();
       key && (obj[key] = utils.trim(v.substr(index + 1) || ""));
@@ -36,15 +36,15 @@ UE.plugin.register("background", function() {
   //重写editor.hasContent方法
 
   var orgFn = me.hasContents;
-  me.hasContents = function() {
+  me.hasContents = function(...args) {
     if (me.queryCommandValue("background")) {
       return true;
     }
-    return orgFn.apply(me, arguments);
+    return orgFn.apply(me, args);
   };
   return {
     bindEvents: {
-      getAllHtml: function(type, headHtml) {
+      getAllHtml(type, headHtml) {
         var body = this.body;
         var su = domUtils.getComputedStyle(body, "background-image");
         var url = "";
@@ -73,13 +73,13 @@ UE.plugin.register("background", function() {
         html += "}</style> ";
         headHtml.push(html);
       },
-      aftersetcontent: function() {
+      aftersetcontent() {
         if (isSetColored == false) setBackground();
       }
     },
-    inputRule: function(root) {
+    inputRule(root) {
       isSetColored = false;
-      utils.each(root.getNodesByTagName("p"), function(p) {
+      utils.each(root.getNodesByTagName("p"), p => {
         var styles = p.getAttr("data-background");
         if (styles) {
           isSetColored = true;
@@ -88,7 +88,7 @@ UE.plugin.register("background", function() {
         }
       });
     },
-    outputRule: function(root) {
+    outputRule(root) {
       var me = this;
       var styles = (utils.cssRule(cssRuleId, me.document) || "").replace(/[\n\r]+/g, "").match(reg);
       if (styles) {
@@ -103,10 +103,10 @@ UE.plugin.register("background", function() {
     },
     commands: {
       background: {
-        execCommand: function(cmd, obj) {
+        execCommand(cmd, obj) {
           setBackground(obj);
         },
-        queryCommandValue: function() {
+        queryCommandValue() {
           var me = this;
           var styles = (utils.cssRule(cssRuleId, me.document) || "").replace(/[\n\r]+/g, "").match(reg);
           return styles ? stringToObj(styles[1]) : null;

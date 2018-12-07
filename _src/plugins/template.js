@@ -7,7 +7,7 @@
 ///commandsDialog  dialogs\template
 UE.plugins["template"] = function() {
   UE.commands["template"] = {
-    execCommand: function(cmd, obj) {
+    execCommand(cmd, obj) {
       obj.html && this.execCommand("inserthtml", obj.html);
     }
   };
@@ -16,7 +16,7 @@ UE.plugins["template"] = function() {
     var range = this.selection.getRange();
     var tnode = domUtils.findParent(
       el,
-      function(node) {
+      node => {
         if (node.className && domUtils.hasClass(node, "ue_t")) {
           return node;
         }
@@ -35,7 +35,7 @@ UE.plugins["template"] = function() {
       if (!evt.ctrlKey && !evt.metaKey && !evt.shiftKey && !evt.altKey) {
         var tnode = domUtils.findParent(
           range.startContainer,
-          function(node) {
+          node => {
             if (node.className && domUtils.hasClass(node, "ue_t")) {
               return node;
             }

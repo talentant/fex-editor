@@ -2,7 +2,7 @@
 ///import uicore
 ///import ui\popup.js
 ///import ui\stateful.js
-(function() {
+(() => {
   var utils = baidu.editor.utils;
   var domUtils = baidu.editor.dom.domUtils;
   var uiUtils = baidu.editor.ui.uiUtils;
@@ -17,23 +17,23 @@
   });
 
   var menuSeparator = {
-    renderHtml: function() {
+    renderHtml() {
       return '<div class="edui-menuitem edui-menuseparator"><div class="edui-menuseparator-inner"></div></div>';
     },
-    postRender: function() {},
-    queryAutoHide: function() {
+    postRender() {},
+    queryAutoHide() {
       return true;
     }
   };
   Menu.prototype = {
     items: null,
     uiName: "menu",
-    initMenu: function() {
+    initMenu() {
       this.items = this.items || [];
       this.initPopup();
       this.initItems();
     },
-    initItems: function() {
+    initItems() {
       for (var i = 0; i < this.items.length; i++) {
         var item = this.items[i];
         if (item == "-") {
@@ -45,16 +45,16 @@
         }
       }
     },
-    getSeparator: function() {
+    getSeparator() {
       return menuSeparator;
     },
-    createItem: function(item) {
+    createItem(item) {
       //新增一个参数menu, 该参数存储了menuItem所对应的menu引用
       item.menu = this;
       return new MenuItem(item);
     },
     _Popup_getContentHtmlTpl: Popup.prototype.getContentHtmlTpl,
-    getContentHtmlTpl: function() {
+    getContentHtmlTpl() {
       if (this.items.length == 0) {
         return this._Popup_getContentHtmlTpl();
       }
@@ -66,14 +66,14 @@
       return '<div class="%%-body">' + buff.join("") + "</div>";
     },
     _Popup_postRender: Popup.prototype.postRender,
-    postRender: function() {
+    postRender() {
       var me = this;
       for (var i = 0; i < this.items.length; i++) {
         var item = this.items[i];
         item.ownerMenu = this;
         item.postRender();
       }
-      domUtils.on(this.getDom(), "mouseover", function(evt) {
+      domUtils.on(this.getDom(), "mouseover", evt => {
         evt = evt || event;
         var rel = evt.relatedTarget || evt.fromElement;
         var el = me.getDom();
@@ -83,7 +83,7 @@
       });
       this._Popup_postRender();
     },
-    queryAutoHide: function(el) {
+    queryAutoHide(el) {
       if (el) {
         if (uiUtils.contains(this.getDom(), el)) {
           return false;
@@ -96,7 +96,7 @@
         }
       }
     },
-    clearItems: function() {
+    clearItems() {
       for (var i = 0; i < this.items.length; i++) {
         var item = this.items[i];
         clearTimeout(item._showingTimer);
@@ -107,13 +107,13 @@
       }
       this.items = [];
     },
-    destroy: function() {
+    destroy() {
       if (this.getDom()) {
         domUtils.remove(this.getDom());
       }
       this.clearItems();
     },
-    dispose: function() {
+    dispose() {
       this.destroy();
     }
   };
@@ -138,14 +138,14 @@
           content: new CellAlignPicker(this.subMenu),
           parentMenu: me,
           editor: me.editor,
-          destroy: function() {
+          destroy() {
             if (this.getDom()) {
               domUtils.remove(this.getDom());
             }
           }
         });
         this.subMenu.addListener("postRenderAfter", function() {
-          domUtils.on(this.getDom(), "mouseover", function() {
+          domUtils.on(this.getDom(), "mouseover", () => {
             me.addState("opened");
           });
         });
@@ -160,7 +160,7 @@
     ownerMenu: null,
     uiName: "menuitem",
     alwalysHoverable: true,
-    getHtmlTpl: function() {
+    getHtmlTpl() {
       return (
         '<div id="##" class="%%" stateful onclick="$$._onClick(event, this);">' +
         '<div class="%%-body">' +
@@ -169,9 +169,9 @@
         "</div>"
       );
     },
-    postRender: function() {
+    postRender() {
       var me = this;
-      this.addListener("over", function() {
+      this.addListener("over", () => {
         me.ownerMenu.fireEvent("submenuover", me);
         if (me.subMenu) {
           me.delayShowSubMenu();
@@ -180,18 +180,18 @@
       if (this.subMenu) {
         this.getDom().className += " edui-hassubmenu";
         this.subMenu.render();
-        this.addListener("out", function() {
+        this.addListener("out", () => {
           me.delayHideSubMenu();
         });
-        this.subMenu.addListener("over", function() {
+        this.subMenu.addListener("over", () => {
           clearTimeout(me._closingTimer);
           me._closingTimer = null;
           me.addState("opened");
         });
-        this.ownerMenu.addListener("hide", function() {
+        this.ownerMenu.addListener("hide", () => {
           me.hideSubMenu();
         });
-        this.ownerMenu.addListener("submenuover", function(t, subMenu) {
+        this.ownerMenu.addListener("submenuover", (t, subMenu) => {
           if (subMenu !== me) {
             me.delayHideSubMenu();
           }
@@ -208,25 +208,25 @@
       uiUtils.makeUnselectable(this.getDom());
       this.Stateful_postRender();
     },
-    delayShowSubMenu: function() {
+    delayShowSubMenu() {
       var me = this;
       if (!me.isDisabled()) {
         me.addState("opened");
         clearTimeout(me._showingTimer);
         clearTimeout(me._closingTimer);
         me._closingTimer = null;
-        me._showingTimer = setTimeout(function() {
+        me._showingTimer = setTimeout(() => {
           me.showSubMenu();
         }, 250);
       }
     },
-    delayHideSubMenu: function() {
+    delayHideSubMenu() {
       var me = this;
       if (!me.isDisabled()) {
         me.removeState("opened");
         clearTimeout(me._showingTimer);
         if (!me._closingTimer) {
-          me._closingTimer = setTimeout(function() {
+          me._closingTimer = setTimeout(() => {
             if (!me.hasState("opened")) {
               me.hideSubMenu();
             }
@@ -235,7 +235,7 @@
         }
       }
     },
-    renderLabelHtml: function() {
+    renderLabelHtml() {
       return (
         '<div class="edui-arrow"></div>' +
         '<div class="edui-box edui-icon"></div>' +
@@ -244,15 +244,15 @@
         "</div>"
       );
     },
-    getStateDom: function() {
+    getStateDom() {
       return this.getDom();
     },
-    queryAutoHide: function(el) {
+    queryAutoHide(el) {
       if (this.subMenu && this.hasState("opened")) {
         return this.subMenu.queryAutoHide(el);
       }
     },
-    _onClick: function(event, this_) {
+    _onClick(event, this_) {
       if (this.hasState("disabled")) return;
       if (this.fireEvent("click", event, this_) !== false) {
         if (this.subMenu) {
@@ -262,7 +262,7 @@
         }
       }
     },
-    showSubMenu: function() {
+    showSubMenu() {
       var rect = uiUtils.getClientRect(this.getDom());
       rect.right -= 5;
       rect.left += 2;
@@ -272,7 +272,7 @@
       rect.height += 8;
       this.subMenu.showAnchorRect(rect, true, true);
     },
-    hideSubMenu: function() {
+    hideSubMenu() {
       this.subMenu.hide();
     }
   };

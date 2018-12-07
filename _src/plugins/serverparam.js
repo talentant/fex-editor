@@ -82,7 +82,7 @@ UE.plugin.register("serverparam", function() {
        * ```
        */
       serverparam: {
-        execCommand: function(cmd, key, value) {
+        execCommand(cmd, key, value) {
           if (key === undefined || key === null) {
             //不传参数,清空列表
             serverParam = {};
@@ -101,7 +101,7 @@ UE.plugin.register("serverparam", function() {
             utils.extend(serverParam, key(), false);
           }
         },
-        queryCommandValue: function() {
+        queryCommandValue() {
           return serverParam || {};
         }
       }

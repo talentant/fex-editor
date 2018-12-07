@@ -44,7 +44,7 @@ UE.plugin.register("insertfile", function() {
   return {
     commands: {
       insertfile: {
-        execCommand: function(command, filelist) {
+        execCommand(command, filelist) {
           filelist = utils.isArray(filelist) ? filelist : [filelist];
 
           if (me.fireEvent("beforeinsertfile", filelist) === true) {

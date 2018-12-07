@@ -10,7 +10,7 @@
  * @unfile
  * @module UE.browser
  */
-var browser = (UE.browser = (function() {
+var browser = (UE.browser = (() => {
   var agent = navigator.userAgent.toLowerCase();
   var opera = window.opera;
 

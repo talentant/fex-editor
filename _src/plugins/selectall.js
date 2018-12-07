@@ -17,7 +17,7 @@
 UE.plugins["selectall"] = function() {
   var me = this;
   me.commands["selectall"] = {
-    execCommand: function() {
+    execCommand() {
       //去掉了原生的selectAll,因为会出现报错和当内容为空时，不能出现闭合状态的光标
       var me = this;
 

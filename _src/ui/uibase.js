@@ -1,23 +1,23 @@
-(function() {
+(() => {
   var utils = baidu.editor.utils;
   var uiUtils = baidu.editor.ui.uiUtils;
   var EventBase = baidu.editor.EventBase;
-  var UIBase = (baidu.editor.ui.UIBase = function() {});
+  var UIBase = (baidu.editor.ui.UIBase = () => {});
 
   UIBase.prototype = {
     className: "",
     uiName: "",
-    initOptions: function(options) {
+    initOptions(options) {
       var me = this;
       for (var k in options) {
         me[k] = options[k];
       }
       this.id = this.id || "edui" + uiUtils.uid();
     },
-    initUIBase: function() {
+    initUIBase() {
       this._globalKey = utils.unhtml(uiUtils.setGlobal(this.id, this));
     },
-    render: function(holder) {
+    render(holder) {
       var html = this.renderHtml();
       var el = uiUtils.createElementByHtml(html);
 
@@ -48,20 +48,20 @@
       }
       this.postRender();
     },
-    getDom: function(name) {
+    getDom(name) {
       if (!name) {
         return document.getElementById(this.id);
       } else {
         return document.getElementById(this.id + "_" + name);
       }
     },
-    postRender: function() {
+    postRender() {
       this.fireEvent("postrender");
     },
-    getHtmlTpl: function() {
+    getHtmlTpl() {
       return "";
     },
-    formatHtml: function(tpl) {
+    formatHtml(tpl) {
       var prefix = "edui-" + this.uiName;
       return tpl
         .replace(/##/g, this.id)
@@ -69,10 +69,10 @@
         .replace(/%%/g, (this.uiName ? prefix : "") + " " + this.className)
         .replace(/\$\$/g, this._globalKey);
     },
-    renderHtml: function() {
+    renderHtml() {
       return this.formatHtml(this.getHtmlTpl());
     },
-    dispose: function() {
+    dispose() {
       var box = this.getDom();
       if (box) baidu.editor.dom.domUtils.remove(box);
       uiUtils.unsetGlobal(this.id);

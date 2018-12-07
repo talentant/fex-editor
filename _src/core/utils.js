@@ -50,7 +50,7 @@ var utils = (UE.utils = {
    * } );
    * ```
    */
-  each: function(obj, iterator, context) {
+  each(obj, iterator, context) {
     if (obj == null) return;
     if (obj.length === +obj.length) {
       for (var i = 0, l = obj.length; i < l; i++) {
@@ -80,7 +80,7 @@ var utils = (UE.utils = {
    * newObject.sayHello();
    * ```
    */
-  makeInstance: function(obj) {
+  makeInstance(obj) {
     var noop = new Function();
     noop.prototype = obj;
     obj = new noop();
@@ -131,7 +131,7 @@ var utils = (UE.utils = {
    *
    * ```
    */
-  extend: function(t, s, b) {
+  extend(t, s, b) {
     if (s) {
       for (var k in s) {
         if (!b || !t.hasOwnProperty(k)) {
@@ -165,7 +165,7 @@ var utils = (UE.utils = {
    *
    * ```
    */
-  extend2: function(t) {
+  extend2(t) {
     var a = arguments;
     for (var i = 1; i < a.length; i++) {
       var x = a[i];
@@ -208,7 +208,7 @@ var utils = (UE.utils = {
    * sub.hello("早上好!");
    * ```
    */
-  inherits: function(subClass, superClass) {
+  inherits(subClass, superClass) {
     var oldP = subClass.prototype;
     var newP = utils.makeInstance(superClass.prototype);
     utils.extend(newP, oldP, true);
@@ -242,9 +242,9 @@ var utils = (UE.utils = {
    *
    * ```
    */
-  bind: function(fn, context) {
-    return function() {
-      return fn.apply(context, arguments);
+  bind(fn, context) {
+    return function(...args) {
+      return fn.apply(context, args);
     };
   },
 
@@ -297,9 +297,9 @@ var utils = (UE.utils = {
    * testDefer();
    * ```
    */
-  defer: function(fn, delay, exclusion) {
+  defer(fn, delay, exclusion) {
     var timerID;
-    return function() {
+    return () => {
       if (exclusion) {
         clearTimeout(timerID);
       }
@@ -341,10 +341,10 @@ var utils = (UE.utils = {
    * console.log( UE.utils.indexOf( arr, item, 5 ) );
    * ```
    */
-  indexOf: function(array, item, start) {
+  indexOf(array, item, start) {
     var index = -1;
     start = this.isNumber(start) ? start : 0;
-    this.each(array, function(v, i) {
+    this.each(array, (v, i) => {
       if (i >= start && v === item) {
         index = i;
         return false;
@@ -369,7 +369,7 @@ var utils = (UE.utils = {
    *
    * ```
    */
-  removeItem: function(array, item) {
+  removeItem(array, item) {
     for (var i = 0, l = array.length; i < l; i++) {
       if (array[i] === item) {
         array.splice(i, 1);
@@ -399,7 +399,7 @@ var utils = (UE.utils = {
    *
    *  ```
    */
-  trim: function(str) {
+  trim(str) {
     return str.replace(/(^[ \t\n\r]+)|([ \t\n\r]+$)/g, "");
   },
 
@@ -432,7 +432,7 @@ var utils = (UE.utils = {
    *
    * ```
    */
-  listToMap: function(list) {
+  listToMap(list) {
     if (!list) return {};
     list = utils.isArray(list) ? list : list.split(",");
     for (var i = 0, ci, obj = {}; (ci = list[i++]); ) {
@@ -455,9 +455,9 @@ var utils = (UE.utils = {
    *
    * ```
    */
-  unhtml: function(str, reg) {
+  unhtml(str, reg) {
     return str
-      ? str.replace(reg || /[&<">'](?:(amp|lt|ldquo|rdquo|quot|gt|#39|nbsp|#\d+);)?/g, function(a, b) {
+      ? str.replace(reg || /[&<">'](?:(amp|lt|ldquo|rdquo|quot|gt|#39|nbsp|#\d+);)?/g, (a, b) => {
           if (b) {
             return a;
           } else {
@@ -491,20 +491,22 @@ var utils = (UE.utils = {
    *
    * ```
    */
-  html: function(str) {
+  html(str) {
     return str
-      ? str.replace(/&((g|l|quo|ldquo|rdquo)t|amp|#39|nbsp);/g, function(m) {
-          return {
-            "&lt;": "<",
-            "&amp;": "&",
-            "&quot;": '"',
-            "&ldquo;": "“",
-            "&rdquo;": "”",
-            "&gt;": ">",
-            "&#39;": "'",
-            "&nbsp;": " "
-          }[m];
-        })
+      ? str.replace(
+          /&((g|l|quo|ldquo|rdquo)t|amp|#39|nbsp);/g,
+          m =>
+            ({
+              "&lt;": "<",
+              "&amp;": "&",
+              "&quot;": '"',
+              "&ldquo;": "“",
+              "&rdquo;": "”",
+              "&gt;": ">",
+              "&#39;": "'",
+              "&nbsp;": " "
+            }[m])
+        )
       : "";
   },
 
@@ -523,21 +525,15 @@ var utils = (UE.utils = {
    *
    * ```
    */
-  cssStyleToDomStyle: (function() {
+  cssStyleToDomStyle: (() => {
     var test = document.createElement("div").style;
 
     var cache = {
       float: test.cssFloat != undefined ? "cssFloat" : test.styleFloat != undefined ? "styleFloat" : "float"
     };
 
-    return function(cssName) {
-      return (
-        cache[cssName] ||
-        (cache[cssName] = cssName.toLowerCase().replace(/-./g, function(match) {
-          return match.charAt(1).toUpperCase();
-        }))
-      );
-    };
+    return cssName =>
+      cache[cssName] || (cache[cssName] = cssName.toLowerCase().replace(/-./g, match => match.charAt(1).toUpperCase()));
   })(),
 
   /**
@@ -580,7 +576,7 @@ var utils = (UE.utils = {
    *
    * ```
    */
-  loadFile: (function() {
+  loadFile: (() => {
     var tmpList = [];
 
     function getItem(doc, obj) {
@@ -595,7 +591,7 @@ var utils = (UE.utils = {
       }
     }
 
-    return function(doc, obj, fn) {
+    return (doc, obj, fn) => {
       var item = getItem(doc, obj);
       if (item) {
         if (item.ready) {
@@ -606,7 +602,7 @@ var utils = (UE.utils = {
         return;
       }
       tmpList.push({
-        doc: doc,
+        doc,
         url: obj.src || obj.href,
         funs: [fn]
       });
@@ -639,7 +635,7 @@ var utils = (UE.utils = {
           element.onload = element.onreadystatechange = null;
         }
       };
-      element.onerror = function() {
+      element.onerror = () => {
         throw Error("The load " + (obj.href || obj.src) + " fails,check the url settings of file ueditor.config.js ");
       };
       doc.getElementsByTagName("head")[0].appendChild(element);
@@ -676,7 +672,7 @@ var utils = (UE.utils = {
    *
    * ```
    */
-  isEmptyObject: function(obj) {
+  isEmptyObject(obj) {
     if (obj == null) return true;
     if (this.isArray(obj) || this.isString(obj)) return obj.length === 0;
     for (var key in obj) if (obj.hasOwnProperty(key)) return false;
@@ -691,7 +687,7 @@ var utils = (UE.utils = {
    * @example
    * rgb(255,255,255)  => "#ffffff"
    */
-  fixColor: function(name, value) {
+  fixColor(name, value) {
     if (/color/i.test(name) && /rgba?/.test(value)) {
       var array = value.split(",");
       if (array.length > 3) return "";
@@ -710,11 +706,11 @@ var utils = (UE.utils = {
    * @function
    * @param {String}    val style字符串
    */
-  optCss: function(val) {
+  optCss(val) {
     var padding;
     var margin;
     var border;
-    val = val.replace(/(padding|margin|border)\-([^:]+):([^;]+);?/gi, function(str, key, name, val) {
+    val = val.replace(/(padding|margin|border)\-([^:]+):([^;]+);?/gi, (str, key, name, val) => {
       if (val.split(" ").length == 1) {
         switch (key) {
           case "padding":
@@ -766,9 +762,7 @@ var utils = (UE.utils = {
     return val
       .replace(/^[ \n\r\t;]*|[ \n\r\t]*$/, "")
       .replace(/;([ \n\r\t]+)|\1;/g, ";")
-      .replace(/(&((l|g)t|quot|#39))?;{2,}/g, function(a, b) {
-        return b ? b + ";;" : ";";
-      });
+      .replace(/(&((l|g)t|quot|#39))?;{2,}/g, (a, b) => (b ? b + ";;" : ";"));
   },
 
   /**
@@ -785,7 +779,7 @@ var utils = (UE.utils = {
    * @param { Object } target 目标对象
    * @return { Object } 附加了source对象所有属性的target对象
    */
-  clone: function(source, target) {
+  clone(source, target) {
     var tmp;
     target = target || {};
     for (var i in source) {
@@ -818,12 +812,12 @@ var utils = (UE.utils = {
    *
    * ```
    */
-  transUnitToPx: function(val) {
+  transUnitToPx(val) {
     if (!/(pt|cm)/.test(val)) {
       return val;
     }
     var unit;
-    val.replace(/([\d.]+)(\w+)/, function(str, v, u) {
+    val.replace(/([\d.]+)(\w+)/, (str, v, u) => {
       val = v;
       unit = u;
     });
@@ -853,7 +847,7 @@ var utils = (UE.utils = {
    *
    * ```
    */
-  domReady: (function() {
+  domReady: (() => {
     var fnArr = [];
 
     function doReady(doc) {
@@ -862,7 +856,7 @@ var utils = (UE.utils = {
       for (var ci; (ci = fnArr.pop()); ci()) {}
     }
 
-    return function(onready, win) {
+    return (onready, win) => {
       win = win || window;
       var doc = win.document;
       onready && fnArr.push(onready);
@@ -871,31 +865,31 @@ var utils = (UE.utils = {
       } else {
         doc.isReady && doReady(doc);
         if (browser.ie && browser.version != 11) {
-          (function() {
+          (function(...args) {
             if (doc.isReady) return;
             try {
               doc.documentElement.doScroll("left");
             } catch (error) {
-              setTimeout(arguments.callee, 0);
+              setTimeout(args.callee, 0);
               return;
             }
             doReady(doc);
           })();
-          win.attachEvent("onload", function() {
+          win.attachEvent("onload", () => {
             doReady(doc);
           });
         } else {
           doc.addEventListener(
             "DOMContentLoaded",
-            function() {
-              doc.removeEventListener("DOMContentLoaded", arguments.callee, false);
+            function(...args) {
+              doc.removeEventListener("DOMContentLoaded", args.callee, false);
               doReady(doc);
             },
             false
           );
           win.addEventListener(
             "load",
-            function() {
+            () => {
               doReady(doc);
             },
             false
@@ -917,7 +911,7 @@ var utils = (UE.utils = {
    */
   cssRule:
     browser.ie && browser.version != 11
-      ? function(key, style, doc) {
+      ? (key, style, doc) => {
           var indexList;
           var index;
           if (style === undefined || (style && style.nodeType && style.nodeType == 9)) {
@@ -952,7 +946,7 @@ var utils = (UE.utils = {
           }
           sheetStyle.cssText = style;
         }
-      : function(key, style, doc) {
+      : (key, style, doc) => {
           var head;
           var node;
           if (style === undefined || (style && style.nodeType && style.nodeType == 9)) {
@@ -983,12 +977,8 @@ var utils = (UE.utils = {
             doc.getElementsByTagName("head")[0].appendChild(node);
           }
         },
-  sort: function(array, compareFn) {
-    compareFn =
-      compareFn ||
-      function(item1, item2) {
-        return item1.localeCompare(item2);
-      };
+  sort(array, compareFn) {
+    compareFn = compareFn || ((item1, item2) => item1.localeCompare(item2));
     for (var i = 0, len = array.length; i < len; i++) {
       for (var j = i, length = array.length; j < length; j++) {
         if (compareFn(array[i], array[j]) > 0) {
@@ -1000,7 +990,7 @@ var utils = (UE.utils = {
     }
     return array;
   },
-  serializeParam: function(json) {
+  serializeParam(json) {
     var strArr = [];
     for (var i in json) {
       //忽略默认的几个参数
@@ -1017,7 +1007,7 @@ var utils = (UE.utils = {
     }
     return strArr.join("&");
   },
-  formatUrl: function(url) {
+  formatUrl(url) {
     var u = url.replace(/&&/g, "&");
     u = u.replace(/\?&/g, "?");
     u = u.replace(/&$/g, "");
@@ -1025,7 +1015,7 @@ var utils = (UE.utils = {
     u = u.replace(/&+/g, "&");
     return u;
   },
-  isCrossDomainUrl: function(url) {
+  isCrossDomainUrl(url) {
     var a = document.createElement("a");
     a.href = url;
     if (browser.ie) {
@@ -1037,7 +1027,7 @@ var utils = (UE.utils = {
       (a.port == location.port || (a.port == "80" && location.port == "") || (a.port == "" && location.port == "80"))
     );
   },
-  clearEmptyAttrs: function(obj) {
+  clearEmptyAttrs(obj) {
     for (var p in obj) {
       if (obj[p] === "") {
         delete obj[p];
@@ -1045,7 +1035,7 @@ var utils = (UE.utils = {
     }
     return obj;
   },
-  str2json: function(s) {
+  str2json(s) {
     if (!utils.isString(s)) return null;
     if (window.JSON) {
       return JSON.parse(s);
@@ -1053,7 +1043,7 @@ var utils = (UE.utils = {
       return new Function("return " + utils.trim(s || ""))();
     }
   },
-  json2str: (function() {
+  json2str: (() => {
     if (window.JSON) {
       return JSON.stringify;
     } else {
@@ -1069,7 +1059,7 @@ var utils = (UE.utils = {
 
       function encodeString(source) {
         if (/["\\\x00-\x1f]/.test(source)) {
-          source = source.replace(/["\\\x00-\x1f]/g, function(match) {
+          source = source.replace(/["\\\x00-\x1f]/g, match => {
             var c = escapeMap[match];
             if (c) {
               return c;
@@ -1130,7 +1120,7 @@ var utils = (UE.utils = {
         );
       }
 
-      return function(value) {
+      return value => {
         switch (typeof value) {
           case "undefined":
             return "undefined";
@@ -1223,8 +1213,6 @@ var utils = (UE.utils = {
  * @param { * } object 需要判断的对象
  * @return { Boolean } 给定的对象是否是普通对象
  */
-utils.each(["String", "Function", "Array", "Number", "RegExp", "Object", "Date"], function(v) {
-  UE.utils["is" + v] = function(obj) {
-    return Object.prototype.toString.apply(obj) == "[object " + v + "]";
-  };
+utils.each(["String", "Function", "Array", "Number", "RegExp", "Object", "Date"], v => {
+  UE.utils["is" + v] = obj => Object.prototype.toString.apply(obj) == "[object " + v + "]";
 });

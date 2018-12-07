@@ -42,7 +42,7 @@
  * ```
  */
 
-UE.plugins["link"] = function() {
+UE.plugins["link"] = () => {
   function optimize(range) {
     var start = range.startContainer;
     var end = range.endContainer;
@@ -56,7 +56,7 @@ UE.plugins["link"] = function() {
   }
 
   UE.commands["unlink"] = {
-    execCommand: function() {
+    execCommand() {
       var range = this.selection.getRange();
       var bookmark;
       if (range.collapsed && !domUtils.findParentByTagName(range.startContainer, "a", true)) {
@@ -69,7 +69,7 @@ UE.plugins["link"] = function() {
         .moveToBookmark(bookmark)
         .select();
     },
-    queryCommandState: function() {
+    queryCommandState() {
       return !this.highlight && this.queryCommandValue("link") ? 0 : -1;
     }
   };
@@ -115,7 +115,7 @@ UE.plugins["link"] = function() {
     }
   }
   UE.commands["link"] = {
-    execCommand: function(cmdName, opt) {
+    execCommand(cmdName, opt) {
       var range;
       opt._href && (opt._href = utils.unhtml(opt._href, /[<">]/g));
       opt.href && (opt.href = utils.unhtml(opt.href, /[<">]/g));
@@ -124,7 +124,7 @@ UE.plugins["link"] = function() {
       //闭合都不加占位符，如果加了会在a后边多个占位符节点，导致a是图片背景组成的列表，出现空白问题
       range.collapse().select(true);
     },
-    queryCommandValue: function() {
+    queryCommandValue() {
       var range = this.selection.getRange();
       var node;
       if (range.collapsed) {
@@ -175,7 +175,7 @@ UE.plugins["link"] = function() {
         return node;
       }
     },
-    queryCommandState: function() {
+    queryCommandState() {
       //判断如果是视频的话连接不可用
       //fix 853
       var img = this.selection.getRange().getClosedNode();

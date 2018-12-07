@@ -26,7 +26,7 @@
  * ```
  */
 UE.commands["touppercase"] = UE.commands["tolowercase"] = {
-  execCommand: function(cmd) {
+  execCommand(cmd) {
     var me = this;
     var rng = me.selection.getRange();
     if (rng.collapsed) {
@@ -35,9 +35,7 @@ UE.commands["touppercase"] = UE.commands["tolowercase"] = {
     var bk = rng.createBookmark();
     var bkEnd = bk.end;
 
-    var filterFn = function(node) {
-      return !domUtils.isBr(node) && !domUtils.isWhitespace(node);
-    };
+    var filterFn = node => !domUtils.isBr(node) && !domUtils.isWhitespace(node);
 
     var curNode = domUtils.getNextDomNode(bk.start, false, filterFn);
     while (curNode && domUtils.getPosition(curNode, bkEnd) & domUtils.POSITION_PRECEDING) {

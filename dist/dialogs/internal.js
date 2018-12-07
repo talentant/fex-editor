@@ -1,4 +1,4 @@
-(function() {
+(() => {
   var parent = window.parent;
   //dialog对象
   dialog = parent.$EDITORUI[window.frameElement.id.replace(/_iframe$/, "")];
@@ -15,12 +15,10 @@
 
   ajax = UE.ajax;
 
-  $G = function(id) {
-    return document.getElementById(id);
-  };
+  $G = id => document.getElementById(id);
   //focus元素
-  $focus = function(node) {
-    setTimeout(function() {
+  $focus = node => {
+    setTimeout(() => {
       if (browser.ie) {
         var r = node.createTextRange();
         r.collapse(false);
@@ -38,7 +36,7 @@
   });
   lang = editor.getLang(dialog.className.split("-")[2]);
   if (lang) {
-    domUtils.on(window, "load", function() {
+    domUtils.on(window, "load", () => {
       var langImgPath = editor.options.langPath + editor.options.lang + "/images/";
       //针对静态资源
       for (var i in lang["static"]) {

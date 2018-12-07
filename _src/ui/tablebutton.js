@@ -3,7 +3,7 @@
 ///import ui/popup.js
 ///import ui/tablepicker.js
 ///import ui/splitbutton.js
-(function() {
+(() => {
   var utils = baidu.editor.utils;
   var Popup = baidu.editor.ui.Popup;
   var TablePicker = baidu.editor.ui.TablePicker;
@@ -15,12 +15,12 @@
   });
 
   TableButton.prototype = {
-    initTableButton: function() {
+    initTableButton() {
       var me = this;
       this.popup = new Popup({
         content: new TablePicker({
           editor: me.editor,
-          onpicktable: function(t, numCols, numRows) {
+          onpicktable(t, numCols, numRows) {
             me._onPickTable(numCols, numRows);
           }
         }),
@@ -28,7 +28,7 @@
       });
       this.initSplitButton();
     },
-    _onPickTable: function(numCols, numRows) {
+    _onPickTable(numCols, numRows) {
       if (this.fireEvent("picktable", numCols, numRows) !== false) {
         this.popup.hide();
       }

@@ -19,7 +19,7 @@
  * @class Range
  */
 
-(function() {
+(() => {
   var guid = 0;
   var fillChar = domUtils.fillChar;
   var fillData;
@@ -282,7 +282,7 @@
      * </body>
      * ```
      */
-    cloneContents: function() {
+    cloneContents() {
       return this.collapsed ? null : execContentsAction(this, 0);
     },
 
@@ -321,7 +321,7 @@
      * </body>
      * ```
      */
-    deleteContents: function() {
+    deleteContents() {
       var txt;
       if (!this.collapsed) {
         execContentsAction(this, 1);
@@ -377,7 +377,7 @@
      *      </script>
      * </body>
      */
-    extractContents: function() {
+    extractContents() {
       return this.collapsed ? null : execContentsAction(this, 2);
     },
 
@@ -423,7 +423,7 @@
      * </script>
      * ```
      */
-    setStart: function(node, offset) {
+    setStart(node, offset) {
       return setEndPoint(true, node, offset, this);
     },
 
@@ -435,7 +435,7 @@
      * @see UE.dom.Range:setStart(Node,int)
      * @return { UE.dom.Range } 当前range对象
      */
-    setEnd: function(node, offset) {
+    setEnd(node, offset) {
       return setEndPoint(false, node, offset, this);
     },
 
@@ -461,7 +461,7 @@
      * </script>
      * ```
      */
-    setStartAfter: function(node) {
+    setStartAfter(node) {
       return this.setStart(node.parentNode, domUtils.getNodeIndex(node) + 1);
     },
 
@@ -473,7 +473,7 @@
      * @see UE.dom.Range:setStartAfter(Node)
      * @return { UE.dom.Range } 当前range对象
      */
-    setStartBefore: function(node) {
+    setStartBefore(node) {
       return this.setStart(node.parentNode, domUtils.getNodeIndex(node));
     },
 
@@ -500,7 +500,7 @@
      * </script>
      * ```
      */
-    setEndAfter: function(node) {
+    setEndAfter(node) {
       return this.setEnd(node.parentNode, domUtils.getNodeIndex(node) + 1);
     },
 
@@ -512,7 +512,7 @@
      * @see UE.dom.Range:setEndAfter(Node)
      * @return { UE.dom.Range } 当前range对象
      */
-    setEndBefore: function(node) {
+    setEndBefore(node) {
       return this.setEnd(node.parentNode, domUtils.getNodeIndex(node));
     },
 
@@ -540,7 +540,7 @@
      * </script>
      * ```
      */
-    setStartAtFirst: function(node) {
+    setStartAtFirst(node) {
       return this.setStart(node, 0);
     },
 
@@ -553,7 +553,7 @@
      * @see UE.dom.Range:setStartAtFirst(Node)
      * @return { UE.dom.Range } 当前range对象
      */
-    setStartAtLast: function(node) {
+    setStartAtLast(node) {
       return this.setStart(node, node.nodeType == 3 ? node.nodeValue.length : node.childNodes.length);
     },
 
@@ -566,7 +566,7 @@
      * @see UE.dom.Range:setStartAtFirst(Node)
      * @return { UE.dom.Range } 当前range对象
      */
-    setEndAtFirst: function(node) {
+    setEndAtFirst(node) {
       return this.setEnd(node, 0);
     },
 
@@ -579,7 +579,7 @@
      * @see UE.dom.Range:setStartAtFirst(Node)
      * @return { UE.dom.Range } 当前range对象
      */
-    setEndAtLast: function(node) {
+    setEndAtLast(node) {
       return this.setEnd(node, node.nodeType == 3 ? node.nodeValue.length : node.childNodes.length);
     },
 
@@ -606,7 +606,7 @@
      * </script>
      * ```
      */
-    selectNode: function(node) {
+    selectNode(node) {
       return this.setStartBefore(node).setEndAfter(node);
     },
 
@@ -633,7 +633,7 @@
      * </script>
      * ```
      */
-    selectNodeContents: function(node) {
+    selectNodeContents(node) {
       return this.setStart(node, 0).setEndAtLast(node);
     },
 
@@ -643,7 +643,7 @@
      * @remind 返回的range是一个全新的range对象， 其内部所有属性与当前被clone的range相同。
      * @return { UE.dom.Range } 当前range对象的一个副本
      */
-    cloneRange: function() {
+    cloneRange() {
       var me = this;
       return new Range(me.document).setStart(me.startContainer, me.startOffset).setEnd(me.endContainer, me.endOffset);
     },
@@ -694,7 +694,7 @@
      * </script>
      * ```
      */
-    collapse: function(toStart) {
+    collapse(toStart) {
       var me = this;
       if (toStart) {
         me.endContainer = me.startContainer;
@@ -745,7 +745,7 @@
      * @return { UE.dom.Range } 当前range对象
      * @see UE.dom.domUtils.Range:shrinkBoundary()
      */
-    shrinkBoundary: function(ignoreEnd) {
+    shrinkBoundary(ignoreEnd) {
       var me = this;
       var child;
       var collapsed = me.collapsed;
@@ -860,7 +860,7 @@
      * </body>
      * ```
      */
-    getCommonAncestor: function(includeSelf, ignoreTextNode) {
+    getCommonAncestor(includeSelf, ignoreTextNode) {
       var me = this;
       var start = me.startContainer;
       var end = me.endContainer;
@@ -920,7 +920,7 @@
      * </script>
      * ```
      */
-    trimBoundary: function(ignoreEnd) {
+    trimBoundary(ignoreEnd) {
       this.txtToElmBoundary();
       var start = this.startContainer;
       var offset = this.startOffset;
@@ -977,27 +977,15 @@
      *                      不论选区是否闭合， 都会执行该操作， 反之， 则不会对闭合的选区执行该操作
      * @return { UE.dom.Range } 当前range对象
      */
-    txtToElmBoundary: function(ignoreCollapsed) {
+    txtToElmBoundary(ignoreCollapsed) {
       function adjust(r, c) {
         var container = r[c + "Container"];
         var offset = r[c + "Offset"];
         if (container.nodeType == 3) {
           if (!offset) {
-            r[
-              "set" +
-                c.replace(/(\w)/, function(a) {
-                  return a.toUpperCase();
-                }) +
-                "Before"
-            ](container);
+            r["set" + c.replace(/(\w)/, a => a.toUpperCase()) + "Before"](container);
           } else if (offset >= container.nodeValue.length) {
-            r[
-              "set" +
-                c.replace(/(\w)/, function(a) {
-                  return a.toUpperCase();
-                }) +
-                "After"
-            ](container);
+            r["set" + c.replace(/(\w)/, a => a.toUpperCase()) + "After"](container);
           }
         }
       }
@@ -1016,7 +1004,7 @@
      * @remind 插入的节点可以是一个DocumentFragment依次插入多个节点
      * @return { UE.dom.Range } 当前range对象
      */
-    insertNode: function(node) {
+    insertNode(node) {
       var first = node;
       var length = 1;
       if (node.nodeType == 11) {
@@ -1053,7 +1041,7 @@
      * @return { UE.dom.Range } 当前range对象
      * @see UE.dom.Range:collapse(Boolean)
      */
-    setCursor: function(toEnd, noFillData) {
+    setCursor(toEnd, noFillData) {
       return this.collapse(!toEnd).select(noFillData);
     },
 
@@ -1066,7 +1054,7 @@
      *                          end => 结束标记的ID或引用， id => 当前标记的类型， 如果为true，则表示
      *                          返回的记录的类型为ID， 反之则为引用
      */
-    createBookmark: function(serialize, same) {
+    createBookmark(serialize, same) {
       var endNode;
       var startNode = this.document.createElement("span");
       startNode.style.cssText = "display:none;line-height:0px;";
@@ -1098,7 +1086,7 @@
      *  @return { UE.dom.Range } 当前range对象
      *  @see UE.dom.Range:createBookmark(Boolean)
      */
-    moveToBookmark: function(bookmark) {
+    moveToBookmark(bookmark) {
       var start = bookmark.id ? this.document.getElementById(bookmark.start) : bookmark.start;
       var end = bookmark.end && bookmark.id ? this.document.getElementById(bookmark.end) : bookmark.end;
       this.setStartBefore(start);
@@ -1126,7 +1114,7 @@
      * @param { Boolean } toBlock 是否要求扩大之后的父节点必须是block节点
      * @return { UE.dom.Range } 当前range对象
      */
-    enlarge: function(toBlock, stopFn) {
+    enlarge(toBlock, stopFn) {
       var isBody = domUtils.isBody;
       var pre;
       var node;
@@ -1210,7 +1198,7 @@
       }
       return this;
     },
-    enlargeToBlockElm: function(ignoreEnd) {
+    enlargeToBlockElm(ignoreEnd) {
       while (!domUtils.isBlockElm(this.startContainer)) {
         this.setStartBefore(this.startContainer);
       }
@@ -1227,7 +1215,7 @@
      * @return { UE.dom.Range } 当前range对象
      * @see UE.dom.Range:shrinkBoundary()
      */
-    adjustmentBoundary: function() {
+    adjustmentBoundary() {
       if (!this.collapsed) {
         while (
           !domUtils.isBody(this.startContainer) &&
@@ -1278,19 +1266,15 @@
      * <p>xxxx[<strong style="font-size:12px">xxxx</strong>]x</p>
      * ```
      */
-    applyInlineStyle: function(tagName, attrs, list) {
+    applyInlineStyle(tagName, attrs, list) {
       if (this.collapsed) return this;
       this.trimBoundary()
-        .enlarge(false, function(node) {
-          return node.nodeType == 1 && domUtils.isBlockElm(node);
-        })
+        .enlarge(false, node => node.nodeType == 1 && domUtils.isBlockElm(node))
         .adjustmentBoundary();
       var bookmark = this.createBookmark();
       var end = bookmark.end;
 
-      var filterFn = function(node) {
-        return node.nodeType == 1 ? node.tagName.toLowerCase() != "br" : !domUtils.isWhitespace(node);
-      };
+      var filterFn = node => (node.nodeType == 1 ? node.tagName.toLowerCase() != "br" : !domUtils.isWhitespace(node));
 
       var current = domUtils.getNextDomNode(bookmark.start, false, filterFn);
       var node;
@@ -1302,9 +1286,7 @@
           node = current;
           while (node && (node.nodeType == 3 || dtd[tagName][node.tagName]) && node !== end) {
             pre = node;
-            node = domUtils.getNextDomNode(node, node.nodeType == 1, null, function(parent) {
-              return dtd[tagName][parent.tagName];
-            });
+            node = domUtils.getNextDomNode(node, node.nodeType == 1, null, parent => dtd[tagName][parent.tagName]);
           }
           var frag = range.setEndAfter(pre).extractContents();
           var elm;
@@ -1326,7 +1308,7 @@
           elm.appendChild(frag);
           //针对嵌套span的全局样式指定，做容错处理
           if (elm.tagName == "SPAN" && attrs && attrs.style) {
-            utils.each(elm.getElementsByTagName("span"), function(s) {
+            utils.each(elm.getElementsByTagName("span"), s => {
               s.style.cssText = s.style.cssText + ";" + attrs.style;
             });
           }
@@ -1378,7 +1360,7 @@
      * @return { UE.dom.Range } 当前的range对象
      * @see UE.dom.Range:removeInlineStyle(String)
      */
-    removeInlineStyle: function(tagNames) {
+    removeInlineStyle(tagNames) {
       if (this.collapsed) return this;
       tagNames = utils.isArray(tagNames) ? tagNames : [tagNames];
       this.shrinkBoundary().adjustmentBoundary();
@@ -1430,15 +1412,11 @@
         end.parentNode.insertBefore(bookmark.end, end.nextSibling);
       }
 
-      var current = domUtils.getNextDomNode(bookmark.start, false, function(node) {
-        return node.nodeType == 1;
-      });
+      var current = domUtils.getNextDomNode(bookmark.start, false, node => node.nodeType == 1);
 
       var next;
       while (current && current !== bookmark.end) {
-        next = domUtils.getNextDomNode(current, true, function(node) {
-          return node.nodeType == 1;
-        });
+        next = domUtils.getNextDomNode(current, true, node => node.nodeType == 1);
         if (utils.indexOf(tagNames, current.tagName.toLowerCase()) > -1) {
           domUtils.remove(current, true);
         }
@@ -1452,7 +1430,7 @@
      * @method  getClosedNode
      * @return { Node | NULL } 如果当前选中的是自闭合节点， 则返回该节点， 否则返回NULL
      */
-    getClosedNode: function() {
+    getClosedNode() {
       var node;
       if (!this.collapsed) {
         var range = this.cloneRange()
@@ -1622,7 +1600,7 @@
      * @param { Number } offset 距离range开始位置处的偏移量， 如果为正数， 则向下偏移， 反之， 则向上偏移
      * @return { UE.dom.Range } 当前Range对象
      */
-    scrollToView: function(win, offset) {
+    scrollToView(win, offset) {
       win = win ? window : domUtils.getWindow(this.document);
       var me = this;
       var span = me.document.createElement("span");
@@ -1640,7 +1618,7 @@
      * @method inFillChar
      * @return { Boolean } 如果是占位符返回true，否则返回false
      */
-    inFillChar: function() {
+    inFillChar() {
       var start = this.startContainer;
       if (
         this.collapsed &&
@@ -1676,16 +1654,14 @@
      * </body>
      * ```
      */
-    createAddress: function(ignoreEnd, ignoreTxt) {
+    createAddress(ignoreEnd, ignoreTxt) {
       var addr = {};
       var me = this;
 
       function getAddress(isStart) {
         var node = isStart ? me.startContainer : me.endContainer;
 
-        var parents = domUtils.findParents(node, true, function(node) {
-          return !domUtils.isBody(node);
-        });
+        var parents = domUtils.findParents(node, true, node => !domUtils.isBody(node));
 
         var addrs = [];
         for (var i = 0, ci; (ci = parents[i++]); ) {
@@ -1767,7 +1743,7 @@
      * </body>
      * ```
      */
-    moveToAddress: function(addr, ignoreEnd) {
+    moveToAddress(addr, ignoreEnd) {
       var me = this;
       function getNode(address, isStart) {
         var tmpNode = me.document.body;
@@ -1807,7 +1783,7 @@
      * @param { UE.dom.Range } 需要判断的Range对象
      * @return { Boolean } 如果给定的Range对象与当前Range对象表示的是同一个选区， 则返回true， 否则返回false
      */
-    equals: function(rng) {
+    equals(rng) {
       for (var p in this) {
         if (this.hasOwnProperty(p)) {
           if (this[p] !== rng[p]) return false;
@@ -1896,7 +1872,7 @@
      * </script>
      * ```
      */
-    traversal: function(doFn, filterFn) {
+    traversal(doFn, filterFn) {
       if (this.collapsed) return this;
       var bookmark = this.createBookmark();
       var end = bookmark.end;

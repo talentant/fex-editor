@@ -23,7 +23,7 @@ UE.plugins["defaultfilter"] = function() {
       return false;
     }
     //进行默认的处理
-    root.traversal(function(node) {
+    root.traversal(node => {
       if (node.type == "element") {
         if (
           !dtd.$cdata[node.tagName] &&
@@ -91,7 +91,7 @@ UE.plugins["defaultfilter"] = function() {
             //
             //                        }
             //p标签不允许嵌套
-            utils.each(node.children, function(n) {
+            utils.each(node.children, n => {
               if (n.type == "element" && n.tagName == "p") {
                 var next = n.nextSibling();
                 node.parentNode.insertAfter(n, node);
@@ -153,7 +153,7 @@ UE.plugins["defaultfilter"] = function() {
               node.setAttr();
             }
             var tmpNodes = node.getNodesByTagName("ol ul");
-            UE.utils.each(tmpNodes, function(n) {
+            UE.utils.each(tmpNodes, n => {
               node.parentNode.insertAfter(n, node);
             });
             break;
@@ -178,9 +178,9 @@ UE.plugins["defaultfilter"] = function() {
   });
 
   //从编辑器出去的内容处理
-  me.addOutputRule(function(root) {
+  me.addOutputRule(root => {
     var val;
-    root.traversal(function(node) {
+    root.traversal(node => {
       if (node.type == "element") {
         if (
           me.options.autoClearEmptyNode &&
@@ -226,7 +226,7 @@ UE.plugins["defaultfilter"] = function() {
               if (cssStyle) {
                 node.setAttr(
                   "style",
-                  cssStyle.replace(/rgba?\(([\d,\s]+)\)/g, function(a, value) {
+                  cssStyle.replace(/rgba?\(([\d,\s]+)\)/g, (a, value) => {
                     var array = value.split(",");
                     if (array.length > 3) return "";
                     value = "#";

@@ -2,7 +2,7 @@
 ///commands 全屏
 ///commandsName FullScreen
 ///commandsTitle  全屏
-(function() {
+(() => {
   var utils = baidu.editor.utils;
   var uiUtils = baidu.editor.ui.uiUtils;
   var UIBase = baidu.editor.ui.UIBase;
@@ -16,7 +16,7 @@
 
   EditorUI.prototype = {
     uiName: "editor",
-    initEditorUI: function() {
+    initEditorUI() {
       this.editor.ui = this;
       this._dialogs = {};
       this.initUIBase();
@@ -24,12 +24,10 @@
       var editor = this.editor;
       var me = this;
 
-      editor.addListener("ready", function() {
+      editor.addListener("ready", () => {
         //提供getDialog方法
-        editor.getDialog = function(name) {
-          return editor.ui._dialogs[name + "Dialog"];
-        };
-        domUtils.on(editor.window, "scroll", function(evt) {
+        editor.getDialog = name => editor.ui._dialogs[name + "Dialog"];
+        domUtils.on(editor.window, "scroll", evt => {
           baidu.editor.ui.Popup.postHide(evt);
         });
         //提供编辑器实时宽高(全屏时宽高不变化)
@@ -45,9 +43,9 @@
             '<div class="edui-editor-breadcrumb">' + editor.getLang("elementPathTip") + ":</div>";
         }
         if (editor.options.wordCount) {
-          function countFn() {
+          function countFn(...args) {
             setCount(editor, me);
-            domUtils.un(editor.document, "click", arguments.callee);
+            domUtils.un(editor.document, "click", args.callee);
           }
           domUtils.on(editor.document, "click", countFn);
           editor.ui.getDom("wordcount").innerHTML = editor.getLang("wordCountTip");
@@ -71,12 +69,12 @@
         editor.fireEvent("selectionchange", false, true);
       });
 
-      editor.addListener("mousedown", function(t, evt) {
+      editor.addListener("mousedown", (t, evt) => {
         var el = evt.target || evt.srcElement;
         baidu.editor.ui.Popup.postHide(evt, el);
         baidu.editor.ui.ShortCutMenu.postHide(evt);
       });
-      editor.addListener("delcells", function() {
+      editor.addListener("delcells", () => {
         if (UE.ui["edittip"]) {
           new UE.ui["edittip"](editor);
         }
@@ -86,12 +84,12 @@
       var pastePop;
       var isPaste = false;
       var timer;
-      editor.addListener("afterpaste", function() {
+      editor.addListener("afterpaste", () => {
         if (editor.queryCommandState("pasteplain")) return;
         if (baidu.editor.ui.PastePicker) {
           pastePop = new baidu.editor.ui.Popup({
-            content: new baidu.editor.ui.PastePicker({editor: editor}),
-            editor: editor,
+            content: new baidu.editor.ui.PastePicker({editor}),
+            editor,
             className: "edui-wordpastepop"
           });
           pastePop.render();
@@ -99,9 +97,9 @@
         isPaste = true;
       });
 
-      editor.addListener("afterinserthtml", function() {
+      editor.addListener("afterinserthtml", () => {
         clearTimeout(timer);
-        timer = setTimeout(function() {
+        timer = setTimeout(() => {
           if (pastePop && (isPaste || editor.ui._isTransfer)) {
             if (pastePop.isHidden()) {
               var span = domUtils.createElement(editor.document, "span", {
@@ -122,10 +120,10 @@
           }
         }, 200);
       });
-      editor.addListener("contextmenu", function(t, evt) {
+      editor.addListener("contextmenu", (t, evt) => {
         baidu.editor.ui.Popup.postHide(evt);
       });
-      editor.addListener("keydown", function(t, evt) {
+      editor.addListener("keydown", (t, evt) => {
         if (pastePop) pastePop.dispose(evt);
         var keyCode = evt.keyCode || evt.which;
         if (evt.altKey && keyCode == 90) {
@@ -159,7 +157,7 @@
         }
       }
 
-      editor.addListener("selectionchange", function() {
+      editor.addListener("selectionchange", () => {
         if (editor.options.elementPathEnabled) {
           me[(editor.queryCommandState("elementpath") == -1 ? "dis" : "en") + "ableElementPath"]();
         }
@@ -168,22 +166,22 @@
         }
       });
       var popup = new baidu.editor.ui.Popup({
-        editor: editor,
+        editor,
         content: "",
         className: "edui-bubble",
-        _onEditButtonClick: function() {
+        _onEditButtonClick() {
           this.hide();
           editor.ui._dialogs.linkDialog.open();
         },
-        _onImgEditButtonClick: function(name) {
+        _onImgEditButtonClick(name) {
           this.hide();
           editor.ui._dialogs[name] && editor.ui._dialogs[name].open();
         },
-        _onImgSetFloat: function(value) {
+        _onImgSetFloat(value) {
           this.hide();
           editor.execCommand("imagefloat", value);
         },
-        _setIframeAlign: function(value) {
+        _setIframeAlign(value) {
           var frame = popup.anchorEl;
           var newFrame = frame.cloneNode(true);
           switch (value) {
@@ -202,7 +200,7 @@
           popup.anchorEl = newFrame;
           popup.showAnchor(popup.anchorEl);
         },
-        _updateIframe: function() {
+        _updateIframe() {
           var frame = (editor._iframe = popup.anchorEl);
           if (domUtils.hasClass(frame, "ueditor_baidumap")) {
             editor.selection
@@ -216,11 +214,11 @@
             popup.hide();
           }
         },
-        _onRemoveButtonClick: function(cmdName) {
+        _onRemoveButtonClick(cmdName) {
           editor.execCommand(cmdName);
           this.hide();
         },
-        queryAutoHide: function(el) {
+        queryAutoHide(el) {
           if (el && el.ownerDocument == editor.document) {
             if (el.tagName.toLowerCase() == "img" || domUtils.findParentByTagName(el, "a", true)) {
               return el !== popup.anchorEl;
@@ -231,7 +229,7 @@
       });
       popup.render();
       if (editor.options.imagePopup) {
-        editor.addListener("mouseover", function(t, evt) {
+        editor.addListener("mouseover", (t, evt) => {
           evt = evt || window.event;
           var el = evt.target || evt.srcElement;
           if (editor.ui._dialogs.insertframeDialog && /iframe/gi.test(el.tagName)) {
@@ -258,7 +256,7 @@
             }
           }
         });
-        editor.addListener("selectionchange", function(t, causeByUi) {
+        editor.addListener("selectionchange", (t, causeByUi) => {
           if (!causeByUi) return;
           var html = "";
           var str = "";
@@ -365,7 +363,7 @@
         });
       }
     },
-    _initToolbars: function() {
+    _initToolbars() {
       var editor = this.editor;
       var toolbars = this.toolbars || [];
       var toolbarUis = [];
@@ -402,7 +400,7 @@
                   } else {
                     extraUIs.push({
                       index: ui.index,
-                      itemUI: itemUI
+                      itemUI
                     });
                   }
                 }
@@ -429,12 +427,12 @@
 
       //接受外部定制的UI
 
-      utils.each(extraUIs, function(obj) {
+      utils.each(extraUIs, obj => {
         toolbarUi.add(obj.itemUI, obj.index);
       });
       this.toolbars = toolbarUis;
     },
-    getHtmlTpl: function() {
+    getHtmlTpl() {
       return (
         '<div id="##" class="%%">' +
         '<div id="##_toolbarbox" class="%%-toolbarbox">' +
@@ -465,17 +463,17 @@
         "</div>"
       );
     },
-    showWordImageDialog: function() {
+    showWordImageDialog() {
       this._dialogs["wordimageDialog"].open();
     },
-    renderToolbarBoxHtml: function() {
+    renderToolbarBoxHtml() {
       var buff = [];
       for (var i = 0; i < this.toolbars.length; i++) {
         buff.push(this.toolbars[i].renderHtml());
       }
       return buff.join("");
     },
-    setFullScreen: function(fullscreen) {
+    setFullScreen(fullscreen) {
       var editor = this.editor;
       var container = editor.container.parentNode.parentNode;
       if (this._fullscreen != fullscreen) {
@@ -532,9 +530,9 @@
           var input = document.createElement("input");
           document.body.appendChild(input);
           editor.body.contentEditable = false;
-          setTimeout(function() {
+          setTimeout(() => {
             input.focus();
-            setTimeout(function() {
+            setTimeout(() => {
               editor.body.contentEditable = true;
               editor.fireEvent("fullscreenchanged", fullscreen);
               editor.selection
@@ -553,7 +551,7 @@
         }
       }
     },
-    _updateFullScreen: function() {
+    _updateFullScreen() {
       if (this._fullscreen) {
         var vpRect = uiUtils.getViewportRect();
         this.getDom().style.cssText =
@@ -584,7 +582,7 @@
         }
       }
     },
-    _updateElementPath: function() {
+    _updateElementPath() {
       var bottom = this.getDom("elementpath");
       var list;
       if (this.elementPathEnabled && (list = this.editor.queryCommandValue("elementpath"))) {
@@ -608,19 +606,19 @@
         bottom.style.display = "none";
       }
     },
-    disableElementPath: function() {
+    disableElementPath() {
       var bottom = this.getDom("elementpath");
       bottom.innerHTML = "";
       bottom.style.display = "none";
       this.elementPathEnabled = false;
     },
-    enableElementPath: function() {
+    enableElementPath() {
       var bottom = this.getDom("elementpath");
       bottom.style.display = "";
       this.elementPathEnabled = true;
       this._updateElementPath();
     },
-    _scale: function() {
+    _scale() {
       var doc = document;
       var editor = this.editor;
       var editorHolder = editor.container;
@@ -660,7 +658,7 @@
 
       var me = this;
       //by xuheng 全屏时关掉缩放
-      this.editor.addListener("fullscreenchanged", function(e, fullScreen) {
+      this.editor.addListener("fullscreenchanged", (e, fullScreen) => {
         if (fullScreen) {
           me.disableScale();
         } else {
@@ -727,10 +725,10 @@
         domUtils.un(scale, "mousedown", down);
       };
     },
-    isFullScreen: function() {
+    isFullScreen() {
       return this._fullscreen;
     },
-    postRender: function() {
+    postRender() {
       UIBase.prototype.postRender.call(this);
       for (var i = 0; i < this.toolbars.length; i++) {
         this.toolbars[i].postRender();
@@ -739,21 +737,21 @@
       var timerId;
       var domUtils = baidu.editor.dom.domUtils;
 
-      var updateFullScreenTime = function() {
+      var updateFullScreenTime = () => {
         clearTimeout(timerId);
-        timerId = setTimeout(function() {
+        timerId = setTimeout(() => {
           me._updateFullScreen();
         });
       };
 
       domUtils.on(window, "resize", updateFullScreenTime);
 
-      me.addListener("destroy", function() {
+      me.addListener("destroy", () => {
         domUtils.un(window, "resize", updateFullScreenTime);
         clearTimeout(timerId);
       });
     },
-    showToolbarMsg: function(msg, flag) {
+    showToolbarMsg(msg, flag) {
       this.getDom("toolbarmsg_label").innerHTML = msg;
       this.getDom("toolbarmsg").style.display = "";
       //
@@ -762,13 +760,13 @@
         w.style.display = "none";
       }
     },
-    hideToolbarMsg: function() {
+    hideToolbarMsg() {
       this.getDom("toolbarmsg").style.display = "none";
     },
-    mapUrl: function(url) {
+    mapUrl(url) {
       return url ? url.replace("~/", this.editor.options.UEDITOR_HOME_URL || "") : "";
     },
-    triggerLayout: function() {
+    triggerLayout() {
       var dom = this.getDom();
       if (dom.style.zoom == "1") {
         dom.style.zoom = "100%";
@@ -781,7 +779,7 @@
 
   var instances = {};
 
-  UE.ui.Editor = function(options) {
+  UE.ui.Editor = options => {
     var editor = new UE.Editor(options);
     editor.options.editor = editor;
     utils.loadFile(document, {
@@ -792,12 +790,12 @@
     });
 
     var oldRender = editor.render;
-    editor.render = function(holder) {
+    editor.render = holder => {
       if (holder.constructor === String) {
         editor.key = holder;
         instances[holder] = editor;
       }
-      utils.domReady(function() {
+      utils.domReady(() => {
         editor.langIsReady ? renderUI() : editor.addListener("langReady", renderUI);
         function renderUI() {
           editor.setOpt({
@@ -899,7 +897,7 @@
    *  UE.getEditor('containerId'); //返回刚创建的实例
    *
    */
-  UE.getEditor = function(id, opt) {
+  UE.getEditor = (id, opt) => {
     var editor = instances[id];
     if (!editor) {
       editor = instances[id] = new UE.ui.Editor(opt);
@@ -908,7 +906,7 @@
     return editor;
   };
 
-  UE.delEditor = function(id) {
+  UE.delEditor = id => {
     var editor;
     if ((editor = instances[id])) {
       editor.key && editor.destroy();
@@ -916,12 +914,12 @@
     }
   };
 
-  UE.registerUI = function(uiName, fn, index, editorId) {
-    utils.each(uiName.split(/\s+/), function(name) {
+  UE.registerUI = (uiName, fn, index, editorId) => {
+    utils.each(uiName.split(/\s+/), name => {
       baidu.editor.ui[name] = {
         id: editorId,
         execFn: fn,
-        index: index
+        index
       };
     });
   };

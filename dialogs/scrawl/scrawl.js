@@ -8,7 +8,7 @@
 var scrawl = function(options) {
   options && this.initOptions(options);
 };
-(function() {
+(() => {
   var canvas = $G("J_brushBoard"); //undo redo指针
   var context = canvas.getContext("2d");
 
@@ -22,7 +22,7 @@ var scrawl = function(options) {
     brushWidth: -1, //画笔粗细
     brushColor: "", //画笔颜色
 
-    initOptions: function(options) {
+    initOptions(options) {
       var me = this;
       me.originalState(options); //初始页面状态
       me._buildToolbarColor(options.colorList); //动态生成颜色选择集合
@@ -42,7 +42,7 @@ var scrawl = function(options) {
       me._clearSelection(); //清楚选中状态
     },
 
-    originalState: function(options) {
+    originalState(options) {
       var me = this;
 
       me.brushWidth = options.drawBrushSize; //同步画笔粗细
@@ -54,7 +54,7 @@ var scrawl = function(options) {
       context.lineCap = "round"; //去除锯齿
       context.fill();
     },
-    _buildToolbarColor: function(colorList) {
+    _buildToolbarColor(colorList) {
       var tmp = null;
       var arr = [];
       arr.push("<table id='J_colorList'>");
@@ -72,7 +72,7 @@ var scrawl = function(options) {
       $G("J_colorBar").innerHTML = arr.join("");
     },
 
-    _addBoardListener: function(saveNum) {
+    _addBoardListener(saveNum) {
       var me = this;
       var margin = 0;
       var startX = -1;
@@ -88,7 +88,7 @@ var scrawl = function(options) {
       drawStep.push(context.getImageData(0, 0, context.canvas.width, context.canvas.height));
       drawStepIndex += 1;
 
-      domUtils.on(canvas, ["mousedown", "mousemove", "mouseup", "mouseout"], function(e) {
+      domUtils.on(canvas, ["mousedown", "mousemove", "mouseup", "mouseout"], e => {
         button = browser.webkit ? e.which : buttonPress;
         switch (e.type) {
           case "mousedown":
@@ -150,9 +150,9 @@ var scrawl = function(options) {
         }
       });
     },
-    _addOPerateListener: function(saveNum) {
+    _addOPerateListener(saveNum) {
       var me = this;
-      domUtils.on($G("J_previousStep"), "click", function() {
+      domUtils.on($G("J_previousStep"), "click", () => {
         if (drawStepIndex > 1) {
           drawStepIndex -= 1;
           context.clearRect(0, 0, context.canvas.width, context.canvas.height);
@@ -161,7 +161,7 @@ var scrawl = function(options) {
           drawStepIndex == 1 && me.btn2disable("J_previousStep");
         }
       });
-      domUtils.on($G("J_nextStep"), "click", function() {
+      domUtils.on($G("J_nextStep"), "click", () => {
         if (drawStepIndex > 0 && drawStepIndex < drawStep.length) {
           context.clearRect(0, 0, context.canvas.width, context.canvas.height);
           context.putImageData(drawStep[drawStepIndex], 0, 0);
@@ -170,7 +170,7 @@ var scrawl = function(options) {
           drawStepIndex == drawStep.length && me.btn2disable("J_nextStep");
         }
       });
-      domUtils.on($G("J_clearBoard"), "click", function() {
+      domUtils.on($G("J_clearBoard"), "click", () => {
         context.clearRect(0, 0, context.canvas.width, context.canvas.height);
         drawStep = [];
         me._saveOPerate(saveNum);
@@ -181,9 +181,9 @@ var scrawl = function(options) {
         me.btn2disable("J_clearBoard");
       });
     },
-    _addColorBarListener: function() {
+    _addColorBarListener() {
       var me = this;
-      domUtils.on($G("J_colorBar"), "click", function(e) {
+      domUtils.on($G("J_colorBar"), "click", e => {
         var target = me.getTarget(e);
         var color = target.title;
         if (!!color) {
@@ -196,9 +196,9 @@ var scrawl = function(options) {
         }
       });
     },
-    _addBrushBarListener: function() {
+    _addBrushBarListener() {
       var me = this;
-      domUtils.on($G("J_brushBar"), "click", function(e) {
+      domUtils.on($G("J_brushBar"), "click", e => {
         var target = me.getTarget(e);
         var size = browser.ie ? target.innerText : target.text;
         if (!!size) {
@@ -211,9 +211,9 @@ var scrawl = function(options) {
         }
       });
     },
-    _addEraserBarListener: function() {
+    _addEraserBarListener() {
       var me = this;
-      domUtils.on($G("J_eraserBar"), "click", function(e) {
+      domUtils.on($G("J_eraserBar"), "click", e => {
         var target = me.getTarget(e);
         var size = browser.ie ? target.innerText : target.text;
         if (!!size) {
@@ -225,20 +225,20 @@ var scrawl = function(options) {
         }
       });
     },
-    _addAddImgListener: function() {
+    _addAddImgListener() {
       var file = $G("J_imgTxt");
       if (!window.FileReader) {
         $G("J_addImg").style.display = "none";
         $G("J_removeImg").style.display = "none";
         $G("J_sacleBoard").style.display = "none";
       }
-      domUtils.on(file, "change", function(e) {
+      domUtils.on(file, "change", e => {
         var frm = file.parentNode;
         addMaskLayer(lang.backgroundUploading);
 
         var target = e.target || e.srcElement;
         var reader = new FileReader();
-        reader.onload = function(evt) {
+        reader.onload = evt => {
           var target = evt.target || evt.srcElement;
           ue_callback(target.result, "SUCCESS");
         };
@@ -246,16 +246,16 @@ var scrawl = function(options) {
         frm.reset();
       });
     },
-    _addRemoveImgListenter: function() {
+    _addRemoveImgListenter() {
       var me = this;
-      domUtils.on($G("J_removeImg"), "click", function() {
+      domUtils.on($G("J_removeImg"), "click", () => {
         $G("J_picBoard").innerHTML = "";
         me.btn2disable("J_removeImg");
         me.btn2disable("J_sacleBoard");
       });
     },
-    _addScalePicListenter: function() {
-      domUtils.on($G("J_sacleBoard"), "click", function() {
+    _addScalePicListenter() {
+      domUtils.on($G("J_sacleBoard"), "click", () => {
         var picBoard = $G("J_picBoard");
         var scaleCon = $G("J_scaleCon");
         var img = picBoard.children[0];
@@ -285,21 +285,21 @@ var scrawl = function(options) {
         }
       });
     },
-    _addClearSelectionListenter: function() {
+    _addClearSelectionListenter() {
       var doc = document;
-      domUtils.on(doc, "mousemove", function(e) {
+      domUtils.on(doc, "mousemove", e => {
         if (browser.ie && browser.version < 11) doc.selection.clear();
         else window.getSelection().removeAllRanges();
       });
     },
-    _clearSelection: function() {
+    _clearSelection() {
       var list = ["J_operateBar", "J_colorBar", "J_brushBar", "J_eraserBar", "J_picBoard"];
       for (var i = 0, group; (group = list[i++]); ) {
         domUtils.unSelectable($G(group));
       }
     },
 
-    _saveOPerate: function(saveNum) {
+    _saveOPerate(saveNum) {
       var me = this;
       if (drawStep.length <= saveNum) {
         if (drawStepIndex < drawStep.length) {
@@ -317,7 +317,7 @@ var scrawl = function(options) {
       me.btn2Highlight("J_clearBoard");
     },
 
-    _originalColorSelect: function(title) {
+    _originalColorSelect(title) {
       var colorList = $G("J_colorList").getElementsByTagName("td");
       for (var j = 0, cell; (cell = colorList[j++]); ) {
         if (cell.children[0].title.toLowerCase() == title) {
@@ -325,7 +325,7 @@ var scrawl = function(options) {
         }
       }
     },
-    _originalBrushSelect: function(text) {
+    _originalBrushSelect(text) {
       var brushList = $G("J_brushBar").children;
       for (var i = 0, ele; (ele = brushList[i++]); ) {
         if (ele.tagName.toLowerCase() == "a") {
@@ -336,7 +336,7 @@ var scrawl = function(options) {
         }
       }
     },
-    _addColorSelect: function(target) {
+    _addColorSelect(target) {
       var me = this;
       var colorList = $G("J_colorList").getElementsByTagName("td");
       var eraserList = $G("J_eraserBar").children;
@@ -363,7 +363,7 @@ var scrawl = function(options) {
       target.style.opacity = 1;
       target.blur();
     },
-    _addBESelect: function(target) {
+    _addBESelect(target) {
       var brushList = $G("J_brushBar").children;
       var eraserList = $G("J_eraserBar").children;
 
@@ -381,7 +381,7 @@ var scrawl = function(options) {
       target.style.opacity = 1;
       target.blur();
     },
-    getCanvasData: function() {
+    getCanvasData() {
       var picContainer = $G("J_picBoard");
       var img = picContainer.children[0];
       if (img) {
@@ -407,15 +407,15 @@ var scrawl = function(options) {
         return "";
       }
     },
-    btn2Highlight: function(id) {
+    btn2Highlight(id) {
       var cur = $G(id);
       cur.className.indexOf("H") == -1 && (cur.className += "H");
     },
-    btn2disable: function(id) {
+    btn2disable(id) {
       var cur = $G(id);
       cur.className.indexOf("H") != -1 && (cur.className = cur.className.replace("H", ""));
     },
-    getTarget: function(evt) {
+    getTarget(evt) {
       return evt.target || evt.srcElement;
     }
   };
@@ -425,7 +425,7 @@ var ScaleBoy = function() {
   this.dom = null;
   this.scalingElement = null;
 };
-(function() {
+(() => {
   function _appendStyle() {
     var doc = document;
     var head = doc.getElementsByTagName("head")[0];
@@ -478,13 +478,13 @@ var ScaleBoy = function() {
     [0, 0, 1, 1]
   ];
   ScaleBoy.prototype = {
-    init: function() {
+    init() {
       _appendStyle();
       var me = this;
       var scale = (me.dom = _getDom());
 
       me.scaleMousemove.fp = me;
-      domUtils.on(scale, "mousedown", function(e) {
+      domUtils.on(scale, "mousedown", e => {
         var target = e.target || e.srcElement;
         me.start = {x: e.clientX, y: e.clientY};
         if (target.className.indexOf("hand") != -1) {
@@ -493,7 +493,7 @@ var ScaleBoy = function() {
         domUtils.on(document.body, "mousemove", me.scaleMousemove);
         e.stopPropagation ? e.stopPropagation() : (e.cancelBubble = true);
       });
-      domUtils.on(document.body, "mouseup", function(e) {
+      domUtils.on(document.body, "mouseup", e => {
         if (me.start) {
           domUtils.un(document.body, "mousemove", me.scaleMousemove);
           if (me.moved) {
@@ -509,7 +509,7 @@ var ScaleBoy = function() {
       });
       return scale;
     },
-    startScale: function(objElement) {
+    startScale(objElement) {
       var me = this;
       var Idom = me.dom;
 
@@ -525,7 +525,7 @@ var ScaleBoy = function() {
         "px;";
       me.scalingElement = objElement;
     },
-    updateScaledElement: function(objStyle) {
+    updateScaledElement(objStyle) {
       var cur = this.scalingElement;
       var pos = objStyle.position;
       var size = objStyle.size;
@@ -538,7 +538,7 @@ var ScaleBoy = function() {
         size.h && (cur.style.height = size.h);
       }
     },
-    updateStyleByDir: function(dir, offset) {
+    updateStyleByDir(dir, offset) {
       var me = this;
       var dom = me.dom;
       var tmp;
@@ -564,7 +564,7 @@ var ScaleBoy = function() {
         me.updateScaledElement({position: {x: dom.style.left, y: dom.style.top}});
       }
     },
-    scaleMousemove: function(e) {
+    scaleMousemove(e) {
       var me = arguments.callee.fp;
       var start = me.start;
       var dir = me.dir || "def";
@@ -574,7 +574,7 @@ var ScaleBoy = function() {
       arguments.callee.fp.start = {x: e.clientX, y: e.clientY};
       arguments.callee.fp.moved = 1;
     },
-    _validScaledProp: function(prop, value) {
+    _validScaledProp(prop, value) {
       var ele = this.dom;
       var wrap = $G("J_picBoard");
 
@@ -672,7 +672,7 @@ function exec(scrawlObj) {
     if (!!base64) {
       var options = {
         timeout: 100000,
-        onsuccess: function(xhr) {
+        onsuccess(xhr) {
           if (!scrawlObj.isCancelScrawl) {
             var responseObj;
             responseObj = eval("(" + xhr.responseText + ")");
@@ -689,7 +689,7 @@ function exec(scrawlObj) {
             }
           }
         },
-        onerror: function() {
+        onerror() {
           alert(lang.imageError);
           dialog.close();
         }

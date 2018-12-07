@@ -5,7 +5,7 @@
  * Time: 下午4:55
  * To change this template use File | Settings | File Templates.
  */
-(function() {
+(() => {
   var title = $G("J_title");
   var titleCol = $G("J_titleCol");
   var caption = $G("J_caption");
@@ -21,13 +21,13 @@
     me.init();
   };
   editTable.prototype = {
-    init: function() {
+    init() {
       var colorPiker = new UE.ui.ColorPicker({
-        editor: editor
+        editor
       });
 
       var colorPop = new UE.ui.Popup({
-        editor: editor,
+        editor,
         content: colorPiker
       });
 
@@ -54,23 +54,23 @@
       domUtils.on(autoSizeContent, "click", me.autoSizeContentHanler);
       domUtils.on(autoSizePage, "click", me.autoSizePageHanler);
 
-      domUtils.on(tone, "click", function() {
+      domUtils.on(tone, "click", () => {
         colorPop.showAnchor(tone);
       });
-      domUtils.on(document, "mousedown", function() {
+      domUtils.on(document, "mousedown", () => {
         colorPop.hide();
       });
-      colorPiker.addListener("pickcolor", function() {
-        me.setColor(arguments[1]);
+      colorPiker.addListener("pickcolor", function(...args) {
+        me.setColor(args[1]);
         colorPop.hide();
       });
-      colorPiker.addListener("picknocolor", function() {
+      colorPiker.addListener("picknocolor", () => {
         me.setColor("");
         colorPop.hide();
       });
     },
 
-    createTable: function(hasTitle, hasTitleCol, hasCaption) {
+    createTable(hasTitle, hasTitleCol, hasCaption) {
       var arr = [];
       var sortSpan = "<span>^</span>";
       arr.push("<table id='J_example'>");
@@ -101,7 +101,7 @@
       preview.innerHTML = arr.join("");
       this.updateSortSpan();
     },
-    titleHanler: function() {
+    titleHanler() {
       var example = $G("J_example");
       var frg = document.createDocumentFragment();
       var color = domUtils.getComputedStyle(domUtils.getElementsByTagName(example, "td")[0], "border-color");
@@ -121,7 +121,7 @@
       me.setColor(color);
       me.updateSortSpan();
     },
-    titleColHanler: function() {
+    titleColHanler() {
       var example = $G("J_example");
       var color = domUtils.getComputedStyle(domUtils.getElementsByTagName(example, "td")[0], "border-color");
       var colArr = example.rows;
@@ -141,7 +141,7 @@
       me.setColor(color);
       me.updateSortSpan();
     },
-    captionHanler: function() {
+    captionHanler() {
       var example = $G("J_example");
       if (caption.checked) {
         var row = document.createElement("caption");
@@ -151,38 +151,38 @@
         domUtils.remove(domUtils.getElementsByTagName(example, "caption")[0]);
       }
     },
-    sorttableHanler: function() {
+    sorttableHanler() {
       me.updateSortSpan();
     },
-    autoSizeContentHanler: function() {
+    autoSizeContentHanler() {
       var example = $G("J_example");
       example.removeAttribute("width");
     },
-    autoSizePageHanler: function() {
+    autoSizePageHanler() {
       var example = $G("J_example");
       var tds = example.getElementsByTagName(example, "td");
-      utils.each(tds, function(td) {
+      utils.each(tds, td => {
         td.removeAttribute("width");
       });
       example.setAttribute("width", "100%");
     },
-    updateSortSpan: function() {
+    updateSortSpan() {
       var example = $G("J_example");
       var row = example.rows[0];
 
       var spans = domUtils.getElementsByTagName(example, "span");
-      utils.each(spans, function(span) {
+      utils.each(spans, span => {
         span.parentNode.removeChild(span);
       });
       if (sorttable.checked) {
-        utils.each(row.cells, function(cell, i) {
+        utils.each(row.cells, (cell, i) => {
           var span = document.createElement("span");
           span.innerHTML = "^";
           cell.appendChild(span);
         });
       }
     },
-    getColor: function() {
+    getColor() {
       var start = editor.selection.getStart();
       var color;
       var cell = domUtils.findParentByTagName(start, ["td", "th", "caption"], true);
@@ -190,7 +190,7 @@
       if (!color) color = "#DDDDDD";
       return color;
     },
-    setColor: function(color) {
+    setColor(color) {
       var example = $G("J_example");
 
       var arr = domUtils
@@ -198,11 +198,11 @@
         .concat(domUtils.getElementsByTagName(example, "th"), domUtils.getElementsByTagName(example, "caption"));
 
       tone.value = color;
-      utils.each(arr, function(node) {
+      utils.each(arr, node => {
         node.style.borderColor = color;
       });
     },
-    setAutoSize: function() {
+    setAutoSize() {
       var me = this;
       autoSizePage.checked = true;
       me.autoSizePageHanler();
@@ -211,7 +211,7 @@
 
   new editTable();
 
-  dialog.onok = function() {
+  dialog.onok = () => {
     editor.__hasEnterExecCommand = true;
 
     var checks = {

@@ -11,13 +11,13 @@ UE.plugins["elementpath"] = function() {
     return;
   }
   me.commands["elementpath"] = {
-    execCommand: function(cmdName, level) {
+    execCommand(cmdName, level) {
       var start = tagNames[level];
       var range = me.selection.getRange();
       currentLevel = level * 1;
       range.selectNode(start).select();
     },
-    queryCommandValue: function() {
+    queryCommandValue() {
       //产生一个副本，不能修改原来的startElementPath;
       var parents = [].concat(this.selection.getStartElementPath()).reverse();
 

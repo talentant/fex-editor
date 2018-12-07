@@ -27,8 +27,8 @@ UE.parse.register("insertcode", function(utils) {
           type: "text/javascript",
           defer: "defer"
         },
-        function() {
-          utils.each(pres, function(pi) {
+        () => {
+          utils.each(pres, pi => {
             if (pi && /brush/i.test(pi.className)) {
               SyntaxHighlighter.highlight(pi);
             }
@@ -36,7 +36,7 @@ UE.parse.register("insertcode", function(utils) {
         }
       );
     } else {
-      utils.each(pres, function(pi) {
+      utils.each(pres, pi => {
         if (pi && /brush/i.test(pi.className)) {
           SyntaxHighlighter.highlight(pi);
         }

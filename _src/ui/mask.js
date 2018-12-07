@@ -1,6 +1,6 @@
 ///import core
 ///import uicore
-(function() {
+(() => {
   var utils = baidu.editor.utils;
   var domUtils = baidu.editor.dom.domUtils;
   var UIBase = baidu.editor.ui.UIBase;
@@ -11,38 +11,38 @@
     this.initUIBase();
   });
   Mask.prototype = {
-    getHtmlTpl: function() {
+    getHtmlTpl() {
       return '<div id="##" class="edui-mask %%" onclick="return $$._onClick(event, this);" onmousedown="return $$._onMouseDown(event, this);"></div>';
     },
-    postRender: function() {
+    postRender() {
       var me = this;
-      domUtils.on(window, "resize", function() {
-        setTimeout(function() {
+      domUtils.on(window, "resize", () => {
+        setTimeout(() => {
           if (!me.isHidden()) {
             me._fill();
           }
         });
       });
     },
-    show: function(zIndex) {
+    show(zIndex) {
       this._fill();
       this.getDom().style.display = "";
       this.getDom().style.zIndex = zIndex;
     },
-    hide: function() {
+    hide() {
       this.getDom().style.display = "none";
       this.getDom().style.zIndex = "";
     },
-    isHidden: function() {
+    isHidden() {
       return this.getDom().style.display == "none";
     },
-    _onMouseDown: function() {
+    _onMouseDown() {
       return false;
     },
-    _onClick: function(e, target) {
+    _onClick(e, target) {
       this.fireEvent("click", e, target);
     },
-    _fill: function() {
+    _fill() {
       var el = this.getDom();
       var vpRect = uiUtils.getViewportRect();
       el.style.width = vpRect.width + "px";

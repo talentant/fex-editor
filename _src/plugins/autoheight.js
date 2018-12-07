@@ -25,7 +25,7 @@ UE.plugins["autoheight"] = function() {
     clearTimeout(timer);
     if (isFullscreen) return;
     if (!me.queryCommandState || (me.queryCommandState && me.queryCommandState("source") != 1)) {
-      timer = setTimeout(function() {
+      timer = setTimeout(() => {
         var node = me.body.lastChild;
         while (node && node.nodeType != 1) {
           node = node.previousSibling;
@@ -49,10 +49,10 @@ UE.plugins["autoheight"] = function() {
     }
   }
   var isFullscreen;
-  me.addListener("fullscreenchanged", function(cmd, f) {
+  me.addListener("fullscreenchanged", (cmd, f) => {
     isFullscreen = f;
   });
-  me.addListener("destroy", function() {
+  me.addListener("destroy", () => {
     domUtils.un(me.window, "scroll", fixedScrollTop);
     me.removeListener("contentchange afterinserthtml keyup mouseup", adjustHeight);
   });
@@ -69,14 +69,14 @@ UE.plugins["autoheight"] = function() {
     //ff不给事件算得不对
 
     setTimeout(
-      function() {
+      () => {
         adjustHeight.call(me);
       },
       browser.gecko ? 100 : 0
     );
     me.fireEvent("autoheightchanged", me.autoHeightEnabled);
   };
-  me.disableAutoHeight = function() {
+  me.disableAutoHeight = () => {
     me.body.style.overflowY = bakOverflow || "";
 
     me.removeListener("contentchange", adjustHeight);
@@ -86,16 +86,16 @@ UE.plugins["autoheight"] = function() {
     me.fireEvent("autoheightchanged", me.autoHeightEnabled);
   };
 
-  me.on("setHeight", function() {
+  me.on("setHeight", () => {
     me.disableAutoHeight();
   });
-  me.addListener("ready", function() {
+  me.addListener("ready", () => {
     me.enableAutoHeight();
     //trace:1764
     var timer;
-    domUtils.on(browser.ie ? me.body : me.document, browser.webkit ? "dragover" : "drop", function() {
+    domUtils.on(browser.ie ? me.body : me.document, browser.webkit ? "dragover" : "drop", () => {
       clearTimeout(timer);
-      timer = setTimeout(function() {
+      timer = setTimeout(() => {
         //trace:3681
         adjustHeight.call(me);
       }, 100);

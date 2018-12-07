@@ -4,9 +4,9 @@
  * @since 1.2.6.1
  */
 
-(function() {
+(() => {
   var sourceEditors = {
-    textarea: function(editor, holder) {
+    textarea(editor, holder) {
       var textarea = holder.ownerDocument.createElement("textarea");
       textarea.style.cssText =
         "position:absolute;resize:none;width:100%;height:100%;border:0;padding:0;margin:0;overflow-y:auto;";
@@ -14,20 +14,20 @@
       if (browser.ie && browser.version < 8) {
         textarea.style.width = holder.offsetWidth + "px";
         textarea.style.height = holder.offsetHeight + "px";
-        holder.onresize = function() {
+        holder.onresize = () => {
           textarea.style.width = holder.offsetWidth + "px";
           textarea.style.height = holder.offsetHeight + "px";
         };
       }
       holder.appendChild(textarea);
       return {
-        setContent: function(content) {
+        setContent(content) {
           textarea.value = content;
         },
-        getContent: function() {
+        getContent() {
           return textarea.value;
         },
-        select: function() {
+        select() {
           var range;
           if (browser.ie) {
             range = textarea.createTextRange();
@@ -39,22 +39,22 @@
             textarea.focus();
           }
         },
-        dispose: function() {
+        dispose() {
           holder.removeChild(textarea);
           // todo
           holder.onresize = null;
           textarea = null;
           holder = null;
         },
-        focus: function() {
+        focus() {
           textarea.focus();
         },
-        blur: function() {
+        blur() {
           textarea.blur();
         }
       };
     },
-    codemirror: function(editor, holder) {
+    codemirror(editor, holder) {
       var codeEditor = window.CodeMirror(holder, {
         mode: "text/html",
         tabMode: "indent",
@@ -67,27 +67,27 @@
       codeEditor.getScrollerElement().style.cssText = "position:absolute;left:0;top:0;width:100%;height:100%;";
       codeEditor.refresh();
       return {
-        getCodeMirror: function() {
+        getCodeMirror() {
           return codeEditor;
         },
-        setContent: function(content) {
+        setContent(content) {
           codeEditor.setValue(content);
         },
-        getContent: function() {
+        getContent() {
           return codeEditor.getValue();
         },
-        select: function() {
+        select() {
           codeEditor.focus();
         },
-        dispose: function() {
+        dispose() {
           holder.removeChild(dom);
           dom = null;
           codeEditor = null;
         },
-        focus: function() {
+        focus() {
           codeEditor.focus();
         },
-        blur: function() {
+        blur() {
           // codeEditor.blur();
           // since codemirror not support blur()
           codeEditor.setOption("readOnly", true);
@@ -148,7 +148,7 @@
      */
 
     me.commands["source"] = {
-      execCommand: function() {
+      execCommand() {
         sourceMode = !sourceMode;
         if (sourceMode) {
           bakAddress = me.selection.getRange().createAddress(false, true);
@@ -163,7 +163,7 @@
           me.fireEvent("beforegetcontent");
           var root = UE.htmlparser(me.body.innerHTML);
           me.filterOutputRule(root);
-          root.traversal(function(node) {
+          root.traversal(node => {
             if (node.type == "element") {
               switch (node.tagName) {
                 case "td":
@@ -191,7 +191,7 @@
 
           orgSetContent = me.setContent;
 
-          me.setContent = function(html) {
+          me.setContent = html => {
             //这里暂时不触发事件，防止报错
             var root = UE.htmlparser(html);
             me.filterInputRule(root);
@@ -199,9 +199,9 @@
             sourceEditor.setContent(html);
           };
 
-          setTimeout(function() {
+          setTimeout(() => {
             sourceEditor.select();
-            me.addListener("fullscreenchanged", function() {
+            me.addListener("fullscreenchanged", () => {
               try {
                 sourceEditor.getCodeMirror().refresh();
               } catch (e) {}
@@ -210,18 +210,16 @@
 
           //重置getContent，源码模式下取值也能是最新的数据
           oldGetContent = me.getContent;
-          me.getContent = function() {
-            return sourceEditor.getContent() || "<p>" + (browser.ie ? "" : "<br/>") + "</p>";
-          };
+          me.getContent = () => sourceEditor.getContent() || "<p>" + (browser.ie ? "" : "<br/>") + "</p>";
 
           orgFocus = me.focus;
           orgBlur = me.blur;
 
-          me.focus = function() {
+          me.focus = () => {
             sourceEditor.focus();
           };
 
-          me.blur = function() {
+          me.blur = () => {
             orgBlur.call(me);
             sourceEditor.blur();
           };
@@ -229,7 +227,7 @@
           me.iframe.style.cssText = bakCssText;
           var cont = sourceEditor.getContent() || "<p>" + (browser.ie ? "" : "<br/>") + "</p>";
           //处理掉block节点前后的空格,有可能会误命中，暂时不考虑
-          cont = cont.replace(new RegExp("[\\r\\t\\n ]*</?(\\w+)\\s*(?:[^>]*)>", "g"), function(a, b) {
+          cont = cont.replace(new RegExp("[\\r\\t\\n ]*</?(\\w+)\\s*(?:[^>]*)>", "g"), (a, b) => {
             if (b && !dtd.$inlineWithA[b.toLowerCase()]) {
               return a.replace(/(^[\n\r\t ]*)|([\n\r\t ]*$)/g, "");
             }
@@ -265,10 +263,10 @@
             document.body.appendChild(input);
 
             me.body.contentEditable = false;
-            setTimeout(function() {
+            setTimeout(() => {
               domUtils.setViewportOffset(input, {left: -32768, top: 0});
               input.focus();
-              setTimeout(function() {
+              setTimeout(() => {
                 me.body.contentEditable = true;
                 me.selection
                   .getRange()
@@ -289,7 +287,7 @@
         }
         this.fireEvent("sourcemodechanged", sourceMode);
       },
-      queryCommandState: function() {
+      queryCommandState() {
         return sourceMode | 0;
       },
       notNeedUndo: 1
@@ -312,7 +310,7 @@
     };
 
     if (opt.sourceEditor == "codemirror") {
-      me.addListener("ready", function() {
+      me.addListener("ready", () => {
         utils.loadFile(
           document,
           {
@@ -321,9 +319,9 @@
             type: "text/javascript",
             defer: "defer"
           },
-          function() {
+          () => {
             if (opt.sourceEditorFirst) {
-              setTimeout(function() {
+              setTimeout(() => {
                 me.execCommand("source");
               }, 0);
             }

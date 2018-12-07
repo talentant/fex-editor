@@ -4,9 +4,11 @@
  * build: 2018-12-07
  */
 
+"use strict";
+
 !function() {
     UE = window.UE || {};
-    var n = !!window.ActiveXObject, l = {
+    var e = !!window.ActiveXObject, l = {
         removeLastbs: function(e) {
             return e.replace(/\/$/, "");
         },
@@ -17,8 +19,8 @@
             }
             return e;
         },
-        isIE: n,
-        cssRule: n ? function(e, t, n) {
+        isIE: e,
+        cssRule: e ? function(e, t, n) {
             var i, r, a;
             if ((i = (n = n || document).indexList ? n.indexList : n.indexList = {})[e]) a = n.styleSheets[i[e]]; else {
                 if (void 0 === t) return "";
@@ -35,23 +37,25 @@
             if (void 0 === t) return i.innerHTML;
             "" !== t ? i.innerHTML = i.innerHTML + "\n" + t : r.removeChild(i);
         },
-        domReady: function(e) {
-            var t = window.document;
-            "complete" === t.readyState ? e() : n ? (function() {
-                if (!t.isReady) {
+        domReady: function(r) {
+            var a = window.document;
+            "complete" === a.readyState ? r() : e ? (function() {
+                if (!a.isReady) {
                     try {
-                        t.documentElement.doScroll("left");
+                        a.documentElement.doScroll("left");
                     } catch (e) {
-                        return setTimeout(arguments.callee, 0);
+                        for (var t = arguments.length, n = new Array(t), i = 0; i < t; i++) n[i] = arguments[i];
+                        return setTimeout(n.callee, 0);
                     }
-                    e();
+                    r();
                 }
             }(), window.attachEvent("onload", function() {
-                e();
-            })) : (t.addEventListener("DOMContentLoaded", function() {
-                t.removeEventListener("DOMContentLoaded", arguments.callee, !1), e();
+                r();
+            })) : (a.addEventListener("DOMContentLoaded", function() {
+                for (var e = arguments.length, t = new Array(e), n = 0; n < e; n++) t[n] = arguments[n];
+                a.removeEventListener("DOMContentLoaded", t.callee, !1), r();
             }, !1), window.addEventListener("load", function() {
-                e();
+                r();
             }, !1));
         },
         each: function(e, t, n) {
@@ -164,13 +168,13 @@
             return Object.prototype.toString.apply(e) == "[object " + t + "]";
         };
     });
-    var i = {};
+    var n = {};
     UE.parse = {
         register: function(e, t) {
-            i[e] = t;
+            n[e] = t;
         },
         load: function(t) {
-            l.each(i, function(e) {
+            l.each(n, function(e) {
                 e.call(t, l);
             });
         }
@@ -216,7 +220,23 @@
 }), UE.parse.register("table", function(h) {
     var s = this, n = this.root;
     if ((t = n.getElementsByTagName("table")).length) {
-        var e = this.selector;
+        var l = function(e, t) {
+            var n, i = e;
+            for (t = h.isArray(t) ? t : [ t ]; i; ) {
+                for (n = 0; n < t.length; n++) if (i.tagName == t[n].toUpperCase()) return i;
+                i = i.parentNode;
+            }
+            return null;
+        }, f = function(e, t) {
+            t = t || function(e, t) {
+                return e.localeCompare(t);
+            };
+            for (var n = 0, i = e.length; n < i; n++) for (var r = n, a = e.length; r < a; r++) if (0 < t(e[n], e[r])) {
+                var s = e[n];
+                e[n] = e[r], e[r] = s;
+            }
+            return e;
+        }, e = this.selector;
         h.cssRule("table", e + " table.noBorderTable td," + e + " table.noBorderTable th," + e + " table.noBorderTable caption{border:1px dashed #ddd !important}" + e + " table.sortEnabled tr.firstRow th," + e + " table.sortEnabled tr.firstRow td{padding-right:20px; background-repeat: no-repeat;background-position: center right; background-image:url(" + this.rootPath + "themes/default/images/sortable.png);}" + e + " table.sortEnabled tr.firstRow th:hover," + e + " table.sortEnabled tr.firstRow td:hover{background-color: #EEE;}" + e + " table{margin-bottom:10px;border-collapse:collapse;display:table;}" + e + " td," + e + " th{padding: 5px 10px;border: 1px solid #DDD;}" + e + " caption{border:1px dashed #DDD;border-bottom:0;padding:3px;text-align:center;}" + e + " th{border-top:1px solid #BBB;background:#F7F7F7;}" + e + " table tr.firstRow th{border-top:2px solid #BBB;background:#F7F7F7;}" + e + " tr.ue-table-interlace-color-single td{ background: #fcfcfc; }" + e + " tr.ue-table-interlace-color-double td{ background: #f7faff; }" + e + " td p{margin:0;padding:0;width:auto;height:auto;}", document), 
         h.each("td th caption".split(" "), function(e) {
             var t = n.getElementsByTagName(e);
@@ -225,14 +245,6 @@
             });
         });
         var t = n.getElementsByTagName("table");
-        function l(e, t) {
-            var n, i = e;
-            for (t = h.isArray(t) ? t : [ t ]; i; ) {
-                for (n = 0; n < t.length; n++) if (i.tagName == t[n].toUpperCase()) return i;
-                i = i.parentNode;
-            }
-            return null;
-        }
         h.each(t, function(e) {
             /\bsortEnabled\b/.test(e.className) && h.on(e, "click", function(e) {
                 var t = e.target || e.srcElement, n = l(t, [ "td", "th" ]), i = l(t, "table"), r = h.indexOf(i.rows[0].cells, n), a = i.getAttribute("data-sort-type");
@@ -247,8 +259,8 @@
                             return n.localeCompare(i);
                         },
                         reversebyasc: function(e, t) {
-                            var n = e.innerHTML, i = t.innerHTML;
-                            return i.localeCompare(n);
+                            var n = e.innerHTML;
+                            return t.innerHTML.localeCompare(n);
                         },
                         orderbynum: function(e, t) {
                             var n = e[h.isIE ? "innerText" : "textContent"].match(/\d+/), i = t[h.isIE ? "innerText" : "textContent"].match(/\d+/);
@@ -260,19 +272,11 @@
                         }
                     };
                     e.setAttribute("data-sort-type", i && "string" == typeof i && o[i] ? i : ""), a && r.splice(0, 1), 
-                    r = function(e, t) {
-                        t = t || function(e, t) {
-                            return e.localeCompare(t);
-                        };
-                        for (var n = 0, i = e.length; n < i; n++) for (var r = n, a = e.length; r < a; r++) if (0 < t(e[n], e[r])) {
-                            var s = e[n];
-                            e[n] = e[r], e[r] = s;
-                        }
-                        return e;
-                    }(r, function(e, t) {
+                    r = f(r, function(e, t) {
                         return i && "function" == typeof i ? i.call(this, e.cells[n], t.cells[n]) : i && "number" == typeof i ? 1 : i && "string" == typeof i && o[i] ? o[i].call(this, e.cells[n], t.cells[n]) : o.orderbyasc.call(this, e.cells[n], t.cells[n]);
                     });
-                    for (var d = e.ownerDocument.createDocumentFragment(), c = 0, l = r.length; c < l; c++) d.appendChild(r[c]);
+                    var d = e.ownerDocument.createDocumentFragment(), c = 0;
+                    for (l = r.length; c < l; c++) d.appendChild(r[c]);
                     var u = e.getElementsByTagName("tbody")[0];
                     u.appendChild(d);
                 }(i, r, s.tableSortCompareFn || a), function(e) {

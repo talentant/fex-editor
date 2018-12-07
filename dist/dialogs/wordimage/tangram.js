@@ -51,7 +51,7 @@ baidu.dom = baidu.dom || {};
  *
  * @return {HTMLElement|null} 获取的元素，查找不到时返回null,如果参数不合法，直接返回参数.
  */
-baidu.dom.g = function(id) {
+baidu.dom.g = id => {
   if (!id) return null;
   if ("string" == typeof id || id instanceof String) {
     return document.getElementById(id);
@@ -85,7 +85,7 @@ baidu.array = baidu.array || {};
  * @returns {Array} 遍历的数组
  */
 
-baidu.each = baidu.array.forEach = baidu.array.each = function(source, iterator, thisObject) {
+baidu.each = baidu.array.forEach = baidu.array.each = (source, iterator, thisObject) => {
   var returnValue;
   var item;
   var i;
@@ -121,9 +121,7 @@ baidu.lang = baidu.lang || {};
  * @meta standard
  * @returns {boolean} 类型判断结果
  */
-baidu.lang.isFunction = function(source) {
-  return "[object Function]" == Object.prototype.toString.call(source);
-};
+baidu.lang.isFunction = source => "[object Function]" == Object.prototype.toString.call(source);
 
 /**
  * 判断目标参数是否string类型或String对象
@@ -137,9 +135,7 @@ baidu.lang.isFunction = function(source) {
  *
  * @returns {boolean} 类型判断结果
  */
-baidu.lang.isString = function(source) {
-  return "[object String]" == Object.prototype.toString.call(source);
-};
+baidu.lang.isString = source => "[object String]" == Object.prototype.toString.call(source);
 baidu.isString = baidu.lang.isString;
 
 /**
@@ -185,7 +181,7 @@ baidu.browser.opera = /opera(\/| )(\d+(\.\d+)?)(.+?(version\/(\d+(\.\d+)?)))?/i.
  *
  * @returns {HTMLElement} 目标元素
  */
-baidu.dom.insertHTML = function(element, position, html) {
+baidu.dom.insertHTML = (element, position, html) => {
   element = baidu.dom.g(element);
   var range;
   var begin;
@@ -222,7 +218,7 @@ baidu.swf = baidu.swf || {};
  * @return {String} 版本号
  * @meta standard
  */
-baidu.swf.version = (function() {
+baidu.swf.version = (() => {
   var n = navigator;
   if (n.plugins && n.mimeTypes.length) {
     var plugin = n.plugins["Shockwave Flash"];
@@ -262,14 +258,13 @@ baidu.string = baidu.string || {};
  *
  * @returns {string} html编码后的字符串
  */
-baidu.string.encodeHTML = function(source) {
-  return String(source)
+baidu.string.encodeHTML = source =>
+  String(source)
     .replace(/&/g, "&amp;")
     .replace(/</g, "&lt;")
     .replace(/>/g, "&gt;")
     .replace(/"/g, "&quot;")
     .replace(/'/g, "&#39;");
-};
 
 baidu.encodeHTML = baidu.string.encodeHTML;
 
@@ -308,7 +303,7 @@ baidu.encodeHTML = baidu.string.encodeHTML;
  * @meta standard
  * @returns {string} flash对象的html字符串
  */
-baidu.swf.createHTML = function(options) {
+baidu.swf.createHTML = options => {
   options = options || {};
   var version = baidu.swf.version;
   var needVersion = options["ver"] || "6.0.0";
@@ -456,7 +451,7 @@ baidu.swf.createHTML = function(options) {
  * @meta standard
  * @see baidu.swf.createHTML,baidu.swf.getMovie
  */
-baidu.swf.create = function(options, target) {
+baidu.swf.create = (options, target) => {
   options = options || {};
   var html = baidu.swf.createHTML(options) || options["errorMessage"] || "";
 
@@ -488,7 +483,7 @@ baidu.browser.ie = baidu.ie = /msie (\d+\.\d+)/i.test(navigator.userAgent)
  *
  * @returns {Array} 移除后的数组
  */
-baidu.array.remove = function(source, match) {
+baidu.array.remove = (source, match) => {
   var len = source.length;
 
   while (len--) {
@@ -510,9 +505,7 @@ baidu.array.remove = function(source, match) {
  *
  * @returns {boolean} 类型判断结果
  */
-baidu.lang.isArray = function(source) {
-  return "[object Array]" == Object.prototype.toString.call(source);
-};
+baidu.lang.isArray = source => "[object Array]" == Object.prototype.toString.call(source);
 
 /**
  * 将一个变量转换成array
@@ -524,7 +517,7 @@ baidu.lang.isArray = function(source) {
  * @meta standard
  * @returns {array} 转换后的array
  */
-baidu.lang.toArray = function(source) {
+baidu.lang.toArray = source => {
   if (source === null || source === undefined) return [];
   if (baidu.lang.isArray(source)) return source;
   if (typeof source.length !== "number" || typeof source === "string" || baidu.lang.isFunction(source)) {
@@ -550,21 +543,19 @@ baidu.lang.toArray = function(source) {
  * @meta standard
  * @returns {HTMLElement} flash对象的实例
  */
-baidu.swf.getMovie = function(name) {
+baidu.swf.getMovie = name => {
   var movie = document[name];
   var ret;
   return baidu.browser.ie == 9
     ? movie && movie.length
-      ? (ret = baidu.array.remove(baidu.lang.toArray(movie), function(item) {
-          return item.tagName.toLowerCase() != "embed";
-        })).length == 1
+      ? (ret = baidu.array.remove(baidu.lang.toArray(movie), item => item.tagName.toLowerCase() != "embed")).length == 1
         ? ret[0]
         : ret
       : movie
     : movie || window[name];
 };
 
-baidu.flash._Base = (function() {
+baidu.flash._Base = (() => {
   var prefix = "bd__flash__";
 
   /**
@@ -601,7 +592,7 @@ baidu.flash._Base = (function() {
     var result = null;
 
     callQueue = callQueue.reverse();
-    baidu.each(callQueue, function(item) {
+    baidu.each(callQueue, item => {
       result = target.call(item.fnName, item.params);
       item.callBack(result);
     });
@@ -618,8 +609,8 @@ baidu.flash._Base = (function() {
 
     if (baidu.lang.isFunction(fun)) {
       name = _createString();
-      window[name] = function() {
-        fun.apply(window, arguments);
+      window[name] = function(...args) {
+        fun.apply(window, args);
       };
 
       return name;
@@ -662,11 +653,11 @@ baidu.flash._Base = (function() {
      * @public
      * @return {Null}
      */
-    me.render = function() {
+    me.render = () => {
       target = _render(createOptions);
 
       if (callBack.length > 0) {
-        baidu.each(callBack, function(funName, index) {
+        baidu.each(callBack, (funName, index) => {
           callBack[index] = _createFunName(options[funName] || new Function());
         });
       }
@@ -677,9 +668,7 @@ baidu.flash._Base = (function() {
      * 返回flash状态
      * @return {Boolean}
      */
-    me.isReady = function() {
-      return isReady;
-    };
+    me.isReady = () => isReady;
 
     /**
      * 调用flash接口的统一入口
@@ -688,7 +677,7 @@ baidu.flash._Base = (function() {
      * @param {Function} [callBack] 异步调用后将返回值作为参数的调用回调函数，如无返回值，可以不传入此参数
      * @return {Null}
      */
-    me.call = function(fnName, params, callBack) {
+    me.call = (fnName, params, callBack) => {
       if (!fnName) return null;
       callBack = callBack || new Function();
 
@@ -699,9 +688,9 @@ baidu.flash._Base = (function() {
         callBack(result);
       } else {
         callQueue.push({
-          fnName: fnName,
-          params: params,
-          callBack: callBack
+          fnName,
+          params,
+          callBack
         });
 
         !timeHandle && (timeHandle = setInterval(_check, 200));
@@ -714,9 +703,7 @@ baidu.flash._Base = (function() {
      * @param {String|Function} fun 传入的匿名函数或者函数名
      * @return {String}
      */
-    me.createFunName = function(fun) {
-      return _createFunName(fun);
-    };
+    me.createFunName = fun => _createFunName(fun);
 
     /**
      * 检查flash是否ready， 并进行调用
@@ -801,7 +788,7 @@ baidu.flash.imageUploader =
      * @public
      * @return {Null}
      */
-    me.upload = function() {
+    me.upload = () => {
       _flash.call("upload");
     };
 
@@ -810,10 +797,10 @@ baidu.flash.imageUploader =
      * @public
      * @return {Null}
      */
-    me.pause = function() {
+    me.pause = () => {
       _flash.call("pause");
     };
-    me.addCustomizedParams = function(index, obj) {
+    me.addCustomizedParams = (index, obj) => {
       _flash.call("addCustomizedParams", [index, obj]);
     };
   };
@@ -843,7 +830,7 @@ baidu.object = baidu.object || {};
  *             
  * @returns {Object} 目标对象
  */
-baidu.extend = baidu.object.extend = function(target, source) {
+baidu.extend = baidu.object.extend = (target, source) => {
   for (var p in source) {
     if (source.hasOwnProperty(p)) {
       target[p] = source[p];
@@ -901,7 +888,7 @@ baidu.flash.fileUploader =
      * @param {Boolean} isCursor
      * @return {Null}
      */
-    me.setHandCursor = function(isCursor) {
+    me.setHandCursor = isCursor => {
       _flash.call("setHandCursor", [isCursor || false]);
     };
 
@@ -909,7 +896,7 @@ baidu.flash.fileUploader =
      * 设置鼠标相应函数名
      * @param {String|Function} fun
      */
-    me.setMSFunName = function(fun) {
+    me.setMSFunName = fun => {
       _flash.call("setMSFunName", [_flash.createFunName(fun)]);
     };
 
@@ -924,7 +911,7 @@ baidu.flash.fileUploader =
      *                            -1/null上传所有文件
      * @return {Null}
      */
-    me.upload = function(url, fieldName, postData, index) {
+    me.upload = (url, fieldName, postData, index) => {
       if (typeof url !== "string" || typeof fieldName !== "string") return null;
       if (typeof index === "undefined") index = -1;
 
@@ -936,7 +923,7 @@ baidu.flash.fileUploader =
      * @public
      * @param {Number|-1} index
      */
-    me.cancel = function(index) {
+    me.cancel = index => {
       if (typeof index === "undefined") index = -1;
       _flash.call("cancel", [index]);
     };
@@ -947,8 +934,8 @@ baidu.flash.fileUploader =
      * @param {Number|Array} [index] 要删除的index，不传则全部删除
      * @param {Function} callBack
      * */
-    me.deleteFile = function(index, callBack) {
-      var callBackAll = function(list) {
+    me.deleteFile = (index, callBack) => {
+      var callBackAll = list => {
         callBack && callBack(list);
       };
 
@@ -958,10 +945,8 @@ baidu.flash.fileUploader =
       }
 
       if (typeof index === "Number") index = [index];
-      index.sort(function(a, b) {
-        return b - a;
-      });
-      baidu.each(index, function(item) {
+      index.sort((a, b) => b - a);
+      baidu.each(index, item => {
         _flash.call("deleteFileBy", item, callBackAll);
       });
     };
@@ -972,7 +957,7 @@ baidu.flash.fileUploader =
      * @param {Object|Array[Object]} type {description:String, extention:String}
      * @return {Null};
      */
-    me.addFileType = function(type) {
+    me.addFileType = type => {
       var type = type || [[]];
 
       if (type instanceof Array) type = [type];
@@ -986,7 +971,7 @@ baidu.flash.fileUploader =
      * @param {Object|Array[Object]} type {description:String, extention:String}
      * @return {Null};
      */
-    me.setFileType = function(type) {
+    me.setFileType = type => {
       var type = type || [[]];
 
       if (type instanceof Array) type = [type];
@@ -1000,7 +985,7 @@ baidu.flash.fileUploader =
      * @param {Number} num
      * @return {Null}
      */
-    me.setMaxNum = function(num) {
+    me.setMaxNum = num => {
       _flash.call("setMaxNum", [num]);
     };
 
@@ -1010,14 +995,14 @@ baidu.flash.fileUploader =
      * @param {Number} num,0为无限制
      * @return {Null}
      */
-    me.setMaxSize = function(num) {
+    me.setMaxSize = num => {
       _flash.call("setMaxSize", [num]);
     };
 
     /**
      * @public
      */
-    me.getFileAll = function(callBack) {
+    me.getFileAll = callBack => {
       _flash.call("getFileAll", [], callBack);
     };
 
@@ -1026,7 +1011,7 @@ baidu.flash.fileUploader =
      * @param {Number} index
      * @param {Function} [callBack]
      */
-    me.getFileByIndex = function(index, callBack) {
+    me.getFileByIndex = (index, callBack) => {
       _flash.call("getFileByIndex", [], callBack);
     };
 
@@ -1035,7 +1020,7 @@ baidu.flash.fileUploader =
      * @param {Number} index
      * @param {function} [callBack]
      */
-    me.getStatusByIndex = function(index, callBack) {
+    me.getStatusByIndex = (index, callBack) => {
       _flash.call("getStatusByIndex", [], callBack);
     };
   };
@@ -1052,7 +1037,7 @@ baidu.sio = baidu.sio || {};
  * @param {String} url script节点的地址
  * @param {String} [charset] 编码
  */
-baidu.sio._createScriptTag = function(scr, url, charset) {
+baidu.sio._createScriptTag = (scr, url, charset) => {
   scr.setAttribute("type", "text/javascript");
   charset && scr.setAttribute("charset", charset);
   scr.setAttribute("src", url);
@@ -1064,7 +1049,7 @@ baidu.sio._createScriptTag = function(scr, url, charset) {
  *
  * @param {HTMLElement} src script节点
  */
-baidu.sio._removeScriptTag = function(scr) {
+baidu.sio._removeScriptTag = scr => {
   if (scr.clearAttributes) {
     scr.clearAttributes();
   } else {
@@ -1097,15 +1082,15 @@ baidu.sio._removeScriptTag = function(scr) {
  * @meta standard
  * @see baidu.sio.callByServer
  */
-baidu.sio.callByBrowser = function(url, opt_callback, opt_options) {
+baidu.sio.callByBrowser = (url, opt_callback, opt_options) => {
   var scr = document.createElement("SCRIPT");
   var scriptLoaded = 0;
   var options = opt_options || {};
   var charset = options["charset"];
-  var callback = opt_callback || function() {};
+  var callback = opt_callback || (() => {});
   var timeOut = options["timeOut"] || 0;
   var timer;
-  scr.onload = scr.onreadystatechange = function() {
+  scr.onload = scr.onreadystatechange = () => {
     if (scriptLoaded) {
       return;
     }
@@ -1124,7 +1109,7 @@ baidu.sio.callByBrowser = function(url, opt_callback, opt_options) {
   };
 
   if (timeOut) {
-    timer = setTimeout(function() {
+    timer = setTimeout(() => {
       scr.onload = scr.onreadystatechange = null;
       baidu.sio._removeScriptTag(scr);
       options.onfailure && options.onfailure();
@@ -1151,7 +1136,7 @@ baidu.sio.callByBrowser = function(url, opt_callback, opt_options) {
  * @meta standard
  * @see baidu.sio.callByBrowser
  */
-baidu.sio.callByServer = /**@function*/ function(url, callback, opt_options) {
+baidu.sio.callByServer = /**@function*/ (url, callback, opt_options) => {
   var scr = document.createElement("SCRIPT");
   var prefix = "bd__cbs__";
   var callbackName;
@@ -1190,12 +1175,12 @@ baidu.sio.callByServer = /**@function*/ function(url, callback, opt_options) {
    */
   function getCallBack(onTimeOut) {
     /*global callbackName, callback, scr, options;*/
-    return function() {
+    return function(...args) {
       try {
         if (onTimeOut) {
           options.onfailure && options.onfailure();
         } else {
-          callback.apply(window, arguments);
+          callback.apply(window, args);
           clearTimeout(timer);
         }
         window[callbackName] = null;
@@ -1215,12 +1200,12 @@ baidu.sio.callByServer = /**@function*/ function(url, callback, opt_options) {
  * @param {string} url 要发送的地址.
  * @author: int08h,leeight
  */
-baidu.sio.log = function(url) {
+baidu.sio.log = url => {
   var img = new Image();
   var key = "tangram_sio_log_" + Math.floor(Math.random() * 2147483648).toString(36);
   window[key] = img;
 
-  img.onload = img.onerror = img.onabort = function() {
+  img.onload = img.onerror = img.onabort = () => {
     img.onload = img.onerror = img.onabort = null;
 
     window[key] = null;
@@ -1267,10 +1252,9 @@ baidu.json = baidu.json || {};
  *
  * @returns {JSON} 解析结果json对象
  */
-baidu.json.parse = function(data) {
-  //2010/12/09：更新至不使用原生parse，不检测用户输入是否正确
-  return new Function("return (" + data + ")")();
-};
+baidu.json.parse = (
+  data //2010/12/09：更新至不使用原生parse，不检测用户输入是否正确
+) => new Function("return (" + data + ")")();
 /*
  * Tangram
  * Copyright 2009 Baidu Inc. All rights reserved.
@@ -1316,7 +1300,7 @@ baidu.json.decode = baidu.json.parse;
  *
  * @returns {string} 序列化后的字符串
  */
-baidu.json.stringify = (function() {
+baidu.json.stringify = (() => {
   /**
    * 字符串处理时需要转义的字符表
    * @private
@@ -1337,7 +1321,7 @@ baidu.json.stringify = (function() {
    */
   function encodeString(source) {
     if (/["\\\x00-\x1f]/.test(source)) {
-      source = source.replace(/["\\\x00-\x1f]/g, function(match) {
+      source = source.replace(/["\\\x00-\x1f]/g, match => {
         var c = escapeMap[match];
         if (c) {
           return c;
@@ -1410,7 +1394,7 @@ baidu.json.stringify = (function() {
     );
   }
 
-  return function(value) {
+  return value => {
     switch (typeof value) {
       case "undefined":
         return "undefined";
