@@ -1,11 +1,13 @@
 (function() {
-  var utils = baidu.editor.utils,
-    uiUtils = baidu.editor.ui.uiUtils,
-    UIBase = baidu.editor.ui.UIBase,
-    Toolbar = (baidu.editor.ui.Toolbar = function(options) {
-      this.initOptions(options);
-      this.initToolbar();
-    });
+  var utils = baidu.editor.utils;
+  var uiUtils = baidu.editor.ui.uiUtils;
+  var UIBase = baidu.editor.ui.UIBase;
+
+  var Toolbar = (baidu.editor.ui.Toolbar = function(options) {
+    this.initOptions(options);
+    this.initToolbar();
+  });
+
   Toolbar.prototype = {
     items: null,
     initToolbar: function() {
@@ -38,8 +40,8 @@
       uiUtils.makeUnselectable(box);
     },
     _onMouseDown: function(e) {
-      var target = e.target || e.srcElement,
-        tagName = target && target.tagName && target.tagName.toLowerCase();
+      var target = e.target || e.srcElement;
+      var tagName = target && target.tagName && target.tagName.toLowerCase();
       if (tagName == "input" || tagName == "object" || tagName == "object") {
         return false;
       }

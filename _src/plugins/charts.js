@@ -8,9 +8,9 @@ UE.plugin.register("charts", function() {
     commands: {
       charts: {
         execCommand: function(cmd, data) {
-          var tableNode = domUtils.findParentByTagName(this.selection.getRange().startContainer, "table", true),
-            flagText = [],
-            config = {};
+          var tableNode = domUtils.findParentByTagName(this.selection.getRange().startContainer, "table", true);
+          var flagText = [];
+          var config = {};
 
           if (!tableNode) {
             return false;
@@ -66,8 +66,8 @@ UE.plugin.register("charts", function() {
   };
 
   function validData(table) {
-    var firstRows = null,
-      cellCount = 0;
+    var firstRows = null;
+    var cellCount = 0;
 
     //行数不够
     if (table.rows.length < 2) {

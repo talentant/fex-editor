@@ -14,9 +14,9 @@
       return url.replace(/\/$/, "");
     },
     extend: function(t, s) {
-      var a = arguments,
-        notCover = this.isBoolean(a[a.length - 1]) ? a[a.length - 1] : false,
-        len = this.isBoolean(a[a.length - 1]) ? a.length - 1 : a.length;
+      var a = arguments;
+      var notCover = this.isBoolean(a[a.length - 1]) ? a[a.length - 1] : false;
+      var len = this.isBoolean(a[a.length - 1]) ? a.length - 1 : a.length;
       for (var i = 1; i < len; i++) {
         var x = a[i];
         for (var k in x) {
@@ -30,49 +30,50 @@
     isIE: isIE,
     cssRule: isIE
       ? function(key, style, doc) {
-          var indexList, index;
-          doc = doc || document;
-          if (doc.indexList) {
-            indexList = doc.indexList;
-          } else {
-            indexList = doc.indexList = {};
-          }
-          var sheetStyle;
-          if (!indexList[key]) {
-            if (style === undefined) {
-              return "";
-            }
-            sheetStyle = doc.createStyleSheet("", (index = doc.styleSheets.length));
-            indexList[key] = index;
-          } else {
-            sheetStyle = doc.styleSheets[indexList[key]];
-          }
-          if (style === undefined) {
-            return sheetStyle.cssText;
-          }
-          sheetStyle.cssText = sheetStyle.cssText + "\n" + (style || "");
+      var indexList;
+      var index;
+      doc = doc || document;
+      if (doc.indexList) {
+        indexList = doc.indexList;
+      } else {
+        indexList = doc.indexList = {};
+      }
+      var sheetStyle;
+      if (!indexList[key]) {
+        if (style === undefined) {
+          return "";
         }
+        sheetStyle = doc.createStyleSheet("", (index = doc.styleSheets.length));
+        indexList[key] = index;
+      } else {
+        sheetStyle = doc.styleSheets[indexList[key]];
+      }
+      if (style === undefined) {
+        return sheetStyle.cssText;
+      }
+      sheetStyle.cssText = sheetStyle.cssText + "\n" + (style || "");
+    }
       : function(key, style, doc) {
-          doc = doc || document;
-          var head = doc.getElementsByTagName("head")[0],
-            node;
-          if (!(node = doc.getElementById(key))) {
-            if (style === undefined) {
-              return "";
-            }
-            node = doc.createElement("style");
-            node.id = key;
-            head.appendChild(node);
-          }
-          if (style === undefined) {
-            return node.innerHTML;
-          }
-          if (style !== "") {
-            node.innerHTML = node.innerHTML + "\n" + style;
-          } else {
-            head.removeChild(node);
-          }
-        },
+      doc = doc || document;
+      var head = doc.getElementsByTagName("head")[0];
+      var node;
+      if (!(node = doc.getElementById(key))) {
+        if (style === undefined) {
+          return "";
+        }
+        node = doc.createElement("style");
+        node.id = key;
+        head.appendChild(node);
+      }
+      if (style === undefined) {
+        return node.innerHTML;
+      }
+      if (style !== "") {
+        node.innerHTML = node.innerHTML + "\n" + style;
+      } else {
+        head.removeChild(node);
+      }
+    },
     domReady: function(onready) {
       var doc = window.document;
       if (doc.readyState === "complete") {
@@ -192,8 +193,8 @@
       !cls && elm.removeAttribute("className");
     },
     on: function(element, type, handler) {
-      var types = this.isArray(type) ? type : type.split(/\s+/),
-        k = types.length;
+      var types = this.isArray(type) ? type : type.split(/\s+/);
+      var k = types.length;
       if (k)
         while (k--) {
           type = types[k];
@@ -205,8 +206,8 @@
                 els: []
               };
             }
-            var key = type + handler.toString(),
-              index = utils.indexOf(handler._d.els, element);
+            var key = type + handler.toString();
+            var index = utils.indexOf(handler._d.els, element);
             if (!handler._d[key] || index == -1) {
               if (index == -1) {
                 handler._d.els.push(element);
@@ -224,8 +225,8 @@
       element = null;
     },
     off: function(element, type, handler) {
-      var types = this.isArray(type) ? type : type.split(/\s+/),
-        k = types.length;
+      var types = this.isArray(type) ? type : type.split(/\s+/);
+      var k = types.length;
       if (k)
         while (k--) {
           type = types[k];
@@ -356,7 +357,8 @@ UE.parse.register("insertcode", function(utils) {
   var pres = this.root.getElementsByTagName("pre");
   if (pres.length) {
     if (typeof XRegExp == "undefined") {
-      var jsurl, cssurl;
+      var jsurl;
+      var cssurl;
       if (this.rootPath !== undefined) {
         jsurl = "https://cdn.jsdelivr.net/npm/fex-editor@2.1.1/dist/third-party/SyntaxHighlighter/shCore.js";
         cssurl = "https://cdn.jsdelivr.net/npm/fex-editor@2.1.1/dist/third-party/SyntaxHighlighter/shCoreDefault.css";
@@ -399,9 +401,9 @@ UE.parse.register("insertcode", function(utils) {
 });
 
 UE.parse.register("table", function(utils) {
-  var me = this,
-    root = this.root,
-    tables = root.getElementsByTagName("table");
+  var me = this;
+  var root = this.root;
+  var tables = root.getElementsByTagName("table");
   if (tables.length) {
     var selector = this.selector;
     //追加默认的表格样式
@@ -461,11 +463,11 @@ UE.parse.register("table", function(utils) {
     utils.each(tables, function(table) {
       if (/\bsortEnabled\b/.test(table.className)) {
         utils.on(table, "click", function(e) {
-          var target = e.target || e.srcElement,
-            cell = findParentByTagName(target, ["td", "th"]);
-          var table = findParentByTagName(target, "table"),
-            colIndex = utils.indexOf(table.rows[0].cells, cell),
-            sortType = table.getAttribute("data-sort-type");
+          var target = e.target || e.srcElement;
+          var cell = findParentByTagName(target, ["td", "th"]);
+          var table = findParentByTagName(target, "table");
+          var colIndex = utils.indexOf(table.rows[0].cells, cell);
+          var sortType = table.getAttribute("data-sort-type");
           if (colIndex != -1) {
             sortTable(table, colIndex, me.tableSortCompareFn || sortType);
             updateTable(table);
@@ -476,8 +478,8 @@ UE.parse.register("table", function(utils) {
 
     //按照标签名查找父节点
     function findParentByTagName(target, tagNames) {
-      var i,
-        current = target;
+      var i;
+      var current = target;
       tagNames = utils.isArray(tagNames) ? tagNames : [tagNames];
       while (current) {
         for (i = 0; i < tagNames.length; i++) {
@@ -489,10 +491,10 @@ UE.parse.register("table", function(utils) {
     }
     //表格排序
     function sortTable(table, sortByCellIndex, compareFn) {
-      var rows = table.rows,
-        trArray = [],
-        flag = rows[0].cells[0].tagName === "TH",
-        lastRowIndex = 0;
+      var rows = table.rows;
+      var trArray = [];
+      var flag = rows[0].cells[0].tagName === "TH";
+      var lastRowIndex = 0;
 
       for (var i = 0, len = rows.length; i < len; i++) {
         trArray[i] = rows[i];
@@ -503,25 +505,25 @@ UE.parse.register("table", function(utils) {
           return 1;
         },
         orderbyasc: function(td1, td2) {
-          var value1 = td1.innerText || td1.textContent,
-            value2 = td2.innerText || td2.textContent;
+          var value1 = td1.innerText || td1.textContent;
+          var value2 = td2.innerText || td2.textContent;
           return value1.localeCompare(value2);
         },
         reversebyasc: function(td1, td2) {
-          var value1 = td1.innerHTML,
-            value2 = td2.innerHTML;
+          var value1 = td1.innerHTML;
+          var value2 = td2.innerHTML;
           return value2.localeCompare(value1);
         },
         orderbynum: function(td1, td2) {
-          var value1 = td1[utils.isIE ? "innerText" : "textContent"].match(/\d+/),
-            value2 = td2[utils.isIE ? "innerText" : "textContent"].match(/\d+/);
+          var value1 = td1[utils.isIE ? "innerText" : "textContent"].match(/\d+/);
+          var value2 = td2[utils.isIE ? "innerText" : "textContent"].match(/\d+/);
           if (value1) value1 = +value1[0];
           if (value2) value2 = +value2[0];
           return (value1 || 0) - (value2 || 0);
         },
         reversebynum: function(td1, td2) {
-          var value1 = td1[utils.isIE ? "innerText" : "textContent"].match(/\d+/),
-            value2 = td2[utils.isIE ? "innerText" : "textContent"].match(/\d+/);
+          var value1 = td1[utils.isIE ? "innerText" : "textContent"].match(/\d+/);
+          var value2 = td2[utils.isIE ? "innerText" : "textContent"].match(/\d+/);
           if (value1) value1 = +value1[0];
           if (value2) value2 = +value2[0];
           return (value2 || 0) - (value1 || 0);
@@ -596,9 +598,9 @@ UE.parse.register("charts", function(utils) {
     "chartsContainerHeight",
     ".edui-chart-container { height:" + (this.chartContainerHeight || 300) + "px}"
   );
-  var resourceRoot = this.rootPath,
-    containers = this.root,
-    sources = null;
+  var resourceRoot = this.rootPath;
+  var containers = this.root;
+  var sources = null;
 
   //不存在指定的根路径， 则直接退出
   if (!resourceRoot) {
@@ -621,8 +623,8 @@ UE.parse.register("charts", function(utils) {
    * 提取数据
    */
   function extractChartData(rootNode) {
-    var data = [],
-      tables = rootNode.getElementsByTagName("table");
+    var data = [];
+    var tables = rootNode.getElementsByTagName("table");
 
     for (var i = 0, tableNode; (tableNode = tables[i]); i++) {
       if (tableNode.getAttribute("data-chart") !== null) {
@@ -634,9 +636,9 @@ UE.parse.register("charts", function(utils) {
   }
 
   function formatData(tableNode) {
-    var meta = tableNode.getAttribute("data-chart"),
-      metaConfig = {},
-      data = [];
+    var meta = tableNode.getAttribute("data-chart");
+    var metaConfig = {};
+    var data = [];
 
     //提取table数据
     for (var i = 0, row; (row = tableNode.rows[i]); i++) {
@@ -727,9 +729,9 @@ UE.parse.register("charts", function(utils) {
 
   //渲染图表
   function render() {
-    var config = null,
-      chartConfig = null,
-      container = null;
+    var config = null;
+    var chartConfig = null;
+    var container = null;
 
     for (var i = 0, len = sources.length; i < len; i++) {
       config = sources[i];
@@ -813,12 +815,14 @@ UE.parse.register("charts", function(utils) {
 
   //根据config解析出正确的类别和图表数据信息
   function analysisConfig(config) {
-    var series = [],
-      //数据类别
-      categories = [],
-      result = [],
-      data = config.data,
-      meta = config.meta;
+    var series = [];
+
+    var //数据类别
+    categories = [];
+
+    var result = [];
+    var data = config.data;
+    var meta = config.meta;
 
     //数据对齐方式为相反的方式， 需要反转数据
     if (meta.dataFormat != "1") {
@@ -879,10 +883,10 @@ UE.parse.register("charts", function(utils) {
 });
 
 UE.parse.register("background", function(utils) {
-  var me = this,
-    root = me.root,
-    p = root.getElementsByTagName("p"),
-    styles;
+  var me = this;
+  var root = me.root;
+  var p = root.getElementsByTagName("p");
+  var styles;
 
   for (var i = 0, ci; (ci = p[i++]); ) {
     styles = ci.getAttribute("data-background");
@@ -896,27 +900,28 @@ UE.parse.register("background", function(utils) {
 });
 
 UE.parse.register("list", function(utils) {
-  var customCss = [],
-    customStyle = {
-      cn: "cn-1-",
-      cn1: "cn-2-",
-      cn2: "cn-3-",
-      num: "num-1-",
-      num1: "num-2-",
-      num2: "num-3-",
-      dash: "dash",
-      dot: "dot"
-    };
+  var customCss = [];
+
+  var customStyle = {
+    cn: "cn-1-",
+    cn1: "cn-2-",
+    cn2: "cn-3-",
+    num: "num-1-",
+    num1: "num-2-",
+    num2: "num-3-",
+    dash: "dash",
+    dot: "dot"
+  };
 
   utils.extend(this, {
     liiconpath: "http://bs.baidu.com/listicon/",
     listDefaultPaddingLeft: "20"
   });
 
-  var root = this.root,
-    ols = root.getElementsByTagName("ol"),
-    uls = root.getElementsByTagName("ul"),
-    selector = this.selector;
+  var root = this.root;
+  var ols = root.getElementsByTagName("ol");
+  var uls = root.getElementsByTagName("ul");
+  var selector = this.selector;
 
   if (ols.length) {
     applyStyle.call(this, ols);
@@ -1038,15 +1043,15 @@ UE.parse.register("list", function(utils) {
 });
 
 UE.parse.register("vedio", function(utils) {
-  var video = this.root.getElementsByTagName("video"),
-    audio = this.root.getElementsByTagName("audio");
+  var video = this.root.getElementsByTagName("video");
+  var audio = this.root.getElementsByTagName("audio");
 
   document.createElement("video");
   document.createElement("audio");
   if (video.length || audio.length) {
-    var jsurl = "https://cdn.jsdelivr.net/npm/video.js@4.3.0/video.js",
-      cssurl = "https://cdn.jsdelivr.net/npm/video.js@4.3.0/video-js.min.css",
-      swfUrl = "https://cdn.jsdelivr.net/npm/video.js@4.3.0/video-js.swf";
+    var jsurl = "https://cdn.jsdelivr.net/npm/video.js@4.3.0/video.js";
+    var cssurl = "https://cdn.jsdelivr.net/npm/video.js@4.3.0/video-js.min.css";
+    var swfUrl = "https://cdn.jsdelivr.net/npm/video.js@4.3.0/video-js.swf";
 
     if (window.videojs) {
       videojs.autoSetup();

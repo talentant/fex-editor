@@ -6,19 +6,23 @@
  * To change this template use File | Settings | File Templates.
  */
 (function() {
-  var UT = UE.UETable,
-    getTableItemsByRange = function(editor) {
-      return UT.getTableItemsByRange(editor);
-    },
-    getUETableBySelected = function(editor) {
-      return UT.getUETableBySelected(editor);
-    },
-    getDefaultValue = function(editor, table) {
-      return UT.getDefaultValue(editor, table);
-    },
-    getUETable = function(tdOrTable) {
-      return UT.getUETable(tdOrTable);
-    };
+  var UT = UE.UETable;
+
+  var getTableItemsByRange = function(editor) {
+    return UT.getTableItemsByRange(editor);
+  };
+
+  var getUETableBySelected = function(editor) {
+    return UT.getUETableBySelected(editor);
+  };
+
+  var getDefaultValue = function(editor, table) {
+    return UT.getDefaultValue(editor, table);
+  };
+
+  var getUETable = function(tdOrTable) {
+    return UT.getUETable(tdOrTable);
+  };
 
   UE.commands["inserttable"] = {
     queryCommandState: function() {
@@ -26,9 +30,9 @@
     },
     execCommand: function(cmd, opt) {
       function createTable(opt, tdWidth) {
-        var html = [],
-          rowsNum = opt.numRows,
-          colsNum = opt.numCols;
+        var html = [];
+        var rowsNum = opt.numRows;
+        var colsNum = opt.numCols;
         for (var r = 0; r < rowsNum; r++) {
           html.push("<tr" + (r == 0 ? ' class="firstRow"' : "") + ">");
           for (var c = 0; c < colsNum; c++) {
@@ -59,20 +63,21 @@
         );
       }
       var me = this;
-      var range = this.selection.getRange(),
-        start = range.startContainer,
-        firstParentBlock =
-          domUtils.findParent(
-            start,
-            function(node) {
-              return domUtils.isBlockElm(node);
-            },
-            true
-          ) || me.body;
+      var range = this.selection.getRange();
+      var start = range.startContainer;
 
-      var defaultValue = getDefaultValue(me),
-        tableWidth = firstParentBlock.offsetWidth,
-        tdWidth = Math.floor(tableWidth / opt.numCols - defaultValue.tdPadding * 2 - defaultValue.tdBorder);
+      var firstParentBlock =
+        domUtils.findParent(
+          start,
+          function(node) {
+            return domUtils.isBlockElm(node);
+          },
+          true
+        ) || me.body;
+
+      var defaultValue = getDefaultValue(me);
+      var tableWidth = firstParentBlock.offsetWidth;
+      var tdWidth = Math.floor(tableWidth / opt.numCols - defaultValue.tdPadding * 2 - defaultValue.tdBorder);
 
       //todo其他属性
       !opt.tdvalign && (opt.tdvalign = me.options.tdvalign);
@@ -173,16 +178,16 @@
   };
   UE.commands["deletecaption"] = {
     queryCommandState: function() {
-      var rng = this.selection.getRange(),
-        table = domUtils.findParentByTagName(rng.startContainer, "table");
+      var rng = this.selection.getRange();
+      var table = domUtils.findParentByTagName(rng.startContainer, "table");
       if (table) {
         return table.getElementsByTagName("caption").length == 0 ? -1 : 1;
       }
       return -1;
     },
     execCommand: function() {
-      var rng = this.selection.getRange(),
-        table = domUtils.findParentByTagName(rng.startContainer, "table");
+      var rng = this.selection.getRange();
+      var table = domUtils.findParentByTagName(rng.startContainer, "table");
       if (table) {
         domUtils.remove(table.getElementsByTagName("caption")[0]);
         var range = this.selection.getRange();
@@ -281,60 +286,60 @@
 
   UE.commands["mergeright"] = {
     queryCommandState: function(cmd) {
-      var tableItems = getTableItemsByRange(this),
-        table = tableItems.table,
-        cell = tableItems.cell;
+      var tableItems = getTableItemsByRange(this);
+      var table = tableItems.table;
+      var cell = tableItems.cell;
 
       if (!table || !cell) return -1;
       var ut = getUETable(table);
       if (ut.selectedTds.length) return -1;
 
-      var cellInfo = ut.getCellInfo(cell),
-        rightColIndex = cellInfo.colIndex + cellInfo.colSpan;
+      var cellInfo = ut.getCellInfo(cell);
+      var rightColIndex = cellInfo.colIndex + cellInfo.colSpan;
       if (rightColIndex >= ut.colsNum) return -1; // 如果处于最右边则不能向右合并
 
-      var rightCellInfo = ut.indexTable[cellInfo.rowIndex][rightColIndex],
-        rightCell = table.rows[rightCellInfo.rowIndex].cells[rightCellInfo.cellIndex];
+      var rightCellInfo = ut.indexTable[cellInfo.rowIndex][rightColIndex];
+      var rightCell = table.rows[rightCellInfo.rowIndex].cells[rightCellInfo.cellIndex];
       if (!rightCell || cell.tagName != rightCell.tagName) return -1; // TH和TD不能相互合并
 
       // 当且仅当两个Cell的开始列号和结束列号一致时能进行合并
       return rightCellInfo.rowIndex == cellInfo.rowIndex && rightCellInfo.rowSpan == cellInfo.rowSpan ? 0 : -1;
     },
     execCommand: function(cmd) {
-      var rng = this.selection.getRange(),
-        bk = rng.createBookmark(true);
-      var cell = getTableItemsByRange(this).cell,
-        ut = getUETable(cell);
+      var rng = this.selection.getRange();
+      var bk = rng.createBookmark(true);
+      var cell = getTableItemsByRange(this).cell;
+      var ut = getUETable(cell);
       ut.mergeRight(cell);
       rng.moveToBookmark(bk).select();
     }
   };
   UE.commands["mergedown"] = {
     queryCommandState: function(cmd) {
-      var tableItems = getTableItemsByRange(this),
-        table = tableItems.table,
-        cell = tableItems.cell;
+      var tableItems = getTableItemsByRange(this);
+      var table = tableItems.table;
+      var cell = tableItems.cell;
 
       if (!table || !cell) return -1;
       var ut = getUETable(table);
       if (ut.selectedTds.length) return -1;
 
-      var cellInfo = ut.getCellInfo(cell),
-        downRowIndex = cellInfo.rowIndex + cellInfo.rowSpan;
+      var cellInfo = ut.getCellInfo(cell);
+      var downRowIndex = cellInfo.rowIndex + cellInfo.rowSpan;
       if (downRowIndex >= ut.rowsNum) return -1; // 如果处于最下边则不能向下合并
 
-      var downCellInfo = ut.indexTable[downRowIndex][cellInfo.colIndex],
-        downCell = table.rows[downCellInfo.rowIndex].cells[downCellInfo.cellIndex];
+      var downCellInfo = ut.indexTable[downRowIndex][cellInfo.colIndex];
+      var downCell = table.rows[downCellInfo.rowIndex].cells[downCellInfo.cellIndex];
       if (!downCell || cell.tagName != downCell.tagName) return -1; // TH和TD不能相互合并
 
       // 当且仅当两个Cell的开始列号和结束列号一致时能进行合并
       return downCellInfo.colIndex == cellInfo.colIndex && downCellInfo.colSpan == cellInfo.colSpan ? 0 : -1;
     },
     execCommand: function() {
-      var rng = this.selection.getRange(),
-        bk = rng.createBookmark(true);
-      var cell = getTableItemsByRange(this).cell,
-        ut = getUETable(cell);
+      var rng = this.selection.getRange();
+      var bk = rng.createBookmark(true);
+      var cell = getTableItemsByRange(this).cell;
+      var ut = getUETable(cell);
       ut.mergeDown(cell);
       rng.moveToBookmark(bk).select();
     }
@@ -360,8 +365,8 @@
   };
   UE.commands["insertrow"] = {
     queryCommandState: function() {
-      var tableItems = getTableItemsByRange(this),
-        cell = tableItems.cell;
+      var tableItems = getTableItemsByRange(this);
+      var cell = tableItems.cell;
       return cell &&
         (cell.tagName == "TD" || (cell.tagName == "TH" && tableItems.tr !== tableItems.table.rows[0])) &&
         getUETable(tableItems.table).rowsNum < this.options.maxRowNum
@@ -369,13 +374,13 @@
         : -1;
     },
     execCommand: function() {
-      var rng = this.selection.getRange(),
-        bk = rng.createBookmark(true);
-      var tableItems = getTableItemsByRange(this),
-        cell = tableItems.cell,
-        table = tableItems.table,
-        ut = getUETable(table),
-        cellInfo = ut.getCellInfo(cell);
+      var rng = this.selection.getRange();
+      var bk = rng.createBookmark(true);
+      var tableItems = getTableItemsByRange(this);
+      var cell = tableItems.cell;
+      var table = tableItems.table;
+      var ut = getUETable(table);
+      var cellInfo = ut.getCellInfo(cell);
       //ut.insertRow(!ut.selectedTds.length ? cellInfo.rowIndex:ut.cellsRange.beginRowIndex,'');
       if (!ut.selectedTds.length) {
         ut.insertRow(cellInfo.rowIndex, cell);
@@ -392,18 +397,18 @@
   //后插入行
   UE.commands["insertrownext"] = {
     queryCommandState: function() {
-      var tableItems = getTableItemsByRange(this),
-        cell = tableItems.cell;
+      var tableItems = getTableItemsByRange(this);
+      var cell = tableItems.cell;
       return cell && cell.tagName == "TD" && getUETable(tableItems.table).rowsNum < this.options.maxRowNum ? 0 : -1;
     },
     execCommand: function() {
-      var rng = this.selection.getRange(),
-        bk = rng.createBookmark(true);
-      var tableItems = getTableItemsByRange(this),
-        cell = tableItems.cell,
-        table = tableItems.table,
-        ut = getUETable(table),
-        cellInfo = ut.getCellInfo(cell);
+      var rng = this.selection.getRange();
+      var bk = rng.createBookmark(true);
+      var tableItems = getTableItemsByRange(this);
+      var cell = tableItems.cell;
+      var table = tableItems.table;
+      var ut = getUETable(table);
+      var cellInfo = ut.getCellInfo(cell);
       //ut.insertRow(!ut.selectedTds.length? cellInfo.rowIndex + cellInfo.rowSpan : ut.cellsRange.endRowIndex + 1,'');
       if (!ut.selectedTds.length) {
         ut.insertRow(cellInfo.rowIndex + cellInfo.rowSpan, cell);
@@ -423,13 +428,13 @@
       return tableItems.cell ? 0 : -1;
     },
     execCommand: function() {
-      var cell = getTableItemsByRange(this).cell,
-        ut = getUETable(cell),
-        cellsRange = ut.cellsRange,
-        cellInfo = ut.getCellInfo(cell),
-        preCell = ut.getVSideCell(cell),
-        nextCell = ut.getVSideCell(cell, true),
-        rng = this.selection.getRange();
+      var cell = getTableItemsByRange(this).cell;
+      var ut = getUETable(cell);
+      var cellsRange = ut.cellsRange;
+      var cellInfo = ut.getCellInfo(cell);
+      var preCell = ut.getVSideCell(cell);
+      var nextCell = ut.getVSideCell(cell, true);
+      var rng = this.selection.getRange();
       if (utils.isEmptyObject(cellsRange)) {
         ut.deleteRow(cellInfo.rowIndex);
       } else {
@@ -457,8 +462,8 @@
   };
   UE.commands["insertcol"] = {
     queryCommandState: function(cmd) {
-      var tableItems = getTableItemsByRange(this),
-        cell = tableItems.cell;
+      var tableItems = getTableItemsByRange(this);
+      var cell = tableItems.cell;
       return cell &&
         (cell.tagName == "TD" || (cell.tagName == "TH" && cell !== tableItems.tr.cells[0])) &&
         getUETable(tableItems.table).colsNum < this.options.maxColNum
@@ -466,12 +471,12 @@
         : -1;
     },
     execCommand: function(cmd) {
-      var rng = this.selection.getRange(),
-        bk = rng.createBookmark(true);
+      var rng = this.selection.getRange();
+      var bk = rng.createBookmark(true);
       if (this.queryCommandState(cmd) == -1) return;
-      var cell = getTableItemsByRange(this).cell,
-        ut = getUETable(cell),
-        cellInfo = ut.getCellInfo(cell);
+      var cell = getTableItemsByRange(this).cell;
+      var ut = getUETable(cell);
+      var cellInfo = ut.getCellInfo(cell);
 
       //ut.insertCol(!ut.selectedTds.length ? cellInfo.colIndex:ut.cellsRange.beginColIndex);
       if (!ut.selectedTds.length) {
@@ -487,16 +492,16 @@
   };
   UE.commands["insertcolnext"] = {
     queryCommandState: function() {
-      var tableItems = getTableItemsByRange(this),
-        cell = tableItems.cell;
+      var tableItems = getTableItemsByRange(this);
+      var cell = tableItems.cell;
       return cell && getUETable(tableItems.table).colsNum < this.options.maxColNum ? 0 : -1;
     },
     execCommand: function() {
-      var rng = this.selection.getRange(),
-        bk = rng.createBookmark(true);
-      var cell = getTableItemsByRange(this).cell,
-        ut = getUETable(cell),
-        cellInfo = ut.getCellInfo(cell);
+      var rng = this.selection.getRange();
+      var bk = rng.createBookmark(true);
+      var cell = getTableItemsByRange(this).cell;
+      var ut = getUETable(cell);
+      var cellInfo = ut.getCellInfo(cell);
       //ut.insertCol(!ut.selectedTds.length ? cellInfo.colIndex + cellInfo.colSpan:ut.cellsRange.endColIndex +1);
       if (!ut.selectedTds.length) {
         ut.insertCol(cellInfo.colIndex + cellInfo.colSpan, cell);
@@ -516,12 +521,12 @@
       return tableItems.cell ? 0 : -1;
     },
     execCommand: function() {
-      var cell = getTableItemsByRange(this).cell,
-        ut = getUETable(cell),
-        range = ut.cellsRange,
-        cellInfo = ut.getCellInfo(cell),
-        preCell = ut.getHSideCell(cell),
-        nextCell = ut.getHSideCell(cell, true);
+      var cell = getTableItemsByRange(this).cell;
+      var ut = getUETable(cell);
+      var range = ut.cellsRange;
+      var cellInfo = ut.getCellInfo(cell);
+      var preCell = ut.getHSideCell(cell);
+      var nextCell = ut.getHSideCell(cell, true);
       if (utils.isEmptyObject(range)) {
         ut.deleteCol(cellInfo.colIndex);
       } else {
@@ -529,8 +534,8 @@
           ut.deleteCol(range.beginColIndex);
         }
       }
-      var table = ut.table,
-        rng = this.selection.getRange();
+      var table = ut.table;
+      var rng = this.selection.getRange();
 
       if (!table.getElementsByTagName("td").length) {
         var nextSibling = table.nextSibling;
@@ -555,54 +560,54 @@
   };
   UE.commands["splittocells"] = {
     queryCommandState: function() {
-      var tableItems = getTableItemsByRange(this),
-        cell = tableItems.cell;
+      var tableItems = getTableItemsByRange(this);
+      var cell = tableItems.cell;
       if (!cell) return -1;
       var ut = getUETable(tableItems.table);
       if (ut.selectedTds.length > 0) return -1;
       return cell && (cell.colSpan > 1 || cell.rowSpan > 1) ? 0 : -1;
     },
     execCommand: function() {
-      var rng = this.selection.getRange(),
-        bk = rng.createBookmark(true);
-      var cell = getTableItemsByRange(this).cell,
-        ut = getUETable(cell);
+      var rng = this.selection.getRange();
+      var bk = rng.createBookmark(true);
+      var cell = getTableItemsByRange(this).cell;
+      var ut = getUETable(cell);
       ut.splitToCells(cell);
       rng.moveToBookmark(bk).select();
     }
   };
   UE.commands["splittorows"] = {
     queryCommandState: function() {
-      var tableItems = getTableItemsByRange(this),
-        cell = tableItems.cell;
+      var tableItems = getTableItemsByRange(this);
+      var cell = tableItems.cell;
       if (!cell) return -1;
       var ut = getUETable(tableItems.table);
       if (ut.selectedTds.length > 0) return -1;
       return cell && cell.rowSpan > 1 ? 0 : -1;
     },
     execCommand: function() {
-      var rng = this.selection.getRange(),
-        bk = rng.createBookmark(true);
-      var cell = getTableItemsByRange(this).cell,
-        ut = getUETable(cell);
+      var rng = this.selection.getRange();
+      var bk = rng.createBookmark(true);
+      var cell = getTableItemsByRange(this).cell;
+      var ut = getUETable(cell);
       ut.splitToRows(cell);
       rng.moveToBookmark(bk).select();
     }
   };
   UE.commands["splittocols"] = {
     queryCommandState: function() {
-      var tableItems = getTableItemsByRange(this),
-        cell = tableItems.cell;
+      var tableItems = getTableItemsByRange(this);
+      var cell = tableItems.cell;
       if (!cell) return -1;
       var ut = getUETable(tableItems.table);
       if (ut.selectedTds.length > 0) return -1;
       return cell && cell.colSpan > 1 ? 0 : -1;
     },
     execCommand: function() {
-      var rng = this.selection.getRange(),
-        bk = rng.createBookmark(true);
-      var cell = getTableItemsByRange(this).cell,
-        ut = getUETable(cell);
+      var rng = this.selection.getRange();
+      var bk = rng.createBookmark(true);
+      var cell = getTableItemsByRange(this).cell;
+      var ut = getUETable(cell);
       ut.splitToCols(cell);
       rng.moveToBookmark(bk).select();
     }
@@ -613,8 +618,8 @@
       return getTableItemsByRange(this).table ? 0 : -1;
     },
     execCommand: function(cmd) {
-      var tableItems = getTableItemsByRange(this),
-        table = tableItems.table;
+      var tableItems = getTableItemsByRange(this);
+      var table = tableItems.table;
       if (table) {
         if (cmd == "adaptbywindow") {
           resetTdWidth(table, this);
@@ -637,23 +642,23 @@
       return ut.isFullRow() || ut.isFullCol() ? 0 : -1;
     },
     execCommand: function(cmd) {
-      var me = this,
-        ut = getUETableBySelected(me);
+      var me = this;
+      var ut = getUETableBySelected(me);
 
       function getAverageWidth() {
-        var tb = ut.table,
-          averageWidth,
-          sumWidth = 0,
-          colsNum = 0,
-          tbAttr = getDefaultValue(me, tb);
+        var tb = ut.table;
+        var averageWidth;
+        var sumWidth = 0;
+        var colsNum = 0;
+        var tbAttr = getDefaultValue(me, tb);
 
         if (ut.isFullRow()) {
           sumWidth = tb.offsetWidth;
           colsNum = ut.colsNum;
         } else {
-          var begin = ut.cellsRange.beginColIndex,
-            end = ut.cellsRange.endColIndex,
-            node;
+          var begin = ut.cellsRange.beginColIndex;
+          var end = ut.cellsRange.endColIndex;
+          var node;
           for (var i = begin; i <= end; ) {
             node = ut.selectedTds[i];
             sumWidth += node.offsetWidth;
@@ -692,22 +697,22 @@
       return ut.isFullRow() || ut.isFullCol() ? 0 : -1;
     },
     execCommand: function(cmd) {
-      var me = this,
-        ut = getUETableBySelected(me);
+      var me = this;
+      var ut = getUETableBySelected(me);
 
       function getAverageHeight() {
-        var averageHeight,
-          rowNum,
-          sumHeight = 0,
-          tb = ut.table,
-          tbAttr = getDefaultValue(me, tb),
-          tdpadding = parseInt(domUtils.getComputedStyle(tb.getElementsByTagName("td")[0], "padding-top"));
+        var averageHeight;
+        var rowNum;
+        var sumHeight = 0;
+        var tb = ut.table;
+        var tbAttr = getDefaultValue(me, tb);
+        var tdpadding = parseInt(domUtils.getComputedStyle(tb.getElementsByTagName("td")[0], "padding-top"));
 
         if (ut.isFullCol()) {
-          var captionArr = domUtils.getElementsByTagName(tb, "caption"),
-            thArr = domUtils.getElementsByTagName(tb, "th"),
-            captionHeight,
-            thHeight;
+          var captionArr = domUtils.getElementsByTagName(tb, "caption");
+          var thArr = domUtils.getElementsByTagName(tb, "th");
+          var captionHeight;
+          var thHeight;
 
           if (captionArr.length > 0) {
             captionHeight = captionArr[0].offsetHeight;
@@ -719,10 +724,10 @@
           sumHeight = tb.offsetHeight - (captionHeight || 0) - (thHeight || 0);
           rowNum = thArr.length == 0 ? ut.rowsNum : ut.rowsNum - 1;
         } else {
-          var begin = ut.cellsRange.beginRowIndex,
-            end = ut.cellsRange.endRowIndex,
-            count = 0,
-            trs = domUtils.getElementsByTagName(tb, "tr");
+          var begin = ut.cellsRange.beginRowIndex;
+          var end = ut.cellsRange.endRowIndex;
+          var count = 0;
+          var trs = domUtils.getElementsByTagName(tb, "tr");
           for (var i = begin; i <= end; i++) {
             sumHeight += trs[i].offsetHeight;
             count += 1;
@@ -759,12 +764,12 @@
       return getTableItemsByRange(this).table ? 0 : -1;
     },
     execCommand: function(cmd, data) {
-      var me = this,
-        ut = getUETableBySelected(me);
+      var me = this;
+      var ut = getUETableBySelected(me);
 
       if (!ut) {
-        var start = me.selection.getStart(),
-          cell = start && domUtils.findParentByTagName(start, ["td", "th", "caption"], true);
+        var start = me.selection.getStart();
+        var cell = start && domUtils.findParentByTagName(start, ["td", "th", "caption"], true);
         if (!/caption/gi.test(cell.tagName)) {
           domUtils.setAttributes(cell, data);
         } else {
@@ -810,9 +815,9 @@
       return getTableItemsByRange(this).table ? 0 : -1;
     },
     execCommand: function(cmd, value) {
-      var me = this,
-        start = me.selection.getStart(),
-        table = start && domUtils.findParentByTagName(start, ["table"], true);
+      var me = this;
+      var start = me.selection.getStart();
+      var table = start && domUtils.findParentByTagName(start, ["table"], true);
 
       if (table) {
         table.setAttribute("align", value);
@@ -826,8 +831,8 @@
       return getTableItemsByRange(this).table ? 0 : -1;
     },
     execCommand: function(cmd, color) {
-      var rng = this.selection.getRange(),
-        table = domUtils.findParentByTagName(rng.startContainer, "table");
+      var rng = this.selection.getRange();
+      var table = domUtils.findParentByTagName(rng.startContainer, "table");
       if (table) {
         var arr = domUtils
           .getElementsByTagName(table, "td")
@@ -844,12 +849,12 @@
       return getTableItemsByRange(this).table ? 0 : -1;
     },
     execCommand: function(cmd, bkColor) {
-      var me = this,
-        ut = getUETableBySelected(me);
+      var me = this;
+      var ut = getUETableBySelected(me);
 
       if (!ut) {
-        var start = me.selection.getStart(),
-          cell = start && domUtils.findParentByTagName(start, ["td", "th", "caption"], true);
+        var start = me.selection.getStart();
+        var cell = start && domUtils.findParentByTagName(start, ["td", "th", "caption"], true);
         if (cell) {
           cell.style.backgroundColor = bkColor;
         }
@@ -866,7 +871,8 @@
       return getSelectedArr(this).length > 1 ? 0 : -1;
     },
     execCommand: function(cmd, value) {
-      var cells, ut;
+      var cells;
+      var ut;
       cells = getSelectedArr(this);
       ut = getUETable(cells[0]);
       ut.setBackground(cells, value);
@@ -883,8 +889,8 @@
       return -1;
     },
     execCommand: function() {
-      var cells = getSelectedArr(this),
-        ut = getUETable(cells[0]);
+      var cells = getSelectedArr(this);
+      var ut = getUETable(cells[0]);
       ut.removeBackground(cells);
     }
   };

@@ -6,7 +6,8 @@
  */
 
 (function() {
-  var uploadFile, onlineFile;
+  var uploadFile;
+  var onlineFile;
 
   window.onload = function() {
     initTabs();
@@ -29,9 +30,9 @@
   /* 初始化tabbody */
   function setTabFocus(id) {
     if (!id) return;
-    var i,
-      bodyId,
-      tabs = $G("tabhead").children;
+    var i;
+    var bodyId;
+    var tabs = $G("tabhead").children;
     for (i = 0; i < tabs.length; i++) {
       bodyId = tabs[i].getAttribute("data-content-id");
       if (bodyId == id) {
@@ -55,9 +56,9 @@
   /* 初始化onok事件 */
   function initButtons() {
     dialog.onok = function() {
-      var list = [],
-        id,
-        tabs = $G("tabhead").children;
+      var list = [];
+      var id;
+      var tabs = $G("tabhead").children;
       for (var i = 0; i < tabs.length; i++) {
         if (domUtils.hasClass(tabs[i], "focus")) {
           id = tabs[i].getAttribute("data-content-id");
@@ -101,57 +102,79 @@
     },
     /* 初始化容器 */
     initUploader: function() {
-      var _this = this,
-        $ = jQuery, // just in case. Make sure it's not an other libaray.
-        $wrap = _this.$wrap,
-        // 图片容器
-        $queue = $wrap.find(".filelist"),
-        // 状态栏，包括进度和控制按钮
-        $statusBar = $wrap.find(".statusBar"),
-        // 文件总体选择信息。
-        $info = $statusBar.find(".info"),
-        // 上传按钮
-        $upload = $wrap.find(".uploadBtn"),
-        // 上传按钮
-        $filePickerBtn = $wrap.find(".filePickerBtn"),
-        // 上传按钮
-        $filePickerBlock = $wrap.find(".filePickerBlock"),
-        // 没选择文件之前的内容。
-        $placeHolder = $wrap.find(".placeholder"),
-        // 总体进度条
-        $progress = $statusBar.find(".progress").hide(),
-        // 添加的文件数量
-        fileCount = 0,
-        // 添加的文件总大小
-        fileSize = 0,
-        // 优化retina, 在retina下这个值是2
-        ratio = window.devicePixelRatio || 1,
-        // 缩略图大小
-        thumbnailWidth = 113 * ratio,
-        thumbnailHeight = 113 * ratio,
-        // 可能有pedding, ready, uploading, confirm, done.
-        state = "",
-        // 所有文件的进度信息，key为file id
-        percentages = {},
-        supportTransition = (function() {
-          var s = document.createElement("p").style,
-            r =
-              "transition" in s ||
-              "WebkitTransition" in s ||
-              "MozTransition" in s ||
-              "msTransition" in s ||
-              "OTransition" in s;
-          s = null;
-          return r;
-        })(),
-        // WebUploader实例
-        uploader,
-        actionUrl = editor.getActionUrl(editor.getOpt("fileActionName")),
-        fileMaxSize = editor.getOpt("fileMaxSize"),
-        acceptExtensions = (editor.getOpt("fileAllowFiles") || [])
-          .join("")
-          .replace(/\./g, ",")
-          .replace(/^[,]/, "");
+      var _this = this;
+
+      var // just in case. Make sure it's not an other libaray.
+      $ = jQuery;
+
+      var $wrap = _this.$wrap;
+
+      var // 图片容器
+      $queue = $wrap.find(".filelist");
+
+      var // 状态栏，包括进度和控制按钮
+      $statusBar = $wrap.find(".statusBar");
+
+      var // 文件总体选择信息。
+      $info = $statusBar.find(".info");
+
+      var // 上传按钮
+      $upload = $wrap.find(".uploadBtn");
+
+      var // 上传按钮
+      $filePickerBtn = $wrap.find(".filePickerBtn");
+
+      var // 上传按钮
+      $filePickerBlock = $wrap.find(".filePickerBlock");
+
+      var // 没选择文件之前的内容。
+      $placeHolder = $wrap.find(".placeholder");
+
+      var // 总体进度条
+      $progress = $statusBar.find(".progress").hide();
+
+      var // 添加的文件数量
+      fileCount = 0;
+
+      var // 添加的文件总大小
+      fileSize = 0;
+
+      var // 优化retina, 在retina下这个值是2
+      ratio = window.devicePixelRatio || 1;
+
+      var // 缩略图大小
+      thumbnailWidth = 113 * ratio;
+
+      var thumbnailHeight = 113 * ratio;
+
+      var // 可能有pedding, ready, uploading, confirm, done.
+      state = "";
+
+      var // 所有文件的进度信息，key为file id
+      percentages = {};
+
+      var supportTransition = (function() {
+        var s = document.createElement("p").style,
+          r =
+            "transition" in s ||
+            "WebkitTransition" in s ||
+            "MozTransition" in s ||
+            "msTransition" in s ||
+            "OTransition" in s;
+        s = null;
+        return r;
+      })();
+
+      var // WebUploader实例
+      uploader;
+
+      var actionUrl = editor.getActionUrl(editor.getOpt("fileActionName"));
+      var fileMaxSize = editor.getOpt("fileMaxSize");
+
+      var acceptExtensions = (editor.getOpt("fileAllowFiles") || [])
+        .join("")
+        .replace(/\./g, ",")
+        .replace(/^[,]/, "");
 
       if (!WebUploader.Uploader.support()) {
         $("#filePickerReady")
@@ -199,44 +222,48 @@
               '<p class="imgWrap"></p>' +
               '<p class="progress"><span></span></p>' +
               "</li>"
-          ),
-          $btns = $(
-            '<div class="file-panel">' +
-              '<span class="cancel">' +
-              lang.uploadDelete +
-              "</span>" +
-              '<span class="rotateRight">' +
-              lang.uploadTurnRight +
-              "</span>" +
-              '<span class="rotateLeft">' +
-              lang.uploadTurnLeft +
-              "</span></div>"
-          ).appendTo($li),
-          $prgress = $li.find("p.progress span"),
-          $wrap = $li.find("p.imgWrap"),
-          $info = $('<p class="error"></p>')
-            .hide()
-            .appendTo($li),
-          showError = function(code) {
-            switch (code) {
-              case "exceed_size":
-                text = lang.errorExceedSize;
-                break;
-              case "interrupt":
-                text = lang.errorInterrupt;
-                break;
-              case "http":
-                text = lang.errorHttp;
-                break;
-              case "not_allow_type":
-                text = lang.errorFileType;
-                break;
-              default:
-                text = lang.errorUploadRetry;
-                break;
-            }
-            $info.text(text).show();
-          };
+          );
+
+        var $btns = $(
+          '<div class="file-panel">' +
+            '<span class="cancel">' +
+            lang.uploadDelete +
+            "</span>" +
+            '<span class="rotateRight">' +
+            lang.uploadTurnRight +
+            "</span>" +
+            '<span class="rotateLeft">' +
+            lang.uploadTurnLeft +
+            "</span></div>"
+        ).appendTo($li);
+
+        var $prgress = $li.find("p.progress span");
+        var $wrap = $li.find("p.imgWrap");
+
+        var $info = $('<p class="error"></p>')
+          .hide()
+          .appendTo($li);
+
+        var showError = function(code) {
+          switch (code) {
+            case "exceed_size":
+              text = lang.errorExceedSize;
+              break;
+            case "interrupt":
+              text = lang.errorInterrupt;
+              break;
+            case "http":
+              text = lang.errorHttp;
+              break;
+            case "not_allow_type":
+              text = lang.errorFileType;
+              break;
+            default:
+              text = lang.errorUploadRetry;
+              break;
+          }
+          $info.text(text).show();
+        };
 
         if (file.getStatus() === "invalid") {
           showError(file.statusText);
@@ -320,8 +347,8 @@
         });
 
         $btns.on("click", "span", function() {
-          var index = $(this).index(),
-            deg;
+          var index = $(this).index();
+          var deg;
 
           switch (index) {
             case 0:
@@ -368,10 +395,10 @@
       }
 
       function updateTotalProgress() {
-        var loaded = 0,
-          total = 0,
-          spans = $progress.children(),
-          percent;
+        var loaded = 0;
+        var total = 0;
+        var spans = $progress.children();
+        var percent;
 
         $.each(percentages, function(k, v) {
           total += v[0];
@@ -463,8 +490,8 @@
       }
 
       function updateStatus() {
-        var text = "",
-          stats;
+        var text = "";
+        var stats;
 
         if (state === "ready") {
           text = lang.updateStatusReady.replace("_", fileCount).replace("_KB", WebUploader.formatSize(fileSize));
@@ -529,8 +556,9 @@
             break;
           case "startUpload":
             /* 添加额外的GET参数 */
-            var params = utils.serializeParam(editor.queryCommandValue("serverparam")) || "",
-              url = utils.formatUrl(actionUrl + (actionUrl.indexOf("?") == -1 ? "?" : "&") + "encode=utf-8&" + params);
+            var params = utils.serializeParam(editor.queryCommandValue("serverparam")) || "";
+
+            var url = utils.formatUrl(actionUrl + (actionUrl.indexOf("?") == -1 ? "?" : "&") + "encode=utf-8&" + params);
             uploader.option("server", url);
             setState("uploading", files);
             break;
@@ -548,8 +576,8 @@
       });
 
       uploader.on("uploadProgress", function(file, percentage) {
-        var $li = $("#" + file.id),
-          $percent = $li.find(".progress span");
+        var $li = $("#" + file.id);
+        var $percent = $li.find(".progress span");
 
         $percent.css("width", percentage * 100 + "%");
         percentages[file.id][1] = percentage;
@@ -559,8 +587,8 @@
       uploader.on("uploadSuccess", function(file, ret) {
         var $file = $("#" + file.id);
         try {
-          var responseText = ret._raw || ret,
-            json = utils.str2json(responseText);
+          var responseText = ret._raw || ret;
+          var json = utils.str2json(responseText);
           if (json.state == "SUCCESS") {
             _this.fileList.push(json);
             $file.append('<span class="success"></span>');
@@ -604,11 +632,11 @@
       updateTotalProgress();
     },
     getQueueCount: function() {
-      var file,
-        i,
-        status,
-        readyFile = 0,
-        files = this.uploader.getFiles();
+      var file;
+      var i;
+      var status;
+      var readyFile = 0;
+      var files = this.uploader.getFiles();
       for (i = 0; (file = files[i++]); ) {
         status = file.getStatus();
         if (status == "queued" || status == "uploading" || status == "progress") readyFile++;
@@ -616,11 +644,11 @@
       return readyFile;
     },
     getInsertList: function() {
-      var i,
-        link,
-        data,
-        list = [],
-        prefix = editor.getOpt("fileUrlPrefix");
+      var i;
+      var link;
+      var data;
+      var list = [];
+      var prefix = editor.getOpt("fileUrlPrefix");
       for (i = 0; i < this.fileList.length; i++) {
         data = this.fileList[i];
         link = data.url;
@@ -669,8 +697,8 @@
       });
       /* 选中图片 */
       domUtils.on(this.list, "click", function(e) {
-        var target = e.target || e.srcElement,
-          li = target.parentNode;
+        var target = e.target || e.srcElement;
+        var li = target.parentNode;
 
         if (li.tagName.toLowerCase() == "li") {
           if (domUtils.hasClass(li, "selected")) {
@@ -737,14 +765,14 @@
     },
     /* 添加图片到列表界面上 */
     pushData: function(list) {
-      var i,
-        item,
-        img,
-        filetype,
-        preview,
-        icon,
-        _this = this,
-        urlPrefix = editor.getOpt("fileManagerUrlPrefix");
+      var i;
+      var item;
+      var img;
+      var filetype;
+      var preview;
+      var icon;
+      var _this = this;
+      var urlPrefix = editor.getOpt("fileManagerUrlPrefix");
       for (i = 0; i < list.length; i++) {
         if (list[i] && list[i].url) {
           item = document.createElement("li");
@@ -771,8 +799,8 @@
                 (+new Date()).toString(36)
             );
           } else {
-            var ic = document.createElement("i"),
-              textSpan = document.createElement("span");
+            var ic = document.createElement("i");
+            var textSpan = document.createElement("span");
             textSpan.innerHTML = list[i].url.substr(list[i].url.lastIndexOf("/") + 1);
             preview = document.createElement("div");
             preview.appendChild(ic);
@@ -796,8 +824,8 @@
     },
     /* 改变图片大小 */
     scale: function(img, w, h, type) {
-      var ow = img.width,
-        oh = img.height;
+      var ow = img.width;
+      var oh = img.height;
 
       if (type == "justify") {
         if (ow >= oh) {
@@ -822,9 +850,9 @@
       }
     },
     getInsertList: function() {
-      var i,
-        lis = this.list.children,
-        list = [];
+      var i;
+      var lis = this.list.children;
+      var list = [];
       for (i = 0; i < lis.length; i++) {
         if (domUtils.hasClass(lis[i], "selected")) {
           var url = lis[i].getAttribute("data-url");

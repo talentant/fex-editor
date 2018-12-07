@@ -6,8 +6,8 @@
  * 远程图片抓取,当开启本插件时所有不符合本地域名的图片都将被抓取成为本地服务器上的图片
  */
 UE.plugins["catchremoteimage"] = function() {
-  var me = this,
-    ajax = UE.ajax;
+  var me = this;
+  var ajax = UE.ajax;
 
   /* 设置默认值 */
   if (me.options.catchRemoteImageEnable === false) return;
@@ -20,27 +20,27 @@ UE.plugins["catchremoteimage"] = function() {
   });
 
   me.addListener("catchRemoteImage", function() {
-    var catcherLocalDomain = me.getOpt("catcherLocalDomain"),
-      catcherActionUrl = me.getActionUrl(me.getOpt("catcherActionName")),
-      catcherUrlPrefix = me.getOpt("catcherUrlPrefix"),
-      catcherFieldName = me.getOpt("catcherFieldName");
+    var catcherLocalDomain = me.getOpt("catcherLocalDomain");
+    var catcherActionUrl = me.getActionUrl(me.getOpt("catcherActionName"));
+    var catcherUrlPrefix = me.getOpt("catcherUrlPrefix");
+    var catcherFieldName = me.getOpt("catcherFieldName");
+    var remoteImages = [];
+    var loadingIMG = me.options.themePath + me.options.theme + "/images/spacer.gif";
+    var imgs = me.document.querySelectorAll('[style*="url"],img');
 
-    var remoteImages = [],
-      loadingIMG = me.options.themePath + me.options.theme + "/images/spacer.gif",
-      imgs = me.document.querySelectorAll('[style*="url"],img'),
-      test = function(src, urls) {
-        if (src.indexOf(location.host) != -1 || /(^\.)|(^\/)/.test(src)) {
-          return true;
-        }
-        if (urls) {
-          for (var j = 0, url; (url = urls[j++]); ) {
-            if (src.indexOf(url) !== -1) {
-              return true;
-            }
+    var test = function(src, urls) {
+      if (src.indexOf(location.host) != -1 || /(^\.)|(^\/)/.test(src)) {
+        return true;
+      }
+      if (urls) {
+        for (var j = 0, url; (url = urls[j++]); ) {
+          if (src.indexOf(url) !== -1) {
+            return true;
           }
         }
-        return false;
-      };
+      }
+      return false;
+    };
 
     for (var i = 0, ci; (ci = imgs[i++]); ) {
       if (ci.getAttribute("word_img")) {
@@ -81,13 +81,14 @@ UE.plugins["catchremoteimage"] = function() {
           }
 
           /* 获取源路径和新路径 */
-          var i,
-            j,
-            ci,
-            cj,
-            oldSrc,
-            newSrc,
-            list = info.list;
+          var i;
+
+          var j;
+          var ci;
+          var cj;
+          var oldSrc;
+          var newSrc;
+          var list = info.list;
 
           /* 抓取失败统计 */
           var catchFailList = [];
@@ -152,16 +153,18 @@ UE.plugins["catchremoteimage"] = function() {
     }
 
     function catchremoteimage(imgs, callbacks) {
-      var params = utils.serializeParam(me.queryCommandValue("serverparam")) || "",
-        url = utils.formatUrl(catcherActionUrl + (catcherActionUrl.indexOf("?") == -1 ? "?" : "&") + params),
-        isJsonp = utils.isCrossDomainUrl(url),
-        opt = {
-          method: "POST",
-          dataType: isJsonp ? "jsonp" : "",
-          timeout: 60000, //单位：毫秒，回调请求超时设置。目标用户如果网速不是很快的话此处建议设置一个较大的数值
-          onsuccess: callbacks["success"],
-          onerror: callbacks["error"]
-        };
+      var params = utils.serializeParam(me.queryCommandValue("serverparam")) || "";
+      var url = utils.formatUrl(catcherActionUrl + (catcherActionUrl.indexOf("?") == -1 ? "?" : "&") + params);
+      var isJsonp = utils.isCrossDomainUrl(url);
+
+      var opt = {
+        method: "POST",
+        dataType: isJsonp ? "jsonp" : "",
+        timeout: 60000, //单位：毫秒，回调请求超时设置。目标用户如果网速不是很快的话此处建议设置一个较大的数值
+        onsuccess: callbacks["success"],
+        onerror: callbacks["error"]
+      };
+
       opt[catcherFieldName] = imgs;
       ajax.request(url, opt);
     }

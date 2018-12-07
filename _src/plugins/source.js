@@ -118,8 +118,11 @@
     }
 
     var bakCssText;
+
     //解决在源码模式下getContent不能得到最新的内容问题
-    var oldGetContent, bakAddress;
+    var oldGetContent;
+
+    var bakAddress;
 
     /**
      * 切换源码模式和编辑模式

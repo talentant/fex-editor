@@ -35,9 +35,9 @@ UE.plugins["fiximgclick"] = (function() {
         me.startPos = this.prePos = {x: 0, y: 0};
         me.dragId = -1;
 
-        var hands = [],
-          cover = (me.cover = document.createElement("div")),
-          resizer = (me.resizer = document.createElement("div"));
+        var hands = [];
+        var cover = (me.cover = document.createElement("div"));
+        var resizer = (me.resizer = document.createElement("div"));
 
         cover.id = me.editor.ui.id + "_imagescale_cover";
         cover.style.cssText =
@@ -87,8 +87,8 @@ UE.plugins["fiximgclick"] = (function() {
         var me = this;
         switch (e.type) {
           case "mousedown":
-            var hand = e.target || e.srcElement,
-              hand;
+            var hand = e.target || e.srcElement;
+            var hand;
             if (hand.className.indexOf("edui-editor-imagescale-hand") != -1 && me.dragId == -1) {
               me.dragId = hand.className.slice(-1);
               me.startPos.x = me.prePos.x = e.clientX;
@@ -141,9 +141,9 @@ UE.plugins["fiximgclick"] = (function() {
         me.attachTo(me.target);
       },
       updateContainerStyle: function(dir, offset) {
-        var me = this,
-          dom = me.resizer,
-          tmp;
+        var me = this;
+        var dom = me.resizer;
+        var tmp;
 
         if (rect[dir][0] != 0) {
           tmp = parseInt(dom.style.left) + offset.x;
@@ -163,8 +163,8 @@ UE.plugins["fiximgclick"] = (function() {
         }
       },
       _validScaledProp: function(prop, value) {
-        var ele = this.resizer,
-          wrap = document;
+        var ele = this.resizer;
+        var wrap = document;
 
         value = isNaN(value) ? 0 : value;
         switch (prop) {
@@ -198,9 +198,9 @@ UE.plugins["fiximgclick"] = (function() {
         this.cover.style.display = "none";
       },
       showCover: function() {
-        var me = this,
-          editorPos = domUtils.getXY(me.editor.ui.getDom()),
-          iframePos = domUtils.getXY(me.editor.iframe);
+        var me = this;
+        var editorPos = domUtils.getXY(me.editor.ui.getDom());
+        var iframePos = domUtils.getXY(me.editor.iframe);
 
         domUtils.setStyles(me.cover, {
           width: me.editor.iframe.offsetWidth + "px",
@@ -238,12 +238,12 @@ UE.plugins["fiximgclick"] = (function() {
         };
       },
       attachTo: function(targetObj) {
-        var me = this,
-          target = (me.target = targetObj),
-          resizer = this.resizer,
-          imgPos = domUtils.getXY(target),
-          iframePos = domUtils.getXY(me.editor.iframe),
-          editorPos = domUtils.getXY(resizer.parentNode);
+        var me = this;
+        var target = (me.target = targetObj);
+        var resizer = this.resizer;
+        var imgPos = domUtils.getXY(target);
+        var iframePos = domUtils.getXY(me.editor.iframe);
+        var editorPos = domUtils.getXY(resizer.parentNode);
 
         domUtils.setStyles(resizer, {
           width: target.width + "px",
@@ -268,15 +268,15 @@ UE.plugins["fiximgclick"] = (function() {
   })();
 
   return function() {
-    var me = this,
-      imageScale;
+    var me = this;
+    var imageScale;
 
     me.setOpt("imageScaleEnabled", true);
 
     if (!browser.ie && me.options.imageScaleEnabled) {
       me.addListener("click", function(type, e) {
-        var range = me.selection.getRange(),
-          img = range.getClosedNode();
+        var range = me.selection.getRange();
+        var img = range.getClosedNode();
 
         if (img && img.tagName == "IMG" && me.body.contentEditable != "false") {
           if (
@@ -299,14 +299,16 @@ UE.plugins["fiximgclick"] = (function() {
                     .getRange()
                     .selectNode(imageScale.target)
                     .select();
-              },
-              _mouseDownHandler = function(e) {
-                var ele = e.target || e.srcElement;
-                if (ele && (ele.className === undefined || ele.className.indexOf("edui-editor-imagescale") == -1)) {
-                  _keyDownHandler(e);
-                }
-              },
-              timer;
+              };
+
+            var _mouseDownHandler = function(e) {
+              var ele = e.target || e.srcElement;
+              if (ele && (ele.className === undefined || ele.className.indexOf("edui-editor-imagescale") == -1)) {
+                _keyDownHandler(e);
+              }
+            };
+
+            var timer;
 
             me.addListener("afterscaleshow", function(e) {
               me.addListener("beforekeydown", _keyDownHandler);

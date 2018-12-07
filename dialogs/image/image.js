@@ -6,7 +6,10 @@
  */
 
 (function() {
-  var remoteImage, uploadImage, onlineImage, searchImage;
+  var remoteImage;
+  var uploadImage;
+  var onlineImage;
+  var searchImage;
 
   window.onload = function() {
     initTabs();
@@ -35,9 +38,9 @@
   /* 初始化tabbody */
   function setTabFocus(id) {
     if (!id) return;
-    var i,
-      bodyId,
-      tabs = $G("tabhead").children;
+    var i;
+    var bodyId;
+    var tabs = $G("tabhead").children;
     for (i = 0; i < tabs.length; i++) {
       bodyId = tabs[i].getAttribute("data-content-id");
       if (bodyId == id) {
@@ -71,10 +74,10 @@
   /* 初始化onok事件 */
   function initButtons() {
     dialog.onok = function() {
-      var remote = false,
-        list = [],
-        id,
-        tabs = $G("tabhead").children;
+      var remote = false;
+      var list = [];
+      var id;
+      var tabs = $G("tabhead").children;
       for (var i = 0; i < tabs.length; i++) {
         if (domUtils.hasClass(tabs[i], "focus")) {
           id = tabs[i].getAttribute("data-content-id");
@@ -168,8 +171,8 @@
       }
     },
     initEvents: function() {
-      var _this = this,
-        locker = $G("lock");
+      var _this = this;
+      var locker = $G("lock");
 
       /* 改变url */
       domUtils.on($G("url"), "keyup", updatePreview);
@@ -204,9 +207,9 @@
       }
     },
     updateLocker: function() {
-      var width = $G("width").value,
-        height = $G("height").value,
-        locker = $G("lock");
+      var width = $G("width").value;
+      var height = $G("height").value;
+      var locker = $G("lock");
       if (width && height && width == parseInt(width) && height == parseInt(height)) {
         locker.disabled = false;
         locker.title = "";
@@ -220,11 +223,13 @@
       /* 不是正常的图片 */
       if (!img.tagName || (img.tagName.toLowerCase() != "img" && !img.getAttribute("src")) || !img.src) return;
 
-      var wordImgFlag = img.getAttribute("word_img"),
-        src = wordImgFlag
-          ? wordImgFlag.replace("&amp;", "&")
-          : img.getAttribute("_src") || img.getAttribute("src", 2).replace("&amp;", "&"),
-        align = editor.queryCommandValue("imageFloat");
+      var wordImgFlag = img.getAttribute("word_img");
+
+      var src = wordImgFlag
+        ? wordImgFlag.replace("&amp;", "&")
+        : img.getAttribute("_src") || img.getAttribute("src", 2).replace("&amp;", "&");
+
+      var align = editor.queryCommandValue("imageFloat");
 
       /* 防止onchange事件循环调用 */
       if (src !== $G("url").value) $G("url").value = src;
@@ -248,14 +253,14 @@
       return data;
     },
     setPreview: function() {
-      var url = $G("url").value,
-        ow = $G("width").value,
-        oh = $G("height").value,
-        border = $G("border").value,
-        title = $G("title").value,
-        preview = $G("preview"),
-        width,
-        height;
+      var url = $G("url").value;
+      var ow = $G("width").value;
+      var oh = $G("height").value;
+      var border = $G("border").value;
+      var title = $G("title").value;
+      var preview = $G("preview");
+      var width;
+      var height;
 
       width = !ow || !oh ? preview.offsetWidth : Math.min(ow, preview.offsetWidth);
       width = width + border * 2 > preview.offsetWidth ? width : preview.offsetWidth - border * 2;
@@ -314,58 +319,81 @@
     },
     /* 初始化容器 */
     initUploader: function() {
-      var _this = this,
-        $ = jQuery, // just in case. Make sure it's not an other libaray.
-        $wrap = _this.$wrap,
-        // 图片容器
-        $queue = $wrap.find(".filelist"),
-        // 状态栏，包括进度和控制按钮
-        $statusBar = $wrap.find(".statusBar"),
-        // 文件总体选择信息。
-        $info = $statusBar.find(".info"),
-        // 上传按钮
-        $upload = $wrap.find(".uploadBtn"),
-        // 上传按钮
-        $filePickerBtn = $wrap.find(".filePickerBtn"),
-        // 上传按钮
-        $filePickerBlock = $wrap.find(".filePickerBlock"),
-        // 没选择文件之前的内容。
-        $placeHolder = $wrap.find(".placeholder"),
-        // 总体进度条
-        $progress = $statusBar.find(".progress").hide(),
-        // 添加的文件数量
-        fileCount = 0,
-        // 添加的文件总大小
-        fileSize = 0,
-        // 优化retina, 在retina下这个值是2
-        ratio = window.devicePixelRatio || 1,
-        // 缩略图大小
-        thumbnailWidth = 113 * ratio,
-        thumbnailHeight = 113 * ratio,
-        // 可能有pedding, ready, uploading, confirm, done.
-        state = "",
-        // 所有文件的进度信息，key为file id
-        percentages = {},
-        supportTransition = (function() {
-          var s = document.createElement("p").style,
-            r =
-              "transition" in s ||
-              "WebkitTransition" in s ||
-              "MozTransition" in s ||
-              "msTransition" in s ||
-              "OTransition" in s;
-          s = null;
-          return r;
-        })(),
-        // WebUploader实例
-        uploader,
-        actionUrl = editor.getActionUrl(editor.getOpt("imageActionName")),
-        acceptExtensions = (editor.getOpt("imageAllowFiles") || [])
-          .join("")
-          .replace(/\./g, ",")
-          .replace(/^[,]/, ""),
-        imageMaxSize = editor.getOpt("imageMaxSize"),
-        imageCompressBorder = editor.getOpt("imageCompressBorder");
+      var _this = this;
+
+      var // just in case. Make sure it's not an other libaray.
+      $ = jQuery;
+
+      var $wrap = _this.$wrap;
+
+      var // 图片容器
+      $queue = $wrap.find(".filelist");
+
+      var // 状态栏，包括进度和控制按钮
+      $statusBar = $wrap.find(".statusBar");
+
+      var // 文件总体选择信息。
+      $info = $statusBar.find(".info");
+
+      var // 上传按钮
+      $upload = $wrap.find(".uploadBtn");
+
+      var // 上传按钮
+      $filePickerBtn = $wrap.find(".filePickerBtn");
+
+      var // 上传按钮
+      $filePickerBlock = $wrap.find(".filePickerBlock");
+
+      var // 没选择文件之前的内容。
+      $placeHolder = $wrap.find(".placeholder");
+
+      var // 总体进度条
+      $progress = $statusBar.find(".progress").hide();
+
+      var // 添加的文件数量
+      fileCount = 0;
+
+      var // 添加的文件总大小
+      fileSize = 0;
+
+      var // 优化retina, 在retina下这个值是2
+      ratio = window.devicePixelRatio || 1;
+
+      var // 缩略图大小
+      thumbnailWidth = 113 * ratio;
+
+      var thumbnailHeight = 113 * ratio;
+
+      var // 可能有pedding, ready, uploading, confirm, done.
+      state = "";
+
+      var // 所有文件的进度信息，key为file id
+      percentages = {};
+
+      var supportTransition = (function() {
+        var s = document.createElement("p").style,
+          r =
+            "transition" in s ||
+            "WebkitTransition" in s ||
+            "MozTransition" in s ||
+            "msTransition" in s ||
+            "OTransition" in s;
+        s = null;
+        return r;
+      })();
+
+      var // WebUploader实例
+      uploader;
+
+      var actionUrl = editor.getActionUrl(editor.getOpt("imageActionName"));
+
+      var acceptExtensions = (editor.getOpt("imageAllowFiles") || [])
+        .join("")
+        .replace(/\./g, ",")
+        .replace(/^[,]/, "");
+
+      var imageMaxSize = editor.getOpt("imageMaxSize");
+      var imageCompressBorder = editor.getOpt("imageCompressBorder");
 
       if (!WebUploader.Uploader.support()) {
         $("#filePickerReady")
@@ -431,44 +459,48 @@
               '<p class="imgWrap"></p>' +
               '<p class="progress"><span></span></p>' +
               "</li>"
-          ),
-          $btns = $(
-            '<div class="file-panel">' +
-              '<span class="cancel">' +
-              lang.uploadDelete +
-              "</span>" +
-              '<span class="rotateRight">' +
-              lang.uploadTurnRight +
-              "</span>" +
-              '<span class="rotateLeft">' +
-              lang.uploadTurnLeft +
-              "</span></div>"
-          ).appendTo($li),
-          $prgress = $li.find("p.progress span"),
-          $wrap = $li.find("p.imgWrap"),
-          $info = $('<p class="error"></p>')
-            .hide()
-            .appendTo($li),
-          showError = function(code) {
-            switch (code) {
-              case "exceed_size":
-                text = lang.errorExceedSize;
-                break;
-              case "interrupt":
-                text = lang.errorInterrupt;
-                break;
-              case "http":
-                text = lang.errorHttp;
-                break;
-              case "not_allow_type":
-                text = lang.errorFileType;
-                break;
-              default:
-                text = lang.errorUploadRetry;
-                break;
-            }
-            $info.text(text).show();
-          };
+          );
+
+        var $btns = $(
+          '<div class="file-panel">' +
+            '<span class="cancel">' +
+            lang.uploadDelete +
+            "</span>" +
+            '<span class="rotateRight">' +
+            lang.uploadTurnRight +
+            "</span>" +
+            '<span class="rotateLeft">' +
+            lang.uploadTurnLeft +
+            "</span></div>"
+        ).appendTo($li);
+
+        var $prgress = $li.find("p.progress span");
+        var $wrap = $li.find("p.imgWrap");
+
+        var $info = $('<p class="error"></p>')
+          .hide()
+          .appendTo($li);
+
+        var showError = function(code) {
+          switch (code) {
+            case "exceed_size":
+              text = lang.errorExceedSize;
+              break;
+            case "interrupt":
+              text = lang.errorInterrupt;
+              break;
+            case "http":
+              text = lang.errorHttp;
+              break;
+            case "not_allow_type":
+              text = lang.errorFileType;
+              break;
+            default:
+              text = lang.errorUploadRetry;
+              break;
+          }
+          $info.text(text).show();
+        };
 
         if (file.getStatus() === "invalid") {
           showError(file.statusText);
@@ -536,8 +568,8 @@
         });
 
         $btns.on("click", "span", function() {
-          var index = $(this).index(),
-            deg;
+          var index = $(this).index();
+          var deg;
 
           switch (index) {
             case 0:
@@ -584,10 +616,10 @@
       }
 
       function updateTotalProgress() {
-        var loaded = 0,
-          total = 0,
-          spans = $progress.children(),
-          percent;
+        var loaded = 0;
+        var total = 0;
+        var spans = $progress.children();
+        var percent;
 
         $.each(percentages, function(k, v) {
           total += v[0];
@@ -679,8 +711,8 @@
       }
 
       function updateStatus() {
-        var text = "",
-          stats;
+        var text = "";
+        var stats;
 
         if (state === "ready") {
           text = lang.updateStatusReady.replace("_", fileCount).replace("_KB", WebUploader.formatSize(fileSize));
@@ -743,8 +775,9 @@
             break;
           case "startUpload":
             /* 添加额外的GET参数 */
-            var params = utils.serializeParam(editor.queryCommandValue("serverparam")) || "",
-              url = utils.formatUrl(actionUrl + (actionUrl.indexOf("?") == -1 ? "?" : "&") + "encode=utf-8&" + params);
+            var params = utils.serializeParam(editor.queryCommandValue("serverparam")) || "";
+
+            var url = utils.formatUrl(actionUrl + (actionUrl.indexOf("?") == -1 ? "?" : "&") + "encode=utf-8&" + params);
             uploader.option("server", url);
             setState("uploading", files);
             break;
@@ -762,8 +795,8 @@
       });
 
       uploader.on("uploadProgress", function(file, percentage) {
-        var $li = $("#" + file.id),
-          $percent = $li.find(".progress span");
+        var $li = $("#" + file.id);
+        var $percent = $li.find(".progress span");
 
         $percent.css("width", percentage * 100 + "%");
         percentages[file.id][1] = percentage;
@@ -773,8 +806,8 @@
       uploader.on("uploadSuccess", function(file, ret) {
         var $file = $("#" + file.id);
         try {
-          var responseText = ret._raw || ret,
-            json = utils.str2json(responseText);
+          var responseText = ret._raw || ret;
+          var json = utils.str2json(responseText);
           if (json.state == "SUCCESS") {
             _this.imageList.push(json);
             $file.append('<span class="success"></span>');
@@ -818,11 +851,11 @@
       updateTotalProgress();
     },
     getQueueCount: function() {
-      var file,
-        i,
-        status,
-        readyFile = 0,
-        files = this.uploader.getFiles();
+      var file;
+      var i;
+      var status;
+      var readyFile = 0;
+      var files = this.uploader.getFiles();
       for (i = 0; (file = files[i++]); ) {
         status = file.getStatus();
         if (status == "queued" || status == "uploading" || status == "progress") readyFile++;
@@ -833,11 +866,11 @@
       this.$wrap.remove();
     },
     getInsertList: function() {
-      var i,
-        data,
-        list = [],
-        align = getAlign(),
-        prefix = editor.getOpt("imageUrlPrefix");
+      var i;
+      var data;
+      var list = [];
+      var align = getAlign();
+      var prefix = editor.getOpt("imageUrlPrefix");
       for (i = 0; i < this.imageList.length; i++) {
         data = this.imageList[i];
         list.push({
@@ -886,8 +919,8 @@
       });
       /* 选中图片 */
       domUtils.on(this.container, "click", function(e) {
-        var target = e.target || e.srcElement,
-          li = target.parentNode;
+        var target = e.target || e.srcElement;
+        var li = target.parentNode;
 
         if (li.tagName.toLowerCase() == "li") {
           if (domUtils.hasClass(li, "selected")) {
@@ -920,8 +953,8 @@
 
       if (!_this.listEnd && !this.isLoadingData) {
         this.isLoadingData = true;
-        var url = editor.getActionUrl(editor.getOpt("imageManagerActionName")),
-          isJsonp = utils.isCrossDomainUrl(url);
+        var url = editor.getActionUrl(editor.getOpt("imageManagerActionName"));
+        var isJsonp = utils.isCrossDomainUrl(url);
         ajax.request(url, {
           timeout: 100000,
           dataType: isJsonp ? "jsonp" : "",
@@ -962,12 +995,12 @@
     },
     /* 添加图片到列表界面上 */
     pushData: function(list) {
-      var i,
-        item,
-        img,
-        icon,
-        _this = this,
-        urlPrefix = editor.getOpt("imageManagerUrlPrefix");
+      var i;
+      var item;
+      var img;
+      var icon;
+      var _this = this;
+      var urlPrefix = editor.getOpt("imageManagerUrlPrefix");
       for (i = 0; i < list.length; i++) {
         if (list[i] && list[i].url) {
           item = document.createElement("li");
@@ -1002,8 +1035,8 @@
     },
     /* 改变图片大小 */
     scale: function(img, w, h, type) {
-      var ow = img.width,
-        oh = img.height;
+      var ow = img.width;
+      var oh = img.height;
 
       if (type == "justify") {
         if (ow >= oh) {
@@ -1028,14 +1061,14 @@
       }
     },
     getInsertList: function() {
-      var i,
-        lis = this.list.children,
-        list = [],
-        align = getAlign();
+      var i;
+      var lis = this.list.children;
+      var list = [];
+      var align = getAlign();
       for (i = 0; i < lis.length; i++) {
         if (domUtils.hasClass(lis[i], "selected")) {
-          var img = lis[i].firstChild,
-            src = img.getAttribute("_src");
+          var img = lis[i].firstChild;
+          var src = img.getAttribute("_src");
           list.push({
             src: src,
             _src: src,
@@ -1089,8 +1122,8 @@
 
       /* 选中图片 */
       domUtils.on($G("searchList"), "click", function(e) {
-        var target = e.target || e.srcElement,
-          li = target.parentNode.parentNode;
+        var target = e.target || e.srcElement;
+        var li = target.parentNode.parentNode;
 
         if (li.tagName.toLowerCase() == "li") {
           if (domUtils.hasClass(li, "selected")) {
@@ -1103,8 +1136,8 @@
     },
     /* 改变图片大小 */
     scale: function(img, w, h) {
-      var ow = img.width,
-        oh = img.height;
+      var ow = img.width;
+      var oh = img.height;
 
       if (ow >= oh) {
         img.width = (w * ow) / oh;
@@ -1117,18 +1150,19 @@
       }
     },
     getImageData: function() {
-      var _this = this,
-        key = $G("searchTxt").value,
-        type = $G("searchType").value,
-        keepOriginName = editor.options.keepOriginName ? "1" : "0",
-        url =
-          "http://image.baidu.com/i?ct=201326592&cl=2&lm=-1&st=-1&tn=baiduimagejson&istype=2&rn=32&fm=index&pv=&word=" +
-          key +
-          type +
-          "&ie=utf-8&oe=utf-8&keeporiginname=" +
-          keepOriginName +
-          "&" +
-          +new Date();
+      var _this = this;
+      var key = $G("searchTxt").value;
+      var type = $G("searchType").value;
+      var keepOriginName = editor.options.keepOriginName ? "1" : "0";
+
+      var url =
+        "http://image.baidu.com/i?ct=201326592&cl=2&lm=-1&st=-1&tn=baiduimagejson&istype=2&rn=32&fm=index&pv=&word=" +
+        key +
+        type +
+        "&ie=utf-8&oe=utf-8&keeporiginname=" +
+        keepOriginName +
+        "&" +
+        +new Date();
 
       $G("searchListUl").innerHTML = lang.searchLoading;
       ajax.request(url, {
@@ -1156,13 +1190,13 @@
     },
     /* 添加图片到列表界面上 */
     setList: function(list) {
-      var i,
-        item,
-        p,
-        img,
-        link,
-        _this = this,
-        listUl = $G("searchListUl");
+      var i;
+      var item;
+      var p;
+      var img;
+      var link;
+      var _this = this;
+      var listUl = $G("searchListUl");
 
       listUl.innerHTML = "";
       if (list.length) {
@@ -1193,11 +1227,11 @@
       }
     },
     getInsertList: function() {
-      var child,
-        src,
-        align = getAlign(),
-        list = [],
-        items = $G("searchListUl").children;
+      var child;
+      var src;
+      var align = getAlign();
+      var list = [];
+      var items = $G("searchListUl").children;
       for (var i = 0; i < items.length; i++) {
         child = items[i].firstChild && items[i].firstChild.firstChild;
         if (child.tagName && child.tagName.toLowerCase() == "img" && domUtils.hasClass(items[i], "selected")) {

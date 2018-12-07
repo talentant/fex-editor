@@ -18,9 +18,9 @@
 
 UE.commands["cleardoc"] = {
   execCommand: function(cmdName) {
-    var me = this,
-      enterTag = me.options.enterTag,
-      range = me.selection.getRange();
+    var me = this;
+    var enterTag = me.options.enterTag;
+    var range = me.selection.getRange();
     if (enterTag == "br") {
       me.body.innerHTML = "<br/>";
       range.setStart(me.body, 0).setCursor();

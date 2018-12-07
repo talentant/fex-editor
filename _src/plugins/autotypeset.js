@@ -36,31 +36,35 @@ UE.plugins["autotypeset"] = function() {
     }
   });
 
-  var me = this,
-    opt = me.options.autotypeset,
-    remainClass = {
-      selectTdClass: 1,
-      pagebreak: 1,
-      anchorclass: 1
-    },
-    remainTag = {
-      li: 1
-    },
-    tags = {
-      div: 1,
-      p: 1,
-      //trace:2183 这些也认为是行
-      blockquote: 1,
-      center: 1,
-      h1: 1,
-      h2: 1,
-      h3: 1,
-      h4: 1,
-      h5: 1,
-      h6: 1,
-      span: 1
-    },
-    highlightCont;
+  var me = this;
+  var opt = me.options.autotypeset;
+
+  var remainClass = {
+    selectTdClass: 1,
+    pagebreak: 1,
+    anchorclass: 1
+  };
+
+  var remainTag = {
+    li: 1
+  };
+
+  var tags = {
+    div: 1,
+    p: 1,
+    //trace:2183 这些也认为是行
+    blockquote: 1,
+    center: 1,
+    h1: 1,
+    h2: 1,
+    h3: 1,
+    h4: 1,
+    h5: 1,
+    h6: 1,
+    span: 1
+  };
+
+  var highlightCont;
   //升级了版本，但配置项目里没有autotypeset
   if (!opt) {
     return;
@@ -91,8 +95,8 @@ UE.plugins["autotypeset"] = function() {
     }
   }
   function autotype(type, html) {
-    var me = this,
-      cont;
+    var me = this;
+    var cont;
     if (html) {
       if (!opt.pasteFilter) {
         return;
@@ -124,9 +128,9 @@ UE.plugins["autotypeset"] = function() {
       if (isLine(ci)) {
         //合并空行
         if (opt.mergeEmptyline) {
-          var next = ci.nextSibling,
-            tmpNode,
-            isBr = domUtils.isBr(ci);
+          var next = ci.nextSibling;
+          var tmpNode;
+          var isBr = domUtils.isBr(ci);
           while (isLine(next)) {
             tmpNode = next;
             next = tmpNode.nextSibling;
@@ -175,10 +179,10 @@ UE.plugins["autotypeset"] = function() {
             case "left":
             case "right":
             case "none":
-              var pN = img.parentNode,
-                tmpNode,
-                pre,
-                next;
+              var pN = img.parentNode;
+              var tmpNode;
+              var pre;
+              var next;
               while (dtd.$inline[pN.tagName] || pN.tagName == "A") {
                 pN = pN.parentNode;
               }

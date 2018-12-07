@@ -1,7 +1,7 @@
 (function() {
-  var browser = baidu.editor.browser,
-    domUtils = baidu.editor.dom.domUtils,
-    uiUtils = baidu.editor.ui.uiUtils;
+  var browser = baidu.editor.browser;
+  var domUtils = baidu.editor.dom.domUtils;
+  var uiUtils = baidu.editor.ui.uiUtils;
 
   var TPL_STATEFUL =
     'onmousedown="$$.Stateful_onMouseDown(event, this);"' +

@@ -32,12 +32,14 @@ UE.commands["touppercase"] = UE.commands["tolowercase"] = {
     if (rng.collapsed) {
       return rng;
     }
-    var bk = rng.createBookmark(),
-      bkEnd = bk.end,
-      filterFn = function(node) {
-        return !domUtils.isBr(node) && !domUtils.isWhitespace(node);
-      },
-      curNode = domUtils.getNextDomNode(bk.start, false, filterFn);
+    var bk = rng.createBookmark();
+    var bkEnd = bk.end;
+
+    var filterFn = function(node) {
+      return !domUtils.isBr(node) && !domUtils.isWhitespace(node);
+    };
+
+    var curNode = domUtils.getNextDomNode(bk.start, false, filterFn);
     while (curNode && domUtils.getPosition(curNode, bkEnd) & domUtils.POSITION_PRECEDING) {
       if (curNode.nodeType == 3) {
         curNode.nodeValue = curNode.nodeValue[cmd == "touppercase" ? "toUpperCase" : "toLowerCase"]();

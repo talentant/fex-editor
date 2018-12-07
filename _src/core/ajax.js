@@ -47,18 +47,20 @@ UE.ajax = (function() {
   }
 
   function doAjax(url, ajaxOptions) {
-    var xhr = creatAjaxRequest(),
-      //是否超时
-      timeIsOut = false,
-      //默认参数
-      defaultAjaxOptions = {
-        method: "POST",
-        timeout: 5000,
-        async: true,
-        data: {}, //需要传递对象的话只能覆盖
-        onsuccess: function() {},
-        onerror: function() {}
-      };
+    var xhr = creatAjaxRequest();
+
+    var //是否超时
+    timeIsOut = false;
+
+    var //默认参数
+    defaultAjaxOptions = {
+      method: "POST",
+      timeout: 5000,
+      async: true,
+      data: {}, //需要传递对象的话只能覆盖
+      onsuccess: function() {},
+      onerror: function() {}
+    };
 
     if (typeof url === "object") {
       ajaxOptions = url;
@@ -103,16 +105,16 @@ UE.ajax = (function() {
   }
 
   function doJsonp(url, opts) {
-    var successhandler = opts.onsuccess || function() {},
-      scr = document.createElement("SCRIPT"),
-      options = opts || {},
-      charset = options["charset"],
-      callbackField = options["jsonp"] || "callback",
-      callbackFnName,
-      timeOut = options["timeOut"] || 0,
-      timer,
-      reg = new RegExp("(\\?|&)" + callbackField + "=([^&]*)"),
-      matches;
+    var successhandler = opts.onsuccess || function() {};
+    var scr = document.createElement("SCRIPT");
+    var options = opts || {};
+    var charset = options["charset"];
+    var callbackField = options["jsonp"] || "callback";
+    var callbackFnName;
+    var timeOut = options["timeOut"] || 0;
+    var timer;
+    var reg = new RegExp("(\\?|&)" + callbackField + "=([^&]*)");
+    var matches;
 
     if (utils.isFunction(successhandler)) {
       callbackFnName = "bd__editor__" + Math.floor(Math.random() * 2147483648).toString(36);

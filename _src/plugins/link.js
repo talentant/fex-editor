@@ -44,8 +44,8 @@
 
 UE.plugins["link"] = function() {
   function optimize(range) {
-    var start = range.startContainer,
-      end = range.endContainer;
+    var start = range.startContainer;
+    var end = range.endContainer;
 
     if ((start = domUtils.findParentByTagName(start, "a", true))) {
       range.setStartBefore(start);
@@ -57,8 +57,8 @@ UE.plugins["link"] = function() {
 
   UE.commands["unlink"] = {
     execCommand: function() {
-      var range = this.selection.getRange(),
-        bookmark;
+      var range = this.selection.getRange();
+      var bookmark;
       if (range.collapsed && !domUtils.findParentByTagName(range.startContainer, "a", true)) {
         return;
       }
@@ -74,8 +74,8 @@ UE.plugins["link"] = function() {
     }
   };
   function doLink(range, opt, me) {
-    var rngClone = range.cloneRange(),
-      link = me.queryCommandValue("link");
+    var rngClone = range.cloneRange();
+    var link = me.queryCommandValue("link");
     optimize((range = range.adjustmentBoundary()));
     var start = range.startContainer;
     if (start.nodeType == 1 && link) {
@@ -95,8 +95,8 @@ UE.plugins["link"] = function() {
     }
 
     if (rngClone.collapsed) {
-      var a = range.document.createElement("a"),
-        text = "";
+      var a = range.document.createElement("a");
+      var text = "";
       if (opt.textValue) {
         text = utils.html(opt.textValue);
         delete opt.textValue;
@@ -125,8 +125,8 @@ UE.plugins["link"] = function() {
       range.collapse().select(true);
     },
     queryCommandValue: function() {
-      var range = this.selection.getRange(),
-        node;
+      var range = this.selection.getRange();
+      var node;
       if (range.collapsed) {
         //                    node = this.selection.getStart();
         //在ie下getstart()取值偏上了
@@ -143,20 +143,23 @@ UE.plugins["link"] = function() {
       } else {
         //trace:1111  如果是<p><a>xx</a></p> startContainer是p就会找不到a
         range.shrinkBoundary();
+
         var start =
             range.startContainer.nodeType == 3 || !range.startContainer.childNodes[range.startOffset]
               ? range.startContainer
-              : range.startContainer.childNodes[range.startOffset],
-          end =
-            range.endContainer.nodeType == 3 || range.endOffset == 0
-              ? range.endContainer
-              : range.endContainer.childNodes[range.endOffset - 1],
-          common = range.getCommonAncestor();
+              : range.startContainer.childNodes[range.startOffset];
+
+        var end =
+          range.endContainer.nodeType == 3 || range.endOffset == 0
+            ? range.endContainer
+            : range.endContainer.childNodes[range.endOffset - 1];
+
+        var common = range.getCommonAncestor();
         node = domUtils.findParentByTagName(common, "a", true);
         if (!node && common.nodeType == 1) {
-          var as = common.getElementsByTagName("a"),
-            ps,
-            pe;
+          var as = common.getElementsByTagName("a");
+          var ps;
+          var pe;
 
           for (var i = 0, ci; (ci = as[i++]); ) {
             (ps = domUtils.getPosition(ci, start)), (pe = domUtils.getPosition(ci, end));
@@ -175,8 +178,9 @@ UE.plugins["link"] = function() {
     queryCommandState: function() {
       //判断如果是视频的话连接不可用
       //fix 853
-      var img = this.selection.getRange().getClosedNode(),
-        flag = img && (img.className == "edui-faked-video" || img.className.indexOf("edui-upload-video") != -1);
+      var img = this.selection.getRange().getClosedNode();
+
+      var flag = img && (img.className == "edui-faked-video" || img.className.indexOf("edui-upload-video") != -1);
       return flag ? -1 : 0;
     }
   };

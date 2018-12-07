@@ -4,14 +4,14 @@
  * @since 1.2.6.1
  */
 UE.plugins["pagebreak"] = function() {
-  var me = this,
-    notBreakTags = ["td"];
+  var me = this;
+  var notBreakTags = ["td"];
   me.setOpt("pageBreakTag", "_ueditor_page_break_tag_");
 
   function fillNode(node) {
     if (domUtils.isEmptyBlock(node)) {
-      var firstChild = node.firstChild,
-        tmpNode;
+      var firstChild = node.firstChild;
+      var tmpNode;
 
       while (firstChild && firstChild.nodeType == 1 && domUtils.isEmptyBlock(firstChild)) {
         tmpNode = firstChild;
@@ -70,18 +70,20 @@ UE.plugins["pagebreak"] = function() {
 
   me.commands["pagebreak"] = {
     execCommand: function() {
-      var range = me.selection.getRange(),
-        hr = me.document.createElement("hr");
+      var range = me.selection.getRange();
+      var hr = me.document.createElement("hr");
       domUtils.setAttributes(hr, {
         class: "pagebreak",
         noshade: "noshade",
         size: "5"
       });
       domUtils.unSelectable(hr);
+
       //table单独处理
-      var node = domUtils.findParentByTagName(range.startContainer, notBreakTags, true),
-        parents = [],
-        pN;
+      var node = domUtils.findParentByTagName(range.startContainer, notBreakTags, true);
+
+      var parents = [];
+      var pN;
       if (node) {
         switch (node.tagName) {
           case "TD":
@@ -120,8 +122,8 @@ UE.plugins["pagebreak"] = function() {
         }
         range.insertNode(hr);
 
-        var pN = hr.parentNode,
-          nextNode;
+        var pN = hr.parentNode;
+        var nextNode;
         while (!domUtils.isBody(pN)) {
           domUtils.breakParent(hr, pN);
           nextNode = hr.nextSibling;

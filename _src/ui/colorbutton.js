@@ -4,15 +4,17 @@
 ///import ui/popup.js
 ///import ui/splitbutton.js
 (function() {
-  var utils = baidu.editor.utils,
-    uiUtils = baidu.editor.ui.uiUtils,
-    ColorPicker = baidu.editor.ui.ColorPicker,
-    Popup = baidu.editor.ui.Popup,
-    SplitButton = baidu.editor.ui.SplitButton,
-    ColorButton = (baidu.editor.ui.ColorButton = function(options) {
-      this.initOptions(options);
-      this.initColorButton();
-    });
+  var utils = baidu.editor.utils;
+  var uiUtils = baidu.editor.ui.uiUtils;
+  var ColorPicker = baidu.editor.ui.ColorPicker;
+  var Popup = baidu.editor.ui.Popup;
+  var SplitButton = baidu.editor.ui.SplitButton;
+
+  var ColorButton = (baidu.editor.ui.ColorButton = function(options) {
+    this.initOptions(options);
+    this.initColorButton();
+  });
+
   ColorButton.prototype = {
     initColorButton: function() {
       var me = this;

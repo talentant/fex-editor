@@ -5,8 +5,8 @@
 ///commandsDialog  dialogs\wordimage
 
 UE.plugin.register("wordimage", function() {
-  var me = this,
-    images = [];
+  var me = this;
+  var images = [];
   return {
     commands: {
       wordimage: {
@@ -33,10 +33,10 @@ UE.plugin.register("wordimage", function() {
     },
     inputRule: function(root) {
       utils.each(root.getNodesByTagName("img"), function(img) {
-        var attrs = img.attrs,
-          flag = parseInt(attrs.width) < 128 || parseInt(attrs.height) < 43,
-          opt = me.options,
-          src = opt.UEDITOR_HOME_URL + "themes/default/images/spacer.gif";
+        var attrs = img.attrs;
+        var flag = parseInt(attrs.width) < 128 || parseInt(attrs.height) < 43;
+        var opt = me.options;
+        var src = opt.UEDITOR_HOME_URL + "themes/default/images/spacer.gif";
         if (attrs["src"] && /^(?:(file:\/+))/.test(attrs["src"])) {
           img.setAttr({
             width: attrs.width,

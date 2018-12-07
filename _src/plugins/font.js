@@ -130,23 +130,27 @@
  */
 
 UE.plugins["font"] = function() {
-  var me = this,
-    fonts = {
-      forecolor: "color",
-      backcolor: "background-color",
-      fontsize: "font-size",
-      fontfamily: "font-family",
-      underline: "text-decoration",
-      strikethrough: "text-decoration",
-      fontborder: "border"
-    },
-    needCmd = {underline: 1, strikethrough: 1, fontborder: 1},
-    needSetChild = {
-      forecolor: "color",
-      backcolor: "background-color",
-      fontsize: "font-size",
-      fontfamily: "font-family"
-    };
+  var me = this;
+
+  var fonts = {
+    forecolor: "color",
+    backcolor: "background-color",
+    fontsize: "font-size",
+    fontfamily: "font-family",
+    underline: "text-decoration",
+    strikethrough: "text-decoration",
+    fontborder: "border"
+  };
+
+  var needCmd = {underline: 1, strikethrough: 1, fontborder: 1};
+
+  var needSetChild = {
+    forecolor: "color",
+    backcolor: "background-color",
+    fontsize: "font-size",
+    fontfamily: "font-family"
+  };
+
   me.setOpt({
     fontfamily: [
       {name: "songti", val: "宋体,SimSun"},
@@ -204,9 +208,9 @@ UE.plugins["font"] = function() {
     }
   }
   function mergesibling(rng, cmdName, value) {
-    var collapsed = rng.collapsed,
-      bk = rng.createBookmark(),
-      common;
+    var collapsed = rng.collapsed;
+    var bk = rng.createBookmark();
+    var common;
     if (collapsed) {
       common = bk.start.parentNode;
       while (dtd.$inline[common.tagName]) {
@@ -369,9 +373,9 @@ UE.plugins["font"] = function() {
               : cmdName == "fontborder"
               ? "1px solid #000"
               : "line-through");
-          var me = this,
-            range = this.selection.getRange(),
-            text;
+          var me = this;
+          var range = this.selection.getRange();
+          var text;
 
           if (value == "default") {
             if (range.collapsed) {
@@ -469,8 +473,8 @@ UE.plugins["font"] = function() {
 
           //trace:946
           if (cmdName == "underline" || cmdName == "strikethrough") {
-            var tmpNode = startNode,
-              value;
+            var tmpNode = startNode;
+            var value;
             while (tmpNode && !domUtils.isBlockElm(tmpNode) && !domUtils.isBody(tmpNode)) {
               if (tmpNode.nodeType == 1) {
                 value = domUtils.getComputedStyle(tmpNode, style);
@@ -484,8 +488,8 @@ UE.plugins["font"] = function() {
             return "none";
           }
           if (cmdName == "fontborder") {
-            var tmp = startNode,
-              val;
+            var tmp = startNode;
+            var val;
             while (tmp && dtd.$inline[tmp.tagName]) {
               if ((val = domUtils.getComputedStyle(tmp, "border"))) {
                 if (/1px/.test(val) && /solid/.test(val)) {
@@ -498,8 +502,8 @@ UE.plugins["font"] = function() {
           }
 
           if (cmdName == "FontSize") {
-            var styleVal = domUtils.getComputedStyle(startNode, style),
-              tmp = /^([\d\.]+)(\w+)$/.exec(styleVal);
+            var styleVal = domUtils.getComputedStyle(startNode, style);
+            var tmp = /^([\d\.]+)(\w+)$/.exec(styleVal);
 
             if (tmp) {
               return Math.floor(tmp[1]) + tmp[2];

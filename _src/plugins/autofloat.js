@@ -7,21 +7,21 @@
  *  注意： 引入此功能后，在IE6下会将body的背景图片覆盖掉！
  */
 UE.plugins["autofloat"] = function() {
-  var me = this,
-    lang = me.getLang();
+  var me = this;
+  var lang = me.getLang();
   me.setOpt({
     topOffset: 0
   });
-  var optsAutoFloatEnabled = me.options.autoFloatEnabled !== false,
-    topOffset = me.options.topOffset;
+  var optsAutoFloatEnabled = me.options.autoFloatEnabled !== false;
+  var topOffset = me.options.topOffset;
 
   //如果不固定toolbar的位置，则直接退出
   if (!optsAutoFloatEnabled) {
     return;
   }
-  var uiUtils = UE.ui.uiUtils,
-    LteIE6 = browser.ie && browser.version <= 6,
-    quirks = browser.quirks;
+  var uiUtils = UE.ui.uiUtils;
+  var LteIE6 = browser.ie && browser.version <= 6;
+  var quirks = browser.quirks;
 
   function checkHasUI() {
     if (!UE.ui) {
@@ -35,16 +35,16 @@ UE.plugins["autofloat"] = function() {
     docStyle.backgroundImage = 'url("about:blank")';
     docStyle.backgroundAttachment = "fixed";
   }
-  var bakCssText,
-    placeHolder = document.createElement("div"),
-    toolbarBox,
-    orgTop,
-    getPosition,
-    flag = true; //ie7模式下需要偏移
+  var bakCssText; //ie7模式下需要偏移
+  var placeHolder = document.createElement("div");
+  var toolbarBox;
+  var orgTop;
+  var getPosition;
+  var flag = true;
   function setFloating() {
-    var toobarBoxPos = domUtils.getXY(toolbarBox),
-      origalFloat = domUtils.getComputedStyle(toolbarBox, "position"),
-      origalLeft = domUtils.getComputedStyle(toolbarBox, "left");
+    var toobarBoxPos = domUtils.getXY(toolbarBox);
+    var origalFloat = domUtils.getComputedStyle(toolbarBox, "position");
+    var origalLeft = domUtils.getComputedStyle(toolbarBox, "left");
     toolbarBox.style.width = toolbarBox.offsetWidth + "px";
     toolbarBox.style.zIndex = me.options.zIndex * 1 + 1;
     toolbarBox.parentNode.insertBefore(placeHolder, toolbarBox);

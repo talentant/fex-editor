@@ -44,18 +44,20 @@ UE.plugins["customstyle"] = function() {
   });
   me.commands["customstyle"] = {
     execCommand: function(cmdName, obj) {
-      var me = this,
-        tagName = obj.tag,
-        node = domUtils.findParent(
-          me.selection.getStart(),
-          function(node) {
-            return node.getAttribute("label");
-          },
-          true
-        ),
-        range,
-        bk,
-        tmpObj = {};
+      var me = this;
+      var tagName = obj.tag;
+
+      var node = domUtils.findParent(
+        me.selection.getStart(),
+        function(node) {
+          return node.getAttribute("label");
+        },
+        true
+      );
+
+      var range;
+      var bk;
+      var tmpObj = {};
       for (var p in obj) {
         if (obj[p] !== undefined) tmpObj[p] = obj[p];
       }
@@ -74,15 +76,15 @@ UE.plugins["customstyle"] = function() {
             domUtils.remove(node, true);
           }
         } else {
-          var common = domUtils.getCommonAncestor(bk.start, bk.end),
-            nodes = domUtils.getElementsByTagName(common, tagName);
+          var common = domUtils.getCommonAncestor(bk.start, bk.end);
+          var nodes = domUtils.getElementsByTagName(common, tagName);
           if (new RegExp(tagName, "i").test(common.tagName)) {
             nodes.push(common);
           }
           for (var i = 0, ni; (ni = nodes[i++]); ) {
             if (ni.getAttribute("label") == obj.label) {
-              var ps = domUtils.getPosition(ni, bk.start),
-                pe = domUtils.getPosition(ni, bk.end);
+              var ps = domUtils.getPosition(ni, bk.start);
+              var pe = domUtils.getPosition(ni, bk.end);
               if (
                 (ps & domUtils.POSITION_FOLLOWING || ps & domUtils.POSITION_CONTAINS) &&
                 (pe & domUtils.POSITION_PRECEDING || pe & domUtils.POSITION_CONTAINS)

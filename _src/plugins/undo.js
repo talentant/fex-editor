@@ -28,10 +28,10 @@
 
 UE.plugins["undo"] = function() {
   var saveSceneTimer;
-  var me = this,
-    maxUndoCount = me.options.maxUndoCount || 20,
-    maxInputCount = me.options.maxInputCount || 20,
-    fillchar = new RegExp(domUtils.fillChar + "|</hr>", "gi"); // ie会产生多余的</hr>
+  var me = this; // ie会产生多余的</hr>
+  var maxUndoCount = me.options.maxUndoCount || 20;
+  var maxInputCount = me.options.maxInputCount || 20;
+  var fillchar = new RegExp(domUtils.fillChar + "|</hr>", "gi");
   var noNeedFillCharTags = {
     ol: 1,
     ul: 1,
@@ -127,8 +127,8 @@ UE.plugins["undo"] = function() {
 
     this.getScene = function() {
       var me = this.editor;
-      var rng = me.selection.getRange(),
-        rngAddress = rng.createAddress(false, true);
+      var rng = me.selection.getRange();
+      var rngAddress = rng.createAddress(false, true);
       me.fireEvent("beforegetscene");
       var root = UE.htmlparser(me.body.innerHTML);
       me.options.autoClearEmptyNode = false;
@@ -147,8 +147,8 @@ UE.plugins["undo"] = function() {
     };
     this.save = function(notCompareRange, notSetCursor) {
       clearTimeout(saveSceneTimer);
-      var currentScene = this.getScene(notSetCursor),
-        lastScene = this.list[this.index];
+      var currentScene = this.getScene(notSetCursor);
+      var lastScene = this.list[this.index];
 
       if (lastScene && lastScene.content != currentScene.content) {
         me.trigger("contentchange");
@@ -227,9 +227,10 @@ UE.plugins["undo"] = function() {
       38: 1,
       39: 1,
       40: 1
-    },
-    keycont = 0,
-    lastKeyCode;
+    };
+
+  var keycont = 0;
+  var lastKeyCode;
   //输入法状态下不计算字符数
   var inputType = false;
   me.addListener("ready", function() {

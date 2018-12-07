@@ -18,10 +18,10 @@
 
 UE.commands["insertparagraph"] = {
   execCommand: function(cmdName, front) {
-    var me = this,
-      range = me.selection.getRange(),
-      start = range.startContainer,
-      tmpNode;
+    var me = this;
+    var range = me.selection.getRange();
+    var start = range.startContainer;
+    var tmpNode;
     while (start) {
       if (domUtils.isBody(start)) {
         break;

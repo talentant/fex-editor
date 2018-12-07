@@ -1,6 +1,6 @@
 UE.registerUI("autosave", function(editor) {
-  var timer = null,
-    uid = null;
+  var timer = null;
+  var uid = null;
   editor.on("afterautosave", function() {
     clearTimeout(timer);
 

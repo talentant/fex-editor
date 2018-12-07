@@ -2,13 +2,14 @@
 ///import uicore
 ///commands 表情
 (function() {
-  var utils = baidu.editor.utils,
-    Popup = baidu.editor.ui.Popup,
-    SplitButton = baidu.editor.ui.SplitButton,
-    MultiMenuPop = (baidu.editor.ui.MultiMenuPop = function(options) {
-      this.initOptions(options);
-      this.initMultiMenu();
-    });
+  var utils = baidu.editor.utils;
+  var Popup = baidu.editor.ui.Popup;
+  var SplitButton = baidu.editor.ui.SplitButton;
+
+  var MultiMenuPop = (baidu.editor.ui.MultiMenuPop = function(options) {
+    this.initOptions(options);
+    this.initMultiMenu();
+  });
 
   MultiMenuPop.prototype = {
     initMultiMenu: function() {

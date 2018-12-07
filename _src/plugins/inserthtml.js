@@ -28,9 +28,9 @@
 
 UE.commands["inserthtml"] = {
   execCommand: function(command, html, notNeedFilter) {
-    var me = this,
-      range,
-      div;
+    var me = this;
+    var range;
+    var div;
     if (!html) {
       return;
     }
@@ -86,8 +86,8 @@ UE.commands["inserthtml"] = {
       }
       !range.collapsed && range.deleteContents();
       if (range.startContainer.nodeType == 1) {
-        var child = range.startContainer.childNodes[range.startOffset],
-          pre;
+        var child = range.startContainer.childNodes[range.startOffset];
+        var pre;
         if (child && domUtils.isBlockElm(child) && (pre = child.previousSibling) && domUtils.isBlockElm(pre)) {
           range.setEnd(pre, pre.childNodes.length).collapse();
           while (child.firstChild) {
@@ -98,12 +98,12 @@ UE.commands["inserthtml"] = {
       }
     }
 
-    var child,
-      parent,
-      pre,
-      tmp,
-      hadBreak = 0,
-      nextNode;
+    var child;
+    var parent;
+    var pre;
+    var tmp;
+    var hadBreak = 0;
+    var nextNode;
     //如果当前位置选中了fillchar要干掉，要不会产生空行
     if (range.inFillChar()) {
       child = range.startContainer;
@@ -119,7 +119,8 @@ UE.commands["inserthtml"] = {
     //列表单独处理
     var li = domUtils.findParentByTagName(range.startContainer, "li", true);
     if (li) {
-      var next, last;
+      var next;
+      var last;
       while ((child = div.firstChild)) {
         //针对hr单独处理一下先
         while (child && (child.nodeType == 3 || !domUtils.isBlockElm(child) || child.tagName == "HR")) {

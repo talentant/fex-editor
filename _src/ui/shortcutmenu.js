@@ -1,13 +1,15 @@
 (function() {
-  var UI = baidu.editor.ui,
-    UIBase = UI.UIBase,
-    uiUtils = UI.uiUtils,
-    utils = baidu.editor.utils,
-    domUtils = baidu.editor.dom.domUtils;
+  var UI = baidu.editor.ui;
+  var UIBase = UI.UIBase;
+  var uiUtils = UI.uiUtils;
+  var utils = baidu.editor.utils;
+  var domUtils = baidu.editor.dom.domUtils;
 
-  var allMenus = [], //存储所有快捷菜单
-    timeID,
-    isSubMenuShow = false; //是否有子pop显示
+  var //存储所有快捷菜单
+  allMenus = []; //是否有子pop显示
+
+  var timeID;
+  var isSubMenuShow = false;
 
   var ShortCutMenu = (UI.ShortCutMenu = function(options) {
     this.initOptions(options);
@@ -27,22 +29,29 @@
       allMenus.push(this);
     },
     initEvent: function() {
-      var me = this,
-        doc = me.editor.document;
+      var me = this;
+      var doc = me.editor.document;
 
       domUtils.on(doc, "mousemove", function(e) {
         if (me.isHidden === false) {
           //有pop显示就不隐藏快捷菜单
           if (me.getSubMenuMark() || me.eventType == "contextmenu") return;
 
-          var flag = true,
-            el = me.getDom(),
-            wt = el.offsetWidth,
-            ht = el.offsetHeight,
-            distanceX = wt / 2 + me.SPACE, //距离中心X标准
-            distanceY = ht / 2, //距离中心Y标准
-            x = Math.abs(e.screenX - me.left), //离中心距离横坐标
-            y = Math.abs(e.screenY - me.top); //离中心距离纵坐标
+          var flag = true; //离中心距离纵坐标
+          var el = me.getDom();
+          var wt = el.offsetWidth;
+          var ht = el.offsetHeight;
+
+          var //距离中心X标准
+          distanceX = wt / 2 + me.SPACE;
+
+          var //距离中心Y标准
+          distanceY = ht / 2;
+
+          var //离中心距离横坐标
+          x = Math.abs(e.screenX - me.left);
+
+          var y = Math.abs(e.screenY - me.top);
 
           clearTimeout(timeID);
           timeID = setTimeout(function() {
@@ -117,10 +126,10 @@
       return isSubMenuShow;
     },
     show: function(e, hasContextmenu) {
-      var me = this,
-        offset = {},
-        el = this.getDom(),
-        fixedlayer = uiUtils.getFixedLayer();
+      var me = this;
+      var offset = {};
+      var el = this.getDom();
+      var fixedlayer = uiUtils.getFixedLayer();
 
       function setPos(offset) {
         if (offset.left < 0) {
@@ -207,14 +216,15 @@
   utils.inherits(ShortCutMenu, UIBase);
 
   function hideAllMenu(e) {
-    var tgt = e.target || e.srcElement,
-      cur = domUtils.findParent(
-        tgt,
-        function(node) {
-          return domUtils.hasClass(node, "edui-shortcutmenu") || domUtils.hasClass(node, "edui-popup");
-        },
-        true
-      );
+    var tgt = e.target || e.srcElement;
+
+    var cur = domUtils.findParent(
+      tgt,
+      function(node) {
+        return domUtils.hasClass(node, "edui-shortcutmenu") || domUtils.hasClass(node, "edui-popup");
+      },
+      true
+    );
 
     if (!cur) {
       for (var i = 0, menu; (menu = allMenus[i++]); ) {

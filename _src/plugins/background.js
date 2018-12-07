@@ -4,17 +4,17 @@
  * @since 1.2.6.1
  */
 UE.plugin.register("background", function() {
-  var me = this,
-    cssRuleId = "editor_background",
-    isSetColored,
-    reg = new RegExp("body[\\s]*\\{(.+)\\}", "i");
+  var me = this;
+  var cssRuleId = "editor_background";
+  var isSetColored;
+  var reg = new RegExp("body[\\s]*\\{(.+)\\}", "i");
 
   function stringToObj(str) {
-    var obj = {},
-      styles = str.split(";");
+    var obj = {};
+    var styles = str.split(";");
     utils.each(styles, function(v) {
-      var index = v.indexOf(":"),
-        key = utils.trim(v.substr(0, index)).toLowerCase();
+      var index = v.indexOf(":");
+      var key = utils.trim(v.substr(0, index)).toLowerCase();
       key && (obj[key] = utils.trim(v.substr(index + 1) || ""));
     });
     return obj;
@@ -45,9 +45,9 @@ UE.plugin.register("background", function() {
   return {
     bindEvents: {
       getAllHtml: function(type, headHtml) {
-        var body = this.body,
-          su = domUtils.getComputedStyle(body, "background-image"),
-          url = "";
+        var body = this.body;
+        var su = domUtils.getComputedStyle(body, "background-image");
+        var url = "";
         if (su.indexOf(me.options.imagePath) > 0) {
           url = su.substring(su.indexOf(me.options.imagePath), su.length - 1).replace(/"|\(|\)/gi, "");
         } else {
@@ -89,8 +89,8 @@ UE.plugin.register("background", function() {
       });
     },
     outputRule: function(root) {
-      var me = this,
-        styles = (utils.cssRule(cssRuleId, me.document) || "").replace(/[\n\r]+/g, "").match(reg);
+      var me = this;
+      var styles = (utils.cssRule(cssRuleId, me.document) || "").replace(/[\n\r]+/g, "").match(reg);
       if (styles) {
         root.appendChild(
           UE.uNode.createElement(
@@ -107,8 +107,8 @@ UE.plugin.register("background", function() {
           setBackground(obj);
         },
         queryCommandValue: function() {
-          var me = this,
-            styles = (utils.cssRule(cssRuleId, me.document) || "").replace(/[\n\r]+/g, "").match(reg);
+          var me = this;
+          var styles = (utils.cssRule(cssRuleId, me.document) || "").replace(/[\n\r]+/g, "").match(reg);
           return styles ? stringToObj(styles[1]) : null;
         },
         notNeedUndo: true

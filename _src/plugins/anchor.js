@@ -64,8 +64,8 @@ UE.plugin.register("anchor", function() {
        */
       anchor: {
         execCommand: function(cmd, name) {
-          var range = this.selection.getRange(),
-            img = range.getClosedNode();
+          var range = this.selection.getRange();
+          var img = range.getClosedNode();
           if (img && img.getAttribute("anchorname")) {
             if (name) {
               img.setAttribute("anchorname", name);

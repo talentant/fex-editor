@@ -12,8 +12,8 @@ UE.plugins["template"] = function() {
     }
   };
   this.addListener("click", function(type, evt) {
-    var el = evt.target || evt.srcElement,
-      range = this.selection.getRange();
+    var el = evt.target || evt.srcElement;
+    var range = this.selection.getRange();
     var tnode = domUtils.findParent(
       el,
       function(node) {

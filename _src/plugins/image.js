@@ -32,8 +32,8 @@
 
 UE.commands["imagefloat"] = {
   execCommand: function(cmd, align) {
-    var me = this,
-      range = me.selection.getRange();
+    var me = this;
+    var range = me.selection.getRange();
     if (!range.collapsed) {
       var img = range.getClosedNode();
       if (img && img.tagName == "IMG") {
@@ -41,10 +41,10 @@ UE.commands["imagefloat"] = {
           case "left":
           case "right":
           case "none":
-            var pN = img.parentNode,
-              tmpNode,
-              pre,
-              next;
+            var pN = img.parentNode;
+            var tmpNode;
+            var pre;
+            var next;
             while (dtd.$inline[pN.tagName] || pN.tagName == "A") {
               pN = pN.parentNode;
             }
@@ -128,9 +128,9 @@ UE.commands["imagefloat"] = {
     }
   },
   queryCommandValue: function() {
-    var range = this.selection.getRange(),
-      startNode,
-      floatStyle;
+    var range = this.selection.getRange();
+    var startNode;
+    var floatStyle;
     if (range.collapsed) {
       return "none";
     }
@@ -152,8 +152,8 @@ UE.commands["imagefloat"] = {
     return "none";
   },
   queryCommandState: function() {
-    var range = this.selection.getRange(),
-      startNode;
+    var range = this.selection.getRange();
+    var startNode;
 
     if (range.collapsed) return -1;
 
@@ -201,9 +201,9 @@ UE.commands["insertimage"] = {
     if (!opt.length) {
       return;
     }
-    var me = this,
-      range = me.selection.getRange(),
-      img = range.getClosedNode();
+    var me = this;
+    var range = me.selection.getRange();
+    var img = range.getClosedNode();
 
     if (me.fireEvent("beforeinsertimage", opt) === true) {
       return;
@@ -228,9 +228,9 @@ UE.commands["insertimage"] = {
         me.execCommand("insertimage", opt);
       }
     } else {
-      var html = [],
-        str = "",
-        ci;
+      var html = [];
+      var str = "";
+      var ci;
       ci = opt[0];
       if (opt.length == 1) {
         str =

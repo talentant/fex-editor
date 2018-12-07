@@ -1,10 +1,10 @@
 ///import core
 ///import uicore
 (function() {
-  var utils = baidu.editor.utils,
-    domUtils = baidu.editor.dom.domUtils,
-    UIBase = baidu.editor.ui.UIBase,
-    uiUtils = baidu.editor.ui.uiUtils;
+  var utils = baidu.editor.utils;
+  var domUtils = baidu.editor.dom.domUtils;
+  var UIBase = baidu.editor.ui.UIBase;
+  var uiUtils = baidu.editor.ui.uiUtils;
 
   var Mask = (baidu.editor.ui.Mask = function(options) {
     this.initOptions(options);

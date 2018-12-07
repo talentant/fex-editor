@@ -53,8 +53,8 @@ UE.plugin.register("section", function() {
       },
       /* 部分键盘操作，触发updateSections事件 */
       keyup: function(type, e) {
-        var me = this,
-          range = me.selection.getRange();
+        var me = this;
+        var range = me.selection.getRange();
         if (range.collapsed != true) {
           me.fireEvent("updateSections");
         } else {
@@ -90,16 +90,16 @@ UE.plugin.register("section", function() {
             return -1;
           }
 
-          var me = this,
-            Directory = getSection({level: -1, title: "root"}),
-            previous = Directory;
+          var me = this;
+          var Directory = getSection({level: -1, title: "root"});
+          var previous = Directory;
 
           function traversal(node, Directory) {
-            var level,
-              tmpSection = null,
-              parent,
-              child,
-              children = node.childNodes;
+            var level;
+            var tmpSection = null;
+            var parent;
+            var child;
+            var children = node.childNodes;
             for (var i = 0, len = children.length; i < len; i++) {
               child = children[i];
               level = getSectionLevel(child);
@@ -107,16 +107,18 @@ UE.plugin.register("section", function() {
                 var address = me.selection
                     .getRange()
                     .selectNode(child)
-                    .createAddress(true).startAddress,
-                  current = getSection({
-                    tag: child.tagName,
-                    title: child.innerText || child.textContent || "",
-                    level: level,
-                    dom: child,
-                    startAddress: utils.clone(address, []),
-                    endAddress: utils.clone(address, []),
-                    children: []
-                  });
+                    .createAddress(true).startAddress;
+
+                var current = getSection({
+                  tag: child.tagName,
+                  title: child.innerText || child.textContent || "",
+                  level: level,
+                  dom: child,
+                  startAddress: utils.clone(address, []),
+                  endAddress: utils.clone(address, []),
+                  children: []
+                });
+
                 previous.nextSection = current;
                 current.previousSection = previous;
                 parent = previous;
@@ -139,9 +141,9 @@ UE.plugin.register("section", function() {
       },
       movesection: {
         execCommand: function(cmd, sourceSection, targetSection, isAfter) {
-          var me = this,
-            targetAddress,
-            target;
+          var me = this;
+          var targetAddress;
+          var target;
 
           if (!sourceSection || !targetSection || targetSection.level == -1) return;
 
@@ -156,10 +158,10 @@ UE.plugin.register("section", function() {
           )
             return;
 
-          var startNode = getNodeFromAddress(sourceSection.startAddress, me.body),
-            endNode = getNodeFromAddress(sourceSection.endAddress, me.body),
-            current,
-            nextNode;
+          var startNode = getNodeFromAddress(sourceSection.startAddress, me.body);
+          var endNode = getNodeFromAddress(sourceSection.endAddress, me.body);
+          var current;
+          var nextNode;
 
           if (isAfter) {
             current = endNode;
@@ -183,8 +185,8 @@ UE.plugin.register("section", function() {
 
           /* 获取地址的包含关系 */
           function isContainsAddress(startAddress, endAddress, addressTarget) {
-            var isAfterStartAddress = false,
-              isBeforeEndAddress = false;
+            var isAfterStartAddress = false;
+            var isBeforeEndAddress = false;
             for (var i = 0; i < startAddress.length; i++) {
               if (i >= addressTarget.length) break;
               if (addressTarget[i] > startAddress[i]) {
@@ -222,10 +224,10 @@ UE.plugin.register("section", function() {
             return current;
           }
 
-          var startNode = getNodeFromAddress(section.startAddress),
-            endNode = getNodeFromAddress(section.endAddress),
-            current = startNode,
-            nextNode;
+          var startNode = getNodeFromAddress(section.startAddress);
+          var endNode = getNodeFromAddress(section.endAddress);
+          var current = startNode;
+          var nextNode;
 
           if (!keepChildren) {
             while (
@@ -247,12 +249,14 @@ UE.plugin.register("section", function() {
       selectsection: {
         execCommand: function(cmd, section) {
           if (!section && !section.dom) return false;
-          var me = this,
-            range = me.selection.getRange(),
-            address = {
-              startAddress: utils.clone(section.startAddress, []),
-              endAddress: utils.clone(section.endAddress, [])
-            };
+          var me = this;
+          var range = me.selection.getRange();
+
+          var address = {
+            startAddress: utils.clone(section.startAddress, []),
+            endAddress: utils.clone(section.endAddress, [])
+          };
+
           address.endAddress[address.endAddress.length - 1]++;
           range
             .moveToAddress(address)
@@ -265,12 +269,14 @@ UE.plugin.register("section", function() {
       scrolltosection: {
         execCommand: function(cmd, section) {
           if (!section && !section.dom) return false;
-          var me = this,
-            range = me.selection.getRange(),
-            address = {
-              startAddress: section.startAddress,
-              endAddress: section.endAddress
-            };
+          var me = this;
+          var range = me.selection.getRange();
+
+          var address = {
+            startAddress: section.startAddress,
+            endAddress: section.endAddress
+          };
+
           address.endAddress[address.endAddress.length - 1]++;
           range.moveToAddress(address).scrollToView();
           return true;

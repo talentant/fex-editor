@@ -13,9 +13,9 @@ window.onload = function() {
 
 function initImgName() {
   for (var pro in emotion.SmilmgName) {
-    var tempName = emotion.SmilmgName[pro],
-      tempBox = emotion.SmileyBox[pro],
-      tempStr = "";
+    var tempName = emotion.SmilmgName[pro];
+    var tempBox = emotion.SmileyBox[pro];
+    var tempStr = "";
 
     if (tempBox.length) return;
     for (var i = 1; i <= tempName[1]; i++) {
@@ -65,11 +65,13 @@ function switchTab(index) {
     emotion.tabExist[index] = 1;
     createTab("tab" + index);
   }
+
   //获取呈现元素句柄数组
-  var tabHeads = $G("tabHeads").getElementsByTagName("span"),
-    tabBodys = $G("tabBodys").getElementsByTagName("div"),
-    i = 0,
-    L = tabHeads.length;
+  var tabHeads = $G("tabHeads").getElementsByTagName("span");
+
+  var tabBodys = $G("tabBodys").getElementsByTagName("div");
+  var i = 0;
+  var L = tabHeads.length;
   //隐藏所有呈现元素
   for (; i < L; i++) {
     tabHeads[i].className = "";
@@ -81,8 +83,8 @@ function switchTab(index) {
 }
 
 function autoHeight(index) {
-  var iframe = dialog.getDom("iframe"),
-    parent = iframe.parentNode.parentNode;
+  var iframe = dialog.getDom("iframe");
+  var parent = iframe.parentNode.parentNode;
   switch (index) {
     case 0:
       iframe.style.height = "380px";
@@ -117,24 +119,36 @@ function autoHeight(index) {
 }
 
 function createTab(tabName) {
-  var faceVersion = "?v=1.1", //版本号
-    tab = $G(tabName), //获取将要生成的Div句柄
-    imagePath = emotion.SmileyPath + emotion.imageFolders[tabName], //获取显示表情和预览表情的路径
-    positionLine = 11 / 2, //中间数
-    iWidth = (iHeight = 35), //图片长宽
-    iColWidth = 3, //表格剩余空间的显示比例
-    tableCss = emotion.imageCss[tabName],
-    cssOffset = emotion.imageCssOffset[tabName],
-    textHTML = ['<table class="smileytable">'],
-    i = 0,
-    imgNum = emotion.SmileyBox[tabName].length,
-    imgColNum = 11,
-    faceImage,
-    sUrl,
-    realUrl,
-    posflag,
-    offset,
-    infor;
+  var //版本号
+  faceVersion = "?v=1.1";
+
+  var //获取将要生成的Div句柄
+  tab = $G(tabName);
+
+  var //获取显示表情和预览表情的路径
+  imagePath = emotion.SmileyPath + emotion.imageFolders[tabName];
+
+  var //中间数
+  positionLine = 11 / 2;
+
+  var //图片长宽
+  iWidth = (iHeight = 35);
+
+  var //表格剩余空间的显示比例
+  iColWidth = 3;
+
+  var tableCss = emotion.imageCss[tabName];
+  var cssOffset = emotion.imageCssOffset[tabName];
+  var textHTML = ['<table class="smileytable">'];
+  var i = 0;
+  var imgNum = emotion.SmileyBox[tabName].length;
+  var imgColNum = 11;
+  var faceImage;
+  var sUrl;
+  var realUrl;
+  var posflag;
+  var offset;
+  var infor;
 
   for (; i < imgNum; ) {
     textHTML.push("<tr>");

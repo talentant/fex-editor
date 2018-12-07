@@ -81,11 +81,13 @@ UE.plugins["basestyle"] = function() {
       italic: ["em", "i"],
       subscript: ["sub"],
       superscript: ["sup"]
-    },
-    getObj = function(editor, tagNames) {
-      return domUtils.filterNodeList(editor.selection.getStartElementPath(), tagNames);
-    },
-    me = this;
+    };
+
+  var getObj = function(editor, tagNames) {
+    return domUtils.filterNodeList(editor.selection.getStartElementPath(), tagNames);
+  };
+
+  var me = this;
   //添加快捷键
   me.addshortcutkey({
     Bold: "ctrl+66", //^B
@@ -107,8 +109,8 @@ UE.plugins["basestyle"] = function() {
     (function(cmd, tagNames) {
       me.commands[cmd] = {
         execCommand: function(cmdName) {
-          var range = me.selection.getRange(),
-            obj = getObj(this, tagNames);
+          var range = me.selection.getRange();
+          var obj = getObj(this, tagNames);
           if (range.collapsed) {
             if (obj) {
               var tmpText = me.document.createTextNode("");

@@ -4,14 +4,16 @@
 ///import ui/tablepicker.js
 ///import ui/splitbutton.js
 (function() {
-  var utils = baidu.editor.utils,
-    Popup = baidu.editor.ui.Popup,
-    TablePicker = baidu.editor.ui.TablePicker,
-    SplitButton = baidu.editor.ui.SplitButton,
-    TableButton = (baidu.editor.ui.TableButton = function(options) {
-      this.initOptions(options);
-      this.initTableButton();
-    });
+  var utils = baidu.editor.utils;
+  var Popup = baidu.editor.ui.Popup;
+  var TablePicker = baidu.editor.ui.TablePicker;
+  var SplitButton = baidu.editor.ui.SplitButton;
+
+  var TableButton = (baidu.editor.ui.TableButton = function(options) {
+    this.initOptions(options);
+    this.initTableButton();
+  });
+
   TableButton.prototype = {
     initTableButton: function() {
       var me = this;

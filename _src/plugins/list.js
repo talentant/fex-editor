@@ -5,12 +5,14 @@
  */
 
 UE.plugins["list"] = function() {
-  var me = this,
-    notExchange = {
-      TD: 1,
-      PRE: 1,
-      BLOCKQUOTE: 1
-    };
+  var me = this;
+
+  var notExchange = {
+    TD: 1,
+    PRE: 1,
+    BLOCKQUOTE: 1
+  };
+
   var customStyle = {
     cn: "cn-1-",
     cn1: "cn-2-",
@@ -148,14 +150,14 @@ UE.plugins["list"] = function() {
   me.ready(function() {
     domUtils.on(me.body, "cut", function() {
       setTimeout(function() {
-        var rng = me.selection.getRange(),
-          li;
+        var rng = me.selection.getRange();
+        var li;
         //trace:3416
         if (!rng.collapsed) {
           if ((li = domUtils.findParentByTagName(rng.startContainer, "li", true))) {
             if (!li.nextSibling && domUtils.isEmptyBlock(li)) {
-              var pn = li.parentNode,
-                node;
+              var pn = li.parentNode;
+              var node;
               if ((node = pn.previousSibling)) {
                 domUtils.remove(pn);
                 rng.setStartAtLast(node).collapse(true);
@@ -188,13 +190,13 @@ UE.plugins["list"] = function() {
   }
 
   me.addListener("beforepaste", function(type, html) {
-    var me = this,
-      rng = me.selection.getRange(),
-      li;
+    var me = this;
+    var rng = me.selection.getRange();
+    var li;
     var root = UE.htmlparser(html.html, true);
     if ((li = domUtils.findParentByTagName(rng.startContainer, "li", true))) {
-      var list = li.parentNode,
-        tagName = list.tagName == "OL" ? "ul" : "ol";
+      var list = li.parentNode;
+      var tagName = list.tagName == "OL" ? "ul" : "ol";
       utils.each(root.getNodesByTagName(tagName), function(n) {
         n.tagName = list.tagName;
         n.setAttr();
@@ -228,8 +230,8 @@ UE.plugins["list"] = function() {
   me.getOpt("disablePInList") === true &&
     me.addOutputRule(function(root) {
       utils.each(root.getNodesByTagName("li"), function(li) {
-        var newChildrens = [],
-          index = 0;
+        var newChildrens = [];
+        var index = 0;
         utils.each(li.children, function(n) {
           if (n.tagName == "p") {
             var tmpNode;
@@ -293,10 +295,12 @@ UE.plugins["list"] = function() {
           "upper-alpha": /^[A-Z]+\./,
           cn: /^[\u4E00\u4E8C\u4E09\u56DB\u516d\u4e94\u4e03\u516b\u4e5d]+[\u3001]/,
           cn2: /^\([\u4E00\u4E8C\u4E09\u56DB\u516d\u4e94\u4e03\u516b\u4e5d]+\)/
-        },
-        unorderlisttype = {
-          square: "n"
         };
+
+      var unorderlisttype = {
+        square: "n"
+      };
+
       function checkListType(content, container) {
         var span = container.firstChild();
         if (
@@ -346,9 +350,9 @@ UE.plugins["list"] = function() {
           li.appendChild(p);
           list.appendChild(li);
         }
-        var tmp = node,
-          type,
-          cacheNode = node;
+        var tmp = node;
+        var type;
+        var cacheNode = node;
 
         if (node.parentNode.tagName != "li" && (type = checkListType(node.innerText(), node))) {
           var list = UE.uNode.createElement(me.options.insertorderedlist.hasOwnProperty(type) ? "ol" : "ul");
@@ -388,16 +392,16 @@ UE.plugins["list"] = function() {
 
       var parent = node.parentNode;
       if (parent.tagName == node.tagName) {
-        var nodeStyleType = getStyle(node) || (node.tagName == "OL" ? "decimal" : "disc"),
-          parentStyleType = getStyle(parent) || (parent.tagName == "OL" ? "decimal" : "disc");
+        var nodeStyleType = getStyle(node) || (node.tagName == "OL" ? "decimal" : "disc");
+        var parentStyleType = getStyle(parent) || (parent.tagName == "OL" ? "decimal" : "disc");
         if (nodeStyleType == parentStyleType) {
           var styleIndex = utils.indexOf(listStyle[node.tagName], nodeStyleType);
           styleIndex = styleIndex + 1 == listStyle[node.tagName].length ? 0 : styleIndex + 1;
           setListStyle(node, listStyle[node.tagName][styleIndex]);
         }
       }
-      var index = 0,
-        type = 2;
+      var index = 0;
+      var type = 2;
       if (domUtils.hasClass(node, /custom_/)) {
         if (!(/[ou]l/i.test(parent.tagName) && domUtils.hasClass(parent, /custom_/))) {
           type = 1;
@@ -422,8 +426,8 @@ UE.plugins["list"] = function() {
         }
         index++;
         if (domUtils.hasClass(node, /custom_/)) {
-          var paddingLeft = 1,
-            currentStyle = getStyle(node);
+          var paddingLeft = 1;
+          var currentStyle = getStyle(node);
           if (node.tagName == "OL") {
             if (currentStyle) {
               switch (currentStyle) {
@@ -547,15 +551,17 @@ UE.plugins["list"] = function() {
     var keyCode = evt.keyCode || evt.which;
     if (keyCode == 13 && !evt.shiftKey) {
       //回车
-      var rng = me.selection.getRange(),
-        parent = domUtils.findParent(
-          rng.startContainer,
-          function(node) {
-            return domUtils.isBlockElm(node);
-          },
-          true
-        ),
-        li = domUtils.findParentByTagName(rng.startContainer, "li", true);
+      var rng = me.selection.getRange();
+
+      var parent = domUtils.findParent(
+        rng.startContainer,
+        function(node) {
+          return domUtils.isBlockElm(node);
+        },
+        true
+      );
+
+      var li = domUtils.findParentByTagName(rng.startContainer, "li", true);
       if (parent && parent.tagName != "PRE" && !li) {
         var html = parent.innerHTML.replace(new RegExp(domUtils.fillChar, "g"), "");
         if (/^\s*1\s*\.[^\d]/.test(html)) {
@@ -569,15 +575,17 @@ UE.plugins["list"] = function() {
           me.__hasEnterExecCommand = false;
         }
       }
-      var range = me.selection.getRange(),
-        start = findList(range.startContainer, function(node) {
-          return node.tagName == "TABLE";
-        }),
-        end = range.collapsed
-          ? start
-          : findList(range.endContainer, function(node) {
-              return node.tagName == "TABLE";
-            });
+      var range = me.selection.getRange();
+
+      var start = findList(range.startContainer, function(node) {
+        return node.tagName == "TABLE";
+      });
+
+      var end = range.collapsed
+        ? start
+        : findList(range.endContainer, function(node) {
+            return node.tagName == "TABLE";
+          });
 
       if (start && end && start === end) {
         if (!range.collapsed) {
@@ -615,8 +623,8 @@ UE.plugins["list"] = function() {
               return;
             }
           } else {
-            var tmpRange = range.cloneRange(),
-              bk = tmpRange.collapse(false).createBookmark();
+            var tmpRange = range.cloneRange();
+            var bk = tmpRange.collapse(false).createBookmark();
 
             range.deleteContents();
             tmpRange.moveToBookmark(bk);
@@ -818,8 +826,8 @@ UE.plugins["list"] = function() {
   me.addListener("keyup", function(type, evt) {
     var keyCode = evt.keyCode || evt.which;
     if (keyCode == 8) {
-      var rng = me.selection.getRange(),
-        list;
+      var rng = me.selection.getRange();
+      var list;
       if ((list = domUtils.findParentByTagName(rng.startContainer, ["ol", "ul"], true))) {
         adjustList(
           list,
@@ -837,8 +845,8 @@ UE.plugins["list"] = function() {
     //控制级数
     function checkLevel(li) {
       if (me.options.maxListLevel != -1) {
-        var level = li.parentNode,
-          levelNum = 0;
+        var level = li.parentNode;
+        var levelNum = 0;
         while (/[ou]l/i.test(level.tagName)) {
           levelNum++;
           level = level.parentNode;
@@ -855,12 +863,14 @@ UE.plugins["list"] = function() {
       var bk;
       if (range.collapsed) {
         if (checkLevel(li)) return true;
-        var parentLi = li.parentNode,
-          list = me.document.createElement(parentLi.tagName),
-          index = utils.indexOf(
-            listStyle[list.tagName],
-            getStyle(parentLi) || domUtils.getComputedStyle(parentLi, "list-style-type")
-          );
+        var parentLi = li.parentNode;
+        var list = me.document.createElement(parentLi.tagName);
+
+        var index = utils.indexOf(
+          listStyle[list.tagName],
+          getStyle(parentLi) || domUtils.getComputedStyle(parentLi, "list-style-type")
+        );
+
         index = index + 1 == listStyle[list.tagName].length ? 0 : index + 1;
         var currentStyle = listStyle[list.tagName][index];
         setListStyle(list, currentStyle);
@@ -892,12 +902,14 @@ UE.plugins["list"] = function() {
               });
               continue;
             }
-            var parentLi = current.parentNode,
-              list = me.document.createElement(parentLi.tagName),
-              index = utils.indexOf(
-                listStyle[list.tagName],
-                getStyle(parentLi) || domUtils.getComputedStyle(parentLi, "list-style-type")
-              );
+            var parentLi = current.parentNode;
+            var list = me.document.createElement(parentLi.tagName);
+
+            var index = utils.indexOf(
+              listStyle[list.tagName],
+              getStyle(parentLi) || domUtils.getComputedStyle(parentLi, "list-style-type")
+            );
+
             var currentIndex = index + 1 == listStyle[list.tagName].length ? 0 : index + 1;
             var currentStyle = listStyle[list.tagName][currentIndex];
             setListStyle(list, currentStyle);
@@ -1016,25 +1028,27 @@ UE.plugins["list"] = function() {
       if (!style) {
         style = command.toLowerCase() == "insertorderedlist" ? "decimal" : "disc";
       }
-      var me = this,
-        range = this.selection.getRange(),
-        filterFn = function(node) {
-          return node.nodeType == 1 ? node.tagName.toLowerCase() != "br" : !domUtils.isWhitespace(node);
-        },
-        tag = command.toLowerCase() == "insertorderedlist" ? "ol" : "ul",
-        frag = me.document.createDocumentFragment();
+      var me = this;
+      var range = this.selection.getRange();
+
+      var filterFn = function(node) {
+        return node.nodeType == 1 ? node.tagName.toLowerCase() != "br" : !domUtils.isWhitespace(node);
+      };
+
+      var tag = command.toLowerCase() == "insertorderedlist" ? "ol" : "ul";
+      var frag = me.document.createDocumentFragment();
       //去掉是因为会出现选到末尾，导致adjustmentBoundary缩到ol/ul的位置
       //range.shrinkBoundary();//.adjustmentBoundary();
       range.adjustmentBoundary().shrinkBoundary();
-      var bko = range.createBookmark(true),
-        start = getLi(me.document.getElementById(bko.start)),
-        modifyStart = 0,
-        end = getLi(me.document.getElementById(bko.end)),
-        modifyEnd = 0,
-        startParent,
-        endParent,
-        list,
-        tmp;
+      var bko = range.createBookmark(true);
+      var start = getLi(me.document.getElementById(bko.start));
+      var modifyStart = 0;
+      var end = getLi(me.document.getElementById(bko.end));
+      var modifyEnd = 0;
+      var startParent;
+      var endParent;
+      var list;
+      var tmp;
 
       if (start || end) {
         start && (startParent = start.parentNode);
@@ -1115,8 +1129,8 @@ UE.plugins["list"] = function() {
             if (domUtils.isTagNode(start, "ol ul")) {
               frag.appendChild(start);
             } else {
-              var tmpfrag = me.document.createDocumentFragment(),
-                hasBlock = 0;
+              var tmpfrag = me.document.createDocumentFragment();
+              var hasBlock = 0;
               while (start.firstChild) {
                 if (domUtils.isBlockElm(start.firstChild)) {
                   hasBlock = 1;
@@ -1201,11 +1215,11 @@ UE.plugins["list"] = function() {
 
       frag = me.document.createDocumentFragment();
 
-      var bk = range.createBookmark(),
-        current = domUtils.getNextDomNode(bk.start, false, filterFn),
-        tmpRange = range.cloneRange(),
-        tmpNode,
-        block = domUtils.isBlockElm;
+      var bk = range.createBookmark();
+      var current = domUtils.getNextDomNode(bk.start, false, filterFn);
+      var tmpRange = range.cloneRange();
+      var tmpNode;
+      var block = domUtils.isBlockElm;
 
       while (current && current !== bk.end && domUtils.getPosition(current, bk.end) & domUtils.POSITION_PRECEDING) {
         if (current.nodeType == 3 || dtd.li[current.tagName]) {
@@ -1284,8 +1298,8 @@ UE.plugins["list"] = function() {
     },
     queryCommandValue: function(command) {
       var tag = command.toLowerCase() == "insertorderedlist" ? "ol" : "ul";
-      var path = this.selection.getStartElementPath(),
-        node;
+      var path = this.selection.getStartElementPath();
+      var node;
       for (var i = 0, ci; (ci = path[i++]); ) {
         if (ci.nodeName == "TABLE") {
           node = null;

@@ -15,10 +15,12 @@ UE.plugins["paste"] = function() {
     if (doc.getElementById("baidu_pastebin")) {
       return;
     }
-    var range = this.selection.getRange(),
-      bk = range.createBookmark(),
-      //创建剪贴的容器div
-      pastebin = doc.createElement("div");
+    var range = this.selection.getRange();
+    var bk = range.createBookmark();
+
+    var //创建剪贴的容器div
+    pastebin = doc.createElement("div");
+
     pastebin.id = "baidu_pastebin";
     // Safari 要求div必须有内容，才能粘贴内容进来
     browser.webkit && pastebin.appendChild(doc.createTextNode(domUtils.fillChar + domUtils.fillChar));
@@ -59,7 +61,9 @@ UE.plugins["paste"] = function() {
     retainOnlyLabelPasted: false
   });
 
-  var txtContent, htmlContent, address;
+  var txtContent;
+  var htmlContent;
+  var address;
 
   function getPureHtml(html) {
     return html.replace(/<(\/?)([\w\-]+)([^>]*)>/gi, function(a, b, tagName, attrs) {

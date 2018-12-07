@@ -4,21 +4,23 @@
 ///import ui/autotypesetpicker.js
 ///import ui/splitbutton.js
 (function() {
-  var utils = baidu.editor.utils,
-    Popup = baidu.editor.ui.Popup,
-    AutoTypeSetPicker = baidu.editor.ui.AutoTypeSetPicker,
-    SplitButton = baidu.editor.ui.SplitButton,
-    AutoTypeSetButton = (baidu.editor.ui.AutoTypeSetButton = function(options) {
-      this.initOptions(options);
-      this.initAutoTypeSetButton();
-    });
+  var utils = baidu.editor.utils;
+  var Popup = baidu.editor.ui.Popup;
+  var AutoTypeSetPicker = baidu.editor.ui.AutoTypeSetPicker;
+  var SplitButton = baidu.editor.ui.SplitButton;
+
+  var AutoTypeSetButton = (baidu.editor.ui.AutoTypeSetButton = function(options) {
+    this.initOptions(options);
+    this.initAutoTypeSetButton();
+  });
+
   function getPara(me) {
-    var opt = {},
-      cont = me.getDom(),
-      editorId = me.editor.uid,
-      inputType = null,
-      attrName = null,
-      ipts = domUtils.getElementsByTagName(cont, "input");
+    var opt = {};
+    var cont = me.getDom();
+    var editorId = me.editor.uid;
+    var inputType = null;
+    var attrName = null;
+    var ipts = domUtils.getElementsByTagName(cont, "input");
     for (var i = ipts.length - 1, ipt; (ipt = ipts[i--]); ) {
       inputType = ipt.getAttribute("type");
       if (inputType == "checkbox") {
@@ -80,8 +82,8 @@
       this.popup.addListener("postRenderAfter", function() {
         var popupUI = this;
         if (flag) return;
-        var cont = this.getDom(),
-          btn = cont.getElementsByTagName("button")[0];
+        var cont = this.getDom();
+        var btn = cont.getElementsByTagName("button")[0];
 
         btn.onclick = function() {
           getPara(popupUI);
@@ -90,19 +92,20 @@
         };
 
         domUtils.on(cont, "click", function(e) {
-          var target = e.target || e.srcElement,
-            editorId = me.editor.uid;
+          var target = e.target || e.srcElement;
+          var editorId = me.editor.uid;
           if (target && target.tagName == "INPUT") {
             // 点击图片浮动的checkbox,去除对应的radio
             if (target.name == "imageBlockLine" || target.name == "textAlign" || target.name == "symbolConver") {
-              var checked = target.checked,
-                radioTd = document.getElementById(target.name + "Value" + editorId),
-                radios = radioTd.getElementsByTagName("input"),
-                defalutSelect = {
-                  imageBlockLine: "none",
-                  textAlign: "left",
-                  symbolConver: "tobdc"
-                };
+              var checked = target.checked;
+              var radioTd = document.getElementById(target.name + "Value" + editorId);
+              var radios = radioTd.getElementsByTagName("input");
+
+              var defalutSelect = {
+                imageBlockLine: "none",
+                textAlign: "left",
+                symbolConver: "tobdc"
+              };
 
               for (var i = 0; i < radios.length; i++) {
                 if (checked) {

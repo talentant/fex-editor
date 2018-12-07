@@ -1,6 +1,6 @@
 (function() {
-  var browser = baidu.editor.browser,
-    domUtils = baidu.editor.dom.domUtils;
+  var browser = baidu.editor.browser;
+  var domUtils = baidu.editor.dom.domUtils;
 
   var magic = "$EDITORUI";
   var root = (window[magic] = {});

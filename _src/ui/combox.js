@@ -4,14 +4,17 @@
 ///import ui/splitbutton.js
 (function() {
   // todo: menu和item提成通用list
-  var utils = baidu.editor.utils,
-    uiUtils = baidu.editor.ui.uiUtils,
-    Menu = baidu.editor.ui.Menu,
-    SplitButton = baidu.editor.ui.SplitButton,
-    Combox = (baidu.editor.ui.Combox = function(options) {
-      this.initOptions(options);
-      this.initCombox();
-    });
+  var utils = baidu.editor.utils;
+
+  var uiUtils = baidu.editor.ui.uiUtils;
+  var Menu = baidu.editor.ui.Menu;
+  var SplitButton = baidu.editor.ui.SplitButton;
+
+  var Combox = (baidu.editor.ui.Combox = function(options) {
+    this.initOptions(options);
+    this.initCombox();
+  });
+
   Combox.prototype = {
     uiName: "combox",
     onbuttonclick: function() {

@@ -1,7 +1,7 @@
 UE.parse.register("table", function(utils) {
-  var me = this,
-    root = this.root,
-    tables = root.getElementsByTagName("table");
+  var me = this;
+  var root = this.root;
+  var tables = root.getElementsByTagName("table");
   if (tables.length) {
     var selector = this.selector;
     //追加默认的表格样式
@@ -61,11 +61,11 @@ UE.parse.register("table", function(utils) {
     utils.each(tables, function(table) {
       if (/\bsortEnabled\b/.test(table.className)) {
         utils.on(table, "click", function(e) {
-          var target = e.target || e.srcElement,
-            cell = findParentByTagName(target, ["td", "th"]);
-          var table = findParentByTagName(target, "table"),
-            colIndex = utils.indexOf(table.rows[0].cells, cell),
-            sortType = table.getAttribute("data-sort-type");
+          var target = e.target || e.srcElement;
+          var cell = findParentByTagName(target, ["td", "th"]);
+          var table = findParentByTagName(target, "table");
+          var colIndex = utils.indexOf(table.rows[0].cells, cell);
+          var sortType = table.getAttribute("data-sort-type");
           if (colIndex != -1) {
             sortTable(table, colIndex, me.tableSortCompareFn || sortType);
             updateTable(table);
@@ -76,8 +76,8 @@ UE.parse.register("table", function(utils) {
 
     //按照标签名查找父节点
     function findParentByTagName(target, tagNames) {
-      var i,
-        current = target;
+      var i;
+      var current = target;
       tagNames = utils.isArray(tagNames) ? tagNames : [tagNames];
       while (current) {
         for (i = 0; i < tagNames.length; i++) {
@@ -89,10 +89,10 @@ UE.parse.register("table", function(utils) {
     }
     //表格排序
     function sortTable(table, sortByCellIndex, compareFn) {
-      var rows = table.rows,
-        trArray = [],
-        flag = rows[0].cells[0].tagName === "TH",
-        lastRowIndex = 0;
+      var rows = table.rows;
+      var trArray = [];
+      var flag = rows[0].cells[0].tagName === "TH";
+      var lastRowIndex = 0;
 
       for (var i = 0, len = rows.length; i < len; i++) {
         trArray[i] = rows[i];
@@ -103,25 +103,25 @@ UE.parse.register("table", function(utils) {
           return 1;
         },
         orderbyasc: function(td1, td2) {
-          var value1 = td1.innerText || td1.textContent,
-            value2 = td2.innerText || td2.textContent;
+          var value1 = td1.innerText || td1.textContent;
+          var value2 = td2.innerText || td2.textContent;
           return value1.localeCompare(value2);
         },
         reversebyasc: function(td1, td2) {
-          var value1 = td1.innerHTML,
-            value2 = td2.innerHTML;
+          var value1 = td1.innerHTML;
+          var value2 = td2.innerHTML;
           return value2.localeCompare(value1);
         },
         orderbynum: function(td1, td2) {
-          var value1 = td1[utils.isIE ? "innerText" : "textContent"].match(/\d+/),
-            value2 = td2[utils.isIE ? "innerText" : "textContent"].match(/\d+/);
+          var value1 = td1[utils.isIE ? "innerText" : "textContent"].match(/\d+/);
+          var value2 = td2[utils.isIE ? "innerText" : "textContent"].match(/\d+/);
           if (value1) value1 = +value1[0];
           if (value2) value2 = +value2[0];
           return (value1 || 0) - (value2 || 0);
         },
         reversebynum: function(td1, td2) {
-          var value1 = td1[utils.isIE ? "innerText" : "textContent"].match(/\d+/),
-            value2 = td2[utils.isIE ? "innerText" : "textContent"].match(/\d+/);
+          var value1 = td1[utils.isIE ? "innerText" : "textContent"].match(/\d+/);
+          var value2 = td2[utils.isIE ? "innerText" : "textContent"].match(/\d+/);
           if (value1) value1 = +value1[0];
           if (value2) value2 = +value2[0];
           return (value2 || 0) - (value1 || 0);

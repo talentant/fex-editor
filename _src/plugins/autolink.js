@@ -23,10 +23,10 @@ UE.plugin.register(
               var keyCode = evt.keyCode || evt.which;
 
               if (keyCode == 32 || keyCode == 13) {
-                var sel = me.selection.getNative(),
-                  range = sel.getRangeAt(0).cloneRange(),
-                  offset,
-                  charCode;
+                var sel = me.selection.getNative();
+                var range = sel.getRangeAt(0).cloneRange();
+                var offset;
+                var charCode;
 
                 var start = range.startContainer;
                 while (start.nodeType == 1 && range.startOffset > 0) {
@@ -86,9 +86,9 @@ UE.plugin.register(
                   if (domUtils.findParentByTagName(range.startContainer, "a", true)) {
                     return;
                   }
-                  var a = me.document.createElement("a"),
-                    text = me.document.createTextNode(" "),
-                    href;
+                  var a = me.document.createElement("a");
+                  var text = me.document.createTextNode(" ");
+                  var href;
 
                   me.undoManger && me.undoManger.save();
                   a.appendChild(range.extractContents());
@@ -146,8 +146,8 @@ UE.plugin.register(
     }
     browser.ie &&
       this.addListener("keyup", function(cmd, evt) {
-        var me = this,
-          keyCode = evt.keyCode;
+        var me = this;
+        var keyCode = evt.keyCode;
         if (keyCodes[keyCode]) {
           var rng = me.selection.getRange();
           var start = rng.startContainer;

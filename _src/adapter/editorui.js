@@ -14,8 +14,8 @@
         var editor = dialog.editor;
         try {
           if (browser.gecko) {
-            var y = editor.window.scrollY,
-              x = editor.window.scrollX;
+            var y = editor.window.scrollY;
+            var x = editor.window.scrollX;
             editor.body.focus();
             editor.window.scrollTo(x, y);
           } else {
@@ -562,8 +562,8 @@
 
   //自定义标题
   editorui.customstyle = function(editor) {
-    var list = editor.options["customstyle"] || [],
-      title = editor.options.labelMap["customstyle"] || editor.getLang("labelMap.customstyle") || "";
+    var list = editor.options["customstyle"] || [];
+    var title = editor.options.labelMap["customstyle"] || editor.getLang("labelMap.customstyle") || "";
     if (!list.length) return;
     var langCs = editor.getLang("customstyle");
     for (var i = 0, items = [], t; (t = list[i++]); ) {
@@ -748,11 +748,13 @@
   for (var l = 0, cl; (cl = lists[l++]); ) {
     (function(cmd) {
       editorui[cmd] = function(editor) {
-        var vals = editor.options[cmd],
-          _onMenuClick = function() {
-            editor.execCommand(cmd, this.value);
-          },
-          items = [];
+        var vals = editor.options[cmd];
+
+        var _onMenuClick = function() {
+          editor.execCommand(cmd, this.value);
+        };
+
+        var items = [];
         for (var i in vals) {
           items.push({
             label: vals[i] || editor.getLang()[cmd][i] || "",
@@ -845,18 +847,20 @@
 
   /* 简单上传插件 */
   editorui["simpleupload"] = function(editor) {
-    var name = "simpleupload",
-      ui = new editorui.Button({
-        className: "edui-for-" + name,
-        title: editor.options.labelMap[name] || editor.getLang("labelMap." + name) || "",
-        onclick: function() {},
-        theme: editor.options.theme,
-        showText: false
-      });
+    var name = "simpleupload";
+
+    var ui = new editorui.Button({
+      className: "edui-for-" + name,
+      title: editor.options.labelMap[name] || editor.getLang("labelMap." + name) || "",
+      onclick: function() {},
+      theme: editor.options.theme,
+      showText: false
+    });
+
     editorui.buttons[name] = ui;
     editor.addListener("ready", function() {
-      var b = ui.getDom("body"),
-        iconSpan = b.children[0];
+      var b = ui.getDom("body");
+      var iconSpan = b.children[0];
       editor.fireEvent("simpleuploadbtnready", iconSpan);
     });
     editor.addListener("selectionchange", function(type, causeByUi, uiReady) {

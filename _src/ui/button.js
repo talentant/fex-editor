@@ -2,28 +2,30 @@
 ///import uicore
 ///import ui/stateful.js
 (function() {
-  var utils = baidu.editor.utils,
-    UIBase = baidu.editor.ui.UIBase,
-    Stateful = baidu.editor.ui.Stateful,
-    Button = (baidu.editor.ui.Button = function(options) {
-      if (options.name) {
-        var btnName = options.name;
-        var cssRules = options.cssRules;
-        if (!options.className) {
-          options.className = "edui-for-" + btnName;
-        }
-        options.cssRules =
-          ".edui-" +
-          (options.theme || "default") +
-          " .edui-toolbar .edui-button.edui-for-" +
-          btnName +
-          " .edui-icon {" +
-          cssRules +
-          "}";
+  var utils = baidu.editor.utils;
+  var UIBase = baidu.editor.ui.UIBase;
+  var Stateful = baidu.editor.ui.Stateful;
+
+  var Button = (baidu.editor.ui.Button = function(options) {
+    if (options.name) {
+      var btnName = options.name;
+      var cssRules = options.cssRules;
+      if (!options.className) {
+        options.className = "edui-for-" + btnName;
       }
-      this.initOptions(options);
-      this.initButton();
-    });
+      options.cssRules =
+        ".edui-" +
+        (options.theme || "default") +
+        " .edui-toolbar .edui-button.edui-for-" +
+        btnName +
+        " .edui-icon {" +
+        cssRules +
+        "}";
+    }
+    this.initOptions(options);
+    this.initButton();
+  });
+
   Button.prototype = {
     uiName: "button",
     label: "",
@@ -57,8 +59,8 @@
       this.setDisabled(this.disabled);
     },
     _onMouseDown: function(e) {
-      var target = e.target || e.srcElement,
-        tagName = target && target.tagName && target.tagName.toLowerCase();
+      var target = e.target || e.srcElement;
+      var tagName = target && target.tagName && target.tagName.toLowerCase();
       if (tagName == "input" || tagName == "object" || tagName == "object") {
         return false;
       }

@@ -7,10 +7,12 @@
  */
 
 var wordImage = {};
+
 //(function(){
-var g = baidu.g,
-  flashObj,
-  flashContainer;
+var g = baidu.g;
+
+var flashObj;
+var flashContainer;
 
 wordImage.init = function(opt, callbacks) {
   showLocalPath("localPath");
@@ -27,8 +29,8 @@ function hideFlash() {
 function addOkListener() {
   dialog.onok = function() {
     if (!imageUrls.length) return;
-    var urlPrefix = editor.getOpt("imageUrlPrefix"),
-      images = domUtils.getElementsByTagName(editor.document, "img");
+    var urlPrefix = editor.getOpt("imageUrlPrefix");
+    var images = domUtils.getElementsByTagName(editor.document, "img");
     editor.fireEvent("saveScene");
     for (var i = 0, img; (img = images[i++]); ) {
       var src = img.getAttribute("word_img");
@@ -71,9 +73,12 @@ function showLocalPath(id) {
     return;
   }
   var path = images[0];
-  var leftSlashIndex = path.lastIndexOf("/") || 0, //不同版本的doc和浏览器都可能影响到这个符号，故直接判断两种
-    rightSlashIndex = path.lastIndexOf("\\") || 0,
-    separater = leftSlashIndex > rightSlashIndex ? "/" : "\\";
+
+  var //不同版本的doc和浏览器都可能影响到这个符号，故直接判断两种
+  leftSlashIndex = path.lastIndexOf("/") || 0;
+
+  var rightSlashIndex = path.lastIndexOf("\\") || 0;
+  var separater = leftSlashIndex > rightSlashIndex ? "/" : "\\";
 
   path = path.substring(0, path.lastIndexOf(separater) + 1);
   g(id).value = path;

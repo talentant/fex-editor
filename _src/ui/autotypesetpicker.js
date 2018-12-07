@@ -1,8 +1,8 @@
 ///import core
 ///import uicore
 (function() {
-  var utils = baidu.editor.utils,
-    UIBase = baidu.editor.ui.UIBase;
+  var utils = baidu.editor.utils;
+  var UIBase = baidu.editor.ui.UIBase;
 
   var AutoTypeSetPicker = (baidu.editor.ui.AutoTypeSetPicker = function(options) {
     this.initOptions(options);
@@ -13,13 +13,12 @@
       this.initUIBase();
     },
     getHtmlTpl: function() {
-      var me = this.editor,
-        opt = me.options.autotypeset,
-        lang = me.getLang("autoTypeSet");
-
-      var textAlignInputName = "textAlignValue" + me.uid,
-        imageBlockInputName = "imageBlockLineValue" + me.uid,
-        symbolConverInputName = "symbolConverValue" + me.uid;
+      var me = this.editor;
+      var opt = me.options.autotypeset;
+      var lang = me.getLang("autoTypeSet");
+      var textAlignInputName = "textAlignValue" + me.uid;
+      var imageBlockInputName = "imageBlockLineValue" + me.uid;
+      var symbolConverInputName = "symbolConverValue" + me.uid;
 
       return (
         '<div id="##" class="edui-autotypesetpicker %%">' +

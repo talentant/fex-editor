@@ -36,24 +36,27 @@ UE.plugins["blockquote"] = function() {
   }
   me.commands["blockquote"] = {
     execCommand: function(cmdName, attrs) {
-      var range = this.selection.getRange(),
-        obj = getObj(this),
-        blockquote = dtd.blockquote,
-        bookmark = range.createBookmark();
+      var range = this.selection.getRange();
+      var obj = getObj(this);
+      var blockquote = dtd.blockquote;
+      var bookmark = range.createBookmark();
 
       if (obj) {
-        var start = range.startContainer,
-          startBlock = domUtils.isBlockElm(start)
-            ? start
-            : domUtils.findParent(start, function(node) {
-                return domUtils.isBlockElm(node);
-              }),
-          end = range.endContainer,
-          endBlock = domUtils.isBlockElm(end)
-            ? end
-            : domUtils.findParent(end, function(node) {
-                return domUtils.isBlockElm(node);
-              });
+        var start = range.startContainer;
+
+        var startBlock = domUtils.isBlockElm(start)
+          ? start
+          : domUtils.findParent(start, function(node) {
+              return domUtils.isBlockElm(node);
+            });
+
+        var end = range.endContainer;
+
+        var endBlock = domUtils.isBlockElm(end)
+          ? end
+          : domUtils.findParent(end, function(node) {
+              return domUtils.isBlockElm(node);
+            });
 
         //处理一下li
         startBlock = domUtils.findParentByTagName(startBlock, "li", true) || startBlock;
@@ -93,10 +96,10 @@ UE.plugins["blockquote"] = function() {
           }
         }
       } else {
-        var tmpRange = range.cloneRange(),
-          node = tmpRange.startContainer.nodeType == 1 ? tmpRange.startContainer : tmpRange.startContainer.parentNode,
-          preNode = node,
-          doEnd = 1;
+        var tmpRange = range.cloneRange();
+        var node = tmpRange.startContainer.nodeType == 1 ? tmpRange.startContainer : tmpRange.startContainer.parentNode;
+        var preNode = node;
+        var doEnd = 1;
 
         //调整开始
         while (1) {

@@ -24,14 +24,16 @@ UE.registerUI("message", function(editor) {
           content: opt
         }
       : opt;
+
     var message = new Message({
         timeout: opt.timeout,
         type: opt.type,
         content: opt.content,
         keepshow: opt.keepshow,
         editor: me
-      }),
-      mid = opt.id || "msg_" + (+new Date()).toString(36);
+      });
+
+    var mid = opt.id || "msg_" + (+new Date()).toString(36);
     message.render(holder);
     _messageItems[mid] = message;
     message.reset(opt);

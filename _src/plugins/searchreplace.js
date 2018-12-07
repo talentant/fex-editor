@@ -23,8 +23,8 @@ UE.plugin.register("searchreplace", function() {
   function findTextInString(textContent, opt, currentIndex) {
     var str = opt.searchStr;
 
-    var reg = new RegExp(str, "g" + (opt.casesensitive ? "" : "i")),
-      match;
+    var reg = new RegExp(str, "g" + (opt.casesensitive ? "" : "i"));
+    var match;
 
     if (opt.dir == -1) {
       textContent = textContent.substr(0, currentIndex);
@@ -51,9 +51,9 @@ UE.plugin.register("searchreplace", function() {
     return -1;
   }
   function findTextBlockElm(node, currentIndex, opt) {
-    var textContent,
-      index,
-      methodName = opt.all || opt.dir == 1 ? "getNextDomNode" : "getPreDomNode";
+    var textContent;
+    var index;
+    var methodName = opt.all || opt.dir == 1 ? "getNextDomNode" : "getPreDomNode";
     if (domUtils.isBody(node)) {
       node = node.firstChild;
     }
@@ -78,10 +78,10 @@ UE.plugin.register("searchreplace", function() {
     }
   }
   function findNTextInBlockElm(node, index, str) {
-    var currentIndex = 0,
-      currentNode = node.firstChild,
-      currentNodeLength = 0,
-      result;
+    var currentIndex = 0;
+    var currentNode = node.firstChild;
+    var currentNodeLength = 0;
+    var result;
     while (currentNode) {
       if (currentNode.nodeType == 3) {
         currentNodeLength = getText(currentNode).replace(/(^[\t\r\n]+)|([\t\r\n]+$)/, "").length;
@@ -107,10 +107,10 @@ UE.plugin.register("searchreplace", function() {
   }
 
   function searchReplace(me, opt) {
-    var rng = lastRng || me.selection.getRange(),
-      startBlockNode,
-      searchStr = opt.searchStr,
-      span = me.document.createElement("span");
+    var rng = lastRng || me.selection.getRange();
+    var startBlockNode;
+    var searchStr = opt.searchStr;
+    var span = me.document.createElement("span");
     span.innerHTML = "$$ueditor_searchreplace_key$$";
 
     rng.shrinkBoundary(true);
@@ -171,8 +171,8 @@ UE.plugin.register("searchreplace", function() {
           var num = 0;
           if (opt.all) {
             lastRng = null;
-            var rng = me.selection.getRange(),
-              first = me.body.firstChild;
+            var rng = me.selection.getRange();
+            var first = me.body.firstChild;
             if (first && first.nodeType == 1) {
               rng.setStart(first, 0);
               rng.shrinkBoundary(true);

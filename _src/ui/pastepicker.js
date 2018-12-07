@@ -1,10 +1,10 @@
 ///import core
 ///import uicore
 (function() {
-  var utils = baidu.editor.utils,
-    Stateful = baidu.editor.ui.Stateful,
-    uiUtils = baidu.editor.ui.uiUtils,
-    UIBase = baidu.editor.ui.UIBase;
+  var utils = baidu.editor.utils;
+  var Stateful = baidu.editor.ui.Stateful;
+  var uiUtils = baidu.editor.ui.uiUtils;
+  var UIBase = baidu.editor.ui.UIBase;
 
   var PastePicker = (baidu.editor.ui.PastePicker = function(options) {
     this.initOptions(options);
@@ -48,9 +48,9 @@
       this.editor.fireEvent("pasteTransfer", param);
     },
     _onClick: function(cur) {
-      var node = domUtils.getNextDomNode(cur),
-        screenHt = uiUtils.getViewportRect().height,
-        subPop = uiUtils.getClientRect(node);
+      var node = domUtils.getNextDomNode(cur);
+      var screenHt = uiUtils.getViewportRect().height;
+      var subPop = uiUtils.getClientRect(node);
 
       if (subPop.top + subPop.height > screenHt) node.style.top = -subPop.height - cur.offsetHeight + "px";
       else node.style.top = "";

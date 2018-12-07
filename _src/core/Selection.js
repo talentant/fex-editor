@@ -22,13 +22,13 @@
     if (!parent.hasChildNodes()) {
       return {container: parent, offset: 0};
     }
-    var siblings = parent.children,
-      child,
-      testRange = range.duplicate(),
-      startIndex = 0,
-      endIndex = siblings.length - 1,
-      index = -1,
-      distance;
+    var siblings = parent.children;
+    var child;
+    var testRange = range.duplicate();
+    var startIndex = 0;
+    var endIndex = siblings.length - 1;
+    var index = -1;
+    var distance;
     while (startIndex <= endIndex) {
       index = Math.floor((startIndex + endIndex) / 2);
       child = siblings[index];
@@ -129,8 +129,8 @@
   }
 
   var Selection = (dom.Selection = function(doc) {
-    var me = this,
-      iframe;
+    var me = this;
+    var iframe;
     me.document = doc;
     if (browser.ie9below) {
       iframe = domUtils.getWindow(doc).frameElement;
@@ -261,8 +261,8 @@
     getRange: function() {
       var me = this;
       function optimze(range) {
-        var child = me.document.body.firstChild,
-          collapsed = range.collapsed;
+        var child = me.document.body.firstChild;
+        var collapsed = range.collapsed;
         while (child && child.firstChild) {
           range.setStart(child, 0);
           child = child.firstChild;
@@ -327,11 +327,11 @@
       if (this._cachedStartElement) {
         return this._cachedStartElement;
       }
-      var range = browser.ie9below ? this.getIERange() : this.getRange(),
-        tmpRange,
-        start,
-        tmp,
-        parent;
+      var range = browser.ie9below ? this.getIERange() : this.getRange();
+      var tmpRange;
+      var start;
+      var tmp;
+      var parent;
       if (browser.ie9below) {
         if (!range) {
           //todo 给第一个值可能会有问题
@@ -376,7 +376,8 @@
      * ```
      */
     getText: function() {
-      var nativeSel, nativeRange;
+      var nativeSel;
+      var nativeRange;
       if (this.isFocus() && (nativeSel = this.getNative())) {
         nativeRange = browser.ie9below ? nativeSel.createRange() : nativeSel.getRangeAt(0);
         return browser.ie9below ? nativeRange.text : nativeRange.toString();

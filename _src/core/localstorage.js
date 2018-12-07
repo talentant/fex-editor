@@ -1,7 +1,7 @@
 //存储媒介封装
 var LocalStorage = (UE.LocalStorage = (function() {
-  var storage = window.localStorage || getUserData() || null,
-    LOCAL_FILE = "localStorage";
+  var storage = window.localStorage || getUserData() || null;
+  var LOCAL_FILE = "localStorage";
 
   return {
     saveLocalData: function(key, data) {

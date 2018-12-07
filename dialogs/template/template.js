@@ -6,11 +6,11 @@
  * To change this template use File | Settings | File Templates.
  */
 (function() {
-  var me = editor,
-    preview = $G("preview"),
-    preitem = $G("preitem"),
-    tmps = templates,
-    currentTmp;
+  var me = editor;
+  var preview = $G("preview");
+  var preitem = $G("preitem");
+  var tmps = templates;
+  var currentTmp;
   var initPre = function() {
     var str = "";
     for (var i = 0, tmp; (tmp = tmps[i++]); ) {

@@ -1,10 +1,12 @@
 (function() {
-  var utils = baidu.editor.utils,
-    UIBase = baidu.editor.ui.UIBase,
-    Breakline = (baidu.editor.ui.Breakline = function(options) {
-      this.initOptions(options);
-      this.initSeparator();
-    });
+  var utils = baidu.editor.utils;
+  var UIBase = baidu.editor.ui.UIBase;
+
+  var Breakline = (baidu.editor.ui.Breakline = function(options) {
+    this.initOptions(options);
+    this.initSeparator();
+  });
+
   Breakline.prototype = {
     uiName: "Breakline",
     initSeparator: function() {

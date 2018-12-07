@@ -209,8 +209,8 @@ var utils = (UE.utils = {
    * ```
    */
   inherits: function(subClass, superClass) {
-    var oldP = subClass.prototype,
-      newP = utils.makeInstance(superClass.prototype);
+    var oldP = subClass.prototype;
+    var newP = utils.makeInstance(superClass.prototype);
     utils.extend(newP, oldP, true);
     subClass.prototype = newP;
     return (newP.constructor = subClass);
@@ -524,10 +524,11 @@ var utils = (UE.utils = {
    * ```
    */
   cssStyleToDomStyle: (function() {
-    var test = document.createElement("div").style,
-      cache = {
-        float: test.cssFloat != undefined ? "cssFloat" : test.styleFloat != undefined ? "styleFloat" : "float"
-      };
+    var test = document.createElement("div").style;
+
+    var cache = {
+      float: test.cssFloat != undefined ? "cssFloat" : test.styleFloat != undefined ? "styleFloat" : "float"
+    };
 
     return function(cssName) {
       return (
@@ -710,7 +711,9 @@ var utils = (UE.utils = {
    * @param {String}    val style字符串
    */
   optCss: function(val) {
-    var padding, margin, border;
+    var padding;
+    var margin;
+    var border;
     val = val.replace(/(padding|margin|border)\-([^:]+):([^;]+);?/gi, function(str, key, name, val) {
       if (val.split(" ").length == 1) {
         switch (key) {
@@ -733,11 +736,11 @@ var utils = (UE.utils = {
       if (!obj) {
         return "";
       }
-      var t = obj.top,
-        b = obj.bottom,
-        l = obj.left,
-        r = obj.right,
-        val = "";
+      var t = obj.top;
+      var b = obj.bottom;
+      var l = obj.left;
+      var r = obj.right;
+      var val = "";
       if (!t || !l || !b || !r) {
         for (var p in obj) {
           val += ";" + name + "-" + p + ":" + obj[p] + ";";
@@ -915,69 +918,71 @@ var utils = (UE.utils = {
   cssRule:
     browser.ie && browser.version != 11
       ? function(key, style, doc) {
-          var indexList, index;
-          if (style === undefined || (style && style.nodeType && style.nodeType == 9)) {
-            //获取样式
-            doc = style && style.nodeType && style.nodeType == 9 ? style : doc || document;
-            indexList = doc.indexList || (doc.indexList = {});
-            index = indexList[key];
-            if (index !== undefined) {
-              return doc.styleSheets[index].cssText;
-            }
-            return undefined;
-          }
-          doc = doc || document;
-          indexList = doc.indexList || (doc.indexList = {});
-          index = indexList[key];
-          //清除样式
-          if (style === "") {
-            if (index !== undefined) {
-              doc.styleSheets[index].cssText = "";
-              delete indexList[key];
-              return true;
-            }
-            return false;
-          }
-
-          //添加样式
-          if (index !== undefined) {
-            sheetStyle = doc.styleSheets[index];
-          } else {
-            sheetStyle = doc.createStyleSheet("", (index = doc.styleSheets.length));
-            indexList[key] = index;
-          }
-          sheetStyle.cssText = style;
+      var indexList;
+      var index;
+      if (style === undefined || (style && style.nodeType && style.nodeType == 9)) {
+        //获取样式
+        doc = style && style.nodeType && style.nodeType == 9 ? style : doc || document;
+        indexList = doc.indexList || (doc.indexList = {});
+        index = indexList[key];
+        if (index !== undefined) {
+          return doc.styleSheets[index].cssText;
         }
+        return undefined;
+      }
+      doc = doc || document;
+      indexList = doc.indexList || (doc.indexList = {});
+      index = indexList[key];
+      //清除样式
+      if (style === "") {
+        if (index !== undefined) {
+          doc.styleSheets[index].cssText = "";
+          delete indexList[key];
+          return true;
+        }
+        return false;
+      }
+
+      //添加样式
+      if (index !== undefined) {
+        sheetStyle = doc.styleSheets[index];
+      } else {
+        sheetStyle = doc.createStyleSheet("", (index = doc.styleSheets.length));
+        indexList[key] = index;
+      }
+      sheetStyle.cssText = style;
+    }
       : function(key, style, doc) {
-          var head, node;
-          if (style === undefined || (style && style.nodeType && style.nodeType == 9)) {
-            //获取样式
-            doc = style && style.nodeType && style.nodeType == 9 ? style : doc || document;
-            node = doc.getElementById(key);
-            return node ? node.innerHTML : undefined;
-          }
-          doc = doc || document;
-          node = doc.getElementById(key);
+      var head;
+      var node;
+      if (style === undefined || (style && style.nodeType && style.nodeType == 9)) {
+        //获取样式
+        doc = style && style.nodeType && style.nodeType == 9 ? style : doc || document;
+        node = doc.getElementById(key);
+        return node ? node.innerHTML : undefined;
+      }
+      doc = doc || document;
+      node = doc.getElementById(key);
 
-          //清除样式
-          if (style === "") {
-            if (node) {
-              node.parentNode.removeChild(node);
-              return true;
-            }
-            return false;
-          }
+      //清除样式
+      if (style === "") {
+        if (node) {
+          node.parentNode.removeChild(node);
+          return true;
+        }
+        return false;
+      }
 
-          //添加样式
-          if (node) {
-            node.innerHTML = style;
-          } else {
-            node = doc.createElement("style");
-            node.id = key;
-            node.innerHTML = style;
-            doc.getElementsByTagName("head")[0].appendChild(node);
-          }
-        },
+      //添加样式
+      if (node) {
+        node.innerHTML = style;
+      } else {
+        node = doc.createElement("style");
+        node.id = key;
+        node.innerHTML = style;
+        doc.getElementsByTagName("head")[0].appendChild(node);
+      }
+    },
   sort: function(array, compareFn) {
     compareFn =
       compareFn ||
@@ -1077,11 +1082,11 @@ var utils = (UE.utils = {
       }
 
       function encodeArray(source) {
-        var result = ["["],
-          l = source.length,
-          preComma,
-          i,
-          item;
+        var result = ["["];
+        var l = source.length;
+        var preComma;
+        var i;
+        var item;
 
         for (i = 0; i < l; i++) {
           item = source[i];
@@ -1147,10 +1152,10 @@ var utils = (UE.utils = {
             } else if (utils.isDate(value)) {
               return encodeDate(value);
             } else {
-              var result = ["{"],
-                encode = utils.json2str,
-                preComma,
-                item;
+              var result = ["{"];
+              var encode = utils.json2str;
+              var preComma;
+              var item;
 
               for (var key in value) {
                 if (Object.prototype.hasOwnProperty.call(value, key)) {

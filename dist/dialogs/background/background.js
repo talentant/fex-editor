@@ -1,6 +1,6 @@
 (function() {
-  var onlineImage,
-    backupStyle = editor.queryCommandValue("background");
+  var onlineImage;
+  var backupStyle = editor.queryCommandValue("background");
 
   window.onload = function() {
     initTabs();
@@ -34,13 +34,13 @@
   function initColorSelector() {
     var obj = editor.queryCommandValue("background");
     if (obj) {
-      var color = obj["background-color"],
-        repeat = obj["background-repeat"] || "repeat",
-        image = obj["background-image"] || "",
-        position = obj["background-position"] || "center center",
-        pos = position.split(" "),
-        x = parseInt(pos[0]) || 0,
-        y = parseInt(pos[1]) || 0;
+      var color = obj["background-color"];
+      var repeat = obj["background-repeat"] || "repeat";
+      var image = obj["background-image"] || "";
+      var position = obj["background-position"] || "center center";
+      var pos = position.split(" ");
+      var x = parseInt(pos[0]) || 0;
+      var y = parseInt(pos[1]) || 0;
 
       if (repeat == "no-repeat" && (x || y)) repeat = "self";
 
@@ -74,8 +74,8 @@
 
   /* 初始化颜色选择器 */
   function initColorPicker() {
-    var me = editor,
-      cp = $G("colorPicker");
+    var me = editor;
+    var cp = $G("colorPicker");
 
     /* 生成颜色选择器ui对象 */
     var popup = new UE.ui.Popup({
@@ -117,8 +117,8 @@
 
   /* 更新背景色设置面板 */
   function updateFormState(radio, color, url, align, x, y) {
-    var nocolorRadio = $G("nocolorRadio"),
-      coloredRadio = $G("coloredRadio");
+    var nocolorRadio = $G("nocolorRadio");
+    var coloredRadio = $G("coloredRadio");
 
     if (radio) {
       nocolorRadio.checked = radio == "colored" ? false : "checked";
@@ -156,13 +156,14 @@
   /* 更新背景颜色 */
   function updateBackground() {
     if ($G("coloredRadio").checked) {
-      var color = domUtils.getStyle($G("colorPicker"), "background-color"),
-        bgimg = $G("url").value,
-        align = $G("repeatType").value,
-        backgroundObj = {
-          "background-repeat": "no-repeat",
-          "background-position": "center center"
-        };
+      var color = domUtils.getStyle($G("colorPicker"), "background-color");
+      var bgimg = $G("url").value;
+      var align = $G("repeatType").value;
+
+      var backgroundObj = {
+        "background-repeat": "no-repeat",
+        "background-position": "center center"
+      };
 
       if (color) backgroundObj["background-color"] = color;
       if (bgimg) backgroundObj["background-image"] = "url(" + bgimg + ")";
@@ -214,9 +215,9 @@
       });
       /* 选中图片 */
       domUtils.on(this.container, "click", function(e) {
-        var target = e.target || e.srcElement,
-          li = target.parentNode,
-          nodes = $G("imageListUl").childNodes;
+        var target = e.target || e.srcElement;
+        var li = target.parentNode;
+        var nodes = $G("imageListUl").childNodes;
 
         if (li.tagName.toLowerCase() == "li") {
           updateFormState("nocolor", null, "");
@@ -254,8 +255,8 @@
 
       if (!_this.listEnd && !this.isLoadingData) {
         this.isLoadingData = true;
-        var url = editor.getActionUrl(editor.getOpt("imageManagerActionName")),
-          isJsonp = utils.isCrossDomainUrl(url);
+        var url = editor.getActionUrl(editor.getOpt("imageManagerActionName"));
+        var isJsonp = utils.isCrossDomainUrl(url);
         ajax.request(url, {
           timeout: 100000,
           dataType: isJsonp ? "jsonp" : "",
@@ -296,12 +297,12 @@
     },
     /* 添加图片到列表界面上 */
     pushData: function(list) {
-      var i,
-        item,
-        img,
-        icon,
-        _this = this,
-        urlPrefix = editor.getOpt("imageManagerUrlPrefix");
+      var i;
+      var item;
+      var img;
+      var icon;
+      var _this = this;
+      var urlPrefix = editor.getOpt("imageManagerUrlPrefix");
       for (i = 0; i < list.length; i++) {
         if (list[i] && list[i].url) {
           item = document.createElement("li");
@@ -336,8 +337,8 @@
     },
     /* 改变图片大小 */
     scale: function(img, w, h, type) {
-      var ow = img.width,
-        oh = img.height;
+      var ow = img.width;
+      var oh = img.height;
 
       if (type == "justify") {
         if (ow >= oh) {
@@ -362,14 +363,14 @@
       }
     },
     getInsertList: function() {
-      var i,
-        lis = this.list.children,
-        list = [],
-        align = getAlign();
+      var i;
+      var lis = this.list.children;
+      var list = [];
+      var align = getAlign();
       for (i = 0; i < lis.length; i++) {
         if (domUtils.hasClass(lis[i], "selected")) {
-          var img = lis[i].firstChild,
-            src = img.getAttribute("_src");
+          var img = lis[i].firstChild;
+          var src = img.getAttribute("_src");
           list.push({
             src: src,
             _src: src,

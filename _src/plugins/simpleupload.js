@@ -5,26 +5,27 @@
  * @date 2014-03-31
  */
 UE.plugin.register("simpleupload", function() {
-  var me = this,
-    isLoaded = false,
-    containerBtn;
+  var me = this;
+  var isLoaded = false;
+  var containerBtn;
 
   function initUploadBtn() {
-    var w = containerBtn.offsetWidth || 20,
-      h = containerBtn.offsetHeight || 20,
-      btnIframe = document.createElement("iframe"),
-      btnStyle =
-        "display:block;width:" +
-        w +
-        "px;height:" +
-        h +
-        "px;overflow:hidden;border:0;margin:0;padding:0;position:absolute;top:0;left:0;filter:alpha(opacity=0);-moz-opacity:0;-khtml-opacity: 0;opacity: 0;cursor:pointer;";
+    var w = containerBtn.offsetWidth || 20;
+    var h = containerBtn.offsetHeight || 20;
+    var btnIframe = document.createElement("iframe");
+
+    var btnStyle =
+      "display:block;width:" +
+      w +
+      "px;height:" +
+      h +
+      "px;overflow:hidden;border:0;margin:0;padding:0;position:absolute;top:0;left:0;filter:alpha(opacity=0);-moz-opacity:0;-khtml-opacity: 0;opacity: 0;cursor:pointer;";
 
     domUtils.on(btnIframe, "load", function() {
-      var timestrap = (+new Date()).toString(36),
-        wrapper,
-        btnIframeDoc,
-        btnIframeBody;
+      var timestrap = (+new Date()).toString(36);
+      var wrapper;
+      var btnIframeDoc;
+      var btnIframeBody;
 
       btnIframeDoc = btnIframe.contentDocument || btnIframe.contentWindow.document;
       btnIframeBody = btnIframeDoc.body;
@@ -93,11 +94,11 @@ UE.plugin.register("simpleupload", function() {
 
         function callback() {
           try {
-            var link,
-              json,
-              loader,
-              body = (iframe.contentDocument || iframe.contentWindow.document).body,
-              result = body.innerText || body.textContent || "";
+            var link;
+            var json;
+            var loader;
+            var body = (iframe.contentDocument || iframe.contentWindow.document).body;
+            var result = body.innerText || body.textContent || "";
             json = new Function("return " + result)();
             link = me.options.imageUrlPrefix + json.url;
             if (json.state == "SUCCESS" && json.url) {
@@ -135,9 +136,11 @@ UE.plugin.register("simpleupload", function() {
           errorHandler(me.getLang("autoupload.errorLoadConfig"));
           return;
         }
+
         // 判断文件格式是否错误
-        var filename = input.value,
-          fileext = filename ? filename.substr(filename.lastIndexOf(".")) : "";
+        var filename = input.value;
+
+        var fileext = filename ? filename.substr(filename.lastIndexOf(".")) : "";
         if (!fileext || (allowFiles && (allowFiles.join("") + ".").indexOf(fileext.toLowerCase() + ".") == -1)) {
           showErrorLoader(me.getLang("simpleupload.exceedTypeError"));
           return;

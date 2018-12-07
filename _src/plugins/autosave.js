@@ -1,11 +1,14 @@
 UE.plugin.register("autosave", function() {
-  var me = this,
-    //无限循环保护
-    lastSaveTime = new Date(),
-    //最小保存间隔时间
-    MIN_TIME = 20,
-    //auto save key
-    saveKey = null;
+  var me = this;
+
+  var //无限循环保护
+  lastSaveTime = new Date();
+
+  var //最小保存间隔时间
+  MIN_TIME = 20;
+
+  var //auto save key
+  saveKey = null;
 
   function save(editor) {
     var saveData;
@@ -49,8 +52,8 @@ UE.plugin.register("autosave", function() {
     },
     bindEvents: {
       ready: function() {
-        var _suffix = "-drafts-data",
-          key = null;
+        var _suffix = "-drafts-data";
+        var key = null;
 
         if (me.key) {
           key = me.key + _suffix;

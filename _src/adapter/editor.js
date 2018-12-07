@@ -3,10 +3,10 @@
 ///commandsName FullScreen
 ///commandsTitle  全屏
 (function() {
-  var utils = baidu.editor.utils,
-    uiUtils = baidu.editor.ui.uiUtils,
-    UIBase = baidu.editor.ui.UIBase,
-    domUtils = baidu.editor.dom.domUtils;
+  var utils = baidu.editor.utils;
+  var uiUtils = baidu.editor.ui.uiUtils;
+  var UIBase = baidu.editor.ui.UIBase;
+  var domUtils = baidu.editor.dom.domUtils;
   var nodeStack = [];
 
   function EditorUI(options) {
@@ -107,8 +107,9 @@
               var span = domUtils.createElement(editor.document, "span", {
                   style: "line-height:0px;",
                   innerHTML: "\ufeff"
-                }),
-                range = editor.selection.getRange();
+                });
+
+              var range = editor.selection.getRange();
               range.insertNode(span);
               var tmp = getDomNode(span, "firstChild", "previousSibling");
               tmp && pastePop.showAnchor(tmp.nodeType == 3 ? tmp.parentNode : tmp);
@@ -141,11 +142,11 @@
           wordCountMsg: editor.options.wordCountMsg || editor.getLang("wordCountMsg"),
           wordOverFlowMsg: editor.options.wordOverFlowMsg || editor.getLang("wordOverFlowMsg")
         });
-        var opt = editor.options,
-          max = opt.maximumWords,
-          msg = opt.wordCountMsg,
-          errMsg = opt.wordOverFlowMsg,
-          countDom = ui.getDom("wordcount");
+        var opt = editor.options;
+        var max = opt.maximumWords;
+        var msg = opt.wordCountMsg;
+        var errMsg = opt.wordOverFlowMsg;
+        var countDom = ui.getDom("wordcount");
         if (!opt.wordCount) {
           return;
         }
@@ -259,10 +260,10 @@
         });
         editor.addListener("selectionchange", function(t, causeByUi) {
           if (!causeByUi) return;
-          var html = "",
-            str = "",
-            img = editor.selection.getRange().getClosedNode(),
-            dialogs = editor.ui._dialogs;
+          var html = "";
+          var str = "";
+          var img = editor.selection.getRange().getClosedNode();
+          var dialogs = editor.ui._dialogs;
           if (img && img.tagName == "IMG") {
             var dialogName = "insertimageDialog";
             if (img.className.indexOf("edui-faked-video") != -1 || img.className.indexOf("edui-upload-video") != -1) {
@@ -475,8 +476,8 @@
       return buff.join("");
     },
     setFullScreen: function(fullscreen) {
-      var editor = this.editor,
-        container = editor.container.parentNode.parentNode;
+      var editor = this.editor;
+      var container = editor.container.parentNode.parentNode;
       if (this._fullscreen != fullscreen) {
         this._fullscreen = fullscreen;
         this.editor.fireEvent("beforefullscreenchange", fullscreen);
@@ -584,8 +585,8 @@
       }
     },
     _updateElementPath: function() {
-      var bottom = this.getDom("elementpath"),
-        list;
+      var bottom = this.getDom("elementpath");
+      var list;
       if (this.elementPathEnabled && (list = this.editor.queryCommandValue("elementpath"))) {
         var buff = [];
         for (var i = 0, ci; (ci = list[i]); i++) {
@@ -620,23 +621,22 @@
       this._updateElementPath();
     },
     _scale: function() {
-      var doc = document,
-        editor = this.editor,
-        editorHolder = editor.container,
-        editorDocument = editor.document,
-        toolbarBox = this.getDom("toolbarbox"),
-        bottombar = this.getDom("bottombar"),
-        scale = this.getDom("scale"),
-        scalelayer = this.getDom("scalelayer");
-
-      var isMouseMove = false,
-        position = null,
-        minEditorHeight = 0,
-        minEditorWidth = editor.options.minFrameWidth,
-        pageX = 0,
-        pageY = 0,
-        scaleWidth = 0,
-        scaleHeight = 0;
+      var doc = document;
+      var editor = this.editor;
+      var editorHolder = editor.container;
+      var editorDocument = editor.document;
+      var toolbarBox = this.getDom("toolbarbox");
+      var bottombar = this.getDom("bottombar");
+      var scale = this.getDom("scale");
+      var scalelayer = this.getDom("scalelayer");
+      var isMouseMove = false;
+      var position = null;
+      var minEditorHeight = 0;
+      var minEditorWidth = editor.options.minFrameWidth;
+      var pageX = 0;
+      var pageY = 0;
+      var scaleWidth = 0;
+      var scaleHeight = 0;
 
       function down() {
         position = domUtils.getXY(editorHolder);
@@ -736,14 +736,16 @@
         this.toolbars[i].postRender();
       }
       var me = this;
-      var timerId,
-        domUtils = baidu.editor.dom.domUtils,
-        updateFullScreenTime = function() {
-          clearTimeout(timerId);
-          timerId = setTimeout(function() {
-            me._updateFullScreen();
-          });
-        };
+      var timerId;
+      var domUtils = baidu.editor.dom.domUtils;
+
+      var updateFullScreenTime = function() {
+        clearTimeout(timerId);
+        timerId = setTimeout(function() {
+          me._updateFullScreen();
+        });
+      };
+
       domUtils.on(window, "resize", updateFullScreenTime);
 
       me.addListener("destroy", function() {

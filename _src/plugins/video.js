@@ -193,9 +193,9 @@ UE.plugins["video"] = function() {
         return;
       }
 
-      var html = [],
-        id = "tmpVedio",
-        cl;
+      var html = [];
+      var id = "tmpVedio";
+      var cl;
       for (var i = 0, vi, len = videoObjs.length; i < len; i++) {
         vi = videoObjs[i];
         cl = type == "upload" ? "edui-upload-video video-js vjs-default-skin" : "edui-faked-video";
@@ -213,8 +213,8 @@ UE.plugins["video"] = function() {
       me.fireEvent("afterinsertvideo", videoObjs);
     },
     queryCommandState: function() {
-      var img = me.selection.getRange().getClosedNode(),
-        flag = img && (img.className == "edui-faked-video" || img.className.indexOf("edui-upload-video") != -1);
+      var img = me.selection.getRange().getClosedNode();
+      var flag = img && (img.className == "edui-faked-video" || img.className.indexOf("edui-upload-video") != -1);
       return flag ? 1 : 0;
     }
   };

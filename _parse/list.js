@@ -1,25 +1,26 @@
 UE.parse.register("list", function(utils) {
-  var customCss = [],
-    customStyle = {
-      cn: "cn-1-",
-      cn1: "cn-2-",
-      cn2: "cn-3-",
-      num: "num-1-",
-      num1: "num-2-",
-      num2: "num-3-",
-      dash: "dash",
-      dot: "dot"
-    };
+  var customCss = [];
+
+  var customStyle = {
+    cn: "cn-1-",
+    cn1: "cn-2-",
+    cn2: "cn-3-",
+    num: "num-1-",
+    num1: "num-2-",
+    num2: "num-3-",
+    dash: "dash",
+    dot: "dot"
+  };
 
   utils.extend(this, {
     liiconpath: "http://bs.baidu.com/listicon/",
     listDefaultPaddingLeft: "20"
   });
 
-  var root = this.root,
-    ols = root.getElementsByTagName("ol"),
-    uls = root.getElementsByTagName("ul"),
-    selector = this.selector;
+  var root = this.root;
+  var ols = root.getElementsByTagName("ol");
+  var uls = root.getElementsByTagName("ul");
+  var selector = this.selector;
 
   if (ols.length) {
     applyStyle.call(this, ols);

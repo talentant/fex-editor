@@ -26,15 +26,16 @@ UE.plugins["removeformat"] = function() {
   });
   me.commands["removeformat"] = {
     execCommand: function(cmdName, tags, style, attrs, notIncludeA) {
-      var tagReg = new RegExp("^(?:" + (tags || this.options.removeFormatTags).replace(/,/g, "|") + ")$", "i"),
-        removeFormatAttributes = style ? [] : (attrs || this.options.removeFormatAttributes).split(","),
-        range = new dom.Range(this.document),
-        bookmark,
-        node,
-        parent,
-        filter = function(node) {
-          return node.nodeType == 1;
-        };
+      var tagReg = new RegExp("^(?:" + (tags || this.options.removeFormatTags).replace(/,/g, "|") + ")$", "i");
+      var removeFormatAttributes = style ? [] : (attrs || this.options.removeFormatAttributes).split(",");
+      var range = new dom.Range(this.document);
+      var bookmark;
+      var node;
+      var parent;
+
+      var filter = function(node) {
+        return node.nodeType == 1;
+      };
 
       function isRedundantSpan(node) {
         if (node.nodeType == 3 || node.tagName.toLowerCase() != "span") {
@@ -93,8 +94,9 @@ UE.plugins["removeformat"] = function() {
           }
 
           //开始去除样式
-          var current = domUtils.getNextDomNode(bookmark.start, false, filter),
-            next;
+          var current = domUtils.getNextDomNode(bookmark.start, false, filter);
+
+          var next;
           while (current) {
             if (current == bookmark.end) {
               break;
@@ -136,10 +138,12 @@ UE.plugins["removeformat"] = function() {
           domUtils.removeAttributes(pN, removeFormatAttributes);
         }
         range.moveToBookmark(bookmark).moveToBookmark(bookmark1);
+
         //清除冗余的代码 <b><bookmark></b>
-        var node = range.startContainer,
-          tmp,
-          collapsed = range.collapsed;
+        var node = range.startContainer;
+
+        var tmp;
+        var collapsed = range.collapsed;
         while (node.nodeType == 1 && domUtils.isEmptyNode(node) && dtd.$removeEmpty[node.tagName]) {
           tmp = node.parentNode;
           range.setStartBefore(node);

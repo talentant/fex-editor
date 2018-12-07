@@ -3,8 +3,8 @@ UE.plugins["keystrokes"] = function() {
   var me = this;
   var collapsed = true;
   me.addListener("keydown", function(type, evt) {
-    var keyCode = evt.keyCode || evt.which,
-      rng = me.selection.getRange();
+    var keyCode = evt.keyCode || evt.which;
+    var rng = me.selection.getRange();
 
     //处理全选的情况
     if (
@@ -61,7 +61,8 @@ UE.plugins["keystrokes"] = function() {
       if (me.fireEvent("delkeydown", evt)) {
         return;
       }
-      var start, end;
+      var start;
+      var end;
       //避免按两次删除才能生效的问题
       if (rng.collapsed && rng.inFillChar()) {
         start = rng.startContainer;
@@ -138,8 +139,8 @@ UE.plugins["keystrokes"] = function() {
         } else {
           var bookmark = range.createBookmark();
           range.enlarge(true);
-          var bookmark2 = range.createBookmark(),
-            current = domUtils.getNextDomNode(bookmark2.start, false, filterFn);
+          var bookmark2 = range.createBookmark();
+          var current = domUtils.getNextDomNode(bookmark2.start, false, filterFn);
           while (current && !(domUtils.getPosition(current, bookmark2.end) & domUtils.POSITION_FOLLOWING)) {
             current.insertBefore(span.cloneNode(true).firstChild, current.firstChild);
             current = domUtils.getNextDomNode(current, false, filterFn);
@@ -180,17 +181,17 @@ UE.plugins["keystrokes"] = function() {
       });
   });
   me.addListener("keyup", function(type, evt) {
-    var keyCode = evt.keyCode || evt.which,
-      rng,
-      me = this;
+    var keyCode = evt.keyCode || evt.which;
+    var rng;
+    var me = this;
     if (keyCode == keymap.Backspace) {
       if (me.fireEvent("delkeyup")) {
         return;
       }
       rng = me.selection.getRange();
       if (rng.collapsed) {
-        var tmpNode,
-          autoClearTagName = ["h1", "h2", "h3", "h4", "h5", "h6"];
+        var tmpNode;
+        var autoClearTagName = ["h1", "h2", "h3", "h4", "h5", "h6"];
         if ((tmpNode = domUtils.findParentByTagName(rng.startContainer, autoClearTagName, true))) {
           if (domUtils.isEmptyBlock(tmpNode)) {
             var pre = tmpNode.previousSibling;

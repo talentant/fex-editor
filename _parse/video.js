@@ -1,13 +1,13 @@
 UE.parse.register("vedio", function(utils) {
-  var video = this.root.getElementsByTagName("video"),
-    audio = this.root.getElementsByTagName("audio");
+  var video = this.root.getElementsByTagName("video");
+  var audio = this.root.getElementsByTagName("audio");
 
   document.createElement("video");
   document.createElement("audio");
   if (video.length || audio.length) {
-    var jsurl = "https://cdn.jsdelivr.net/npm/video.js@4.3.0/video.js",
-      cssurl = "https://cdn.jsdelivr.net/npm/video.js@4.3.0/video-js.min.css",
-      swfUrl = "https://cdn.jsdelivr.net/npm/video.js@4.3.0/video-js.swf";
+    var jsurl = "https://cdn.jsdelivr.net/npm/video.js@4.3.0/video.js";
+    var cssurl = "https://cdn.jsdelivr.net/npm/video.js@4.3.0/video-js.min.css";
+    var swfUrl = "https://cdn.jsdelivr.net/npm/video.js@4.3.0/video-js.swf";
 
     if (window.videojs) {
       videojs.autoSetup();

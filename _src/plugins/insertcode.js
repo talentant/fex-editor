@@ -62,9 +62,9 @@ UE.plugins["insertcode"] = function() {
 
   me.commands["insertcode"] = {
     execCommand: function(cmd, lang) {
-      var me = this,
-        rng = me.selection.getRange(),
-        pre = domUtils.findParentByTagName(rng.startContainer, "pre", true);
+      var me = this;
+      var rng = me.selection.getRange();
+      var pre = domUtils.findParentByTagName(rng.startContainer, "pre", true);
       if (pre) {
         pre.className = "brush:" + lang + ";toolbar:false;";
       } else {
@@ -262,8 +262,8 @@ UE.plugins["insertcode"] = function() {
         rng.deleteContents();
       }
       if (!browser.ie || browser.ie9above) {
-        var tmpNode = me.document.createElement("br"),
-          pre;
+        var tmpNode = me.document.createElement("br");
+        var pre;
         rng
           .insertNode(tmpNode)
           .setStartAfter(tmpNode)
@@ -426,9 +426,9 @@ UE.plugins["insertcode"] = function() {
   });
 
   me.addListener("beforeinserthtml", function(evtName, html) {
-    var me = this,
-      rng = me.selection.getRange(),
-      pre = domUtils.findParentByTagName(rng.startContainer, "pre", true);
+    var me = this;
+    var rng = me.selection.getRange();
+    var pre = domUtils.findParentByTagName(rng.startContainer, "pre", true);
     if (pre) {
       if (!rng.collapsed) {
         rng.deleteContents();
@@ -505,12 +505,12 @@ UE.plugins["insertcode"] = function() {
   });
   //方向键的处理
   me.addListener("keydown", function(cmd, evt) {
-    var me = this,
-      keyCode = evt.keyCode || evt.which;
+    var me = this;
+    var keyCode = evt.keyCode || evt.which;
     if (keyCode == 40) {
-      var rng = me.selection.getRange(),
-        pre,
-        start = rng.startContainer;
+      var rng = me.selection.getRange();
+      var pre;
+      var start = rng.startContainer;
       if (rng.collapsed && (pre = domUtils.findParentByTagName(rng.startContainer, "pre", true)) && !pre.nextSibling) {
         var last = pre.lastChild;
         while (last && last.nodeName == "BR") {

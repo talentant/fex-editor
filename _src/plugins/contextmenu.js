@@ -17,358 +17,360 @@ UE.plugins["contextmenu"] = function() {
   if (me.getOpt("enableContextMenu") === false) {
     return;
   }
-  var lang = me.getLang("contextMenu"),
-    menu,
-    items = me.options.contextMenu || [
-      {label: lang["selectall"], cmdName: "selectall"},
-      {
-        label: lang.cleardoc,
-        cmdName: "cleardoc",
-        exec: function() {
-          if (confirm(lang.confirmclear)) {
-            this.execCommand("cleardoc");
+  var lang = me.getLang("contextMenu");
+  var menu;
+
+  var items = me.options.contextMenu || [
+    {label: lang["selectall"], cmdName: "selectall"},
+    {
+      label: lang.cleardoc,
+      cmdName: "cleardoc",
+      exec: function() {
+        if (confirm(lang.confirmclear)) {
+          this.execCommand("cleardoc");
+        }
+      }
+    },
+    "-",
+    {
+      label: lang.unlink,
+      cmdName: "unlink"
+    },
+    "-",
+    {
+      group: lang.paragraph,
+      icon: "justifyjustify",
+      subMenu: [
+        {
+          label: lang.justifyleft,
+          cmdName: "justify",
+          value: "left"
+        },
+        {
+          label: lang.justifyright,
+          cmdName: "justify",
+          value: "right"
+        },
+        {
+          label: lang.justifycenter,
+          cmdName: "justify",
+          value: "center"
+        },
+        {
+          label: lang.justifyjustify,
+          cmdName: "justify",
+          value: "justify"
+        }
+      ]
+    },
+    "-",
+    {
+      group: lang.table,
+      icon: "table",
+      subMenu: [
+        {
+          label: lang.inserttable,
+          cmdName: "inserttable"
+        },
+        {
+          label: lang.deletetable,
+          cmdName: "deletetable"
+        },
+        "-",
+        {
+          label: lang.deleterow,
+          cmdName: "deleterow"
+        },
+        {
+          label: lang.deletecol,
+          cmdName: "deletecol"
+        },
+        {
+          label: lang.insertcol,
+          cmdName: "insertcol"
+        },
+        {
+          label: lang.insertcolnext,
+          cmdName: "insertcolnext"
+        },
+        {
+          label: lang.insertrow,
+          cmdName: "insertrow"
+        },
+        {
+          label: lang.insertrownext,
+          cmdName: "insertrownext"
+        },
+        "-",
+        {
+          label: lang.insertcaption,
+          cmdName: "insertcaption"
+        },
+        {
+          label: lang.deletecaption,
+          cmdName: "deletecaption"
+        },
+        {
+          label: lang.inserttitle,
+          cmdName: "inserttitle"
+        },
+        {
+          label: lang.deletetitle,
+          cmdName: "deletetitle"
+        },
+        {
+          label: lang.inserttitlecol,
+          cmdName: "inserttitlecol"
+        },
+        {
+          label: lang.deletetitlecol,
+          cmdName: "deletetitlecol"
+        },
+        "-",
+        {
+          label: lang.mergecells,
+          cmdName: "mergecells"
+        },
+        {
+          label: lang.mergeright,
+          cmdName: "mergeright"
+        },
+        {
+          label: lang.mergedown,
+          cmdName: "mergedown"
+        },
+        "-",
+        {
+          label: lang.splittorows,
+          cmdName: "splittorows"
+        },
+        {
+          label: lang.splittocols,
+          cmdName: "splittocols"
+        },
+        {
+          label: lang.splittocells,
+          cmdName: "splittocells"
+        },
+        "-",
+        {
+          label: lang.averageDiseRow,
+          cmdName: "averagedistributerow"
+        },
+        {
+          label: lang.averageDisCol,
+          cmdName: "averagedistributecol"
+        },
+        "-",
+        {
+          label: lang.edittd,
+          cmdName: "edittd",
+          exec: function() {
+            if (UE.ui["edittd"]) {
+              new UE.ui["edittd"](this);
+            }
+            this.getDialog("edittd").open();
+          }
+        },
+        {
+          label: lang.edittable,
+          cmdName: "edittable",
+          exec: function() {
+            if (UE.ui["edittable"]) {
+              new UE.ui["edittable"](this);
+            }
+            this.getDialog("edittable").open();
+          }
+        },
+        {
+          label: lang.setbordervisible,
+          cmdName: "setbordervisible"
+        }
+      ]
+    },
+    {
+      group: lang.tablesort,
+      icon: "tablesort",
+      subMenu: [
+        {
+          label: lang.enablesort,
+          cmdName: "enablesort"
+        },
+        {
+          label: lang.disablesort,
+          cmdName: "disablesort"
+        },
+        "-",
+        {
+          label: lang.reversecurrent,
+          cmdName: "sorttable",
+          value: "reversecurrent"
+        },
+        {
+          label: lang.orderbyasc,
+          cmdName: "sorttable",
+          value: "orderbyasc"
+        },
+        {
+          label: lang.reversebyasc,
+          cmdName: "sorttable",
+          value: "reversebyasc"
+        },
+        {
+          label: lang.orderbynum,
+          cmdName: "sorttable",
+          value: "orderbynum"
+        },
+        {
+          label: lang.reversebynum,
+          cmdName: "sorttable",
+          value: "reversebynum"
+        }
+      ]
+    },
+    {
+      group: lang.borderbk,
+      icon: "borderBack",
+      subMenu: [
+        {
+          label: lang.setcolor,
+          cmdName: "interlacetable",
+          exec: function() {
+            this.execCommand("interlacetable");
+          }
+        },
+        {
+          label: lang.unsetcolor,
+          cmdName: "uninterlacetable",
+          exec: function() {
+            this.execCommand("uninterlacetable");
+          }
+        },
+        {
+          label: lang.setbackground,
+          cmdName: "settablebackground",
+          exec: function() {
+            this.execCommand("settablebackground", {
+              repeat: true,
+              colorList: ["#bbb", "#ccc"]
+            });
+          }
+        },
+        {
+          label: lang.unsetbackground,
+          cmdName: "cleartablebackground",
+          exec: function() {
+            this.execCommand("cleartablebackground");
+          }
+        },
+        {
+          label: lang.redandblue,
+          cmdName: "settablebackground",
+          exec: function() {
+            this.execCommand("settablebackground", {
+              repeat: true,
+              colorList: ["red", "blue"]
+            });
+          }
+        },
+        {
+          label: lang.threecolorgradient,
+          cmdName: "settablebackground",
+          exec: function() {
+            this.execCommand("settablebackground", {
+              repeat: true,
+              colorList: ["#aaa", "#bbb", "#ccc"]
+            });
           }
         }
-      },
-      "-",
-      {
-        label: lang.unlink,
-        cmdName: "unlink"
-      },
-      "-",
-      {
-        group: lang.paragraph,
-        icon: "justifyjustify",
-        subMenu: [
-          {
-            label: lang.justifyleft,
-            cmdName: "justify",
-            value: "left"
-          },
-          {
-            label: lang.justifyright,
-            cmdName: "justify",
-            value: "right"
-          },
-          {
-            label: lang.justifycenter,
-            cmdName: "justify",
-            value: "center"
-          },
-          {
-            label: lang.justifyjustify,
-            cmdName: "justify",
-            value: "justify"
-          }
-        ]
-      },
-      "-",
-      {
-        group: lang.table,
-        icon: "table",
-        subMenu: [
-          {
-            label: lang.inserttable,
-            cmdName: "inserttable"
-          },
-          {
-            label: lang.deletetable,
-            cmdName: "deletetable"
-          },
-          "-",
-          {
-            label: lang.deleterow,
-            cmdName: "deleterow"
-          },
-          {
-            label: lang.deletecol,
-            cmdName: "deletecol"
-          },
-          {
-            label: lang.insertcol,
-            cmdName: "insertcol"
-          },
-          {
-            label: lang.insertcolnext,
-            cmdName: "insertcolnext"
-          },
-          {
-            label: lang.insertrow,
-            cmdName: "insertrow"
-          },
-          {
-            label: lang.insertrownext,
-            cmdName: "insertrownext"
-          },
-          "-",
-          {
-            label: lang.insertcaption,
-            cmdName: "insertcaption"
-          },
-          {
-            label: lang.deletecaption,
-            cmdName: "deletecaption"
-          },
-          {
-            label: lang.inserttitle,
-            cmdName: "inserttitle"
-          },
-          {
-            label: lang.deletetitle,
-            cmdName: "deletetitle"
-          },
-          {
-            label: lang.inserttitlecol,
-            cmdName: "inserttitlecol"
-          },
-          {
-            label: lang.deletetitlecol,
-            cmdName: "deletetitlecol"
-          },
-          "-",
-          {
-            label: lang.mergecells,
-            cmdName: "mergecells"
-          },
-          {
-            label: lang.mergeright,
-            cmdName: "mergeright"
-          },
-          {
-            label: lang.mergedown,
-            cmdName: "mergedown"
-          },
-          "-",
-          {
-            label: lang.splittorows,
-            cmdName: "splittorows"
-          },
-          {
-            label: lang.splittocols,
-            cmdName: "splittocols"
-          },
-          {
-            label: lang.splittocells,
-            cmdName: "splittocells"
-          },
-          "-",
-          {
-            label: lang.averageDiseRow,
-            cmdName: "averagedistributerow"
-          },
-          {
-            label: lang.averageDisCol,
-            cmdName: "averagedistributecol"
-          },
-          "-",
-          {
-            label: lang.edittd,
-            cmdName: "edittd",
-            exec: function() {
-              if (UE.ui["edittd"]) {
-                new UE.ui["edittd"](this);
-              }
-              this.getDialog("edittd").open();
-            }
-          },
-          {
-            label: lang.edittable,
-            cmdName: "edittable",
-            exec: function() {
-              if (UE.ui["edittable"]) {
-                new UE.ui["edittable"](this);
-              }
-              this.getDialog("edittable").open();
-            }
-          },
-          {
-            label: lang.setbordervisible,
-            cmdName: "setbordervisible"
-          }
-        ]
-      },
-      {
-        group: lang.tablesort,
-        icon: "tablesort",
-        subMenu: [
-          {
-            label: lang.enablesort,
-            cmdName: "enablesort"
-          },
-          {
-            label: lang.disablesort,
-            cmdName: "disablesort"
-          },
-          "-",
-          {
-            label: lang.reversecurrent,
-            cmdName: "sorttable",
-            value: "reversecurrent"
-          },
-          {
-            label: lang.orderbyasc,
-            cmdName: "sorttable",
-            value: "orderbyasc"
-          },
-          {
-            label: lang.reversebyasc,
-            cmdName: "sorttable",
-            value: "reversebyasc"
-          },
-          {
-            label: lang.orderbynum,
-            cmdName: "sorttable",
-            value: "orderbynum"
-          },
-          {
-            label: lang.reversebynum,
-            cmdName: "sorttable",
-            value: "reversebynum"
-          }
-        ]
-      },
-      {
-        group: lang.borderbk,
-        icon: "borderBack",
-        subMenu: [
-          {
-            label: lang.setcolor,
-            cmdName: "interlacetable",
-            exec: function() {
-              this.execCommand("interlacetable");
-            }
-          },
-          {
-            label: lang.unsetcolor,
-            cmdName: "uninterlacetable",
-            exec: function() {
-              this.execCommand("uninterlacetable");
-            }
-          },
-          {
-            label: lang.setbackground,
-            cmdName: "settablebackground",
-            exec: function() {
-              this.execCommand("settablebackground", {
-                repeat: true,
-                colorList: ["#bbb", "#ccc"]
-              });
-            }
-          },
-          {
-            label: lang.unsetbackground,
-            cmdName: "cleartablebackground",
-            exec: function() {
-              this.execCommand("cleartablebackground");
-            }
-          },
-          {
-            label: lang.redandblue,
-            cmdName: "settablebackground",
-            exec: function() {
-              this.execCommand("settablebackground", {
-                repeat: true,
-                colorList: ["red", "blue"]
-              });
-            }
-          },
-          {
-            label: lang.threecolorgradient,
-            cmdName: "settablebackground",
-            exec: function() {
-              this.execCommand("settablebackground", {
-                repeat: true,
-                colorList: ["#aaa", "#bbb", "#ccc"]
-              });
-            }
-          }
-        ]
-      },
-      {
-        group: lang.aligntd,
-        icon: "aligntd",
-        subMenu: [
-          {
-            cmdName: "cellalignment",
-            value: {align: "left", vAlign: "top"}
-          },
-          {
-            cmdName: "cellalignment",
-            value: {align: "center", vAlign: "top"}
-          },
-          {
-            cmdName: "cellalignment",
-            value: {align: "right", vAlign: "top"}
-          },
-          {
-            cmdName: "cellalignment",
-            value: {align: "left", vAlign: "middle"}
-          },
-          {
-            cmdName: "cellalignment",
-            value: {align: "center", vAlign: "middle"}
-          },
-          {
-            cmdName: "cellalignment",
-            value: {align: "right", vAlign: "middle"}
-          },
-          {
-            cmdName: "cellalignment",
-            value: {align: "left", vAlign: "bottom"}
-          },
-          {
-            cmdName: "cellalignment",
-            value: {align: "center", vAlign: "bottom"}
-          },
-          {
-            cmdName: "cellalignment",
-            value: {align: "right", vAlign: "bottom"}
-          }
-        ]
-      },
-      {
-        group: lang.aligntable,
-        icon: "aligntable",
-        subMenu: [
-          {
-            cmdName: "tablealignment",
-            className: "left",
-            label: lang.tableleft,
-            value: "left"
-          },
-          {
-            cmdName: "tablealignment",
-            className: "center",
-            label: lang.tablecenter,
-            value: "center"
-          },
-          {
-            cmdName: "tablealignment",
-            className: "right",
-            label: lang.tableright,
-            value: "right"
-          }
-        ]
-      },
-      "-",
-      {
-        label: lang.insertparagraphbefore,
-        cmdName: "insertparagraph",
-        value: true
-      },
-      {
-        label: lang.insertparagraphafter,
-        cmdName: "insertparagraph"
-      },
-      {
-        label: lang["copy"],
-        cmdName: "copy"
-      },
-      {
-        label: lang["paste"],
-        cmdName: "paste"
-      }
-    ];
+      ]
+    },
+    {
+      group: lang.aligntd,
+      icon: "aligntd",
+      subMenu: [
+        {
+          cmdName: "cellalignment",
+          value: {align: "left", vAlign: "top"}
+        },
+        {
+          cmdName: "cellalignment",
+          value: {align: "center", vAlign: "top"}
+        },
+        {
+          cmdName: "cellalignment",
+          value: {align: "right", vAlign: "top"}
+        },
+        {
+          cmdName: "cellalignment",
+          value: {align: "left", vAlign: "middle"}
+        },
+        {
+          cmdName: "cellalignment",
+          value: {align: "center", vAlign: "middle"}
+        },
+        {
+          cmdName: "cellalignment",
+          value: {align: "right", vAlign: "middle"}
+        },
+        {
+          cmdName: "cellalignment",
+          value: {align: "left", vAlign: "bottom"}
+        },
+        {
+          cmdName: "cellalignment",
+          value: {align: "center", vAlign: "bottom"}
+        },
+        {
+          cmdName: "cellalignment",
+          value: {align: "right", vAlign: "bottom"}
+        }
+      ]
+    },
+    {
+      group: lang.aligntable,
+      icon: "aligntable",
+      subMenu: [
+        {
+          cmdName: "tablealignment",
+          className: "left",
+          label: lang.tableleft,
+          value: "left"
+        },
+        {
+          cmdName: "tablealignment",
+          className: "center",
+          label: lang.tablecenter,
+          value: "center"
+        },
+        {
+          cmdName: "tablealignment",
+          className: "right",
+          label: lang.tableright,
+          value: "right"
+        }
+      ]
+    },
+    "-",
+    {
+      label: lang.insertparagraphbefore,
+      cmdName: "insertparagraph",
+      value: true
+    },
+    {
+      label: lang.insertparagraphafter,
+      cmdName: "insertparagraph"
+    },
+    {
+      label: lang["copy"],
+      cmdName: "copy"
+    },
+    {
+      label: lang["paste"],
+      cmdName: "paste"
+    }
+  ];
+
   if (!items.length) {
     return;
   }

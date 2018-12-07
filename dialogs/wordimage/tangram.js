@@ -21,8 +21,9 @@
  * 声明baidu包
  * @author: allstar, erik, meizz, berg
  */
-var T,
-  baidu = (T = baidu || {version: "1.5.0"});
+var T;
+
+var baidu = (T = baidu || {version: "1.5.0"});
 baidu.guid = "$BAIDU$";
 baidu.$$ = window[baidu.guid] = window[baidu.guid] || {global: {}};
 
@@ -85,10 +86,10 @@ baidu.array = baidu.array || {};
  */
 
 baidu.each = baidu.array.forEach = baidu.array.each = function(source, iterator, thisObject) {
-  var returnValue,
-    item,
-    i,
-    len = source.length;
+  var returnValue;
+  var item;
+  var i;
+  var len = source.length;
 
   if ("function" == typeof iterator) {
     for (i = 0; i < len; i++) {
@@ -186,7 +187,8 @@ baidu.browser.opera = /opera(\/| )(\d+(\.\d+)?)(.+?(version\/(\d+(\.\d+)?)))?/i.
  */
 baidu.dom.insertHTML = function(element, position, html) {
   element = baidu.dom.g(element);
-  var range, begin;
+  var range;
+  var begin;
   if (element.insertAdjacentHTML && !baidu.browser.opera) {
     element.insertAdjacentHTML(position, html);
   } else {
@@ -308,16 +310,16 @@ baidu.encodeHTML = baidu.string.encodeHTML;
  */
 baidu.swf.createHTML = function(options) {
   options = options || {};
-  var version = baidu.swf.version,
-    needVersion = options["ver"] || "6.0.0",
-    vUnit1,
-    vUnit2,
-    i,
-    k,
-    len,
-    item,
-    tmpOpt = {},
-    encodeHTML = baidu.string.encodeHTML;
+  var version = baidu.swf.version;
+  var needVersion = options["ver"] || "6.0.0";
+  var vUnit1;
+  var vUnit2;
+  var i;
+  var k;
+  var len;
+  var item;
+  var tmpOpt = {};
+  var encodeHTML = baidu.string.encodeHTML;
   for (k in options) {
     tmpOpt[k] = options[k];
   }
@@ -338,8 +340,8 @@ baidu.swf.createHTML = function(options) {
     return "";
   }
 
-  var vars = options["vars"],
-    objProperties = ["classid", "codebase", "id", "width", "height", "align"];
+  var vars = options["vars"];
+  var objProperties = ["classid", "codebase", "id", "width", "height", "align"];
   options["align"] = options["align"] || "middle";
   options["classid"] = "clsid:d27cdb6e-ae6d-11cf-96b8-444553540000";
   options["codebase"] = "http://fpdownload.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,0,0";
@@ -529,8 +531,8 @@ baidu.lang.toArray = function(source) {
     return [source];
   }
   if (source.item) {
-    var l = source.length,
-      array = new Array(l);
+    var l = source.length;
+    var array = new Array(l);
     while (l--) array[l] = source[l];
     return array;
   }
@@ -549,8 +551,8 @@ baidu.lang.toArray = function(source) {
  * @returns {HTMLElement} flash对象的实例
  */
 baidu.swf.getMovie = function(name) {
-  var movie = document[name],
-    ret;
+  var movie = document[name];
+  var ret;
   return baidu.browser.ie == 9
     ? movie && movie.length
       ? (ret = baidu.array.remove(baidu.lang.toArray(movie), function(item) {
@@ -646,14 +648,14 @@ baidu.flash._Base = (function() {
   }
 
   return function(options, callBack) {
-    var me = this,
-      autoRender = typeof options.autoRender !== "undefined" ? options.autoRender : true,
-      createOptions = options.createOptions || {},
-      target = null,
-      isReady = false,
-      callQueue = [],
-      timeHandle = null,
-      callBack = callBack || [];
+    var me = this;
+    var autoRender = typeof options.autoRender !== "undefined" ? options.autoRender : true;
+    var createOptions = options.createOptions || {};
+    var target = null;
+    var isReady = false;
+    var callQueue = [];
+    var timeHandle = null;
+    var callBack = callBack || [];
 
     /**
      * 将flash文件绘制到页面上
@@ -780,18 +782,20 @@ baidu.flash._Base = (function() {
 baidu.flash.imageUploader =
   baidu.flash.imageUploader ||
   function(options) {
-    var me = this,
-      options = options || {},
-      _flash = new baidu.flash._Base(options, [
-        "selectFileCallback",
-        "exceedFileCallback",
-        "deleteFileCallback",
-        "startUploadCallback",
-        "uploadCompleteCallback",
-        "uploadErrorCallback",
-        "allCompleteCallback",
-        "changeFlashHeight"
-      ]);
+    var me = this;
+    var options = options || {};
+
+    var _flash = new baidu.flash._Base(options, [
+      "selectFileCallback",
+      "exceedFileCallback",
+      "deleteFileCallback",
+      "startUploadCallback",
+      "uploadCompleteCallback",
+      "uploadErrorCallback",
+      "allCompleteCallback",
+      "changeFlashHeight"
+    ]);
+
     /**
      * 开始或回复上传图片
      * @public
@@ -869,8 +873,8 @@ baidu.extend = baidu.object.extend = function(target, source) {
 baidu.flash.fileUploader =
   baidu.flash.fileUploader ||
   function(options) {
-    var me = this,
-      options = options || {};
+    var me = this;
+    var options = options || {};
 
     options.createOptions = baidu.extend(
       {
@@ -1094,13 +1098,13 @@ baidu.sio._removeScriptTag = function(scr) {
  * @see baidu.sio.callByServer
  */
 baidu.sio.callByBrowser = function(url, opt_callback, opt_options) {
-  var scr = document.createElement("SCRIPT"),
-    scriptLoaded = 0,
-    options = opt_options || {},
-    charset = options["charset"],
-    callback = opt_callback || function() {},
-    timeOut = options["timeOut"] || 0,
-    timer;
+  var scr = document.createElement("SCRIPT");
+  var scriptLoaded = 0;
+  var options = opt_options || {};
+  var charset = options["charset"];
+  var callback = opt_callback || function() {};
+  var timeOut = options["timeOut"] || 0;
+  var timer;
   scr.onload = scr.onreadystatechange = function() {
     if (scriptLoaded) {
       return;
@@ -1148,17 +1152,17 @@ baidu.sio.callByBrowser = function(url, opt_callback, opt_options) {
  * @see baidu.sio.callByBrowser
  */
 baidu.sio.callByServer = /**@function*/ function(url, callback, opt_options) {
-  var scr = document.createElement("SCRIPT"),
-    prefix = "bd__cbs__",
-    callbackName,
-    callbackImpl,
-    options = opt_options || {},
-    charset = options["charset"],
-    queryField = options["queryField"] || "callback",
-    timeOut = options["timeOut"] || 0,
-    timer,
-    reg = new RegExp("(\\?|&)" + queryField + "=([^&]*)"),
-    matches;
+  var scr = document.createElement("SCRIPT");
+  var prefix = "bd__cbs__";
+  var callbackName;
+  var callbackImpl;
+  var options = opt_options || {};
+  var charset = options["charset"];
+  var queryField = options["queryField"] || "callback";
+  var timeOut = options["timeOut"] || 0;
+  var timer;
+  var reg = new RegExp("(\\?|&)" + queryField + "=([^&]*)");
+  var matches;
 
   if (baidu.lang.isFunction(callback)) {
     callbackName = prefix + Math.floor(Math.random() * 2147483648).toString(36);
@@ -1212,8 +1216,8 @@ baidu.sio.callByServer = /**@function*/ function(url, callback, opt_options) {
  * @author: int08h,leeight
  */
 baidu.sio.log = function(url) {
-  var img = new Image(),
-    key = "tangram_sio_log_" + Math.floor(Math.random() * 2147483648).toString(36);
+  var img = new Image();
+  var key = "tangram_sio_log_" + Math.floor(Math.random() * 2147483648).toString(36);
   window[key] = img;
 
   img.onload = img.onerror = img.onabort = function() {
@@ -1350,11 +1354,11 @@ baidu.json.stringify = (function() {
    * @private
    */
   function encodeArray(source) {
-    var result = ["["],
-      l = source.length,
-      preComma,
-      i,
-      item;
+    var result = ["["];
+    var l = source.length;
+    var preComma;
+    var i;
+    var item;
 
     for (i = 0; i < l; i++) {
       item = source[i];
@@ -1428,10 +1432,10 @@ baidu.json.stringify = (function() {
         } else if (value instanceof Date) {
           return encodeDate(value);
         } else {
-          var result = ["{"],
-            encode = baidu.json.stringify,
-            preComma,
-            item;
+          var result = ["{"];
+          var encode = baidu.json.stringify;
+          var preComma;
+          var item;
 
           for (var key in value) {
             if (Object.prototype.hasOwnProperty.call(value, key)) {

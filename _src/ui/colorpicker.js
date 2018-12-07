@@ -1,13 +1,14 @@
 ///import core
 ///import uicore
 (function() {
-  var utils = baidu.editor.utils,
-    UIBase = baidu.editor.ui.UIBase,
-    ColorPicker = (baidu.editor.ui.ColorPicker = function(options) {
-      this.initOptions(options);
-      this.noColorText = this.noColorText || this.editor.getLang("clearColor");
-      this.initUIBase();
-    });
+  var utils = baidu.editor.utils;
+  var UIBase = baidu.editor.ui.UIBase;
+
+  var ColorPicker = (baidu.editor.ui.ColorPicker = function(options) {
+    this.initOptions(options);
+    this.noColorText = this.noColorText || this.editor.getLang("clearColor");
+    this.initUIBase();
+  });
 
   ColorPicker.prototype = {
     getHtmlTpl: function() {

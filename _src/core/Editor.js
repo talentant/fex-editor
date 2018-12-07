@@ -20,8 +20,8 @@
  */
 
 (function() {
-  var uid = 0,
-    _selectionChangeTimer;
+  var uid = 0;
+  var _selectionChangeTimer;
 
   /**
    * 获取编辑器的html内容，赋值到编辑器所在表单的textarea文本域里面
@@ -381,11 +381,13 @@
      * @warning 必须且只能调用一次
      */
     render: function(container) {
-      var me = this,
-        options = me.options,
-        getStyleValue = function(attr) {
-          return parseInt(domUtils.getComputedStyle(container, attr));
-        };
+      var me = this;
+      var options = me.options;
+
+      var getStyleValue = function(attr) {
+        return parseInt(domUtils.getComputedStyle(container, attr));
+      };
+
       if (utils.isString(container)) {
         container = document.getElementById(container);
       }
@@ -482,8 +484,8 @@
      * @param { Element } doc 编辑器Iframe中的文档对象
      */
     _setup: function(doc) {
-      var me = this,
-        options = me.options;
+      var me = this;
+      var options = me.options;
       if (ie) {
         doc.body.disabled = true;
         doc.body.contentEditable = true;
@@ -618,16 +620,18 @@
      * @param { String } formID 指定一个要同步数据的form的id,编辑器的数据会同步到你指定form下
      */
     sync: function(formId) {
-      var me = this,
-        form = formId
-          ? document.getElementById(formId)
-          : domUtils.findParent(
-              me.iframe.parentNode,
-              function(node) {
-                return node.tagName == "FORM";
-              },
-              true
-            );
+      var me = this;
+
+      var form = formId
+        ? document.getElementById(formId)
+        : domUtils.findParent(
+            me.iframe.parentNode,
+            function(node) {
+              return node.tagName == "FORM";
+            },
+            true
+          );
+
       form && setValue(form, me);
     },
 
@@ -689,16 +693,16 @@
      * @private
      */
     _bindshortcutKeys: function() {
-      var me = this,
-        shortcutkeys = this.shortcutkeys;
+      var me = this;
+      var shortcutkeys = this.shortcutkeys;
       me.addListener("keydown", function(type, e) {
         var keyCode = e.keyCode || e.which;
         for (var i in shortcutkeys) {
           var tmp = shortcutkeys[i].split(",");
           for (var t = 0, ti; (ti = tmp[t++]); ) {
             ti = ti.split(":");
-            var key = ti[0],
-              param = ti[1];
+            var key = ti[0];
+            var param = ti[1];
             if (/^(ctrl)(\+shift)?\+(\d+)$/.test(key.toLowerCase()) || /^(\d+)$/.test(key)) {
               if (
                 ((RegExp.$1 == "ctrl" ? e.ctrlKey || e.metaKey : 0) &&
@@ -771,9 +775,9 @@
      * ```
      */
     getAllHtml: function() {
-      var me = this,
-        headHtml = [],
-        html = "";
+      var me = this;
+      var headHtml = [];
+      var html = "";
       me.fireEvent("getAllHtml", headHtml);
       if (browser.ie && browser.version > 8) {
         var headHtmlForIE9 = "";
@@ -813,8 +817,8 @@
      * ```
      */
     getPlainTxt: function() {
-      var reg = new RegExp(domUtils.fillChar, "g"),
-        html = this.body.innerHTML.replace(/[\n\r]/g, ""); //ie要先去了\n在处理
+      var reg = new RegExp(domUtils.fillChar, "g"); //ie要先去了\n在处理
+      var html = this.body.innerHTML.replace(/[\n\r]/g, "");
       html = html
         .replace(/<(p|div)[^>]*>(<br\/?>|&nbsp;)<\/\1>/gi, "\n")
         .replace(/<br\/?>/gi, "\n")
@@ -885,8 +889,8 @@
       }
       //给文本或者inline节点套p标签
       if (me.options.enterTag == "p") {
-        var child = this.body.firstChild,
-          tmpNode;
+        var child = this.body.firstChild;
+        var tmpNode;
         if (
           !child ||
           (child.nodeType == 1 &&
@@ -954,8 +958,8 @@
      */
     focus: function(toEnd) {
       try {
-        var me = this,
-          rng = me.selection.getRange();
+        var me = this;
+        var rng = me.selection.getRange();
         if (toEnd) {
           var node = me.body.lastChild;
           if (node && node.nodeType == 1 && !dtd.$empty[node.tagName]) {
@@ -1003,9 +1007,9 @@
      * @private
      */
     _initEvents: function() {
-      var me = this,
-        doc = me.document,
-        win = me.window;
+      var me = this;
+      var doc = me.document;
+      var win = me.window;
       me._proxyDomEvent = utils.bind(me._proxyDomEvent, me);
       domUtils.on(
         doc,
@@ -1069,7 +1073,8 @@
       //            }
 
       var hackForMouseUp = false;
-      var mouseX, mouseY;
+      var mouseX;
+      var mouseY;
       if (browser.ie && browser.version < 9 && evt && evt.type == "mouseup") {
         var range = this.selection.getRange();
         if (!range.collapsed) {
@@ -1124,9 +1129,9 @@
      * @return { * } 返回命令函数运行的返回值
      */
     _callCmdFn: function(fnName, args) {
-      var cmdName = args[0].toLowerCase(),
-        cmd,
-        cmdFn;
+      var cmdName = args[0].toLowerCase();
+      var cmd;
+      var cmdFn;
       cmd = this.commands[cmdName] || UE.commands[cmdName];
       cmdFn = cmd && cmd[fnName];
       //没有querycommandstate或者没有command的都默认返回0
@@ -1150,9 +1155,9 @@
      */
     execCommand: function(cmdName) {
       cmdName = cmdName.toLowerCase();
-      var me = this,
-        result,
-        cmd = me.commands[cmdName] || UE.commands[cmdName];
+      var me = this;
+      var result;
+      var cmd = me.commands[cmdName] || UE.commands[cmdName];
       if (!cmd || !cmd.execCommand) {
         return null;
       }
@@ -1277,8 +1282,8 @@
      * ```
      */
     setEnabled: function() {
-      var me = this,
-        range;
+      var me = this;
+      var range;
       if (me.body.contentEditable == "false") {
         me.body.contentEditable = true;
         range = me.selection.getRange();
@@ -1393,8 +1398,8 @@
      * ```
      */
     setShow: function() {
-      var me = this,
-        range = me.selection.getRange();
+      var me = this;
+      var range = me.selection.getRange();
       if (me.container.style.display == "none") {
         //有可能内容丢失了
         try {
@@ -1570,9 +1575,9 @@
      * ```
      */
     getActionUrl: function(action) {
-      var actionName = this.getOpt(action) || action,
-        imageUrl = this.getOpt("imageUrl"),
-        serverUrl = this.getOpt("serverUrl");
+      var actionName = this.getOpt(action) || action;
+      var imageUrl = this.getOpt("imageUrl");
+      var serverUrl = this.getOpt("serverUrl");
 
       if (!serverUrl && imageUrl) {
         serverUrl = imageUrl.replace(/^(.*[\/]).+([\.].+)$/, "$1controller$2");

@@ -31,8 +31,8 @@ var filterNode = (UE.filterNode = (function() {
           if (val === "-") {
             node.parentNode.removeChild(node);
           } else if (utils.isFunction(val)) {
-            var parentNode = node.parentNode,
-              index = node.getIndex();
+            var parentNode = node.parentNode;
+            var index = node.getIndex();
             val(node);
             if (node.parentNode) {
               if (node.children) {
@@ -54,8 +54,8 @@ var filterNode = (UE.filterNode = (function() {
           } else {
             var attrs = val["$"];
             if (attrs && node.attrs) {
-              var tmpAttrs = {},
-                tmpVal;
+              var tmpAttrs = {};
+              var tmpVal;
               for (var a in attrs) {
                 tmpVal = node.getAttr(a);
                 //todo 只先对style单独处理
@@ -89,8 +89,8 @@ var filterNode = (UE.filterNode = (function() {
           if (dtd.$cdata[node.tagName]) {
             node.parentNode.removeChild(node);
           } else {
-            var parentNode = node.parentNode,
-              index = node.getIndex();
+            var parentNode = node.parentNode;
+            var index = node.getIndex();
             node.parentNode.removeChild(node, true);
             for (var i = index, ci; (ci = parentNode.children[i]); ) {
               filterNode(ci, rules);

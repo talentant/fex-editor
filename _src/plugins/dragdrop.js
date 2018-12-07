@@ -6,8 +6,8 @@ UE.plugins["dragdrop"] = function() {
       var node = rng.getClosedNode() || me.selection.getStart();
 
       if (node && node.tagName == "IMG") {
-        var pre = node.previousSibling,
-          next;
+        var pre = node.previousSibling;
+        var next;
         while ((next = node.nextSibling)) {
           if (next.nodeType == 1 && next.tagName == "SPAN" && !next.firstChild) {
             domUtils.remove(next);
@@ -43,8 +43,8 @@ UE.plugins["dragdrop"] = function() {
   me.addListener("keyup", function(type, evt) {
     var keyCode = evt.keyCode || evt.which;
     if (keyCode == 13) {
-      var rng = me.selection.getRange(),
-        node;
+      var rng = me.selection.getRange();
+      var node;
       if ((node = domUtils.findParentByTagName(rng.startContainer, "p", true))) {
         if (domUtils.getComputedStyle(node, "text-align") == "center") {
           domUtils.removeStyle(node, "text-align");

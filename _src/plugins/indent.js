@@ -16,8 +16,8 @@
  */
 UE.commands["indent"] = {
   execCommand: function() {
-    var me = this,
-      value = me.queryCommandState("indent") ? "0em" : me.options.indentValue || "2em";
+    var me = this;
+    var value = me.queryCommandState("indent") ? "0em" : me.options.indentValue || "2em";
     me.execCommand("Paragraph", "p", {style: "text-indent:" + value});
   },
   queryCommandState: function() {

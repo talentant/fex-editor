@@ -2,7 +2,8 @@ UE.parse.register("insertcode", function(utils) {
   var pres = this.root.getElementsByTagName("pre");
   if (pres.length) {
     if (typeof XRegExp == "undefined") {
-      var jsurl, cssurl;
+      var jsurl;
+      var cssurl;
       if (this.rootPath !== undefined) {
         jsurl = "https://cdn.jsdelivr.net/npm/fex-editor@2.1.1/dist/third-party/SyntaxHighlighter/shCore.js";
         cssurl = "https://cdn.jsdelivr.net/npm/fex-editor@2.1.1/dist/third-party/SyntaxHighlighter/shCoreDefault.css";

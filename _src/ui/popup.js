@@ -1,14 +1,15 @@
 ///import core
 ///import uicore
 (function() {
-  var utils = baidu.editor.utils,
-    uiUtils = baidu.editor.ui.uiUtils,
-    domUtils = baidu.editor.dom.domUtils,
-    UIBase = baidu.editor.ui.UIBase,
-    Popup = (baidu.editor.ui.Popup = function(options) {
-      this.initOptions(options);
-      this.initPopup();
-    });
+  var utils = baidu.editor.utils;
+  var uiUtils = baidu.editor.ui.uiUtils;
+  var domUtils = baidu.editor.dom.domUtils;
+  var UIBase = baidu.editor.ui.UIBase;
+
+  var Popup = (baidu.editor.ui.Popup = function(options) {
+    this.initOptions(options);
+    this.initPopup();
+  });
 
   var allPopups = [];
   function closeAllPopup(evt, el) {
@@ -77,12 +78,12 @@
       if (this.captureWheel && !this.captured) {
         this.captured = true;
 
-        var winHeight = (document.documentElement.clientHeight || document.body.clientHeight) - 80,
-          _height = this.getDom().offsetHeight,
-          _top = uiUtils.getClientRect(this.combox.getDom()).top,
-          content = this.getDom("content"),
-          ifr = this.getDom("body").getElementsByTagName("iframe"),
-          me = this;
+        var winHeight = (document.documentElement.clientHeight || document.body.clientHeight) - 80;
+        var _height = this.getDom().offsetHeight;
+        var _top = uiUtils.getClientRect(this.combox.getDom()).top;
+        var content = this.getDom("content");
+        var ifr = this.getDom("body").getElementsByTagName("iframe");
+        var me = this;
 
         ifr.length && (ifr = ifr[0]);
 
@@ -161,7 +162,10 @@
       this._show();
       var popSize = this.fitSize();
 
-      var sideLeft, sideUp, left, top;
+      var sideLeft;
+      var sideUp;
+      var left;
+      var top;
       if (hoz) {
         sideLeft = this.canSideLeft && (rect.right + popSize.width > vpRect.right && rect.left > popSize.width);
         sideUp = this.canSideUp && (rect.top + popSize.height > vpRect.bottom && rect.bottom > popSize.height);

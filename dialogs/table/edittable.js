@@ -6,15 +6,15 @@
  * To change this template use File | Settings | File Templates.
  */
 (function() {
-  var title = $G("J_title"),
-    titleCol = $G("J_titleCol"),
-    caption = $G("J_caption"),
-    sorttable = $G("J_sorttable"),
-    autoSizeContent = $G("J_autoSizeContent"),
-    autoSizePage = $G("J_autoSizePage"),
-    tone = $G("J_tone"),
-    me,
-    preview = $G("J_preview");
+  var title = $G("J_title");
+  var titleCol = $G("J_titleCol");
+  var caption = $G("J_caption");
+  var sorttable = $G("J_sorttable");
+  var autoSizeContent = $G("J_autoSizeContent");
+  var autoSizePage = $G("J_autoSizePage");
+  var tone = $G("J_tone");
+  var me;
+  var preview = $G("J_preview");
 
   var editTable = function() {
     me = this;
@@ -24,19 +24,20 @@
     init: function() {
       var colorPiker = new UE.ui.ColorPicker({
           editor: editor
-        }),
-        colorPop = new UE.ui.Popup({
-          editor: editor,
-          content: colorPiker
         });
+
+      var colorPop = new UE.ui.Popup({
+        editor: editor,
+        content: colorPiker
+      });
 
       title.checked = editor.queryCommandState("inserttitle") == -1;
       titleCol.checked = editor.queryCommandState("inserttitlecol") == -1;
       caption.checked = editor.queryCommandState("insertcaption") == -1;
       sorttable.checked = editor.queryCommandState("enablesort") == 1;
 
-      var enablesortState = editor.queryCommandState("enablesort"),
-        disablesortState = editor.queryCommandState("disablesort");
+      var enablesortState = editor.queryCommandState("enablesort");
+      var disablesortState = editor.queryCommandState("disablesort");
 
       sorttable.checked = !!(enablesortState < 0 && disablesortState >= 0);
       sorttable.disabled = !!(enablesortState < 0 && disablesortState < 0);
@@ -70,8 +71,8 @@
     },
 
     createTable: function(hasTitle, hasTitleCol, hasCaption) {
-      var arr = [],
-        sortSpan = "<span>^</span>";
+      var arr = [];
+      var sortSpan = "<span>^</span>";
       arr.push("<table id='J_example'>");
       if (hasCaption) {
         arr.push("<caption>" + lang.captionName + "</caption>");
@@ -101,10 +102,10 @@
       this.updateSortSpan();
     },
     titleHanler: function() {
-      var example = $G("J_example"),
-        frg = document.createDocumentFragment(),
-        color = domUtils.getComputedStyle(domUtils.getElementsByTagName(example, "td")[0], "border-color"),
-        colCount = example.rows[0].children.length;
+      var example = $G("J_example");
+      var frg = document.createDocumentFragment();
+      var color = domUtils.getComputedStyle(domUtils.getElementsByTagName(example, "td")[0], "border-color");
+      var colCount = example.rows[0].children.length;
 
       if (title.checked) {
         example.insertRow(0);
@@ -121,10 +122,10 @@
       me.updateSortSpan();
     },
     titleColHanler: function() {
-      var example = $G("J_example"),
-        color = domUtils.getComputedStyle(domUtils.getElementsByTagName(example, "td")[0], "border-color"),
-        colArr = example.rows,
-        colCount = colArr.length;
+      var example = $G("J_example");
+      var color = domUtils.getComputedStyle(domUtils.getElementsByTagName(example, "td")[0], "border-color");
+      var colArr = example.rows;
+      var colCount = colArr.length;
 
       if (titleCol.checked) {
         for (var i = 0, node; i < colCount; i++) {
@@ -166,8 +167,8 @@
       example.setAttribute("width", "100%");
     },
     updateSortSpan: function() {
-      var example = $G("J_example"),
-        row = example.rows[0];
+      var example = $G("J_example");
+      var row = example.rows[0];
 
       var spans = domUtils.getElementsByTagName(example, "span");
       utils.each(spans, function(span) {
@@ -182,18 +183,19 @@
       }
     },
     getColor: function() {
-      var start = editor.selection.getStart(),
-        color,
-        cell = domUtils.findParentByTagName(start, ["td", "th", "caption"], true);
+      var start = editor.selection.getStart();
+      var color;
+      var cell = domUtils.findParentByTagName(start, ["td", "th", "caption"], true);
       color = cell && domUtils.getComputedStyle(cell, "border-color");
       if (!color) color = "#DDDDDD";
       return color;
     },
     setColor: function(color) {
-      var example = $G("J_example"),
-        arr = domUtils
-          .getElementsByTagName(example, "td")
-          .concat(domUtils.getElementsByTagName(example, "th"), domUtils.getElementsByTagName(example, "caption"));
+      var example = $G("J_example");
+
+      var arr = domUtils
+        .getElementsByTagName(example, "td")
+        .concat(domUtils.getElementsByTagName(example, "th"), domUtils.getElementsByTagName(example, "caption"));
 
       tone.value = color;
       utils.each(arr, function(node) {
@@ -220,8 +222,8 @@
     };
     editor.fireEvent("saveScene");
     for (var i in checks) {
-      var cmds = checks[i].split(" "),
-        input = $G("J_" + i);
+      var cmds = checks[i].split(" ");
+      var input = $G("J_" + i);
       if (input["checked"]) {
         editor.queryCommandState(cmds[0]) != -1 && editor.execCommand(cmds[0]);
       } else {

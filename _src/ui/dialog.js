@@ -3,41 +3,43 @@
 ///import ui/mask.js
 ///import ui/button.js
 (function() {
-  var utils = baidu.editor.utils,
-    domUtils = baidu.editor.dom.domUtils,
-    uiUtils = baidu.editor.ui.uiUtils,
-    Mask = baidu.editor.ui.Mask,
-    UIBase = baidu.editor.ui.UIBase,
-    Button = baidu.editor.ui.Button,
-    Dialog = (baidu.editor.ui.Dialog = function(options) {
-      if (options.name) {
-        var name = options.name;
-        var cssRules = options.cssRules;
-        if (!options.className) {
-          options.className = "edui-for-" + name;
-        }
-        if (cssRules) {
-          options.cssRules = ".edui-for-" + name + " .edui-dialog-content  {" + cssRules + "}";
-        }
+  var utils = baidu.editor.utils;
+  var domUtils = baidu.editor.dom.domUtils;
+  var uiUtils = baidu.editor.ui.uiUtils;
+  var Mask = baidu.editor.ui.Mask;
+  var UIBase = baidu.editor.ui.UIBase;
+  var Button = baidu.editor.ui.Button;
+
+  var Dialog = (baidu.editor.ui.Dialog = function(options) {
+    if (options.name) {
+      var name = options.name;
+      var cssRules = options.cssRules;
+      if (!options.className) {
+        options.className = "edui-for-" + name;
       }
-      this.initOptions(
-        utils.extend(
-          {
-            autoReset: true,
-            draggable: true,
-            onok: function() {},
-            oncancel: function() {},
-            onclose: function(t, ok) {
-              return ok ? this.onok() : this.oncancel();
-            },
-            //是否控制dialog中的scroll事件， 默认为不阻止
-            holdScroll: false
+      if (cssRules) {
+        options.cssRules = ".edui-for-" + name + " .edui-dialog-content  {" + cssRules + "}";
+      }
+    }
+    this.initOptions(
+      utils.extend(
+        {
+          autoReset: true,
+          draggable: true,
+          onok: function() {},
+          oncancel: function() {},
+          onclose: function(t, ok) {
+            return ok ? this.onok() : this.oncancel();
           },
-          options
-        )
-      );
-      this.initDialog();
-    });
+          //是否控制dialog中的scroll事件， 默认为不阻止
+          holdScroll: false
+        },
+        options
+      )
+    );
+    this.initDialog();
+  });
+
   var modalMask;
   var dragMask;
   var activeDialog;
@@ -45,8 +47,8 @@
     draggable: false,
     uiName: "dialog",
     initDialog: function() {
-      var me = this,
-        theme = this.editor.options.theme;
+      var me = this;
+      var theme = this.editor.options.theme;
       if (this.cssRules) {
         this.cssRules = ".edui-" + theme + " " + this.cssRules;
         utils.cssRule("edui-customize-" + this.name + "-style", this.cssRules);
@@ -109,11 +111,11 @@
         me.__resizeTimer = window.setTimeout(function() {
           me.__resizeTimer = null;
 
-          var dialogWrapNode = me.getDom(),
-            contentNode = me.getDom("content"),
-            wrapRect = UE.ui.uiUtils.getClientRect(dialogWrapNode),
-            contentRect = UE.ui.uiUtils.getClientRect(contentNode),
-            vpRect = uiUtils.getViewportRect();
+          var dialogWrapNode = me.getDom();
+          var contentNode = me.getDom("content");
+          var wrapRect = UE.ui.uiUtils.getClientRect(dialogWrapNode);
+          var contentRect = UE.ui.uiUtils.getClientRect(contentNode);
+          var vpRect = uiUtils.getViewportRect();
 
           contentNode.style.width = vpRect.width - wrapRect.width + contentRect.width + "px";
           contentNode.style.height = vpRect.height - wrapRect.height + contentRect.height + "px";
@@ -170,13 +172,13 @@
           popEl.className += " edui-state-centered";
         }
       } else {
-        var dialogWrapNode = this.getDom(),
-          contentNode = this.getDom("content");
+        var dialogWrapNode = this.getDom();
+        var contentNode = this.getDom("content");
 
         dialogWrapNode.style.display = "block";
 
-        var wrapRect = UE.ui.uiUtils.getClientRect(dialogWrapNode),
-          contentRect = UE.ui.uiUtils.getClientRect(contentNode);
+        var wrapRect = UE.ui.uiUtils.getClientRect(dialogWrapNode);
+        var contentRect = UE.ui.uiUtils.getClientRect(contentNode);
         dialogWrapNode.style.left = "-100000px";
 
         contentNode.style.width = vpRect.width - wrapRect.width + contentRect.width + "px";

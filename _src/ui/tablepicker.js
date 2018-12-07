@@ -1,9 +1,9 @@
 ///import core
 ///import uicore
 (function() {
-  var utils = baidu.editor.utils,
-    uiUtils = baidu.editor.ui.uiUtils,
-    UIBase = baidu.editor.ui.UIBase;
+  var utils = baidu.editor.utils;
+  var uiUtils = baidu.editor.ui.uiUtils;
+  var UIBase = baidu.editor.ui.UIBase;
 
   var TablePicker = (baidu.editor.ui.TablePicker = function(options) {
     this.initOptions(options);

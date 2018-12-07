@@ -3,17 +3,18 @@
 ///import ui\popup.js
 ///import ui\stateful.js
 (function() {
-  var utils = baidu.editor.utils,
-    domUtils = baidu.editor.dom.domUtils,
-    uiUtils = baidu.editor.ui.uiUtils,
-    UIBase = baidu.editor.ui.UIBase,
-    Popup = baidu.editor.ui.Popup,
-    Stateful = baidu.editor.ui.Stateful,
-    CellAlignPicker = baidu.editor.ui.CellAlignPicker,
-    Menu = (baidu.editor.ui.Menu = function(options) {
-      this.initOptions(options);
-      this.initMenu();
-    });
+  var utils = baidu.editor.utils;
+  var domUtils = baidu.editor.dom.domUtils;
+  var uiUtils = baidu.editor.ui.uiUtils;
+  var UIBase = baidu.editor.ui.UIBase;
+  var Popup = baidu.editor.ui.Popup;
+  var Stateful = baidu.editor.ui.Stateful;
+  var CellAlignPicker = baidu.editor.ui.CellAlignPicker;
+
+  var Menu = (baidu.editor.ui.Menu = function(options) {
+    this.initOptions(options);
+    this.initMenu();
+  });
 
   var menuSeparator = {
     renderHtml: function() {

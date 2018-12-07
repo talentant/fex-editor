@@ -1,13 +1,14 @@
 ///import core
 ///import uicore
 (function() {
-  var utils = baidu.editor.utils,
-    domUtils = baidu.editor.dom.domUtils,
-    UIBase = baidu.editor.ui.UIBase,
-    Message = (baidu.editor.ui.Message = function(options) {
-      this.initOptions(options);
-      this.initMessage();
-    });
+  var utils = baidu.editor.utils;
+  var domUtils = baidu.editor.dom.domUtils;
+  var UIBase = baidu.editor.ui.UIBase;
+
+  var Message = (baidu.editor.ui.Message = function(options) {
+    this.initOptions(options);
+    this.initMessage();
+  });
 
   Message.prototype = {
     initMessage: function() {
@@ -41,8 +42,8 @@
       me.show();
     },
     postRender: function() {
-      var me = this,
-        closer = this.getDom("closer");
+      var me = this;
+      var closer = this.getDom("closer");
       closer &&
         domUtils.on(closer, "click", function() {
           me.hide();

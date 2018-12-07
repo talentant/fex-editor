@@ -3,9 +3,9 @@ UE.parse.register("charts", function(utils) {
     "chartsContainerHeight",
     ".edui-chart-container { height:" + (this.chartContainerHeight || 300) + "px}"
   );
-  var resourceRoot = this.rootPath,
-    containers = this.root,
-    sources = null;
+  var resourceRoot = this.rootPath;
+  var containers = this.root;
+  var sources = null;
 
   //不存在指定的根路径， 则直接退出
   if (!resourceRoot) {
@@ -28,8 +28,8 @@ UE.parse.register("charts", function(utils) {
    * 提取数据
    */
   function extractChartData(rootNode) {
-    var data = [],
-      tables = rootNode.getElementsByTagName("table");
+    var data = [];
+    var tables = rootNode.getElementsByTagName("table");
 
     for (var i = 0, tableNode; (tableNode = tables[i]); i++) {
       if (tableNode.getAttribute("data-chart") !== null) {
@@ -41,9 +41,9 @@ UE.parse.register("charts", function(utils) {
   }
 
   function formatData(tableNode) {
-    var meta = tableNode.getAttribute("data-chart"),
-      metaConfig = {},
-      data = [];
+    var meta = tableNode.getAttribute("data-chart");
+    var metaConfig = {};
+    var data = [];
 
     //提取table数据
     for (var i = 0, row; (row = tableNode.rows[i]); i++) {
@@ -134,9 +134,9 @@ UE.parse.register("charts", function(utils) {
 
   //渲染图表
   function render() {
-    var config = null,
-      chartConfig = null,
-      container = null;
+    var config = null;
+    var chartConfig = null;
+    var container = null;
 
     for (var i = 0, len = sources.length; i < len; i++) {
       config = sources[i];
@@ -220,12 +220,14 @@ UE.parse.register("charts", function(utils) {
 
   //根据config解析出正确的类别和图表数据信息
   function analysisConfig(config) {
-    var series = [],
-      //数据类别
-      categories = [],
-      result = [],
-      data = config.data,
-      meta = config.meta;
+    var series = [];
+
+    var //数据类别
+    categories = [];
+
+    var result = [];
+    var data = config.data;
+    var meta = config.meta;
 
     //数据对齐方式为相反的方式， 需要反转数据
     if (meta.dataFormat != "1") {

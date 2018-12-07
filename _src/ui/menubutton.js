@@ -3,13 +3,15 @@
 ///import ui/menu.js
 ///import ui/splitbutton.js
 (function() {
-  var utils = baidu.editor.utils,
-    Menu = baidu.editor.ui.Menu,
-    SplitButton = baidu.editor.ui.SplitButton,
-    MenuButton = (baidu.editor.ui.MenuButton = function(options) {
-      this.initOptions(options);
-      this.initMenuButton();
-    });
+  var utils = baidu.editor.utils;
+  var Menu = baidu.editor.ui.Menu;
+  var SplitButton = baidu.editor.ui.SplitButton;
+
+  var MenuButton = (baidu.editor.ui.MenuButton = function(options) {
+    this.initOptions(options);
+    this.initMenuButton();
+  });
+
   MenuButton.prototype = {
     initMenuButton: function() {
       var me = this;

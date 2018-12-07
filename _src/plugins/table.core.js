@@ -57,10 +57,10 @@
   UETable.getTableCellAlignState = function(cells) {
     !utils.isArray(cells) && (cells = [cells]);
 
-    var result = {},
-      status = ["align", "valign"],
-      tempStatus = null,
-      isSame = true; //状态是否相同
+    var result = {}; //状态是否相同
+    var status = ["align", "valign"];
+    var tempStatus = null;
+    var isSame = true;
 
     utils.each(cells, function(cellNode) {
       utils.each(status, function(currentState) {
@@ -93,10 +93,11 @@
     }
 
     //在table或者td边缘有可能存在选中tr的情况
-    var cell = start && domUtils.findParentByTagName(start, ["td", "th"], true),
-      tr = cell && cell.parentNode,
-      table = tr && domUtils.findParentByTagName(tr, ["table"]),
-      caption = table && table.getElementsByTagName("caption")[0];
+    var cell = start && domUtils.findParentByTagName(start, ["td", "th"], true);
+
+    var tr = cell && cell.parentNode;
+    var table = tr && domUtils.findParentByTagName(tr, ["table"]);
+    var caption = table && table.getElementsByTagName("caption")[0];
 
     return {
       cell: cell,
@@ -118,11 +119,12 @@
         thin: "0px",
         medium: "1px",
         thick: "2px"
-      },
-      tableBorder,
-      tdPadding,
-      tdBorder,
-      tmpValue;
+      };
+
+    var tableBorder;
+    var tdPadding;
+    var tdBorder;
+    var tmpValue;
     if (!table) {
       table = editor.document.createElement("table");
       table.insertRow(0).insertCell(0).innerHTML = "xxx";
@@ -197,8 +199,8 @@
 
   UETable.prototype = {
     getMaxRows: function() {
-      var rows = this.table.rows,
-        maxLen = 1;
+      var rows = this.table.rows;
+      var maxLen = 1;
       for (var i = 0, row; (row = rows[i]); i++) {
         var currentMax = 1;
         for (var j = 0, cj; (cj = row.cells[j++]); ) {
@@ -212,9 +214,9 @@
      * 获取当前表格的最大列数
      */
     getMaxCols: function() {
-      var rows = this.table.rows,
-        maxLen = 0,
-        cellRows = {};
+      var rows = this.table.rows;
+      var maxLen = 0;
+      var cellRows = {};
       for (var i = 0, row; (row = rows[i]); i++) {
         var cellsNum = 0;
         for (var j = 0, cj; (cj = row.cells[j++]); ) {
@@ -242,11 +244,11 @@
      */
     getHSideCell: function(cell, right) {
       try {
-        var cellInfo = this.getCellInfo(cell),
-          previewRowIndex,
-          previewColIndex;
-        var len = this.selectedTds.length,
-          range = this.cellsRange;
+        var cellInfo = this.getCellInfo(cell);
+        var previewRowIndex;
+        var previewColIndex;
+        var len = this.selectedTds.length;
+        var range = this.cellsRange;
         //首行或者首列没有前置单元格
         if (
           (!right && (!len ? !cellInfo.colIndex : !range.beginColIndex)) ||
@@ -273,10 +275,10 @@
       }
     },
     getTabNextCell: function(cell, preRowIndex) {
-      var cellInfo = this.getCellInfo(cell),
-        rowIndex = preRowIndex || cellInfo.rowIndex,
-        colIndex = cellInfo.colIndex + 1 + (cellInfo.colSpan - 1),
-        nextCell;
+      var cellInfo = this.getCellInfo(cell);
+      var rowIndex = preRowIndex || cellInfo.rowIndex;
+      var colIndex = cellInfo.colIndex + 1 + (cellInfo.colSpan - 1);
+      var nextCell;
       try {
         nextCell = this.getCell(
           this.indexTable[rowIndex][colIndex].rowIndex,
@@ -301,11 +303,11 @@
      */
     getVSideCell: function(cell, bottom, ignoreRange) {
       try {
-        var cellInfo = this.getCellInfo(cell),
-          nextRowIndex,
-          nextColIndex;
-        var len = this.selectedTds.length && !ignoreRange,
-          range = this.cellsRange;
+        var cellInfo = this.getCellInfo(cell);
+        var nextRowIndex;
+        var nextColIndex;
+        var len = this.selectedTds.length && !ignoreRange;
+        var range = this.cellsRange;
         //末行或者末列没有后置单元格
         if (
           (!bottom && cellInfo.rowIndex == 0) ||
@@ -335,11 +337,11 @@
      */
     getSameEndPosCells: function(cell, xOrY) {
       try {
-        var flag = xOrY.toLowerCase() === "x",
-          end = domUtils.getXY(cell)[flag ? "x" : "y"] + cell["offset" + (flag ? "Width" : "Height")],
-          rows = this.table.rows,
-          cells = null,
-          returns = [];
+        var flag = xOrY.toLowerCase() === "x";
+        var end = domUtils.getXY(cell)[flag ? "x" : "y"] + cell["offset" + (flag ? "Width" : "Height")];
+        var rows = this.table.rows;
+        var cells = null;
+        var returns = [];
         for (var i = 0; i < this.rowsNum; i++) {
           cells = rows[i].cells;
           for (var j = 0, tmpCell; (tmpCell = cells[j++]); ) {
@@ -370,10 +372,10 @@
      */
     getSameStartPosXCells: function(cell) {
       try {
-        var start = domUtils.getXY(cell).x + cell.offsetWidth,
-          rows = this.table.rows,
-          cells,
-          returns = [];
+        var start = domUtils.getXY(cell).x + cell.offsetWidth;
+        var rows = this.table.rows;
+        var cells;
+        var returns = [];
         for (var i = 0; i < this.rowsNum; i++) {
           cells = rows[i].cells;
           for (var j = 0, tmpCell; (tmpCell = cells[j++]); ) {
@@ -398,10 +400,10 @@
       this.selectedTds = [];
       this.cellsRange = {};
       this.indexTable = [];
-      var rows = this.table.rows,
-        rowsNum = this.getMaxRows(),
-        dNum = rowsNum - rows.length,
-        colsNum = this.getMaxCols();
+      var rows = this.table.rows;
+      var rowsNum = this.getMaxRows();
+      var dNum = rowsNum - rows.length;
+      var colsNum = this.getMaxCols();
       while (dNum--) {
         this.table.insertRow(rows.length);
       }
@@ -417,9 +419,9 @@
           if (cell.rowSpan > rowsNum) {
             cell.rowSpan = rowsNum;
           }
-          var colIndex = cellIndex,
-            rowSpan = cell.rowSpan || 1,
-            colSpan = cell.colSpan || 1;
+          var colIndex = cellIndex;
+          var rowSpan = cell.rowSpan || 1;
+          var colSpan = cell.colSpan || 1;
           //当已经被上一行rowSpan或者被前一列colSpan了，则跳到下一个单元格进行
           while (this.indexTable[rowIndex][colIndex]) colIndex++;
           for (var j = 0; j < rowSpan; j++) {
@@ -456,19 +458,21 @@
           }
         }
       }
+
       //当框选后删除行或者列后撤销，需要重建选区。
-      var tds = domUtils.getElementsByTagName(this.table, "td"),
-        selectTds = [];
+      var tds = domUtils.getElementsByTagName(this.table, "td");
+
+      var selectTds = [];
       utils.each(tds, function(td) {
         if (domUtils.hasClass(td, "selectTdClass")) {
           selectTds.push(td);
         }
       });
       if (selectTds.length) {
-        var start = selectTds[0],
-          end = selectTds[selectTds.length - 1],
-          startInfo = this.getCellInfo(start),
-          endInfo = this.getCellInfo(end);
+        var start = selectTds[0];
+        var end = selectTds[selectTds.length - 1];
+        var startInfo = this.getCellInfo(start);
+        var endInfo = this.getCellInfo(end);
         this.selectedTds = selectTds;
         this.cellsRange = {
           beginRowIndex: startInfo.rowIndex,
@@ -490,10 +494,10 @@
      */
     getCellInfo: function(cell) {
       if (!cell) return;
-      var cellIndex = cell.cellIndex,
-        rowIndex = cell.parentNode.rowIndex,
-        rowInfo = this.indexTable[rowIndex],
-        numCols = this.colsNum;
+      var cellIndex = cell.cellIndex;
+      var rowIndex = cell.parentNode.rowIndex;
+      var rowInfo = this.indexTable[rowIndex];
+      var numCols = this.colsNum;
       for (var colIndex = cellIndex; colIndex < numCols; colIndex++) {
         var cellInfo = rowInfo[colIndex];
         if (cellInfo.rowIndex === rowIndex && cellInfo.cellIndex === cellIndex) {
@@ -520,13 +524,13 @@
      */
     getCellsRange: function(cellA, cellB) {
       function checkRange(beginRowIndex, beginColIndex, endRowIndex, endColIndex) {
-        var tmpBeginRowIndex = beginRowIndex,
-          tmpBeginColIndex = beginColIndex,
-          tmpEndRowIndex = endRowIndex,
-          tmpEndColIndex = endColIndex,
-          cellInfo,
-          colIndex,
-          rowIndex;
+        var tmpBeginRowIndex = beginRowIndex;
+        var tmpBeginColIndex = beginColIndex;
+        var tmpEndRowIndex = endRowIndex;
+        var tmpEndColIndex = endColIndex;
+        var cellInfo;
+        var colIndex;
+        var rowIndex;
         // 通过indexTable检查是否存在超出TableRange上边界的情况
         if (beginRowIndex > 0) {
           for (colIndex = beginColIndex; colIndex < endColIndex; colIndex++) {
@@ -587,8 +591,8 @@
       }
 
       try {
-        var me = this,
-          cellAInfo = me.getCellInfo(cellA);
+        var me = this;
+        var cellAInfo = me.getCellInfo(cellA);
         if (cellA === cellB) {
           return {
             beginRowIndex: cellAInfo.rowIndex,
@@ -598,17 +602,21 @@
           };
         }
         var cellBInfo = me.getCellInfo(cellB);
+
         // 计算TableRange的四个边
-        var beginRowIndex = Math.min(cellAInfo.rowIndex, cellBInfo.rowIndex),
-          beginColIndex = Math.min(cellAInfo.colIndex, cellBInfo.colIndex),
-          endRowIndex = Math.max(
-            cellAInfo.rowIndex + cellAInfo.rowSpan - 1,
-            cellBInfo.rowIndex + cellBInfo.rowSpan - 1
-          ),
-          endColIndex = Math.max(
-            cellAInfo.colIndex + cellAInfo.colSpan - 1,
-            cellBInfo.colIndex + cellBInfo.colSpan - 1
-          );
+        var beginRowIndex = Math.min(cellAInfo.rowIndex, cellBInfo.rowIndex);
+
+        var beginColIndex = Math.min(cellAInfo.colIndex, cellBInfo.colIndex);
+
+        var endRowIndex = Math.max(
+          cellAInfo.rowIndex + cellAInfo.rowSpan - 1,
+          cellBInfo.rowIndex + cellBInfo.rowSpan - 1
+        );
+
+        var endColIndex = Math.max(
+          cellAInfo.colIndex + cellAInfo.colSpan - 1,
+          cellBInfo.colIndex + cellBInfo.colSpan - 1
+        );
 
         return checkRange(beginRowIndex, beginColIndex, endRowIndex, endColIndex);
       } catch (e) {
@@ -621,15 +629,15 @@
     getCells: function(range) {
       //每次获取cells之前必须先清除上次的选择，否则会对后续获取操作造成影响
       this.clearSelected();
-      var beginRowIndex = range.beginRowIndex,
-        beginColIndex = range.beginColIndex,
-        endRowIndex = range.endRowIndex,
-        endColIndex = range.endColIndex,
-        cellInfo,
-        rowIndex,
-        colIndex,
-        tdHash = {},
-        returnTds = [];
+      var beginRowIndex = range.beginRowIndex;
+      var beginColIndex = range.beginColIndex;
+      var endRowIndex = range.endRowIndex;
+      var endColIndex = range.endColIndex;
+      var cellInfo;
+      var rowIndex;
+      var colIndex;
+      var tdHash = {};
+      var returnTds = [];
       for (var i = beginRowIndex; i <= endRowIndex; i++) {
         for (var j = beginColIndex; j <= endColIndex; j++) {
           cellInfo = this.indexTable[i][j];
@@ -674,10 +682,10 @@
       return range.endColIndex - range.beginColIndex + 1 == this.colsNum;
     },
     isFullCol: function() {
-      var range = this.cellsRange,
-        table = this.table,
-        ths = table.getElementsByTagName("th"),
-        rows = range.endRowIndex - range.beginRowIndex + 1;
+      var range = this.cellsRange;
+      var table = this.table;
+      var ths = table.getElementsByTagName("th");
+      var rows = range.endRowIndex - range.beginRowIndex + 1;
       return !ths.length ? rows == this.rowsNum : rows == this.rowsNum || rows == this.rowsNum - 1;
     },
     /**
@@ -687,11 +695,11 @@
      */
     getNextCell: function(cell, bottom, ignoreRange) {
       try {
-        var cellInfo = this.getCellInfo(cell),
-          nextRowIndex,
-          nextColIndex;
-        var len = this.selectedTds.length && !ignoreRange,
-          range = this.cellsRange;
+        var cellInfo = this.getCellInfo(cell);
+        var nextRowIndex;
+        var nextColIndex;
+        var len = this.selectedTds.length && !ignoreRange;
+        var range = this.cellsRange;
         //末行或者末列没有后置单元格
         if (
           (!bottom && cellInfo.rowIndex == 0) ||
@@ -718,11 +726,11 @@
     },
     getPreviewCell: function(cell, top) {
       try {
-        var cellInfo = this.getCellInfo(cell),
-          previewRowIndex,
-          previewColIndex;
-        var len = this.selectedTds.length,
-          range = this.cellsRange;
+        var cellInfo = this.getCellInfo(cell);
+        var previewRowIndex;
+        var previewColIndex;
+        var len = this.selectedTds.length;
+        var range = this.cellsRange;
         //首行或者首列没有前置单元格
         if (
           (!top && (!len ? !cellInfo.colIndex : !range.beginColIndex)) ||
@@ -777,10 +785,10 @@
      * 向右合并单元格
      */
     mergeRight: function(cell) {
-      var cellInfo = this.getCellInfo(cell),
-        rightColIndex = cellInfo.colIndex + cellInfo.colSpan,
-        rightCellInfo = this.indexTable[cellInfo.rowIndex][rightColIndex],
-        rightCell = this.getCell(rightCellInfo.rowIndex, rightCellInfo.cellIndex);
+      var cellInfo = this.getCellInfo(cell);
+      var rightColIndex = cellInfo.colIndex + cellInfo.colSpan;
+      var rightCellInfo = this.indexTable[cellInfo.rowIndex][rightColIndex];
+      var rightCell = this.getCell(rightCellInfo.rowIndex, rightCellInfo.cellIndex);
       //合并
       cell.colSpan = cellInfo.colSpan + rightCellInfo.colSpan;
       //被合并的单元格不应存在宽度属性
@@ -795,10 +803,10 @@
      * 向下合并单元格
      */
     mergeDown: function(cell) {
-      var cellInfo = this.getCellInfo(cell),
-        downRowIndex = cellInfo.rowIndex + cellInfo.rowSpan,
-        downCellInfo = this.indexTable[downRowIndex][cellInfo.colIndex],
-        downCell = this.getCell(downCellInfo.rowIndex, downCellInfo.cellIndex);
+      var cellInfo = this.getCellInfo(cell);
+      var downRowIndex = cellInfo.rowIndex + cellInfo.rowSpan;
+      var downCellInfo = this.indexTable[downRowIndex][cellInfo.colIndex];
+      var downCell = this.getCell(downCellInfo.rowIndex, downCellInfo.cellIndex);
       cell.rowSpan = cellInfo.rowSpan + downCellInfo.rowSpan;
       cell.removeAttribute("height");
       this.moveContent(cell, downCell);
@@ -810,11 +818,12 @@
      */
     mergeRange: function() {
       //由于合并操作可以在任意时刻进行，所以无法通过鼠标位置等信息实时生成range，只能通过缓存实例中的cellsRange对象来访问
-      var range = this.cellsRange,
-        leftTopCell = this.getCell(
-          range.beginRowIndex,
-          this.indexTable[range.beginRowIndex][range.beginColIndex].cellIndex
-        );
+      var range = this.cellsRange;
+
+      var leftTopCell = this.getCell(
+        range.beginRowIndex,
+        this.indexTable[range.beginRowIndex][range.beginColIndex].cellIndex
+      );
 
       // 这段关于行表头或者列表头的特殊处理会导致表头合并范围错误
       // 为什么有这段代码的原因未明，暂且注释掉，希望原作者看到后出面说明下
@@ -872,17 +881,17 @@
      * 插入一行单元格
      */
     insertRow: function(rowIndex, sourceCell) {
-      var numCols = this.colsNum,
-        table = this.table,
-        row = table.insertRow(rowIndex),
-        cell,
-        thead = null,
-        isInsertTitle = typeof sourceCell == "string" && sourceCell.toUpperCase() == "TH";
+      var numCols = this.colsNum;
+      var table = this.table;
+      var row = table.insertRow(rowIndex);
+      var cell;
+      var thead = null;
+      var isInsertTitle = typeof sourceCell == "string" && sourceCell.toUpperCase() == "TH";
 
       function replaceTdToTh(colIndex, cell, tableRow) {
         if (colIndex == 0) {
-          var tr = tableRow.nextSibling || tableRow.previousSibling,
-            th = tr.cells[colIndex];
+          var tr = tableRow.nextSibling || tableRow.previousSibling;
+          var th = tr.cells[colIndex];
           if (th.tagName == "TH") {
             th = cell.ownerDocument.createElement("th");
             th.appendChild(cell.firstChild);
@@ -914,8 +923,8 @@
           thead.insertBefore(row, thead.firstChild);
         }
       } else {
-        var infoRow = this.indexTable[rowIndex],
-          cellIndex = 0;
+        var infoRow = this.indexTable[rowIndex];
+        var cellIndex = 0;
         for (colIndex = 0; colIndex < numCols; colIndex++) {
           var cellInfo = infoRow[colIndex];
           //如果存在某个单元格的rowspan穿过待插入行的位置，则修改该单元格的rowspan即可，无需插入单元格
@@ -939,23 +948,23 @@
      * @param rowIndex
      */
     deleteRow: function(rowIndex) {
-      var row = this.table.rows[rowIndex],
-        infoRow = this.indexTable[rowIndex],
-        colsNum = this.colsNum,
-        count = 0; //处理计数
+      var row = this.table.rows[rowIndex]; //处理计数
+      var infoRow = this.indexTable[rowIndex];
+      var colsNum = this.colsNum;
+      var count = 0;
       for (var colIndex = 0; colIndex < colsNum; ) {
-        var cellInfo = infoRow[colIndex],
-          cell = this.getCell(cellInfo.rowIndex, cellInfo.cellIndex);
+        var cellInfo = infoRow[colIndex];
+        var cell = this.getCell(cellInfo.rowIndex, cellInfo.cellIndex);
         if (cell.rowSpan > 1) {
           if (cellInfo.rowIndex == rowIndex) {
             var clone = cell.cloneNode(true);
             clone.rowSpan = cell.rowSpan - 1;
             clone.innerHTML = "";
             cell.rowSpan = 1;
-            var nextRowIndex = rowIndex + 1,
-              nextRow = this.table.rows[nextRowIndex],
-              insertCellIndex,
-              preMerged = this.getPreviewMergedCellsNum(nextRowIndex, colIndex) - count;
+            var nextRowIndex = rowIndex + 1;
+            var nextRow = this.table.rows[nextRowIndex];
+            var insertCellIndex;
+            var preMerged = this.getPreviewMergedCellsNum(nextRowIndex, colIndex) - count;
             if (preMerged < colIndex) {
               insertCellIndex = colIndex - preMerged - 1;
               //nextRow.insertCell(insertCellIndex);
@@ -969,12 +978,12 @@
         }
         colIndex += cell.colSpan || 1;
       }
-      var deleteTds = [],
-        cacheMap = {};
+      var deleteTds = [];
+      var cacheMap = {};
       for (colIndex = 0; colIndex < colsNum; colIndex++) {
-        var tmpRowIndex = infoRow[colIndex].rowIndex,
-          tmpCellIndex = infoRow[colIndex].cellIndex,
-          key = tmpRowIndex + "_" + tmpCellIndex;
+        var tmpRowIndex = infoRow[colIndex].rowIndex;
+        var tmpCellIndex = infoRow[colIndex].cellIndex;
+        var key = tmpRowIndex + "_" + tmpCellIndex;
         if (cacheMap[key]) continue;
         cacheMap[key] = 1;
         cell = this.getCell(tmpRowIndex, tmpCellIndex);
@@ -997,15 +1006,17 @@
       this.update();
     },
     insertCol: function(colIndex, sourceCell, defaultValue) {
-      var rowsNum = this.rowsNum,
-        rowIndex = 0,
-        tableRow,
-        cell,
-        backWidth = parseInt(
-          (this.table.offsetWidth - (this.colsNum + 1) * 20 - (this.colsNum + 1)) / (this.colsNum + 1),
-          10
-        ),
-        isInsertTitleCol = typeof sourceCell == "string" && sourceCell.toUpperCase() == "TH";
+      var rowsNum = this.rowsNum;
+      var rowIndex = 0;
+      var tableRow;
+      var cell;
+
+      var backWidth = parseInt(
+        (this.table.offsetWidth - (this.colsNum + 1) * 20 - (this.colsNum + 1)) / (this.colsNum + 1),
+        10
+      );
+
+      var isInsertTitleCol = typeof sourceCell == "string" && sourceCell.toUpperCase() == "TH";
 
       function replaceTdToTh(rowIndex, cell, tableRow) {
         if (rowIndex == 0) {
@@ -1067,8 +1078,8 @@
       this.updateWidth(backWidth, defaultValue || {tdPadding: 10, tdBorder: 1});
     },
     updateWidth: function(width, defaultValue) {
-      var table = this.table,
-        tmpWidth = UETable.getWidth(table) - defaultValue.tdPadding * 2 - defaultValue.tdBorder + width;
+      var table = this.table;
+      var tmpWidth = UETable.getWidth(table) - defaultValue.tdPadding * 2 - defaultValue.tdBorder + width;
       if (tmpWidth < table.ownerDocument.body.offsetWidth) {
         table.setAttribute("width", tmpWidth);
         return;
@@ -1079,16 +1090,16 @@
       });
     },
     deleteCol: function(colIndex) {
-      var indexTable = this.indexTable,
-        tableRows = this.table.rows,
-        backTableWidth = this.table.getAttribute("width"),
-        backTdWidth = 0,
-        rowsNum = this.rowsNum,
-        cacheMap = {};
+      var indexTable = this.indexTable;
+      var tableRows = this.table.rows;
+      var backTableWidth = this.table.getAttribute("width");
+      var backTdWidth = 0;
+      var rowsNum = this.rowsNum;
+      var cacheMap = {};
       for (var rowIndex = 0; rowIndex < rowsNum; ) {
-        var infoRow = indexTable[rowIndex],
-          cellInfo = infoRow[colIndex],
-          key = cellInfo.rowIndex + "_" + cellInfo.colIndex;
+        var infoRow = indexTable[rowIndex];
+        var cellInfo = infoRow[colIndex];
+        var key = cellInfo.rowIndex + "_" + cellInfo.colIndex;
         // 跳过已经处理过的Cell
         if (cacheMap[key]) continue;
         cacheMap[key] = 1;
@@ -1106,25 +1117,25 @@
       this.update();
     },
     splitToCells: function(cell) {
-      var me = this,
-        cells = this.splitToRows(cell);
+      var me = this;
+      var cells = this.splitToRows(cell);
       utils.each(cells, function(cell) {
         me.splitToCols(cell);
       });
     },
     splitToRows: function(cell) {
-      var cellInfo = this.getCellInfo(cell),
-        rowIndex = cellInfo.rowIndex,
-        colIndex = cellInfo.colIndex,
-        results = [];
+      var cellInfo = this.getCellInfo(cell);
+      var rowIndex = cellInfo.rowIndex;
+      var colIndex = cellInfo.colIndex;
+      var results = [];
       // 修改Cell的rowSpan
       cell.rowSpan = 1;
       results.push(cell);
       // 补齐单元格
       for (var i = rowIndex, endRow = rowIndex + cellInfo.rowSpan; i < endRow; i++) {
         if (i == rowIndex) continue;
-        var tableRow = this.table.rows[i],
-          tmpCell = tableRow.insertCell(colIndex - this.getPreviewMergedCellsNum(i, colIndex));
+        var tableRow = this.table.rows[i];
+        var tmpCell = tableRow.insertCell(colIndex - this.getPreviewMergedCellsNum(i, colIndex));
         tmpCell.colSpan = cellInfo.colSpan;
         this.setCellContent(tmpCell);
         tmpCell.setAttribute("vAlign", cell.getAttribute("vAlign"));
@@ -1138,22 +1149,22 @@
       return results;
     },
     getPreviewMergedCellsNum: function(rowIndex, colIndex) {
-      var indexRow = this.indexTable[rowIndex],
-        num = 0;
+      var indexRow = this.indexTable[rowIndex];
+      var num = 0;
       for (var i = 0; i < colIndex; ) {
-        var colSpan = indexRow[i].colSpan,
-          tmpRowIndex = indexRow[i].rowIndex;
+        var colSpan = indexRow[i].colSpan;
+        var tmpRowIndex = indexRow[i].rowIndex;
         num += colSpan - (tmpRowIndex == rowIndex ? 1 : 0);
         i += colSpan;
       }
       return num;
     },
     splitToCols: function(cell) {
-      var backWidth = (cell.offsetWidth / cell.colSpan - 22).toFixed(0),
-        cellInfo = this.getCellInfo(cell),
-        rowIndex = cellInfo.rowIndex,
-        colIndex = cellInfo.colIndex,
-        results = [];
+      var backWidth = (cell.offsetWidth / cell.colSpan - 22).toFixed(0);
+      var cellInfo = this.getCellInfo(cell);
+      var rowIndex = cellInfo.rowIndex;
+      var colIndex = cellInfo.colIndex;
+      var results = [];
       // 修改Cell的rowSpan
       cell.colSpan = 1;
       cell.setAttribute("width", backWidth);
@@ -1161,8 +1172,8 @@
       // 补齐单元格
       for (var j = colIndex, endCol = colIndex + cellInfo.colSpan; j < endCol; j++) {
         if (j == colIndex) continue;
-        var tableRow = this.table.rows[rowIndex],
-          tmpCell = tableRow.insertCell(this.indexTable[rowIndex][j].cellIndex + 1);
+        var tableRow = this.table.rows[rowIndex];
+        var tmpCell = tableRow.insertCell(this.indexTable[rowIndex][j].cellIndex + 1);
         tmpCell.rowSpan = cellInfo.rowSpan;
         this.setCellContent(tmpCell);
         tmpCell.setAttribute("vAlign", cell.getAttribute("vAlign"));
@@ -1194,12 +1205,12 @@
     getLastCell: function(cells) {
       cells = cells || this.table.getElementsByTagName("td");
       var firstInfo = this.getCellInfo(cells[0]);
-      var me = this,
-        last = cells[0],
-        tr = last.parentNode,
-        cellsNum = 0,
-        cols = 0,
-        rows;
+      var me = this;
+      var last = cells[0];
+      var tr = last.parentNode;
+      var cellsNum = 0;
+      var cols = 0;
+      var rows;
       utils.each(cells, function(cell) {
         if (cell.parentNode == tr) cols += cell.colSpan || 1;
         cellsNum += cell.rowSpan * cell.colSpan || 1;
@@ -1214,15 +1225,15 @@
       return last;
     },
     selectRow: function(rowIndex) {
-      var indexRow = this.indexTable[rowIndex],
-        start = this.getCell(indexRow[0].rowIndex, indexRow[0].cellIndex),
-        end = this.getCell(indexRow[this.colsNum - 1].rowIndex, indexRow[this.colsNum - 1].cellIndex),
-        range = this.getCellsRange(start, end);
+      var indexRow = this.indexTable[rowIndex];
+      var start = this.getCell(indexRow[0].rowIndex, indexRow[0].cellIndex);
+      var end = this.getCell(indexRow[this.colsNum - 1].rowIndex, indexRow[this.colsNum - 1].cellIndex);
+      var range = this.getCellsRange(start, end);
       this.setSelected(range);
     },
     selectTable: function() {
-      var tds = this.table.getElementsByTagName("td"),
-        range = this.getCellsRange(tds[0], tds[tds.length - 1]);
+      var tds = this.table.getElementsByTagName("td");
+      var range = this.getCellsRange(tds[0], tds[tds.length - 1]);
       this.setSelected(range);
     },
     setBackground: function(cells, value) {
@@ -1238,12 +1249,14 @@
           },
           value
         );
-        var rowIndex = this.getCellInfo(cells[0]).rowIndex,
-          count = 0,
-          colors = value.colorList,
-          getColor = function(list, index, repeat) {
-            return list[index] ? list[index] : repeat ? list[index % list.length] : "";
-          };
+        var rowIndex = this.getCellInfo(cells[0]).rowIndex;
+        var count = 0;
+        var colors = value.colorList;
+
+        var getColor = function(list, index, repeat) {
+          return list[index] ? list[index] : repeat ? list[index % list.length] : "";
+        };
+
         for (var i = 0, cell; (cell = cells[i++]); ) {
           var cellInfo = this.getCellInfo(cell);
           cell.style.backgroundColor = getColor(

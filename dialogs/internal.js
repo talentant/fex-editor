@@ -44,8 +44,8 @@
       for (var i in lang["static"]) {
         var dom = $G(i);
         if (!dom) continue;
-        var tagName = dom.tagName,
-          content = lang["static"][i];
+        var tagName = dom.tagName;
+        var content = lang["static"][i];
         if (content.src) {
           //clone
           content = utils.extend({}, content, false);

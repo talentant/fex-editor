@@ -20,17 +20,19 @@ UE.plugins["wordcount"] = function() {
   me.addListener("ready", function() {
     var me = this;
     domUtils.on(me.body, "keyup", function(evt) {
-      var code = evt.keyCode || evt.which,
-        //忽略的按键,ctr,alt,shift,方向键
-        ignores = {
-          "16": 1,
-          "18": 1,
-          "20": 1,
-          "37": 1,
-          "38": 1,
-          "39": 1,
-          "40": 1
-        };
+      var code = evt.keyCode || evt.which;
+
+      var //忽略的按键,ctr,alt,shift,方向键
+      ignores = {
+        "16": 1,
+        "18": 1,
+        "20": 1,
+        "37": 1,
+        "38": 1,
+        "39": 1,
+        "40": 1
+      };
+
       if (code in ignores) return;
       clearTimeout(timer);
       timer = setTimeout(function() {

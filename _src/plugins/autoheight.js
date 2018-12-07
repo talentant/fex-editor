@@ -14,11 +14,11 @@ UE.plugins["autoheight"] = function() {
     return;
   }
 
-  var bakOverflow,
-    lastHeight = 0,
-    options = me.options,
-    currentHeight,
-    timer;
+  var bakOverflow;
+  var lastHeight = 0;
+  var options = me.options;
+  var currentHeight;
+  var timer;
 
   function adjustHeight() {
     var me = this;

@@ -1,10 +1,10 @@
 ///import core
 ///import uicore
 (function() {
-  var utils = baidu.editor.utils,
-    Popup = baidu.editor.ui.Popup,
-    Stateful = baidu.editor.ui.Stateful,
-    UIBase = baidu.editor.ui.UIBase;
+  var utils = baidu.editor.utils;
+  var Popup = baidu.editor.ui.Popup;
+  var Stateful = baidu.editor.ui.Stateful;
+  var UIBase = baidu.editor.ui.UIBase;
 
   /**
    * 该参数将新增一个参数： selected， 参数类型为一个Object， 形如{ 'align': 'center', 'valign': 'top' }， 表示单元格的初始
@@ -31,8 +31,9 @@
             right: 2
           },
           count: 3
-        },
-        result = -1;
+        };
+
+      var result = -1;
 
       if (this.selected) {
         this.selectedIndex = status.valign[this.selected.valign] * status.count + status.align[this.selected.align];
@@ -43,11 +44,11 @@
       this.Stateful_init();
     },
     getHtmlTpl: function() {
-      var alignType = ["left", "center", "right"],
-        COUNT = 9,
-        tempClassName = null,
-        tempIndex = -1,
-        tmpl = [];
+      var alignType = ["left", "center", "right"];
+      var COUNT = 9;
+      var tempClassName = null;
+      var tempIndex = -1;
+      var tmpl = [];
 
       for (var i = 0; i < COUNT; i++) {
         tempClassName = this.selectedIndex === i ? ' class="edui-cellalign-selected" ' : "";

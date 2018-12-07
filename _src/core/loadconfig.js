@@ -6,8 +6,8 @@
         me.options.imageUrl &&
           me.setOpt("serverUrl", me.options.imageUrl.replace(/^(.*[\/]).+([\.].+)$/, "$1controller$2"));
 
-        var configUrl = me.getActionUrl("config"),
-          isJsonp = utils.isCrossDomainUrl(configUrl);
+        var configUrl = me.getActionUrl("config");
+        var isJsonp = utils.isCrossDomainUrl(configUrl);
 
         /* 发出ajax请求 */
         me._serverConfigLoaded = false;

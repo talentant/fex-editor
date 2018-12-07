@@ -25,8 +25,8 @@ function clickHandler(tabHeads, tabBodys, obj) {
   //body显隐
   var tabSrc = obj.getAttribute("tabSrc");
   for (var j = 0, length = tabBodys.length; j < length; j++) {
-    var body = tabBodys[j],
-      id = body.getAttribute("id");
+    var body = tabBodys[j];
+    var id = body.getAttribute("id");
     if (id != tabSrc) {
       body.style.zIndex = 1;
     } else {
@@ -40,9 +40,9 @@ function clickHandler(tabHeads, tabBodys, obj) {
  * @param tabParentId  tab的父节点ID或者对象本身
  */
 function switchTab(tabParentId) {
-  var tabElements = $G(tabParentId).children,
-    tabHeads = tabElements[0].children,
-    tabBodys = tabElements[1].children;
+  var tabElements = $G(tabParentId).children;
+  var tabHeads = tabElements[0].children;
+  var tabBodys = tabElements[1].children;
 
   for (var i = 0, length = tabHeads.length; i < length; i++) {
     var head = tabHeads[i];
@@ -62,8 +62,8 @@ function getMatchCase(id) {
 }
 //查找
 $G("nextFindBtn").onclick = function(txt, dir, mcase) {
-  var findtxt = $G("findtxt").value,
-    obj;
+  var findtxt = $G("findtxt").value;
+  var obj;
   if (!findtxt) {
     return false;
   }
@@ -82,8 +82,8 @@ $G("nextFindBtn").onclick = function(txt, dir, mcase) {
   }
 };
 $G("nextReplaceBtn").onclick = function(txt, dir, mcase) {
-  var findtxt = $G("findtxt1").value,
-    obj;
+  var findtxt = $G("findtxt1").value;
+  var obj;
   if (!findtxt) {
     return false;
   }
@@ -95,8 +95,8 @@ $G("nextReplaceBtn").onclick = function(txt, dir, mcase) {
   frCommond(obj);
 };
 $G("preFindBtn").onclick = function(txt, dir, mcase) {
-  var findtxt = $G("findtxt").value,
-    obj;
+  var findtxt = $G("findtxt").value;
+  var obj;
   if (!findtxt) {
     return false;
   }
@@ -110,8 +110,8 @@ $G("preFindBtn").onclick = function(txt, dir, mcase) {
   }
 };
 $G("preReplaceBtn").onclick = function(txt, dir, mcase) {
-  var findtxt = $G("findtxt1").value,
-    obj;
+  var findtxt = $G("findtxt1").value;
+  var obj;
   if (!findtxt) {
     return false;
   }
@@ -125,9 +125,9 @@ $G("preReplaceBtn").onclick = function(txt, dir, mcase) {
 //替换
 $G("repalceBtn").onclick = function() {
   editor.trigger("clearLastSearchResult");
-  var findtxt = $G("findtxt1").value.replace(/^\s|\s$/g, ""),
-    obj,
-    replacetxt = $G("replacetxt").value.replace(/^\s|\s$/g, "");
+  var findtxt = $G("findtxt1").value.replace(/^\s|\s$/g, "");
+  var obj;
+  var replacetxt = $G("replacetxt").value.replace(/^\s|\s$/g, "");
   if (!findtxt) {
     return false;
   }
@@ -144,9 +144,9 @@ $G("repalceBtn").onclick = function() {
 };
 //全部替换
 $G("repalceAllBtn").onclick = function() {
-  var findtxt = $G("findtxt1").value.replace(/^\s|\s$/g, ""),
-    obj,
-    replacetxt = $G("replacetxt").value.replace(/^\s|\s$/g, "");
+  var findtxt = $G("findtxt1").value.replace(/^\s|\s$/g, "");
+  var obj;
+  var replacetxt = $G("replacetxt").value.replace(/^\s|\s$/g, "");
   if (!findtxt) {
     return false;
   }

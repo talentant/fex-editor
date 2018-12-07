@@ -7,14 +7,14 @@
  */
 
 UE.UETable.prototype.sortTable = function(sortByCellIndex, compareFn) {
-  var table = this.table,
-    rows = table.rows,
-    trArray = [],
-    flag = rows[0].cells[0].tagName === "TH",
-    lastRowIndex = 0;
+  var table = this.table;
+  var rows = table.rows;
+  var trArray = [];
+  var flag = rows[0].cells[0].tagName === "TH";
+  var lastRowIndex = 0;
   if (this.selectedTds.length) {
-    var range = this.cellsRange,
-      len = range.endRowIndex + 1;
+    var range = this.cellsRange;
+    var len = range.endRowIndex + 1;
     for (var i = range.beginRowIndex; i < len; i++) {
       trArray[i] = rows[i];
     }
@@ -31,25 +31,25 @@ UE.UETable.prototype.sortTable = function(sortByCellIndex, compareFn) {
       return 1;
     },
     orderbyasc: function(td1, td2) {
-      var value1 = td1.innerText || td1.textContent,
-        value2 = td2.innerText || td2.textContent;
+      var value1 = td1.innerText || td1.textContent;
+      var value2 = td2.innerText || td2.textContent;
       return value1.localeCompare(value2);
     },
     reversebyasc: function(td1, td2) {
-      var value1 = td1.innerHTML,
-        value2 = td2.innerHTML;
+      var value1 = td1.innerHTML;
+      var value2 = td2.innerHTML;
       return value2.localeCompare(value1);
     },
     orderbynum: function(td1, td2) {
-      var value1 = td1[browser.ie ? "innerText" : "textContent"].match(/\d+/),
-        value2 = td2[browser.ie ? "innerText" : "textContent"].match(/\d+/);
+      var value1 = td1[browser.ie ? "innerText" : "textContent"].match(/\d+/);
+      var value2 = td2[browser.ie ? "innerText" : "textContent"].match(/\d+/);
       if (value1) value1 = +value1[0];
       if (value2) value2 = +value2[0];
       return (value1 || 0) - (value2 || 0);
     },
     reversebynum: function(td1, td2) {
-      var value1 = td1[browser.ie ? "innerText" : "textContent"].match(/\d+/),
-        value2 = td2[browser.ie ? "innerText" : "textContent"].match(/\d+/);
+      var value1 = td1[browser.ie ? "innerText" : "textContent"].match(/\d+/);
+      var value2 = td2[browser.ie ? "innerText" : "textContent"].match(/\d+/);
       if (value1) value1 = +value1[0];
       if (value2) value2 = +value2[0];
       return (value2 || 0) - (value1 || 0);
@@ -87,14 +87,16 @@ UE.UETable.prototype.sortTable = function(sortByCellIndex, compareFn) {
 };
 
 UE.plugins["tablesort"] = function() {
-  var me = this,
-    UT = UE.UETable,
-    getUETable = function(tdOrTable) {
-      return UT.getUETable(tdOrTable);
-    },
-    getTableItemsByRange = function(editor) {
-      return UT.getTableItemsByRange(editor);
-    };
+  var me = this;
+  var UT = UE.UETable;
+
+  var getUETable = function(tdOrTable) {
+    return UT.getUETable(tdOrTable);
+  };
+
+  var getTableItemsByRange = function(editor) {
+    return UT.getTableItemsByRange(editor);
+  };
 
   me.ready(function() {
     //添加表格可排序的样式
@@ -119,24 +121,24 @@ UE.plugins["tablesort"] = function() {
   //表格排序
   UE.commands["sorttable"] = {
     queryCommandState: function() {
-      var me = this,
-        tableItems = getTableItemsByRange(me);
+      var me = this;
+      var tableItems = getTableItemsByRange(me);
       if (!tableItems.cell) return -1;
-      var table = tableItems.table,
-        cells = table.getElementsByTagName("td");
+      var table = tableItems.table;
+      var cells = table.getElementsByTagName("td");
       for (var i = 0, cell; (cell = cells[i++]); ) {
         if (cell.rowSpan != 1 || cell.colSpan != 1) return -1;
       }
       return 0;
     },
     execCommand: function(cmd, fn) {
-      var me = this,
-        range = me.selection.getRange(),
-        bk = range.createBookmark(true),
-        tableItems = getTableItemsByRange(me),
-        cell = tableItems.cell,
-        ut = getUETable(tableItems.table),
-        cellInfo = ut.getCellInfo(cell);
+      var me = this;
+      var range = me.selection.getRange();
+      var bk = range.createBookmark(true);
+      var tableItems = getTableItemsByRange(me);
+      var cell = tableItems.cell;
+      var ut = getUETable(tableItems.table);
+      var cellInfo = ut.getCellInfo(cell);
       ut.sortTable(cellInfo.cellIndex, fn);
       range.moveToBookmark(bk);
       try {

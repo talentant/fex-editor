@@ -19,9 +19,10 @@ UE.plugins["selectall"] = function() {
   me.commands["selectall"] = {
     execCommand: function() {
       //去掉了原生的selectAll,因为会出现报错和当内容为空时，不能出现闭合状态的光标
-      var me = this,
-        body = me.body,
-        range = me.selection.getRange();
+      var me = this;
+
+      var body = me.body;
+      var range = me.selection.getRange();
       range.selectNodeContents(body);
       if (domUtils.isEmptyBlock(body)) {
         //opera不能自动合并到元素的里边，要手动处理一下

@@ -8,15 +8,15 @@
  * @author zhanyi
  */
 UE.plugins["enterkey"] = function() {
-  var hTag,
-    me = this,
-    tag = me.options.enterTag;
+  var hTag;
+  var me = this;
+  var tag = me.options.enterTag;
   me.addListener("keyup", function(type, evt) {
     var keyCode = evt.keyCode || evt.which;
     if (keyCode == 13) {
-      var range = me.selection.getRange(),
-        start = range.startContainer,
-        doSave;
+      var range = me.selection.getRange();
+      var start = range.startContainer;
+      var doSave;
 
       //修正在h1-h6里边回车后不能嵌套p的问题
       if (!browser.ie) {
@@ -34,8 +34,8 @@ UE.plugins["enterkey"] = function() {
           } else {
             //chrome remove div
             if (start.nodeType == 1) {
-              var tmp = me.document.createTextNode(""),
-                div;
+              var tmp = me.document.createTextNode("");
+              var div;
               range.insertNode(tmp);
               div = domUtils.findParentByTagName(tmp, "div", true);
               if (div) {
@@ -79,10 +79,11 @@ UE.plugins["enterkey"] = function() {
 
       if (!range.collapsed) {
         //跨td不能删
-        var start = range.startContainer,
-          end = range.endContainer,
-          startTd = domUtils.findParentByTagName(start, "td", true),
-          endTd = domUtils.findParentByTagName(end, "td", true);
+        var start = range.startContainer;
+
+        var end = range.endContainer;
+        var startTd = domUtils.findParentByTagName(start, "td", true);
+        var endTd = domUtils.findParentByTagName(end, "td", true);
         if ((startTd && endTd && startTd !== endTd) || (!startTd && endTd) || (startTd && !endTd)) {
           evt.preventDefault ? evt.preventDefault() : (evt.returnValue = false);
           return;

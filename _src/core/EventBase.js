@@ -123,10 +123,10 @@ EventBase.prototype = {
     var types = arguments[0];
     types = utils.trim(types).split(" ");
     for (var i = 0, ti; (ti = types[i++]); ) {
-      var listeners = getListener(this, ti),
-        r,
-        t,
-        k;
+      var listeners = getListener(this, ti);
+      var r;
+      var t;
+      var k;
       if (listeners) {
         k = listeners.length;
         while (k--) {

@@ -4,8 +4,8 @@
  * @since 1.2.6.1
  */
 UE.plugin.register("serverparam", function() {
-  var me = this,
-    serverParam = {};
+  var me = this;
+  var serverParam = {};
 
   return {
     commands: {

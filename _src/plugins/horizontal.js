@@ -21,8 +21,8 @@ UE.plugins["horizontal"] = function() {
       var me = this;
       if (me.queryCommandState(cmdName) !== -1) {
         me.execCommand("insertHtml", "<hr>");
-        var range = me.selection.getRange(),
-          start = range.startContainer;
+        var range = me.selection.getRange();
+        var start = range.startContainer;
         if (start.nodeType == 1 && !start.childNodes[range.startOffset]) {
           var tmp;
           if ((tmp = start.childNodes[range.startOffset - 1])) {

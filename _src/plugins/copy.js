@@ -11,9 +11,9 @@ UE.plugin.register("copy", function() {
 
     // 复制内容
     client.on("copy", function(e) {
-      var client = e.client,
-        rng = me.selection.getRange(),
-        div = document.createElement("div");
+      var client = e.client;
+      var rng = me.selection.getRange();
+      var div = document.createElement("div");
 
       div.appendChild(rng.cloneContents());
       client.setText(div.innerText || div.textContent);

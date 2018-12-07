@@ -8,17 +8,19 @@
 UE.plugin.register("autoupload", function() {
   function sendAndInsertFile(file, editor) {
     var me = editor;
+
     //模拟数据
-    var fieldName,
-      urlPrefix,
-      maxSize,
-      allowFiles,
-      actionUrl,
-      loadingHtml,
-      errorHandler,
-      successHandler,
-      filetype = /image\/\w+/i.test(file.type) ? "image" : "file",
-      loadingId = "loading_" + (+new Date()).toString(36);
+    var fieldName;
+
+    var urlPrefix;
+    var maxSize;
+    var allowFiles;
+    var actionUrl;
+    var loadingHtml;
+    var errorHandler;
+    var successHandler;
+    var filetype = /image\/\w+/i.test(file.type) ? "image" : "file";
+    var loadingId = "loading_" + (+new Date()).toString(36);
 
     fieldName = me.getOpt(filetype + "FieldName");
     urlPrefix = me.getOpt(filetype + "UrlPrefix");
@@ -45,8 +47,8 @@ UE.plugin.register("autoupload", function() {
         me.options.theme +
         '/images/spacer.gif">';
       successHandler = function(data) {
-        var link = urlPrefix + data.url,
-          loader = me.document.getElementById(loadingId);
+        var link = urlPrefix + data.url;
+        var loader = me.document.getElementById(loadingId);
         if (loader) {
           domUtils.removeClasses(loader, "loadingclass");
           loader.setAttribute("src", link);
@@ -67,11 +69,10 @@ UE.plugin.register("autoupload", function() {
         '/images/spacer.gif">' +
         "</p>";
       successHandler = function(data) {
-        var link = urlPrefix + data.url,
-          loader = me.document.getElementById(loadingId);
-
-        var rng = me.selection.getRange(),
-          bk = rng.createBookmark();
+        var link = urlPrefix + data.url;
+        var loader = me.document.getElementById(loadingId);
+        var rng = me.selection.getRange();
+        var bk = rng.createBookmark();
         rng.selectNode(loader).select();
         me.execCommand("insertfile", {url: link});
         rng.moveToBookmark(bk).select();
@@ -101,10 +102,11 @@ UE.plugin.register("autoupload", function() {
     }
 
     /* 创建Ajax并提交 */
-    var xhr = new XMLHttpRequest(),
-      fd = new FormData(),
-      params = utils.serializeParam(me.queryCommandValue("serverparam")) || "",
-      url = utils.formatUrl(actionUrl + (actionUrl.indexOf("?") == -1 ? "?" : "&") + params);
+    var xhr = new XMLHttpRequest();
+
+    var fd = new FormData();
+    var params = utils.serializeParam(me.queryCommandValue("serverparam")) || "";
+    var url = utils.formatUrl(actionUrl + (actionUrl.indexOf("?") == -1 ? "?" : "&") + params);
 
     fd.append(fieldName, file, file.name || "blob." + file.type.substr("image/".length));
     fd.append("type", "ajax");
@@ -161,13 +163,13 @@ UE.plugin.register("autoupload", function() {
         var me = this;
         if (window.FormData && window.FileReader) {
           var handler = function(e) {
-            var hasImg = false,
-              items;
+            var hasImg = false;
+            var items;
             //获取粘贴板文件列表或者拖放文件列表
             items = e.type == "paste" ? getPasteImage(e) : getDropImage(e);
             if (items) {
-              var len = items.length,
-                file;
+              var len = items.length;
+              var file;
               while (len--) {
                 file = items[len];
                 if (file.getAsFile) file = file.getAsFile();

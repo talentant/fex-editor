@@ -10,24 +10,25 @@
  */
 
 UE.plugins["shortcutmenu"] = function() {
-  var me = this,
-    menu,
-    items = me.options.shortcutMenu || [];
+  var me = this;
+  var menu;
+  var items = me.options.shortcutMenu || [];
 
   if (!items.length) {
     return;
   }
 
   me.addListener("contextmenu mouseup", function(type, e) {
-    var me = this,
-      customEvt = {
-        type: type,
-        target: e.target || e.srcElement,
-        screenX: e.screenX,
-        screenY: e.screenY,
-        clientX: e.clientX,
-        clientY: e.clientY
-      };
+    var me = this;
+
+    var customEvt = {
+      type: type,
+      target: e.target || e.srcElement,
+      screenX: e.screenX,
+      screenY: e.screenY,
+      clientX: e.clientX,
+      clientY: e.clientY
+    };
 
     setTimeout(function() {
       var rng = me.selection.getRange();

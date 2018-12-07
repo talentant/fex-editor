@@ -33,8 +33,9 @@ UE.plugins["rowspacing"] = function() {
     queryCommandValue: function(cmdName, dir) {
       var pN = domUtils.filterNodeList(this.selection.getStartElementPath(), function(node) {
           return domUtils.isBlockElm(node);
-        }),
-        value;
+        });
+
+      var value;
       //trace:1026
       if (pN) {
         value = domUtils.getComputedStyle(pN, "margin-" + dir).replace(/[^\d]/g, "");

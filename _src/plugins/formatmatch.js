@@ -18,10 +18,10 @@
  * ```
  */
 UE.plugins["formatmatch"] = function() {
-  var me = this,
-    list = [],
-    img,
-    flag = 0;
+  var me = this;
+  var list = [];
+  var img;
+  var flag = 0;
 
   me.addListener("reset", function() {
     list = [];
@@ -42,8 +42,8 @@ UE.plugins["formatmatch"] = function() {
 
     me.undoManger && me.undoManger.save();
 
-    var range = me.selection.getRange(),
-      imgT = target || range.getClosedNode();
+    var range = me.selection.getRange();
+    var imgT = target || range.getClosedNode();
     if (img && imgT && imgT.tagName == "IMG") {
       //trace:964
 

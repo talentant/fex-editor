@@ -2,13 +2,16 @@
  * 图片转换对话框脚本
  **/
 
-var tableData = [],
-  //编辑器页面table
-  editorTable = null,
-  chartsConfig = window.typeConfig,
-  resizeTimer = null,
-  //初始默认图表类型
-  currentChartType = 0;
+var tableData = [];
+
+var //编辑器页面table
+editorTable = null;
+
+var chartsConfig = window.typeConfig;
+var resizeTimer = null;
+
+var //初始默认图表类型
+currentChartType = 0;
 
 window.onload = function() {
   editorTable = domUtils.findParentByTagName(editor.selection.getRange().startContainer, "table", true);
@@ -107,10 +110,12 @@ function initUserConfig(config) {
 }
 
 function initEvent() {
-  var cacheValue = null,
-    //图表类型数
-    typeViewCount = chartsConfig.length - 1,
-    $chartsTypeViewBox = $("#scrollBed .view-box");
+  var cacheValue = null;
+
+  var //图表类型数
+  typeViewCount = chartsConfig.length - 1;
+
+  var $chartsTypeViewBox = $("#scrollBed .view-box");
 
   $(".charts-format").delegate(".format-ctrl", "change", function() {
     renderCharts();
@@ -222,8 +227,8 @@ function updateViewType(index) {
 }
 
 function collectData() {
-  var form = document.forms["data-form"],
-    data = null;
+  var form = document.forms["data-form"];
+  var data = null;
 
   if (currentChartType !== chartsConfig.length - 1) {
     data = getSeriesAndCategories();
@@ -243,18 +248,19 @@ function collectData() {
  * 获取用户配置信息
  */
 function getUserConfig() {
-  var form = document.forms["data-form"],
-    info = {
-      title: form["title"].value,
-      subTitle: form["sub-title"].value,
-      xTitle: form["x-title"].value,
-      yTitle: form["y-title"].value,
-      suffix: form["unit"].value,
-      //数据对齐方式
-      tableDataFormat: getTableDataFormat(),
-      //饼图提示文字
-      tip: $("#tipInput").val()
-    };
+  var form = document.forms["data-form"];
+
+  var info = {
+    title: form["title"].value,
+    subTitle: form["sub-title"].value,
+    xTitle: form["x-title"].value,
+    yTitle: form["y-title"].value,
+    suffix: form["unit"].value,
+    //数据对齐方式
+    tableDataFormat: getTableDataFormat(),
+    //饼图提示文字
+    tip: $("#tipInput").val()
+  };
 
   return info;
 }
@@ -273,11 +279,11 @@ function setUserConfig(config) {
 }
 
 function getSeriesAndCategories() {
-  var form = document.forms["data-form"],
-    series = [],
-    categories = [],
-    tmp = [],
-    tableData = getTableData();
+  var form = document.forms["data-form"];
+  var series = [];
+  var categories = [];
+  var tmp = [];
+  var tableData = getTableData();
 
   //反转数据
   if (getTableDataFormat() === "-1") {
@@ -313,8 +319,8 @@ function getSeriesAndCategories() {
  * 获取数据源数据对齐方式
  */
 function getTableDataFormat() {
-  var form = document.forms["data-form"],
-    items = form["charts-format"];
+  var form = document.forms["data-form"];
+  var items = form["charts-format"];
 
   return items[0].checked ? items[0].value : items[1].value;
 }
@@ -334,8 +340,8 @@ function enableNotPieConfig() {
 }
 
 function updateConfigItem(value) {
-  var table = $("#showTable")[0],
-    isDisable = value === "disable" ? true : false;
+  var table = $("#showTable")[0];
+  var isDisable = value === "disable" ? true : false;
 
   //table中的input处理
   for (var i = 2, row; (row = table.rows[i]); i++) {
@@ -358,12 +364,13 @@ function getSeriesForPieChart() {
       type: "pie",
       name: $("#tipInput").val(),
       data: []
-    },
-    tableData = getTableData();
+    };
+
+  var tableData = getTableData();
 
   for (var j = 1, jlen = tableData[0].length; j < jlen; j++) {
-    var title = tableData[0][j],
-      val = tableData[1][j];
+    var title = tableData[0][j];
+    var val = tableData[1][j];
 
     series.data.push([title, val]);
   }
@@ -374,9 +381,9 @@ function getSeriesForPieChart() {
 }
 
 function getTableData() {
-  var table = document.getElementById("showTable"),
-    xCount = table.rows[0].cells.length - 1,
-    values = getTableInputValue();
+  var table = document.getElementById("showTable");
+  var xCount = table.rows[0].cells.length - 1;
+  var values = getTableInputValue();
 
   for (var i = 0, value; (value = values[i]); i++) {
     tableData[Math.floor(i / xCount) + 1][(i % xCount) + 1] = values[i];
@@ -386,9 +393,9 @@ function getTableData() {
 }
 
 function getTableInputValue() {
-  var table = document.getElementById("showTable"),
-    inputs = table.getElementsByTagName("input"),
-    values = [];
+  var table = document.getElementById("showTable");
+  var inputs = table.getElementsByTagName("input");
+  var values = [];
 
   for (var i = 0, input; (input = inputs[i]); i++) {
     values.push(input.value | 0);
@@ -406,8 +413,9 @@ function getCellValue(cell) {
 //dialog确认事件
 dialog.onok = function() {
   //收集信息
-  var form = document.forms["data-form"],
-    info = getUserConfig();
+  var form = document.forms["data-form"];
+
+  var info = getUserConfig();
 
   //添加图表类型
   info.chartType = currentChartType;

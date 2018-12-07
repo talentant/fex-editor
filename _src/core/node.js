@@ -55,8 +55,8 @@
     script: 1
   };
 
-  var indentChar = "    ",
-    breakChar = "\n";
+  var indentChar = "    ";
+  var breakChar = "\n";
 
   function insertLine(arr, current, begin) {
     arr.push(breakChar);
@@ -661,8 +661,8 @@
         .trim(tagNames)
         .replace(/[ ]{2,}/g, " ")
         .split(" ");
-      var arr = [],
-        me = this;
+      var arr = [];
+      var me = this;
       utils.each(tagNames, function(tagName) {
         if (me.children && me.children.length) {
           for (var i = 0, ci; (ci = me.children[i++]); ) {

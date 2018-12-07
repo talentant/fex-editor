@@ -2,15 +2,17 @@
 ///import uicore
 ///import ui/stateful.js
 (function() {
-  var utils = baidu.editor.utils,
-    uiUtils = baidu.editor.ui.uiUtils,
-    domUtils = baidu.editor.dom.domUtils,
-    UIBase = baidu.editor.ui.UIBase,
-    Stateful = baidu.editor.ui.Stateful,
-    SplitButton = (baidu.editor.ui.SplitButton = function(options) {
-      this.initOptions(options);
-      this.initSplitButton();
-    });
+  var utils = baidu.editor.utils;
+  var uiUtils = baidu.editor.ui.uiUtils;
+  var domUtils = baidu.editor.dom.domUtils;
+  var UIBase = baidu.editor.ui.UIBase;
+  var Stateful = baidu.editor.ui.Stateful;
+
+  var SplitButton = (baidu.editor.ui.SplitButton = function(options) {
+    this.initOptions(options);
+    this.initSplitButton();
+  });
+
   SplitButton.prototype = {
     popup: null,
     uiName: "splitbutton",
