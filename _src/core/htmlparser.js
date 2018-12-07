@@ -75,10 +75,7 @@ var htmlparser = (UE.htmlparser = function(htmlstr, ignoreBlank) {
         }
         return a
           .replace(new RegExp("^[\\r\\n" + (ignoreBlank ? "" : " ") + "]+"), "")
-          .replace(
-            new RegExp("[\\r\\n" + (ignoreBlank ? "" : " ") + "]+$"),
-            ""
-          );
+          .replace(new RegExp("[\\r\\n" + (ignoreBlank ? "" : " ") + "]+$"), "");
       }
     );
   }
@@ -136,10 +133,7 @@ var htmlparser = (UE.htmlparser = function(htmlstr, ignoreBlank) {
         tmpParent = tmpParent.parentNode;
       }
       if (!hasParent) {
-        parent = element(
-          parent,
-          utils.isArray(needParentTag) ? needParentTag[0] : needParentTag
-        );
+        parent = element(parent, utils.isArray(needParentTag) ? needParentTag[0] : needParentTag);
       }
     }
     //按dtd处理嵌套
@@ -206,11 +200,7 @@ var htmlparser = (UE.htmlparser = function(htmlstr, ignoreBlank) {
           text(currentParent, match[0]);
         } else {
           //start tag
-          currentParent = element(
-            currentParent,
-            match[3].toLowerCase(),
-            match[4]
-          );
+          currentParent = element(currentParent, match[3].toLowerCase(), match[4]);
         }
       } else if (match[1]) {
         if (currentParent.type != "root") {
@@ -218,10 +208,7 @@ var htmlparser = (UE.htmlparser = function(htmlstr, ignoreBlank) {
             text(currentParent, match[0]);
           } else {
             var tmpParent = currentParent;
-            while (
-              currentParent.type == "element" &&
-              currentParent.tagName != match[1].toLowerCase()
-            ) {
+            while (currentParent.type == "element" && currentParent.tagName != match[1].toLowerCase()) {
               currentParent = currentParent.parentNode;
               if (currentParent.type == "root") {
                 currentParent = tmpParent;

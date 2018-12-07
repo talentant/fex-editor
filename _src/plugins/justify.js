@@ -40,8 +40,7 @@ UE.plugins["justify"] = function() {
       var bookmark = range.createBookmark(),
         filterFn = function(node) {
           return node.nodeType == 1
-            ? node.tagName.toLowerCase() != "br" &&
-                !domUtils.isBookmarkNode(node)
+            ? node.tagName.toLowerCase() != "br" && !domUtils.isBookmarkNode(node)
             : !domUtils.isWhitespace(node);
         };
 
@@ -50,37 +49,23 @@ UE.plugins["justify"] = function() {
         current = domUtils.getNextDomNode(bookmark2.start, false, filterFn),
         tmpRange = range.cloneRange(),
         tmpNode;
-      while (
-        current &&
-        !(
-          domUtils.getPosition(current, bookmark2.end) &
-          domUtils.POSITION_FOLLOWING
-        )
-      ) {
+      while (current && !(domUtils.getPosition(current, bookmark2.end) & domUtils.POSITION_FOLLOWING)) {
         if (current.nodeType == 3 || !block(current)) {
           tmpRange.setStartBefore(current);
           while (current && current !== bookmark2.end && !block(current)) {
             tmpNode = current;
-            current = domUtils.getNextDomNode(current, false, null, function(
-              node
-            ) {
+            current = domUtils.getNextDomNode(current, false, null, function(node) {
               return !block(node);
             });
           }
           tmpRange.setEndAfter(tmpNode);
           var common = tmpRange.getCommonAncestor();
           if (!domUtils.isBody(common) && block(common)) {
-            domUtils.setStyles(
-              common,
-              utils.isString(style) ? { "text-align": style } : style
-            );
+            domUtils.setStyles(common, utils.isString(style) ? {"text-align": style} : style);
             current = common;
           } else {
             var p = range.document.createElement("p");
-            domUtils.setStyles(
-              p,
-              utils.isString(style) ? { "text-align": style } : style
-            );
+            domUtils.setStyles(p, utils.isString(style) ? {"text-align": style} : style);
             var frag = tmpRange.extractContents();
             p.appendChild(frag);
             tmpRange.insertNode(p);
@@ -121,9 +106,7 @@ UE.plugins["justify"] = function() {
     },
     queryCommandState: function() {
       var start = this.selection.getStart(),
-        cell =
-          start &&
-          domUtils.findParentByTagName(start, ["td", "th", "caption"], true);
+        cell = start && domUtils.findParentByTagName(start, ["td", "th", "caption"], true);
 
       return cell ? -1 : 0;
     }

@@ -46,10 +46,10 @@
           textarea = null;
           holder = null;
         },
-        focus: function (){
+        focus: function() {
           textarea.focus();
         },
-        blur: function (){
+        blur: function() {
           textarea.blur();
         }
       };
@@ -64,8 +64,7 @@
       var dom = codeEditor.getWrapperElement();
       dom.style.cssText =
         'position:absolute;left:0;top:0;width:100%;height:100%;font-family:consolas,"Courier new",monospace;font-size:13px;';
-      codeEditor.getScrollerElement().style.cssText =
-        "position:absolute;left:0;top:0;width:100%;height:100%;";
+      codeEditor.getScrollerElement().style.cssText = "position:absolute;left:0;top:0;width:100%;height:100%;";
       codeEditor.refresh();
       return {
         getCodeMirror: function() {
@@ -85,14 +84,14 @@
           dom = null;
           codeEditor = null;
         },
-        focus: function (){
+        focus: function() {
           codeEditor.focus();
         },
-        blur: function (){
+        blur: function() {
           // codeEditor.blur();
           // since codemirror not support blur()
-          codeEditor.setOption('readOnly', true);
-          codeEditor.setOption('readOnly', false);
+          codeEditor.setOption("readOnly", true);
+          codeEditor.setOption("readOnly", false);
         }
       };
     }
@@ -106,19 +105,16 @@
     var orgSetContent;
     var orgFocus;
     var orgBlur;
-    opt.sourceEditor = browser.ie
-      ? "textarea"
-      : opt.sourceEditor || "codemirror";
+    opt.sourceEditor = browser.ie ? "textarea" : opt.sourceEditor || "codemirror";
 
     me.setOpt({
       sourceEditorFirst: false
     });
     function createSourceEditor(holder) {
-      return sourceEditors[
-        opt.sourceEditor == "codemirror" && window.CodeMirror
-          ? "codemirror"
-          : "textarea"
-      ](me, holder);
+      return sourceEditors[opt.sourceEditor == "codemirror" && window.CodeMirror ? "codemirror" : "textarea"](
+        me,
+        holder
+      );
     }
 
     var bakCssText;
@@ -126,27 +122,27 @@
     var oldGetContent, bakAddress;
 
     /**
-         * 切换源码模式和编辑模式
-         * @command source
-         * @method execCommand
-         * @param { String } cmd 命令字符串
-         * @example
-         * ```javascript
-         * editor.execCommand( 'source');
-         * ```
-         */
+     * 切换源码模式和编辑模式
+     * @command source
+     * @method execCommand
+     * @param { String } cmd 命令字符串
+     * @example
+     * ```javascript
+     * editor.execCommand( 'source');
+     * ```
+     */
 
     /**
-         * 查询当前编辑区域的状态是源码模式还是可视化模式
-         * @command source
-         * @method queryCommandState
-         * @param { String } cmd 命令字符串
-         * @return { int } 如果当前是源码编辑模式，返回1，否则返回0
-         * @example
-         * ```javascript
-         * editor.queryCommandState( 'source' );
-         * ```
-         */
+     * 查询当前编辑区域的状态是源码模式还是可视化模式
+     * @command source
+     * @method queryCommandState
+     * @param { String } cmd 命令字符串
+     * @return { int } 如果当前是源码编辑模式，返回1，否则返回0
+     * @example
+     * ```javascript
+     * editor.queryCommandState( 'source' );
+     * ```
+     */
 
     me.commands["source"] = {
       execCommand: function() {
@@ -159,8 +155,7 @@
           }
 
           bakCssText = me.iframe.style.cssText;
-          me.iframe.style.cssText +=
-            "position:absolute;left:-32768px;top:-32768px;";
+          me.iframe.style.cssText += "position:absolute;left:-32768px;top:-32768px;";
 
           me.fireEvent("beforegetcontent");
           var root = UE.htmlparser(me.body.innerHTML);
@@ -213,38 +208,30 @@
           //重置getContent，源码模式下取值也能是最新的数据
           oldGetContent = me.getContent;
           me.getContent = function() {
-            return (
-              sourceEditor.getContent() ||
-              "<p>" + (browser.ie ? "" : "<br/>") + "</p>"
-            );
+            return sourceEditor.getContent() || "<p>" + (browser.ie ? "" : "<br/>") + "</p>";
           };
 
           orgFocus = me.focus;
           orgBlur = me.blur;
 
-          me.focus = function(){
+          me.focus = function() {
             sourceEditor.focus();
           };
 
-          me.blur = function(){
+          me.blur = function() {
             orgBlur.call(me);
             sourceEditor.blur();
           };
         } else {
           me.iframe.style.cssText = bakCssText;
-          var cont =
-            sourceEditor.getContent() ||
-            "<p>" + (browser.ie ? "" : "<br/>") + "</p>";
+          var cont = sourceEditor.getContent() || "<p>" + (browser.ie ? "" : "<br/>") + "</p>";
           //处理掉block节点前后的空格,有可能会误命中，暂时不考虑
-          cont = cont.replace(
-            new RegExp("[\\r\\t\\n ]*</?(\\w+)\\s*(?:[^>]*)>", "g"),
-            function(a, b) {
-              if (b && !dtd.$inlineWithA[b.toLowerCase()]) {
-                return a.replace(/(^[\n\r\t ]*)|([\n\r\t ]*$)/g, "");
-              }
-              return a.replace(/(^[\n\r\t]*)|([\n\r\t]*$)/g, "");
+          cont = cont.replace(new RegExp("[\\r\\t\\n ]*</?(\\w+)\\s*(?:[^>]*)>", "g"), function(a, b) {
+            if (b && !dtd.$inlineWithA[b.toLowerCase()]) {
+              return a.replace(/(^[\n\r\t ]*)|([\n\r\t ]*$)/g, "");
             }
-          );
+            return a.replace(/(^[\n\r\t]*)|([\n\r\t]*$)/g, "");
+          });
 
           me.setContent = orgSetContent;
 
@@ -276,18 +263,24 @@
 
             me.body.contentEditable = false;
             setTimeout(function() {
-              domUtils.setViewportOffset(input, { left: -32768, top: 0 });
+              domUtils.setViewportOffset(input, {left: -32768, top: 0});
               input.focus();
               setTimeout(function() {
                 me.body.contentEditable = true;
-                me.selection.getRange().moveToAddress(bakAddress).select(true);
+                me.selection
+                  .getRange()
+                  .moveToAddress(bakAddress)
+                  .select(true);
                 domUtils.remove(input);
               });
             });
           } else {
             //ie下有可能报错，比如在代码顶头的情况
             try {
-              me.selection.getRange().moveToAddress(bakAddress).select(true);
+              me.selection
+                .getRange()
+                .moveToAddress(bakAddress)
+                .select(true);
             } catch (e) {}
           }
         }
@@ -320,9 +313,7 @@
         utils.loadFile(
           document,
           {
-            src:
-              opt.codeMirrorJsUrl ||
-                "https://cdn.jsdelivr.net/npm/codemirror@2.33.0/lib/codemirror.js",
+            src: opt.codeMirrorJsUrl || "https://cdn.jsdelivr.net/npm/codemirror@2.33.0/lib/codemirror.js",
             tag: "script",
             type: "text/javascript",
             defer: "defer"
@@ -339,9 +330,7 @@
           tag: "link",
           rel: "stylesheet",
           type: "text/css",
-          href:
-            opt.codeMirrorCssUrl ||
-              "https://cdn.jsdelivr.net/npm/codemirror@2.33.0/lib/codemirror.css"
+          href: opt.codeMirrorCssUrl || "https://cdn.jsdelivr.net/npm/codemirror@2.33.0/lib/codemirror.css"
         });
       });
     }

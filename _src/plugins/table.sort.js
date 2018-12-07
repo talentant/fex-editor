@@ -19,9 +19,7 @@ UE.UETable.prototype.sortTable = function(sortByCellIndex, compareFn) {
       trArray[i] = rows[i];
     }
     trArray.splice(0, range.beginRowIndex);
-    lastRowIndex = range.endRowIndex + 1 === this.rowsNum
-      ? 0
-      : range.endRowIndex + 1;
+    lastRowIndex = range.endRowIndex + 1 === this.rowsNum ? 0 : range.endRowIndex + 1;
   } else {
     for (var i = 0, len = rows.length; i < len; i++) {
       trArray[i] = rows[i];
@@ -59,35 +57,20 @@ UE.UETable.prototype.sortTable = function(sortByCellIndex, compareFn) {
   };
 
   //对表格设置排序的标记data-sort-type
-  table.setAttribute(
-    "data-sort-type",
-    compareFn && typeof compareFn === "string" && Fn[compareFn] ? compareFn : ""
-  );
+  table.setAttribute("data-sort-type", compareFn && typeof compareFn === "string" && Fn[compareFn] ? compareFn : "");
 
   //th不参与排序
   flag && trArray.splice(0, 1);
   trArray = utils.sort(trArray, function(tr1, tr2) {
     var result;
     if (compareFn && typeof compareFn === "function") {
-      result = compareFn.call(
-        this,
-        tr1.cells[sortByCellIndex],
-        tr2.cells[sortByCellIndex]
-      );
+      result = compareFn.call(this, tr1.cells[sortByCellIndex], tr2.cells[sortByCellIndex]);
     } else if (compareFn && typeof compareFn === "number") {
       result = 1;
     } else if (compareFn && typeof compareFn === "string" && Fn[compareFn]) {
-      result = Fn[compareFn].call(
-        this,
-        tr1.cells[sortByCellIndex],
-        tr2.cells[sortByCellIndex]
-      );
+      result = Fn[compareFn].call(this, tr1.cells[sortByCellIndex], tr2.cells[sortByCellIndex]);
     } else {
-      result = Fn["orderbyasc"].call(
-        this,
-        tr1.cells[sortByCellIndex],
-        tr2.cells[sortByCellIndex]
-      );
+      result = Fn["orderbyasc"].call(this, tr1.cells[sortByCellIndex], tr2.cells[sortByCellIndex]);
     }
     return result;
   });
@@ -99,10 +82,7 @@ UE.UETable.prototype.sortTable = function(sortByCellIndex, compareFn) {
   if (!lastRowIndex) {
     tbody.appendChild(fragment);
   } else {
-    tbody.insertBefore(
-      fragment,
-      rows[lastRowIndex - range.endRowIndex + range.beginRowIndex - 1]
-    );
+    tbody.insertBefore(fragment, rows[lastRowIndex - range.endRowIndex + range.beginRowIndex - 1]);
   }
 };
 
@@ -172,30 +152,16 @@ UE.plugins["tablesort"] = function() {
       if (table && cmd == "enablesort") {
         var cells = domUtils.getElementsByTagName(table, "th td");
         for (var i = 0; i < cells.length; i++) {
-          if (
-            cells[i].getAttribute("colspan") > 1 ||
-            cells[i].getAttribute("rowspan") > 1
-          )
-            return -1;
+          if (cells[i].getAttribute("colspan") > 1 || cells[i].getAttribute("rowspan") > 1) return -1;
         }
       }
 
-      return !table
-        ? -1
-        : (cmd == "enablesort") ^
-            (table.getAttribute("data-sort") != "sortEnabled")
-          ? -1
-          : 0;
+      return !table ? -1 : (cmd == "enablesort") ^ (table.getAttribute("data-sort") != "sortEnabled") ? -1 : 0;
     },
     execCommand: function(cmd) {
       var table = getTableItemsByRange(this).table;
-      table.setAttribute(
-        "data-sort",
-        cmd == "enablesort" ? "sortEnabled" : "sortDisabled"
-      );
-      cmd == "enablesort"
-        ? domUtils.addClass(table, "sortEnabled")
-        : domUtils.removeClasses(table, "sortEnabled");
+      table.setAttribute("data-sort", cmd == "enablesort" ? "sortEnabled" : "sortDisabled");
+      cmd == "enablesort" ? domUtils.addClass(table, "sortEnabled") : domUtils.removeClasses(table, "sortEnabled");
     }
   };
 };

@@ -21,10 +21,7 @@ UE.plugins["paste"] = function() {
       pastebin = doc.createElement("div");
     pastebin.id = "baidu_pastebin";
     // Safari 要求div必须有内容，才能粘贴内容进来
-    browser.webkit &&
-      pastebin.appendChild(
-        doc.createTextNode(domUtils.fillChar + domUtils.fillChar)
-      );
+    browser.webkit && pastebin.appendChild(doc.createTextNode(domUtils.fillChar + domUtils.fillChar));
     doc.body.appendChild(pastebin);
     //trace:717 隐藏的span不能得到top
     //bk.start.innerHTML = '&nbsp;';
@@ -39,11 +36,7 @@ UE.plugins["paste"] = function() {
 
     setTimeout(function() {
       if (browser.webkit) {
-        for (
-          var i = 0, pastebins = doc.querySelectorAll("#baidu_pastebin"), pi;
-          (pi = pastebins[i++]);
-
-        ) {
+        for (var i = 0, pastebins = doc.querySelectorAll("#baidu_pastebin"), pi; (pi = pastebins[i++]); ) {
           if (domUtils.isEmptyNode(pi)) {
             domUtils.remove(pi);
           } else {
@@ -69,31 +62,23 @@ UE.plugins["paste"] = function() {
   var txtContent, htmlContent, address;
 
   function getPureHtml(html) {
-    return html.replace(/<(\/?)([\w\-]+)([^>]*)>/gi, function(
-      a,
-      b,
-      tagName,
-      attrs
-    ) {
+    return html.replace(/<(\/?)([\w\-]+)([^>]*)>/gi, function(a, b, tagName, attrs) {
       tagName = tagName.toLowerCase();
-      if ({ img: 1 }[tagName]) {
+      if ({img: 1}[tagName]) {
         return a;
       }
-      attrs = attrs.replace(
-        /([\w\-]*?)\s*=\s*(("([^"]*)")|('([^']*)')|([^\s>]+))/gi,
-        function(str, atr, val) {
-          if (
-            {
-              src: 1,
-              href: 1,
-              name: 1
-            }[atr.toLowerCase()]
-          ) {
-            return atr + "=" + val + " ";
-          }
-          return "";
+      attrs = attrs.replace(/([\w\-]*?)\s*=\s*(("([^"]*)")|('([^']*)')|([^\s>]+))/gi, function(str, atr, val) {
+        if (
+          {
+            src: 1,
+            href: 1,
+            name: 1
+          }[atr.toLowerCase()]
+        ) {
+          return atr + "=" + val + " ";
         }
-      );
+        return "";
+      });
       if (
         {
           span: 1,
@@ -186,7 +171,7 @@ UE.plugins["paste"] = function() {
           }
         });
       }
-      html = { html: root.toHtml() };
+      html = {html: root.toHtml()};
       me.fireEvent("beforepaste", html, root);
       //抢了默认的粘贴，那后边的内容就不执行了，比如表格粘贴
       if (!html.html) {
@@ -195,11 +180,7 @@ UE.plugins["paste"] = function() {
       root = UE.htmlparser(html.html, true);
       //如果开启了纯文本模式
       if (me.queryCommandState("pasteplain") === 1) {
-        me.execCommand(
-          "insertHtml",
-          UE.filterNode(root, me.options.filterTxtRules).toHtml(),
-          true
-        );
+        me.execCommand("insertHtml", UE.filterNode(root, me.options.filterTxtRules).toHtml(), true);
       } else {
         //文本模式
         UE.filterNode(root, me.options.filterTxtRules);
@@ -210,9 +191,7 @@ UE.plugins["paste"] = function() {
         address = me.selection.getRange().createAddress(true);
         me.execCommand(
           "insertHtml",
-          me.getOpt("retainOnlyLabelPasted") === true
-            ? getPureHtml(htmlContent)
-            : htmlContent,
+          me.getOpt("retainOnlyLabelPasted") === true ? getPureHtml(htmlContent) : htmlContent,
           true
         );
       }
@@ -236,13 +215,7 @@ UE.plugins["paste"] = function() {
             }
             var pre = start.previousSibling;
 
-            if (
-              pre &&
-              pre.nodeType == 3 &&
-              new RegExp("^[\n\r\t " + domUtils.fillChar + "]*$").test(
-                pre.nodeValue
-              )
-            ) {
+            if (pre && pre.nodeType == 3 && new RegExp("^[\n\r\t " + domUtils.fillChar + "]*$").test(pre.nodeValue)) {
               range.setStartBefore(pre);
             }
           }
@@ -261,21 +234,12 @@ UE.plugins["paste"] = function() {
               continue;
             }
             var next = end.nextSibling;
-            if (
-              next &&
-              next.nodeType == 3 &&
-              new RegExp("^[\n\r\t" + domUtils.fillChar + "]*$").test(
-                next.nodeValue
-              )
-            ) {
+            if (next && next.nodeType == 3 && new RegExp("^[\n\r\t" + domUtils.fillChar + "]*$").test(next.nodeValue)) {
               range.setEndAfter(next);
             }
           }
           if (
-            range.endOffset ==
-            range.endContainer[
-              range.endContainer.nodeType == 3 ? "nodeValue" : "childNodes"
-            ].length
+            range.endOffset == range.endContainer[range.endContainer.nodeType == 3 ? "nodeValue" : "childNodes"].length
           ) {
             range.setEndAfter(range.endContainer);
           } else {
@@ -299,9 +263,7 @@ UE.plugins["paste"] = function() {
       while (
         !domUtils.isBody(rng.startContainer) &&
         !rng.startOffset &&
-        rng.startContainer[
-          rng.startContainer.nodeType == 3 ? "nodeValue" : "childNodes"
-        ].length
+        rng.startContainer[rng.startContainer.nodeType == 3 ? "nodeValue" : "childNodes"].length
       ) {
         rng.setStartBefore(rng.startContainer);
       }
@@ -319,21 +281,14 @@ UE.plugins["paste"] = function() {
     });
 
     //ie下beforepaste在点击右键时也会触发，所以用监控键盘才处理
-    domUtils.on(
-      me.body,
-      browser.ie || browser.opera ? "keydown" : "paste",
-      function(e) {
-        if (
-          (browser.ie || browser.opera) &&
-          ((!e.ctrlKey && !e.metaKey) || e.keyCode != "86")
-        ) {
-          return;
-        }
-        getClipboardData.call(me, function(div) {
-          filter(div);
-        });
+    domUtils.on(me.body, browser.ie || browser.opera ? "keydown" : "paste", function(e) {
+      if ((browser.ie || browser.opera) && ((!e.ctrlKey && !e.metaKey) || e.keyCode != "86")) {
+        return;
       }
-    );
+      getClipboardData.call(me, function(div) {
+        filter(div);
+      });
+    });
   });
 
   me.commands["paste"] = {

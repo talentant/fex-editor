@@ -12,10 +12,5 @@ UE.parse.register("background", function(utils) {
   }
 
   //追加默认的表格样式
-  styles &&
-    utils.cssRule(
-      "ueditor_background",
-      me.selector + "{" + styles + "}",
-      document
-    );
+  styles && utils.cssRule("ueditor_background", me.selector + "{" + styles + "}", document);
 });

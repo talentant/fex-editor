@@ -85,10 +85,7 @@
       return this.items[index];
     },
     selectByIndex: function(index) {
-      if (
-        index < this.items.length &&
-        this.fireEvent("select", index) !== false
-      ) {
+      if (index < this.items.length && this.fireEvent("select", index) !== false) {
         this.selectedIndex = index;
         this.value = this.items[index].value;
         this.setLabel(this.items[index].label);

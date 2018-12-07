@@ -24,17 +24,7 @@ UE.plugins["enterkey"] = function() {
           if (browser.gecko) {
             var h = domUtils.findParentByTagName(
               start,
-              [
-                "h1",
-                "h2",
-                "h3",
-                "h4",
-                "h5",
-                "h6",
-                "blockquote",
-                "caption",
-                "table"
-              ],
+              ["h1", "h2", "h3", "h4", "h5", "h6", "blockquote", "caption", "table"],
               true
             );
             if (!h) {
@@ -93,11 +83,7 @@ UE.plugins["enterkey"] = function() {
           end = range.endContainer,
           startTd = domUtils.findParentByTagName(start, "td", true),
           endTd = domUtils.findParentByTagName(end, "td", true);
-        if (
-          (startTd && endTd && startTd !== endTd) ||
-          (!startTd && endTd) ||
-          (startTd && !endTd)
-        ) {
+        if ((startTd && endTd && startTd !== endTd) || (!startTd && endTd) || (startTd && !endTd)) {
           evt.preventDefault ? evt.preventDefault() : (evt.returnValue = false);
           return;
         }
@@ -106,19 +92,7 @@ UE.plugins["enterkey"] = function() {
         if (!browser.ie) {
           start = domUtils.findParentByTagName(
             range.startContainer,
-            [
-              "ol",
-              "ul",
-              "p",
-              "h1",
-              "h2",
-              "h3",
-              "h4",
-              "h5",
-              "h6",
-              "blockquote",
-              "caption"
-            ],
+            ["ol", "ul", "p", "h1", "h2", "h3", "h4", "h5", "h6", "blockquote", "caption"],
             true
           );
 
@@ -129,18 +103,12 @@ UE.plugins["enterkey"] = function() {
 
             if (browser.gecko) {
               range = me.selection.getRange();
-              start = domUtils.findParentByTagName(
-                range.startContainer,
-                "p",
-                true
-              );
+              start = domUtils.findParentByTagName(range.startContainer, "p", true);
               start && domUtils.removeDirtyAttr(start);
             }
           } else {
             hTag = start.tagName;
-            start.tagName.toLowerCase() == "p" &&
-              browser.gecko &&
-              domUtils.removeDirtyAttr(start);
+            start.tagName.toLowerCase() == "p" && browser.gecko && domUtils.removeDirtyAttr(start);
           }
         }
       } else {
@@ -149,10 +117,7 @@ UE.plugins["enterkey"] = function() {
         if (!range.collapsed) {
           range.deleteContents();
           start = range.startContainer;
-          if (
-            start.nodeType == 1 &&
-            (start = start.childNodes[range.startOffset])
-          ) {
+          if (start.nodeType == 1 && (start = start.childNodes[range.startOffset])) {
             while (start.nodeType == 1) {
               if (dtd.$empty[start.tagName]) {
                 range.setStartBefore(start).setCursor();
@@ -180,7 +145,10 @@ UE.plugins["enterkey"] = function() {
             }
           } else {
             br = range.document.createElement("br");
-            range.insertNode(br).setStartAfter(br).setCursor();
+            range
+              .insertNode(br)
+              .setStartAfter(br)
+              .setCursor();
           }
         } else {
           br = range.document.createElement("br");

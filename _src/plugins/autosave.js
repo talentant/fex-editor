@@ -59,11 +59,7 @@ UE.plugin.register("autosave", function() {
         }
 
         //页面地址+编辑器ID 保持唯一
-        saveKey =
-          (location.protocol + location.host + location.pathname).replace(
-            /[.:\/]/g,
-            "_"
-          ) + key;
+        saveKey = (location.protocol + location.host + location.pathname).replace(/[.:\/]/g, "_") + key;
       },
 
       contentchange: function() {
@@ -110,8 +106,7 @@ UE.plugin.register("autosave", function() {
       drafts: {
         execCommand: function(cmd, name) {
           if (saveKey) {
-            me.body.innerHTML =
-              me.getPreferences(saveKey) || "<p>" + domUtils.fillHtml + "</p>";
+            me.body.innerHTML = me.getPreferences(saveKey) || "<p>" + domUtils.fillHtml + "</p>";
             me.focus(true);
           }
         },

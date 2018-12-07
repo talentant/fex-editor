@@ -20,7 +20,7 @@
     var parent = range.parentElement();
     //如果节点里没有子节点，直接退出
     if (!parent.hasChildNodes()) {
-      return { container: parent, offset: 0 };
+      return {container: parent, offset: 0};
     }
     var siblings = parent.children,
       child,
@@ -40,7 +40,7 @@
         startIndex = index + 1;
       } else {
         //trace:1043
-        return { container: parent, offset: getIndex(child) };
+        return {container: parent, offset: getIndex(child)};
       }
     }
     if (index == -1) {
@@ -50,14 +50,14 @@
       siblings = parent.childNodes;
       if (!distance) {
         child = siblings[siblings.length - 1];
-        return { container: child, offset: child.nodeValue.length };
+        return {container: child, offset: child.nodeValue.length};
       }
 
       var i = siblings.length;
       while (distance > 0) {
         distance -= siblings[--i].nodeValue.length;
       }
-      return { container: siblings[i], offset: -distance };
+      return {container: siblings[i], offset: -distance};
     }
     testRange.collapse(position > 0);
     testRange.setEndPoint(position > 0 ? "StartToStart" : "EndToStart", range);
@@ -79,7 +79,7 @@
         child = child[position > 0 ? "previousSibling" : "nextSibling"];
         distance -= child.nodeValue.length;
       } catch (e) {
-        return { container: parent, offset: getIndex(pre) };
+        return {container: parent, offset: getIndex(pre)};
       }
     }
     return {
@@ -89,11 +89,11 @@
   }
 
   /**
-     * 将ieRange转换为Range对象
-     * @param {Range}   ieRange    ieRange对象
-     * @param {Range}   range      Range对象
-     * @return  {Range}  range       返回转换后的Range对象
-     */
+   * 将ieRange转换为Range对象
+   * @param {Range}   ieRange    ieRange对象
+   * @param {Range}   range      Range对象
+   * @return  {Range}  range       返回转换后的Range对象
+   */
   function transformIERangeToRange(ieRange, range) {
     if (ieRange.item) {
       range.selectNode(ieRange.item(0));
@@ -109,10 +109,10 @@
   }
 
   /**
-     * 获得ieRange
-     * @param {Selection} sel    Selection对象
-     * @return {ieRange}    得到ieRange
-     */
+   * 获得ieRange
+   * @param {Selection} sel    Selection对象
+   * @return {ieRange}    得到ieRange
+   */
   function _getIERange(sel) {
     var ieRange;
     //ie下有可能报错
@@ -151,44 +151,38 @@
 
   Selection.prototype = {
     rangeInBody: function(rng, txtRange) {
-      var node = browser.ie9below || txtRange
-        ? rng.item ? rng.item() : rng.parentElement()
-        : rng.startContainer;
+      var node = browser.ie9below || txtRange ? (rng.item ? rng.item() : rng.parentElement()) : rng.startContainer;
 
       return node === this.document.body || domUtils.inDoc(node, this.document);
     },
 
     /**
-         * 获取原生seleciton对象
-         * @method getNative
-         * @return { Object } 获得selection对象
-         * @example
-         * ```javascript
-         * editor.selection.getNative();
-         * ```
-         */
+     * 获取原生seleciton对象
+     * @method getNative
+     * @return { Object } 获得selection对象
+     * @example
+     * ```javascript
+     * editor.selection.getNative();
+     * ```
+     */
     getNative: function() {
       var doc = this.document;
       try {
-        return !doc
-          ? null
-          : browser.ie9below
-            ? doc.selection
-            : domUtils.getWindow(doc).getSelection();
+        return !doc ? null : browser.ie9below ? doc.selection : domUtils.getWindow(doc).getSelection();
       } catch (e) {
         return null;
       }
     },
 
     /**
-         * 获得ieRange
-         * @method getIERange
-         * @return { Object } 返回ie原生的Range
-         * @example
-         * ```javascript
-         * editor.selection.getIERange();
-         * ```
-         */
+     * 获得ieRange
+     * @method getIERange
+     * @return { Object } 返回ie原生的Range
+     * @example
+     * ```javascript
+     * editor.selection.getIERange();
+     * ```
+     */
     getIERange: function() {
       var ieRange = _getIERange(this);
       if (!ieRange) {
@@ -200,9 +194,9 @@
     },
 
     /**
-         * 缓存当前选区的range和选区的开始节点
-         * @method cache
-         */
+     * 缓存当前选区的range和选区的开始节点
+     * @method cache
+     */
     cache: function() {
       this.clear();
       this._cachedRange = this.getRange();
@@ -211,14 +205,14 @@
     },
 
     /**
-         * 获取选区开始位置的父节点到body
-         * @method getStartElementPath
-         * @return { Array } 返回父节点集合
-         * @example
-         * ```javascript
-         * editor.selection.getStartElementPath();
-         * ```
-         */
+     * 获取选区开始位置的父节点到body
+     * @method getStartElementPath
+     * @return { Array } 返回父节点集合
+     * @example
+     * ```javascript
+     * editor.selection.getStartElementPath();
+     * ```
+     */
     getStartElementPath: function() {
       if (this._cachedStartElementPath) {
         return this._cachedStartElementPath;
@@ -231,17 +225,17 @@
     },
 
     /**
-         * 清空缓存
-         * @method clear
-         */
+     * 清空缓存
+     * @method clear
+     */
     clear: function() {
       this._cachedStartElementPath = this._cachedRange = this._cachedStartElement = null;
     },
 
     /**
-         * 编辑器是否得到了选区
-         * @method isFocus
-         */
+     * 编辑器是否得到了选区
+     * @method isFocus
+     */
     isFocus: function() {
       try {
         if (browser.ie9below) {
@@ -256,14 +250,14 @@
     },
 
     /**
-         * 获取选区对应的Range
-         * @method getRange
-         * @return { Object } 得到Range对象
-         * @example
-         * ```javascript
-         * editor.selection.getRange();
-         * ```
-         */
+     * 获取选区对应的Range
+     * @method getRange
+     * @return { Object } 得到Range对象
+     * @example
+     * ```javascript
+     * editor.selection.getRange();
+     * ```
+     */
     getRange: function() {
       var me = this;
       function optimze(range) {
@@ -306,19 +300,12 @@
           range
             .setStart(firstRange.startContainer, firstRange.startOffset)
             .setEnd(lastRange.endContainer, lastRange.endOffset);
-          if (
-            range.collapsed &&
-            domUtils.isBody(range.startContainer) &&
-            !range.startOffset
-          ) {
+          if (range.collapsed && domUtils.isBody(range.startContainer) && !range.startOffset) {
             optimze(range);
           }
         } else {
           //trace:1734 有可能已经不在dom树上了，标识的节点
-          if (
-            this._bakRange &&
-            domUtils.inDoc(this._bakRange.startContainer, this.document)
-          ) {
+          if (this._bakRange && domUtils.inDoc(this._bakRange.startContainer, this.document)) {
             return this._bakRange;
           }
           optimze(range);
@@ -328,14 +315,14 @@
     },
 
     /**
-         * 获取开始元素，用于状态反射
-         * @method getStart
-         * @return { Element } 获得开始元素
-         * @example
-         * ```javascript
-         * editor.selection.getStart();
-         * ```
-         */
+     * 获取开始元素，用于状态反射
+     * @method getStart
+     * @return { Element } 获得开始元素
+     * @example
+     * ```javascript
+     * editor.selection.getStart();
+     * ```
+     */
     getStart: function() {
       if (this._cachedStartElement) {
         return this._cachedStartElement;
@@ -370,10 +357,7 @@
         range.shrinkBoundary();
         start = range.startContainer;
         if (start.nodeType == 1 && start.hasChildNodes()) {
-          start =
-            start.childNodes[
-              Math.min(start.childNodes.length - 1, range.startOffset)
-            ];
+          start = start.childNodes[Math.min(start.childNodes.length - 1, range.startOffset)];
         }
         if (start.nodeType == 3) {
           return start.parentNode;
@@ -383,33 +367,31 @@
     },
 
     /**
-         * 得到选区中的文本
-         * @method getText
-         * @return { String } 选区中包含的文本
-         * @example
-         * ```javascript
-         * editor.selection.getText();
-         * ```
-         */
+     * 得到选区中的文本
+     * @method getText
+     * @return { String } 选区中包含的文本
+     * @example
+     * ```javascript
+     * editor.selection.getText();
+     * ```
+     */
     getText: function() {
       var nativeSel, nativeRange;
       if (this.isFocus() && (nativeSel = this.getNative())) {
-        nativeRange = browser.ie9below
-          ? nativeSel.createRange()
-          : nativeSel.getRangeAt(0);
+        nativeRange = browser.ie9below ? nativeSel.createRange() : nativeSel.getRangeAt(0);
         return browser.ie9below ? nativeRange.text : nativeRange.toString();
       }
       return "";
     },
 
     /**
-         * 清除选区
-         * @method clearRange
-         * @example
-         * ```javascript
-         * editor.selection.clearRange();
-         * ```
-         */
+     * 清除选区
+     * @method clearRange
+     * @example
+     * ```javascript
+     * editor.selection.clearRange();
+     * ```
+     */
     clearRange: function() {
       this.getNative()[browser.ie9below ? "empty" : "removeAllRanges"]();
     }

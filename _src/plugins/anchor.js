@@ -51,17 +51,17 @@ UE.plugin.register("anchor", function() {
     },
     commands: {
       /**
-            * 插入锚点
-            * @command anchor
-            * @method execCommand
-            * @param { String } cmd 命令字符串
-            * @param { String } name 锚点名称字符串
-            * @example
-            * ```javascript
-            * //editor 是编辑器实例
-            * editor.execCommand('anchor', 'anchor1');
-            * ```
-            */
+       * 插入锚点
+       * @command anchor
+       * @method execCommand
+       * @param { String } cmd 命令字符串
+       * @param { String } name 锚点名称字符串
+       * @example
+       * ```javascript
+       * //editor 是编辑器实例
+       * editor.execCommand('anchor', 'anchor1');
+       * ```
+       */
       anchor: {
         execCommand: function(cmd, name) {
           var range = this.selection.getRange(),

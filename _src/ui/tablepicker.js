@@ -43,11 +43,7 @@
     _UIBase_render: UIBase.prototype.render,
     render: function(holder) {
       this._UIBase_render(holder);
-      this.getDom("label").innerHTML =
-        "0" +
-        this.editor.getLang("t_row") +
-        " x 0" +
-        this.editor.getLang("t_col");
+      this.getDom("label").innerHTML = "0" + this.editor.getLang("t_row") + " x 0" + this.editor.getLang("t_col");
     },
     _track: function(numCols, numRows) {
       var style = this.getDom("overlay").style;
@@ -55,34 +51,21 @@
       style.width = numCols * sideLen + "px";
       style.height = numRows * sideLen + "px";
       var label = this.getDom("label");
-      label.innerHTML =
-        numCols +
-        this.editor.getLang("t_col") +
-        " x " +
-        numRows +
-        this.editor.getLang("t_row");
+      label.innerHTML = numCols + this.editor.getLang("t_col") + " x " + numRows + this.editor.getLang("t_row");
       this.numCols = numCols;
       this.numRows = numRows;
     },
     _onMouseOver: function(evt, el) {
       var rel = evt.relatedTarget || evt.fromElement;
       if (!uiUtils.contains(el, rel) && el !== rel) {
-        this.getDom("label").innerHTML =
-          "0" +
-          this.editor.getLang("t_col") +
-          " x 0" +
-          this.editor.getLang("t_row");
+        this.getDom("label").innerHTML = "0" + this.editor.getLang("t_col") + " x 0" + this.editor.getLang("t_row");
         this.getDom("overlay").style.visibility = "";
       }
     },
     _onMouseOut: function(evt, el) {
       var rel = evt.relatedTarget || evt.toElement;
       if (!uiUtils.contains(el, rel) && el !== rel) {
-        this.getDom("label").innerHTML =
-          "0" +
-          this.editor.getLang("t_col") +
-          " x 0" +
-          this.editor.getLang("t_row");
+        this.getDom("label").innerHTML = "0" + this.editor.getLang("t_col") + " x 0" + this.editor.getLang("t_row");
         this.getDom("overlay").style.visibility = "hidden";
       }
     },

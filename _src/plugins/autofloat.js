@@ -53,18 +53,12 @@ UE.plugins["autofloat"] = function() {
         toolbarBox.style.position = "absolute";
       }
       toolbarBox.style.top =
-        (document.body.scrollTop || document.documentElement.scrollTop) -
-        orgTop +
-        topOffset +
-        "px";
+        (document.body.scrollTop || document.documentElement.scrollTop) - orgTop + topOffset + "px";
     } else {
       if (browser.ie7Compat && flag) {
         flag = false;
         toolbarBox.style.left =
-          domUtils.getXY(toolbarBox).x -
-          document.documentElement.getBoundingClientRect().left +
-          2 +
-          "px";
+          domUtils.getXY(toolbarBox).x - document.documentElement.getBoundingClientRect().left + 2 + "px";
       }
       if (toolbarBox.style.position != "fixed") {
         toolbarBox.style.position = "fixed";

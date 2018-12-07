@@ -31,18 +31,8 @@ UE.parse.register("list", function(utils) {
 
   if (ols.length || uls.length) {
     customCss.push(selector + " .list-paddingleft-1{padding-left:0}");
-    customCss.push(
-      selector +
-        " .list-paddingleft-2{padding-left:" +
-        this.listDefaultPaddingLeft +
-        "px}"
-    );
-    customCss.push(
-      selector +
-        " .list-paddingleft-3{padding-left:" +
-        this.listDefaultPaddingLeft * 2 +
-        "px}"
-    );
+    customCss.push(selector + " .list-paddingleft-2{padding-left:" + this.listDefaultPaddingLeft + "px}");
+    customCss.push(selector + " .list-paddingleft-3{padding-left:" + this.listDefaultPaddingLeft * 2 + "px}");
 
     utils.cssRule(
       "list",
@@ -117,117 +107,33 @@ UE.parse.register("list", function(utils) {
         }
         switch (listStyle) {
           case "cn":
-            utils.pushItem(
-              customCss,
-              selector +
-                " li.list-" +
-                listStyle +
-                "-paddingleft-1{padding-left:25px}"
-            );
-            utils.pushItem(
-              customCss,
-              selector +
-                " li.list-" +
-                listStyle +
-                "-paddingleft-2{padding-left:40px}"
-            );
-            utils.pushItem(
-              customCss,
-              selector +
-                " li.list-" +
-                listStyle +
-                "-paddingleft-3{padding-left:55px}"
-            );
+            utils.pushItem(customCss, selector + " li.list-" + listStyle + "-paddingleft-1{padding-left:25px}");
+            utils.pushItem(customCss, selector + " li.list-" + listStyle + "-paddingleft-2{padding-left:40px}");
+            utils.pushItem(customCss, selector + " li.list-" + listStyle + "-paddingleft-3{padding-left:55px}");
             break;
           case "cn1":
-            utils.pushItem(
-              customCss,
-              selector +
-                " li.list-" +
-                listStyle +
-                "-paddingleft-1{padding-left:30px}"
-            );
-            utils.pushItem(
-              customCss,
-              selector +
-                " li.list-" +
-                listStyle +
-                "-paddingleft-2{padding-left:40px}"
-            );
-            utils.pushItem(
-              customCss,
-              selector +
-                " li.list-" +
-                listStyle +
-                "-paddingleft-3{padding-left:55px}"
-            );
+            utils.pushItem(customCss, selector + " li.list-" + listStyle + "-paddingleft-1{padding-left:30px}");
+            utils.pushItem(customCss, selector + " li.list-" + listStyle + "-paddingleft-2{padding-left:40px}");
+            utils.pushItem(customCss, selector + " li.list-" + listStyle + "-paddingleft-3{padding-left:55px}");
             break;
           case "cn2":
-            utils.pushItem(
-              customCss,
-              selector +
-                " li.list-" +
-                listStyle +
-                "-paddingleft-1{padding-left:40px}"
-            );
-            utils.pushItem(
-              customCss,
-              selector +
-                " li.list-" +
-                listStyle +
-                "-paddingleft-2{padding-left:55px}"
-            );
-            utils.pushItem(
-              customCss,
-              selector +
-                " li.list-" +
-                listStyle +
-                "-paddingleft-3{padding-left:68px}"
-            );
+            utils.pushItem(customCss, selector + " li.list-" + listStyle + "-paddingleft-1{padding-left:40px}");
+            utils.pushItem(customCss, selector + " li.list-" + listStyle + "-paddingleft-2{padding-left:55px}");
+            utils.pushItem(customCss, selector + " li.list-" + listStyle + "-paddingleft-3{padding-left:68px}");
             break;
           case "num":
           case "num1":
-            utils.pushItem(
-              customCss,
-              selector +
-                " li.list-" +
-                listStyle +
-                "-paddingleft-1{padding-left:25px}"
-            );
+            utils.pushItem(customCss, selector + " li.list-" + listStyle + "-paddingleft-1{padding-left:25px}");
             break;
           case "num2":
-            utils.pushItem(
-              customCss,
-              selector +
-                " li.list-" +
-                listStyle +
-                "-paddingleft-1{padding-left:35px}"
-            );
-            utils.pushItem(
-              customCss,
-              selector +
-                " li.list-" +
-                listStyle +
-                "-paddingleft-2{padding-left:40px}"
-            );
+            utils.pushItem(customCss, selector + " li.list-" + listStyle + "-paddingleft-1{padding-left:35px}");
+            utils.pushItem(customCss, selector + " li.list-" + listStyle + "-paddingleft-2{padding-left:40px}");
             break;
           case "dash":
-            utils.pushItem(
-              customCss,
-              selector +
-                " li.list-" +
-                listStyle +
-                "-paddingleft{padding-left:35px}"
-            );
+            utils.pushItem(customCss, selector + " li.list-" + listStyle + "-paddingleft{padding-left:35px}");
             break;
           case "dot":
-            utils.pushItem(
-              customCss,
-              selector +
-                " li.list-" +
-                listStyle +
-                "-paddingleft{padding-left:20px}"
-            );
+            utils.pushItem(customCss, selector + " li.list-" + listStyle + "-paddingleft{padding-left:20px}");
         }
       }
     });

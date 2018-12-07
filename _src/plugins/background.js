@@ -28,11 +28,7 @@ UE.plugin.register("background", function() {
           styles.push(name + ":" + obj[name] + "; ");
         }
       }
-      utils.cssRule(
-        cssRuleId,
-        styles.length ? "body{" + styles.join("") + "}" : "",
-        me.document
-      );
+      utils.cssRule(cssRuleId, styles.length ? "body{" + styles.join("") + "}" : "", me.document);
     } else {
       utils.cssRule(cssRuleId, "", me.document);
     }
@@ -53,23 +49,19 @@ UE.plugin.register("background", function() {
           su = domUtils.getComputedStyle(body, "background-image"),
           url = "";
         if (su.indexOf(me.options.imagePath) > 0) {
-          url = su
-            .substring(su.indexOf(me.options.imagePath), su.length - 1)
-            .replace(/"|\(|\)/gi, "");
+          url = su.substring(su.indexOf(me.options.imagePath), su.length - 1).replace(/"|\(|\)/gi, "");
         } else {
           url = su != "none" ? su.replace(/url\("?|"?\)/gi, "") : "";
         }
         var html = '<style type="text/css">body{';
         var bgObj = {
-          "background-color":
-            domUtils.getComputedStyle(body, "background-color") || "#ffffff",
+          "background-color": domUtils.getComputedStyle(body, "background-color") || "#ffffff",
           "background-image": url ? "url(" + url + ")" : "",
-          "background-repeat":
-            domUtils.getComputedStyle(body, "background-repeat") || "",
+          "background-repeat": domUtils.getComputedStyle(body, "background-repeat") || "",
           "background-position": browser.ie
             ? domUtils.getComputedStyle(body, "background-position-x") +
-                " " +
-                domUtils.getComputedStyle(body, "background-position-y")
+              " " +
+              domUtils.getComputedStyle(body, "background-position-y")
             : domUtils.getComputedStyle(body, "background-position"),
           height: domUtils.getComputedStyle(body, "height")
         };
@@ -98,9 +90,7 @@ UE.plugin.register("background", function() {
     },
     outputRule: function(root) {
       var me = this,
-        styles = (utils.cssRule(cssRuleId, me.document) || "")
-          .replace(/[\n\r]+/g, "")
-          .match(reg);
+        styles = (utils.cssRule(cssRuleId, me.document) || "").replace(/[\n\r]+/g, "").match(reg);
       if (styles) {
         root.appendChild(
           UE.uNode.createElement(
@@ -118,9 +108,7 @@ UE.plugin.register("background", function() {
         },
         queryCommandValue: function() {
           var me = this,
-            styles = (utils.cssRule(cssRuleId, me.document) || "")
-              .replace(/[\n\r]+/g, "")
-              .match(reg);
+            styles = (utils.cssRule(cssRuleId, me.document) || "").replace(/[\n\r]+/g, "").match(reg);
           return styles ? stringToObj(styles[1]) : null;
         },
         notNeedUndo: true

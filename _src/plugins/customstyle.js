@@ -33,14 +33,12 @@ UE.plugins["customstyle"] = function() {
       {
         tag: "span",
         name: "im",
-        style:
-          "font-size:16px;font-style:italic;font-weight:bold;line-height:18px;"
+        style: "font-size:16px;font-style:italic;font-weight:bold;line-height:18px;"
       },
       {
         tag: "span",
         name: "hi",
-        style:
-          "font-size:16px;font-style:italic;font-weight:bold;color:rgb(51, 153, 204);line-height:18px;"
+        style: "font-size:16px;font-style:italic;font-weight:bold;color:rgb(51, 153, 204);line-height:18px;"
       }
     ]
   });
@@ -86,10 +84,8 @@ UE.plugins["customstyle"] = function() {
               var ps = domUtils.getPosition(ni, bk.start),
                 pe = domUtils.getPosition(ni, bk.end);
               if (
-                (ps & domUtils.POSITION_FOLLOWING ||
-                  ps & domUtils.POSITION_CONTAINS) &&
-                (pe & domUtils.POSITION_PRECEDING ||
-                  pe & domUtils.POSITION_CONTAINS)
+                (ps & domUtils.POSITION_FOLLOWING || ps & domUtils.POSITION_CONTAINS) &&
+                (pe & domUtils.POSITION_PRECEDING || pe & domUtils.POSITION_CONTAINS)
               )
                 if (dtd.$block[tagName]) {
                   var fillNode = me.document.createElement("p");
@@ -134,23 +130,26 @@ UE.plugins["customstyle"] = function() {
           if (range.collapsed) {
             node = me.document.createElement(tagName);
             domUtils.setAttributes(node, tmpObj);
-            range.insertNode(node).setStart(node, 0).setCursor();
+            range
+              .insertNode(node)
+              .setStart(node, 0)
+              .setCursor();
 
             return;
           }
 
           bk = range.createBookmark();
-          range.applyInlineStyle(tagName, tmpObj).moveToBookmark(bk).select();
+          range
+            .applyInlineStyle(tagName, tmpObj)
+            .moveToBookmark(bk)
+            .select();
         }
       }
     },
     queryCommandValue: function() {
-      var parent = domUtils.filterNodeList(
-        this.selection.getStartElementPath(),
-        function(node) {
-          return node.getAttribute("label");
-        }
-      );
+      var parent = domUtils.filterNodeList(this.selection.getStartElementPath(), function(node) {
+        return node.getAttribute("label");
+      });
       return parent ? parent.getAttribute("label") : "";
     }
   };

@@ -26,8 +26,7 @@ UE.plugin.register("simpleupload", function() {
         btnIframeDoc,
         btnIframeBody;
 
-      btnIframeDoc =
-        btnIframe.contentDocument || btnIframe.contentWindow.document;
+      btnIframeDoc = btnIframe.contentDocument || btnIframe.contentWindow.document;
       btnIframeBody = btnIframeDoc.body;
       wrapper = btnIframeDoc.createElement("div");
 
@@ -76,8 +75,7 @@ UE.plugin.register("simpleupload", function() {
       domUtils.on(input, "change", function() {
         if (!input.value) return;
         var loadingId = "loading_" + (+new Date()).toString(36);
-        var params =
-          utils.serializeParam(me.queryCommandValue("serverparam")) || "";
+        var params = utils.serializeParam(me.queryCommandValue("serverparam")) || "";
 
         var imageActionUrl = me.getActionUrl(me.getOpt("imageActionName"));
         var allowFiles = me.getOpt("imageAllowFiles");
@@ -98,8 +96,7 @@ UE.plugin.register("simpleupload", function() {
             var link,
               json,
               loader,
-              body = (iframe.contentDocument || iframe.contentWindow.document)
-                .body,
+              body = (iframe.contentDocument || iframe.contentWindow.document).body,
               result = body.innerText || body.textContent || "";
             json = new Function("return " + result)();
             link = me.options.imageUrlPrefix + json.url;
@@ -115,8 +112,7 @@ UE.plugin.register("simpleupload", function() {
               showErrorLoader && showErrorLoader(json.state);
             }
           } catch (er) {
-            showErrorLoader &&
-              showErrorLoader(me.getLang("simpleupload.loadError"));
+            showErrorLoader && showErrorLoader(me.getLang("simpleupload.loadError"));
           }
           form.reset();
           domUtils.un(iframe, "load", callback);
@@ -142,22 +138,13 @@ UE.plugin.register("simpleupload", function() {
         // 判断文件格式是否错误
         var filename = input.value,
           fileext = filename ? filename.substr(filename.lastIndexOf(".")) : "";
-        if (
-          !fileext ||
-          (allowFiles &&
-            (allowFiles.join("") + ".").indexOf(fileext.toLowerCase() + ".") ==
-              -1)
-        ) {
+        if (!fileext || (allowFiles && (allowFiles.join("") + ".").indexOf(fileext.toLowerCase() + ".") == -1)) {
           showErrorLoader(me.getLang("simpleupload.exceedTypeError"));
           return;
         }
 
         domUtils.on(iframe, "load", callback);
-        form.action = utils.formatUrl(
-          imageActionUrl +
-            (imageActionUrl.indexOf("?") == -1 ? "?" : "&") +
-            params
-        );
+        form.action = utils.formatUrl(imageActionUrl + (imageActionUrl.indexOf("?") == -1 ? "?" : "&") + params);
         form.submit();
       });
 

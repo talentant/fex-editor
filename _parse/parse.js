@@ -35,10 +35,7 @@
             if (style === undefined) {
               return "";
             }
-            sheetStyle = doc.createStyleSheet(
-              "",
-              (index = doc.styleSheets.length)
-            );
+            sheetStyle = doc.createStyleSheet("", (index = doc.styleSheets.length));
             indexList[key] = index;
           } else {
             sheetStyle = doc.styleSheets[indexList[key]];
@@ -92,11 +89,7 @@
           doc.addEventListener(
             "DOMContentLoaded",
             function() {
-              doc.removeEventListener(
-                "DOMContentLoaded",
-                arguments.callee,
-                false
-              );
+              doc.removeEventListener("DOMContentLoaded", arguments.callee, false);
               onready();
             },
             false
@@ -120,8 +113,7 @@
       } else {
         for (var key in obj) {
           if (obj.hasOwnProperty(key)) {
-            if (iterator.call(context, obj[key], key, obj) === false)
-              return false;
+            if (iterator.call(context, obj[key], key, obj) === false) return false;
           }
         }
       }
@@ -169,7 +161,9 @@
     },
     addClass: function(elm, classNames) {
       if (!elm) return;
-      classNames = this.trim(classNames).replace(/[ ]{2,}/g, " ").split(" ");
+      classNames = this.trim(classNames)
+        .replace(/[ ]{2,}/g, " ")
+        .split(" ");
       for (var i = 0, ci, cls = elm.className; (ci = classNames[i++]); ) {
         if (!new RegExp("\\b" + ci + "\\b").test(cls)) {
           cls += " " + ci;
@@ -180,7 +174,9 @@
     removeClass: function(elm, classNames) {
       classNames = this.isArray(classNames)
         ? classNames
-        : this.trim(classNames).replace(/[ ]{2,}/g, " ").split(" ");
+        : this.trim(classNames)
+            .replace(/[ ]{2,}/g, " ")
+            .split(" ");
       for (var i = 0, ci, cls = elm.className; (ci = classNames[i++]); ) {
         cls = cls.replace(new RegExp("\\b" + ci + "\\b"), "");
       }
@@ -231,10 +227,7 @@
           } else {
             var key = type + handler.toString();
             try {
-              element.detachEvent(
-                "on" + type,
-                handler._d ? handler._d[key] : handler
-              );
+              element.detachEvent("on" + type, handler._d ? handler._d[key] : handler);
             } catch (e) {}
             if (handler._d && handler._d[key]) {
               var index = utils.indexOf(handler._d.els, element);
@@ -280,9 +273,7 @@
             if (p == "tag") continue;
             html.push(p + '="' + obj[p] + '"');
           }
-          doc.write(
-            "<" + obj.tag + " " + html.join(" ") + " ></" + obj.tag + ">"
-          );
+          doc.write("<" + obj.tag + " " + html.join(" ") + " ></" + obj.tag + ">");
           return;
         }
         if (obj.id && doc.getElementById(obj.id)) {
@@ -306,22 +297,17 @@
           }
         };
         element.onerror = function() {
-          throw Error(
-            "The load " + (obj.href || obj.src) + " fails,check the url"
-          );
+          throw Error("The load " + (obj.href || obj.src) + " fails,check the url");
         };
         doc.getElementsByTagName("head")[0].appendChild(element);
       };
     })()
   };
-  utils.each(
-    ["String", "Function", "Array", "Number", "RegExp", "Object", "Boolean"],
-    function(v) {
-      utils["is" + v] = function(obj) {
-        return Object.prototype.toString.apply(obj) == "[object " + v + "]";
-      };
-    }
-  );
+  utils.each(["String", "Function", "Array", "Number", "RegExp", "Object", "Boolean"], function(v) {
+    utils["is" + v] = function(obj) {
+      return Object.prototype.toString.apply(obj) == "[object " + v + "]";
+    };
+  });
   var parselist = {};
   UE.parse = {
     register: function(parseName, fn) {
@@ -344,12 +330,7 @@
         } else if (/^\./.test(selector)) {
           var contents = [];
           utils.each(document.getElementsByTagName("*"), function(node) {
-            if (
-              node.className &&
-              new RegExp("\\b" + selector.replace(/^\./, "") + "\\b", "i").test(
-                node.className
-              )
-            ) {
+            if (node.className && new RegExp("\\b" + selector.replace(/^\./, "") + "\\b", "i").test(node.className)) {
               contents.push(node);
             }
           });
@@ -358,7 +339,7 @@
         }
       }
       utils.each(contents, function(v) {
-        UE.parse.load(utils.extend({ root: v, selector: selector }, opt));
+        UE.parse.load(utils.extend({root: v, selector: selector}, opt));
       });
     });
   };

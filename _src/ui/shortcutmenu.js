@@ -129,12 +129,7 @@
         if (offset.top < 0) {
           offset.top = 0;
         }
-        el.style.cssText =
-          "position:absolute;left:" +
-          offset.left +
-          "px;top:" +
-          offset.top +
-          "px;";
+        el.style.cssText = "position:absolute;left:" + offset.left + "px;top:" + offset.top + "px;";
       }
 
       function setPosByCxtMenu(menu) {
@@ -151,11 +146,7 @@
       el.style.cssText = "display:block;left:-9999px";
 
       if (e.type == "contextmenu" && hasContextmenu) {
-        var menu = domUtils.getElementsByTagName(
-          fixedlayer,
-          "div",
-          "edui-contextmenu"
-        )[0];
+        var menu = domUtils.getElementsByTagName(fixedlayer, "div", "edui-contextmenu")[0];
         if (menu) {
           setPosByCxtMenu(menu);
         } else {
@@ -220,10 +211,7 @@
       cur = domUtils.findParent(
         tgt,
         function(node) {
-          return (
-            domUtils.hasClass(node, "edui-shortcutmenu") ||
-            domUtils.hasClass(node, "edui-popup")
-          );
+          return domUtils.hasClass(node, "edui-shortcutmenu") || domUtils.hasClass(node, "edui-popup");
         },
         true
       );

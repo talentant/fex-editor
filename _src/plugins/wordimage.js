@@ -46,10 +46,10 @@ UE.plugin.register("wordimage", function() {
             src: src,
             style:
               "background:url(" +
-                (flag
-                  ? opt.themePath + opt.theme + "/images/word.gif"
-                  : opt.langPath + opt.lang + "/images/localimage.png") +
-                ") no-repeat center center;border:1px solid #ddd"
+              (flag
+                ? opt.themePath + opt.theme + "/images/word.gif"
+                : opt.langPath + opt.lang + "/images/localimage.png") +
+              ") no-repeat center center;border:1px solid #ddd"
           });
         }
       });

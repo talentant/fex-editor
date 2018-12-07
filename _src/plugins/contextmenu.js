@@ -20,7 +20,7 @@ UE.plugins["contextmenu"] = function() {
   var lang = me.getLang("contextMenu"),
     menu,
     items = me.options.contextMenu || [
-      { label: lang["selectall"], cmdName: "selectall" },
+      {label: lang["selectall"], cmdName: "selectall"},
       {
         label: lang.cleardoc,
         cmdName: "cleardoc",
@@ -290,39 +290,39 @@ UE.plugins["contextmenu"] = function() {
         subMenu: [
           {
             cmdName: "cellalignment",
-            value: { align: "left", vAlign: "top" }
+            value: {align: "left", vAlign: "top"}
           },
           {
             cmdName: "cellalignment",
-            value: { align: "center", vAlign: "top" }
+            value: {align: "center", vAlign: "top"}
           },
           {
             cmdName: "cellalignment",
-            value: { align: "right", vAlign: "top" }
+            value: {align: "right", vAlign: "top"}
           },
           {
             cmdName: "cellalignment",
-            value: { align: "left", vAlign: "middle" }
+            value: {align: "left", vAlign: "middle"}
           },
           {
             cmdName: "cellalignment",
-            value: { align: "center", vAlign: "middle" }
+            value: {align: "center", vAlign: "middle"}
           },
           {
             cmdName: "cellalignment",
-            value: { align: "right", vAlign: "middle" }
+            value: {align: "right", vAlign: "middle"}
           },
           {
             cmdName: "cellalignment",
-            value: { align: "left", vAlign: "bottom" }
+            value: {align: "left", vAlign: "bottom"}
           },
           {
             cmdName: "cellalignment",
-            value: { align: "center", vAlign: "bottom" }
+            value: {align: "center", vAlign: "bottom"}
           },
           {
             cmdName: "cellalignment",
-            value: { align: "right", vAlign: "bottom" }
+            value: {align: "right", vAlign: "bottom"}
           }
         ]
       },
@@ -398,31 +398,15 @@ UE.plugins["contextmenu"] = function() {
                 }
               } else {
                 if (
-                  (me.commands[subItem.cmdName] ||
-                    UE.commands[subItem.cmdName] ||
-                    subItem.query) &&
-                  (subItem.query
-                    ? subItem.query()
-                    : me.queryCommandState(subItem.cmdName)) > -1
+                  (me.commands[subItem.cmdName] || UE.commands[subItem.cmdName] || subItem.query) &&
+                  (subItem.query ? subItem.query() : me.queryCommandState(subItem.cmdName)) > -1
                 ) {
                   subMenu.push({
-                    label:
-                      subItem.label ||
-                        me.getLang(
-                          "contextMenu." +
-                            subItem.cmdName +
-                            (subItem.value || "")
-                        ) ||
-                        "",
+                    label: subItem.label || me.getLang("contextMenu." + subItem.cmdName + (subItem.value || "")) || "",
                     className:
                       "edui-for-" +
-                        subItem.cmdName +
-                        (subItem.className
-                          ? " edui-for-" +
-                              subItem.cmdName +
-                              "-" +
-                              subItem.className
-                          : ""),
+                      subItem.cmdName +
+                      (subItem.className ? " edui-for-" + subItem.cmdName + "-" + subItem.className : ""),
                     onclick: subItem.exec
                       ? function() {
                           subItem.exec.call(me);
@@ -467,18 +451,12 @@ UE.plugins["contextmenu"] = function() {
         } else {
           //有可能commmand没有加载右键不能出来，或者没有command也想能展示出来添加query方法
           if (
-            (me.commands[item.cmdName] ||
-              UE.commands[item.cmdName] ||
-              item.query) &&
-            (item.query
-              ? item.query.call(me)
-              : me.queryCommandState(item.cmdName)) > -1
+            (me.commands[item.cmdName] || UE.commands[item.cmdName] || item.query) &&
+            (item.query ? item.query.call(me) : me.queryCommandState(item.cmdName)) > -1
           ) {
             contextItems.push({
               label: item.label || me.getLang("contextMenu." + item.cmdName),
-              className:
-                "edui-for-" +
-                  (item.icon ? item.icon : item.cmdName + (item.value || "")),
+              className: "edui-for-" + (item.icon ? item.icon : item.cmdName + (item.value || "")),
               onclick: item.exec
                 ? function() {
                     item.exec.call(me);

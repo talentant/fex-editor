@@ -5,8 +5,7 @@ UE.parse.register("vedio", function(utils) {
   document.createElement("video");
   document.createElement("audio");
   if (video.length || audio.length) {
-    var
-      jsurl = "https://cdn.jsdelivr.net/npm/video.js@4.3.0/video.js",
+    var jsurl = "https://cdn.jsdelivr.net/npm/video.js@4.3.0/video.js",
       cssurl = "https://cdn.jsdelivr.net/npm/video.js@4.3.0/video-js.min.css",
       swfUrl = "https://cdn.jsdelivr.net/npm/video.js@4.3.0/video-js.swf";
 

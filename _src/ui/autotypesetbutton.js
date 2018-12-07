@@ -25,19 +25,13 @@
         attrName = ipt.getAttribute("name");
         opt[attrName] && delete opt[attrName];
         if (ipt.checked) {
-          var attrValue = document.getElementById(
-            attrName + "Value" + editorId
-          );
+          var attrValue = document.getElementById(attrName + "Value" + editorId);
           if (attrValue) {
             if (/input/gi.test(attrValue.tagName)) {
               opt[attrName] = attrValue.value;
             } else {
               var iptChilds = attrValue.getElementsByTagName("input");
-              for (
-                var j = iptChilds.length - 1, iptchild;
-                (iptchild = iptChilds[j--]);
-
-              ) {
+              for (var j = iptChilds.length - 1, iptchild; (iptchild = iptChilds[j--]); ) {
                 if (iptchild.checked) {
                   opt[attrName] = iptchild.value;
                   break;
@@ -71,7 +65,7 @@
       var me = this;
       this.popup = new Popup({
         //传入配置参数
-        content: new AutoTypeSetPicker({ editor: me.editor }),
+        content: new AutoTypeSetPicker({editor: me.editor}),
         editor: me.editor,
         hide: function() {
           if (!this._hidden && this.getDom()) {
@@ -100,15 +94,9 @@
             editorId = me.editor.uid;
           if (target && target.tagName == "INPUT") {
             // 点击图片浮动的checkbox,去除对应的radio
-            if (
-              target.name == "imageBlockLine" ||
-              target.name == "textAlign" ||
-              target.name == "symbolConver"
-            ) {
+            if (target.name == "imageBlockLine" || target.name == "textAlign" || target.name == "symbolConver") {
               var checked = target.checked,
-                radioTd = document.getElementById(
-                  target.name + "Value" + editorId
-                ),
+                radioTd = document.getElementById(target.name + "Value" + editorId),
                 radios = radioTd.getElementsByTagName("input"),
                 defalutSelect = {
                   imageBlockLine: "none",
@@ -132,9 +120,7 @@
               target.name == "textAlignValue" + editorId ||
               target.name == "bdc"
             ) {
-              var checkboxs = target.parentNode.previousSibling.getElementsByTagName(
-                "input"
-              );
+              var checkboxs = target.parentNode.previousSibling.getElementsByTagName("input");
               checkboxs && (checkboxs[0].checked = true);
             }
 

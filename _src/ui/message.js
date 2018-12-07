@@ -54,10 +54,7 @@
     setType: function(type) {
       type = type || "info";
       var body = this.getDom("body");
-      body.className = body.className.replace(
-        /edui-message-type-[\w-]+/,
-        "edui-message-type-" + type
-      );
+      body.className = body.className.replace(/edui-message-type-[\w-]+/, "edui-message-type-" + type);
     },
     getContent: function() {
       return this.getDom("content").innerHTML;

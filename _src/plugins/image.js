@@ -49,10 +49,7 @@ UE.commands["imagefloat"] = {
               pN = pN.parentNode;
             }
             tmpNode = pN;
-            if (
-              tmpNode.tagName == "P" &&
-              domUtils.getStyle(tmpNode, "text-align") == "center"
-            ) {
+            if (tmpNode.tagName == "P" && domUtils.getStyle(tmpNode, "text-align") == "center") {
               if (
                 !domUtils.isBody(tmpNode) &&
                 domUtils.getChildCount(tmpNode, function(node) {
@@ -111,9 +108,7 @@ UE.commands["imagefloat"] = {
 
               me.execCommand(
                 "insertHtml",
-                '<p id="_img_parent_tmp" style="text-align:center">' +
-                  pN.innerHTML +
-                  "</p>"
+                '<p id="_img_parent_tmp" style="text-align:center">' + pN.innerHTML + "</p>"
               );
 
               tmpNode = me.document.getElementById("_img_parent_tmp");
@@ -141,17 +136,10 @@ UE.commands["imagefloat"] = {
     }
     startNode = range.getClosedNode();
     if (startNode && startNode.nodeType == 1 && startNode.tagName == "IMG") {
-      floatStyle =
-        domUtils.getComputedStyle(startNode, "float") ||
-        startNode.getAttribute("align");
+      floatStyle = domUtils.getComputedStyle(startNode, "float") || startNode.getAttribute("align");
 
       if (floatStyle == "none") {
-        floatStyle = domUtils.getComputedStyle(
-          startNode.parentNode,
-          "text-align"
-        ) == "center"
-          ? "center"
-          : floatStyle;
+        floatStyle = domUtils.getComputedStyle(startNode.parentNode, "text-align") == "center" ? "center" : floatStyle;
       }
       return {
         left: 1,
@@ -224,8 +212,7 @@ UE.commands["insertimage"] = {
     if (
       img &&
       /img/i.test(img.tagName) &&
-      (img.className != "edui-faked-video" ||
-        img.className.indexOf("edui-upload-video") != -1) &&
+      (img.className != "edui-faked-video" || img.className.indexOf("edui-upload-video") != -1) &&
       !img.getAttribute("word_img")
     ) {
       var first = opt.shift();
@@ -259,12 +246,8 @@ UE.commands["insertimage"] = {
           (ci.title && ci.title != "" ? ' title="' + ci.title + '"' : "") +
           (ci.border && ci.border != "0" ? ' border="' + ci.border + '"' : "") +
           (ci.alt && ci.alt != "" ? ' alt="' + ci.alt + '"' : "") +
-          (ci.hspace && ci.hspace != "0"
-            ? ' hspace = "' + ci.hspace + '"'
-            : "") +
-          (ci.vspace && ci.vspace != "0"
-            ? ' vspace = "' + ci.vspace + '"'
-            : "") +
+          (ci.hspace && ci.hspace != "0" ? ' hspace = "' + ci.hspace + '"' : "") +
+          (ci.vspace && ci.vspace != "0" ? ' vspace = "' + ci.vspace + '"' : "") +
           "/>";
         if (ci["floatStyle"] == "center") {
           str = '<p style="text-align: center">' + str + "</p>";
@@ -274,9 +257,7 @@ UE.commands["insertimage"] = {
         for (var i = 0; (ci = opt[i++]); ) {
           str =
             "<p " +
-            (ci["floatStyle"] == "center"
-              ? 'style="text-align: center" '
-              : "") +
+            (ci["floatStyle"] == "center" ? 'style="text-align: center" ' : "") +
             '><img src="' +
             ci.src +
             '" ' +
@@ -284,9 +265,7 @@ UE.commands["insertimage"] = {
             (ci._src ? ' _src="' + ci._src + '" ' : "") +
             (ci.height ? ' height="' + ci.height + '" ' : "") +
             ' style="' +
-            (ci["floatStyle"] && ci["floatStyle"] != "center"
-              ? "float:" + ci["floatStyle"] + ";"
-              : "") +
+            (ci["floatStyle"] && ci["floatStyle"] != "center" ? "float:" + ci["floatStyle"] + ";" : "") +
             (ci.border || "") +
             '" ' +
             (ci.title ? ' title="' + ci.title + '"' : "") +

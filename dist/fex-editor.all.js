@@ -41,75 +41,71 @@ var browser = (UE.browser = (function() {
     opera = window.opera,
     browser = {
       /**
-         * @property {boolean} ie 检测当前浏览器是否为IE
-         * @example
-         * ```javascript
-         * if ( UE.browser.ie ) {
-         *     console.log( '当前浏览器是IE' );
-         * }
-         * ```
-         */
+       * @property {boolean} ie 检测当前浏览器是否为IE
+       * @example
+       * ```javascript
+       * if ( UE.browser.ie ) {
+       *     console.log( '当前浏览器是IE' );
+       * }
+       * ```
+       */
       ie: /(msie\s|trident.*rv:)([\w.]+)/i.test(agent),
 
       /**
-         * @property {boolean} opera 检测当前浏览器是否为Opera
-         * @example
-         * ```javascript
-         * if ( UE.browser.opera ) {
-         *     console.log( '当前浏览器是Opera' );
-         * }
-         * ```
-         */
+       * @property {boolean} opera 检测当前浏览器是否为Opera
+       * @example
+       * ```javascript
+       * if ( UE.browser.opera ) {
+       *     console.log( '当前浏览器是Opera' );
+       * }
+       * ```
+       */
       opera: !!opera && opera.version,
 
       /**
-         * @property {boolean} webkit 检测当前浏览器是否是webkit内核的浏览器
-         * @example
-         * ```javascript
-         * if ( UE.browser.webkit ) {
-         *     console.log( '当前浏览器是webkit内核浏览器' );
-         * }
-         * ```
-         */
+       * @property {boolean} webkit 检测当前浏览器是否是webkit内核的浏览器
+       * @example
+       * ```javascript
+       * if ( UE.browser.webkit ) {
+       *     console.log( '当前浏览器是webkit内核浏览器' );
+       * }
+       * ```
+       */
       webkit: agent.indexOf(" applewebkit/") > -1,
 
       /**
-         * @property {boolean} mac 检测当前浏览器是否是运行在mac平台下
-         * @example
-         * ```javascript
-         * if ( UE.browser.mac ) {
-         *     console.log( '当前浏览器运行在mac平台下' );
-         * }
-         * ```
-         */
+       * @property {boolean} mac 检测当前浏览器是否是运行在mac平台下
+       * @example
+       * ```javascript
+       * if ( UE.browser.mac ) {
+       *     console.log( '当前浏览器运行在mac平台下' );
+       * }
+       * ```
+       */
       mac: agent.indexOf("macintosh") > -1,
 
       /**
-         * @property {boolean} quirks 检测当前浏览器是否处于“怪异模式”下
-         * @example
-         * ```javascript
-         * if ( UE.browser.quirks ) {
-         *     console.log( '当前浏览器运行处于“怪异模式”' );
-         * }
-         * ```
-         */
+       * @property {boolean} quirks 检测当前浏览器是否处于“怪异模式”下
+       * @example
+       * ```javascript
+       * if ( UE.browser.quirks ) {
+       *     console.log( '当前浏览器运行处于“怪异模式”' );
+       * }
+       * ```
+       */
       quirks: document.compatMode == "BackCompat"
     };
 
   /**
-    * @property {boolean} gecko 检测当前浏览器内核是否是gecko内核
-    * @example
-    * ```javascript
-    * if ( UE.browser.gecko ) {
-    *     console.log( '当前浏览器内核是gecko内核' );
-    * }
-    * ```
-    */
-  browser.gecko =
-    navigator.product == "Gecko" &&
-    !browser.webkit &&
-    !browser.opera &&
-    !browser.ie;
+   * @property {boolean} gecko 检测当前浏览器内核是否是gecko内核
+   * @example
+   * ```javascript
+   * if ( UE.browser.gecko ) {
+   *     console.log( '当前浏览器内核是gecko内核' );
+   * }
+   * ```
+   */
+  browser.gecko = navigator.product == "Gecko" && !browser.webkit && !browser.opera && !browser.ie;
 
   var version = 0;
 
@@ -129,64 +125,63 @@ var browser = (UE.browser = (function() {
 
     browser.ie11Compat = document.documentMode == 11;
     /**
-         * @property { boolean } ie9Compat 检测浏览器模式是否为 IE9 兼容模式
-         * @warning 如果浏览器不是IE， 则该值为undefined
-         * @example
-         * ```javascript
-         * if ( UE.browser.ie9Compat ) {
-         *     console.log( '当前浏览器运行在IE9兼容模式下' );
-         * }
-         * ```
-         */
+     * @property { boolean } ie9Compat 检测浏览器模式是否为 IE9 兼容模式
+     * @warning 如果浏览器不是IE， 则该值为undefined
+     * @example
+     * ```javascript
+     * if ( UE.browser.ie9Compat ) {
+     *     console.log( '当前浏览器运行在IE9兼容模式下' );
+     * }
+     * ```
+     */
     browser.ie9Compat = document.documentMode == 9;
 
     /**
-         * @property { boolean } ie8 检测浏览器是否是IE8浏览器
-         * @warning 如果浏览器不是IE， 则该值为undefined
-         * @example
-         * ```javascript
-         * if ( UE.browser.ie8 ) {
-         *     console.log( '当前浏览器是IE8浏览器' );
-         * }
-         * ```
-         */
+     * @property { boolean } ie8 检测浏览器是否是IE8浏览器
+     * @warning 如果浏览器不是IE， 则该值为undefined
+     * @example
+     * ```javascript
+     * if ( UE.browser.ie8 ) {
+     *     console.log( '当前浏览器是IE8浏览器' );
+     * }
+     * ```
+     */
     browser.ie8 = !!document.documentMode;
 
     /**
-         * @property { boolean } ie8Compat 检测浏览器模式是否为 IE8 兼容模式
-         * @warning 如果浏览器不是IE， 则该值为undefined
-         * @example
-         * ```javascript
-         * if ( UE.browser.ie8Compat ) {
-         *     console.log( '当前浏览器运行在IE8兼容模式下' );
-         * }
-         * ```
-         */
+     * @property { boolean } ie8Compat 检测浏览器模式是否为 IE8 兼容模式
+     * @warning 如果浏览器不是IE， 则该值为undefined
+     * @example
+     * ```javascript
+     * if ( UE.browser.ie8Compat ) {
+     *     console.log( '当前浏览器运行在IE8兼容模式下' );
+     * }
+     * ```
+     */
     browser.ie8Compat = document.documentMode == 8;
 
     /**
-         * @property { boolean } ie7Compat 检测浏览器模式是否为 IE7 兼容模式
-         * @warning 如果浏览器不是IE， 则该值为undefined
-         * @example
-         * ```javascript
-         * if ( UE.browser.ie7Compat ) {
-         *     console.log( '当前浏览器运行在IE7兼容模式下' );
-         * }
-         * ```
-         */
-    browser.ie7Compat =
-      (version == 7 && !document.documentMode) || document.documentMode == 7;
+     * @property { boolean } ie7Compat 检测浏览器模式是否为 IE7 兼容模式
+     * @warning 如果浏览器不是IE， 则该值为undefined
+     * @example
+     * ```javascript
+     * if ( UE.browser.ie7Compat ) {
+     *     console.log( '当前浏览器运行在IE7兼容模式下' );
+     * }
+     * ```
+     */
+    browser.ie7Compat = (version == 7 && !document.documentMode) || document.documentMode == 7;
 
     /**
-         * @property { boolean } ie6Compat 检测浏览器模式是否为 IE6 模式 或者怪异模式
-         * @warning 如果浏览器不是IE， 则该值为undefined
-         * @example
-         * ```javascript
-         * if ( UE.browser.ie6Compat ) {
-         *     console.log( '当前浏览器运行在IE6模式或者怪异模式下' );
-         * }
-         * ```
-         */
+     * @property { boolean } ie6Compat 检测浏览器模式是否为 IE6 模式 或者怪异模式
+     * @warning 如果浏览器不是IE， 则该值为undefined
+     * @example
+     * ```javascript
+     * if ( UE.browser.ie6Compat ) {
+     *     console.log( '当前浏览器运行在IE6模式或者怪异模式下' );
+     * }
+     * ```
+     */
     browser.ie6Compat = version < 7 || browser.quirks;
 
     browser.ie9above = version > 8;
@@ -203,41 +198,35 @@ var browser = (UE.browser = (function() {
     var geckoRelease = agent.match(/rv:([\d\.]+)/);
     if (geckoRelease) {
       geckoRelease = geckoRelease[1].split(".");
-      version =
-        geckoRelease[0] * 10000 +
-        (geckoRelease[1] || 0) * 100 +
-        (geckoRelease[2] || 0) * 1;
+      version = geckoRelease[0] * 10000 + (geckoRelease[1] || 0) * 100 + (geckoRelease[2] || 0) * 1;
     }
   }
 
   /**
-     * @property { Number } chrome 检测当前浏览器是否为Chrome, 如果是，则返回Chrome的大版本号
-     * @warning 如果浏览器不是chrome， 则该值为undefined
-     * @example
-     * ```javascript
-     * if ( UE.browser.chrome ) {
-     *     console.log( '当前浏览器是Chrome' );
-     * }
-     * ```
-     */
+   * @property { Number } chrome 检测当前浏览器是否为Chrome, 如果是，则返回Chrome的大版本号
+   * @warning 如果浏览器不是chrome， 则该值为undefined
+   * @example
+   * ```javascript
+   * if ( UE.browser.chrome ) {
+   *     console.log( '当前浏览器是Chrome' );
+   * }
+   * ```
+   */
   if (/chrome\/(\d+\.\d)/i.test(agent)) {
     browser.chrome = +RegExp["\x241"];
   }
 
   /**
-     * @property { Number } safari 检测当前浏览器是否为Safari, 如果是，则返回Safari的大版本号
-     * @warning 如果浏览器不是safari， 则该值为undefined
-     * @example
-     * ```javascript
-     * if ( UE.browser.safari ) {
-     *     console.log( '当前浏览器是Safari' );
-     * }
-     * ```
-     */
-  if (
-    /(\d+\.\d)?(?:\.\d)?\s+safari\/?(\d+\.\d+)?/i.test(agent) &&
-    !/chrome/i.test(agent)
-  ) {
+   * @property { Number } safari 检测当前浏览器是否为Safari, 如果是，则返回Safari的大版本号
+   * @warning 如果浏览器不是safari， 则该值为undefined
+   * @example
+   * ```javascript
+   * if ( UE.browser.safari ) {
+   *     console.log( '当前浏览器是Safari' );
+   * }
+   * ```
+   */
+  if (/(\d+\.\d)?(?:\.\d)?\s+safari\/?(\d+\.\d+)?/i.test(agent) && !/chrome/i.test(agent)) {
     browser.safari = +(RegExp["\x241"] || RegExp["\x242"]);
   }
 
@@ -245,33 +234,32 @@ var browser = (UE.browser = (function() {
   if (browser.opera) version = parseFloat(opera.version());
 
   // WebKit 522+ (Safari 3+)
-  if (browser.webkit)
-    version = parseFloat(agent.match(/ applewebkit\/(\d+)/)[1]);
+  if (browser.webkit) version = parseFloat(agent.match(/ applewebkit\/(\d+)/)[1]);
 
   /**
-     * @property { Number } version 检测当前浏览器版本号
-     * @remind
-     * <ul>
-     *     <li>IE系列返回值为5,6,7,8,9,10等</li>
-     *     <li>gecko系列会返回10900，158900等</li>
-     *     <li>webkit系列会返回其build号 (如 522等)</li>
-     * </ul>
-     * @example
-     * ```javascript
-     * console.log( '当前浏览器版本号是： ' + UE.browser.version );
-     * ```
-     */
+   * @property { Number } version 检测当前浏览器版本号
+   * @remind
+   * <ul>
+   *     <li>IE系列返回值为5,6,7,8,9,10等</li>
+   *     <li>gecko系列会返回10900，158900等</li>
+   *     <li>webkit系列会返回其build号 (如 522等)</li>
+   * </ul>
+   * @example
+   * ```javascript
+   * console.log( '当前浏览器版本号是： ' + UE.browser.version );
+   * ```
+   */
   browser.version = version;
 
   /**
-     * @property { boolean } isCompatible 检测当前浏览器是否能够与UEditor良好兼容
-     * @example
-     * ```javascript
-     * if ( UE.browser.isCompatible ) {
-     *     console.log( '浏览器与UEditor能够良好兼容' );
-     * }
-     * ```
-     */
+   * @property { boolean } isCompatible 检测当前浏览器是否能够与UEditor良好兼容
+   * @example
+   * ```javascript
+   * if ( UE.browser.isCompatible ) {
+   *     console.log( '浏览器与UEditor能够良好兼容' );
+   * }
+   * ```
+   */
   browser.isCompatible =
     !browser.mobile &&
     ((browser.ie && version >= 6) ||
@@ -305,43 +293,43 @@ var ie = browser.ie,
 
 var utils = (UE.utils = {
   /**
-     * 用给定的迭代器遍历对象
-     * @method each
-     * @param { Object } obj 需要遍历的对象
-     * @param { Function } iterator 迭代器， 该方法接受两个参数， 第一个参数是当前所处理的value， 第二个参数是当前遍历对象的key
-     * @example
-     * ```javascript
-     * var demoObj = {
-     *     key1: 1,
-     *     key2: 2
-     * };
-     *
-     * //output: key1: 1, key2: 2
-     * UE.utils.each( demoObj, funciton ( value, key ) {
-     *
-     *     console.log( key + ":" + value );
-     *
-     * } );
-     * ```
-     */
+   * 用给定的迭代器遍历对象
+   * @method each
+   * @param { Object } obj 需要遍历的对象
+   * @param { Function } iterator 迭代器， 该方法接受两个参数， 第一个参数是当前所处理的value， 第二个参数是当前遍历对象的key
+   * @example
+   * ```javascript
+   * var demoObj = {
+   *     key1: 1,
+   *     key2: 2
+   * };
+   *
+   * //output: key1: 1, key2: 2
+   * UE.utils.each( demoObj, funciton ( value, key ) {
+   *
+   *     console.log( key + ":" + value );
+   *
+   * } );
+   * ```
+   */
 
   /**
-     * 用给定的迭代器遍历数组或类数组对象
-     * @method each
-     * @param { Array } array 需要遍历的数组或者类数组
-     * @param { Function } iterator 迭代器， 该方法接受两个参数， 第一个参数是当前所处理的value， 第二个参数是当前遍历对象的key
-     * @example
-     * ```javascript
-     * var divs = document.getElmentByTagNames( "div" );
-     *
-     * //output: 0: DIV, 1: DIV ...
-     * UE.utils.each( divs, funciton ( value, key ) {
-     *
-     *     console.log( key + ":" + value.tagName );
-     *
-     * } );
-     * ```
-     */
+   * 用给定的迭代器遍历数组或类数组对象
+   * @method each
+   * @param { Array } array 需要遍历的数组或者类数组
+   * @param { Function } iterator 迭代器， 该方法接受两个参数， 第一个参数是当前所处理的value， 第二个参数是当前遍历对象的key
+   * @example
+   * ```javascript
+   * var divs = document.getElmentByTagNames( "div" );
+   *
+   * //output: 0: DIV, 1: DIV ...
+   * UE.utils.each( divs, funciton ( value, key ) {
+   *
+   *     console.log( key + ":" + value.tagName );
+   *
+   * } );
+   * ```
+   */
   each: function(obj, iterator, context) {
     if (obj == null) return;
     if (obj.length === +obj.length) {
@@ -351,28 +339,27 @@ var utils = (UE.utils = {
     } else {
       for (var key in obj) {
         if (obj.hasOwnProperty(key)) {
-          if (iterator.call(context, obj[key], key, obj) === false)
-            return false;
+          if (iterator.call(context, obj[key], key, obj) === false) return false;
         }
       }
     }
   },
 
   /**
-     * 以给定对象作为原型创建一个新对象
-     * @method makeInstance
-     * @param { Object } protoObject 该对象将作为新创建对象的原型
-     * @return { Object } 新的对象， 该对象的原型是给定的protoObject对象
-     * @example
-     * ```javascript
-     *
-     * var protoObject = { sayHello: function () { console.log('Hello UEditor!'); } };
-     *
-     * var newObject = UE.utils.makeInstance( protoObject );
-     * //output: Hello UEditor!
-     * newObject.sayHello();
-     * ```
-     */
+   * 以给定对象作为原型创建一个新对象
+   * @method makeInstance
+   * @param { Object } protoObject 该对象将作为新创建对象的原型
+   * @return { Object } 新的对象， 该对象的原型是给定的protoObject对象
+   * @example
+   * ```javascript
+   *
+   * var protoObject = { sayHello: function () { console.log('Hello UEditor!'); } };
+   *
+   * var newObject = UE.utils.makeInstance( protoObject );
+   * //output: Hello UEditor!
+   * newObject.sayHello();
+   * ```
+   */
   makeInstance: function(obj) {
     var noop = new Function();
     noop.prototype = obj;
@@ -382,48 +369,48 @@ var utils = (UE.utils = {
   },
 
   /**
-     * 将source对象中的属性扩展到target对象上
-     * @method extend
-     * @remind 该方法将强制把source对象上的属性复制到target对象上
-     * @see UE.utils.extend(Object,Object,Boolean)
-     * @param { Object } target 目标对象， 新的属性将附加到该对象上
-     * @param { Object } source 源对象， 该对象的属性会被附加到target对象上
-     * @return { Object } 返回target对象
-     * @example
-     * ```javascript
-     *
-     * var target = { name: 'target', sex: 1 },
-     *      source = { name: 'source', age: 17 };
-     *
-     * UE.utils.extend( target, source );
-     *
-     * //output: { name: 'source', sex: 1, age: 17 }
-     * console.log( target );
-     *
-     * ```
-     */
+   * 将source对象中的属性扩展到target对象上
+   * @method extend
+   * @remind 该方法将强制把source对象上的属性复制到target对象上
+   * @see UE.utils.extend(Object,Object,Boolean)
+   * @param { Object } target 目标对象， 新的属性将附加到该对象上
+   * @param { Object } source 源对象， 该对象的属性会被附加到target对象上
+   * @return { Object } 返回target对象
+   * @example
+   * ```javascript
+   *
+   * var target = { name: 'target', sex: 1 },
+   *      source = { name: 'source', age: 17 };
+   *
+   * UE.utils.extend( target, source );
+   *
+   * //output: { name: 'source', sex: 1, age: 17 }
+   * console.log( target );
+   *
+   * ```
+   */
 
   /**
-     * 将source对象中的属性扩展到target对象上， 根据指定的isKeepTarget值决定是否保留目标对象中与
-     * 源对象属性名相同的属性值。
-     * @method extend
-     * @param { Object } target 目标对象， 新的属性将附加到该对象上
-     * @param { Object } source 源对象， 该对象的属性会被附加到target对象上
-     * @param { Boolean } isKeepTarget 是否保留目标对象中与源对象中属性名相同的属性
-     * @return { Object } 返回target对象
-     * @example
-     * ```javascript
-     *
-     * var target = { name: 'target', sex: 1 },
-     *      source = { name: 'source', age: 17 };
-     *
-     * UE.utils.extend( target, source, true );
-     *
-     * //output: { name: 'target', sex: 1, age: 17 }
-     * console.log( target );
-     *
-     * ```
-     */
+   * 将source对象中的属性扩展到target对象上， 根据指定的isKeepTarget值决定是否保留目标对象中与
+   * 源对象属性名相同的属性值。
+   * @method extend
+   * @param { Object } target 目标对象， 新的属性将附加到该对象上
+   * @param { Object } source 源对象， 该对象的属性会被附加到target对象上
+   * @param { Boolean } isKeepTarget 是否保留目标对象中与源对象中属性名相同的属性
+   * @return { Object } 返回target对象
+   * @example
+   * ```javascript
+   *
+   * var target = { name: 'target', sex: 1 },
+   *      source = { name: 'source', age: 17 };
+   *
+   * UE.utils.extend( target, source, true );
+   *
+   * //output: { name: 'target', sex: 1, age: 17 }
+   * console.log( target );
+   *
+   * ```
+   */
   extend: function(t, s, b) {
     if (s) {
       for (var k in s) {
@@ -436,28 +423,28 @@ var utils = (UE.utils = {
   },
 
   /**
-     * 将给定的多个对象的属性复制到目标对象target上
-     * @method extend2
-     * @remind 该方法将强制把源对象上的属性复制到target对象上
-     * @remind 该方法支持两个及以上的参数， 从第二个参数开始， 其属性都会被复制到第一个参数上。 如果遇到同名的属性，
-     *          将会覆盖掉之前的值。
-     * @param { Object } target 目标对象， 新的属性将附加到该对象上
-     * @param { Object... } source 源对象， 支持多个对象， 该对象的属性会被附加到target对象上
-     * @return { Object } 返回target对象
-     * @example
-     * ```javascript
-     *
-     * var target = {},
-     *     source1 = { name: 'source', age: 17 },
-     *     source2 = { title: 'dev' };
-     *
-     * UE.utils.extend2( target, source1, source2 );
-     *
-     * //output: { name: 'source', age: 17, title: 'dev' }
-     * console.log( target );
-     *
-     * ```
-     */
+   * 将给定的多个对象的属性复制到目标对象target上
+   * @method extend2
+   * @remind 该方法将强制把源对象上的属性复制到target对象上
+   * @remind 该方法支持两个及以上的参数， 从第二个参数开始， 其属性都会被复制到第一个参数上。 如果遇到同名的属性，
+   *          将会覆盖掉之前的值。
+   * @param { Object } target 目标对象， 新的属性将附加到该对象上
+   * @param { Object... } source 源对象， 支持多个对象， 该对象的属性会被附加到target对象上
+   * @return { Object } 返回target对象
+   * @example
+   * ```javascript
+   *
+   * var target = {},
+   *     source1 = { name: 'source', age: 17 },
+   *     source2 = { title: 'dev' };
+   *
+   * UE.utils.extend2( target, source1, source2 );
+   *
+   * //output: { name: 'source', age: 17, title: 'dev' }
+   * console.log( target );
+   *
+   * ```
+   */
   extend2: function(t) {
     var a = arguments;
     for (var i = 1; i < a.length; i++) {
@@ -472,35 +459,35 @@ var utils = (UE.utils = {
   },
 
   /**
-     * 模拟继承机制， 使得subClass继承自superClass
-     * @method inherits
-     * @param { Object } subClass 子类对象
-     * @param { Object } superClass 超类对象
-     * @warning 该方法只能让subClass继承超类的原型， subClass对象自身的属性和方法不会被继承
-     * @return { Object } 继承superClass后的子类对象
-     * @example
-     * ```javascript
-     * function SuperClass(){
-     *     this.name = "小李";
-     * }
-     *
-     * SuperClass.prototype = {
-     *     hello:function(str){
-     *         console.log(this.name + str);
-     *     }
-     * }
-     *
-     * function SubClass(){
-     *     this.name = "小张";
-     * }
-     *
-     * UE.utils.inherits(SubClass,SuperClass);
-     *
-     * var sub = new SubClass();
-     * //output: '小张早上好!
-     * sub.hello("早上好!");
-     * ```
-     */
+   * 模拟继承机制， 使得subClass继承自superClass
+   * @method inherits
+   * @param { Object } subClass 子类对象
+   * @param { Object } superClass 超类对象
+   * @warning 该方法只能让subClass继承超类的原型， subClass对象自身的属性和方法不会被继承
+   * @return { Object } 继承superClass后的子类对象
+   * @example
+   * ```javascript
+   * function SuperClass(){
+   *     this.name = "小李";
+   * }
+   *
+   * SuperClass.prototype = {
+   *     hello:function(str){
+   *         console.log(this.name + str);
+   *     }
+   * }
+   *
+   * function SubClass(){
+   *     this.name = "小张";
+   * }
+   *
+   * UE.utils.inherits(SubClass,SuperClass);
+   *
+   * var sub = new SubClass();
+   * //output: '小张早上好!
+   * sub.hello("早上好!");
+   * ```
+   */
   inherits: function(subClass, superClass) {
     var oldP = subClass.prototype,
       newP = utils.makeInstance(superClass.prototype);
@@ -510,31 +497,31 @@ var utils = (UE.utils = {
   },
 
   /**
-     * 用指定的context对象作为函数fn的上下文
-     * @method bind
-     * @param { Function } fn 需要绑定上下文的函数对象
-     * @param { Object } content 函数fn新的上下文对象
-     * @return { Function } 一个新的函数， 该函数作为原始函数fn的代理， 将完成fn的上下文调换工作。
-     * @example
-     * ```javascript
-     *
-     * var name = 'window',
-     *     newTest = null;
-     *
-     * function test () {
-     *     console.log( this.name );
-     * }
-     *
-     * newTest = UE.utils.bind( test, { name: 'object' } );
-     *
-     * //output: object
-     * newTest();
-     *
-     * //output: window
-     * test();
-     *
-     * ```
-     */
+   * 用指定的context对象作为函数fn的上下文
+   * @method bind
+   * @param { Function } fn 需要绑定上下文的函数对象
+   * @param { Object } content 函数fn新的上下文对象
+   * @return { Function } 一个新的函数， 该函数作为原始函数fn的代理， 将完成fn的上下文调换工作。
+   * @example
+   * ```javascript
+   *
+   * var name = 'window',
+   *     newTest = null;
+   *
+   * function test () {
+   *     console.log( this.name );
+   * }
+   *
+   * newTest = UE.utils.bind( test, { name: 'object' } );
+   *
+   * //output: object
+   * newTest();
+   *
+   * //output: window
+   * test();
+   *
+   * ```
+   */
   bind: function(fn, context) {
     return function() {
       return fn.apply(context, arguments);
@@ -542,54 +529,54 @@ var utils = (UE.utils = {
   },
 
   /**
-     * 创建延迟指定时间后执行的函数fn
-     * @method defer
-     * @param { Function } fn 需要延迟执行的函数对象
-     * @param { int } delay 延迟的时间， 单位是毫秒
-     * @warning 该方法的时间控制是不精确的，仅仅只能保证函数的执行是在给定的时间之后，
-     *           而不能保证刚好到达延迟时间时执行。
-     * @return { Function } 目标函数fn的代理函数， 只有执行该函数才能起到延时效果
-     * @example
-     * ```javascript
-     * var start = 0;
-     *
-     * function test(){
-     *     console.log( new Date() - start );
-     * }
-     *
-     * var testDefer = UE.utils.defer( test, 1000 );
-     * //
-     * start = new Date();
-     * //output: (大约在1000毫秒之后输出) 1000
-     * testDefer();
-     * ```
-     */
+   * 创建延迟指定时间后执行的函数fn
+   * @method defer
+   * @param { Function } fn 需要延迟执行的函数对象
+   * @param { int } delay 延迟的时间， 单位是毫秒
+   * @warning 该方法的时间控制是不精确的，仅仅只能保证函数的执行是在给定的时间之后，
+   *           而不能保证刚好到达延迟时间时执行。
+   * @return { Function } 目标函数fn的代理函数， 只有执行该函数才能起到延时效果
+   * @example
+   * ```javascript
+   * var start = 0;
+   *
+   * function test(){
+   *     console.log( new Date() - start );
+   * }
+   *
+   * var testDefer = UE.utils.defer( test, 1000 );
+   * //
+   * start = new Date();
+   * //output: (大约在1000毫秒之后输出) 1000
+   * testDefer();
+   * ```
+   */
 
   /**
-     * 创建延迟指定时间后执行的函数fn, 如果在延迟时间内再次执行该方法， 将会根据指定的exclusion的值，
-     * 决定是否取消前一次函数的执行， 如果exclusion的值为true， 则取消执行，反之，将继续执行前一个方法。
-     * @method defer
-     * @param { Function } fn 需要延迟执行的函数对象
-     * @param { int } delay 延迟的时间， 单位是毫秒
-     * @param { Boolean } exclusion 如果在延迟时间内再次执行该函数，该值将决定是否取消执行前一次函数的执行，
-     *                     值为true表示取消执行， 反之则将在执行前一次函数之后才执行本次函数调用。
-     * @warning 该方法的时间控制是不精确的，仅仅只能保证函数的执行是在给定的时间之后，
-     *           而不能保证刚好到达延迟时间时执行。
-     * @return { Function } 目标函数fn的代理函数， 只有执行该函数才能起到延时效果
-     * @example
-     * ```javascript
-     *
-     * function test(){
-     *     console.log(1);
-     * }
-     *
-     * var testDefer = UE.utils.defer( test, 1000, true );
-     *
-     * //output: (两次调用仅有一次输出) 1
-     * testDefer();
-     * testDefer();
-     * ```
-     */
+   * 创建延迟指定时间后执行的函数fn, 如果在延迟时间内再次执行该方法， 将会根据指定的exclusion的值，
+   * 决定是否取消前一次函数的执行， 如果exclusion的值为true， 则取消执行，反之，将继续执行前一个方法。
+   * @method defer
+   * @param { Function } fn 需要延迟执行的函数对象
+   * @param { int } delay 延迟的时间， 单位是毫秒
+   * @param { Boolean } exclusion 如果在延迟时间内再次执行该函数，该值将决定是否取消执行前一次函数的执行，
+   *                     值为true表示取消执行， 反之则将在执行前一次函数之后才执行本次函数调用。
+   * @warning 该方法的时间控制是不精确的，仅仅只能保证函数的执行是在给定的时间之后，
+   *           而不能保证刚好到达延迟时间时执行。
+   * @return { Function } 目标函数fn的代理函数， 只有执行该函数才能起到延时效果
+   * @example
+   * ```javascript
+   *
+   * function test(){
+   *     console.log(1);
+   * }
+   *
+   * var testDefer = UE.utils.defer( test, 1000, true );
+   *
+   * //output: (两次调用仅有一次输出) 1
+   * testDefer();
+   * testDefer();
+   * ```
+   */
   defer: function(fn, delay, exclusion) {
     var timerID;
     return function() {
@@ -601,39 +588,39 @@ var utils = (UE.utils = {
   },
 
   /**
-     * 获取元素item在数组array中首次出现的位置, 如果未找到item， 则返回-1
-     * @method indexOf
-     * @remind 该方法的匹配过程使用的是恒等“===”
-     * @param { Array } array 需要查找的数组对象
-     * @param { * } item 需要在目标数组中查找的值
-     * @return { int } 返回item在目标数组array中首次出现的位置， 如果在数组中未找到item， 则返回-1
-     * @example
-     * ```javascript
-     * var item = 1,
-     *     arr = [ 3, 4, 6, 8, 1, 1, 2 ];
-     *
-     * //output: 4
-     * console.log( UE.utils.indexOf( arr, item ) );
-     * ```
-     */
+   * 获取元素item在数组array中首次出现的位置, 如果未找到item， 则返回-1
+   * @method indexOf
+   * @remind 该方法的匹配过程使用的是恒等“===”
+   * @param { Array } array 需要查找的数组对象
+   * @param { * } item 需要在目标数组中查找的值
+   * @return { int } 返回item在目标数组array中首次出现的位置， 如果在数组中未找到item， 则返回-1
+   * @example
+   * ```javascript
+   * var item = 1,
+   *     arr = [ 3, 4, 6, 8, 1, 1, 2 ];
+   *
+   * //output: 4
+   * console.log( UE.utils.indexOf( arr, item ) );
+   * ```
+   */
 
   /**
-     * 获取元素item数组array中首次出现的位置, 如果未找到item， 则返回-1。通过start的值可以指定搜索的起始位置。
-     * @method indexOf
-     * @remind 该方法的匹配过程使用的是恒等“===”
-     * @param { Array } array 需要查找的数组对象
-     * @param { * } item 需要在目标数组中查找的值
-     * @param { int } start 搜索的起始位置
-     * @return { int } 返回item在目标数组array中的start位置之后首次出现的位置， 如果在数组中未找到item， 则返回-1
-     * @example
-     * ```javascript
-     * var item = 1,
-     *     arr = [ 3, 4, 6, 8, 1, 2, 8, 3, 2, 1, 1, 4 ];
-     *
-     * //output: 9
-     * console.log( UE.utils.indexOf( arr, item, 5 ) );
-     * ```
-     */
+   * 获取元素item数组array中首次出现的位置, 如果未找到item， 则返回-1。通过start的值可以指定搜索的起始位置。
+   * @method indexOf
+   * @remind 该方法的匹配过程使用的是恒等“===”
+   * @param { Array } array 需要查找的数组对象
+   * @param { * } item 需要在目标数组中查找的值
+   * @param { int } start 搜索的起始位置
+   * @return { int } 返回item在目标数组array中的start位置之后首次出现的位置， 如果在数组中未找到item， 则返回-1
+   * @example
+   * ```javascript
+   * var item = 1,
+   *     arr = [ 3, 4, 6, 8, 1, 2, 8, 3, 2, 1, 1, 4 ];
+   *
+   * //output: 9
+   * console.log( UE.utils.indexOf( arr, item, 5 ) );
+   * ```
+   */
   indexOf: function(array, item, start) {
     var index = -1;
     start = this.isNumber(start) ? start : 0;
@@ -647,21 +634,21 @@ var utils = (UE.utils = {
   },
 
   /**
-     * 移除数组array中所有的元素item
-     * @method removeItem
-     * @param { Array } array 要移除元素的目标数组
-     * @param { * } item 将要被移除的元素
-     * @remind 该方法的匹配过程使用的是恒等“===”
-     * @example
-     * ```javascript
-     * var arr = [ 4, 5, 7, 1, 3, 4, 6 ];
-     *
-     * UE.utils.removeItem( arr, 4 );
-     * //output: [ 5, 7, 1, 3, 6 ]
-     * console.log( arr );
-     *
-     * ```
-     */
+   * 移除数组array中所有的元素item
+   * @method removeItem
+   * @param { Array } array 要移除元素的目标数组
+   * @param { * } item 将要被移除的元素
+   * @remind 该方法的匹配过程使用的是恒等“===”
+   * @example
+   * ```javascript
+   * var arr = [ 4, 5, 7, 1, 3, 4, 6 ];
+   *
+   * UE.utils.removeItem( arr, 4 );
+   * //output: [ 5, 7, 1, 3, 6 ]
+   * console.log( arr );
+   *
+   * ```
+   */
   removeItem: function(array, item) {
     for (var i = 0, l = array.length; i < l; i++) {
       if (array[i] === item) {
@@ -672,59 +659,59 @@ var utils = (UE.utils = {
   },
 
   /**
-     * 删除字符串str的首尾空格
-     * @method trim
-     * @param { String } str 需要删除首尾空格的字符串
-     * @return { String } 删除了首尾的空格后的字符串
-     * @example
-     * ```javascript
-     *
-     * var str = " UEdtior ";
-     *
-     * //output: 9
-     * console.log( str.length );
-     *
-     * //output: 7
-     * console.log( UE.utils.trim( " UEdtior " ).length );
-     *
-     * //output: 9
-     * console.log( str.length );
-     *
-     *  ```
-     */
+   * 删除字符串str的首尾空格
+   * @method trim
+   * @param { String } str 需要删除首尾空格的字符串
+   * @return { String } 删除了首尾的空格后的字符串
+   * @example
+   * ```javascript
+   *
+   * var str = " UEdtior ";
+   *
+   * //output: 9
+   * console.log( str.length );
+   *
+   * //output: 7
+   * console.log( UE.utils.trim( " UEdtior " ).length );
+   *
+   * //output: 9
+   * console.log( str.length );
+   *
+   *  ```
+   */
   trim: function(str) {
     return str.replace(/(^[ \t\n\r]+)|([ \t\n\r]+$)/g, "");
   },
 
   /**
-     * 将字符串str以','分隔成数组后，将该数组转换成哈希对象， 其生成的hash对象的key为数组中的元素， value为1
-     * @method listToMap
-     * @warning 该方法在生成的hash对象中，会为每一个key同时生成一个另一个全大写的key。
-     * @param { String } str 该字符串将被以','分割为数组， 然后进行转化
-     * @return { Object } 转化之后的hash对象
-     * @example
-     * ```javascript
-     *
-     * //output: Object {UEdtior: 1, UEDTIOR: 1, Hello: 1, HELLO: 1}
-     * console.log( UE.utils.listToMap( 'UEdtior,Hello' ) );
-     *
-     * ```
-     */
+   * 将字符串str以','分隔成数组后，将该数组转换成哈希对象， 其生成的hash对象的key为数组中的元素， value为1
+   * @method listToMap
+   * @warning 该方法在生成的hash对象中，会为每一个key同时生成一个另一个全大写的key。
+   * @param { String } str 该字符串将被以','分割为数组， 然后进行转化
+   * @return { Object } 转化之后的hash对象
+   * @example
+   * ```javascript
+   *
+   * //output: Object {UEdtior: 1, UEDTIOR: 1, Hello: 1, HELLO: 1}
+   * console.log( UE.utils.listToMap( 'UEdtior,Hello' ) );
+   *
+   * ```
+   */
 
   /**
-     * 将字符串数组转换成哈希对象， 其生成的hash对象的key为数组中的元素， value为1
-     * @method listToMap
-     * @warning 该方法在生成的hash对象中，会为每一个key同时生成一个另一个全大写的key。
-     * @param { Array } arr 字符串数组
-     * @return { Object } 转化之后的hash对象
-     * @example
-     * ```javascript
-     *
-     * //output: Object {UEdtior: 1, UEDTIOR: 1, Hello: 1, HELLO: 1}
-     * console.log( UE.utils.listToMap( [ 'UEdtior', 'Hello' ] ) );
-     *
-     * ```
-     */
+   * 将字符串数组转换成哈希对象， 其生成的hash对象的key为数组中的元素， value为1
+   * @method listToMap
+   * @warning 该方法在生成的hash对象中，会为每一个key同时生成一个另一个全大写的key。
+   * @param { Array } arr 字符串数组
+   * @return { Object } 转化之后的hash对象
+   * @example
+   * ```javascript
+   *
+   * //output: Object {UEdtior: 1, UEDTIOR: 1, Hello: 1, HELLO: 1}
+   * console.log( UE.utils.listToMap( [ 'UEdtior', 'Hello' ] ) );
+   *
+   * ```
+   */
   listToMap: function(list) {
     if (!list) return {};
     list = utils.isArray(list) ? list : list.split(",");
@@ -735,58 +722,55 @@ var utils = (UE.utils = {
   },
 
   /**
-     * 将str中的html符号转义,将转义“'，&，<，"，>，”，“”七个字符
-     * @method unhtml
-     * @param { String } str 需要转义的字符串
-     * @return { String } 转义后的字符串
-     * @example
-     * ```javascript
-     * var html = '<body>&</body>';
-     *
-     * //output: &lt;body&gt;&amp;&lt;/body&gt;
-     * console.log( UE.utils.unhtml( html ) );
-     *
-     * ```
-     */
+   * 将str中的html符号转义,将转义“'，&，<，"，>，”，“”七个字符
+   * @method unhtml
+   * @param { String } str 需要转义的字符串
+   * @return { String } 转义后的字符串
+   * @example
+   * ```javascript
+   * var html = '<body>&</body>';
+   *
+   * //output: &lt;body&gt;&amp;&lt;/body&gt;
+   * console.log( UE.utils.unhtml( html ) );
+   *
+   * ```
+   */
   unhtml: function(str, reg) {
     return str
-      ? str.replace(
-          reg || /[&<">'](?:(amp|lt|ldquo|rdquo|quot|gt|#39|nbsp|#\d+);)?/g,
-          function(a, b) {
-            if (b) {
-              return a;
-            } else {
-              return {
-                "<": "&lt;",
-                "&": "&amp;",
-                '"': "&quot;",
-                "“": "&ldquo;",
-                "”": "&rdquo;",
-                ">": "&gt;",
-                "'": "&#39;"
-              }[a];
-            }
+      ? str.replace(reg || /[&<">'](?:(amp|lt|ldquo|rdquo|quot|gt|#39|nbsp|#\d+);)?/g, function(a, b) {
+          if (b) {
+            return a;
+          } else {
+            return {
+              "<": "&lt;",
+              "&": "&amp;",
+              '"': "&quot;",
+              "“": "&ldquo;",
+              "”": "&rdquo;",
+              ">": "&gt;",
+              "'": "&#39;"
+            }[a];
           }
-        )
+        })
       : "";
   },
 
   /**
-     * 将str中的转义字符还原成html字符
-     * @see UE.utils.unhtml(String);
-     * @method html
-     * @param { String } str 需要逆转义的字符串
-     * @return { String } 逆转义后的字符串
-     * @example
-     * ```javascript
-     *
-     * var str = '&lt;body&gt;&amp;&lt;/body&gt;';
-     *
-     * //output: <body>&</body>
-     * console.log( UE.utils.html( str ) );
-     *
-     * ```
-     */
+   * 将str中的转义字符还原成html字符
+   * @see UE.utils.unhtml(String);
+   * @method html
+   * @param { String } str 需要逆转义的字符串
+   * @return { String } 逆转义后的字符串
+   * @example
+   * ```javascript
+   *
+   * var str = '&lt;body&gt;&amp;&lt;/body&gt;';
+   *
+   * //output: <body>&</body>
+   * console.log( UE.utils.html( str ) );
+   *
+   * ```
+   */
   html: function(str) {
     return str
       ? str.replace(/&((g|l|quo|ldquo|rdquo)t|amp|#39|nbsp);/g, function(m) {
@@ -805,26 +789,24 @@ var utils = (UE.utils = {
   },
 
   /**
-     * 将css样式转换为驼峰的形式
-     * @method cssStyleToDomStyle
-     * @param { String } cssName 需要转换的css样式名
-     * @return { String } 转换成驼峰形式后的css样式名
-     * @example
-     * ```javascript
-     *
-     * var str = 'border-top';
-     *
-     * //output: borderTop
-     * console.log( UE.utils.cssStyleToDomStyle( str ) );
-     *
-     * ```
-     */
+   * 将css样式转换为驼峰的形式
+   * @method cssStyleToDomStyle
+   * @param { String } cssName 需要转换的css样式名
+   * @return { String } 转换成驼峰形式后的css样式名
+   * @example
+   * ```javascript
+   *
+   * var str = 'border-top';
+   *
+   * //output: borderTop
+   * console.log( UE.utils.cssStyleToDomStyle( str ) );
+   *
+   * ```
+   */
   cssStyleToDomStyle: (function() {
     var test = document.createElement("div").style,
       cache = {
-        float: test.cssFloat != undefined
-          ? "cssFloat"
-          : test.styleFloat != undefined ? "styleFloat" : "float"
+        float: test.cssFloat != undefined ? "cssFloat" : test.styleFloat != undefined ? "styleFloat" : "float"
       };
 
     return function(cssName) {
@@ -838,45 +820,45 @@ var utils = (UE.utils = {
   })(),
 
   /**
-     * 动态加载文件到doc中
-     * @method loadFile
-     * @param { DomDocument } document 需要加载资源文件的文档对象
-     * @param { Object } options 加载资源文件的属性集合， 取值请参考代码示例
-     * @example
-     * ```javascript
-     *
-     * UE.utils.loadFile( document, {
-     *     src:"test.js",
-     *     tag:"script",
-     *     type:"text/javascript",
-     *     defer:"defer"
-     * } );
-     *
-     * ```
-     */
+   * 动态加载文件到doc中
+   * @method loadFile
+   * @param { DomDocument } document 需要加载资源文件的文档对象
+   * @param { Object } options 加载资源文件的属性集合， 取值请参考代码示例
+   * @example
+   * ```javascript
+   *
+   * UE.utils.loadFile( document, {
+   *     src:"test.js",
+   *     tag:"script",
+   *     type:"text/javascript",
+   *     defer:"defer"
+   * } );
+   *
+   * ```
+   */
 
   /**
-     * 动态加载文件到doc中，加载成功后执行的回调函数fn
-     * @method loadFile
-     * @param { DomDocument } document 需要加载资源文件的文档对象
-     * @param { Object } options 加载资源文件的属性集合， 该集合支持的值是script标签和style标签支持的所有属性。
-     * @param { Function } fn 资源文件加载成功之后执行的回调
-     * @warning 对于在同一个文档中多次加载同一URL的文件， 该方法会在第一次加载之后缓存该请求，
-     *           在此之后的所有同一URL的请求， 将会直接触发回调。
-     * @example
-     * ```javascript
-     *
-     * UE.utils.loadFile( document, {
-     *     src:"test.js",
-     *     tag:"script",
-     *     type:"text/javascript",
-     *     defer:"defer"
-     * }, function () {
-     *     console.log('加载成功');
-     * } );
-     *
-     * ```
-     */
+   * 动态加载文件到doc中，加载成功后执行的回调函数fn
+   * @method loadFile
+   * @param { DomDocument } document 需要加载资源文件的文档对象
+   * @param { Object } options 加载资源文件的属性集合， 该集合支持的值是script标签和style标签支持的所有属性。
+   * @param { Function } fn 资源文件加载成功之后执行的回调
+   * @warning 对于在同一个文档中多次加载同一URL的文件， 该方法会在第一次加载之后缓存该请求，
+   *           在此之后的所有同一URL的请求， 将会直接触发回调。
+   * @example
+   * ```javascript
+   *
+   * UE.utils.loadFile( document, {
+   *     src:"test.js",
+   *     tag:"script",
+   *     type:"text/javascript",
+   *     defer:"defer"
+   * }, function () {
+   *     console.log('加载成功');
+   * } );
+   *
+   * ```
+   */
   loadFile: (function() {
     var tmpList = [];
 
@@ -913,9 +895,7 @@ var utils = (UE.utils = {
           if (p == "tag") continue;
           html.push(p + '="' + obj[p] + '"');
         }
-        doc.write(
-          "<" + obj.tag + " " + html.join(" ") + " ></" + obj.tag + ">"
-        );
+        doc.write("<" + obj.tag + " " + html.join(" ") + " ></" + obj.tag + ">");
         return;
       }
       if (obj.id && doc.getElementById(obj.id)) {
@@ -939,46 +919,42 @@ var utils = (UE.utils = {
         }
       };
       element.onerror = function() {
-        throw Error(
-          "The load " +
-            (obj.href || obj.src) +
-            " fails,check the url settings of file ueditor.config.js "
-        );
+        throw Error("The load " + (obj.href || obj.src) + " fails,check the url settings of file ueditor.config.js ");
       };
       doc.getElementsByTagName("head")[0].appendChild(element);
     };
   })(),
 
   /**
-     * 判断obj对象是否为空
-     * @method isEmptyObject
-     * @param { * } obj 需要判断的对象
-     * @remind 如果判断的对象是NULL， 将直接返回true， 如果是数组且为空， 返回true， 如果是字符串， 且字符串为空，
-     *          返回true， 如果是普通对象， 且该对象没有任何实例属性， 返回true
-     * @return { Boolean } 对象是否为空
-     * @example
-     * ```javascript
-     *
-     * //output: true
-     * console.log( UE.utils.isEmptyObject( {} ) );
-     *
-     * //output: true
-     * console.log( UE.utils.isEmptyObject( [] ) );
-     *
-     * //output: true
-     * console.log( UE.utils.isEmptyObject( "" ) );
-     *
-     * //output: false
-     * console.log( UE.utils.isEmptyObject( { key: 1 } ) );
-     *
-     * //output: false
-     * console.log( UE.utils.isEmptyObject( [1] ) );
-     *
-     * //output: false
-     * console.log( UE.utils.isEmptyObject( "1" ) );
-     *
-     * ```
-     */
+   * 判断obj对象是否为空
+   * @method isEmptyObject
+   * @param { * } obj 需要判断的对象
+   * @remind 如果判断的对象是NULL， 将直接返回true， 如果是数组且为空， 返回true， 如果是字符串， 且字符串为空，
+   *          返回true， 如果是普通对象， 且该对象没有任何实例属性， 返回true
+   * @return { Boolean } 对象是否为空
+   * @example
+   * ```javascript
+   *
+   * //output: true
+   * console.log( UE.utils.isEmptyObject( {} ) );
+   *
+   * //output: true
+   * console.log( UE.utils.isEmptyObject( [] ) );
+   *
+   * //output: true
+   * console.log( UE.utils.isEmptyObject( "" ) );
+   *
+   * //output: false
+   * console.log( UE.utils.isEmptyObject( { key: 1 } ) );
+   *
+   * //output: false
+   * console.log( UE.utils.isEmptyObject( [1] ) );
+   *
+   * //output: false
+   * console.log( UE.utils.isEmptyObject( "1" ) );
+   *
+   * ```
+   */
   isEmptyObject: function(obj) {
     if (obj == null) return true;
     if (this.isArray(obj) || this.isString(obj)) return obj.length === 0;
@@ -987,13 +963,13 @@ var utils = (UE.utils = {
   },
 
   /**
-     * 把rgb格式的颜色值转换成16进制格式
-     * @method fixColor
-     * @param { String } rgb格式的颜色值
-     * @param { String }
-     * @example
-     * rgb(255,255,255)  => "#ffffff"
-     */
+   * 把rgb格式的颜色值转换成16进制格式
+   * @method fixColor
+   * @param { String } rgb格式的颜色值
+   * @param { String }
+   * @example
+   * rgb(255,255,255)  => "#ffffff"
+   */
   fixColor: function(name, value) {
     if (/color/i.test(name) && /rgba?/.test(value)) {
       var array = value.split(",");
@@ -1008,19 +984,14 @@ var utils = (UE.utils = {
     return value;
   },
   /**
-     * 只针对border,padding,margin做了处理，因为性能问题
-     * @public
-     * @function
-     * @param {String}    val style字符串
-     */
+   * 只针对border,padding,margin做了处理，因为性能问题
+   * @public
+   * @function
+   * @param {String}    val style字符串
+   */
   optCss: function(val) {
     var padding, margin, border;
-    val = val.replace(/(padding|margin|border)\-([^:]+):([^;]+);?/gi, function(
-      str,
-      key,
-      name,
-      val
-    ) {
+    val = val.replace(/(padding|margin|border)\-([^:]+):([^;]+);?/gi, function(str, key, name, val) {
       if (val.split(" ").length == 1) {
         switch (key) {
           case "padding":
@@ -1059,10 +1030,10 @@ var utils = (UE.utils = {
           (t == b && b == l && l == r
             ? t
             : t == b && l == r
-              ? t + " " + l
-              : l == r
-                ? t + " " + l + " " + b
-                : t + " " + r + " " + b + " " + l) +
+            ? t + " " + l
+            : l == r
+            ? t + " " + l + " " + b
+            : t + " " + r + " " + b + " " + l) +
           ";";
       }
       return val;
@@ -1078,19 +1049,19 @@ var utils = (UE.utils = {
   },
 
   /**
-     * 克隆对象
-     * @method clone
-     * @param { Object } source 源对象
-     * @return { Object } source的一个副本
-     */
+   * 克隆对象
+   * @method clone
+   * @param { Object } source 源对象
+   * @return { Object } source的一个副本
+   */
 
   /**
-     * 深度克隆对象，将source的属性克隆到target对象， 会覆盖target重名的属性。
-     * @method clone
-     * @param { Object } source 源对象
-     * @param { Object } target 目标对象
-     * @return { Object } 附加了source对象所有属性的target对象
-     */
+   * 深度克隆对象，将source的属性克隆到target对象， 会覆盖target重名的属性。
+   * @method clone
+   * @param { Object } source 源对象
+   * @param { Object } target 目标对象
+   * @return { Object } 附加了source对象所有属性的target对象
+   */
   clone: function(source, target) {
     var tmp;
     target = target || {};
@@ -1109,21 +1080,21 @@ var utils = (UE.utils = {
   },
 
   /**
-     * 把cm／pt为单位的值转换为px为单位的值
-     * @method transUnitToPx
-     * @param { String } 待转换的带单位的字符串
-     * @return { String } 转换为px为计量单位的值的字符串
-     * @example
-     * ```javascript
-     *
-     * //output: 500px
-     * console.log( UE.utils.transUnitToPx( '20cm' ) );
-     *
-     * //output: 27px
-     * console.log( UE.utils.transUnitToPx( '20pt' ) );
-     *
-     * ```
-     */
+   * 把cm／pt为单位的值转换为px为单位的值
+   * @method transUnitToPx
+   * @param { String } 待转换的带单位的字符串
+   * @return { String } 转换为px为计量单位的值的字符串
+   * @example
+   * ```javascript
+   *
+   * //output: 500px
+   * console.log( UE.utils.transUnitToPx( '20cm' ) );
+   *
+   * //output: 27px
+   * console.log( UE.utils.transUnitToPx( '20pt' ) );
+   *
+   * ```
+   */
   transUnitToPx: function(val) {
     if (!/(pt|cm)/.test(val)) {
       return val;
@@ -1138,27 +1109,27 @@ var utils = (UE.utils = {
         val = parseFloat(val) * 25;
         break;
       case "pt":
-        val = Math.round(parseFloat(val) * 96 / 72);
+        val = Math.round((parseFloat(val) * 96) / 72);
     }
     return val + (val ? "px" : "");
   },
 
   /**
-     * 在dom树ready之后执行给定的回调函数
-     * @method domReady
-     * @remind 如果在执行该方法的时候， dom树已经ready， 那么回调函数将立刻执行
-     * @param { Function } fn dom树ready之后的回调函数
-     * @example
-     * ```javascript
-     *
-     * UE.utils.domReady( function () {
-     *
-     *     console.log('123');
-     *
-     * } );
-     *
-     * ```
-     */
+   * 在dom树ready之后执行给定的回调函数
+   * @method domReady
+   * @remind 如果在执行该方法的时候， dom树已经ready， 那么回调函数将立刻执行
+   * @param { Function } fn dom树ready之后的回调函数
+   * @example
+   * ```javascript
+   *
+   * UE.utils.domReady( function () {
+   *
+   *     console.log('123');
+   *
+   * } );
+   *
+   * ```
+   */
   domReady: (function() {
     var fnArr = [];
 
@@ -1194,11 +1165,7 @@ var utils = (UE.utils = {
           doc.addEventListener(
             "DOMContentLoaded",
             function() {
-              doc.removeEventListener(
-                "DOMContentLoaded",
-                arguments.callee,
-                false
-              );
+              doc.removeEventListener("DOMContentLoaded", arguments.callee, false);
               doReady(doc);
             },
             false
@@ -1216,93 +1183,81 @@ var utils = (UE.utils = {
   })(),
 
   /**
-     * 动态添加css样式
-     * @method cssRule
-     * @param { String } 节点名称
-     * @grammar UE.utils.cssRule('添加的样式的节点名称',['样式'，'放到哪个document上'])
-     * @grammar UE.utils.cssRule('body','body{background:#ccc}') => null  //给body添加背景颜色
-     * @grammar UE.utils.cssRule('body') =>样式的字符串  //取得key值为body的样式的内容,如果没有找到key值先关的样式将返回空，例如刚才那个背景颜色，将返回 body{background:#ccc}
-     * @grammar UE.utils.cssRule('body',document) => 返回指定key的样式，并且指定是哪个document
-     * @grammar UE.utils.cssRule('body','') =>null //清空给定的key值的背景颜色
-     */
-  cssRule: browser.ie && browser.version != 11
-    ? function(key, style, doc) {
-        var indexList, index;
-        if (
-          style === undefined ||
-          (style && style.nodeType && style.nodeType == 9)
-        ) {
-          //获取样式
-          doc = style && style.nodeType && style.nodeType == 9
-            ? style
-            : doc || document;
+   * 动态添加css样式
+   * @method cssRule
+   * @param { String } 节点名称
+   * @grammar UE.utils.cssRule('添加的样式的节点名称',['样式'，'放到哪个document上'])
+   * @grammar UE.utils.cssRule('body','body{background:#ccc}') => null  //给body添加背景颜色
+   * @grammar UE.utils.cssRule('body') =>样式的字符串  //取得key值为body的样式的内容,如果没有找到key值先关的样式将返回空，例如刚才那个背景颜色，将返回 body{background:#ccc}
+   * @grammar UE.utils.cssRule('body',document) => 返回指定key的样式，并且指定是哪个document
+   * @grammar UE.utils.cssRule('body','') =>null //清空给定的key值的背景颜色
+   */
+  cssRule:
+    browser.ie && browser.version != 11
+      ? function(key, style, doc) {
+          var indexList, index;
+          if (style === undefined || (style && style.nodeType && style.nodeType == 9)) {
+            //获取样式
+            doc = style && style.nodeType && style.nodeType == 9 ? style : doc || document;
+            indexList = doc.indexList || (doc.indexList = {});
+            index = indexList[key];
+            if (index !== undefined) {
+              return doc.styleSheets[index].cssText;
+            }
+            return undefined;
+          }
+          doc = doc || document;
           indexList = doc.indexList || (doc.indexList = {});
           index = indexList[key];
-          if (index !== undefined) {
-            return doc.styleSheets[index].cssText;
+          //清除样式
+          if (style === "") {
+            if (index !== undefined) {
+              doc.styleSheets[index].cssText = "";
+              delete indexList[key];
+              return true;
+            }
+            return false;
           }
-          return undefined;
-        }
-        doc = doc || document;
-        indexList = doc.indexList || (doc.indexList = {});
-        index = indexList[key];
-        //清除样式
-        if (style === "") {
-          if (index !== undefined) {
-            doc.styleSheets[index].cssText = "";
-            delete indexList[key];
-            return true;
-          }
-          return false;
-        }
 
-        //添加样式
-        if (index !== undefined) {
-          sheetStyle = doc.styleSheets[index];
-        } else {
-          sheetStyle = doc.createStyleSheet(
-            "",
-            (index = doc.styleSheets.length)
-          );
-          indexList[key] = index;
+          //添加样式
+          if (index !== undefined) {
+            sheetStyle = doc.styleSheets[index];
+          } else {
+            sheetStyle = doc.createStyleSheet("", (index = doc.styleSheets.length));
+            indexList[key] = index;
+          }
+          sheetStyle.cssText = style;
         }
-        sheetStyle.cssText = style;
-      }
-    : function(key, style, doc) {
-        var head, node;
-        if (
-          style === undefined ||
-          (style && style.nodeType && style.nodeType == 9)
-        ) {
-          //获取样式
-          doc = style && style.nodeType && style.nodeType == 9
-            ? style
-            : doc || document;
+      : function(key, style, doc) {
+          var head, node;
+          if (style === undefined || (style && style.nodeType && style.nodeType == 9)) {
+            //获取样式
+            doc = style && style.nodeType && style.nodeType == 9 ? style : doc || document;
+            node = doc.getElementById(key);
+            return node ? node.innerHTML : undefined;
+          }
+          doc = doc || document;
           node = doc.getElementById(key);
-          return node ? node.innerHTML : undefined;
-        }
-        doc = doc || document;
-        node = doc.getElementById(key);
 
-        //清除样式
-        if (style === "") {
-          if (node) {
-            node.parentNode.removeChild(node);
-            return true;
+          //清除样式
+          if (style === "") {
+            if (node) {
+              node.parentNode.removeChild(node);
+              return true;
+            }
+            return false;
           }
-          return false;
-        }
 
-        //添加样式
-        if (node) {
-          node.innerHTML = style;
-        } else {
-          node = doc.createElement("style");
-          node.id = key;
-          node.innerHTML = style;
-          doc.getElementsByTagName("head")[0].appendChild(node);
-        }
-      },
+          //添加样式
+          if (node) {
+            node.innerHTML = style;
+          } else {
+            node = doc.createElement("style");
+            node.id = key;
+            node.innerHTML = style;
+            doc.getElementsByTagName("head")[0].appendChild(node);
+          }
+        },
   sort: function(array, compareFn) {
     compareFn =
       compareFn ||
@@ -1326,19 +1281,12 @@ var utils = (UE.utils = {
       //忽略默认的几个参数
       if (i == "method" || i == "timeout" || i == "async") continue;
       //传递过来的对象和函数不在提交之列
-      if (
-        !(
-          (typeof json[i]).toLowerCase() == "function" ||
-          (typeof json[i]).toLowerCase() == "object"
-        )
-      ) {
+      if (!((typeof json[i]).toLowerCase() == "function" || (typeof json[i]).toLowerCase() == "object")) {
         strArr.push(encodeURIComponent(i) + "=" + encodeURIComponent(json[i]));
       } else if (utils.isArray(json[i])) {
         //支持传数组内容
         for (var j = 0; j < json[i].length; j++) {
-          strArr.push(
-            encodeURIComponent(i) + "[]=" + encodeURIComponent(json[i][j])
-          );
+          strArr.push(encodeURIComponent(i) + "[]=" + encodeURIComponent(json[i][j]));
         }
       }
     }
@@ -1361,9 +1309,7 @@ var utils = (UE.utils = {
     return !(
       a.protocol == location.protocol &&
       a.hostname == location.hostname &&
-      (a.port == location.port ||
-        (a.port == "80" && location.port == "") ||
-        (a.port == "" && location.port == "80"))
+      (a.port == location.port || (a.port == "80" && location.port == "") || (a.port == "" && location.port == "80"))
     );
   },
   clearEmptyAttrs: function(obj) {
@@ -1404,9 +1350,7 @@ var utils = (UE.utils = {
               return c;
             }
             c = match.charCodeAt();
-            return (
-              "\\u00" + Math.floor(c / 16).toString(16) + (c % 16).toString(16)
-            );
+            return "\\u00" + Math.floor(c / 16).toString(16) + (c % 16).toString(16);
           });
         }
         return '"' + source + '"';
@@ -1554,14 +1498,11 @@ var utils = (UE.utils = {
  * @param { * } object 需要判断的对象
  * @return { Boolean } 给定的对象是否是普通对象
  */
-utils.each(
-  ["String", "Function", "Array", "Number", "RegExp", "Object", "Date"],
-  function(v) {
-    UE.utils["is" + v] = function(obj) {
-      return Object.prototype.toString.apply(obj) == "[object " + v + "]";
-    };
-  }
-);
+utils.each(["String", "Function", "Array", "Number", "RegExp", "Object", "Date"], function(v) {
+  UE.utils["is" + v] = function(obj) {
+    return Object.prototype.toString.apply(obj) == "[object " + v + "]";
+  };
+});
 
 
 // core/EventBase.js
@@ -1599,27 +1540,27 @@ var EventBase = (UE.EventBase = function() {});
 
 EventBase.prototype = {
   /**
-     * 注册事件监听器
-     * @method addListener
-     * @param { String } types 监听的事件名称，同时监听多个事件使用空格分隔
-     * @param { Function } fn 监听的事件被触发时，会执行该回调函数
-     * @waining 事件被触发时，监听的函数假如返回的值恒等于true，回调函数的队列中后面的函数将不执行
-     * @example
-     * ```javascript
-     * editor.addListener('selectionchange',function(){
-     *      console.log("选区已经变化！");
-     * })
-     * editor.addListener('beforegetcontent aftergetcontent',function(type){
-     *         if(type == 'beforegetcontent'){
-     *             //do something
-     *         }else{
-     *             //do something
-     *         }
-     *         console.log(this.getContent) // this是注册的事件的编辑器实例
-     * })
-     * ```
-     * @see UE.EventBase:fireEvent(String)
-     */
+   * 注册事件监听器
+   * @method addListener
+   * @param { String } types 监听的事件名称，同时监听多个事件使用空格分隔
+   * @param { Function } fn 监听的事件被触发时，会执行该回调函数
+   * @waining 事件被触发时，监听的函数假如返回的值恒等于true，回调函数的队列中后面的函数将不执行
+   * @example
+   * ```javascript
+   * editor.addListener('selectionchange',function(){
+   *      console.log("选区已经变化！");
+   * })
+   * editor.addListener('beforegetcontent aftergetcontent',function(type){
+   *         if(type == 'beforegetcontent'){
+   *             //do something
+   *         }else{
+   *             //do something
+   *         }
+   *         console.log(this.getContent) // this是注册的事件的编辑器实例
+   * })
+   * ```
+   * @see UE.EventBase:fireEvent(String)
+   */
   addListener: function(types, listener) {
     types = utils.trim(types).split(/\s+/);
     for (var i = 0, ti; (ti = types[i++]); ) {
@@ -1637,16 +1578,16 @@ EventBase.prototype = {
     return this.fireEvent.apply(this, arguments);
   },
   /**
-     * 移除事件监听器
-     * @method removeListener
-     * @param { String } types 移除的事件名称，同时移除多个事件使用空格分隔
-     * @param { Function } fn 移除监听事件的函数引用
-     * @example
-     * ```javascript
-     * //changeCallback为方法体
-     * editor.removeListener("selectionchange",changeCallback);
-     * ```
-     */
+   * 移除事件监听器
+   * @method removeListener
+   * @param { String } types 移除的事件名称，同时移除多个事件使用空格分隔
+   * @param { Function } fn 移除监听事件的函数引用
+   * @example
+   * ```javascript
+   * //changeCallback为方法体
+   * editor.removeListener("selectionchange",changeCallback);
+   * ```
+   */
   removeListener: function(types, listener) {
     types = utils.trim(types).split(/\s+/);
     for (var i = 0, ti; (ti = types[i++]); ) {
@@ -1655,37 +1596,37 @@ EventBase.prototype = {
   },
 
   /**
-     * 触发事件
-     * @method fireEvent
-     * @param { String } types 触发的事件名称，同时触发多个事件使用空格分隔
-     * @remind 该方法会触发addListener
-     * @return { * } 返回触发事件的队列中，最后执行的回调函数的返回值
-     * @example
-     * ```javascript
-     * editor.fireEvent("selectionchange");
-     * ```
-     */
+   * 触发事件
+   * @method fireEvent
+   * @param { String } types 触发的事件名称，同时触发多个事件使用空格分隔
+   * @remind 该方法会触发addListener
+   * @return { * } 返回触发事件的队列中，最后执行的回调函数的返回值
+   * @example
+   * ```javascript
+   * editor.fireEvent("selectionchange");
+   * ```
+   */
 
   /**
-     * 触发事件
-     * @method fireEvent
-     * @param { String } types 触发的事件名称，同时触发多个事件使用空格分隔
-     * @param { *... } options 可选参数，可以传入一个或多个参数，会传给事件触发的回调函数
-     * @return { * } 返回触发事件的队列中，最后执行的回调函数的返回值
-     * @example
-     * ```javascript
-     *
-     * editor.addListener( "selectionchange", function ( type, arg1, arg2 ) {
-     *
-     *     console.log( arg1 + " " + arg2 );
-     *
-     * } );
-     *
-     * //触发selectionchange事件， 会执行上面的事件监听器
-     * //output: Hello World
-     * editor.fireEvent("selectionchange", "Hello", "World");
-     * ```
-     */
+   * 触发事件
+   * @method fireEvent
+   * @param { String } types 触发的事件名称，同时触发多个事件使用空格分隔
+   * @param { *... } options 可选参数，可以传入一个或多个参数，会传给事件触发的回调函数
+   * @return { * } 返回触发事件的队列中，最后执行的回调函数的返回值
+   * @example
+   * ```javascript
+   *
+   * editor.addListener( "selectionchange", function ( type, arg1, arg2 ) {
+   *
+   *     console.log( arg1 + " " + arg2 );
+   *
+   * } );
+   *
+   * //触发selectionchange事件， 会执行上面的事件监听器
+   * //output: Hello World
+   * editor.fireEvent("selectionchange", "Hello", "World");
+   * ```
+   */
   fireEvent: function() {
     var types = arguments[0];
     types = utils.trim(types).split(" ");
@@ -1730,8 +1671,7 @@ function getListener(obj, type, force) {
   var allListeners;
   type = type.toLowerCase();
   return (
-    (allListeners =
-      obj.__allListeners || (force && (obj.__allListeners = {}))) &&
+    (allListeners = obj.__allListeners || (force && (obj.__allListeners = {}))) &&
     (allListeners[type] || (force && (allListeners[type] = [])))
   );
 }
@@ -1754,10 +1694,10 @@ var dtd = (dom.dtd = (function() {
     return s;
   }
   var X = utils.extend2;
-  var A = _({ isindex: 1, fieldset: 1 }),
-    B = _({ input: 1, button: 1, select: 1, textarea: 1, label: 1 }),
-    C = X(_({ a: 1 }), B),
-    D = X({ iframe: 1 }, C),
+  var A = _({isindex: 1, fieldset: 1}),
+    B = _({input: 1, button: 1, select: 1, textarea: 1, label: 1}),
+    C = X(_({a: 1}), B),
+    D = X({iframe: 1}, C),
     E = _({
       hr: 1,
       ul: 1,
@@ -1780,7 +1720,7 @@ var dtd = (dom.dtd = (function() {
       h3: 1,
       h2: 1
     }),
-    F = _({ ins: 1, del: 1, script: 1, style: 1 }),
+    F = _({ins: 1, del: 1, script: 1, style: 1}),
     G = X(
       _({
         mark: 1,
@@ -1824,8 +1764,8 @@ var dtd = (dom.dtd = (function() {
       }),
       G
     ),
-    I = X(_({ p: 1 }), H),
-    J = X(_({ iframe: 1 }), H, B),
+    I = X(_({p: 1}), H),
+    J = X(_({iframe: 1}), H, B),
     K = _({
       img: 1,
       embed: 1,
@@ -1894,43 +1834,43 @@ var dtd = (dom.dtd = (function() {
       em: 1,
       dfn: 1
     }),
-    L = X(_({ a: 0 }), J), //a不能被切开，所以把他
-    M = _({ tr: 1 }),
-    N = _({ "#": 1 }),
-    O = X(_({ param: 1 }), K),
-    P = X(_({ form: 1 }), A, D, E, I),
-    Q = _({ li: 1, ol: 1, ul: 1 }),
-    R = _({ style: 1, script: 1 }),
-    S = _({ base: 1, link: 1, meta: 1, title: 1 }),
+    L = X(_({a: 0}), J), //a不能被切开，所以把他
+    M = _({tr: 1}),
+    N = _({"#": 1}),
+    O = X(_({param: 1}), K),
+    P = X(_({form: 1}), A, D, E, I),
+    Q = _({li: 1, ol: 1, ul: 1}),
+    R = _({style: 1, script: 1}),
+    S = _({base: 1, link: 1, meta: 1, title: 1}),
     T = X(S, R),
-    U = _({ head: 1, body: 1 }),
-    V = _({ html: 1 });
+    U = _({head: 1, body: 1}),
+    V = _({html: 1});
 
   var block = _({
-    address: 1,
-    blockquote: 1,
-    center: 1,
-    dir: 1,
-    div: 1,
-    dl: 1,
-    fieldset: 1,
-    form: 1,
-    h1: 1,
-    h2: 1,
-    h3: 1,
-    h4: 1,
-    h5: 1,
-    h6: 1,
-    hr: 1,
-    isindex: 1,
-    menu: 1,
-    noframes: 1,
-    ol: 1,
-    p: 1,
-    pre: 1,
-    table: 1,
-    ul: 1
-  }),
+      address: 1,
+      blockquote: 1,
+      center: 1,
+      dir: 1,
+      div: 1,
+      dl: 1,
+      fieldset: 1,
+      form: 1,
+      h1: 1,
+      h2: 1,
+      h3: 1,
+      h4: 1,
+      h5: 1,
+      h6: 1,
+      hr: 1,
+      isindex: 1,
+      menu: 1,
+      noframes: 1,
+      ol: 1,
+      p: 1,
+      pre: 1,
+      table: 1,
+      ul: 1
+    }),
     empty = _({
       area: 1,
       base: 1,
@@ -1965,22 +1905,22 @@ var dtd = (dom.dtd = (function() {
     //内联元素列表
     $inline: L,
 
-    $inlineWithA: X(_({ a: 1 }), L),
+    $inlineWithA: X(_({a: 1}), L),
 
-    $body: X(_({ script: 1, style: 1 }), block),
+    $body: X(_({script: 1, style: 1}), block),
 
-    $cdata: _({ script: 1, style: 1 }),
+    $cdata: _({script: 1, style: 1}),
 
     //自闭和元素
     $empty: empty,
 
     //不是自闭合，但不能让range选中里边
-    $nonChild: _({ iframe: 1, textarea: 1 }),
+    $nonChild: _({iframe: 1, textarea: 1}),
     //列表元素列表
-    $listItem: _({ dd: 1, dt: 1, li: 1 }),
+    $listItem: _({dd: 1, dt: 1, li: 1}),
 
     //列表根元素列表
-    $list: _({ ul: 1, ol: 1, dl: 1 }),
+    $list: _({ul: 1, ol: 1, dl: 1}),
 
     //不能认为是空的元素
     $isNotEmpty: _({
@@ -2041,7 +1981,7 @@ var dtd = (dom.dtd = (function() {
       var: 1
     }),
 
-    $removeEmptyBlock: _({ p: 1, div: 1 }),
+    $removeEmptyBlock: _({p: 1, div: 1}),
 
     //在table元素里的元素列表
     $tableContent: _({
@@ -2057,7 +1997,7 @@ var dtd = (dom.dtd = (function() {
       table: 1
     }),
     //不转换的标签
-    $notTransContent: _({ pre: 1, script: 1, style: 1, textarea: 1 }),
+    $notTransContent: _({pre: 1, script: 1, style: 1, textarea: 1}),
     html: U,
     head: T,
     style: N,
@@ -2068,10 +2008,10 @@ var dtd = (dom.dtd = (function() {
     meta: {},
     title: N,
     col: {},
-    tr: _({ td: 1, th: 1 }),
+    tr: _({td: 1, th: 1}),
     img: {},
     embed: {},
-    colgroup: _({ thead: 1, col: 1, tbody: 1, tr: 1, tfoot: 1 }),
+    colgroup: _({thead: 1, col: 1, tbody: 1, tr: 1, tfoot: 1}),
     noscript: P,
     td: P,
     br: {},
@@ -2090,7 +2030,7 @@ var dtd = (dom.dtd = (function() {
     option: N,
     h2: L,
     form: X(A, D, E, I),
-    select: _({ optgroup: 1, option: 1 }),
+    select: _({optgroup: 1, option: 1}),
     font: L,
     ins: L,
     menu: Q,
@@ -2133,7 +2073,7 @@ var dtd = (dom.dtd = (function() {
     hr: L,
     dt: L,
     sub: L,
-    optgroup: _({ option: 1 }),
+    optgroup: _({option: 1}),
     param: {},
     bdo: L,
     var: L,
@@ -2144,18 +2084,18 @@ var dtd = (dom.dtd = (function() {
     strike: L,
     area: {},
     dir: Q,
-    map: X(_({ area: 1, form: 1, p: 1 }), A, F, E),
+    map: X(_({area: 1, form: 1, p: 1}), A, F, E),
     applet: O,
-    dl: _({ dt: 1, dd: 1 }),
+    dl: _({dt: 1, dd: 1}),
     del: L,
     isindex: {},
-    fieldset: X(_({ legend: 1 }), K),
+    fieldset: X(_({legend: 1}), K),
     thead: M,
     ul: Q,
     acronym: L,
     b: L,
-    a: X(_({ a: 1 }), J),
-    blockquote: X(_({ td: 1, tr: 1, tbody: 1, li: 1 }), P),
+    a: X(_({a: 1}), J),
+    blockquote: X(_({td: 1, tr: 1, tbody: 1, li: 1}), P),
     caption: L,
     i: L,
     u: L,
@@ -2166,7 +2106,7 @@ var dtd = (dom.dtd = (function() {
     legend: L,
     q: L,
     pre: X(G, C),
-    p: X(_({ a: 1 }), L),
+    p: X(_({a: 1}), L),
     em: L,
     dfn: L,
     mark: L
@@ -2202,24 +2142,25 @@ function getDomNode(node, start, ltr, startFromChild, fn, guard) {
   }
   return tmpNode;
 }
-var attrFix = ie && browser.version < 9
-  ? {
-      tabindex: "tabIndex",
-      readonly: "readOnly",
-      for: "htmlFor",
-      class: "className",
-      maxlength: "maxLength",
-      cellspacing: "cellSpacing",
-      cellpadding: "cellPadding",
-      rowspan: "rowSpan",
-      colspan: "colSpan",
-      usemap: "useMap",
-      frameborder: "frameBorder"
-    }
-  : {
-      tabindex: "tabIndex",
-      readonly: "readOnly"
-    },
+var attrFix =
+    ie && browser.version < 9
+      ? {
+          tabindex: "tabIndex",
+          readonly: "readOnly",
+          for: "htmlFor",
+          class: "className",
+          maxlength: "maxLength",
+          cellspacing: "cellSpacing",
+          cellpadding: "cellPadding",
+          rowspan: "rowSpan",
+          colspan: "colSpan",
+          usemap: "useMap",
+          frameborder: "frameBorder"
+        }
+      : {
+          tabindex: "tabIndex",
+          readonly: "readOnly"
+        },
   styleBlock = utils.listToMap([
     "-webkit-box",
     "-moz-box",
@@ -2266,52 +2207,52 @@ var domUtils = (dom.domUtils = {
     13: 1 /*enter*/
   },
   /**
-     * 获取节点A相对于节点B的位置关系
-     * @method getPosition
-     * @param { Node } nodeA 需要查询位置关系的节点A
-     * @param { Node } nodeB 需要查询位置关系的节点B
-     * @return { Number } 节点A与节点B的关系
-     * @example
-     * ```javascript
-     * //output: 20
-     * var position = UE.dom.domUtils.getPosition( document.documentElement, document.body );
-     *
-     * switch ( position ) {
-     *
-     *      //0
-     *      case UE.dom.domUtils.POSITION_IDENTICAL:
-     *          console.log('元素相同');
-     *          break;
-     *      //1
-     *      case UE.dom.domUtils.POSITION_DISCONNECTED:
-     *          console.log('两个节点在不同的文档中');
-     *          break;
-     *      //2
-     *      case UE.dom.domUtils.POSITION_FOLLOWING:
-     *          console.log('节点A在节点B之后');
-     *          break;
-     *      //4
-     *      case UE.dom.domUtils.POSITION_PRECEDING;
-     *          console.log('节点A在节点B之前');
-     *          break;
-     *      //8
-     *      case UE.dom.domUtils.POSITION_IS_CONTAINED:
-     *          console.log('节点A被节点B包含');
-     *          break;
-     *      case 10:
-     *          console.log('节点A被节点B包含且节点A在节点B之后');
-     *          break;
-     *      //16
-     *      case UE.dom.domUtils.POSITION_CONTAINS:
-     *          console.log('节点A包含节点B');
-     *          break;
-     *      case 20:
-     *          console.log('节点A包含节点B且节点A在节点B之前');
-     *          break;
-     *
-     * }
-     * ```
-     */
+   * 获取节点A相对于节点B的位置关系
+   * @method getPosition
+   * @param { Node } nodeA 需要查询位置关系的节点A
+   * @param { Node } nodeB 需要查询位置关系的节点B
+   * @return { Number } 节点A与节点B的关系
+   * @example
+   * ```javascript
+   * //output: 20
+   * var position = UE.dom.domUtils.getPosition( document.documentElement, document.body );
+   *
+   * switch ( position ) {
+   *
+   *      //0
+   *      case UE.dom.domUtils.POSITION_IDENTICAL:
+   *          console.log('元素相同');
+   *          break;
+   *      //1
+   *      case UE.dom.domUtils.POSITION_DISCONNECTED:
+   *          console.log('两个节点在不同的文档中');
+   *          break;
+   *      //2
+   *      case UE.dom.domUtils.POSITION_FOLLOWING:
+   *          console.log('节点A在节点B之后');
+   *          break;
+   *      //4
+   *      case UE.dom.domUtils.POSITION_PRECEDING;
+   *          console.log('节点A在节点B之前');
+   *          break;
+   *      //8
+   *      case UE.dom.domUtils.POSITION_IS_CONTAINED:
+   *          console.log('节点A被节点B包含');
+   *          break;
+   *      case 10:
+   *          console.log('节点A被节点B包含且节点A在节点B之后');
+   *          break;
+   *      //16
+   *      case UE.dom.domUtils.POSITION_CONTAINS:
+   *          console.log('节点A包含节点B');
+   *          break;
+   *      case 20:
+   *          console.log('节点A包含节点B且节点A在节点B之前');
+   *          break;
+   *
+   * }
+   * ```
+   */
   getPosition: function(nodeA, nodeB) {
     // 如果两个节点是同一个节点
     if (nodeA === nodeB) {
@@ -2360,36 +2301,36 @@ var domUtils = (dom.domUtils = {
   },
 
   /**
-     * 检测节点node在父节点中的索引位置
-     * @method getNodeIndex
-     * @param { Node } node 需要检测的节点对象
-     * @return { Number } 该节点在父节点中的位置
-     * @see UE.dom.domUtils.getNodeIndex(Node,Boolean)
-     */
+   * 检测节点node在父节点中的索引位置
+   * @method getNodeIndex
+   * @param { Node } node 需要检测的节点对象
+   * @return { Number } 该节点在父节点中的位置
+   * @see UE.dom.domUtils.getNodeIndex(Node,Boolean)
+   */
 
   /**
-     * 检测节点node在父节点中的索引位置， 根据给定的mergeTextNode参数决定是否要合并多个连续的文本节点为一个节点
-     * @method getNodeIndex
-     * @param { Node } node 需要检测的节点对象
-     * @param { Boolean } mergeTextNode 是否合并多个连续的文本节点为一个节点
-     * @return { Number } 该节点在父节点中的位置
-     * @example
-     * ```javascript
-     *
-     *      var node = document.createElement("div");
-     *
-     *      node.appendChild( document.createTextNode( "hello" ) );
-     *      node.appendChild( document.createTextNode( "world" ) );
-     *      node.appendChild( node = document.createElement( "div" ) );
-     *
-     *      //output: 2
-     *      console.log( UE.dom.domUtils.getNodeIndex( node ) );
-     *
-     *      //output: 1
-     *      console.log( UE.dom.domUtils.getNodeIndex( node, true ) );
-     *
-     * ```
-     */
+   * 检测节点node在父节点中的索引位置， 根据给定的mergeTextNode参数决定是否要合并多个连续的文本节点为一个节点
+   * @method getNodeIndex
+   * @param { Node } node 需要检测的节点对象
+   * @param { Boolean } mergeTextNode 是否合并多个连续的文本节点为一个节点
+   * @return { Number } 该节点在父节点中的位置
+   * @example
+   * ```javascript
+   *
+   *      var node = document.createElement("div");
+   *
+   *      node.appendChild( document.createTextNode( "hello" ) );
+   *      node.appendChild( document.createTextNode( "world" ) );
+   *      node.appendChild( node = document.createElement( "div" ) );
+   *
+   *      //output: 2
+   *      console.log( UE.dom.domUtils.getNodeIndex( node ) );
+   *
+   *      //output: 1
+   *      console.log( UE.dom.domUtils.getNodeIndex( node, true ) );
+   *
+   * ```
+   */
   getNodeIndex: function(node, ignoreTextNode) {
     var preNode = node,
       i = 0;
@@ -2406,95 +2347,93 @@ var domUtils = (dom.domUtils = {
   },
 
   /**
-     * 检测节点node是否在给定的document对象上
-     * @method inDoc
-     * @param { Node } node 需要检测的节点对象
-     * @param { DomDocument } doc 需要检测的document对象
-     * @return { Boolean } 该节点node是否在给定的document的dom树上
-     * @example
-     * ```javascript
-     *
-     * var node = document.createElement("div");
-     *
-     * //output: false
-     * console.log( UE.do.domUtils.inDoc( node, document ) );
-     *
-     * document.body.appendChild( node );
-     *
-     * //output: true
-     * console.log( UE.do.domUtils.inDoc( node, document ) );
-     *
-     * ```
-     */
+   * 检测节点node是否在给定的document对象上
+   * @method inDoc
+   * @param { Node } node 需要检测的节点对象
+   * @param { DomDocument } doc 需要检测的document对象
+   * @return { Boolean } 该节点node是否在给定的document的dom树上
+   * @example
+   * ```javascript
+   *
+   * var node = document.createElement("div");
+   *
+   * //output: false
+   * console.log( UE.do.domUtils.inDoc( node, document ) );
+   *
+   * document.body.appendChild( node );
+   *
+   * //output: true
+   * console.log( UE.do.domUtils.inDoc( node, document ) );
+   *
+   * ```
+   */
   inDoc: function(node, doc) {
     return domUtils.getPosition(node, doc) == 10;
   },
   /**
-     * 根据给定的过滤规则filterFn， 查找符合该过滤规则的node节点的第一个祖先节点，
-     * 查找的起点是给定node节点的父节点。
-     * @method findParent
-     * @param { Node } node 需要查找的节点
-     * @param { Function } filterFn 自定义的过滤方法。
-     * @warning 查找的终点是到body节点为止
-     * @remind 自定义的过滤方法filterFn接受一个Node对象作为参数， 该对象代表当前执行检测的祖先节点。 如果该
-     *          节点满足过滤条件， 则要求返回true， 这时将直接返回该节点作为findParent()的结果， 否则， 请返回false。
-     * @return { Node | Null } 如果找到符合过滤条件的节点， 就返回该节点， 否则返回NULL
-     * @example
-     * ```javascript
-     * var filterNode = UE.dom.domUtils.findParent( document.body.firstChild, function ( node ) {
-     *
-     *     //由于查找的终点是body节点， 所以永远也不会匹配当前过滤器的条件， 即这里永远会返回false
-     *     return node.tagName === "HTML";
-     *
-     * } );
-     *
-     * //output: true
-     * console.log( filterNode === null );
-     * ```
-     */
+   * 根据给定的过滤规则filterFn， 查找符合该过滤规则的node节点的第一个祖先节点，
+   * 查找的起点是给定node节点的父节点。
+   * @method findParent
+   * @param { Node } node 需要查找的节点
+   * @param { Function } filterFn 自定义的过滤方法。
+   * @warning 查找的终点是到body节点为止
+   * @remind 自定义的过滤方法filterFn接受一个Node对象作为参数， 该对象代表当前执行检测的祖先节点。 如果该
+   *          节点满足过滤条件， 则要求返回true， 这时将直接返回该节点作为findParent()的结果， 否则， 请返回false。
+   * @return { Node | Null } 如果找到符合过滤条件的节点， 就返回该节点， 否则返回NULL
+   * @example
+   * ```javascript
+   * var filterNode = UE.dom.domUtils.findParent( document.body.firstChild, function ( node ) {
+   *
+   *     //由于查找的终点是body节点， 所以永远也不会匹配当前过滤器的条件， 即这里永远会返回false
+   *     return node.tagName === "HTML";
+   *
+   * } );
+   *
+   * //output: true
+   * console.log( filterNode === null );
+   * ```
+   */
 
   /**
-     * 根据给定的过滤规则filterFn， 查找符合该过滤规则的node节点的第一个祖先节点，
-     * 如果includeSelf的值为true，则查找的起点是给定的节点node， 否则， 起点是node的父节点
-     * @method findParent
-     * @param { Node } node 需要查找的节点
-     * @param { Function } filterFn 自定义的过滤方法。
-     * @param { Boolean } includeSelf 查找过程是否包含自身
-     * @warning 查找的终点是到body节点为止
-     * @remind 自定义的过滤方法filterFn接受一个Node对象作为参数， 该对象代表当前执行检测的祖先节点。 如果该
-     *          节点满足过滤条件， 则要求返回true， 这时将直接返回该节点作为findParent()的结果， 否则， 请返回false。
-     * @remind 如果includeSelf为true， 则过滤器第一次执行时的参数会是节点本身。
-     *          反之， 过滤器第一次执行时的参数将是该节点的父节点。
-     * @return { Node | Null } 如果找到符合过滤条件的节点， 就返回该节点， 否则返回NULL
-     * @example
-     * ```html
-     * <body>
-     *
-     *      <div id="test">
-     *      </div>
-     *
-     *      <script type="text/javascript">
-     *
-     *          //output: DIV, BODY
-     *          var filterNode = UE.dom.domUtils.findParent( document.getElementById( "test" ), function ( node ) {
-     *
-     *              console.log( node.tagName );
-     *              return false;
-     *
-     *          }, true );
-     *
-     *      </script>
-     * </body>
-     * ```
-     */
+   * 根据给定的过滤规则filterFn， 查找符合该过滤规则的node节点的第一个祖先节点，
+   * 如果includeSelf的值为true，则查找的起点是给定的节点node， 否则， 起点是node的父节点
+   * @method findParent
+   * @param { Node } node 需要查找的节点
+   * @param { Function } filterFn 自定义的过滤方法。
+   * @param { Boolean } includeSelf 查找过程是否包含自身
+   * @warning 查找的终点是到body节点为止
+   * @remind 自定义的过滤方法filterFn接受一个Node对象作为参数， 该对象代表当前执行检测的祖先节点。 如果该
+   *          节点满足过滤条件， 则要求返回true， 这时将直接返回该节点作为findParent()的结果， 否则， 请返回false。
+   * @remind 如果includeSelf为true， 则过滤器第一次执行时的参数会是节点本身。
+   *          反之， 过滤器第一次执行时的参数将是该节点的父节点。
+   * @return { Node | Null } 如果找到符合过滤条件的节点， 就返回该节点， 否则返回NULL
+   * @example
+   * ```html
+   * <body>
+   *
+   *      <div id="test">
+   *      </div>
+   *
+   *      <script type="text/javascript">
+   *
+   *          //output: DIV, BODY
+   *          var filterNode = UE.dom.domUtils.findParent( document.getElementById( "test" ), function ( node ) {
+   *
+   *              console.log( node.tagName );
+   *              return false;
+   *
+   *          }, true );
+   *
+   *      </script>
+   * </body>
+   * ```
+   */
   findParent: function(node, filterFn, includeSelf) {
     if (node && !domUtils.isBody(node)) {
       node = includeSelf ? node : node.parentNode;
       while (node) {
         if (!filterFn || filterFn(node) || domUtils.isBody(node)) {
-          return filterFn && !filterFn(node) && domUtils.isBody(node)
-            ? null
-            : node;
+          return filterFn && !filterFn(node) && domUtils.isBody(node) ? null : node;
         }
         node = node.parentNode;
       }
@@ -2502,37 +2441,37 @@ var domUtils = (dom.domUtils = {
     return null;
   },
   /**
-     * 查找node的节点名为tagName的第一个祖先节点， 查找的起点是node节点的父节点。
-     * @method findParentByTagName
-     * @param { Node } node 需要查找的节点对象
-     * @param { Array } tagNames 需要查找的父节点的名称数组
-     * @warning 查找的终点是到body节点为止
-     * @return { Node | NULL } 如果找到符合条件的节点， 则返回该节点， 否则返回NULL
-     * @example
-     * ```javascript
-     * var node = UE.dom.domUtils.findParentByTagName( document.getElementsByTagName("div")[0], [ "BODY" ] );
-     * //output: BODY
-     * console.log( node.tagName );
-     * ```
-     */
+   * 查找node的节点名为tagName的第一个祖先节点， 查找的起点是node节点的父节点。
+   * @method findParentByTagName
+   * @param { Node } node 需要查找的节点对象
+   * @param { Array } tagNames 需要查找的父节点的名称数组
+   * @warning 查找的终点是到body节点为止
+   * @return { Node | NULL } 如果找到符合条件的节点， 则返回该节点， 否则返回NULL
+   * @example
+   * ```javascript
+   * var node = UE.dom.domUtils.findParentByTagName( document.getElementsByTagName("div")[0], [ "BODY" ] );
+   * //output: BODY
+   * console.log( node.tagName );
+   * ```
+   */
 
   /**
-     * 查找node的节点名为tagName的祖先节点， 如果includeSelf的值为true，则查找的起点是给定的节点node，
-     * 否则， 起点是node的父节点。
-     * @method findParentByTagName
-     * @param { Node } node 需要查找的节点对象
-     * @param { Array } tagNames 需要查找的父节点的名称数组
-     * @param { Boolean } includeSelf 查找过程是否包含node节点自身
-     * @warning 查找的终点是到body节点为止
-     * @return { Node | NULL } 如果找到符合条件的节点， 则返回该节点， 否则返回NULL
-     * @example
-     * ```javascript
-     * var queryTarget = document.getElementsByTagName("div")[0];
-     * var node = UE.dom.domUtils.findParentByTagName( queryTarget, [ "DIV" ], true );
-     * //output: true
-     * console.log( queryTarget === node );
-     * ```
-     */
+   * 查找node的节点名为tagName的祖先节点， 如果includeSelf的值为true，则查找的起点是给定的节点node，
+   * 否则， 起点是node的父节点。
+   * @method findParentByTagName
+   * @param { Node } node 需要查找的节点对象
+   * @param { Array } tagNames 需要查找的父节点的名称数组
+   * @param { Boolean } includeSelf 查找过程是否包含node节点自身
+   * @warning 查找的终点是到body节点为止
+   * @return { Node | NULL } 如果找到符合条件的节点， 则返回该节点， 否则返回NULL
+   * @example
+   * ```javascript
+   * var queryTarget = document.getElementsByTagName("div")[0];
+   * var node = UE.dom.domUtils.findParentByTagName( queryTarget, [ "DIV" ], true );
+   * //output: true
+   * console.log( queryTarget === node );
+   * ```
+   */
   findParentByTagName: function(node, tagNames, includeSelf, excludeFn) {
     tagNames = utils.listToMap(utils.isArray(tagNames) ? tagNames : [tagNames]);
     return domUtils.findParent(
@@ -2544,28 +2483,26 @@ var domUtils = (dom.domUtils = {
     );
   },
   /**
-     * 查找节点node的祖先节点集合， 查找的起点是给定节点的父节点，结果集中不包含给定的节点。
-     * @method findParents
-     * @param { Node } node 需要查找的节点对象
-     * @return { Array } 给定节点的祖先节点数组
-     * @grammar UE.dom.domUtils.findParents(node)  => Array  //返回一个祖先节点数组集合，不包含自身
-     * @grammar UE.dom.domUtils.findParents(node,includeSelf)  => Array  //返回一个祖先节点数组集合，includeSelf指定是否包含自身
-     * @grammar UE.dom.domUtils.findParents(node,includeSelf,filterFn)  => Array  //返回一个祖先节点数组集合，filterFn指定过滤条件，返回true的node将被选取
-     * @grammar UE.dom.domUtils.findParents(node,includeSelf,filterFn,closerFirst)  => Array  //返回一个祖先节点数组集合，closerFirst为true的话，node的直接父亲节点是数组的第0个
-     */
+   * 查找节点node的祖先节点集合， 查找的起点是给定节点的父节点，结果集中不包含给定的节点。
+   * @method findParents
+   * @param { Node } node 需要查找的节点对象
+   * @return { Array } 给定节点的祖先节点数组
+   * @grammar UE.dom.domUtils.findParents(node)  => Array  //返回一个祖先节点数组集合，不包含自身
+   * @grammar UE.dom.domUtils.findParents(node,includeSelf)  => Array  //返回一个祖先节点数组集合，includeSelf指定是否包含自身
+   * @grammar UE.dom.domUtils.findParents(node,includeSelf,filterFn)  => Array  //返回一个祖先节点数组集合，filterFn指定过滤条件，返回true的node将被选取
+   * @grammar UE.dom.domUtils.findParents(node,includeSelf,filterFn,closerFirst)  => Array  //返回一个祖先节点数组集合，closerFirst为true的话，node的直接父亲节点是数组的第0个
+   */
 
   /**
-     * 查找节点node的祖先节点集合， 如果includeSelf的值为true，
-     * 则返回的结果集中允许出现当前给定的节点， 否则， 该节点不会出现在其结果集中。
-     * @method findParents
-     * @param { Node } node 需要查找的节点对象
-     * @param { Boolean } includeSelf 查找的结果中是否允许包含当前查找的节点对象
-     * @return { Array } 给定节点的祖先节点数组
-     */
+   * 查找节点node的祖先节点集合， 如果includeSelf的值为true，
+   * 则返回的结果集中允许出现当前给定的节点， 否则， 该节点不会出现在其结果集中。
+   * @method findParents
+   * @param { Node } node 需要查找的节点对象
+   * @param { Boolean } includeSelf 查找的结果中是否允许包含当前查找的节点对象
+   * @return { Array } 给定节点的祖先节点数组
+   */
   findParents: function(node, includeSelf, filterFn, closerFirst) {
-    var parents = includeSelf && ((filterFn && filterFn(node)) || !filterFn)
-      ? [node]
-      : [];
+    var parents = includeSelf && ((filterFn && filterFn(node)) || !filterFn) ? [node] : [];
     while ((node = domUtils.findParent(node, filterFn))) {
       parents.push(node);
     }
@@ -2573,12 +2510,12 @@ var domUtils = (dom.domUtils = {
   },
 
   /**
-     * 在节点node后面插入新节点newNode
-     * @method insertAfter
-     * @param { Node } node 目标节点
-     * @param { Node } newNode 新插入的节点， 该节点将置于目标节点之后
-     * @return { Node } 新插入的节点
-     */
+   * 在节点node后面插入新节点newNode
+   * @method insertAfter
+   * @param { Node } node 目标节点
+   * @param { Node } newNode 新插入的节点， 该节点将置于目标节点之后
+   * @return { Node } 新插入的节点
+   */
   insertAfter: function(node, newNode) {
     return node.nextSibling
       ? node.parentNode.insertBefore(newNode, node.nextSibling)
@@ -2586,41 +2523,41 @@ var domUtils = (dom.domUtils = {
   },
 
   /**
-     * 删除节点node及其下属的所有节点
-     * @method remove
-     * @param { Node } node 需要删除的节点对象
-     * @return { Node } 返回刚删除的节点对象
-     * @example
-     * ```html
-     * <div id="test">
-     *     <div id="child">你好</div>
-     * </div>
-     * <script>
-     *     UE.dom.domUtils.remove( document.body, false );
-     *     //output: false
-     *     console.log( document.getElementById( "child" ) !== null );
-     * </script>
-     * ```
-     */
+   * 删除节点node及其下属的所有节点
+   * @method remove
+   * @param { Node } node 需要删除的节点对象
+   * @return { Node } 返回刚删除的节点对象
+   * @example
+   * ```html
+   * <div id="test">
+   *     <div id="child">你好</div>
+   * </div>
+   * <script>
+   *     UE.dom.domUtils.remove( document.body, false );
+   *     //output: false
+   *     console.log( document.getElementById( "child" ) !== null );
+   * </script>
+   * ```
+   */
 
   /**
-     * 删除节点node，并根据keepChildren的值决定是否保留子节点
-     * @method remove
-     * @param { Node } node 需要删除的节点对象
-     * @param { Boolean } keepChildren 是否需要保留子节点
-     * @return { Node } 返回刚删除的节点对象
-     * @example
-     * ```html
-     * <div id="test">
-     *     <div id="child">你好</div>
-     * </div>
-     * <script>
-     *     UE.dom.domUtils.remove( document.body, true );
-     *     //output: true
-     *     console.log( document.getElementById( "child" ) !== null );
-     * </script>
-     * ```
-     */
+   * 删除节点node，并根据keepChildren的值决定是否保留子节点
+   * @method remove
+   * @param { Node } node 需要删除的节点对象
+   * @param { Boolean } keepChildren 是否需要保留子节点
+   * @return { Node } 返回刚删除的节点对象
+   * @example
+   * ```html
+   * <div id="test">
+   *     <div id="child">你好</div>
+   * </div>
+   * <script>
+   *     UE.dom.domUtils.remove( document.body, true );
+   *     //output: true
+   *     console.log( document.getElementById( "child" ) !== null );
+   * </script>
+   * ```
+   */
   remove: function(node, keepChildren) {
     var parent = node.parentNode,
       child;
@@ -2636,123 +2573,109 @@ var domUtils = (dom.domUtils = {
   },
 
   /**
-     * 取得node节点的下一个兄弟节点， 如果该节点其后没有兄弟节点， 则递归查找其父节点之后的第一个兄弟节点，
-     * 直到找到满足条件的节点或者递归到BODY节点之后才会结束。
-     * @method getNextDomNode
-     * @param { Node } node 需要获取其后的兄弟节点的节点对象
-     * @return { Node | NULL } 如果找满足条件的节点， 则返回该节点， 否则返回NULL
-     * @example
-     * ```html
-     *     <body>
-     *      <div id="test">
-     *          <span></span>
-     *      </div>
-     *      <i>xxx</i>
-     * </body>
-     * <script>
-     *
-     *     //output: i节点
-     *     console.log( UE.dom.domUtils.getNextDomNode( document.getElementById( "test" ) ) );
-     *
-     * </script>
-     * ```
-     * @example
-     * ```html
-     * <body>
-     *      <div>
-     *          <span></span>
-     *          <i id="test">xxx</i>
-     *      </div>
-     *      <b>xxx</b>
-     * </body>
-     * <script>
-     *
-     *     //由于id为test的i节点之后没有兄弟节点， 则查找其父节点（div）后面的兄弟节点
-     *     //output: b节点
-     *     console.log( UE.dom.domUtils.getNextDomNode( document.getElementById( "test" ) ) );
-     *
-     * </script>
-     * ```
-     */
+   * 取得node节点的下一个兄弟节点， 如果该节点其后没有兄弟节点， 则递归查找其父节点之后的第一个兄弟节点，
+   * 直到找到满足条件的节点或者递归到BODY节点之后才会结束。
+   * @method getNextDomNode
+   * @param { Node } node 需要获取其后的兄弟节点的节点对象
+   * @return { Node | NULL } 如果找满足条件的节点， 则返回该节点， 否则返回NULL
+   * @example
+   * ```html
+   *     <body>
+   *      <div id="test">
+   *          <span></span>
+   *      </div>
+   *      <i>xxx</i>
+   * </body>
+   * <script>
+   *
+   *     //output: i节点
+   *     console.log( UE.dom.domUtils.getNextDomNode( document.getElementById( "test" ) ) );
+   *
+   * </script>
+   * ```
+   * @example
+   * ```html
+   * <body>
+   *      <div>
+   *          <span></span>
+   *          <i id="test">xxx</i>
+   *      </div>
+   *      <b>xxx</b>
+   * </body>
+   * <script>
+   *
+   *     //由于id为test的i节点之后没有兄弟节点， 则查找其父节点（div）后面的兄弟节点
+   *     //output: b节点
+   *     console.log( UE.dom.domUtils.getNextDomNode( document.getElementById( "test" ) ) );
+   *
+   * </script>
+   * ```
+   */
 
   /**
-     * 取得node节点的下一个兄弟节点， 如果startFromChild的值为ture，则先获取其子节点，
-     * 如果有子节点则直接返回第一个子节点；如果没有子节点或者startFromChild的值为false，
-     * 则执行<a href="#UE.dom.domUtils.getNextDomNode(Node)">getNextDomNode(Node node)</a>的查找过程。
-     * @method getNextDomNode
-     * @param { Node } node 需要获取其后的兄弟节点的节点对象
-     * @param { Boolean } startFromChild 查找过程是否从其子节点开始
-     * @return { Node | NULL } 如果找满足条件的节点， 则返回该节点， 否则返回NULL
-     * @see UE.dom.domUtils.getNextDomNode(Node)
-     */
+   * 取得node节点的下一个兄弟节点， 如果startFromChild的值为ture，则先获取其子节点，
+   * 如果有子节点则直接返回第一个子节点；如果没有子节点或者startFromChild的值为false，
+   * 则执行<a href="#UE.dom.domUtils.getNextDomNode(Node)">getNextDomNode(Node node)</a>的查找过程。
+   * @method getNextDomNode
+   * @param { Node } node 需要获取其后的兄弟节点的节点对象
+   * @param { Boolean } startFromChild 查找过程是否从其子节点开始
+   * @return { Node | NULL } 如果找满足条件的节点， 则返回该节点， 否则返回NULL
+   * @see UE.dom.domUtils.getNextDomNode(Node)
+   */
   getNextDomNode: function(node, startFromChild, filterFn, guard) {
-    return getDomNode(
-      node,
-      "firstChild",
-      "nextSibling",
-      startFromChild,
-      filterFn,
-      guard
-    );
+    return getDomNode(node, "firstChild", "nextSibling", startFromChild, filterFn, guard);
   },
   getPreDomNode: function(node, startFromChild, filterFn, guard) {
-    return getDomNode(
-      node,
-      "lastChild",
-      "previousSibling",
-      startFromChild,
-      filterFn,
-      guard
-    );
+    return getDomNode(node, "lastChild", "previousSibling", startFromChild, filterFn, guard);
   },
   /**
-     * 检测节点node是否属是UEditor定义的bookmark节点
-     * @method isBookmarkNode
-     * @private
-     * @param { Node } node 需要检测的节点对象
-     * @return { Boolean } 是否是bookmark节点
-     * @example
-     * ```html
-     * <span id="_baidu_bookmark_1"></span>
-     * <script>
-     *      var bookmarkNode = document.getElementById("_baidu_bookmark_1");
-     *      //output: true
-     *      console.log( UE.dom.domUtils.isBookmarkNode( bookmarkNode ) );
-     * </script>
-     * ```
-     */
+   * 检测节点node是否属是UEditor定义的bookmark节点
+   * @method isBookmarkNode
+   * @private
+   * @param { Node } node 需要检测的节点对象
+   * @return { Boolean } 是否是bookmark节点
+   * @example
+   * ```html
+   * <span id="_baidu_bookmark_1"></span>
+   * <script>
+   *      var bookmarkNode = document.getElementById("_baidu_bookmark_1");
+   *      //output: true
+   *      console.log( UE.dom.domUtils.isBookmarkNode( bookmarkNode ) );
+   * </script>
+   * ```
+   */
   isBookmarkNode: function(node) {
     return node.nodeType == 1 && node.id && /^_baidu_bookmark_/i.test(node.id);
   },
   /**
-     * 获取节点node所属的window对象
-     * @method  getWindow
-     * @param { Node } node 节点对象
-     * @return { Window } 当前节点所属的window对象
-     * @example
-     * ```javascript
-     * //output: true
-     * console.log( UE.dom.domUtils.getWindow( document.body ) === window );
-     * ```
-     */
+   * 获取节点node所属的window对象
+   * @method  getWindow
+   * @param { Node } node 节点对象
+   * @return { Window } 当前节点所属的window对象
+   * @example
+   * ```javascript
+   * //output: true
+   * console.log( UE.dom.domUtils.getWindow( document.body ) === window );
+   * ```
+   */
   getWindow: function(node) {
     var doc = node.ownerDocument || node;
     return doc.defaultView || doc.parentWindow;
   },
   /**
-     * 获取离nodeA与nodeB最近的公共的祖先节点
-     * @method  getCommonAncestor
-     * @param { Node } nodeA 第一个节点
-     * @param { Node } nodeB 第二个节点
-     * @remind 如果给定的两个节点是同一个节点， 将直接返回该节点。
-     * @return { Node | NULL } 如果未找到公共节点， 返回NULL， 否则返回最近的公共祖先节点。
-     * @example
-     * ```javascript
-     * var commonAncestor = UE.dom.domUtils.getCommonAncestor( document.body, document.body.firstChild );
-     * //output: true
-     * console.log( commonAncestor.tagName.toLowerCase() === 'body' );
-     * ```
-     */
+   * 获取离nodeA与nodeB最近的公共的祖先节点
+   * @method  getCommonAncestor
+   * @param { Node } nodeA 第一个节点
+   * @param { Node } nodeB 第二个节点
+   * @remind 如果给定的两个节点是同一个节点， 将直接返回该节点。
+   * @return { Node | NULL } 如果未找到公共节点， 返回NULL， 否则返回最近的公共祖先节点。
+   * @example
+   * ```javascript
+   * var commonAncestor = UE.dom.domUtils.getCommonAncestor( document.body, document.body.firstChild );
+   * //output: true
+   * console.log( commonAncestor.tagName.toLowerCase() === 'body' );
+   * ```
+   */
   getCommonAncestor: function(nodeA, nodeB) {
     if (nodeA === nodeB) return nodeA;
     var parentsA = [nodeA],
@@ -2776,53 +2699,53 @@ var domUtils = (dom.domUtils = {
     return i == 0 ? null : parentsA[i - 1];
   },
   /**
-     * 清除node节点左右连续为空的兄弟inline节点
-     * @method clearEmptySibling
-     * @param { Node } node 执行的节点对象， 如果该节点的左右连续的兄弟节点是空的inline节点，
-     * 则这些兄弟节点将被删除
-     * @grammar UE.dom.domUtils.clearEmptySibling(node,ignoreNext)  //ignoreNext指定是否忽略右边空节点
-     * @grammar UE.dom.domUtils.clearEmptySibling(node,ignoreNext,ignorePre)  //ignorePre指定是否忽略左边空节点
-     * @example
-     * ```html
-     * <body>
-     *     <div></div>
-     *     <span id="test"></span>
-     *     <i></i>
-     *     <b></b>
-     *     <em>xxx</em>
-     *     <span></span>
-     * </body>
-     * <script>
-     *
-     *      UE.dom.domUtils.clearEmptySibling( document.getElementById( "test" ) );
-     *
-     *      //output: <div></div><span id="test"></span><em>xxx</em><span></span>
-     *      console.log( document.body.innerHTML );
-     *
-     * </script>
-     * ```
-     */
+   * 清除node节点左右连续为空的兄弟inline节点
+   * @method clearEmptySibling
+   * @param { Node } node 执行的节点对象， 如果该节点的左右连续的兄弟节点是空的inline节点，
+   * 则这些兄弟节点将被删除
+   * @grammar UE.dom.domUtils.clearEmptySibling(node,ignoreNext)  //ignoreNext指定是否忽略右边空节点
+   * @grammar UE.dom.domUtils.clearEmptySibling(node,ignoreNext,ignorePre)  //ignorePre指定是否忽略左边空节点
+   * @example
+   * ```html
+   * <body>
+   *     <div></div>
+   *     <span id="test"></span>
+   *     <i></i>
+   *     <b></b>
+   *     <em>xxx</em>
+   *     <span></span>
+   * </body>
+   * <script>
+   *
+   *      UE.dom.domUtils.clearEmptySibling( document.getElementById( "test" ) );
+   *
+   *      //output: <div></div><span id="test"></span><em>xxx</em><span></span>
+   *      console.log( document.body.innerHTML );
+   *
+   * </script>
+   * ```
+   */
 
   /**
-     * 清除node节点左右连续为空的兄弟inline节点， 如果ignoreNext的值为true，
-     * 则忽略对右边兄弟节点的操作。
-     * @method clearEmptySibling
-     * @param { Node } node 执行的节点对象， 如果该节点的左右连续的兄弟节点是空的inline节点，
-     * @param { Boolean } ignoreNext 是否忽略忽略对右边的兄弟节点的操作
-     * 则这些兄弟节点将被删除
-     * @see UE.dom.domUtils.clearEmptySibling(Node)
-     */
+   * 清除node节点左右连续为空的兄弟inline节点， 如果ignoreNext的值为true，
+   * 则忽略对右边兄弟节点的操作。
+   * @method clearEmptySibling
+   * @param { Node } node 执行的节点对象， 如果该节点的左右连续的兄弟节点是空的inline节点，
+   * @param { Boolean } ignoreNext 是否忽略忽略对右边的兄弟节点的操作
+   * 则这些兄弟节点将被删除
+   * @see UE.dom.domUtils.clearEmptySibling(Node)
+   */
 
   /**
-     * 清除node节点左右连续为空的兄弟inline节点， 如果ignoreNext的值为true，
-     * 则忽略对右边兄弟节点的操作， 如果ignorePre的值为true，则忽略对左边兄弟节点的操作。
-     * @method clearEmptySibling
-     * @param { Node } node 执行的节点对象， 如果该节点的左右连续的兄弟节点是空的inline节点，
-     * @param { Boolean } ignoreNext 是否忽略忽略对右边的兄弟节点的操作
-     * @param { Boolean } ignorePre 是否忽略忽略对左边的兄弟节点的操作
-     * 则这些兄弟节点将被删除
-     * @see UE.dom.domUtils.clearEmptySibling(Node)
-     */
+   * 清除node节点左右连续为空的兄弟inline节点， 如果ignoreNext的值为true，
+   * 则忽略对右边兄弟节点的操作， 如果ignorePre的值为true，则忽略对左边兄弟节点的操作。
+   * @method clearEmptySibling
+   * @param { Node } node 执行的节点对象， 如果该节点的左右连续的兄弟节点是空的inline节点，
+   * @param { Boolean } ignoreNext 是否忽略忽略对右边的兄弟节点的操作
+   * @param { Boolean } ignorePre 是否忽略忽略对左边的兄弟节点的操作
+   * 则这些兄弟节点将被删除
+   * @see UE.dom.domUtils.clearEmptySibling(Node)
+   */
   clearEmptySibling: function(node, ignoreNext, ignorePre) {
     function clear(next, dir) {
       var tmpNode;
@@ -2831,9 +2754,7 @@ var domUtils = (dom.domUtils = {
         !domUtils.isBookmarkNode(next) &&
         (domUtils.isEmptyInlineElement(next) ||
           //这里不能把空格算进来会吧空格干掉，出现文字间的空格丢掉了
-          !new RegExp("[^\t\n\r" + domUtils.fillChar + "]").test(
-            next.nodeValue
-          ))
+          !new RegExp("[^\t\n\r" + domUtils.fillChar + "]").test(next.nodeValue))
       ) {
         tmpNode = next[dir];
         domUtils.remove(next);
@@ -2844,21 +2765,21 @@ var domUtils = (dom.domUtils = {
     !ignorePre && clear(node.previousSibling, "previousSibling");
   },
   /**
-     * 将一个文本节点textNode拆分成两个文本节点，offset指定拆分位置
-     * @method split
-     * @param { Node } textNode 需要拆分的文本节点对象
-     * @param { int } offset 需要拆分的位置， 位置计算从0开始
-     * @return { Node } 拆分后形成的新节点
-     * @example
-     * ```html
-     * <div id="test">abcdef</div>
-     * <script>
-     *      var newNode = UE.dom.domUtils.split( document.getElementById( "test" ).firstChild, 3 );
-     *      //output: def
-     *      console.log( newNode.nodeValue );
-     * </script>
-     * ```
-     */
+   * 将一个文本节点textNode拆分成两个文本节点，offset指定拆分位置
+   * @method split
+   * @param { Node } textNode 需要拆分的文本节点对象
+   * @param { int } offset 需要拆分的位置， 位置计算从0开始
+   * @return { Node } 拆分后形成的新节点
+   * @example
+   * ```html
+   * <div id="test">abcdef</div>
+   * <script>
+   *      var newNode = UE.dom.domUtils.split( document.getElementById( "test" ).firstChild, 3 );
+   *      //output: def
+   *      console.log( newNode.nodeValue );
+   * </script>
+   * ```
+   */
   split: function(node, offset) {
     var doc = node.ownerDocument;
     if (browser.ie && offset == node.nodeValue.length) {
@@ -2876,40 +2797,38 @@ var domUtils = (dom.domUtils = {
   },
 
   /**
-     * 检测文本节点textNode是否为空节点（包括空格、换行、占位符等字符）
-     * @method  isWhitespace
-     * @param { Node } node 需要检测的节点对象
-     * @return { Boolean } 检测的节点是否为空
-     * @example
-     * ```html
-     * <div id="test">
-     *
-     * </div>
-     * <script>
-     *      //output: true
-     *      console.log( UE.dom.domUtils.isWhitespace( document.getElementById("test").firstChild ) );
-     * </script>
-     * ```
-     */
+   * 检测文本节点textNode是否为空节点（包括空格、换行、占位符等字符）
+   * @method  isWhitespace
+   * @param { Node } node 需要检测的节点对象
+   * @return { Boolean } 检测的节点是否为空
+   * @example
+   * ```html
+   * <div id="test">
+   *
+   * </div>
+   * <script>
+   *      //output: true
+   *      console.log( UE.dom.domUtils.isWhitespace( document.getElementById("test").firstChild ) );
+   * </script>
+   * ```
+   */
   isWhitespace: function(node) {
-    return !new RegExp("[^ \t\n\r" + domUtils.fillChar + "]").test(
-      node.nodeValue
-    );
+    return !new RegExp("[^ \t\n\r" + domUtils.fillChar + "]").test(node.nodeValue);
   },
   /**
-     * 获取元素element相对于viewport的位置坐标
-     * @method getXY
-     * @param { Node } element 需要计算位置的节点对象
-     * @return { Object } 返回形如{x:left,y:top}的一个key-value映射对象， 其中键x代表水平偏移距离，
-     *                          y代表垂直偏移距离。
-     *
-     * @example
-     * ```javascript
-     * var location = UE.dom.domUtils.getXY( document.getElementById("test") );
-     * //output: test的坐标为: 12, 24
-     * console.log( 'test的坐标为： ', location.x, ',', location.y );
-     * ```
-     */
+   * 获取元素element相对于viewport的位置坐标
+   * @method getXY
+   * @param { Node } element 需要计算位置的节点对象
+   * @return { Object } 返回形如{x:left,y:top}的一个key-value映射对象， 其中键x代表水平偏移距离，
+   *                          y代表垂直偏移距离。
+   *
+   * @example
+   * ```javascript
+   * var location = UE.dom.domUtils.getXY( document.getElementById("test") );
+   * //output: test的坐标为: 12, 24
+   * console.log( 'test的坐标为： ', location.x, ',', location.y );
+   * ```
+   */
   getXY: function(element) {
     var x = 0,
       y = 0;
@@ -2918,35 +2837,35 @@ var domUtils = (dom.domUtils = {
       x += element.offsetLeft;
       element = element.offsetParent;
     }
-    return { x: x, y: y };
+    return {x: x, y: y};
   },
   /**
-     * 为元素element绑定原生DOM事件，type为事件类型，handler为处理函数
-     * @method on
-     * @param { Node } element 需要绑定事件的节点对象
-     * @param { String } type 绑定的事件类型
-     * @param { Function } handler 事件处理器
-     * @example
-     * ```javascript
-     * UE.dom.domUtils.on(document.body,"click",function(e){
-     *     //e为事件对象，this为被点击元素对戏那个
-     * });
-     * ```
-     */
+   * 为元素element绑定原生DOM事件，type为事件类型，handler为处理函数
+   * @method on
+   * @param { Node } element 需要绑定事件的节点对象
+   * @param { String } type 绑定的事件类型
+   * @param { Function } handler 事件处理器
+   * @example
+   * ```javascript
+   * UE.dom.domUtils.on(document.body,"click",function(e){
+   *     //e为事件对象，this为被点击元素对戏那个
+   * });
+   * ```
+   */
 
   /**
-     * 为元素element绑定原生DOM事件，type为事件类型，handler为处理函数
-     * @method on
-     * @param { Node } element 需要绑定事件的节点对象
-     * @param { Array } type 绑定的事件类型数组
-     * @param { Function } handler 事件处理器
-     * @example
-     * ```javascript
-     * UE.dom.domUtils.on(document.body,["click","mousedown"],function(evt){
-     *     //evt为事件对象，this为被点击元素对象
-     * });
-     * ```
-     */
+   * 为元素element绑定原生DOM事件，type为事件类型，handler为处理函数
+   * @method on
+   * @param { Node } element 需要绑定事件的节点对象
+   * @param { Array } type 绑定的事件类型数组
+   * @param { Function } handler 事件处理器
+   * @example
+   * ```javascript
+   * UE.dom.domUtils.on(document.body,["click","mousedown"],function(evt){
+   *     //evt为事件对象，this为被点击元素对象
+   * });
+   * ```
+   */
   on: function(element, type, handler) {
     var types = utils.isArray(type) ? type : utils.trim(type).split(/\s+/),
       k = types.length;
@@ -2980,32 +2899,32 @@ var domUtils = (dom.domUtils = {
     element = null;
   },
   /**
-     * 解除DOM事件绑定
-     * @method un
-     * @param { Node } element 需要解除事件绑定的节点对象
-     * @param { String } type 需要接触绑定的事件类型
-     * @param { Function } handler 对应的事件处理器
-     * @example
-     * ```javascript
-     * UE.dom.domUtils.un(document.body,"click",function(evt){
-     *     //evt为事件对象，this为被点击元素对象
-     * });
-     * ```
-     */
+   * 解除DOM事件绑定
+   * @method un
+   * @param { Node } element 需要解除事件绑定的节点对象
+   * @param { String } type 需要接触绑定的事件类型
+   * @param { Function } handler 对应的事件处理器
+   * @example
+   * ```javascript
+   * UE.dom.domUtils.un(document.body,"click",function(evt){
+   *     //evt为事件对象，this为被点击元素对象
+   * });
+   * ```
+   */
 
   /**
-     * 解除DOM事件绑定
-     * @method un
-     * @param { Node } element 需要解除事件绑定的节点对象
-     * @param { Array } type 需要接触绑定的事件类型数组
-     * @param { Function } handler 对应的事件处理器
-     * @example
-     * ```javascript
-     * UE.dom.domUtils.un(document.body, ["click","mousedown"],function(evt){
-     *     //evt为事件对象，this为被点击元素对象
-     * });
-     * ```
-     */
+   * 解除DOM事件绑定
+   * @method un
+   * @param { Node } element 需要解除事件绑定的节点对象
+   * @param { Array } type 需要接触绑定的事件类型数组
+   * @param { Function } handler 对应的事件处理器
+   * @example
+   * ```javascript
+   * UE.dom.domUtils.un(document.body, ["click","mousedown"],function(evt){
+   *     //evt为事件对象，this为被点击元素对象
+   * });
+   * ```
+   */
   un: function(element, type, handler) {
     var types = utils.isArray(type) ? type : utils.trim(type).split(/\s+/),
       k = types.length;
@@ -3017,10 +2936,7 @@ var domUtils = (dom.domUtils = {
         } else {
           var key = type + handler.toString();
           try {
-            element.detachEvent(
-              "on" + type,
-              handler._d ? handler._d[key] : handler
-            );
+            element.detachEvent("on" + type, handler._d ? handler._d[key] : handler);
           } catch (e) {}
           if (handler._d && handler._d[key]) {
             var index = utils.indexOf(handler._d.els, element);
@@ -3034,31 +2950,31 @@ var domUtils = (dom.domUtils = {
   },
 
   /**
-     * 比较节点nodeA与节点nodeB是否具有相同的标签名、属性名以及属性值
-     * @method  isSameElement
-     * @param { Node } nodeA 需要比较的节点
-     * @param { Node } nodeB 需要比较的节点
-     * @return { Boolean } 两个节点是否具有相同的标签名、属性名以及属性值
-     * @example
-     * ```html
-     * <span style="font-size:12px">ssss</span>
-     * <span style="font-size:12px">bbbbb</span>
-     * <span style="font-size:13px">ssss</span>
-     * <span style="font-size:14px">bbbbb</span>
-     *
-     * <script>
-     *
-     *     var nodes = document.getElementsByTagName( "span" );
-     *
-     *     //output: true
-     *     console.log( UE.dom.domUtils.isSameElement( nodes[0], nodes[1] ) );
-     *
-     *     //output: false
-     *     console.log( UE.dom.domUtils.isSameElement( nodes[2], nodes[3] ) );
-     *
-     * </script>
-     * ```
-     */
+   * 比较节点nodeA与节点nodeB是否具有相同的标签名、属性名以及属性值
+   * @method  isSameElement
+   * @param { Node } nodeA 需要比较的节点
+   * @param { Node } nodeB 需要比较的节点
+   * @return { Boolean } 两个节点是否具有相同的标签名、属性名以及属性值
+   * @example
+   * ```html
+   * <span style="font-size:12px">ssss</span>
+   * <span style="font-size:12px">bbbbb</span>
+   * <span style="font-size:13px">ssss</span>
+   * <span style="font-size:14px">bbbbb</span>
+   *
+   * <script>
+   *
+   *     var nodes = document.getElementsByTagName( "span" );
+   *
+   *     //output: true
+   *     console.log( UE.dom.domUtils.isSameElement( nodes[0], nodes[1] ) );
+   *
+   *     //output: false
+   *     console.log( UE.dom.domUtils.isSameElement( nodes[2], nodes[3] ) );
+   *
+   * </script>
+   * ```
+   */
   isSameElement: function(nodeA, nodeB) {
     if (nodeA.tagName != nodeB.tagName) {
       return false;
@@ -3112,38 +3028,34 @@ var domUtils = (dom.domUtils = {
   },
 
   /**
-     * 判断节点nodeA与节点nodeB的元素的style属性是否一致
-     * @method isSameStyle
-     * @param { Node } nodeA 需要比较的节点
-     * @param { Node } nodeB 需要比较的节点
-     * @return { Boolean } 两个节点是否具有相同的style属性值
-     * @example
-     * ```html
-     * <span style="font-size:12px">ssss</span>
-     * <span style="font-size:12px">bbbbb</span>
-     * <span style="font-size:13px">ssss</span>
-     * <span style="font-size:14px">bbbbb</span>
-     *
-     * <script>
-     *
-     *     var nodes = document.getElementsByTagName( "span" );
-     *
-     *     //output: true
-     *     console.log( UE.dom.domUtils.isSameStyle( nodes[0], nodes[1] ) );
-     *
-     *     //output: false
-     *     console.log( UE.dom.domUtils.isSameStyle( nodes[2], nodes[3] ) );
-     *
-     * </script>
-     * ```
-     */
+   * 判断节点nodeA与节点nodeB的元素的style属性是否一致
+   * @method isSameStyle
+   * @param { Node } nodeA 需要比较的节点
+   * @param { Node } nodeB 需要比较的节点
+   * @return { Boolean } 两个节点是否具有相同的style属性值
+   * @example
+   * ```html
+   * <span style="font-size:12px">ssss</span>
+   * <span style="font-size:12px">bbbbb</span>
+   * <span style="font-size:13px">ssss</span>
+   * <span style="font-size:14px">bbbbb</span>
+   *
+   * <script>
+   *
+   *     var nodes = document.getElementsByTagName( "span" );
+   *
+   *     //output: true
+   *     console.log( UE.dom.domUtils.isSameStyle( nodes[0], nodes[1] ) );
+   *
+   *     //output: false
+   *     console.log( UE.dom.domUtils.isSameStyle( nodes[2], nodes[3] ) );
+   *
+   * </script>
+   * ```
+   */
   isSameStyle: function(nodeA, nodeB) {
-    var styleA = nodeA.style.cssText
-      .replace(/( ?; ?)/g, ";")
-      .replace(/( ?: ?)/g, ":"),
-      styleB = nodeB.style.cssText
-        .replace(/( ?; ?)/g, ";")
-        .replace(/( ?: ?)/g, ":");
+    var styleA = nodeA.style.cssText.replace(/( ?; ?)/g, ";").replace(/( ?: ?)/g, ":"),
+      styleB = nodeB.style.cssText.replace(/( ?; ?)/g, ";").replace(/( ?: ?)/g, ":");
     if (browser.opera) {
       styleA = nodeA.style;
       styleB = nodeB.style;
@@ -3174,83 +3086,82 @@ var domUtils = (dom.domUtils = {
     return true;
   },
   /**
-     * 检查节点node是否为block元素
-     * @method isBlockElm
-     * @param { Node } node 需要检测的节点对象
-     * @return { Boolean } 是否是block元素节点
-     * @warning 该方法的判断规则如下： 如果该元素原本是block元素， 则不论该元素当前的css样式是什么都会返回true；
-     *          否则，检测该元素的css样式， 如果该元素当前是block元素， 则返回true。 其余情况下都返回false。
-     * @example
-     * ```html
-     * <span id="test1" style="display: block"></span>
-     * <span id="test2"></span>
-     * <div id="test3" style="display: inline"></div>
-     *
-     * <script>
-     *
-     *     //output: true
-     *     console.log( UE.dom.domUtils.isBlockElm( document.getElementById("test1") ) );
-     *
-     *     //output: false
-     *     console.log( UE.dom.domUtils.isBlockElm( document.getElementById("test2") ) );
-     *
-     *     //output: true
-     *     console.log( UE.dom.domUtils.isBlockElm( document.getElementById("test3") ) );
-     *
-     * </script>
-     * ```
-     */
+   * 检查节点node是否为block元素
+   * @method isBlockElm
+   * @param { Node } node 需要检测的节点对象
+   * @return { Boolean } 是否是block元素节点
+   * @warning 该方法的判断规则如下： 如果该元素原本是block元素， 则不论该元素当前的css样式是什么都会返回true；
+   *          否则，检测该元素的css样式， 如果该元素当前是block元素， 则返回true。 其余情况下都返回false。
+   * @example
+   * ```html
+   * <span id="test1" style="display: block"></span>
+   * <span id="test2"></span>
+   * <div id="test3" style="display: inline"></div>
+   *
+   * <script>
+   *
+   *     //output: true
+   *     console.log( UE.dom.domUtils.isBlockElm( document.getElementById("test1") ) );
+   *
+   *     //output: false
+   *     console.log( UE.dom.domUtils.isBlockElm( document.getElementById("test2") ) );
+   *
+   *     //output: true
+   *     console.log( UE.dom.domUtils.isBlockElm( document.getElementById("test3") ) );
+   *
+   * </script>
+   * ```
+   */
   isBlockElm: function(node) {
     return (
       node.nodeType == 1 &&
-      (dtd.$block[node.tagName] ||
-        styleBlock[domUtils.getComputedStyle(node, "display")]) &&
+      (dtd.$block[node.tagName] || styleBlock[domUtils.getComputedStyle(node, "display")]) &&
       !dtd.$nonChild[node.tagName]
     );
   },
   /**
-     * 检测node节点是否为body节点
-     * @method isBody
-     * @param { Element } node 需要检测的dom元素
-     * @return { Boolean } 给定的元素是否是body元素
-     * @example
-     * ```javascript
-     * //output: true
-     * console.log( UE.dom.domUtils.isBody( document.body ) );
-     * ```
-     */
+   * 检测node节点是否为body节点
+   * @method isBody
+   * @param { Element } node 需要检测的dom元素
+   * @return { Boolean } 给定的元素是否是body元素
+   * @example
+   * ```javascript
+   * //output: true
+   * console.log( UE.dom.domUtils.isBody( document.body ) );
+   * ```
+   */
   isBody: function(node) {
     return node && node.nodeType == 1 && node.tagName.toLowerCase() == "body";
   },
   /**
-     * 以node节点为分界，将该节点的指定祖先节点parent拆分成两个独立的节点，
-     * 拆分形成的两个节点之间是node节点
-     * @method breakParent
-     * @param { Node } node 作为分界的节点对象
-     * @param { Node } parent 该节点必须是node节点的祖先节点， 且是block节点。
-     * @return { Node } 给定的node分界节点
-     * @example
-     * ```javascript
-     *
-     *      var node = document.createElement("span"),
-     *          wrapNode = document.createElement( "div" ),
-     *          parent = document.createElement("p");
-     *
-     *      parent.appendChild( node );
-     *      wrapNode.appendChild( parent );
-     *
-     *      //拆分前
-     *      //output: <p><span></span></p>
-     *      console.log( wrapNode.innerHTML );
-     *
-     *
-     *      UE.dom.domUtils.breakParent( node, parent );
-     *      //拆分后
-     *      //output: <p></p><span></span><p></p>
-     *      console.log( wrapNode.innerHTML );
-     *
-     * ```
-     */
+   * 以node节点为分界，将该节点的指定祖先节点parent拆分成两个独立的节点，
+   * 拆分形成的两个节点之间是node节点
+   * @method breakParent
+   * @param { Node } node 作为分界的节点对象
+   * @param { Node } parent 该节点必须是node节点的祖先节点， 且是block节点。
+   * @return { Node } 给定的node分界节点
+   * @example
+   * ```javascript
+   *
+   *      var node = document.createElement("span"),
+   *          wrapNode = document.createElement( "div" ),
+   *          parent = document.createElement("p");
+   *
+   *      parent.appendChild( node );
+   *      wrapNode.appendChild( parent );
+   *
+   *      //拆分前
+   *      //output: <p><span></span></p>
+   *      console.log( wrapNode.innerHTML );
+   *
+   *
+   *      UE.dom.domUtils.breakParent( node, parent );
+   *      //拆分后
+   *      //output: <p></p><span></span><p></p>
+   *      console.log( wrapNode.innerHTML );
+   *
+   * ```
+   */
   breakParent: function(node, parent) {
     var tmpNode,
       parentClone = node,
@@ -3286,18 +3197,18 @@ var domUtils = (dom.domUtils = {
     return node;
   },
   /**
-     * 检查节点node是否是空inline节点
-     * @method  isEmptyInlineElement
-     * @param { Node } node 需要检测的节点对象
-     * @return { Number }  如果给定的节点是空的inline节点， 则返回1, 否则返回0。
-     * @example
-     * ```html
-     * <b><i></i></b> => 1
-     * <b><i></i><u></u></b> => 1
-     * <b></b> => 1
-     * <b>xx<i></i></b> => 0
-     * ```
-     */
+   * 检查节点node是否是空inline节点
+   * @method  isEmptyInlineElement
+   * @param { Node } node 需要检测的节点对象
+   * @return { Number }  如果给定的节点是空的inline节点， 则返回1, 否则返回0。
+   * @example
+   * ```html
+   * <b><i></i></b> => 1
+   * <b><i></i><u></u></b> => 1
+   * <b></b> => 1
+   * <b>xx<i></i></b> => 0
+   * ```
+   */
   isEmptyInlineElement: function(node) {
     if (node.nodeType != 1 || !dtd.$removeEmpty[node.tagName]) {
       return 0;
@@ -3320,36 +3231,32 @@ var domUtils = (dom.domUtils = {
   },
 
   /**
-     * 删除node节点下首尾两端的空白文本子节点
-     * @method trimWhiteTextNode
-     * @param { Element } node 需要执行删除操作的元素对象
-     * @example
-     * ```javascript
-     *      var node = document.createElement("div");
-     *
-     *      node.appendChild( document.createTextNode( "" ) );
-     *
-     *      node.appendChild( document.createElement("div") );
-     *
-     *      node.appendChild( document.createTextNode( "" ) );
-     *
-     *      //3
-     *      console.log( node.childNodes.length );
-     *
-     *      UE.dom.domUtils.trimWhiteTextNode( node );
-     *
-     *      //1
-     *      console.log( node.childNodes.length );
-     * ```
-     */
+   * 删除node节点下首尾两端的空白文本子节点
+   * @method trimWhiteTextNode
+   * @param { Element } node 需要执行删除操作的元素对象
+   * @example
+   * ```javascript
+   *      var node = document.createElement("div");
+   *
+   *      node.appendChild( document.createTextNode( "" ) );
+   *
+   *      node.appendChild( document.createElement("div") );
+   *
+   *      node.appendChild( document.createTextNode( "" ) );
+   *
+   *      //3
+   *      console.log( node.childNodes.length );
+   *
+   *      UE.dom.domUtils.trimWhiteTextNode( node );
+   *
+   *      //1
+   *      console.log( node.childNodes.length );
+   * ```
+   */
   trimWhiteTextNode: function(node) {
     function remove(dir) {
       var child;
-      while (
-        (child = node[dir]) &&
-        child.nodeType == 3 &&
-        domUtils.isWhitespace(child)
-      ) {
+      while ((child = node[dir]) && child.nodeType == 3 && domUtils.isWhitespace(child)) {
         node.removeChild(child);
       }
     }
@@ -3358,15 +3265,15 @@ var domUtils = (dom.domUtils = {
   },
 
   /**
-     * 合并node节点下相同的子节点
-     * @name mergeChild
-     * @desc
-     * UE.dom.domUtils.mergeChild(node,tagName) //tagName要合并的子节点的标签
-     * @example
-     * <p><span style="font-size:12px;">xx<span style="font-size:12px;">aa</span>xx</span></p>
-     * ==> UE.dom.domUtils.mergeChild(node,'span')
-     * <p><span style="font-size:12px;">xxaaxx</span></p>
-     */
+   * 合并node节点下相同的子节点
+   * @name mergeChild
+   * @desc
+   * UE.dom.domUtils.mergeChild(node,tagName) //tagName要合并的子节点的标签
+   * @example
+   * <p><span style="font-size:12px;">xx<span style="font-size:12px;">aa</span>xx</span></p>
+   * ==> UE.dom.domUtils.mergeChild(node,'span')
+   * <p><span style="font-size:12px;">xxaaxx</span></p>
+   */
   mergeChild: function(node, tagName, attrs) {
     var list = domUtils.getElementsByTagName(node, node.tagName.toLowerCase());
     for (var i = 0, ci; (ci = list[i++]); ) {
@@ -3389,9 +3296,7 @@ var domUtils = (dom.domUtils = {
           if (style) {
             style = style.split(";");
             for (var j = 0, s; (s = style[j++]); ) {
-              ci.style[utils.cssStyleToDomStyle(s.split(":")[0])] = s.split(
-                ":"
-              )[1];
+              ci.style[utils.cssStyleToDomStyle(s.split(":")[0])] = s.split(":")[1];
             }
           }
         }
@@ -3407,12 +3312,12 @@ var domUtils = (dom.domUtils = {
   },
 
   /**
-     * 原生方法getElementsByTagName的封装
-     * @method getElementsByTagName
-     * @param { Node } node 目标节点对象
-     * @param { String } tagName 需要查找的节点的tagName， 多个tagName以空格分割
-     * @return { Array } 符合条件的节点集合
-     */
+   * 原生方法getElementsByTagName的封装
+   * @method getElementsByTagName
+   * @param { Node } node 目标节点对象
+   * @param { String } tagName 需要查找的节点的tagName， 多个tagName以空格分割
+   * @return { Array } 符合条件的节点集合
+   */
   getElementsByTagName: function(node, name, filter) {
     if (filter && utils.isString(filter)) {
       var className = filter;
@@ -3420,7 +3325,10 @@ var domUtils = (dom.domUtils = {
         return domUtils.hasClass(node, className);
       };
     }
-    name = utils.trim(name).replace(/[ ]{2,}/g, " ").split(" ");
+    name = utils
+      .trim(name)
+      .replace(/[ ]{2,}/g, " ")
+      .split(" ");
     var arr = [];
     for (var n = 0, ni; (ni = name[n++]); ) {
       var list = node.getElementsByTagName(ni);
@@ -3432,32 +3340,32 @@ var domUtils = (dom.domUtils = {
     return arr;
   },
   /**
-     * 将节点node提取到父节点上
-     * @method mergeToParent
-     * @param { Element } node 需要提取的元素对象
-     * @example
-     * ```html
-     * <div id="parent">
-     *     <div id="sub">
-     *         <span id="child"></span>
-     *     </div>
-     * </div>
-     *
-     * <script>
-     *
-     *     var child = document.getElementById( "child" );
-     *
-     *     //output: sub
-     *     console.log( child.parentNode.id );
-     *
-     *     UE.dom.domUtils.mergeToParent( child );
-     *
-     *     //output: parent
-     *     console.log( child.parentNode.id );
-     *
-     * </script>
-     * ```
-     */
+   * 将节点node提取到父节点上
+   * @method mergeToParent
+   * @param { Element } node 需要提取的元素对象
+   * @example
+   * ```html
+   * <div id="parent">
+   *     <div id="sub">
+   *         <span id="child"></span>
+   *     </div>
+   * </div>
+   *
+   * <script>
+   *
+   *     var child = document.getElementById( "child" );
+   *
+   *     //output: sub
+   *     console.log( child.parentNode.id );
+   *
+   *     UE.dom.domUtils.mergeToParent( child );
+   *
+   *     //output: parent
+   *     console.log( child.parentNode.id );
+   *
+   * </script>
+   * ```
+   */
   mergeToParent: function(node) {
     var parent = node.parentNode;
     while (parent && dtd.$removeEmpty[parent.tagName]) {
@@ -3470,8 +3378,7 @@ var domUtils = (dom.domUtils = {
           (parent.tagName == "A" && node.tagName == "SPAN")
         ) {
           if (parent.childNodes.length > 1 || parent !== node.parentNode) {
-            node.style.cssText =
-              parent.style.cssText + ";" + node.style.cssText;
+            node.style.cssText = parent.style.cssText + ";" + node.style.cssText;
             parent = parent.parentNode;
             continue;
           } else {
@@ -3491,59 +3398,59 @@ var domUtils = (dom.domUtils = {
     }
   },
   /**
-     * 合并节点node的左右兄弟节点
-     * @method mergeSibling
-     * @param { Element } node 需要合并的目标节点
-     * @example
-     * ```html
-     * <b>xxxx</b><b id="test">ooo</b><b>xxxx</b>
-     *
-     * <script>
-     *     var demoNode = document.getElementById("test");
-     *     UE.dom.domUtils.mergeSibling( demoNode );
-     *     //output: xxxxoooxxxx
-     *     console.log( demoNode.innerHTML );
-     * </script>
-     * ```
-     */
+   * 合并节点node的左右兄弟节点
+   * @method mergeSibling
+   * @param { Element } node 需要合并的目标节点
+   * @example
+   * ```html
+   * <b>xxxx</b><b id="test">ooo</b><b>xxxx</b>
+   *
+   * <script>
+   *     var demoNode = document.getElementById("test");
+   *     UE.dom.domUtils.mergeSibling( demoNode );
+   *     //output: xxxxoooxxxx
+   *     console.log( demoNode.innerHTML );
+   * </script>
+   * ```
+   */
 
   /**
-     * 合并节点node的左右兄弟节点， 可以根据给定的条件选择是否忽略合并左节点。
-     * @method mergeSibling
-     * @param { Element } node 需要合并的目标节点
-     * @param { Boolean } ignorePre 是否忽略合并左节点
-     * @example
-     * ```html
-     * <b>xxxx</b><b id="test">ooo</b><b>xxxx</b>
-     *
-     * <script>
-     *     var demoNode = document.getElementById("test");
-     *     UE.dom.domUtils.mergeSibling( demoNode, true );
-     *     //output: oooxxxx
-     *     console.log( demoNode.innerHTML );
-     * </script>
-     * ```
-     */
+   * 合并节点node的左右兄弟节点， 可以根据给定的条件选择是否忽略合并左节点。
+   * @method mergeSibling
+   * @param { Element } node 需要合并的目标节点
+   * @param { Boolean } ignorePre 是否忽略合并左节点
+   * @example
+   * ```html
+   * <b>xxxx</b><b id="test">ooo</b><b>xxxx</b>
+   *
+   * <script>
+   *     var demoNode = document.getElementById("test");
+   *     UE.dom.domUtils.mergeSibling( demoNode, true );
+   *     //output: oooxxxx
+   *     console.log( demoNode.innerHTML );
+   * </script>
+   * ```
+   */
 
   /**
-     * 合并节点node的左右兄弟节点，可以根据给定的条件选择是否忽略合并左右节点。
-     * @method mergeSibling
-     * @param { Element } node 需要合并的目标节点
-     * @param { Boolean } ignorePre 是否忽略合并左节点
-     * @param { Boolean } ignoreNext 是否忽略合并右节点
-     * @remind 如果同时忽略左右节点， 则该操作什么也不会做
-     * @example
-     * ```html
-     * <b>xxxx</b><b id="test">ooo</b><b>xxxx</b>
-     *
-     * <script>
-     *     var demoNode = document.getElementById("test");
-     *     UE.dom.domUtils.mergeSibling( demoNode, false, true );
-     *     //output: xxxxooo
-     *     console.log( demoNode.innerHTML );
-     * </script>
-     * ```
-     */
+   * 合并节点node的左右兄弟节点，可以根据给定的条件选择是否忽略合并左右节点。
+   * @method mergeSibling
+   * @param { Element } node 需要合并的目标节点
+   * @param { Boolean } ignorePre 是否忽略合并左节点
+   * @param { Boolean } ignoreNext 是否忽略合并右节点
+   * @remind 如果同时忽略左右节点， 则该操作什么也不会做
+   * @example
+   * ```html
+   * <b>xxxx</b><b id="test">ooo</b><b>xxxx</b>
+   *
+   * <script>
+   *     var demoNode = document.getElementById("test");
+   *     UE.dom.domUtils.mergeSibling( demoNode, false, true );
+   *     //output: xxxxooo
+   *     console.log( demoNode.innerHTML );
+   * </script>
+   * ```
+   */
   mergeSibling: function(node, ignorePre, ignoreNext) {
     function merge(rtl, start, node) {
       var next;
@@ -3568,90 +3475,94 @@ var domUtils = (dom.domUtils = {
   },
 
   /**
-     * 设置节点node及其子节点不会被选中
-     * @method unSelectable
-     * @param { Element } node 需要执行操作的dom元素
-     * @remind 执行该操作后的节点， 将不能被鼠标选中
-     * @example
-     * ```javascript
-     * UE.dom.domUtils.unSelectable( document.body );
-     * ```
-     */
-  unSelectable: (ie && browser.ie9below) || browser.opera
-    ? function(node) {
-        //for ie9
-        node.onselectstart = function() {
-          return false;
-        };
-        node.onclick = node.onkeyup = node.onkeydown = function() {
-          return false;
-        };
-        node.unselectable = "on";
-        node.setAttribute("unselectable", "on");
-        for (var i = 0, ci; (ci = node.all[i++]); ) {
-          switch (ci.tagName.toLowerCase()) {
-            case "iframe":
-            case "textarea":
-            case "input":
-            case "select":
-              break;
-            default:
-              ci.unselectable = "on";
-              node.setAttribute("unselectable", "on");
+   * 设置节点node及其子节点不会被选中
+   * @method unSelectable
+   * @param { Element } node 需要执行操作的dom元素
+   * @remind 执行该操作后的节点， 将不能被鼠标选中
+   * @example
+   * ```javascript
+   * UE.dom.domUtils.unSelectable( document.body );
+   * ```
+   */
+  unSelectable:
+    (ie && browser.ie9below) || browser.opera
+      ? function(node) {
+          //for ie9
+          node.onselectstart = function() {
+            return false;
+          };
+          node.onclick = node.onkeyup = node.onkeydown = function() {
+            return false;
+          };
+          node.unselectable = "on";
+          node.setAttribute("unselectable", "on");
+          for (var i = 0, ci; (ci = node.all[i++]); ) {
+            switch (ci.tagName.toLowerCase()) {
+              case "iframe":
+              case "textarea":
+              case "input":
+              case "select":
+                break;
+              default:
+                ci.unselectable = "on";
+                node.setAttribute("unselectable", "on");
+            }
           }
         }
-      }
-    : function(node) {
-        node.style.MozUserSelect = node.style.webkitUserSelect = node.style.msUserSelect = node.style.KhtmlUserSelect =
-          "none";
-      },
+      : function(node) {
+          node.style.MozUserSelect = node.style.webkitUserSelect = node.style.msUserSelect = node.style.KhtmlUserSelect =
+            "none";
+        },
   /**
-     * 删除节点node上的指定属性名称的属性
-     * @method  removeAttributes
-     * @param { Node } node 需要删除属性的节点对象
-     * @param { String } attrNames 可以是空格隔开的多个属性名称，该操作将会依次删除相应的属性
-     * @example
-     * ```html
-     * <div id="wrap">
-     *      <span style="font-size:14px;" id="test" name="followMe">xxxxx</span>
-     * </div>
-     *
-     * <script>
-     *
-     *     UE.dom.domUtils.removeAttributes( document.getElementById( "test" ), "id name" );
-     *
-     *     //output: <span style="font-size:14px;">xxxxx</span>
-     *     console.log( document.getElementById("wrap").innerHTML );
-     *
-     * </script>
-     * ```
-     */
+   * 删除节点node上的指定属性名称的属性
+   * @method  removeAttributes
+   * @param { Node } node 需要删除属性的节点对象
+   * @param { String } attrNames 可以是空格隔开的多个属性名称，该操作将会依次删除相应的属性
+   * @example
+   * ```html
+   * <div id="wrap">
+   *      <span style="font-size:14px;" id="test" name="followMe">xxxxx</span>
+   * </div>
+   *
+   * <script>
+   *
+   *     UE.dom.domUtils.removeAttributes( document.getElementById( "test" ), "id name" );
+   *
+   *     //output: <span style="font-size:14px;">xxxxx</span>
+   *     console.log( document.getElementById("wrap").innerHTML );
+   *
+   * </script>
+   * ```
+   */
 
   /**
-     * 删除节点node上的指定属性名称的属性
-     * @method  removeAttributes
-     * @param { Node } node 需要删除属性的节点对象
-     * @param { Array } attrNames 需要删除的属性名数组
-     * @example
-     * ```html
-     * <div id="wrap">
-     *      <span style="font-size:14px;" id="test" name="followMe">xxxxx</span>
-     * </div>
-     *
-     * <script>
-     *
-     *     UE.dom.domUtils.removeAttributes( document.getElementById( "test" ), ["id", "name"] );
-     *
-     *     //output: <span style="font-size:14px;">xxxxx</span>
-     *     console.log( document.getElementById("wrap").innerHTML );
-     *
-     * </script>
-     * ```
-     */
+   * 删除节点node上的指定属性名称的属性
+   * @method  removeAttributes
+   * @param { Node } node 需要删除属性的节点对象
+   * @param { Array } attrNames 需要删除的属性名数组
+   * @example
+   * ```html
+   * <div id="wrap">
+   *      <span style="font-size:14px;" id="test" name="followMe">xxxxx</span>
+   * </div>
+   *
+   * <script>
+   *
+   *     UE.dom.domUtils.removeAttributes( document.getElementById( "test" ), ["id", "name"] );
+   *
+   *     //output: <span style="font-size:14px;">xxxxx</span>
+   *     console.log( document.getElementById("wrap").innerHTML );
+   *
+   * </script>
+   * ```
+   */
   removeAttributes: function(node, attrNames) {
     attrNames = utils.isArray(attrNames)
       ? attrNames
-      : utils.trim(attrNames).replace(/[ ]{2,}/g, " ").split(" ");
+      : utils
+          .trim(attrNames)
+          .replace(/[ ]{2,}/g, " ")
+          .split(" ");
     for (var i = 0, ci; (ci = attrNames[i++]); ) {
       ci = attrFix[ci] || ci;
       switch (ci) {
@@ -3667,51 +3578,51 @@ var domUtils = (dom.domUtils = {
     }
   },
   /**
-     * 在doc下创建一个标签名为tag，属性为attrs的元素
-     * @method createElement
-     * @param { DomDocument } doc 新创建的元素属于该document节点创建
-     * @param { String } tagName 需要创建的元素的标签名
-     * @param { Object } attrs 新创建的元素的属性key-value集合
-     * @return { Element } 新创建的元素对象
-     * @example
-     * ```javascript
-     * var ele = UE.dom.domUtils.createElement( document, 'div', {
-     *     id: 'test'
-     * } );
-     *
-     * //output: DIV
-     * console.log( ele.tagName );
-     *
-     * //output: test
-     * console.log( ele.id );
-     *
-     * ```
-     */
+   * 在doc下创建一个标签名为tag，属性为attrs的元素
+   * @method createElement
+   * @param { DomDocument } doc 新创建的元素属于该document节点创建
+   * @param { String } tagName 需要创建的元素的标签名
+   * @param { Object } attrs 新创建的元素的属性key-value集合
+   * @return { Element } 新创建的元素对象
+   * @example
+   * ```javascript
+   * var ele = UE.dom.domUtils.createElement( document, 'div', {
+   *     id: 'test'
+   * } );
+   *
+   * //output: DIV
+   * console.log( ele.tagName );
+   *
+   * //output: test
+   * console.log( ele.id );
+   *
+   * ```
+   */
   createElement: function(doc, tag, attrs) {
     return domUtils.setAttributes(doc.createElement(tag), attrs);
   },
   /**
-     * 为节点node添加属性attrs，attrs为属性键值对
-     * @method setAttributes
-     * @param { Element } node 需要设置属性的元素对象
-     * @param { Object } attrs 需要设置的属性名-值对
-     * @return { Element } 设置属性的元素对象
-     * @example
-     * ```html
-     * <span id="test"></span>
-     *
-     * <script>
-     *
-     *     var testNode = UE.dom.domUtils.setAttributes( document.getElementById( "test" ), {
-     *         id: 'demo'
-     *     } );
-     *
-     *     //output: demo
-     *     console.log( testNode.id );
-     *
-     * </script>
-     *
-     */
+   * 为节点node添加属性attrs，attrs为属性键值对
+   * @method setAttributes
+   * @param { Element } node 需要设置属性的元素对象
+   * @param { Object } attrs 需要设置的属性名-值对
+   * @return { Element } 设置属性的元素对象
+   * @example
+   * ```html
+   * <span id="test"></span>
+   *
+   * <script>
+   *
+   *     var testNode = UE.dom.domUtils.setAttributes( document.getElementById( "test" ), {
+   *         id: 'demo'
+   *     } );
+   *
+   *     //output: demo
+   *     console.log( testNode.id );
+   *
+   * </script>
+   *
+   */
   setAttributes: function(node, attrs) {
     for (var attr in attrs) {
       if (attrs.hasOwnProperty(attr)) {
@@ -3739,27 +3650,27 @@ var domUtils = (dom.domUtils = {
   },
 
   /**
-     * 获取元素element经过计算后的样式值
-     * @method getComputedStyle
-     * @param { Element } element 需要获取样式的元素对象
-     * @param { String } styleName 需要获取的样式名
-     * @return { String } 获取到的样式值
-     * @example
-     * ```html
-     * <style type="text/css">
-     *      #test {
-     *          font-size: 15px;
-     *      }
-     * </style>
-     *
-     * <span id="test"></span>
-     *
-     * <script>
-     *     //output: 15px
-     *     console.log( UE.dom.domUtils.getComputedStyle( document.getElementById( "test" ), 'font-size' ) );
-     * </script>
-     * ```
-     */
+   * 获取元素element经过计算后的样式值
+   * @method getComputedStyle
+   * @param { Element } element 需要获取样式的元素对象
+   * @param { String } styleName 需要获取的样式名
+   * @return { String } 获取到的样式值
+   * @example
+   * ```html
+   * <style type="text/css">
+   *      #test {
+   *          font-size: 15px;
+   *      }
+   * </style>
+   *
+   * <span id="test"></span>
+   *
+   * <script>
+   *     //output: 15px
+   *     console.log( UE.dom.domUtils.getComputedStyle( document.getElementById( "test" ), 'font-size' ) );
+   * </script>
+   * ```
+   */
   getComputedStyle: function(element, styleName) {
     //一下的属性单独处理
     var pros = "width height top left";
@@ -3804,59 +3715,60 @@ var domUtils = (dom.domUtils = {
               .getWindow(element)
               .getComputedStyle(element, "")
               .getPropertyValue(styleName)
-          : (element.currentStyle || element.style)[
-              utils.cssStyleToDomStyle(styleName)
-            ]);
+          : (element.currentStyle || element.style)[utils.cssStyleToDomStyle(styleName)]);
     } catch (e) {
       return "";
     }
     return utils.transUnitToPx(utils.fixColor(styleName, value));
   },
   /**
-     * 删除元素element指定的className
-     * @method removeClasses
-     * @param { Element } ele 需要删除class的元素节点
-     * @param { String } classNames 需要删除的className， 多个className之间以空格分开
-     * @example
-     * ```html
-     * <span id="test" class="test1 test2 test3">xxx</span>
-     *
-     * <script>
-     *
-     *     var testNode = document.getElementById( "test" );
-     *     UE.dom.domUtils.removeClasses( testNode, "test1 test2" );
-     *
-     *     //output: test3
-     *     console.log( testNode.className );
-     *
-     * </script>
-     * ```
-     */
+   * 删除元素element指定的className
+   * @method removeClasses
+   * @param { Element } ele 需要删除class的元素节点
+   * @param { String } classNames 需要删除的className， 多个className之间以空格分开
+   * @example
+   * ```html
+   * <span id="test" class="test1 test2 test3">xxx</span>
+   *
+   * <script>
+   *
+   *     var testNode = document.getElementById( "test" );
+   *     UE.dom.domUtils.removeClasses( testNode, "test1 test2" );
+   *
+   *     //output: test3
+   *     console.log( testNode.className );
+   *
+   * </script>
+   * ```
+   */
 
   /**
-     * 删除元素element指定的className
-     * @method removeClasses
-     * @param { Element } ele 需要删除class的元素节点
-     * @param { Array } classNames 需要删除的className数组
-     * @example
-     * ```html
-     * <span id="test" class="test1 test2 test3">xxx</span>
-     *
-     * <script>
-     *
-     *     var testNode = document.getElementById( "test" );
-     *     UE.dom.domUtils.removeClasses( testNode, ["test1", "test2"] );
-     *
-     *     //output: test3
-     *     console.log( testNode.className );
-     *
-     * </script>
-     * ```
-     */
+   * 删除元素element指定的className
+   * @method removeClasses
+   * @param { Element } ele 需要删除class的元素节点
+   * @param { Array } classNames 需要删除的className数组
+   * @example
+   * ```html
+   * <span id="test" class="test1 test2 test3">xxx</span>
+   *
+   * <script>
+   *
+   *     var testNode = document.getElementById( "test" );
+   *     UE.dom.domUtils.removeClasses( testNode, ["test1", "test2"] );
+   *
+   *     //output: test3
+   *     console.log( testNode.className );
+   *
+   * </script>
+   * ```
+   */
   removeClasses: function(elm, classNames) {
     classNames = utils.isArray(classNames)
       ? classNames
-      : utils.trim(classNames).replace(/[ ]{2,}/g, " ").split(" ");
+      : utils
+          .trim(classNames)
+          .replace(/[ ]{2,}/g, " ")
+          .split(" ");
     for (var i = 0, ci, cls = elm.className; (ci = classNames[i++]); ) {
       cls = cls.replace(new RegExp("\\b" + ci + "\\b"), "");
     }
@@ -3868,51 +3780,54 @@ var domUtils = (dom.domUtils = {
     }
   },
   /**
-     * 给元素element添加className
-     * @method addClass
-     * @param { Node } ele 需要增加className的元素
-     * @param { String } classNames 需要添加的className， 多个className之间以空格分割
-     * @remind 相同的类名不会被重复添加
-     * @example
-     * ```html
-     * <span id="test" class="cls1 cls2"></span>
-     *
-     * <script>
-     *     var testNode = document.getElementById("test");
-     *
-     *     UE.dom.domUtils.addClass( testNode, "cls2 cls3 cls4" );
-     *
-     *     //output: cl1 cls2 cls3 cls4
-     *     console.log( testNode.className );
-     *
-     * <script>
-     * ```
-     */
+   * 给元素element添加className
+   * @method addClass
+   * @param { Node } ele 需要增加className的元素
+   * @param { String } classNames 需要添加的className， 多个className之间以空格分割
+   * @remind 相同的类名不会被重复添加
+   * @example
+   * ```html
+   * <span id="test" class="cls1 cls2"></span>
+   *
+   * <script>
+   *     var testNode = document.getElementById("test");
+   *
+   *     UE.dom.domUtils.addClass( testNode, "cls2 cls3 cls4" );
+   *
+   *     //output: cl1 cls2 cls3 cls4
+   *     console.log( testNode.className );
+   *
+   * <script>
+   * ```
+   */
 
   /**
-     * 给元素element添加className
-     * @method addClass
-     * @param { Node } ele 需要增加className的元素
-     * @param { Array } classNames 需要添加的className的数组
-     * @remind 相同的类名不会被重复添加
-     * @example
-     * ```html
-     * <span id="test" class="cls1 cls2"></span>
-     *
-     * <script>
-     *     var testNode = document.getElementById("test");
-     *
-     *     UE.dom.domUtils.addClass( testNode, ["cls2", "cls3", "cls4"] );
-     *
-     *     //output: cl1 cls2 cls3 cls4
-     *     console.log( testNode.className );
-     *
-     * <script>
-     * ```
-     */
+   * 给元素element添加className
+   * @method addClass
+   * @param { Node } ele 需要增加className的元素
+   * @param { Array } classNames 需要添加的className的数组
+   * @remind 相同的类名不会被重复添加
+   * @example
+   * ```html
+   * <span id="test" class="cls1 cls2"></span>
+   *
+   * <script>
+   *     var testNode = document.getElementById("test");
+   *
+   *     UE.dom.domUtils.addClass( testNode, ["cls2", "cls3", "cls4"] );
+   *
+   *     //output: cl1 cls2 cls3 cls4
+   *     console.log( testNode.className );
+   *
+   * <script>
+   * ```
+   */
   addClass: function(elm, classNames) {
     if (!elm) return;
-    classNames = utils.trim(classNames).replace(/[ ]{2,}/g, " ").split(" ");
+    classNames = utils
+      .trim(classNames)
+      .replace(/[ ]{2,}/g, " ")
+      .split(" ");
     for (var i = 0, ci, cls = elm.className; (ci = classNames[i++]); ) {
       if (!new RegExp("\\b" + ci + "\\b").test(cls)) {
         cls += " " + ci;
@@ -3921,53 +3836,56 @@ var domUtils = (dom.domUtils = {
     elm.className = utils.trim(cls);
   },
   /**
-     * 判断元素element是否包含给定的样式类名className
-     * @method hasClass
-     * @param { Node } ele 需要检测的元素
-     * @param { String } classNames 需要检测的className， 多个className之间用空格分割
-     * @return { Boolean } 元素是否包含所有给定的className
-     * @example
-     * ```html
-     * <span id="test1" class="cls1 cls2"></span>
-     *
-     * <script>
-     *     var test1 = document.getElementById("test1");
-     *
-     *     //output: false
-     *     console.log( UE.dom.domUtils.hasClass( test1, "cls2 cls1 cls3" ) );
-     *
-     *     //output: true
-     *     console.log( UE.dom.domUtils.hasClass( test1, "cls2 cls1" ) );
-     * </script>
-     * ```
-     */
+   * 判断元素element是否包含给定的样式类名className
+   * @method hasClass
+   * @param { Node } ele 需要检测的元素
+   * @param { String } classNames 需要检测的className， 多个className之间用空格分割
+   * @return { Boolean } 元素是否包含所有给定的className
+   * @example
+   * ```html
+   * <span id="test1" class="cls1 cls2"></span>
+   *
+   * <script>
+   *     var test1 = document.getElementById("test1");
+   *
+   *     //output: false
+   *     console.log( UE.dom.domUtils.hasClass( test1, "cls2 cls1 cls3" ) );
+   *
+   *     //output: true
+   *     console.log( UE.dom.domUtils.hasClass( test1, "cls2 cls1" ) );
+   * </script>
+   * ```
+   */
 
   /**
-     * 判断元素element是否包含给定的样式类名className
-     * @method hasClass
-     * @param { Node } ele 需要检测的元素
-     * @param { Array } classNames 需要检测的className数组
-     * @return { Boolean } 元素是否包含所有给定的className
-     * @example
-     * ```html
-     * <span id="test1" class="cls1 cls2"></span>
-     *
-     * <script>
-     *     var test1 = document.getElementById("test1");
-     *
-     *     //output: false
-     *     console.log( UE.dom.domUtils.hasClass( test1, [ "cls2", "cls1", "cls3" ] ) );
-     *
-     *     //output: true
-     *     console.log( UE.dom.domUtils.hasClass( test1, [ "cls2", "cls1" ]) );
-     * </script>
-     * ```
-     */
+   * 判断元素element是否包含给定的样式类名className
+   * @method hasClass
+   * @param { Node } ele 需要检测的元素
+   * @param { Array } classNames 需要检测的className数组
+   * @return { Boolean } 元素是否包含所有给定的className
+   * @example
+   * ```html
+   * <span id="test1" class="cls1 cls2"></span>
+   *
+   * <script>
+   *     var test1 = document.getElementById("test1");
+   *
+   *     //output: false
+   *     console.log( UE.dom.domUtils.hasClass( test1, [ "cls2", "cls1", "cls3" ] ) );
+   *
+   *     //output: true
+   *     console.log( UE.dom.domUtils.hasClass( test1, [ "cls2", "cls1" ]) );
+   * </script>
+   * ```
+   */
   hasClass: function(element, className) {
     if (utils.isRegExp(className)) {
       return className.test(element.className);
     }
-    className = utils.trim(className).replace(/[ ]{2,}/g, " ").split(" ");
+    className = utils
+      .trim(className)
+      .replace(/[ ]{2,}/g, " ")
+      .split(" ");
     for (var i = 0, ci, cls = element.className; (ci = className[i++]); ) {
       if (!new RegExp("\\b" + ci + "\\b", "i").test(cls)) {
         return false;
@@ -3977,48 +3895,45 @@ var domUtils = (dom.domUtils = {
   },
 
   /**
-     * 阻止事件默认行为
-     * @method preventDefault
-     * @param { Event } evt 需要阻止默认行为的事件对象
-     * @example
-     * ```javascript
-     * UE.dom.domUtils.preventDefault( evt );
-     * ```
-     */
+   * 阻止事件默认行为
+   * @method preventDefault
+   * @param { Event } evt 需要阻止默认行为的事件对象
+   * @example
+   * ```javascript
+   * UE.dom.domUtils.preventDefault( evt );
+   * ```
+   */
   preventDefault: function(evt) {
     evt.preventDefault ? evt.preventDefault() : (evt.returnValue = false);
   },
   /**
-     * 删除元素element指定的样式
-     * @method removeStyle
-     * @param { Element } element 需要删除样式的元素
-     * @param { String } styleName 需要删除的样式名
-     * @example
-     * ```html
-     * <span id="test" style="color: red; background: blue;"></span>
-     *
-     * <script>
-     *
-     *     var testNode = document.getElementById("test");
-     *
-     *     UE.dom.domUtils.removeStyle( testNode, 'color' );
-     *
-     *     //output: background: blue;
-     *     console.log( testNode.style.cssText );
-     *
-     * </script>
-     * ```
-     */
+   * 删除元素element指定的样式
+   * @method removeStyle
+   * @param { Element } element 需要删除样式的元素
+   * @param { String } styleName 需要删除的样式名
+   * @example
+   * ```html
+   * <span id="test" style="color: red; background: blue;"></span>
+   *
+   * <script>
+   *
+   *     var testNode = document.getElementById("test");
+   *
+   *     UE.dom.domUtils.removeStyle( testNode, 'color' );
+   *
+   *     //output: background: blue;
+   *     console.log( testNode.style.cssText );
+   *
+   * </script>
+   * ```
+   */
   removeStyle: function(element, name) {
     if (browser.ie) {
       //针对color先单独处理一下
       if (name == "color") {
         name = "(^|;)" + name;
       }
-      element.style.cssText = element.style.cssText.replace(
-        new RegExp(name + "[^:]*:[^;]+;?", "ig"),
-        ""
-      );
+      element.style.cssText = element.style.cssText.replace(new RegExp(name + "[^:]*:[^;]+;?", "ig"), "");
     } else {
       if (element.style.removeProperty) {
         element.style.removeProperty(name);
@@ -4032,57 +3947,57 @@ var domUtils = (dom.domUtils = {
     }
   },
   /**
-     * 获取元素element的style属性的指定值
-     * @method getStyle
-     * @param { Element } element 需要获取属性值的元素
-     * @param { String } styleName 需要获取的style的名称
-     * @warning 该方法仅获取元素style属性中所标明的值
-     * @return { String } 该元素包含指定的style属性值
-     * @example
-     * ```html
-     * <div id="test" style="color: red;"></div>
-     *
-     * <script>
-     *
-     *      var testNode = document.getElementById( "test" );
-     *
-     *      //output: red
-     *      console.log( UE.dom.domUtils.getStyle( testNode, "color" ) );
-     *
-     *      //output: ""
-     *      console.log( UE.dom.domUtils.getStyle( testNode, "background" ) );
-     *
-     * </script>
-     * ```
-     */
+   * 获取元素element的style属性的指定值
+   * @method getStyle
+   * @param { Element } element 需要获取属性值的元素
+   * @param { String } styleName 需要获取的style的名称
+   * @warning 该方法仅获取元素style属性中所标明的值
+   * @return { String } 该元素包含指定的style属性值
+   * @example
+   * ```html
+   * <div id="test" style="color: red;"></div>
+   *
+   * <script>
+   *
+   *      var testNode = document.getElementById( "test" );
+   *
+   *      //output: red
+   *      console.log( UE.dom.domUtils.getStyle( testNode, "color" ) );
+   *
+   *      //output: ""
+   *      console.log( UE.dom.domUtils.getStyle( testNode, "background" ) );
+   *
+   * </script>
+   * ```
+   */
   getStyle: function(element, name) {
     var value = element.style[utils.cssStyleToDomStyle(name)];
     return utils.fixColor(name, value);
   },
   /**
-     * 为元素element设置样式属性值
-     * @method setStyle
-     * @param { Element } element 需要设置样式的元素
-     * @param { String } styleName 样式名
-     * @param { String } styleValue 样式值
-     * @example
-     * ```html
-     * <div id="test"></div>
-     *
-     * <script>
-     *
-     *      var testNode = document.getElementById( "test" );
-     *
-     *      //output: ""
-     *      console.log( testNode.style.color );
-     *
-     *      UE.dom.domUtils.setStyle( testNode, 'color', 'red' );
-     *      //output: "red"
-     *      console.log( testNode.style.color );
-     *
-     * </script>
-     * ```
-     */
+   * 为元素element设置样式属性值
+   * @method setStyle
+   * @param { Element } element 需要设置样式的元素
+   * @param { String } styleName 样式名
+   * @param { String } styleValue 样式值
+   * @example
+   * ```html
+   * <div id="test"></div>
+   *
+   * <script>
+   *
+   *      var testNode = document.getElementById( "test" );
+   *
+   *      //output: ""
+   *      console.log( testNode.style.color );
+   *
+   *      UE.dom.domUtils.setStyle( testNode, 'color', 'red' );
+   *      //output: "red"
+   *      console.log( testNode.style.color );
+   *
+   * </script>
+   * ```
+   */
   setStyle: function(element, name, value) {
     element.style[utils.cssStyleToDomStyle(name)] = value;
     if (!utils.trim(element.style.cssText)) {
@@ -4090,30 +4005,30 @@ var domUtils = (dom.domUtils = {
     }
   },
   /**
-     * 为元素element设置多个样式属性值
-     * @method setStyles
-     * @param { Element } element 需要设置样式的元素
-     * @param { Object } styles 样式名值对
-     * @example
-     * ```html
-     * <div id="test"></div>
-     *
-     * <script>
-     *
-     *      var testNode = document.getElementById( "test" );
-     *
-     *      //output: ""
-     *      console.log( testNode.style.color );
-     *
-     *      UE.dom.domUtils.setStyles( testNode, {
-     *          'color': 'red'
-     *      } );
-     *      //output: "red"
-     *      console.log( testNode.style.color );
-     *
-     * </script>
-     * ```
-     */
+   * 为元素element设置多个样式属性值
+   * @method setStyles
+   * @param { Element } element 需要设置样式的元素
+   * @param { Object } styles 样式名值对
+   * @example
+   * ```html
+   * <div id="test"></div>
+   *
+   * <script>
+   *
+   *      var testNode = document.getElementById( "test" );
+   *
+   *      //output: ""
+   *      console.log( testNode.style.color );
+   *
+   *      UE.dom.domUtils.setStyles( testNode, {
+   *          'color': 'red'
+   *      } );
+   *      //output: "red"
+   *      console.log( testNode.style.color );
+   *
+   * </script>
+   * ```
+   */
   setStyles: function(element, styles) {
     for (var name in styles) {
       if (styles.hasOwnProperty(name)) {
@@ -4122,64 +4037,60 @@ var domUtils = (dom.domUtils = {
     }
   },
   /**
-     * 删除_moz_dirty属性
-     * @private
-     * @method removeDirtyAttr
-     */
+   * 删除_moz_dirty属性
+   * @private
+   * @method removeDirtyAttr
+   */
   removeDirtyAttr: function(node) {
-    for (
-      var i = 0, ci, nodes = node.getElementsByTagName("*");
-      (ci = nodes[i++]);
-
-    ) {
+    for (var i = 0, ci, nodes = node.getElementsByTagName("*"); (ci = nodes[i++]); ) {
       ci.removeAttribute("_moz_dirty");
     }
     node.removeAttribute("_moz_dirty");
   },
   /**
-     * 获取子节点的数量
-     * @method getChildCount
-     * @param { Element } node 需要检测的元素
-     * @return { Number } 给定的node元素的子节点数量
-     * @example
-     * ```html
-     * <div id="test">
-     *      <span></span>
-     * </div>
-     *
-     * <script>
-     *
-     *     //output: 3
-     *     console.log( UE.dom.domUtils.getChildCount( document.getElementById("test") ) );
-     *
-     * </script>
-     * ```
-     */
+   * 获取子节点的数量
+   * @method getChildCount
+   * @param { Element } node 需要检测的元素
+   * @return { Number } 给定的node元素的子节点数量
+   * @example
+   * ```html
+   * <div id="test">
+   *      <span></span>
+   * </div>
+   *
+   * <script>
+   *
+   *     //output: 3
+   *     console.log( UE.dom.domUtils.getChildCount( document.getElementById("test") ) );
+   *
+   * </script>
+   * ```
+   */
 
   /**
-     * 根据给定的过滤规则， 获取符合条件的子节点的数量
-     * @method getChildCount
-     * @param { Element } node 需要检测的元素
-     * @param { Function } fn 过滤器， 要求对符合条件的子节点返回true， 反之则要求返回false
-     * @return { Number } 符合过滤条件的node元素的子节点数量
-     * @example
-     * ```html
-     * <div id="test">
-     *      <span></span>
-     * </div>
-     *
-     * <script>
-     *
-     *     //output: 1
-     *     console.log( UE.dom.domUtils.getChildCount( document.getElementById("test"), function ( node ) {
-     *
-     *         return node.nodeType === 1;
-     *
-     *     } ) );
-     *
-     * </script>
-     * ```
-     */
+   * 根据给定的过滤规则， 获取符合条件的子节点的数量
+   * @method getChildCount
+   * @param { Element } node 需要检测的元素
+   * @param { Function } fn 过滤器， 要求对符合条件的子节点返回true， 反之则要求返回false
+   * @return { Number } 符合过滤条件的node元素的子节点数量
+   * @example
+   * ```html
+   * <div id="test">
+   *      <span></span>
+   * </div>
+   *
+   * <script>
+   *
+   *     //output: 1
+   *     console.log( UE.dom.domUtils.getChildCount( document.getElementById("test"), function ( node ) {
+   *
+   *         return node.nodeType === 1;
+   *
+   *     } ) );
+   *
+   * </script>
+   * ```
+   */
   getChildCount: function(node, fn) {
     var count = 0,
       first = node.firstChild;
@@ -4198,24 +4109,20 @@ var domUtils = (dom.domUtils = {
   },
 
   /**
-     * 判断给定节点是否为空节点
-     * @method isEmptyNode
-     * @param { Node } node 需要检测的节点对象
-     * @return { Boolean } 节点是否为空
-     * @example
-     * ```javascript
-     * UE.dom.domUtils.isEmptyNode( document.body );
-     * ```
-     */
+   * 判断给定节点是否为空节点
+   * @method isEmptyNode
+   * @param { Node } node 需要检测的节点对象
+   * @return { Boolean } 节点是否为空
+   * @example
+   * ```javascript
+   * UE.dom.domUtils.isEmptyNode( document.body );
+   * ```
+   */
   isEmptyNode: function(node) {
     return (
       !node.firstChild ||
       domUtils.getChildCount(node, function(node) {
-        return (
-          !domUtils.isBr(node) &&
-          !domUtils.isBookmarkNode(node) &&
-          !domUtils.isWhitespace(node)
-        );
+        return !domUtils.isBr(node) && !domUtils.isBookmarkNode(node) && !domUtils.isWhitespace(node);
       }) == 0
     );
   },
@@ -4226,23 +4133,21 @@ var domUtils = (dom.domUtils = {
     }
   },
   /**
-     * 将显示区域滚动到指定节点的位置
-     * @method scrollToView
-     * @param    {Node}   node    节点
-     * @param    {window}   win      window对象
-     * @param    {Number}    offsetTop    距离上方的偏移量
-     */
+   * 将显示区域滚动到指定节点的位置
+   * @method scrollToView
+   * @param    {Node}   node    节点
+   * @param    {window}   win      window对象
+   * @param    {Number}    offsetTop    距离上方的偏移量
+   */
   scrollToView: function(node, win, offsetTop) {
     var getViewPaneSize = function() {
-      var doc = win.document,
-        mode = doc.compatMode == "CSS1Compat";
-      return {
-        width:
-          (mode ? doc.documentElement.clientWidth : doc.body.clientWidth) || 0,
-        height:
-          (mode ? doc.documentElement.clientHeight : doc.body.clientHeight) || 0
-      };
-    },
+        var doc = win.document,
+          mode = doc.compatMode == "CSS1Compat";
+        return {
+          width: (mode ? doc.documentElement.clientWidth : doc.body.clientWidth) || 0,
+          height: (mode ? doc.documentElement.clientHeight : doc.body.clientHeight) || 0
+        };
+      },
       getScrollPosition = function(win) {
         if ("pageXOffset" in win) {
           return {
@@ -4269,22 +4174,22 @@ var domUtils = (dom.domUtils = {
     }
   },
   /**
-     * 判断给定节点是否为br
-     * @method isBr
-     * @param { Node } node 需要判断的节点对象
-     * @return { Boolean } 给定的节点是否是br节点
-     */
+   * 判断给定节点是否为br
+   * @method isBr
+   * @param { Node } node 需要判断的节点对象
+   * @return { Boolean } 给定的节点是否是br节点
+   */
   isBr: function(node) {
     return node.nodeType == 1 && node.tagName == "BR";
   },
   /**
-     * 判断给定的节点是否是一个“填充”节点
-     * @private
-     * @method isFillChar
-     * @param { Node } node 需要判断的节点
-     * @param { Boolean } isInStart 是否从节点内容的开始位置匹配
-     * @returns { Boolean } 节点是否是填充节点
-     */
+   * 判断给定的节点是否是一个“填充”节点
+   * @private
+   * @method isFillChar
+   * @param { Node } node 需要判断的节点
+   * @param { Boolean } isInStart 是否从节点内容的开始位置匹配
+   * @returns { Boolean } 节点是否是填充节点
+   */
   isFillChar: function(node, isInStart) {
     if (node.nodeType != 3) return false;
     var text = node.nodeValue;
@@ -4319,11 +4224,7 @@ var domUtils = (dom.domUtils = {
       tmpRange.setStartBefore(tmp);
       start = tmpRange.startContainer;
     }
-    if (
-      start.nodeType == 1 &&
-      domUtils.isEmptyNode(start) &&
-      tmpRange.startOffset == 1
-    ) {
+    if (start.nodeType == 1 && domUtils.isEmptyNode(start) && tmpRange.startOffset == 1) {
       tmpRange.setStart(start, 0).collapse(true);
     }
     while (!tmpRange.startOffset) {
@@ -4352,35 +4253,33 @@ var domUtils = (dom.domUtils = {
   },
 
   /**
-     * 判断给定的元素是否是一个空元素
-     * @method isEmptyBlock
-     * @param { Element } node 需要判断的元素
-     * @return { Boolean } 是否是空元素
-     * @example
-     * ```html
-     * <div id="test"></div>
-     *
-     * <script>
-     *     //output: true
-     *     console.log( UE.dom.domUtils.isEmptyBlock( document.getElementById("test") ) );
-     * </script>
-     * ```
-     */
+   * 判断给定的元素是否是一个空元素
+   * @method isEmptyBlock
+   * @param { Element } node 需要判断的元素
+   * @return { Boolean } 是否是空元素
+   * @example
+   * ```html
+   * <div id="test"></div>
+   *
+   * <script>
+   *     //output: true
+   *     console.log( UE.dom.domUtils.isEmptyBlock( document.getElementById("test") ) );
+   * </script>
+   * ```
+   */
 
   /**
-     * 根据指定的判断规则判断给定的元素是否是一个空元素
-     * @method isEmptyBlock
-     * @param { Element } node 需要判断的元素
-     * @param { RegExp } reg 对内容执行判断的正则表达式对象
-     * @return { Boolean } 是否是空元素
-     */
+   * 根据指定的判断规则判断给定的元素是否是一个空元素
+   * @method isEmptyBlock
+   * @param { Element } node 需要判断的元素
+   * @param { RegExp } reg 对内容执行判断的正则表达式对象
+   * @return { Boolean } 是否是空元素
+   */
   isEmptyBlock: function(node, reg) {
     if (node.nodeType != 1) return 0;
     reg = reg || new RegExp("[ \xa0\t\r\n" + domUtils.fillChar + "]", "g");
 
-    if (
-      node[browser.ie ? "innerText" : "textContent"].replace(reg, "").length > 0
-    ) {
+    if (node[browser.ie ? "innerText" : "textContent"].replace(reg, "").length > 0) {
       return 0;
     }
     for (var n in dtd.$isNotEmpty) {
@@ -4392,31 +4291,31 @@ var domUtils = (dom.domUtils = {
   },
 
   /**
-     * 移动元素使得该元素的位置移动指定的偏移量的距离
-     * @method setViewportOffset
-     * @param { Element } element 需要设置偏移量的元素
-     * @param { Object } offset 偏移量， 形如{ left: 100, top: 50 }的一个键值对， 表示该元素将在
-     *                                  现有的位置上向水平方向偏移offset.left的距离， 在竖直方向上偏移
-     *                                  offset.top的距离
-     * @example
-     * ```html
-     * <div id="test" style="top: 100px; left: 50px; position: absolute;"></div>
-     *
-     * <script>
-     *
-     *     var testNode = document.getElementById("test");
-     *
-     *     UE.dom.domUtils.setViewportOffset( testNode, {
-     *         left: 200,
-     *         top: 50
-     *     } );
-     *
-     *     //output: top: 300px; left: 100px; position: absolute;
-     *     console.log( testNode.style.cssText );
-     *
-     * </script>
-     * ```
-     */
+   * 移动元素使得该元素的位置移动指定的偏移量的距离
+   * @method setViewportOffset
+   * @param { Element } element 需要设置偏移量的元素
+   * @param { Object } offset 偏移量， 形如{ left: 100, top: 50 }的一个键值对， 表示该元素将在
+   *                                  现有的位置上向水平方向偏移offset.left的距离， 在竖直方向上偏移
+   *                                  offset.top的距离
+   * @example
+   * ```html
+   * <div id="test" style="top: 100px; left: 50px; position: absolute;"></div>
+   *
+   * <script>
+   *
+   *     var testNode = document.getElementById("test");
+   *
+   *     UE.dom.domUtils.setViewportOffset( testNode, {
+   *         left: 200,
+   *         top: 50
+   *     } );
+   *
+   *     //output: top: 300px; left: 100px; position: absolute;
+   *     console.log( testNode.style.cssText );
+   *
+   * </script>
+   * ```
+   */
   setViewportOffset: function(element, offset) {
     var left = parseInt(element.style.left) | 0;
     var top = parseInt(element.style.top) | 0;
@@ -4432,99 +4331,97 @@ var domUtils = (dom.domUtils = {
   },
 
   /**
-     * 用“填充字符”填充节点
-     * @method fillNode
-     * @private
-     * @param { DomDocument } doc 填充的节点所在的docment对象
-     * @param { Node } node 需要填充的节点对象
-     * @example
-     * ```html
-     * <div id="test"></div>
-     *
-     * <script>
-     *     var testNode = document.getElementById("test");
-     *
-     *     //output: 0
-     *     console.log( testNode.childNodes.length );
-     *
-     *     UE.dom.domUtils.fillNode( document, testNode );
-     *
-     *     //output: 1
-     *     console.log( testNode.childNodes.length );
-     *
-     * </script>
-     * ```
-     */
+   * 用“填充字符”填充节点
+   * @method fillNode
+   * @private
+   * @param { DomDocument } doc 填充的节点所在的docment对象
+   * @param { Node } node 需要填充的节点对象
+   * @example
+   * ```html
+   * <div id="test"></div>
+   *
+   * <script>
+   *     var testNode = document.getElementById("test");
+   *
+   *     //output: 0
+   *     console.log( testNode.childNodes.length );
+   *
+   *     UE.dom.domUtils.fillNode( document, testNode );
+   *
+   *     //output: 1
+   *     console.log( testNode.childNodes.length );
+   *
+   * </script>
+   * ```
+   */
   fillNode: function(doc, node) {
-    var tmpNode = browser.ie
-      ? doc.createTextNode(domUtils.fillChar)
-      : doc.createElement("br");
+    var tmpNode = browser.ie ? doc.createTextNode(domUtils.fillChar) : doc.createElement("br");
     node.innerHTML = "";
     node.appendChild(tmpNode);
   },
 
   /**
-     * 把节点src的所有子节点追加到另一个节点tag上去
-     * @method moveChild
-     * @param { Node } src 源节点， 该节点下的所有子节点将被移除
-     * @param { Node } tag 目标节点， 从源节点移除的子节点将被追加到该节点下
-     * @example
-     * ```html
-     * <div id="test1">
-     *      <span></span>
-     * </div>
-     * <div id="test2">
-     *     <div></div>
-     * </div>
-     *
-     * <script>
-     *
-     *     var test1 = document.getElementById("test1"),
-     *         test2 = document.getElementById("test2");
-     *
-     *     UE.dom.domUtils.moveChild( test1, test2 );
-     *
-     *     //output: ""（空字符串）
-     *     console.log( test1.innerHTML );
-     *
-     *     //output: "<div></div><span></span>"
-     *     console.log( test2.innerHTML );
-     *
-     * </script>
-     * ```
-     */
+   * 把节点src的所有子节点追加到另一个节点tag上去
+   * @method moveChild
+   * @param { Node } src 源节点， 该节点下的所有子节点将被移除
+   * @param { Node } tag 目标节点， 从源节点移除的子节点将被追加到该节点下
+   * @example
+   * ```html
+   * <div id="test1">
+   *      <span></span>
+   * </div>
+   * <div id="test2">
+   *     <div></div>
+   * </div>
+   *
+   * <script>
+   *
+   *     var test1 = document.getElementById("test1"),
+   *         test2 = document.getElementById("test2");
+   *
+   *     UE.dom.domUtils.moveChild( test1, test2 );
+   *
+   *     //output: ""（空字符串）
+   *     console.log( test1.innerHTML );
+   *
+   *     //output: "<div></div><span></span>"
+   *     console.log( test2.innerHTML );
+   *
+   * </script>
+   * ```
+   */
 
   /**
-     * 把节点src的所有子节点移动到另一个节点tag上去, 可以通过dir参数控制附加的行为是“追加”还是“插入顶部”
-     * @method moveChild
-     * @param { Node } src 源节点， 该节点下的所有子节点将被移除
-     * @param { Node } tag 目标节点， 从源节点移除的子节点将被附加到该节点下
-     * @param { Boolean } dir 附加方式， 如果为true， 则附加进去的节点将被放到目标节点的顶部， 反之，则放到末尾
-     * @example
-     * ```html
-     * <div id="test1">
-     *      <span></span>
-     * </div>
-     * <div id="test2">
-     *     <div></div>
-     * </div>
-     *
-     * <script>
-     *
-     *     var test1 = document.getElementById("test1"),
-     *         test2 = document.getElementById("test2");
-     *
-     *     UE.dom.domUtils.moveChild( test1, test2, true );
-     *
-     *     //output: ""（空字符串）
-     *     console.log( test1.innerHTML );
-     *
-     *     //output: "<span></span><div></div>"
-     *     console.log( test2.innerHTML );
-     *
-     * </script>
-     * ```
-     */
+   * 把节点src的所有子节点移动到另一个节点tag上去, 可以通过dir参数控制附加的行为是“追加”还是“插入顶部”
+   * @method moveChild
+   * @param { Node } src 源节点， 该节点下的所有子节点将被移除
+   * @param { Node } tag 目标节点， 从源节点移除的子节点将被附加到该节点下
+   * @param { Boolean } dir 附加方式， 如果为true， 则附加进去的节点将被放到目标节点的顶部， 反之，则放到末尾
+   * @example
+   * ```html
+   * <div id="test1">
+   *      <span></span>
+   * </div>
+   * <div id="test2">
+   *     <div></div>
+   * </div>
+   *
+   * <script>
+   *
+   *     var test1 = document.getElementById("test1"),
+   *         test2 = document.getElementById("test2");
+   *
+   *     UE.dom.domUtils.moveChild( test1, test2, true );
+   *
+   *     //output: ""（空字符串）
+   *     console.log( test1.innerHTML );
+   *
+   *     //output: "<span></span><div></div>"
+   *     console.log( test2.innerHTML );
+   *
+   * </script>
+   * ```
+   */
   moveChild: function(src, tag, dir) {
     while (src.firstChild) {
       if (dir && tag.firstChild) {
@@ -4536,163 +4433,151 @@ var domUtils = (dom.domUtils = {
   },
 
   /**
-     * 判断节点的标签上是否不存在任何属性
-     * @method hasNoAttributes
-     * @private
-     * @param { Node } node 需要检测的节点对象
-     * @return { Boolean } 节点是否不包含任何属性
-     * @example
-     * ```html
-     * <div id="test"><span>xxxx</span></div>
-     *
-     * <script>
-     *
-     *     //output: false
-     *     console.log( UE.dom.domUtils.hasNoAttributes( document.getElementById("test") ) );
-     *
-     *     //output: true
-     *     console.log( UE.dom.domUtils.hasNoAttributes( document.getElementById("test").firstChild ) );
-     *
-     * </script>
-     * ```
-     */
+   * 判断节点的标签上是否不存在任何属性
+   * @method hasNoAttributes
+   * @private
+   * @param { Node } node 需要检测的节点对象
+   * @return { Boolean } 节点是否不包含任何属性
+   * @example
+   * ```html
+   * <div id="test"><span>xxxx</span></div>
+   *
+   * <script>
+   *
+   *     //output: false
+   *     console.log( UE.dom.domUtils.hasNoAttributes( document.getElementById("test") ) );
+   *
+   *     //output: true
+   *     console.log( UE.dom.domUtils.hasNoAttributes( document.getElementById("test").firstChild ) );
+   *
+   * </script>
+   * ```
+   */
   hasNoAttributes: function(node) {
-    return browser.ie
-      ? /^<\w+\s*?>/.test(node.outerHTML)
-      : node.attributes.length == 0;
+    return browser.ie ? /^<\w+\s*?>/.test(node.outerHTML) : node.attributes.length == 0;
   },
 
   /**
-     * 检测节点是否是UEditor所使用的辅助节点
-     * @method isCustomeNode
-     * @private
-     * @param { Node } node 需要检测的节点
-     * @remind 辅助节点是指编辑器要完成工作临时添加的节点， 在输出的时候将会从编辑器内移除， 不会影响最终的结果。
-     * @return { Boolean } 给定的节点是否是一个辅助节点
-     */
+   * 检测节点是否是UEditor所使用的辅助节点
+   * @method isCustomeNode
+   * @private
+   * @param { Node } node 需要检测的节点
+   * @remind 辅助节点是指编辑器要完成工作临时添加的节点， 在输出的时候将会从编辑器内移除， 不会影响最终的结果。
+   * @return { Boolean } 给定的节点是否是一个辅助节点
+   */
   isCustomeNode: function(node) {
     return node.nodeType == 1 && node.getAttribute("_ue_custom_node_");
   },
 
   /**
-     * 检测节点的标签是否是给定的标签
-     * @method isTagNode
-     * @param { Node } node 需要检测的节点对象
-     * @param { String } tagName 标签
-     * @return { Boolean } 节点的标签是否是给定的标签
-     * @example
-     * ```html
-     * <div id="test"></div>
-     *
-     * <script>
-     *
-     *     //output: true
-     *     console.log( UE.dom.domUtils.isTagNode( document.getElementById("test"), "div" ) );
-     *
-     * </script>
-     * ```
-     */
+   * 检测节点的标签是否是给定的标签
+   * @method isTagNode
+   * @param { Node } node 需要检测的节点对象
+   * @param { String } tagName 标签
+   * @return { Boolean } 节点的标签是否是给定的标签
+   * @example
+   * ```html
+   * <div id="test"></div>
+   *
+   * <script>
+   *
+   *     //output: true
+   *     console.log( UE.dom.domUtils.isTagNode( document.getElementById("test"), "div" ) );
+   *
+   * </script>
+   * ```
+   */
   isTagNode: function(node, tagNames) {
-    return (
-      node.nodeType == 1 &&
-      new RegExp("\\b" + node.tagName + "\\b", "i").test(tagNames)
-    );
+    return node.nodeType == 1 && new RegExp("\\b" + node.tagName + "\\b", "i").test(tagNames);
   },
 
   /**
-     * 给定一个节点数组，在通过指定的过滤器过滤后， 获取其中满足过滤条件的第一个节点
-     * @method filterNodeList
-     * @param { Array } nodeList 需要过滤的节点数组
-     * @param { Function } fn 过滤器， 对符合条件的节点， 执行结果返回true， 反之则返回false
-     * @return { Node | NULL } 如果找到符合过滤条件的节点， 则返回该节点， 否则返回NULL
-     * @example
-     * ```javascript
-     * var divNodes = document.getElementsByTagName("div");
-     * divNodes = [].slice.call( divNodes, 0 );
-     *
-     * //output: null
-     * console.log( UE.dom.domUtils.filterNodeList( divNodes, function ( node ) {
-     *     return node.tagName.toLowerCase() !== 'div';
-     * } ) );
-     * ```
-     */
+   * 给定一个节点数组，在通过指定的过滤器过滤后， 获取其中满足过滤条件的第一个节点
+   * @method filterNodeList
+   * @param { Array } nodeList 需要过滤的节点数组
+   * @param { Function } fn 过滤器， 对符合条件的节点， 执行结果返回true， 反之则返回false
+   * @return { Node | NULL } 如果找到符合过滤条件的节点， 则返回该节点， 否则返回NULL
+   * @example
+   * ```javascript
+   * var divNodes = document.getElementsByTagName("div");
+   * divNodes = [].slice.call( divNodes, 0 );
+   *
+   * //output: null
+   * console.log( UE.dom.domUtils.filterNodeList( divNodes, function ( node ) {
+   *     return node.tagName.toLowerCase() !== 'div';
+   * } ) );
+   * ```
+   */
 
   /**
-     * 给定一个节点数组nodeList和一组标签名tagNames， 获取其中能够匹配标签名的节点集合中的第一个节点
-     * @method filterNodeList
-     * @param { Array } nodeList 需要过滤的节点数组
-     * @param { String } tagNames 需要匹配的标签名， 多个标签名之间用空格分割
-     * @return { Node | NULL } 如果找到标签名匹配的节点， 则返回该节点， 否则返回NULL
-     * @example
-     * ```javascript
-     * var divNodes = document.getElementsByTagName("div");
-     * divNodes = [].slice.call( divNodes, 0 );
-     *
-     * //output: null
-     * console.log( UE.dom.domUtils.filterNodeList( divNodes, 'a span' ) );
-     * ```
-     */
+   * 给定一个节点数组nodeList和一组标签名tagNames， 获取其中能够匹配标签名的节点集合中的第一个节点
+   * @method filterNodeList
+   * @param { Array } nodeList 需要过滤的节点数组
+   * @param { String } tagNames 需要匹配的标签名， 多个标签名之间用空格分割
+   * @return { Node | NULL } 如果找到标签名匹配的节点， 则返回该节点， 否则返回NULL
+   * @example
+   * ```javascript
+   * var divNodes = document.getElementsByTagName("div");
+   * divNodes = [].slice.call( divNodes, 0 );
+   *
+   * //output: null
+   * console.log( UE.dom.domUtils.filterNodeList( divNodes, 'a span' ) );
+   * ```
+   */
 
   /**
-     * 给定一个节点数组，在通过指定的过滤器过滤后， 如果参数forAll为true， 则会返回所有满足过滤
-     * 条件的节点集合， 否则， 返回满足条件的节点集合中的第一个节点
-     * @method filterNodeList
-     * @param { Array } nodeList 需要过滤的节点数组
-     * @param { Function } fn 过滤器， 对符合条件的节点， 执行结果返回true， 反之则返回false
-     * @param { Boolean } forAll 是否返回整个节点数组, 如果该参数为false， 则返回节点集合中的第一个节点
-     * @return { Array | Node | NULL } 如果找到符合过滤条件的节点， 则根据参数forAll的值决定返回满足
-     *                                      过滤条件的节点数组或第一个节点， 否则返回NULL
-     * @example
-     * ```javascript
-     * var divNodes = document.getElementsByTagName("div");
-     * divNodes = [].slice.call( divNodes, 0 );
-     *
-     * //output: 3（假定有3个div）
-     * console.log( divNodes.length );
-     *
-     * var nodes = UE.dom.domUtils.filterNodeList( divNodes, function ( node ) {
-     *     return node.tagName.toLowerCase() === 'div';
-     * }, true );
-     *
-     * //output: 3
-     * console.log( nodes.length );
-     *
-     * var node = UE.dom.domUtils.filterNodeList( divNodes, function ( node ) {
-     *     return node.tagName.toLowerCase() === 'div';
-     * }, false );
-     *
-     * //output: div
-     * console.log( node.nodeName );
-     * ```
-     */
+   * 给定一个节点数组，在通过指定的过滤器过滤后， 如果参数forAll为true， 则会返回所有满足过滤
+   * 条件的节点集合， 否则， 返回满足条件的节点集合中的第一个节点
+   * @method filterNodeList
+   * @param { Array } nodeList 需要过滤的节点数组
+   * @param { Function } fn 过滤器， 对符合条件的节点， 执行结果返回true， 反之则返回false
+   * @param { Boolean } forAll 是否返回整个节点数组, 如果该参数为false， 则返回节点集合中的第一个节点
+   * @return { Array | Node | NULL } 如果找到符合过滤条件的节点， 则根据参数forAll的值决定返回满足
+   *                                      过滤条件的节点数组或第一个节点， 否则返回NULL
+   * @example
+   * ```javascript
+   * var divNodes = document.getElementsByTagName("div");
+   * divNodes = [].slice.call( divNodes, 0 );
+   *
+   * //output: 3（假定有3个div）
+   * console.log( divNodes.length );
+   *
+   * var nodes = UE.dom.domUtils.filterNodeList( divNodes, function ( node ) {
+   *     return node.tagName.toLowerCase() === 'div';
+   * }, true );
+   *
+   * //output: 3
+   * console.log( nodes.length );
+   *
+   * var node = UE.dom.domUtils.filterNodeList( divNodes, function ( node ) {
+   *     return node.tagName.toLowerCase() === 'div';
+   * }, false );
+   *
+   * //output: div
+   * console.log( node.nodeName );
+   * ```
+   */
   filterNodeList: function(nodelist, filter, forAll) {
     var results = [];
     if (!utils.isFunction(filter)) {
       var str = filter;
       filter = function(n) {
-        return (
-          utils.indexOf(
-            utils.isArray(str) ? str : str.split(" "),
-            n.tagName.toLowerCase()
-          ) != -1
-        );
+        return utils.indexOf(utils.isArray(str) ? str : str.split(" "), n.tagName.toLowerCase()) != -1;
       };
     }
     utils.each(nodelist, function(n) {
       filter(n) && results.push(n);
     });
-    return results.length == 0
-      ? null
-      : results.length == 1 || !forAll ? results[0] : results;
+    return results.length == 0 ? null : results.length == 1 || !forAll ? results[0] : results;
   },
 
   /**
-     * 查询给定的range选区是否在给定的node节点内，且在该节点的最末尾
-     * @method isInNodeEndBoundary
-     * @param { UE.dom.Range } rng 需要判断的range对象， 该对象的startContainer不能为NULL
-     * @param node 需要检测的节点对象
-     * @return { Number } 如果给定的选取range对象是在node内部的最末端， 则返回1, 否则返回0
-     */
+   * 查询给定的range选区是否在给定的node节点内，且在该节点的最末尾
+   * @method isInNodeEndBoundary
+   * @param { UE.dom.Range } rng 需要判断的range对象， 该对象的startContainer不能为NULL
+   * @param node 需要检测的节点对象
+   * @return { Number } 如果给定的选取range对象是在node内部的最末端， 则返回1, 否则返回0
+   */
   isInNodeEndBoundary: function(rng, node) {
     var start = rng.startContainer;
     if (start.nodeType == 3 && rng.startOffset != start.nodeValue.length) {
@@ -4753,9 +4638,9 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
     fillData;
 
   /**
-     * 更新range的collapse状态
-     * @param  {Range}   range    range对象
-     */
+   * 更新range的collapse状态
+   * @param  {Range}   range    range对象
+   */
   function updateCollapse(range) {
     range.collapsed =
       range.startContainer &&
@@ -4774,10 +4659,7 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
   }
   function setEndPoint(toStart, node, offset, range) {
     //如果node是自闭合标签要处理
-    if (
-      node.nodeType == 1 &&
-      (dtd.$empty[node.tagName] || dtd.$nonChild[node.tagName])
-    ) {
+    if (node.nodeType == 1 && (dtd.$empty[node.tagName] || dtd.$nonChild[node.tagName])) {
       offset = domUtils.getNodeIndex(node) + (toStart ? 0 : 1);
       node = node.parentNode;
     }
@@ -4810,21 +4692,13 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
       tmpStart,
       tmpEnd;
     if (start.nodeType == 1) {
-      start =
-        start.childNodes[startOffset] ||
-        (tmpStart = start.appendChild(doc.createTextNode("")));
+      start = start.childNodes[startOffset] || (tmpStart = start.appendChild(doc.createTextNode("")));
     }
     if (end.nodeType == 1) {
-      end =
-        end.childNodes[endOffset] ||
-        (tmpEnd = end.appendChild(doc.createTextNode("")));
+      end = end.childNodes[endOffset] || (tmpEnd = end.appendChild(doc.createTextNode("")));
     }
     if (start === end && start.nodeType == 3) {
-      frag.appendChild(
-        doc.createTextNode(
-          start.substringData(startOffset, endOffset - startOffset)
-        )
-      );
+      frag.appendChild(doc.createTextNode(start.substringData(startOffset, endOffset - startOffset)));
       //is not clone
       if (action) {
         start.deleteData(startOffset, endOffset - startOffset);
@@ -4845,15 +4719,10 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
       if (si == start) {
         if (!tmpStart) {
           if (range.startContainer.nodeType == 3) {
-            clone.appendChild(
-              doc.createTextNode(start.nodeValue.slice(startOffset))
-            );
+            clone.appendChild(doc.createTextNode(start.nodeValue.slice(startOffset)));
             //is not clone
             if (action) {
-              start.deleteData(
-                startOffset,
-                start.nodeValue.length - startOffset
-              );
+              start.deleteData(startOffset, start.nodeValue.length - startOffset);
             }
           } else {
             clone.appendChild(!action ? start.cloneNode(true) : start);
@@ -4882,9 +4751,7 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
       current = ei.previousSibling;
       if (ei == end) {
         if (!tmpEnd && range.endContainer.nodeType == 3) {
-          clone.appendChild(
-            doc.createTextNode(end.substringData(0, endOffset))
-          );
+          clone.appendChild(doc.createTextNode(end.substringData(0, endOffset)));
           //is not clone
           if (action) {
             end.deleteData(0, endOffset);
@@ -4901,10 +4768,7 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
             break;
           }
           ei = current.previousSibling;
-          clone.insertBefore(
-            !action ? current.cloneNode(true) : current,
-            clone.firstChild
-          );
+          clone.insertBefore(!action ? current.cloneNode(true) : current, clone.firstChild);
           current = ei;
         }
       }
@@ -4912,11 +4776,7 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
     }
     if (action) {
       range
-        .setStartBefore(
-          !endParents[i]
-            ? endParents[i - 1]
-            : !startParents[i] ? startParents[i - 1] : endParents[i]
-        )
+        .setStartBefore(!endParents[i] ? endParents[i - 1] : !startParents[i] ? startParents[i - 1] : endParents[i])
         .collapse(true);
     }
     tmpStart && domUtils.remove(tmpStart);
@@ -4925,39 +4785,39 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
   }
 
   /**
-     * 创建一个跟document绑定的空的Range实例
-     * @constructor
-     * @param { Document } document 新建的选区所属的文档对象
-     */
+   * 创建一个跟document绑定的空的Range实例
+   * @constructor
+   * @param { Document } document 新建的选区所属的文档对象
+   */
 
   /**
-     * @property { Node } startContainer 当前Range的开始边界的容器节点, 可以是一个元素节点或者是文本节点
-     */
+   * @property { Node } startContainer 当前Range的开始边界的容器节点, 可以是一个元素节点或者是文本节点
+   */
 
   /**
-     * @property { Node } startOffset 当前Range的开始边界容器节点的偏移量, 如果是元素节点，
-     *                              该值就是childNodes中的第几个节点， 如果是文本节点就是文本内容的第几个字符
-     */
+   * @property { Node } startOffset 当前Range的开始边界容器节点的偏移量, 如果是元素节点，
+   *                              该值就是childNodes中的第几个节点， 如果是文本节点就是文本内容的第几个字符
+   */
 
   /**
-     * @property { Node } endContainer 当前Range的结束边界的容器节点, 可以是一个元素节点或者是文本节点
-     */
+   * @property { Node } endContainer 当前Range的结束边界的容器节点, 可以是一个元素节点或者是文本节点
+   */
 
   /**
-     * @property { Node } endOffset 当前Range的结束边界容器节点的偏移量, 如果是元素节点，
-     *                              该值就是childNodes中的第几个节点， 如果是文本节点就是文本内容的第几个字符
-     */
+   * @property { Node } endOffset 当前Range的结束边界容器节点的偏移量, 如果是元素节点，
+   *                              该值就是childNodes中的第几个节点， 如果是文本节点就是文本内容的第几个字符
+   */
 
   /**
-     * @property { Boolean } collapsed 当前Range是否闭合
-     * @default true
-     * @remind Range是闭合的时候， startContainer === endContainer && startOffset === endOffset
-     */
+   * @property { Boolean } collapsed 当前Range是否闭合
+   * @default true
+   * @remind Range是闭合的时候， startContainer === endContainer && startOffset === endOffset
+   */
 
   /**
-     * @property { Document } document 当前Range所属的Document对象
-     * @remind 不同range的的document属性可以是不同的
-     */
+   * @property { Document } document 当前Range所属的Document对象
+   * @remind 不同range的的document属性可以是不同的
+   */
   var Range = (dom.Range = function(document) {
     var me = this;
     me.startContainer = me.startOffset = me.endContainer = me.endOffset = null;
@@ -4966,10 +4826,10 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
   });
 
   /**
-     * 删除fillData
-     * @param doc
-     * @param excludeNode
-     */
+   * 删除fillData
+   * @param doc
+   * @param excludeNode
+   */
   function removeFillData(doc, excludeNode) {
     try {
       if (fillData && domUtils.inDoc(fillData, doc)) {
@@ -4981,10 +4841,7 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
             domUtils.isEmptyInlineElement(tmpNode) &&
             //safari的contains有bug
             (browser.safari
-              ? !(
-                  domUtils.getPosition(tmpNode, excludeNode) &
-                  domUtils.POSITION_CONTAINS
-                )
+              ? !(domUtils.getPosition(tmpNode, excludeNode) & domUtils.POSITION_CONTAINS)
               : !tmpNode.contains(excludeNode))
           ) {
             fillData = tmpNode.parentNode;
@@ -4999,9 +4856,9 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
   }
 
   /**
-     * @param node
-     * @param dir
-     */
+   * @param node
+   * @param dir
+   */
   function mergeSibling(node, dir) {
     var tmpNode;
     node = node[dir];
@@ -5014,68 +4871,68 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
 
   Range.prototype = {
     /**
-         * 克隆选区的内容到一个DocumentFragment里
-         * @method cloneContents
-         * @return { DocumentFragment | NULL } 如果选区是闭合的将返回null， 否则， 返回包含所clone内容的DocumentFragment元素
-         * @example
-         * ```html
-         * <body>
-         *      <!-- 中括号表示选区 -->
-         *      <b>x<i>x[x</i>xx]x</b>
-         *
-         *      <script>
-         *          //range是已选中的选区
-         *          var fragment = range.cloneContents(),
-         *              node = document.createElement("div");
-         *
-         *          node.appendChild( fragment );
-         *
-         *          //output: <i>x</i>xx
-         *          console.log( node.innerHTML );
-         *
-         *      </script>
-         * </body>
-         * ```
-         */
+     * 克隆选区的内容到一个DocumentFragment里
+     * @method cloneContents
+     * @return { DocumentFragment | NULL } 如果选区是闭合的将返回null， 否则， 返回包含所clone内容的DocumentFragment元素
+     * @example
+     * ```html
+     * <body>
+     *      <!-- 中括号表示选区 -->
+     *      <b>x<i>x[x</i>xx]x</b>
+     *
+     *      <script>
+     *          //range是已选中的选区
+     *          var fragment = range.cloneContents(),
+     *              node = document.createElement("div");
+     *
+     *          node.appendChild( fragment );
+     *
+     *          //output: <i>x</i>xx
+     *          console.log( node.innerHTML );
+     *
+     *      </script>
+     * </body>
+     * ```
+     */
     cloneContents: function() {
       return this.collapsed ? null : execContentsAction(this, 0);
     },
 
     /**
-         * 删除当前选区范围中的所有内容
-         * @method deleteContents
-         * @remind 执行完该操作后， 当前Range对象变成了闭合状态
-         * @return { UE.dom.Range } 当前操作的Range对象
-         * @example
-         * ```html
-         * <body>
-         *      <!-- 中括号表示选区 -->
-         *      <b>x<i>x[x</i>xx]x</b>
-         *
-         *      <script>
-         *          //range是已选中的选区
-         *          range.deleteContents();
-         *
-         *          //竖线表示闭合后的选区位置
-         *          //output: <b>x<i>x</i>|x</b>
-         *          console.log( document.body.innerHTML );
-         *
-         *          //此时， range的各项属性为
-         *          //output: B
-         *          console.log( range.startContainer.tagName );
-         *          //output: 2
-         *          console.log( range.startOffset );
-         *          //output: B
-         *          console.log( range.endContainer.tagName );
-         *          //output: 2
-         *          console.log( range.endOffset );
-         *          //output: true
-         *          console.log( range.collapsed );
-         *
-         *      </script>
-         * </body>
-         * ```
-         */
+     * 删除当前选区范围中的所有内容
+     * @method deleteContents
+     * @remind 执行完该操作后， 当前Range对象变成了闭合状态
+     * @return { UE.dom.Range } 当前操作的Range对象
+     * @example
+     * ```html
+     * <body>
+     *      <!-- 中括号表示选区 -->
+     *      <b>x<i>x[x</i>xx]x</b>
+     *
+     *      <script>
+     *          //range是已选中的选区
+     *          range.deleteContents();
+     *
+     *          //竖线表示闭合后的选区位置
+     *          //output: <b>x<i>x</i>|x</b>
+     *          console.log( document.body.innerHTML );
+     *
+     *          //此时， range的各项属性为
+     *          //output: B
+     *          console.log( range.startContainer.tagName );
+     *          //output: 2
+     *          console.log( range.startOffset );
+     *          //output: B
+     *          console.log( range.endContainer.tagName );
+     *          //output: 2
+     *          console.log( range.endOffset );
+     *          //output: true
+     *          console.log( range.collapsed );
+     *
+     *      </script>
+     * </body>
+     * ```
+     */
     deleteContents: function() {
       var txt;
       if (!this.collapsed) {
@@ -5092,371 +4949,363 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
     },
 
     /**
-         * 将当前选区的内容提取到一个DocumentFragment里
-         * @method extractContents
-         * @remind 执行该操作后， 选区将变成闭合状态
-         * @warning 执行该操作后， 原来选区所选中的内容将从dom树上剥离出来
-         * @return { DocumentFragment } 返回包含所提取内容的DocumentFragment对象
-         * @example
-         * ```html
-         * <body>
-         *      <!-- 中括号表示选区 -->
-         *      <b>x<i>x[x</i>xx]x</b>
-         *
-         *      <script>
-         *          //range是已选中的选区
-         *          var fragment = range.extractContents(),
-         *              node = document.createElement( "div" );
-         *
-         *          node.appendChild( fragment );
-         *
-         *          //竖线表示闭合后的选区位置
-         *
-         *          //output: <b>x<i>x</i>|x</b>
-         *          console.log( document.body.innerHTML );
-         *          //output: <i>x</i>xx
-         *          console.log( node.innerHTML );
-         *
-         *          //此时， range的各项属性为
-         *          //output: B
-         *          console.log( range.startContainer.tagName );
-         *          //output: 2
-         *          console.log( range.startOffset );
-         *          //output: B
-         *          console.log( range.endContainer.tagName );
-         *          //output: 2
-         *          console.log( range.endOffset );
-         *          //output: true
-         *          console.log( range.collapsed );
-         *
-         *      </script>
-         * </body>
-         */
+     * 将当前选区的内容提取到一个DocumentFragment里
+     * @method extractContents
+     * @remind 执行该操作后， 选区将变成闭合状态
+     * @warning 执行该操作后， 原来选区所选中的内容将从dom树上剥离出来
+     * @return { DocumentFragment } 返回包含所提取内容的DocumentFragment对象
+     * @example
+     * ```html
+     * <body>
+     *      <!-- 中括号表示选区 -->
+     *      <b>x<i>x[x</i>xx]x</b>
+     *
+     *      <script>
+     *          //range是已选中的选区
+     *          var fragment = range.extractContents(),
+     *              node = document.createElement( "div" );
+     *
+     *          node.appendChild( fragment );
+     *
+     *          //竖线表示闭合后的选区位置
+     *
+     *          //output: <b>x<i>x</i>|x</b>
+     *          console.log( document.body.innerHTML );
+     *          //output: <i>x</i>xx
+     *          console.log( node.innerHTML );
+     *
+     *          //此时， range的各项属性为
+     *          //output: B
+     *          console.log( range.startContainer.tagName );
+     *          //output: 2
+     *          console.log( range.startOffset );
+     *          //output: B
+     *          console.log( range.endContainer.tagName );
+     *          //output: 2
+     *          console.log( range.endOffset );
+     *          //output: true
+     *          console.log( range.collapsed );
+     *
+     *      </script>
+     * </body>
+     */
     extractContents: function() {
       return this.collapsed ? null : execContentsAction(this, 2);
     },
 
     /**
-         * 设置Range的开始容器节点和偏移量
-         * @method  setStart
-         * @remind 如果给定的节点是元素节点，那么offset指的是其子元素中索引为offset的元素，
-         *          如果是文本节点，那么offset指的是其文本内容的第offset个字符
-         * @remind 如果提供的容器节点是一个不能包含子元素的节点， 则该选区的开始容器将被设置
-         *          为该节点的父节点， 此时， 其距离开始容器的偏移量也变成了该节点在其父节点
-         *          中的索引
-         * @param { Node } node 将被设为当前选区开始边界容器的节点对象
-         * @param { int } offset 选区的开始位置偏移量
-         * @return { UE.dom.Range } 当前range对象
-         * @example
-         * ```html
-         * <!-- 选区 -->
-         * <b>xxx<i>x<span>xx</span>xx<em>xx</em>xxx</i>[xxx]</b>
-         *
-         * <script>
-         *
-         *     //执行操作
-         *     range.setStart( document.getElementsByTagName("i")[0], 1 );
-         *
-         *     //此时， 选区变成了
-         *     //<b>xxx<i>x[<span>xx</span>xx<em>xx</em>xxx</i>xxx]</b>
-         *
-         * </script>
-         * ```
-         * @example
-         * ```html
-         * <!-- 选区 -->
-         * <b>xxx<img>[xx]x</b>
-         *
-         * <script>
-         *
-         *     //执行操作
-         *     range.setStart( document.getElementsByTagName("img")[0], 3 );
-         *
-         *     //此时， 选区变成了
-         *     //<b>xxx[<img>xx]x</b>
-         *
-         * </script>
-         * ```
-         */
+     * 设置Range的开始容器节点和偏移量
+     * @method  setStart
+     * @remind 如果给定的节点是元素节点，那么offset指的是其子元素中索引为offset的元素，
+     *          如果是文本节点，那么offset指的是其文本内容的第offset个字符
+     * @remind 如果提供的容器节点是一个不能包含子元素的节点， 则该选区的开始容器将被设置
+     *          为该节点的父节点， 此时， 其距离开始容器的偏移量也变成了该节点在其父节点
+     *          中的索引
+     * @param { Node } node 将被设为当前选区开始边界容器的节点对象
+     * @param { int } offset 选区的开始位置偏移量
+     * @return { UE.dom.Range } 当前range对象
+     * @example
+     * ```html
+     * <!-- 选区 -->
+     * <b>xxx<i>x<span>xx</span>xx<em>xx</em>xxx</i>[xxx]</b>
+     *
+     * <script>
+     *
+     *     //执行操作
+     *     range.setStart( document.getElementsByTagName("i")[0], 1 );
+     *
+     *     //此时， 选区变成了
+     *     //<b>xxx<i>x[<span>xx</span>xx<em>xx</em>xxx</i>xxx]</b>
+     *
+     * </script>
+     * ```
+     * @example
+     * ```html
+     * <!-- 选区 -->
+     * <b>xxx<img>[xx]x</b>
+     *
+     * <script>
+     *
+     *     //执行操作
+     *     range.setStart( document.getElementsByTagName("img")[0], 3 );
+     *
+     *     //此时， 选区变成了
+     *     //<b>xxx[<img>xx]x</b>
+     *
+     * </script>
+     * ```
+     */
     setStart: function(node, offset) {
       return setEndPoint(true, node, offset, this);
     },
 
     /**
-         * 设置Range的结束容器和偏移量
-         * @method  setEnd
-         * @param { Node } node 作为当前选区结束边界容器的节点对象
-         * @param { int } offset 结束边界的偏移量
-         * @see UE.dom.Range:setStart(Node,int)
-         * @return { UE.dom.Range } 当前range对象
-         */
+     * 设置Range的结束容器和偏移量
+     * @method  setEnd
+     * @param { Node } node 作为当前选区结束边界容器的节点对象
+     * @param { int } offset 结束边界的偏移量
+     * @see UE.dom.Range:setStart(Node,int)
+     * @return { UE.dom.Range } 当前range对象
+     */
     setEnd: function(node, offset) {
       return setEndPoint(false, node, offset, this);
     },
 
     /**
-         * 将Range开始位置设置到node节点之后
-         * @method  setStartAfter
-         * @remind 该操作将会把给定节点的父节点作为range的开始容器， 且偏移量是该节点在其父节点中的位置索引+1
-         * @param { Node } node 选区的开始边界将紧接着该节点之后
-         * @return { UE.dom.Range } 当前range对象
-         * @example
-         * ```html
-         * <!-- 选区示例 -->
-         * <b>xx<i>xxx</i><span>xx[x</span>xxx]</b>
-         *
-         * <script>
-         *
-         *     //执行操作
-         *     range.setStartAfter( document.getElementsByTagName("i")[0] );
-         *
-         *     //结果选区
-         *     //<b>xx<i>xxx</i>[<span>xxx</span>xxx]</b>
-         *
-         * </script>
-         * ```
-         */
+     * 将Range开始位置设置到node节点之后
+     * @method  setStartAfter
+     * @remind 该操作将会把给定节点的父节点作为range的开始容器， 且偏移量是该节点在其父节点中的位置索引+1
+     * @param { Node } node 选区的开始边界将紧接着该节点之后
+     * @return { UE.dom.Range } 当前range对象
+     * @example
+     * ```html
+     * <!-- 选区示例 -->
+     * <b>xx<i>xxx</i><span>xx[x</span>xxx]</b>
+     *
+     * <script>
+     *
+     *     //执行操作
+     *     range.setStartAfter( document.getElementsByTagName("i")[0] );
+     *
+     *     //结果选区
+     *     //<b>xx<i>xxx</i>[<span>xxx</span>xxx]</b>
+     *
+     * </script>
+     * ```
+     */
     setStartAfter: function(node) {
       return this.setStart(node.parentNode, domUtils.getNodeIndex(node) + 1);
     },
 
     /**
-         * 将Range开始位置设置到node节点之前
-         * @method  setStartBefore
-         * @remind 该操作将会把给定节点的父节点作为range的开始容器， 且偏移量是该节点在其父节点中的位置索引
-         * @param { Node } node 新的选区开始位置在该节点之前
-         * @see UE.dom.Range:setStartAfter(Node)
-         * @return { UE.dom.Range } 当前range对象
-         */
+     * 将Range开始位置设置到node节点之前
+     * @method  setStartBefore
+     * @remind 该操作将会把给定节点的父节点作为range的开始容器， 且偏移量是该节点在其父节点中的位置索引
+     * @param { Node } node 新的选区开始位置在该节点之前
+     * @see UE.dom.Range:setStartAfter(Node)
+     * @return { UE.dom.Range } 当前range对象
+     */
     setStartBefore: function(node) {
       return this.setStart(node.parentNode, domUtils.getNodeIndex(node));
     },
 
     /**
-         * 将Range结束位置设置到node节点之后
-         * @method  setEndAfter
-         * @remind 该操作将会把给定节点的父节点作为range的结束容器， 且偏移量是该节点在其父节点中的位置索引+1
-         * @param { Node } node 目标节点
-         * @see UE.dom.Range:setStartAfter(Node)
-         * @return { UE.dom.Range } 当前range对象
-         * @example
-         * ```html
-         * <!-- 选区示例 -->
-         * <b>[xx<i>xxx</i><span>xx]x</span>xxx</b>
-         *
-         * <script>
-         *
-         *     //执行操作
-         *     range.setStartAfter( document.getElementsByTagName("span")[0] );
-         *
-         *     //结果选区
-         *     //<b>[xx<i>xxx</i><span>xxx</span>]xxx</b>
-         *
-         * </script>
-         * ```
-         */
+     * 将Range结束位置设置到node节点之后
+     * @method  setEndAfter
+     * @remind 该操作将会把给定节点的父节点作为range的结束容器， 且偏移量是该节点在其父节点中的位置索引+1
+     * @param { Node } node 目标节点
+     * @see UE.dom.Range:setStartAfter(Node)
+     * @return { UE.dom.Range } 当前range对象
+     * @example
+     * ```html
+     * <!-- 选区示例 -->
+     * <b>[xx<i>xxx</i><span>xx]x</span>xxx</b>
+     *
+     * <script>
+     *
+     *     //执行操作
+     *     range.setStartAfter( document.getElementsByTagName("span")[0] );
+     *
+     *     //结果选区
+     *     //<b>[xx<i>xxx</i><span>xxx</span>]xxx</b>
+     *
+     * </script>
+     * ```
+     */
     setEndAfter: function(node) {
       return this.setEnd(node.parentNode, domUtils.getNodeIndex(node) + 1);
     },
 
     /**
-         * 将Range结束位置设置到node节点之前
-         * @method  setEndBefore
-         * @remind 该操作将会把给定节点的父节点作为range的结束容器， 且偏移量是该节点在其父节点中的位置索引
-         * @param { Node } node 目标节点
-         * @see UE.dom.Range:setEndAfter(Node)
-         * @return { UE.dom.Range } 当前range对象
-         */
+     * 将Range结束位置设置到node节点之前
+     * @method  setEndBefore
+     * @remind 该操作将会把给定节点的父节点作为range的结束容器， 且偏移量是该节点在其父节点中的位置索引
+     * @param { Node } node 目标节点
+     * @see UE.dom.Range:setEndAfter(Node)
+     * @return { UE.dom.Range } 当前range对象
+     */
     setEndBefore: function(node) {
       return this.setEnd(node.parentNode, domUtils.getNodeIndex(node));
     },
 
     /**
-         * 设置Range的开始位置到node节点内的第一个子节点之前
-         * @method  setStartAtFirst
-         * @remind 选区的开始容器将变成给定的节点， 且偏移量为0
-         * @remind 如果给定的节点是元素节点， 则该节点必须是允许包含子节点的元素。
-         * @param { Node } node 目标节点
-         * @see UE.dom.Range:setStartBefore(Node)
-         * @return { UE.dom.Range } 当前range对象
-         * @example
-         * ```html
-         * <!-- 选区示例 -->
-         * <b>xx<i>xxx</i><span>[xx]x</span>xxx</b>
-         *
-         * <script>
-         *
-         *     //执行操作
-         *     range.setStartAtFirst( document.getElementsByTagName("i")[0] );
-         *
-         *     //结果选区
-         *     //<b>xx<i>[xxx</i><span>xx]x</span>xxx</b>
-         *
-         * </script>
-         * ```
-         */
+     * 设置Range的开始位置到node节点内的第一个子节点之前
+     * @method  setStartAtFirst
+     * @remind 选区的开始容器将变成给定的节点， 且偏移量为0
+     * @remind 如果给定的节点是元素节点， 则该节点必须是允许包含子节点的元素。
+     * @param { Node } node 目标节点
+     * @see UE.dom.Range:setStartBefore(Node)
+     * @return { UE.dom.Range } 当前range对象
+     * @example
+     * ```html
+     * <!-- 选区示例 -->
+     * <b>xx<i>xxx</i><span>[xx]x</span>xxx</b>
+     *
+     * <script>
+     *
+     *     //执行操作
+     *     range.setStartAtFirst( document.getElementsByTagName("i")[0] );
+     *
+     *     //结果选区
+     *     //<b>xx<i>[xxx</i><span>xx]x</span>xxx</b>
+     *
+     * </script>
+     * ```
+     */
     setStartAtFirst: function(node) {
       return this.setStart(node, 0);
     },
 
     /**
-         * 设置Range的开始位置到node节点内的最后一个节点之后
-         * @method setStartAtLast
-         * @remind 选区的开始容器将变成给定的节点， 且偏移量为该节点的子节点数
-         * @remind 如果给定的节点是元素节点， 则该节点必须是允许包含子节点的元素。
-         * @param { Node } node 目标节点
-         * @see UE.dom.Range:setStartAtFirst(Node)
-         * @return { UE.dom.Range } 当前range对象
-         */
+     * 设置Range的开始位置到node节点内的最后一个节点之后
+     * @method setStartAtLast
+     * @remind 选区的开始容器将变成给定的节点， 且偏移量为该节点的子节点数
+     * @remind 如果给定的节点是元素节点， 则该节点必须是允许包含子节点的元素。
+     * @param { Node } node 目标节点
+     * @see UE.dom.Range:setStartAtFirst(Node)
+     * @return { UE.dom.Range } 当前range对象
+     */
     setStartAtLast: function(node) {
-      return this.setStart(
-        node,
-        node.nodeType == 3 ? node.nodeValue.length : node.childNodes.length
-      );
+      return this.setStart(node, node.nodeType == 3 ? node.nodeValue.length : node.childNodes.length);
     },
 
     /**
-         * 设置Range的结束位置到node节点内的第一个节点之前
-         * @method  setEndAtFirst
-         * @param { Node } node 目标节点
-         * @remind 选区的结束容器将变成给定的节点， 且偏移量为0
-         * @remind node必须是一个元素节点， 且必须是允许包含子节点的元素。
-         * @see UE.dom.Range:setStartAtFirst(Node)
-         * @return { UE.dom.Range } 当前range对象
-         */
+     * 设置Range的结束位置到node节点内的第一个节点之前
+     * @method  setEndAtFirst
+     * @param { Node } node 目标节点
+     * @remind 选区的结束容器将变成给定的节点， 且偏移量为0
+     * @remind node必须是一个元素节点， 且必须是允许包含子节点的元素。
+     * @see UE.dom.Range:setStartAtFirst(Node)
+     * @return { UE.dom.Range } 当前range对象
+     */
     setEndAtFirst: function(node) {
       return this.setEnd(node, 0);
     },
 
     /**
-         * 设置Range的结束位置到node节点内的最后一个节点之后
-         * @method  setEndAtLast
-         * @param { Node } node 目标节点
-         * @remind 选区的结束容器将变成给定的节点， 且偏移量为该节点的子节点数量
-         * @remind node必须是一个元素节点， 且必须是允许包含子节点的元素。
-         * @see UE.dom.Range:setStartAtFirst(Node)
-         * @return { UE.dom.Range } 当前range对象
-         */
+     * 设置Range的结束位置到node节点内的最后一个节点之后
+     * @method  setEndAtLast
+     * @param { Node } node 目标节点
+     * @remind 选区的结束容器将变成给定的节点， 且偏移量为该节点的子节点数量
+     * @remind node必须是一个元素节点， 且必须是允许包含子节点的元素。
+     * @see UE.dom.Range:setStartAtFirst(Node)
+     * @return { UE.dom.Range } 当前range对象
+     */
     setEndAtLast: function(node) {
-      return this.setEnd(
-        node,
-        node.nodeType == 3 ? node.nodeValue.length : node.childNodes.length
-      );
+      return this.setEnd(node, node.nodeType == 3 ? node.nodeValue.length : node.childNodes.length);
     },
 
     /**
-         * 选中给定节点
-         * @method  selectNode
-         * @remind 此时， 选区的开始容器和结束容器都是该节点的父节点， 其startOffset是该节点在父节点中的位置索引，
-         *          而endOffset为startOffset+1
-         * @param { Node } node 需要选中的节点
-         * @return { UE.dom.Range } 当前range对象，此时的range仅包含当前给定的节点对象
-         * @example
-         * ```html
-         * <!-- 选区示例 -->
-         * <b>xx<i>xxx</i><span>[xx]x</span>xxx</b>
-         *
-         * <script>
-         *
-         *     //执行操作
-         *     range.selectNode( document.getElementsByTagName("i")[0] );
-         *
-         *     //结果选区
-         *     //<b>xx[<i>xxx</i>]<span>xxx</span>xxx</b>
-         *
-         * </script>
-         * ```
-         */
+     * 选中给定节点
+     * @method  selectNode
+     * @remind 此时， 选区的开始容器和结束容器都是该节点的父节点， 其startOffset是该节点在父节点中的位置索引，
+     *          而endOffset为startOffset+1
+     * @param { Node } node 需要选中的节点
+     * @return { UE.dom.Range } 当前range对象，此时的range仅包含当前给定的节点对象
+     * @example
+     * ```html
+     * <!-- 选区示例 -->
+     * <b>xx<i>xxx</i><span>[xx]x</span>xxx</b>
+     *
+     * <script>
+     *
+     *     //执行操作
+     *     range.selectNode( document.getElementsByTagName("i")[0] );
+     *
+     *     //结果选区
+     *     //<b>xx[<i>xxx</i>]<span>xxx</span>xxx</b>
+     *
+     * </script>
+     * ```
+     */
     selectNode: function(node) {
       return this.setStartBefore(node).setEndAfter(node);
     },
 
     /**
-         * 选中给定节点内部的所有节点
-         * @method  selectNodeContents
-         * @remind 此时， 选区的开始容器和结束容器都是该节点， 其startOffset为0，
-         *          而endOffset是该节点的子节点数。
-         * @param { Node } node 目标节点， 当前range将包含该节点内的所有节点
-         * @return { UE.dom.Range } 当前range对象， 此时range仅包含给定节点的所有子节点
-         * @example
-         * ```html
-         * <!-- 选区示例 -->
-         * <b>xx<i>xxx</i><span>[xx]x</span>xxx</b>
-         *
-         * <script>
-         *
-         *     //执行操作
-         *     range.selectNode( document.getElementsByTagName("b")[0] );
-         *
-         *     //结果选区
-         *     //<b>[xx<i>xxx</i><span>xxx</span>xxx]</b>
-         *
-         * </script>
-         * ```
-         */
+     * 选中给定节点内部的所有节点
+     * @method  selectNodeContents
+     * @remind 此时， 选区的开始容器和结束容器都是该节点， 其startOffset为0，
+     *          而endOffset是该节点的子节点数。
+     * @param { Node } node 目标节点， 当前range将包含该节点内的所有节点
+     * @return { UE.dom.Range } 当前range对象， 此时range仅包含给定节点的所有子节点
+     * @example
+     * ```html
+     * <!-- 选区示例 -->
+     * <b>xx<i>xxx</i><span>[xx]x</span>xxx</b>
+     *
+     * <script>
+     *
+     *     //执行操作
+     *     range.selectNode( document.getElementsByTagName("b")[0] );
+     *
+     *     //结果选区
+     *     //<b>[xx<i>xxx</i><span>xxx</span>xxx]</b>
+     *
+     * </script>
+     * ```
+     */
     selectNodeContents: function(node) {
       return this.setStart(node, 0).setEndAtLast(node);
     },
 
     /**
-         * clone当前Range对象
-         * @method  cloneRange
-         * @remind 返回的range是一个全新的range对象， 其内部所有属性与当前被clone的range相同。
-         * @return { UE.dom.Range } 当前range对象的一个副本
-         */
+     * clone当前Range对象
+     * @method  cloneRange
+     * @remind 返回的range是一个全新的range对象， 其内部所有属性与当前被clone的range相同。
+     * @return { UE.dom.Range } 当前range对象的一个副本
+     */
     cloneRange: function() {
       var me = this;
-      return new Range(me.document)
-        .setStart(me.startContainer, me.startOffset)
-        .setEnd(me.endContainer, me.endOffset);
+      return new Range(me.document).setStart(me.startContainer, me.startOffset).setEnd(me.endContainer, me.endOffset);
     },
 
     /**
-         * 向当前选区的结束处闭合选区
-         * @method  collapse
-         * @return { UE.dom.Range } 当前range对象
-         * @example
-         * ```html
-         * <!-- 选区示例 -->
-         * <b>xx<i>xxx</i><span>[xx]x</span>xxx</b>
-         *
-         * <script>
-         *
-         *     //执行操作
-         *     range.collapse();
-         *
-         *     //结果选区
-         *     //“|”表示选区已闭合
-         *     //<b>xx<i>xxx</i><span>xx|x</span>xxx</b>
-         *
-         * </script>
-         * ```
-         */
+     * 向当前选区的结束处闭合选区
+     * @method  collapse
+     * @return { UE.dom.Range } 当前range对象
+     * @example
+     * ```html
+     * <!-- 选区示例 -->
+     * <b>xx<i>xxx</i><span>[xx]x</span>xxx</b>
+     *
+     * <script>
+     *
+     *     //执行操作
+     *     range.collapse();
+     *
+     *     //结果选区
+     *     //“|”表示选区已闭合
+     *     //<b>xx<i>xxx</i><span>xx|x</span>xxx</b>
+     *
+     * </script>
+     * ```
+     */
 
     /**
-         * 闭合当前选区，根据给定的toStart参数项决定是向当前选区开始处闭合还是向结束处闭合，
-         * 如果toStart的值为true，则向开始位置闭合， 反之，向结束位置闭合。
-         * @method  collapse
-         * @param { Boolean } toStart 是否向选区开始处闭合
-         * @return { UE.dom.Range } 当前range对象，此时range对象处于闭合状态
-         * @see UE.dom.Range:collapse()
-         * @example
-         * ```html
-         * <!-- 选区示例 -->
-         * <b>xx<i>xxx</i><span>[xx]x</span>xxx</b>
-         *
-         * <script>
-         *
-         *     //执行操作
-         *     range.collapse( true );
-         *
-         *     //结果选区
-         *     //“|”表示选区已闭合
-         *     //<b>xx<i>xxx</i><span>|xxx</span>xxx</b>
-         *
-         * </script>
-         * ```
-         */
+     * 闭合当前选区，根据给定的toStart参数项决定是向当前选区开始处闭合还是向结束处闭合，
+     * 如果toStart的值为true，则向开始位置闭合， 反之，向结束位置闭合。
+     * @method  collapse
+     * @param { Boolean } toStart 是否向选区开始处闭合
+     * @return { UE.dom.Range } 当前range对象，此时range对象处于闭合状态
+     * @see UE.dom.Range:collapse()
+     * @example
+     * ```html
+     * <!-- 选区示例 -->
+     * <b>xx<i>xxx</i><span>[xx]x</span>xxx</b>
+     *
+     * <script>
+     *
+     *     //执行操作
+     *     range.collapse( true );
+     *
+     *     //结果选区
+     *     //“|”表示选区已闭合
+     *     //<b>xx<i>xxx</i><span>|xxx</span>xxx</b>
+     *
+     * </script>
+     * ```
+     */
     collapse: function(toStart) {
       var me = this;
       if (toStart) {
@@ -5471,43 +5320,43 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
     },
 
     /**
-         * 调整range的开始位置和结束位置，使其"收缩"到最小的位置
-         * @method  shrinkBoundary
-         * @return { UE.dom.Range } 当前range对象
-         * @example
-         * ```html
-         * <span>xx<b>xx[</b>xxxxx]</span> => <span>xx<b>xx</b>[xxxxx]</span>
-         * ```
-         *
-         * @example
-         * ```html
-         * <!-- 选区示例 -->
-         * <b>x[xx</b><i>]xxx</i>
-         *
-         * <script>
-         *
-         *     //执行收缩
-         *     range.shrinkBoundary();
-         *
-         *     //结果选区
-         *     //<b>x[xx]</b><i>xxx</i>
-         * </script>
-         * ```
-         *
-         * @example
-         * ```html
-         * [<b><i>xxxx</i>xxxxxxx</b>] => <b><i>[xxxx</i>xxxxxxx]</b>
-         * ```
-         */
+     * 调整range的开始位置和结束位置，使其"收缩"到最小的位置
+     * @method  shrinkBoundary
+     * @return { UE.dom.Range } 当前range对象
+     * @example
+     * ```html
+     * <span>xx<b>xx[</b>xxxxx]</span> => <span>xx<b>xx</b>[xxxxx]</span>
+     * ```
+     *
+     * @example
+     * ```html
+     * <!-- 选区示例 -->
+     * <b>x[xx</b><i>]xxx</i>
+     *
+     * <script>
+     *
+     *     //执行收缩
+     *     range.shrinkBoundary();
+     *
+     *     //结果选区
+     *     //<b>x[xx]</b><i>xxx</i>
+     * </script>
+     * ```
+     *
+     * @example
+     * ```html
+     * [<b><i>xxxx</i>xxxxxxx</b>] => <b><i>[xxxx</i>xxxxxxx]</b>
+     * ```
+     */
 
     /**
-         * 调整range的开始位置和结束位置，使其"收缩"到最小的位置，
-         * 如果ignoreEnd的值为true，则忽略对结束位置的调整
-         * @method  shrinkBoundary
-         * @param { Boolean } ignoreEnd 是否忽略对结束位置的调整
-         * @return { UE.dom.Range } 当前range对象
-         * @see UE.dom.domUtils.Range:shrinkBoundary()
-         */
+     * 调整range的开始位置和结束位置，使其"收缩"到最小的位置，
+     * 如果ignoreEnd的值为true，则忽略对结束位置的调整
+     * @method  shrinkBoundary
+     * @param { Boolean } ignoreEnd 是否忽略对结束位置的调整
+     * @return { UE.dom.Range } 当前range对象
+     * @see UE.dom.domUtils.Range:shrinkBoundary()
+     */
     shrinkBoundary: function(ignoreEnd) {
       var me = this,
         child,
@@ -5544,85 +5393,85 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
     },
 
     /**
-         * 获取离当前选区内包含的所有节点最近的公共祖先节点，
-         * @method  getCommonAncestor
-         * @remind 返回的公共祖先节点一定不是range自身的容器节点， 但有可能是一个文本节点
-         * @return { Node } 当前range对象内所有节点的公共祖先节点
-         * @example
-         * ```html
-         * //选区示例
-         * <span>xxx<b>x[x<em>xx]x</em>xxx</b>xx</span>
-         * <script>
-         *
-         *     var node = range.getCommonAncestor();
-         *
-         *     //公共祖先节点是： b节点
-         *     //输出： B
-         *     console.log(node.tagName);
-         *
-         * </script>
-         * ```
-         */
+     * 获取离当前选区内包含的所有节点最近的公共祖先节点，
+     * @method  getCommonAncestor
+     * @remind 返回的公共祖先节点一定不是range自身的容器节点， 但有可能是一个文本节点
+     * @return { Node } 当前range对象内所有节点的公共祖先节点
+     * @example
+     * ```html
+     * //选区示例
+     * <span>xxx<b>x[x<em>xx]x</em>xxx</b>xx</span>
+     * <script>
+     *
+     *     var node = range.getCommonAncestor();
+     *
+     *     //公共祖先节点是： b节点
+     *     //输出： B
+     *     console.log(node.tagName);
+     *
+     * </script>
+     * ```
+     */
 
     /**
-         * 获取当前选区所包含的所有节点的公共祖先节点， 可以根据给定的参数 includeSelf 决定获取到
-         * 的公共祖先节点是否可以是当前选区的startContainer或endContainer节点， 如果 includeSelf
-         * 的取值为true， 则返回的节点可以是自身的容器节点， 否则， 则不能是容器节点
-         * @method  getCommonAncestor
-         * @param { Boolean } includeSelf 是否允许获取到的公共祖先节点是当前range对象的容器节点
-         * @return { Node } 当前range对象内所有节点的公共祖先节点
-         * @see UE.dom.Range:getCommonAncestor()
-         * @example
-         * ```html
-         * <body>
-         *
-         *     <!-- 选区示例 -->
-         *     <b>xxx<i>xxxx<span>xx[x</span>xx]x</i>xxxxxxx</b>
-         *
-         *     <script>
-         *
-         *         var node = range.getCommonAncestor( false );
-         *
-         *         //这里的公共祖先节点是B而不是I， 是因为参数限制了获取到的节点不能是容器节点
-         *         //output: B
-         *         console.log( node.tagName );
-         *
-         *     </script>
-         *
-         * </body>
-         * ```
-         */
+     * 获取当前选区所包含的所有节点的公共祖先节点， 可以根据给定的参数 includeSelf 决定获取到
+     * 的公共祖先节点是否可以是当前选区的startContainer或endContainer节点， 如果 includeSelf
+     * 的取值为true， 则返回的节点可以是自身的容器节点， 否则， 则不能是容器节点
+     * @method  getCommonAncestor
+     * @param { Boolean } includeSelf 是否允许获取到的公共祖先节点是当前range对象的容器节点
+     * @return { Node } 当前range对象内所有节点的公共祖先节点
+     * @see UE.dom.Range:getCommonAncestor()
+     * @example
+     * ```html
+     * <body>
+     *
+     *     <!-- 选区示例 -->
+     *     <b>xxx<i>xxxx<span>xx[x</span>xx]x</i>xxxxxxx</b>
+     *
+     *     <script>
+     *
+     *         var node = range.getCommonAncestor( false );
+     *
+     *         //这里的公共祖先节点是B而不是I， 是因为参数限制了获取到的节点不能是容器节点
+     *         //output: B
+     *         console.log( node.tagName );
+     *
+     *     </script>
+     *
+     * </body>
+     * ```
+     */
 
     /**
-         * 获取当前选区所包含的所有节点的公共祖先节点， 可以根据给定的参数 includeSelf 决定获取到
-         * 的公共祖先节点是否可以是当前选区的startContainer或endContainer节点， 如果 includeSelf
-         * 的取值为true， 则返回的节点可以是自身的容器节点， 否则， 则不能是容器节点； 同时可以根据
-         * ignoreTextNode 参数的取值决定是否忽略类型为文本节点的祖先节点。
-         * @method  getCommonAncestor
-         * @param { Boolean } includeSelf 是否允许获取到的公共祖先节点是当前range对象的容器节点
-         * @param { Boolean } ignoreTextNode 获取祖先节点的过程中是否忽略类型为文本节点的祖先节点
-         * @return { Node } 当前range对象内所有节点的公共祖先节点
-         * @see UE.dom.Range:getCommonAncestor()
-         * @see UE.dom.Range:getCommonAncestor(Boolean)
-         * @example
-         * ```html
-         * <body>
-         *
-         *     <!-- 选区示例 -->
-         *     <b>xxx<i>xxxx<span>x[x]x</span>xxx</i>xxxxxxx</b>
-         *
-         *     <script>
-         *
-         *         var node = range.getCommonAncestor( true, false );
-         *
-         *         //output: SPAN
-         *         console.log( node.tagName );
-         *
-         *     </script>
-         *
-         * </body>
-         * ```
-         */
+     * 获取当前选区所包含的所有节点的公共祖先节点， 可以根据给定的参数 includeSelf 决定获取到
+     * 的公共祖先节点是否可以是当前选区的startContainer或endContainer节点， 如果 includeSelf
+     * 的取值为true， 则返回的节点可以是自身的容器节点， 否则， 则不能是容器节点； 同时可以根据
+     * ignoreTextNode 参数的取值决定是否忽略类型为文本节点的祖先节点。
+     * @method  getCommonAncestor
+     * @param { Boolean } includeSelf 是否允许获取到的公共祖先节点是当前range对象的容器节点
+     * @param { Boolean } ignoreTextNode 获取祖先节点的过程中是否忽略类型为文本节点的祖先节点
+     * @return { Node } 当前range对象内所有节点的公共祖先节点
+     * @see UE.dom.Range:getCommonAncestor()
+     * @see UE.dom.Range:getCommonAncestor(Boolean)
+     * @example
+     * ```html
+     * <body>
+     *
+     *     <!-- 选区示例 -->
+     *     <b>xxx<i>xxxx<span>x[x]x</span>xxx</i>xxxxxxx</b>
+     *
+     *     <script>
+     *
+     *         var node = range.getCommonAncestor( true, false );
+     *
+     *         //output: SPAN
+     *         console.log( node.tagName );
+     *
+     *     </script>
+     *
+     * </body>
+     * ```
+     */
     getCommonAncestor: function(includeSelf, ignoreTextNode) {
       var me = this,
         start = me.startContainer,
@@ -5639,50 +5488,50 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
     },
 
     /**
-         * 调整当前Range的开始和结束边界容器，如果是容器节点是文本节点,就调整到包含该文本节点的父节点上
-         * @method trimBoundary
-         * @remind 该操作有可能会引起文本节点被切开
-         * @return { UE.dom.Range } 当前range对象
-         * @example
-         * ```html
-         *
-         * //选区示例
-         * <b>xxx<i>[xxxxx]</i>xxx</b>
-         *
-         * <script>
-         *     //未调整前， 选区的开始容器和结束都是文本节点
-         *     //执行调整
-         *     range.trimBoundary();
-         *
-         *     //调整之后， 容器节点变成了i节点
-         *     //<b>xxx[<i>xxxxx</i>]xxx</b>
-         * </script>
-         * ```
-         */
+     * 调整当前Range的开始和结束边界容器，如果是容器节点是文本节点,就调整到包含该文本节点的父节点上
+     * @method trimBoundary
+     * @remind 该操作有可能会引起文本节点被切开
+     * @return { UE.dom.Range } 当前range对象
+     * @example
+     * ```html
+     *
+     * //选区示例
+     * <b>xxx<i>[xxxxx]</i>xxx</b>
+     *
+     * <script>
+     *     //未调整前， 选区的开始容器和结束都是文本节点
+     *     //执行调整
+     *     range.trimBoundary();
+     *
+     *     //调整之后， 容器节点变成了i节点
+     *     //<b>xxx[<i>xxxxx</i>]xxx</b>
+     * </script>
+     * ```
+     */
 
     /**
-         * 调整当前Range的开始和结束边界容器，如果是容器节点是文本节点,就调整到包含该文本节点的父节点上，
-         * 可以根据 ignoreEnd 参数的值决定是否调整对结束边界的调整
-         * @method trimBoundary
-         * @param { Boolean } ignoreEnd 是否忽略对结束边界的调整
-         * @return { UE.dom.Range } 当前range对象
-         * @example
-         * ```html
-         *
-         * //选区示例
-         * <b>xxx<i>[xxxxx]</i>xxx</b>
-         *
-         * <script>
-         *     //未调整前， 选区的开始容器和结束都是文本节点
-         *     //执行调整
-         *     range.trimBoundary( true );
-         *
-         *     //调整之后， 开始容器节点变成了i节点
-         *     //但是， 结束容器没有发生变化
-         *     //<b>xxx[<i>xxxxx]</i>xxx</b>
-         * </script>
-         * ```
-         */
+     * 调整当前Range的开始和结束边界容器，如果是容器节点是文本节点,就调整到包含该文本节点的父节点上，
+     * 可以根据 ignoreEnd 参数的值决定是否调整对结束边界的调整
+     * @method trimBoundary
+     * @param { Boolean } ignoreEnd 是否忽略对结束边界的调整
+     * @return { UE.dom.Range } 当前range对象
+     * @example
+     * ```html
+     *
+     * //选区示例
+     * <b>xxx<i>[xxxxx]</i>xxx</b>
+     *
+     * <script>
+     *     //未调整前， 选区的开始容器和结束都是文本节点
+     *     //执行调整
+     *     range.trimBoundary( true );
+     *
+     *     //调整之后， 开始容器节点变成了i节点
+     *     //但是， 结束容器没有发生变化
+     *     //<b>xxx[<i>xxxxx]</i>xxx</b>
+     * </script>
+     * ```
+     */
     trimBoundary: function(ignoreEnd) {
       this.txtToElmBoundary();
       var start = this.startContainer,
@@ -5726,20 +5575,20 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
     },
 
     /**
-         * 如果选区在文本的边界上，就扩展选区到文本的父节点上, 如果当前选区是闭合的， 则什么也不做
-         * @method txtToElmBoundary
-         * @remind 该操作不会修改dom节点
-         * @return { UE.dom.Range } 当前range对象
-         */
+     * 如果选区在文本的边界上，就扩展选区到文本的父节点上, 如果当前选区是闭合的， 则什么也不做
+     * @method txtToElmBoundary
+     * @remind 该操作不会修改dom节点
+     * @return { UE.dom.Range } 当前range对象
+     */
 
     /**
-         * 如果选区在文本的边界上，就扩展选区到文本的父节点上, 如果当前选区是闭合的， 则根据参数项
-         * ignoreCollapsed 的值决定是否执行该调整
-         * @method txtToElmBoundary
-         * @param { Boolean } ignoreCollapsed 是否忽略选区的闭合状态， 如果该参数取值为true， 则
-         *                      不论选区是否闭合， 都会执行该操作， 反之， 则不会对闭合的选区执行该操作
-         * @return { UE.dom.Range } 当前range对象
-         */
+     * 如果选区在文本的边界上，就扩展选区到文本的父节点上, 如果当前选区是闭合的， 则根据参数项
+     * ignoreCollapsed 的值决定是否执行该调整
+     * @method txtToElmBoundary
+     * @param { Boolean } ignoreCollapsed 是否忽略选区的闭合状态， 如果该参数取值为true， 则
+     *                      不论选区是否闭合， 都会执行该操作， 反之， 则不会对闭合的选区执行该操作
+     * @return { UE.dom.Range } 当前range对象
+     */
     txtToElmBoundary: function(ignoreCollapsed) {
       function adjust(r, c) {
         var container = r[c + "Container"],
@@ -5773,12 +5622,12 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
     },
 
     /**
-         * 在当前选区的开始位置前插入节点，新插入的节点会被该range包含
-         * @method  insertNode
-         * @param { Node } node 需要插入的节点
-         * @remind 插入的节点可以是一个DocumentFragment依次插入多个节点
-         * @return { UE.dom.Range } 当前range对象
-         */
+     * 在当前选区的开始位置前插入节点，新插入的节点会被该range包含
+     * @method  insertNode
+     * @param { Node } node 需要插入的节点
+     * @remind 插入的节点可以是一个DocumentFragment依次插入多个节点
+     * @return { UE.dom.Range } 当前range对象
+     */
     insertNode: function(node) {
       var first = node,
         length = 1;
@@ -5802,33 +5651,33 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
     },
 
     /**
-         * 闭合选区到当前选区的开始位置， 并且定位光标到闭合后的位置
-         * @method  setCursor
-         * @return { UE.dom.Range } 当前range对象
-         * @see UE.dom.Range:collapse()
-         */
+     * 闭合选区到当前选区的开始位置， 并且定位光标到闭合后的位置
+     * @method  setCursor
+     * @return { UE.dom.Range } 当前range对象
+     * @see UE.dom.Range:collapse()
+     */
 
     /**
-         * 闭合选区，可以根据参数toEnd的值控制选区是向前闭合还是向后闭合， 并且定位光标到闭合后的位置。
-         * @method  setCursor
-         * @param { Boolean } toEnd 是否向后闭合， 如果为true， 则闭合选区时， 将向结束容器方向闭合，
-         *                      反之，则向开始容器方向闭合
-         * @return { UE.dom.Range } 当前range对象
-         * @see UE.dom.Range:collapse(Boolean)
-         */
+     * 闭合选区，可以根据参数toEnd的值控制选区是向前闭合还是向后闭合， 并且定位光标到闭合后的位置。
+     * @method  setCursor
+     * @param { Boolean } toEnd 是否向后闭合， 如果为true， 则闭合选区时， 将向结束容器方向闭合，
+     *                      反之，则向开始容器方向闭合
+     * @return { UE.dom.Range } 当前range对象
+     * @see UE.dom.Range:collapse(Boolean)
+     */
     setCursor: function(toEnd, noFillData) {
       return this.collapse(!toEnd).select(noFillData);
     },
 
     /**
-         * 创建当前range的一个书签，记录下当前range的位置，方便当dom树改变时，还能找回原来的选区位置
-         * @method createBookmark
-         * @param { Boolean } serialize 控制返回的标记位置是对当前位置的引用还是ID，如果该值为true，则
-         *                              返回标记位置的ID， 反之则返回标记位置节点的引用
-         * @return { Object } 返回一个书签记录键值对， 其包含的key有： start => 开始标记的ID或者引用，
-         *                          end => 结束标记的ID或引用， id => 当前标记的类型， 如果为true，则表示
-         *                          返回的记录的类型为ID， 反之则为引用
-         */
+     * 创建当前range的一个书签，记录下当前range的位置，方便当dom树改变时，还能找回原来的选区位置
+     * @method createBookmark
+     * @param { Boolean } serialize 控制返回的标记位置是对当前位置的引用还是ID，如果该值为true，则
+     *                              返回标记位置的ID， 反之则返回标记位置节点的引用
+     * @return { Object } 返回一个书签记录键值对， 其包含的key有： start => 开始标记的ID或者引用，
+     *                          end => 结束标记的ID或引用， id => 当前标记的类型， 如果为true，则表示
+     *                          返回的记录的类型为ID， 反之则为引用
+     */
     createBookmark: function(serialize, same) {
       var endNode,
         startNode = this.document.createElement("span");
@@ -5842,7 +5691,9 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
       }
       this.insertNode(startNode);
       if (endNode) {
-        this.collapse().insertNode(endNode).setEndBefore(endNode);
+        this.collapse()
+          .insertNode(endNode)
+          .setEndBefore(endNode);
       }
       this.setStartAfter(startNode);
       return {
@@ -5853,19 +5704,15 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
     },
 
     /**
-         *  调整当前range的边界到书签位置，并删除该书签对象所标记的位置内的节点
-         *  @method  moveToBookmark
-         *  @param { BookMark } bookmark createBookmark所创建的标签对象
-         *  @return { UE.dom.Range } 当前range对象
-         *  @see UE.dom.Range:createBookmark(Boolean)
-         */
+     *  调整当前range的边界到书签位置，并删除该书签对象所标记的位置内的节点
+     *  @method  moveToBookmark
+     *  @param { BookMark } bookmark createBookmark所创建的标签对象
+     *  @return { UE.dom.Range } 当前range对象
+     *  @see UE.dom.Range:createBookmark(Boolean)
+     */
     moveToBookmark: function(bookmark) {
-      var start = bookmark.id
-        ? this.document.getElementById(bookmark.start)
-        : bookmark.start,
-        end = bookmark.end && bookmark.id
-          ? this.document.getElementById(bookmark.end)
-          : bookmark.end;
+      var start = bookmark.id ? this.document.getElementById(bookmark.start) : bookmark.start,
+        end = bookmark.end && bookmark.id ? this.document.getElementById(bookmark.end) : bookmark.end;
       this.setStartBefore(start);
       domUtils.remove(start);
       if (end) {
@@ -5878,19 +5725,19 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
     },
 
     /**
-         * 调整range的边界，使其"放大"到最近的父节点
-         * @method  enlarge
-         * @remind 会引起选区的变化
-         * @return { UE.dom.Range } 当前range对象
-         */
+     * 调整range的边界，使其"放大"到最近的父节点
+     * @method  enlarge
+     * @remind 会引起选区的变化
+     * @return { UE.dom.Range } 当前range对象
+     */
 
     /**
-         * 调整range的边界，使其"放大"到最近的父节点，根据参数 toBlock 的取值， 可以
-         * 要求扩大之后的父节点是block节点
-         * @method  enlarge
-         * @param { Boolean } toBlock 是否要求扩大之后的父节点必须是block节点
-         * @return { UE.dom.Range } 当前range对象
-         */
+     * 调整range的边界，使其"放大"到最近的父节点，根据参数 toBlock 的取值， 可以
+     * 要求扩大之后的父节点是block节点
+     * @method  enlarge
+     * @param { Boolean } toBlock 是否要求扩大之后的父节点必须是block节点
+     * @return { UE.dom.Range } 当前range对象
+     */
     enlarge: function(toBlock, stopFn) {
       var isBody = domUtils.isBody,
         pre,
@@ -5962,9 +5809,7 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
         }
         while (
           this.endOffset ==
-          (this.endContainer.nodeType == 1
-            ? this.endContainer.childNodes.length
-            : this.endContainer.nodeValue.length)
+          (this.endContainer.nodeType == 1 ? this.endContainer.childNodes.length : this.endContainer.nodeValue.length)
         ) {
           if (stopFn && stopFn(this.endContainer)) {
             break;
@@ -5989,31 +5834,25 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
       return this;
     },
     /**
-         * 调整Range的边界，使其"缩小"到最合适的位置
-         * @method adjustmentBoundary
-         * @return { UE.dom.Range } 当前range对象
-         * @see UE.dom.Range:shrinkBoundary()
-         */
+     * 调整Range的边界，使其"缩小"到最合适的位置
+     * @method adjustmentBoundary
+     * @return { UE.dom.Range } 当前range对象
+     * @see UE.dom.Range:shrinkBoundary()
+     */
     adjustmentBoundary: function() {
       if (!this.collapsed) {
         while (
           !domUtils.isBody(this.startContainer) &&
           this.startOffset ==
-            this.startContainer[
-              this.startContainer.nodeType == 3 ? "nodeValue" : "childNodes"
-            ].length &&
-          this.startContainer[
-            this.startContainer.nodeType == 3 ? "nodeValue" : "childNodes"
-          ].length
+            this.startContainer[this.startContainer.nodeType == 3 ? "nodeValue" : "childNodes"].length &&
+          this.startContainer[this.startContainer.nodeType == 3 ? "nodeValue" : "childNodes"].length
         ) {
           this.setStartAfter(this.startContainer);
         }
         while (
           !domUtils.isBody(this.endContainer) &&
           !this.endOffset &&
-          this.endContainer[
-            this.endContainer.nodeType == 3 ? "nodeValue" : "childNodes"
-          ].length
+          this.endContainer[this.endContainer.nodeType == 3 ? "nodeValue" : "childNodes"].length
         ) {
           this.setEndBefore(this.endContainer);
         }
@@ -6022,35 +5861,35 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
     },
 
     /**
-         * 给range选区中的内容添加给定的inline标签
-         * @method applyInlineStyle
-         * @param { String } tagName 需要添加的标签名
-         * @example
-         * ```html
-         * <p>xxxx[xxxx]x</p>  ==>  range.applyInlineStyle("strong")  ==>  <p>xxxx[<strong>xxxx</strong>]x</p>
-         * ```
-         */
+     * 给range选区中的内容添加给定的inline标签
+     * @method applyInlineStyle
+     * @param { String } tagName 需要添加的标签名
+     * @example
+     * ```html
+     * <p>xxxx[xxxx]x</p>  ==>  range.applyInlineStyle("strong")  ==>  <p>xxxx[<strong>xxxx</strong>]x</p>
+     * ```
+     */
 
     /**
-         * 给range选区中的内容添加给定的inline标签， 并且为标签附加上一些初始化属性。
-         * @method applyInlineStyle
-         * @param { String } tagName 需要添加的标签名
-         * @param { Object } attrs 跟随新添加的标签的属性
-         * @return { UE.dom.Range } 当前选区
-         * @example
-         * ```html
-         * <p>xxxx[xxxx]x</p>
-         *
-         * ==>
-         *
-         * <!-- 执行操作 -->
-         * range.applyInlineStyle("strong",{"style":"font-size:12px"})
-         *
-         * ==>
-         *
-         * <p>xxxx[<strong style="font-size:12px">xxxx</strong>]x</p>
-         * ```
-         */
+     * 给range选区中的内容添加给定的inline标签， 并且为标签附加上一些初始化属性。
+     * @method applyInlineStyle
+     * @param { String } tagName 需要添加的标签名
+     * @param { Object } attrs 跟随新添加的标签的属性
+     * @return { UE.dom.Range } 当前选区
+     * @example
+     * ```html
+     * <p>xxxx[xxxx]x</p>
+     *
+     * ==>
+     *
+     * <!-- 执行操作 -->
+     * range.applyInlineStyle("strong",{"style":"font-size:12px"})
+     *
+     * ==>
+     *
+     * <p>xxxx[<strong style="font-size:12px">xxxx</strong>]x</p>
+     * ```
+     */
     applyInlineStyle: function(tagName, attrs, list) {
       if (this.collapsed) return this;
       this.trimBoundary()
@@ -6061,35 +5900,21 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
       var bookmark = this.createBookmark(),
         end = bookmark.end,
         filterFn = function(node) {
-          return node.nodeType == 1
-            ? node.tagName.toLowerCase() != "br"
-            : !domUtils.isWhitespace(node);
+          return node.nodeType == 1 ? node.tagName.toLowerCase() != "br" : !domUtils.isWhitespace(node);
         },
         current = domUtils.getNextDomNode(bookmark.start, false, filterFn),
         node,
         pre,
         range = this.cloneRange();
-      while (
-        current &&
-        domUtils.getPosition(current, end) & domUtils.POSITION_PRECEDING
-      ) {
+      while (current && domUtils.getPosition(current, end) & domUtils.POSITION_PRECEDING) {
         if (current.nodeType == 3 || dtd[tagName][current.tagName]) {
           range.setStartBefore(current);
           node = current;
-          while (
-            node &&
-            (node.nodeType == 3 || dtd[tagName][node.tagName]) &&
-            node !== end
-          ) {
+          while (node && (node.nodeType == 3 || dtd[tagName][node.tagName]) && node !== end) {
             pre = node;
-            node = domUtils.getNextDomNode(
-              node,
-              node.nodeType == 1,
-              null,
-              function(parent) {
-                return dtd[tagName][parent.tagName];
-              }
-            );
+            node = domUtils.getNextDomNode(node, node.nodeType == 1, null, function(parent) {
+              return dtd[tagName][parent.tagName];
+            });
           }
           var frag = range.setEndAfter(pre).extractContents(),
             elm;
@@ -6145,23 +5970,23 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
     },
 
     /**
-         * 移除当前选区内指定的inline标签，但保留其中的内容
-         * @method removeInlineStyle
-         * @param { String } tagName 需要移除的标签名
-         * @return { UE.dom.Range } 当前的range对象
-         * @example
-         * ```html
-         * xx[x<span>xxx<em>yyy</em>zz]z</span>  => range.removeInlineStyle(["em"])  => xx[x<span>xxxyyyzz]z</span>
-         * ```
-         */
+     * 移除当前选区内指定的inline标签，但保留其中的内容
+     * @method removeInlineStyle
+     * @param { String } tagName 需要移除的标签名
+     * @return { UE.dom.Range } 当前的range对象
+     * @example
+     * ```html
+     * xx[x<span>xxx<em>yyy</em>zz]z</span>  => range.removeInlineStyle(["em"])  => xx[x<span>xxxyyyzz]z</span>
+     * ```
+     */
 
     /**
-         * 移除当前选区内指定的一组inline标签，但保留其中的内容
-         * @method removeInlineStyle
-         * @param { Array } tagNameArr 需要移除的标签名的数组
-         * @return { UE.dom.Range } 当前的range对象
-         * @see UE.dom.Range:removeInlineStyle(String)
-         */
+     * 移除当前选区内指定的一组inline标签，但保留其中的内容
+     * @method removeInlineStyle
+     * @param { Array } tagNameArr 需要移除的标签名的数组
+     * @return { UE.dom.Range } 当前的range对象
+     * @see UE.dom.Range:removeInlineStyle(String)
+     */
     removeInlineStyle: function(tagNames) {
       if (this.collapsed) return this;
       tagNames = utils.isArray(tagNames) ? tagNames : [tagNames];
@@ -6213,11 +6038,9 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
         domUtils.clearEmptySibling(end, false, true);
         end.parentNode.insertBefore(bookmark.end, end.nextSibling);
       }
-      var current = domUtils.getNextDomNode(bookmark.start, false, function(
-        node
-      ) {
-        return node.nodeType == 1;
-      }),
+      var current = domUtils.getNextDomNode(bookmark.start, false, function(node) {
+          return node.nodeType == 1;
+        }),
         next;
       while (current && current !== bookmark.end) {
         next = domUtils.getNextDomNode(current, true, function(node) {
@@ -6232,21 +6055,19 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
     },
 
     /**
-         * 获取当前选中的自闭合的节点
-         * @method  getClosedNode
-         * @return { Node | NULL } 如果当前选中的是自闭合节点， 则返回该节点， 否则返回NULL
-         */
+     * 获取当前选中的自闭合的节点
+     * @method  getClosedNode
+     * @return { Node | NULL } 如果当前选中的是自闭合节点， 则返回该节点， 否则返回NULL
+     */
     getClosedNode: function() {
       var node;
       if (!this.collapsed) {
-        var range = this.cloneRange().adjustmentBoundary().shrinkBoundary();
+        var range = this.cloneRange()
+          .adjustmentBoundary()
+          .shrinkBoundary();
         if (selectOneNode(range)) {
           var child = range.startContainer.childNodes[range.startOffset];
-          if (
-            child &&
-            child.nodeType == 1 &&
-            (dtd.$empty[child.tagName] || dtd.$nonChild[child.tagName])
-          ) {
+          if (child && child.nodeType == 1 && (dtd.$empty[child.tagName] || dtd.$nonChild[child.tagName])) {
             node = child;
           }
         }
@@ -6255,10 +6076,10 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
     },
 
     /**
-         * 在页面上高亮range所表示的选区
-         * @method select
-         * @return { UE.dom.Range } 返回当前Range对象
-         */
+     * 在页面上高亮range所表示的选区
+     * @method select
+     * @return { UE.dom.Range } 返回当前Range对象
+     */
     //这里不区分ie9以上，trace:3824
     select: browser.ie
       ? function(noFillData, textRange) {
@@ -6349,8 +6170,7 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
               if (
                 !(start.nodeType == 3 && this.startOffset) &&
                 (child
-                  ? !child.previousSibling ||
-                      child.previousSibling.nodeType != 3
+                  ? !child.previousSibling || child.previousSibling.nodeType != 3
                   : !start.lastChild || start.lastChild.nodeType != 3)
               ) {
                 txtNode = this.document.createTextNode(fillChar);
@@ -6364,11 +6184,7 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
               }
             }
             var nativeRange = this.document.createRange();
-            if (
-              this.collapsed &&
-              browser.opera &&
-              this.startContainer.nodeType == 1
-            ) {
+            if (this.collapsed && browser.opera && this.startContainer.nodeType == 1) {
               var child = this.startContainer.childNodes[this.startOffset];
               if (!child) {
                 //往前靠拢
@@ -6398,19 +6214,19 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
         },
 
     /**
-         * 滚动到当前range开始的位置
-         * @method scrollToView
-         * @param { Window } win 当前range对象所属的window对象
-         * @return { UE.dom.Range } 当前Range对象
-         */
+     * 滚动到当前range开始的位置
+     * @method scrollToView
+     * @param { Window } win 当前range对象所属的window对象
+     * @return { UE.dom.Range } 当前Range对象
+     */
 
     /**
-         * 滚动到距离当前range开始位置 offset 的位置处
-         * @method scrollToView
-         * @param { Window } win 当前range对象所属的window对象
-         * @param { Number } offset 距离range开始位置处的偏移量， 如果为正数， 则向下偏移， 反之， 则向上偏移
-         * @return { UE.dom.Range } 当前Range对象
-         */
+     * 滚动到距离当前range开始位置 offset 的位置处
+     * @method scrollToView
+     * @param { Window } win 当前range对象所属的window对象
+     * @param { Number } offset 距离range开始位置处的偏移量， 如果为正数， 则向下偏移， 反之， 则向上偏移
+     * @return { UE.dom.Range } 当前Range对象
+     */
     scrollToView: function(win, offset) {
       win = win ? window : domUtils.getWindow(this.document);
       var me = this,
@@ -6424,20 +6240,17 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
     },
 
     /**
-         * 判断当前选区内容是否占位符
-         * @private
-         * @method inFillChar
-         * @return { Boolean } 如果是占位符返回true，否则返回false
-         */
+     * 判断当前选区内容是否占位符
+     * @private
+     * @method inFillChar
+     * @return { Boolean } 如果是占位符返回true，否则返回false
+     */
     inFillChar: function() {
       var start = this.startContainer;
       if (
         this.collapsed &&
         start.nodeType == 3 &&
-        start.nodeValue.replace(new RegExp("^" + domUtils.fillChar), "")
-          .length +
-          1 ==
-          start.nodeValue.length
+        start.nodeValue.replace(new RegExp("^" + domUtils.fillChar), "").length + 1 == start.nodeValue.length
       ) {
         return true;
       }
@@ -6445,29 +6258,29 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
     },
 
     /**
-         * 保存
-         * @method createAddress
-         * @private
-         * @return { Boolean } 返回开始和结束的位置
-         * @example
-         * ```html
-         * <body>
-         *     <p>
-         *         aaaa
-         *         <em>
-         *             <!-- 选区开始 -->
-         *             bbbb
-         *             <!-- 选区结束 -->
-         *         </em>
-         *     </p>
-         *
-         *     <script>
-         *         //output: {startAddress:[0,1,0,0],endAddress:[0,1,0,4]}
-         *         console.log( range.createAddress() );
-         *     </script>
-         * </body>
-         * ```
-         */
+     * 保存
+     * @method createAddress
+     * @private
+     * @return { Boolean } 返回开始和结束的位置
+     * @example
+     * ```html
+     * <body>
+     *     <p>
+     *         aaaa
+     *         <em>
+     *             <!-- 选区开始 -->
+     *             bbbb
+     *             <!-- 选区结束 -->
+     *         </em>
+     *     </p>
+     *
+     *     <script>
+     *         //output: {startAddress:[0,1,0,0],endAddress:[0,1,0,4]}
+     *         console.log( range.createAddress() );
+     *     </script>
+     * </body>
+     * ```
+     */
     createAddress: function(ignoreEnd, ignoreTxt) {
       var addr = {},
         me = this;
@@ -6475,8 +6288,8 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
       function getAddress(isStart) {
         var node = isStart ? me.startContainer : me.endContainer;
         var parents = domUtils.findParents(node, true, function(node) {
-          return !domUtils.isBody(node);
-        }),
+            return !domUtils.isBody(node);
+          }),
           addrs = [];
         for (var i = 0, ci; (ci = parents[i++]); ) {
           addrs.push(domUtils.getNodeIndex(ci, ignoreTxt));
@@ -6515,9 +6328,7 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
             }
           }
         } else {
-          firstIndex = isStart
-            ? domUtils.isFillChar(node) ? 0 : me.startOffset
-            : me.endOffset;
+          firstIndex = isStart ? (domUtils.isFillChar(node) ? 0 : me.startOffset) : me.endOffset;
         }
         if (firstIndex < 0) {
           firstIndex = 0;
@@ -6527,40 +6338,38 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
       }
       addr.startAddress = getAddress(true);
       if (!ignoreEnd) {
-        addr.endAddress = me.collapsed
-          ? [].concat(addr.startAddress)
-          : getAddress();
+        addr.endAddress = me.collapsed ? [].concat(addr.startAddress) : getAddress();
       }
       return addr;
     },
 
     /**
-         * 保存
-         * @method createAddress
-         * @private
-         * @return { Boolean } 返回开始和结束的位置
-         * @example
-         * ```html
-         * <body>
-         *     <p>
-         *         aaaa
-         *         <em>
-         *             <!-- 选区开始 -->
-         *             bbbb
-         *             <!-- 选区结束 -->
-         *         </em>
-         *     </p>
-         *
-         *     <script>
-         *         var range = editor.selection.getRange();
-         *         range.moveToAddress({startAddress:[0,1,0,0],endAddress:[0,1,0,4]});
-         *         range.select();
-         *         //output: 'bbbb'
-         *         console.log(editor.selection.getText());
-         *     </script>
-         * </body>
-         * ```
-         */
+     * 保存
+     * @method createAddress
+     * @private
+     * @return { Boolean } 返回开始和结束的位置
+     * @example
+     * ```html
+     * <body>
+     *     <p>
+     *         aaaa
+     *         <em>
+     *             <!-- 选区开始 -->
+     *             bbbb
+     *             <!-- 选区结束 -->
+     *         </em>
+     *     </p>
+     *
+     *     <script>
+     *         var range = editor.selection.getRange();
+     *         range.moveToAddress({startAddress:[0,1,0,0],endAddress:[0,1,0,4]});
+     *         range.select();
+     *         //output: 'bbbb'
+     *         console.log(editor.selection.getText());
+     *     </script>
+     * </body>
+     * ```
+     */
     moveToAddress: function(addr, ignoreEnd) {
       var me = this;
       function getNode(address, isStart) {
@@ -6596,11 +6405,11 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
     },
 
     /**
-         * 判断给定的Range对象是否和当前Range对象表示的是同一个选区
-         * @method equals
-         * @param { UE.dom.Range } 需要判断的Range对象
-         * @return { Boolean } 如果给定的Range对象与当前Range对象表示的是同一个选区， 则返回true， 否则返回false
-         */
+     * 判断给定的Range对象是否和当前Range对象表示的是同一个选区
+     * @method equals
+     * @param { UE.dom.Range } 需要判断的Range对象
+     * @return { Boolean } 如果给定的Range对象与当前Range对象表示的是同一个选区， 则返回true， 否则返回false
+     */
     equals: function(rng) {
       for (var p in this) {
         if (this.hasOwnProperty(p)) {
@@ -6611,95 +6420,91 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
     },
 
     /**
-         * 遍历range内的节点。每当遍历一个节点时， 都会执行参数项 doFn 指定的函数， 该函数的接受当前遍历的节点
-         * 作为其参数。
-         * @method traversal
-         * @param { Function }  doFn 对每个遍历的节点要执行的方法， 该方法接受当前遍历的节点作为其参数
-         * @return { UE.dom.Range } 当前range对象
-         * @example
-         * ```html
-         *
-         * <body>
-         *
-         *     <!-- 选区开始 -->
-         *     <span></span>
-         *     <a></a>
-         *     <!-- 选区结束 -->
-         * </body>
-         *
-         * <script>
-         *
-         *     //output: <span></span><a></a>
-         *     console.log( range.cloneContents() );
-         *
-         *     range.traversal( function ( node ) {
-         *
-         *         if ( node.nodeType === 1 ) {
-         *             node.className = "test";
-         *         }
-         *
-         *     } );
-         *
-         *     //output: <span class="test"></span><a class="test"></a>
-         *     console.log( range.cloneContents() );
-         *
-         * </script>
-         * ```
-         */
+     * 遍历range内的节点。每当遍历一个节点时， 都会执行参数项 doFn 指定的函数， 该函数的接受当前遍历的节点
+     * 作为其参数。
+     * @method traversal
+     * @param { Function }  doFn 对每个遍历的节点要执行的方法， 该方法接受当前遍历的节点作为其参数
+     * @return { UE.dom.Range } 当前range对象
+     * @example
+     * ```html
+     *
+     * <body>
+     *
+     *     <!-- 选区开始 -->
+     *     <span></span>
+     *     <a></a>
+     *     <!-- 选区结束 -->
+     * </body>
+     *
+     * <script>
+     *
+     *     //output: <span></span><a></a>
+     *     console.log( range.cloneContents() );
+     *
+     *     range.traversal( function ( node ) {
+     *
+     *         if ( node.nodeType === 1 ) {
+     *             node.className = "test";
+     *         }
+     *
+     *     } );
+     *
+     *     //output: <span class="test"></span><a class="test"></a>
+     *     console.log( range.cloneContents() );
+     *
+     * </script>
+     * ```
+     */
 
     /**
-         * 遍历range内的节点。
-         * 每当遍历一个节点时， 都会执行参数项 doFn 指定的函数， 该函数的接受当前遍历的节点
-         * 作为其参数。
-         * 可以通过参数项 filterFn 来指定一个过滤器， 只有符合该过滤器过滤规则的节点才会触
-         * 发doFn函数的执行
-         * @method traversal
-         * @param { Function } doFn 对每个遍历的节点要执行的方法， 该方法接受当前遍历的节点作为其参数
-         * @param { Function } filterFn 过滤器， 该函数接受当前遍历的节点作为参数， 如果该节点满足过滤
-         *                      规则， 请返回true， 该节点会触发doFn， 否则， 请返回false， 则该节点不
-         *                      会触发doFn。
-         * @return { UE.dom.Range } 当前range对象
-         * @see UE.dom.Range:traversal(Function)
-         * @example
-         * ```html
-         *
-         * <body>
-         *
-         *     <!-- 选区开始 -->
-         *     <span></span>
-         *     <a></a>
-         *     <!-- 选区结束 -->
-         * </body>
-         *
-         * <script>
-         *
-         *     //output: <span></span><a></a>
-         *     console.log( range.cloneContents() );
-         *
-         *     range.traversal( function ( node ) {
-         *
-         *         node.className = "test";
-         *
-         *     }, function ( node ) {
-         *          return node.nodeType === 1;
-         *     } );
-         *
-         *     //output: <span class="test"></span><a class="test"></a>
-         *     console.log( range.cloneContents() );
-         *
-         * </script>
-         * ```
-         */
+     * 遍历range内的节点。
+     * 每当遍历一个节点时， 都会执行参数项 doFn 指定的函数， 该函数的接受当前遍历的节点
+     * 作为其参数。
+     * 可以通过参数项 filterFn 来指定一个过滤器， 只有符合该过滤器过滤规则的节点才会触
+     * 发doFn函数的执行
+     * @method traversal
+     * @param { Function } doFn 对每个遍历的节点要执行的方法， 该方法接受当前遍历的节点作为其参数
+     * @param { Function } filterFn 过滤器， 该函数接受当前遍历的节点作为参数， 如果该节点满足过滤
+     *                      规则， 请返回true， 该节点会触发doFn， 否则， 请返回false， 则该节点不
+     *                      会触发doFn。
+     * @return { UE.dom.Range } 当前range对象
+     * @see UE.dom.Range:traversal(Function)
+     * @example
+     * ```html
+     *
+     * <body>
+     *
+     *     <!-- 选区开始 -->
+     *     <span></span>
+     *     <a></a>
+     *     <!-- 选区结束 -->
+     * </body>
+     *
+     * <script>
+     *
+     *     //output: <span></span><a></a>
+     *     console.log( range.cloneContents() );
+     *
+     *     range.traversal( function ( node ) {
+     *
+     *         node.className = "test";
+     *
+     *     }, function ( node ) {
+     *          return node.nodeType === 1;
+     *     } );
+     *
+     *     //output: <span class="test"></span><a class="test"></a>
+     *     console.log( range.cloneContents() );
+     *
+     * </script>
+     * ```
+     */
     traversal: function(doFn, filterFn) {
       if (this.collapsed) return this;
       var bookmark = this.createBookmark(),
         end = bookmark.end,
         current = domUtils.getNextDomNode(bookmark.start, false, filterFn);
-      while (
-        current &&
-        current !== end &&
-        domUtils.getPosition(current, end) & domUtils.POSITION_PRECEDING
-      ) {
+      while (current && current !== end && domUtils.getPosition(current, end) & domUtils.POSITION_PRECEDING) {
         var tmpNode = domUtils.getNextDomNode(current, false, filterFn);
         doFn(current);
         current = tmpNode;
@@ -6733,7 +6538,7 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
     var parent = range.parentElement();
     //如果节点里没有子节点，直接退出
     if (!parent.hasChildNodes()) {
-      return { container: parent, offset: 0 };
+      return {container: parent, offset: 0};
     }
     var siblings = parent.children,
       child,
@@ -6753,7 +6558,7 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
         startIndex = index + 1;
       } else {
         //trace:1043
-        return { container: parent, offset: getIndex(child) };
+        return {container: parent, offset: getIndex(child)};
       }
     }
     if (index == -1) {
@@ -6763,14 +6568,14 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
       siblings = parent.childNodes;
       if (!distance) {
         child = siblings[siblings.length - 1];
-        return { container: child, offset: child.nodeValue.length };
+        return {container: child, offset: child.nodeValue.length};
       }
 
       var i = siblings.length;
       while (distance > 0) {
         distance -= siblings[--i].nodeValue.length;
       }
-      return { container: siblings[i], offset: -distance };
+      return {container: siblings[i], offset: -distance};
     }
     testRange.collapse(position > 0);
     testRange.setEndPoint(position > 0 ? "StartToStart" : "EndToStart", range);
@@ -6792,7 +6597,7 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
         child = child[position > 0 ? "previousSibling" : "nextSibling"];
         distance -= child.nodeValue.length;
       } catch (e) {
-        return { container: parent, offset: getIndex(pre) };
+        return {container: parent, offset: getIndex(pre)};
       }
     }
     return {
@@ -6802,11 +6607,11 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
   }
 
   /**
-     * 将ieRange转换为Range对象
-     * @param {Range}   ieRange    ieRange对象
-     * @param {Range}   range      Range对象
-     * @return  {Range}  range       返回转换后的Range对象
-     */
+   * 将ieRange转换为Range对象
+   * @param {Range}   ieRange    ieRange对象
+   * @param {Range}   range      Range对象
+   * @return  {Range}  range       返回转换后的Range对象
+   */
   function transformIERangeToRange(ieRange, range) {
     if (ieRange.item) {
       range.selectNode(ieRange.item(0));
@@ -6822,10 +6627,10 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
   }
 
   /**
-     * 获得ieRange
-     * @param {Selection} sel    Selection对象
-     * @return {ieRange}    得到ieRange
-     */
+   * 获得ieRange
+   * @param {Selection} sel    Selection对象
+   * @return {ieRange}    得到ieRange
+   */
   function _getIERange(sel) {
     var ieRange;
     //ie下有可能报错
@@ -6864,44 +6669,38 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
 
   Selection.prototype = {
     rangeInBody: function(rng, txtRange) {
-      var node = browser.ie9below || txtRange
-        ? rng.item ? rng.item() : rng.parentElement()
-        : rng.startContainer;
+      var node = browser.ie9below || txtRange ? (rng.item ? rng.item() : rng.parentElement()) : rng.startContainer;
 
       return node === this.document.body || domUtils.inDoc(node, this.document);
     },
 
     /**
-         * 获取原生seleciton对象
-         * @method getNative
-         * @return { Object } 获得selection对象
-         * @example
-         * ```javascript
-         * editor.selection.getNative();
-         * ```
-         */
+     * 获取原生seleciton对象
+     * @method getNative
+     * @return { Object } 获得selection对象
+     * @example
+     * ```javascript
+     * editor.selection.getNative();
+     * ```
+     */
     getNative: function() {
       var doc = this.document;
       try {
-        return !doc
-          ? null
-          : browser.ie9below
-            ? doc.selection
-            : domUtils.getWindow(doc).getSelection();
+        return !doc ? null : browser.ie9below ? doc.selection : domUtils.getWindow(doc).getSelection();
       } catch (e) {
         return null;
       }
     },
 
     /**
-         * 获得ieRange
-         * @method getIERange
-         * @return { Object } 返回ie原生的Range
-         * @example
-         * ```javascript
-         * editor.selection.getIERange();
-         * ```
-         */
+     * 获得ieRange
+     * @method getIERange
+     * @return { Object } 返回ie原生的Range
+     * @example
+     * ```javascript
+     * editor.selection.getIERange();
+     * ```
+     */
     getIERange: function() {
       var ieRange = _getIERange(this);
       if (!ieRange) {
@@ -6913,9 +6712,9 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
     },
 
     /**
-         * 缓存当前选区的range和选区的开始节点
-         * @method cache
-         */
+     * 缓存当前选区的range和选区的开始节点
+     * @method cache
+     */
     cache: function() {
       this.clear();
       this._cachedRange = this.getRange();
@@ -6924,14 +6723,14 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
     },
 
     /**
-         * 获取选区开始位置的父节点到body
-         * @method getStartElementPath
-         * @return { Array } 返回父节点集合
-         * @example
-         * ```javascript
-         * editor.selection.getStartElementPath();
-         * ```
-         */
+     * 获取选区开始位置的父节点到body
+     * @method getStartElementPath
+     * @return { Array } 返回父节点集合
+     * @example
+     * ```javascript
+     * editor.selection.getStartElementPath();
+     * ```
+     */
     getStartElementPath: function() {
       if (this._cachedStartElementPath) {
         return this._cachedStartElementPath;
@@ -6944,17 +6743,17 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
     },
 
     /**
-         * 清空缓存
-         * @method clear
-         */
+     * 清空缓存
+     * @method clear
+     */
     clear: function() {
       this._cachedStartElementPath = this._cachedRange = this._cachedStartElement = null;
     },
 
     /**
-         * 编辑器是否得到了选区
-         * @method isFocus
-         */
+     * 编辑器是否得到了选区
+     * @method isFocus
+     */
     isFocus: function() {
       try {
         if (browser.ie9below) {
@@ -6969,14 +6768,14 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
     },
 
     /**
-         * 获取选区对应的Range
-         * @method getRange
-         * @return { Object } 得到Range对象
-         * @example
-         * ```javascript
-         * editor.selection.getRange();
-         * ```
-         */
+     * 获取选区对应的Range
+     * @method getRange
+     * @return { Object } 得到Range对象
+     * @example
+     * ```javascript
+     * editor.selection.getRange();
+     * ```
+     */
     getRange: function() {
       var me = this;
       function optimze(range) {
@@ -7019,19 +6818,12 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
           range
             .setStart(firstRange.startContainer, firstRange.startOffset)
             .setEnd(lastRange.endContainer, lastRange.endOffset);
-          if (
-            range.collapsed &&
-            domUtils.isBody(range.startContainer) &&
-            !range.startOffset
-          ) {
+          if (range.collapsed && domUtils.isBody(range.startContainer) && !range.startOffset) {
             optimze(range);
           }
         } else {
           //trace:1734 有可能已经不在dom树上了，标识的节点
-          if (
-            this._bakRange &&
-            domUtils.inDoc(this._bakRange.startContainer, this.document)
-          ) {
+          if (this._bakRange && domUtils.inDoc(this._bakRange.startContainer, this.document)) {
             return this._bakRange;
           }
           optimze(range);
@@ -7041,14 +6833,14 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
     },
 
     /**
-         * 获取开始元素，用于状态反射
-         * @method getStart
-         * @return { Element } 获得开始元素
-         * @example
-         * ```javascript
-         * editor.selection.getStart();
-         * ```
-         */
+     * 获取开始元素，用于状态反射
+     * @method getStart
+     * @return { Element } 获得开始元素
+     * @example
+     * ```javascript
+     * editor.selection.getStart();
+     * ```
+     */
     getStart: function() {
       if (this._cachedStartElement) {
         return this._cachedStartElement;
@@ -7083,10 +6875,7 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
         range.shrinkBoundary();
         start = range.startContainer;
         if (start.nodeType == 1 && start.hasChildNodes()) {
-          start =
-            start.childNodes[
-              Math.min(start.childNodes.length - 1, range.startOffset)
-            ];
+          start = start.childNodes[Math.min(start.childNodes.length - 1, range.startOffset)];
         }
         if (start.nodeType == 3) {
           return start.parentNode;
@@ -7096,33 +6885,31 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
     },
 
     /**
-         * 得到选区中的文本
-         * @method getText
-         * @return { String } 选区中包含的文本
-         * @example
-         * ```javascript
-         * editor.selection.getText();
-         * ```
-         */
+     * 得到选区中的文本
+     * @method getText
+     * @return { String } 选区中包含的文本
+     * @example
+     * ```javascript
+     * editor.selection.getText();
+     * ```
+     */
     getText: function() {
       var nativeSel, nativeRange;
       if (this.isFocus() && (nativeSel = this.getNative())) {
-        nativeRange = browser.ie9below
-          ? nativeSel.createRange()
-          : nativeSel.getRangeAt(0);
+        nativeRange = browser.ie9below ? nativeSel.createRange() : nativeSel.getRangeAt(0);
         return browser.ie9below ? nativeRange.text : nativeRange.toString();
       }
       return "";
     },
 
     /**
-         * 清除选区
-         * @method clearRange
-         * @example
-         * ```javascript
-         * editor.selection.clearRange();
-         * ```
-         */
+     * 清除选区
+     * @method clearRange
+     * @example
+     * ```javascript
+     * editor.selection.clearRange();
+     * ```
+     */
     clearRange: function() {
       this.getNative()[browser.ie9below ? "empty" : "removeAllRanges"]();
     }
@@ -7157,20 +6944,16 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
     _selectionChangeTimer;
 
   /**
-     * 获取编辑器的html内容，赋值到编辑器所在表单的textarea文本域里面
-     * @private
-     * @method setValue
-     * @param { UE.Editor } editor 编辑器事例
-     */
+   * 获取编辑器的html内容，赋值到编辑器所在表单的textarea文本域里面
+   * @private
+   * @method setValue
+   * @param { UE.Editor } editor 编辑器事例
+   */
   function setValue(form, editor) {
     var textarea;
     if (editor.options.textarea) {
       if (utils.isString(editor.options.textarea)) {
-        for (
-          var i = 0, ti, tis = domUtils.getElementsByTagName(form, "textarea");
-          (ti = tis[i++]);
-
-        ) {
+        for (var i = 0, ti, tis = domUtils.getElementsByTagName(form, "textarea"); (ti = tis[i++]); ) {
           if (ti.id == "ueditor_textarea_" + editor.options.textarea) {
             textarea = ti;
             break;
@@ -7191,8 +6974,7 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
       //不要产生多个textarea
       editor.textarea = textarea;
     }
-    !textarea.getAttribute("name") &&
-      textarea.setAttribute("name", editor.options.textarea);
+    !textarea.getAttribute("name") && textarea.setAttribute("name", editor.options.textarea);
     textarea.value = editor.hasContents()
       ? editor.options.allHtmlEnabled
         ? editor.getAllHtml()
@@ -7218,154 +7000,154 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
   }
 
   /**
-     * 编辑器准备就绪后会触发该事件
-     * @module UE
-     * @class Editor
-     * @event ready
-     * @remind render方法执行完成之后,会触发该事件
-     * @remind
-     * @example
-     * ```javascript
-     * editor.addListener( 'ready', function( editor ) {
-     *     editor.execCommand( 'focus' ); //编辑器家在完成后，让编辑器拿到焦点
-     * } );
-     * ```
-     */
+   * 编辑器准备就绪后会触发该事件
+   * @module UE
+   * @class Editor
+   * @event ready
+   * @remind render方法执行完成之后,会触发该事件
+   * @remind
+   * @example
+   * ```javascript
+   * editor.addListener( 'ready', function( editor ) {
+   *     editor.execCommand( 'focus' ); //编辑器家在完成后，让编辑器拿到焦点
+   * } );
+   * ```
+   */
   /**
-     * 执行destroy方法,会触发该事件
-     * @module UE
-     * @class Editor
-     * @event destroy
-     * @see UE.Editor:destroy()
-     */
+   * 执行destroy方法,会触发该事件
+   * @module UE
+   * @class Editor
+   * @event destroy
+   * @see UE.Editor:destroy()
+   */
   /**
-     * 执行reset方法,会触发该事件
-     * @module UE
-     * @class Editor
-     * @event reset
-     * @see UE.Editor:reset()
-     */
+   * 执行reset方法,会触发该事件
+   * @module UE
+   * @class Editor
+   * @event reset
+   * @see UE.Editor:reset()
+   */
   /**
-     * 执行focus方法,会触发该事件
-     * @module UE
-     * @class Editor
-     * @event focus
-     * @see UE.Editor:focus(Boolean)
-     */
+   * 执行focus方法,会触发该事件
+   * @module UE
+   * @class Editor
+   * @event focus
+   * @see UE.Editor:focus(Boolean)
+   */
   /**
-     * 语言加载完成会触发该事件
-     * @module UE
-     * @class Editor
-     * @event langReady
-     */
+   * 语言加载完成会触发该事件
+   * @module UE
+   * @class Editor
+   * @event langReady
+   */
   /**
-     * 运行命令之后会触发该命令
-     * @module UE
-     * @class Editor
-     * @event beforeExecCommand
-     */
+   * 运行命令之后会触发该命令
+   * @module UE
+   * @class Editor
+   * @event beforeExecCommand
+   */
   /**
-     * 运行命令之后会触发该命令
-     * @module UE
-     * @class Editor
-     * @event afterExecCommand
-     */
+   * 运行命令之后会触发该命令
+   * @module UE
+   * @class Editor
+   * @event afterExecCommand
+   */
   /**
-     * 运行命令之前会触发该命令
-     * @module UE
-     * @class Editor
-     * @event firstBeforeExecCommand
-     */
+   * 运行命令之前会触发该命令
+   * @module UE
+   * @class Editor
+   * @event firstBeforeExecCommand
+   */
   /**
-     * 在getContent方法执行之前会触发该事件
-     * @module UE
-     * @class Editor
-     * @event beforeGetContent
-     * @see UE.Editor:getContent()
-     */
+   * 在getContent方法执行之前会触发该事件
+   * @module UE
+   * @class Editor
+   * @event beforeGetContent
+   * @see UE.Editor:getContent()
+   */
   /**
-     * 在getContent方法执行之后会触发该事件
-     * @module UE
-     * @class Editor
-     * @event afterGetContent
-     * @see UE.Editor:getContent()
-     */
+   * 在getContent方法执行之后会触发该事件
+   * @module UE
+   * @class Editor
+   * @event afterGetContent
+   * @see UE.Editor:getContent()
+   */
   /**
-     * 在getAllHtml方法执行时会触发该事件
-     * @module UE
-     * @class Editor
-     * @event getAllHtml
-     * @see UE.Editor:getAllHtml()
-     */
+   * 在getAllHtml方法执行时会触发该事件
+   * @module UE
+   * @class Editor
+   * @event getAllHtml
+   * @see UE.Editor:getAllHtml()
+   */
   /**
-     * 在setContent方法执行之前会触发该事件
-     * @module UE
-     * @class Editor
-     * @event beforeSetContent
-     * @see UE.Editor:setContent(String)
-     */
+   * 在setContent方法执行之前会触发该事件
+   * @module UE
+   * @class Editor
+   * @event beforeSetContent
+   * @see UE.Editor:setContent(String)
+   */
   /**
-     * 在setContent方法执行之后会触发该事件
-     * @module UE
-     * @class Editor
-     * @event afterSetContent
-     * @see UE.Editor:setContent(String)
-     */
+   * 在setContent方法执行之后会触发该事件
+   * @module UE
+   * @class Editor
+   * @event afterSetContent
+   * @see UE.Editor:setContent(String)
+   */
   /**
-     * 每当编辑器内部选区发生改变时，将触发该事件
-     * @event selectionchange
-     * @warning 该事件的触发非常频繁，不建议在该事件的处理过程中做重量级的处理
-     * @example
-     * ```javascript
-     * editor.addListener( 'selectionchange', function( editor ) {
-     *     console.log('选区发生改变');
-     * }
-     */
+   * 每当编辑器内部选区发生改变时，将触发该事件
+   * @event selectionchange
+   * @warning 该事件的触发非常频繁，不建议在该事件的处理过程中做重量级的处理
+   * @example
+   * ```javascript
+   * editor.addListener( 'selectionchange', function( editor ) {
+   *     console.log('选区发生改变');
+   * }
+   */
   /**
-     * 在所有selectionchange的监听函数执行之前，会触发该事件
-     * @module UE
-     * @class Editor
-     * @event beforeSelectionChange
-     * @see UE.Editor:selectionchange
-     */
+   * 在所有selectionchange的监听函数执行之前，会触发该事件
+   * @module UE
+   * @class Editor
+   * @event beforeSelectionChange
+   * @see UE.Editor:selectionchange
+   */
   /**
-     * 在所有selectionchange的监听函数执行完之后，会触发该事件
-     * @module UE
-     * @class Editor
-     * @event afterSelectionChange
-     * @see UE.Editor:selectionchange
-     */
+   * 在所有selectionchange的监听函数执行完之后，会触发该事件
+   * @module UE
+   * @class Editor
+   * @event afterSelectionChange
+   * @see UE.Editor:selectionchange
+   */
   /**
-     * 编辑器内容发生改变时会触发该事件
-     * @module UE
-     * @class Editor
-     * @event contentChange
-     */
+   * 编辑器内容发生改变时会触发该事件
+   * @module UE
+   * @class Editor
+   * @event contentChange
+   */
 
   /**
-     * 以默认参数构建一个编辑器实例
-     * @constructor
-     * @remind 通过 改构造方法实例化的编辑器,不带ui层.需要render到一个容器,编辑器实例才能正常渲染到页面
-     * @example
-     * ```javascript
-     * var editor = new UE.Editor();
-     * editor.execCommand('blod');
-     * ```
-     * @see UE.Config
-     */
+   * 以默认参数构建一个编辑器实例
+   * @constructor
+   * @remind 通过 改构造方法实例化的编辑器,不带ui层.需要render到一个容器,编辑器实例才能正常渲染到页面
+   * @example
+   * ```javascript
+   * var editor = new UE.Editor();
+   * editor.execCommand('blod');
+   * ```
+   * @see UE.Config
+   */
 
   /**
-     * 以给定的参数集合创建一个编辑器实例，对于未指定的参数，将应用默认参数。
-     * @constructor
-     * @remind 通过 改构造方法实例化的编辑器,不带ui层.需要render到一个容器,编辑器实例才能正常渲染到页面
-     * @param { Object } setting 创建编辑器的参数
-     * @example
-     * ```javascript
-     * var editor = new UE.Editor();
-     * editor.execCommand('blod');
-     * ```
-     * @see UE.Config
-     */
+   * 以给定的参数集合创建一个编辑器实例，对于未指定的参数，将应用默认参数。
+   * @constructor
+   * @remind 通过 改构造方法实例化的编辑器,不带ui层.需要render到一个容器,编辑器实例才能正常渲染到页面
+   * @param { Object } setting 创建编辑器的参数
+   * @example
+   * ```javascript
+   * var editor = new UE.Editor();
+   * editor.execCommand('blod');
+   * ```
+   * @see UE.Config
+   */
   var Editor = (UE.Editor = function(options) {
     var me = this;
     me.uid = uid++;
@@ -7390,12 +7172,7 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
       utils.loadFile(
         document,
         {
-          src:
-            me.options.langPath +
-              me.options.lang +
-              "/" +
-              me.options.lang +
-              ".js",
+          src: me.options.langPath + me.options.lang + "/" + me.options.lang + ".js",
           tag: "script",
           type: "text/javascript",
           defer: "defer"
@@ -7414,19 +7191,19 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
       this.commands[name] = obj;
     },
     /**
-         * 编辑器对外提供的监听ready事件的接口， 通过调用该方法，达到的效果与监听ready事件是一致的
-         * @method ready
-         * @param { Function } fn 编辑器ready之后所执行的回调, 如果在注册事件之前编辑器已经ready，将会
-         * 立即触发该回调。
-         * @remind 需要等待编辑器加载完成后才能执行的代码,可以使用该方法传入
-         * @example
-         * ```javascript
-         * editor.ready( function( editor ) {
-         *     editor.setContent('初始化完毕');
-         * } );
-         * ```
-         * @see UE.Editor.event:ready
-         */
+     * 编辑器对外提供的监听ready事件的接口， 通过调用该方法，达到的效果与监听ready事件是一致的
+     * @method ready
+     * @param { Function } fn 编辑器ready之后所执行的回调, 如果在注册事件之前编辑器已经ready，将会
+     * 立即触发该回调。
+     * @remind 需要等待编辑器加载完成后才能执行的代码,可以使用该方法传入
+     * @example
+     * ```javascript
+     * editor.ready( function( editor ) {
+     *     editor.setContent('初始化完毕');
+     * } );
+     * ```
+     * @see UE.Editor.event:ready
+     */
     ready: function(fn) {
       var me = this;
       if (fn) {
@@ -7435,31 +7212,31 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
     },
 
     /**
-         * 该方法是提供给插件里面使用，设置配置项默认值
-         * @method setOpt
-         * @warning 三处设置配置项的优先级: 实例化时传入参数 > setOpt()设置 > config文件里设置
-         * @warning 该方法仅供编辑器插件内部和编辑器初始化时调用，其他地方不能调用。
-         * @param { String } key 编辑器的可接受的选项名称
-         * @param { * } val  该选项可接受的值
-         * @example
-         * ```javascript
-         * editor.setOpt( 'initContent', '欢迎使用编辑器' );
-         * ```
-         */
+     * 该方法是提供给插件里面使用，设置配置项默认值
+     * @method setOpt
+     * @warning 三处设置配置项的优先级: 实例化时传入参数 > setOpt()设置 > config文件里设置
+     * @warning 该方法仅供编辑器插件内部和编辑器初始化时调用，其他地方不能调用。
+     * @param { String } key 编辑器的可接受的选项名称
+     * @param { * } val  该选项可接受的值
+     * @example
+     * ```javascript
+     * editor.setOpt( 'initContent', '欢迎使用编辑器' );
+     * ```
+     */
 
     /**
-         * 该方法是提供给插件里面使用，以{key:value}集合的方式设置插件内用到的配置项默认值
-         * @method setOpt
-         * @warning 三处设置配置项的优先级: 实例化时传入参数 > setOpt()设置 > config文件里设置
-         * @warning 该方法仅供编辑器插件内部和编辑器初始化时调用，其他地方不能调用。
-         * @param { Object } options 将要设置的选项的键值对对象
-         * @example
-         * ```javascript
-         * editor.setOpt( {
-         *     'initContent': '欢迎使用编辑器'
-         * } );
-         * ```
-         */
+     * 该方法是提供给插件里面使用，以{key:value}集合的方式设置插件内用到的配置项默认值
+     * @method setOpt
+     * @warning 三处设置配置项的优先级: 实例化时传入参数 > setOpt()设置 > config文件里设置
+     * @warning 该方法仅供编辑器插件内部和编辑器初始化时调用，其他地方不能调用。
+     * @param { Object } options 将要设置的选项的键值对对象
+     * @example
+     * ```javascript
+     * editor.setOpt( {
+     *     'initContent': '欢迎使用编辑器'
+     * } );
+     * ```
+     */
     setOpt: function(key, val) {
       var obj = {};
       if (utils.isString(key)) {
@@ -7473,13 +7250,13 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
       return this.options[key];
     },
     /**
-         * 销毁编辑器实例，使用textarea代替
-         * @method destroy
-         * @example
-         * ```javascript
-         * editor.destroy();
-         * ```
-         */
+     * 销毁编辑器实例，使用textarea代替
+     * @method destroy
+     * @example
+     * ```javascript
+     * editor.destroy();
+     * ```
+     */
     destroy: function() {
       var me = this;
       me.fireEvent("destroy");
@@ -7509,20 +7286,20 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
     },
 
     /**
-         * 渲染编辑器的DOM到指定容器
-         * @method render
-         * @param { String } containerId 指定一个容器ID
-         * @remind 执行该方法,会触发ready事件
-         * @warning 必须且只能调用一次
-         */
+     * 渲染编辑器的DOM到指定容器
+     * @method render
+     * @param { String } containerId 指定一个容器ID
+     * @remind 执行该方法,会触发ready事件
+     * @warning 必须且只能调用一次
+     */
 
     /**
-         * 渲染编辑器的DOM到指定容器
-         * @method render
-         * @param { Element } containerDom 直接指定容器对象
-         * @remind 执行该方法,会触发ready事件
-         * @warning 必须且只能调用一次
-         */
+     * 渲染编辑器的DOM到指定容器
+     * @method render
+     * @param { Element } containerDom 直接指定容器对象
+     * @remind 执行该方法,会触发ready事件
+     * @warning 必须且只能调用一次
+     */
     render: function(container) {
       var me = this,
         options = me.options,
@@ -7536,28 +7313,20 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
         if (options.initialFrameWidth) {
           options.minFrameWidth = options.initialFrameWidth;
         } else {
-          options.minFrameWidth = options.initialFrameWidth =
-            container.offsetWidth;
+          options.minFrameWidth = options.initialFrameWidth = container.offsetWidth;
         }
         if (options.initialFrameHeight) {
           options.minFrameHeight = options.initialFrameHeight;
         } else {
-          options.initialFrameHeight = options.minFrameHeight =
-            container.offsetHeight;
+          options.initialFrameHeight = options.minFrameHeight = container.offsetHeight;
         }
 
         container.style.width = /%$/.test(options.initialFrameWidth)
           ? "100%"
-          : options.initialFrameWidth -
-              getStyleValue("padding-left") -
-              getStyleValue("padding-right") +
-              "px";
+          : options.initialFrameWidth - getStyleValue("padding-left") - getStyleValue("padding-right") + "px";
         container.style.height = /%$/.test(options.initialFrameHeight)
           ? "100%"
-          : options.initialFrameHeight -
-              getStyleValue("padding-top") -
-              getStyleValue("padding-bottom") +
-              "px";
+          : options.initialFrameHeight - getStyleValue("padding-top") - getStyleValue("padding-bottom") + "px";
 
         container.style.zIndex = options.zIndex;
 
@@ -7574,13 +7343,9 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
           //设置段落间距
           "p{margin:5px 0;}</style>" +
           (options.iframeCssUrl
-            ? "<link rel='stylesheet' type='text/css' href='" +
-                utils.unhtml(options.iframeCssUrl) +
-                "'/>"
+            ? "<link rel='stylesheet' type='text/css' href='" + utils.unhtml(options.iframeCssUrl) + "'/>"
             : "") +
-          (options.initialStyle
-            ? "<style>" + options.initialStyle + "</style>"
-            : "") +
+          (options.initialStyle ? "<style>" + options.initialStyle + "</style>" : "") +
           "</head>" +
           "<body class='view' ></body>" +
           "<script type='text/javascript' " +
@@ -7592,9 +7357,7 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
           "var _tmpScript = document.getElementById('_initialScript');_tmpScript.parentNode.removeChild(_tmpScript);" +
           "</script>" +
           (options.iframeJsUrl
-            ? "<script type='text/javascript' src='" +
-                utils.unhtml(options.iframeJsUrl) +
-                "'></script>"
+            ? "<script type='text/javascript' src='" + utils.unhtml(options.iframeJsUrl) + "'></script>"
             : "") +
           "</html>";
 
@@ -7608,26 +7371,24 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
             //                    scrolling :'no',
             src:
               "javascript:void(function(){document.open();" +
-                (options.customDomain && document.domain != location.hostname
-                  ? 'document.domain="' + document.domain + '";'
-                  : "") +
-                'document.write("' +
-                html +
-                '");document.close();}())'
+              (options.customDomain && document.domain != location.hostname
+                ? 'document.domain="' + document.domain + '";'
+                : "") +
+              'document.write("' +
+              html +
+              '");document.close();}())'
           })
         );
         container.style.overflow = "hidden";
         //解决如果是给定的百分比，会导致高度算不对的问题
         setTimeout(function() {
           if (/%$/.test(options.initialFrameWidth)) {
-            options.minFrameWidth = options.initialFrameWidth =
-              container.offsetWidth;
+            options.minFrameWidth = options.initialFrameWidth = container.offsetWidth;
             //如果这里给定宽度，会导致ie在拖动窗口大小时，编辑区域不随着变化
             //                        container.style.width = options.initialFrameWidth + 'px';
           }
           if (/%$/.test(options.initialFrameHeight)) {
-            options.minFrameHeight = options.initialFrameHeight =
-              container.offsetHeight;
+            options.minFrameHeight = options.initialFrameHeight = container.offsetHeight;
             container.style.height = options.initialFrameHeight + "px";
           }
         });
@@ -7635,11 +7396,11 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
     },
 
     /**
-         * 编辑器初始化
-         * @method _setup
-         * @private
-         * @param { Element } doc 编辑器Iframe中的文档对象
-         */
+     * 编辑器初始化
+     * @method _setup
+     * @private
+     * @param { Element } doc 编辑器Iframe中的文档对象
+     */
     _setup: function(doc) {
       var me = this,
         options = me.options;
@@ -7663,11 +7424,7 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
       }
       this._initEvents();
       //为form提交提供一个隐藏的textarea
-      for (
-        var form = this.iframe.parentNode;
-        !domUtils.isBody(form);
-        form = form.parentNode
-      ) {
+      for (var form = this.iframe.parentNode; !domUtils.isBody(form); form = form.parentNode) {
         if (form.tagName == "FORM") {
           me.form = form;
           if (me.options.autoSyncData) {
@@ -7763,23 +7520,23 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
     },
 
     /**
-         * 同步数据到编辑器所在的form
-         * 从编辑器的容器节点向上查找form元素，若找到，就同步编辑内容到找到的form里，为提交数据做准备，主要用于是手动提交的情况
-         * 后台取得数据的键值，使用你容器上的name属性，如果没有就使用参数里的textarea项
-         * @method sync
-         * @example
-         * ```javascript
-         * editor.sync();
-         * form.sumbit(); //form变量已经指向了form元素
-         * ```
-         */
+     * 同步数据到编辑器所在的form
+     * 从编辑器的容器节点向上查找form元素，若找到，就同步编辑内容到找到的form里，为提交数据做准备，主要用于是手动提交的情况
+     * 后台取得数据的键值，使用你容器上的name属性，如果没有就使用参数里的textarea项
+     * @method sync
+     * @example
+     * ```javascript
+     * editor.sync();
+     * form.sumbit(); //form变量已经指向了form元素
+     * ```
+     */
 
     /**
-         * 根据传入的formId，在页面上查找要同步数据的表单，若找到，就同步编辑内容到找到的form里，为提交数据做准备
-         * 后台取得数据的键值，该键值默认使用给定的编辑器容器的name属性，如果没有name属性则使用参数项里给定的“textarea”项
-         * @method sync
-         * @param { String } formID 指定一个要同步数据的form的id,编辑器的数据会同步到你指定form下
-         */
+     * 根据传入的formId，在页面上查找要同步数据的表单，若找到，就同步编辑内容到找到的form里，为提交数据做准备
+     * 后台取得数据的键值，该键值默认使用给定的编辑器容器的name属性，如果没有name属性则使用参数项里给定的“textarea”项
+     * @method sync
+     * @param { String } formID 指定一个要同步数据的form的id,编辑器的数据会同步到你指定form下
+     */
     sync: function(formId) {
       var me = this,
         form = formId
@@ -7795,48 +7552,47 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
     },
 
     /**
-         * 设置编辑器高度
-         * @method setHeight
-         * @remind 当配置项autoHeightEnabled为真时,该方法无效
-         * @param { Number } number 设置的高度值，纯数值，不带单位
-         * @example
-         * ```javascript
-         * editor.setHeight(number);
-         * ```
-         */
+     * 设置编辑器高度
+     * @method setHeight
+     * @remind 当配置项autoHeightEnabled为真时,该方法无效
+     * @param { Number } number 设置的高度值，纯数值，不带单位
+     * @example
+     * ```javascript
+     * editor.setHeight(number);
+     * ```
+     */
     setHeight: function(height, notSetHeight) {
       if (height !== parseInt(this.iframe.parentNode.style.height)) {
         this.iframe.parentNode.style.height = height + "px";
       }
-      !notSetHeight &&
-        (this.options.minFrameHeight = this.options.initialFrameHeight = height);
+      !notSetHeight && (this.options.minFrameHeight = this.options.initialFrameHeight = height);
       this.body.style.height = height + "px";
       !notSetHeight && this.trigger("setHeight");
     },
 
     /**
-         * 为编辑器的编辑命令提供快捷键
-         * 这个接口是为插件扩展提供的接口,主要是为新添加的插件，如果需要添加快捷键，所提供的接口
-         * @method addshortcutkey
-         * @param { Object } keyset 命令名和快捷键键值对对象，多个按钮的快捷键用“＋”分隔
-         * @example
-         * ```javascript
-         * editor.addshortcutkey({
-         *     "Bold" : "ctrl+66",//^B
-         *     "Italic" : "ctrl+73", //^I
-         * });
-         * ```
-         */
+     * 为编辑器的编辑命令提供快捷键
+     * 这个接口是为插件扩展提供的接口,主要是为新添加的插件，如果需要添加快捷键，所提供的接口
+     * @method addshortcutkey
+     * @param { Object } keyset 命令名和快捷键键值对对象，多个按钮的快捷键用“＋”分隔
+     * @example
+     * ```javascript
+     * editor.addshortcutkey({
+     *     "Bold" : "ctrl+66",//^B
+     *     "Italic" : "ctrl+73", //^I
+     * });
+     * ```
+     */
     /**
-         * 这个接口是为插件扩展提供的接口,主要是为新添加的插件，如果需要添加快捷键，所提供的接口
-         * @method addshortcutkey
-         * @param { String } cmd 触发快捷键时，响应的命令
-         * @param { String } keys 快捷键的字符串，多个按钮用“＋”分隔
-         * @example
-         * ```javascript
-         * editor.addshortcutkey("Underline", "ctrl+85"); //^U
-         * ```
-         */
+     * 这个接口是为插件扩展提供的接口,主要是为新添加的插件，如果需要添加快捷键，所提供的接口
+     * @method addshortcutkey
+     * @param { String } cmd 触发快捷键时，响应的命令
+     * @param { String } keys 快捷键的字符串，多个按钮用“＋”分隔
+     * @example
+     * ```javascript
+     * editor.addshortcutkey("Underline", "ctrl+85"); //^U
+     * ```
+     */
     addshortcutkey: function(cmd, keys) {
       var obj = {};
       if (keys) {
@@ -7848,10 +7604,10 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
     },
 
     /**
-         * 对编辑器设置keydown事件监听，绑定快捷键和命令，当快捷键组合触发成功，会响应对应的命令
-         * @method _bindshortcutKeys
-         * @private
-         */
+     * 对编辑器设置keydown事件监听，绑定快捷键和命令，当快捷键组合触发成功，会响应对应的命令
+     * @method _bindshortcutKeys
+     * @private
+     */
     _bindshortcutKeys: function() {
       var me = this,
         shortcutkeys = this.shortcutkeys;
@@ -7863,18 +7619,14 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
             ti = ti.split(":");
             var key = ti[0],
               param = ti[1];
-            if (
-              /^(ctrl)(\+shift)?\+(\d+)$/.test(key.toLowerCase()) ||
-              /^(\d+)$/.test(key)
-            ) {
+            if (/^(ctrl)(\+shift)?\+(\d+)$/.test(key.toLowerCase()) || /^(\d+)$/.test(key)) {
               if (
                 ((RegExp.$1 == "ctrl" ? e.ctrlKey || e.metaKey : 0) &&
                   (RegExp.$2 != "" ? e[RegExp.$2.slice(1) + "Key"] : 1) &&
                   keyCode == RegExp.$3) ||
                 keyCode == RegExp.$1
               ) {
-                if (me.queryCommandState(i, param) != -1)
-                  me.execCommand(i, param);
+                if (me.queryCommandState(i, param) != -1) me.execCommand(i, param);
                 domUtils.preventDefault(e);
               }
             }
@@ -7884,35 +7636,35 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
     },
 
     /**
-         * 获取编辑器的内容
-         * @method getContent
-         * @warning 该方法获取到的是经过编辑器内置的过滤规则进行过滤后得到的内容
-         * @return { String } 编辑器的内容字符串, 如果编辑器的内容为空，或者是空的标签内容（如:”&lt;p&gt;&lt;br/&gt;&lt;/p&gt;“）， 则返回空字符串
-         * @example
-         * ```javascript
-         * //编辑器html内容:<p>1<strong>2<em>34</em>5</strong>6</p>
-         * var content = editor.getContent(); //返回值:<p>1<strong>2<em>34</em>5</strong>6</p>
-         * ```
-         */
+     * 获取编辑器的内容
+     * @method getContent
+     * @warning 该方法获取到的是经过编辑器内置的过滤规则进行过滤后得到的内容
+     * @return { String } 编辑器的内容字符串, 如果编辑器的内容为空，或者是空的标签内容（如:”&lt;p&gt;&lt;br/&gt;&lt;/p&gt;“）， 则返回空字符串
+     * @example
+     * ```javascript
+     * //编辑器html内容:<p>1<strong>2<em>34</em>5</strong>6</p>
+     * var content = editor.getContent(); //返回值:<p>1<strong>2<em>34</em>5</strong>6</p>
+     * ```
+     */
 
     /**
-         * 获取编辑器的内容。 可以通过参数定义编辑器内置的判空规则
-         * @method getContent
-         * @param { Function } fn 自定的判空规则， 要求该方法返回一个boolean类型的值，
-         *                      代表当前编辑器的内容是否空，
-         *                      如果返回true， 则该方法将直接返回空字符串；如果返回false，则编辑器将返回
-         *                      经过内置过滤规则处理后的内容。
-         * @remind 该方法在处理包含有初始化内容的时候能起到很好的作用。
-         * @warning 该方法获取到的是经过编辑器内置的过滤规则进行过滤后得到的内容
-         * @return { String } 编辑器的内容字符串
-         * @example
-         * ```javascript
-         * // editor 是一个编辑器的实例
-         * var content = editor.getContent( function ( editor ) {
-         *      return editor.body.innerHTML === '欢迎使用UEditor'; //返回空字符串
-         * } );
-         * ```
-         */
+     * 获取编辑器的内容。 可以通过参数定义编辑器内置的判空规则
+     * @method getContent
+     * @param { Function } fn 自定的判空规则， 要求该方法返回一个boolean类型的值，
+     *                      代表当前编辑器的内容是否空，
+     *                      如果返回true， 则该方法将直接返回空字符串；如果返回false，则编辑器将返回
+     *                      经过内置过滤规则处理后的内容。
+     * @remind 该方法在处理包含有初始化内容的时候能起到很好的作用。
+     * @warning 该方法获取到的是经过编辑器内置的过滤规则进行过滤后得到的内容
+     * @return { String } 编辑器的内容字符串
+     * @example
+     * ```javascript
+     * // editor 是一个编辑器的实例
+     * var content = editor.getContent( function ( editor ) {
+     *      return editor.body.innerHTML === '欢迎使用UEditor'; //返回空字符串
+     * } );
+     * ```
+     */
     getContent: function(cmd, fn, notSetCursor, ignoreBlank, formatter) {
       var me = this;
       if (cmd && utils.isFunction(cmd)) {
@@ -7930,14 +7682,14 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
     },
 
     /**
-         * 取得完整的html代码，可以直接显示成完整的html文档
-         * @method getAllHtml
-         * @return { String } 编辑器的内容html文档字符串
-         * @eaxmple
-         * ```javascript
-         * editor.getAllHtml(); //返回格式大致是: <html><head>...</head><body>...</body></html>
-         * ```
-         */
+     * 取得完整的html代码，可以直接显示成完整的html文档
+     * @method getAllHtml
+     * @return { String } 编辑器的内容html文档字符串
+     * @eaxmple
+     * ```javascript
+     * editor.getAllHtml(); //返回格式大致是: <html><head>...</head><body>...</body></html>
+     * ```
+     */
     getAllHtml: function() {
       var me = this,
         headHtml = [],
@@ -7957,12 +7709,9 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
       return (
         '<html lang="en"><head>' +
         (me.options.charset
-          ? '<meta http-equiv="Content-Type" content="text/html; charset=' +
-              me.options.charset +
-              '"/>'
+          ? '<meta http-equiv="Content-Type" content="text/html; charset=' + me.options.charset + '"/>'
           : "") +
-        (headHtmlForIE9 ||
-          me.document.getElementsByTagName("head")[0].innerHTML) +
+        (headHtmlForIE9 || me.document.getElementsByTagName("head")[0].innerHTML) +
         headHtml.join("\n") +
         "</head>" +
         "<body " +
@@ -7974,15 +7723,15 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
     },
 
     /**
-         * 得到编辑器的纯文本内容，但会保留段落格式
-         * @method getPlainTxt
-         * @return { String } 编辑器带段落格式的纯文本内容字符串
-         * @example
-         * ```javascript
-         * //编辑器html内容:<p><strong>1</strong></p><p><strong>2</strong></p>
-         * console.log(editor.getPlainTxt()); //输出:"1\n2\n
-         * ```
-         */
+     * 得到编辑器的纯文本内容，但会保留段落格式
+     * @method getPlainTxt
+     * @return { String } 编辑器带段落格式的纯文本内容字符串
+     * @example
+     * ```javascript
+     * //编辑器html内容:<p><strong>1</strong></p><p><strong>2</strong></p>
+     * console.log(editor.getPlainTxt()); //输出:"1\n2\n
+     * ```
+     */
     getPlainTxt: function() {
       var reg = new RegExp(domUtils.fillChar, "g"),
         html = this.body.innerHTML.replace(/[\n\r]/g, ""); //ie要先去了\n在处理
@@ -8001,48 +7750,46 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
     },
 
     /**
-         * 获取编辑器中的纯文本内容,没有段落格式
-         * @method getContentTxt
-         * @return { String } 编辑器不带段落格式的纯文本内容字符串
-         * @example
-         * ```javascript
-         * //编辑器html内容:<p><strong>1</strong></p><p><strong>2</strong></p>
-         * console.log(editor.getPlainTxt()); //输出:"12
-         * ```
-         */
+     * 获取编辑器中的纯文本内容,没有段落格式
+     * @method getContentTxt
+     * @return { String } 编辑器不带段落格式的纯文本内容字符串
+     * @example
+     * ```javascript
+     * //编辑器html内容:<p><strong>1</strong></p><p><strong>2</strong></p>
+     * console.log(editor.getPlainTxt()); //输出:"12
+     * ```
+     */
     getContentTxt: function() {
       var reg = new RegExp(domUtils.fillChar, "g");
       //取出来的空格会有c2a0会变成乱码，处理这种情况\u00a0
-      return this.body[browser.ie ? "innerText" : "textContent"]
-        .replace(reg, "")
-        .replace(/\u00a0/g, " ");
+      return this.body[browser.ie ? "innerText" : "textContent"].replace(reg, "").replace(/\u00a0/g, " ");
     },
 
     /**
-         * 设置编辑器的内容，可修改编辑器当前的html内容
-         * @method setContent
-         * @warning 通过该方法插入的内容，是经过编辑器内置的过滤规则进行过滤后得到的内容
-         * @warning 该方法会触发selectionchange事件
-         * @param { String } html 要插入的html内容
-         * @example
-         * ```javascript
-         * editor.getContent('<p>test</p>');
-         * ```
-         */
+     * 设置编辑器的内容，可修改编辑器当前的html内容
+     * @method setContent
+     * @warning 通过该方法插入的内容，是经过编辑器内置的过滤规则进行过滤后得到的内容
+     * @warning 该方法会触发selectionchange事件
+     * @param { String } html 要插入的html内容
+     * @example
+     * ```javascript
+     * editor.getContent('<p>test</p>');
+     * ```
+     */
 
     /**
-         * 设置编辑器的内容，可修改编辑器当前的html内容
-         * @method setContent
-         * @warning 通过该方法插入的内容，是经过编辑器内置的过滤规则进行过滤后得到的内容
-         * @warning 该方法会触发selectionchange事件
-         * @param { String } html 要插入的html内容
-         * @param { Boolean } isAppendTo 若传入true，不清空原来的内容，在最后插入内容，否则，清空内容再插入
-         * @example
-         * ```javascript
-         * //假设设置前的编辑器内容是 <p>old text</p>
-         * editor.setContent('<p>new text</p>', true); //插入的结果是<p>old text</p><p>new text</p>
-         * ```
-         */
+     * 设置编辑器的内容，可修改编辑器当前的html内容
+     * @method setContent
+     * @warning 通过该方法插入的内容，是经过编辑器内置的过滤规则进行过滤后得到的内容
+     * @warning 该方法会触发selectionchange事件
+     * @param { String } html 要插入的html内容
+     * @param { Boolean } isAppendTo 若传入true，不清空原来的内容，在最后插入内容，否则，清空内容再插入
+     * @example
+     * ```javascript
+     * //假设设置前的编辑器内容是 <p>old text</p>
+     * editor.setContent('<p>new text</p>', true); //插入的结果是<p>old text</p><p>new text</p>
+     * ```
+     */
     setContent: function(html, isAppendTo, notFireSelectionchange) {
       var me = this;
 
@@ -8063,25 +7810,16 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
         if (
           !child ||
           (child.nodeType == 1 &&
-            (dtd.$cdata[child.tagName] ||
-              isCdataDiv(child) ||
-              domUtils.isCustomeNode(child)) &&
+            (dtd.$cdata[child.tagName] || isCdataDiv(child) || domUtils.isCustomeNode(child)) &&
             child === this.body.lastChild)
         ) {
-          this.body.innerHTML =
-            "<p>" +
-            (browser.ie ? "&nbsp;" : "<br/>") +
-            "</p>" +
-            this.body.innerHTML;
+          this.body.innerHTML = "<p>" + (browser.ie ? "&nbsp;" : "<br/>") + "</p>" + this.body.innerHTML;
         } else {
           var p = me.document.createElement("p");
           while (child) {
             while (
               child &&
-              (child.nodeType == 3 ||
-                (child.nodeType == 1 &&
-                  dtd.p[child.tagName] &&
-                  !dtd.$cdata[child.tagName]))
+              (child.nodeType == 3 || (child.nodeType == 1 && dtd.p[child.tagName] && !dtd.$cdata[child.tagName]))
             ) {
               tmpNode = child.nextSibling;
               p.appendChild(child);
@@ -8117,23 +7855,23 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
     },
 
     /**
-         * 让编辑器获得焦点，默认focus到编辑器头部
-         * @method focus
-         * @example
-         * ```javascript
-         * editor.focus()
-         * ```
-         */
+     * 让编辑器获得焦点，默认focus到编辑器头部
+     * @method focus
+     * @example
+     * ```javascript
+     * editor.focus()
+     * ```
+     */
 
     /**
-         * 让编辑器获得焦点，toEnd确定focus位置
-         * @method focus
-         * @param { Boolean } toEnd 默认focus到编辑器头部，toEnd为true时focus到内容尾部
-         * @example
-         * ```javascript
-         * editor.focus(true)
-         * ```
-         */
+     * 让编辑器获得焦点，toEnd确定focus位置
+     * @method focus
+     * @param { Boolean } toEnd 默认focus到编辑器头部，toEnd为true时focus到内容尾部
+     * @example
+     * ```javascript
+     * editor.focus(true)
+     * ```
+     */
     focus: function(toEnd) {
       try {
         var me = this,
@@ -8150,11 +7888,7 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
           }
           rng.setCursor(true);
         } else {
-          if (
-            !rng.collapsed &&
-            domUtils.isBody(rng.startContainer) &&
-            rng.startOffset == 0
-          ) {
+          if (!rng.collapsed && domUtils.isBody(rng.startContainer) && rng.startOffset == 0) {
             var node = me.body.firstChild;
             if (node && node.nodeType == 1 && !dtd.$empty[node.tagName]) {
               rng.setStartAtFirst(node).collapse(true);
@@ -8184,10 +7918,10 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
       //this.fireEvent('blur selectionchange');
     },
     /**
-         * 初始化UE事件及部分事件代理
-         * @method _initEvents
-         * @private
-         */
+     * 初始化UE事件及部分事件代理
+     * @method _initEvents
+     * @private
+     */
     _initEvents: function() {
       var me = this,
         doc = me.document,
@@ -8219,10 +7953,7 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
       });
       domUtils.on(doc, ["mouseup", "keydown"], function(evt) {
         //特殊键不触发selectionchange
-        if (
-          evt.type == "keydown" &&
-          (evt.ctrlKey || evt.metaKey || evt.shiftKey || evt.altKey)
-        ) {
+        if (evt.type == "keydown" && (evt.ctrlKey || evt.metaKey || evt.shiftKey || evt.altKey)) {
           return;
         }
         if (evt.button == 2) return;
@@ -8230,31 +7961,26 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
       });
     },
     /**
-         * 触发事件代理
-         * @method _proxyDomEvent
-         * @private
-         * @return { * } fireEvent的返回值
-         * @see UE.EventBase:fireEvent(String)
-         */
+     * 触发事件代理
+     * @method _proxyDomEvent
+     * @private
+     * @return { * } fireEvent的返回值
+     * @see UE.EventBase:fireEvent(String)
+     */
     _proxyDomEvent: function(evt) {
-      if (
-        this.fireEvent("before" + evt.type.replace(/^on/, "").toLowerCase()) ===
-        false
-      ) {
+      if (this.fireEvent("before" + evt.type.replace(/^on/, "").toLowerCase()) === false) {
         return false;
       }
       if (this.fireEvent(evt.type.replace(/^on/, ""), evt) === false) {
         return false;
       }
-      return this.fireEvent(
-        "after" + evt.type.replace(/^on/, "").toLowerCase()
-      );
+      return this.fireEvent("after" + evt.type.replace(/^on/, "").toLowerCase());
     },
     /**
-         * 变化选区
-         * @method _selectionChange
-         * @private
-         */
+     * 变化选区
+     * @method _selectionChange
+     * @private
+     */
     _selectionChange: function(delay, evt) {
       var me = this;
       //有光标才做selectionchange 为了解决未focus时点击source不能触发更改工具栏状态的问题（source命令notNeedUndo=1）
@@ -8310,13 +8036,13 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
     },
 
     /**
-         * 执行编辑命令
-         * @method _callCmdFn
-         * @private
-         * @param { String } fnName 函数名称
-         * @param { * } args 传给命令函数的参数
-         * @return { * } 返回命令函数运行的返回值
-         */
+     * 执行编辑命令
+     * @method _callCmdFn
+     * @private
+     * @param { String } fnName 函数名称
+     * @param { * } args 传给命令函数的参数
+     * @return { * } 返回命令函数运行的返回值
+     */
     _callCmdFn: function(fnName, args) {
       var cmdName = args[0].toLowerCase(),
         cmd,
@@ -8332,16 +8058,16 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
     },
 
     /**
-         * 执行编辑命令cmdName，完成富文本编辑效果
-         * @method execCommand
-         * @param { String } cmdName 需要执行的命令
-         * @remind 具体命令的使用请参考<a href="#COMMAND.LIST">命令列表</a>
-         * @return { * } 返回命令函数运行的返回值
-         * @example
-         * ```javascript
-         * editor.execCommand(cmdName);
-         * ```
-         */
+     * 执行编辑命令cmdName，完成富文本编辑效果
+     * @method execCommand
+     * @param { String } cmdName 需要执行的命令
+     * @remind 具体命令的使用请参考<a href="#COMMAND.LIST">命令列表</a>
+     * @return { * } 返回命令函数运行的返回值
+     * @example
+     * ```javascript
+     * editor.execCommand(cmdName);
+     * ```
+     */
     execCommand: function(cmdName) {
       cmdName = cmdName.toLowerCase();
       var me = this,
@@ -8354,17 +8080,11 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
         me.__hasEnterExecCommand = true;
         if (me.queryCommandState.apply(me, arguments) != -1) {
           me.fireEvent("saveScene");
-          me.fireEvent.apply(
-            me,
-            ["beforeexeccommand", cmdName].concat(arguments)
-          );
+          me.fireEvent.apply(me, ["beforeexeccommand", cmdName].concat(arguments));
           result = this._callCmdFn("execCommand", arguments);
           //保存场景时，做了内容对比，再看是否进行contentchange触发，这里多触发了一次，去掉
           //                    (!cmd.ignoreContentChange && !me._ignoreContentChange) && me.fireEvent('contentchange');
-          me.fireEvent.apply(
-            me,
-            ["afterexeccommand", cmdName].concat(arguments)
-          );
+          me.fireEvent.apply(me, ["afterexeccommand", cmdName].concat(arguments));
           me.fireEvent("saveScene");
         }
         me.__hasEnterExecCommand = false;
@@ -8375,65 +8095,62 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
           !me._ignoreContentChange &&
           me.fireEvent("contentchange");
       }
-      !me.__hasEnterExecCommand &&
-        !cmd.ignoreContentChange &&
-        !me._ignoreContentChange &&
-        me._selectionChange();
+      !me.__hasEnterExecCommand && !cmd.ignoreContentChange && !me._ignoreContentChange && me._selectionChange();
       return result;
     },
 
     /**
-         * 根据传入的command命令，查选编辑器当前的选区，返回命令的状态
-         * @method  queryCommandState
-         * @param { String } cmdName 需要查询的命令名称
-         * @remind 具体命令的使用请参考<a href="#COMMAND.LIST">命令列表</a>
-         * @return { Number } number 返回放前命令的状态，返回值三种情况：(-1|0|1)
-         * @example
-         * ```javascript
-         * editor.queryCommandState(cmdName)  => (-1|0|1)
-         * ```
-         * @see COMMAND.LIST
-         */
+     * 根据传入的command命令，查选编辑器当前的选区，返回命令的状态
+     * @method  queryCommandState
+     * @param { String } cmdName 需要查询的命令名称
+     * @remind 具体命令的使用请参考<a href="#COMMAND.LIST">命令列表</a>
+     * @return { Number } number 返回放前命令的状态，返回值三种情况：(-1|0|1)
+     * @example
+     * ```javascript
+     * editor.queryCommandState(cmdName)  => (-1|0|1)
+     * ```
+     * @see COMMAND.LIST
+     */
     queryCommandState: function(cmdName) {
       return this._callCmdFn("queryCommandState", arguments);
     },
 
     /**
-         * 根据传入的command命令，查选编辑器当前的选区，根据命令返回相关的值
-         * @method queryCommandValue
-         * @param { String } cmdName 需要查询的命令名称
-         * @remind 具体命令的使用请参考<a href="#COMMAND.LIST">命令列表</a>
-         * @remind 只有部分插件有此方法
-         * @return { * } 返回每个命令特定的当前状态值
-         * @grammar editor.queryCommandValue(cmdName)  =>  {*}
-         * @see COMMAND.LIST
-         */
+     * 根据传入的command命令，查选编辑器当前的选区，根据命令返回相关的值
+     * @method queryCommandValue
+     * @param { String } cmdName 需要查询的命令名称
+     * @remind 具体命令的使用请参考<a href="#COMMAND.LIST">命令列表</a>
+     * @remind 只有部分插件有此方法
+     * @return { * } 返回每个命令特定的当前状态值
+     * @grammar editor.queryCommandValue(cmdName)  =>  {*}
+     * @see COMMAND.LIST
+     */
     queryCommandValue: function(cmdName) {
       return this._callCmdFn("queryCommandValue", arguments);
     },
 
     /**
-         * 检查编辑区域中是否有内容
-         * @method  hasContents
-         * @remind 默认有文本内容，或者有以下节点都不认为是空
-         * table,ul,ol,dl,iframe,area,base,col,hr,img,embed,input,link,meta,param
-         * @return { Boolean } 检查有内容返回true，否则返回false
-         * @example
-         * ```javascript
-         * editor.hasContents()
-         * ```
-         */
+     * 检查编辑区域中是否有内容
+     * @method  hasContents
+     * @remind 默认有文本内容，或者有以下节点都不认为是空
+     * table,ul,ol,dl,iframe,area,base,col,hr,img,embed,input,link,meta,param
+     * @return { Boolean } 检查有内容返回true，否则返回false
+     * @example
+     * ```javascript
+     * editor.hasContents()
+     * ```
+     */
 
     /**
-         * 检查编辑区域中是否有内容，若包含参数tags中的节点类型，直接返回true
-         * @method  hasContents
-         * @param { Array } tags 传入数组判断时用到的节点类型
-         * @return { Boolean } 若文档中包含tags数组里对应的tag，返回true，否则返回false
-         * @example
-         * ```javascript
-         * editor.hasContents(['span']);
-         * ```
-         */
+     * 检查编辑区域中是否有内容，若包含参数tags中的节点类型，直接返回true
+     * @method  hasContents
+     * @param { Array } tags 传入数组判断时用到的节点类型
+     * @return { Boolean } 若文档中包含tags数组里对应的tag，返回true，否则返回false
+     * @example
+     * ```javascript
+     * editor.hasContents(['span']);
+     * ```
+     */
     hasContents: function(tags) {
       if (tags) {
         for (var i = 0, ci; (ci = tags[i++]); ) {
@@ -8459,26 +8176,26 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
     },
 
     /**
-         * 重置编辑器，可用来做多个tab使用同一个编辑器实例
-         * @method  reset
-         * @remind 此方法会清空编辑器内容，清空回退列表，会触发reset事件
-         * @example
-         * ```javascript
-         * editor.reset()
-         * ```
-         */
+     * 重置编辑器，可用来做多个tab使用同一个编辑器实例
+     * @method  reset
+     * @remind 此方法会清空编辑器内容，清空回退列表，会触发reset事件
+     * @example
+     * ```javascript
+     * editor.reset()
+     * ```
+     */
     reset: function() {
       this.fireEvent("reset");
     },
 
     /**
-         * 设置当前编辑区域可以编辑
-         * @method setEnabled
-         * @example
-         * ```javascript
-         * editor.setEnabled()
-         * ```
-         */
+     * 设置当前编辑区域可以编辑
+     * @method setEnabled
+     * @example
+     * ```javascript
+     * editor.setEnabled()
+     * ```
+     */
     setEnabled: function() {
       var me = this,
         range;
@@ -8509,28 +8226,28 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
     },
 
     /** 设置当前编辑区域不可编辑
-         * @method setDisabled
-         */
+     * @method setDisabled
+     */
 
     /** 设置当前编辑区域不可编辑,except中的命令除外
-         * @method setDisabled
-         * @param { String } except 例外命令的字符串
-         * @remind 即使设置了disable，此处配置的例外命令仍然可以执行
-         * @example
-         * ```javascript
-         * editor.setDisabled('bold'); //禁用工具栏中除加粗之外的所有功能
-         * ```
-         */
+     * @method setDisabled
+     * @param { String } except 例外命令的字符串
+     * @remind 即使设置了disable，此处配置的例外命令仍然可以执行
+     * @example
+     * ```javascript
+     * editor.setDisabled('bold'); //禁用工具栏中除加粗之外的所有功能
+     * ```
+     */
 
     /** 设置当前编辑区域不可编辑,except中的命令除外
-         * @method setDisabled
-         * @param { Array } except 例外命令的字符串数组，数组中的命令仍然可以执行
-         * @remind 即使设置了disable，此处配置的例外命令仍然可以执行
-         * @example
-         * ```javascript
-         * editor.setDisabled(['bold','insertimage']); //禁用工具栏中除加粗和插入图片之外的所有功能
-         * ```
-         */
+     * @method setDisabled
+     * @param { Array } except 例外命令的字符串数组，数组中的命令仍然可以执行
+     * @remind 即使设置了disable，此处配置的例外命令仍然可以执行
+     * @example
+     * ```javascript
+     * editor.setDisabled(['bold','insertimage']); //禁用工具栏中除加粗和插入图片之外的所有功能
+     * ```
+     */
     setDisabled: function(except) {
       var me = this;
       except = except ? (utils.isArray(except) ? except : [except]) : [];
@@ -8561,11 +8278,11 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
     },
 
     /**
-         * 设置默认内容
-         * @method _setDefaultContent
-         * @private
-         * @param  { String } cont 要存入的内容
-         */
+     * 设置默认内容
+     * @method _setDefaultContent
+     * @private
+     * @param  { String } cont 要存入的内容
+     */
     _setDefaultContent: (function() {
       function clear() {
         var me = this;
@@ -8588,13 +8305,13 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
     })(),
 
     /**
-         * 显示编辑器
-         * @method setShow
-         * @example
-         * ```javascript
-         * editor.setShow()
-         * ```
-         */
+     * 显示编辑器
+     * @method setShow
+     * @example
+     * ```javascript
+     * editor.setShow()
+     * ```
+     */
     setShow: function() {
       var me = this,
         range = me.selection.getRange();
@@ -8617,13 +8334,13 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
       return this.setShow();
     },
     /**
-         * 隐藏编辑器
-         * @method setHide
-         * @example
-         * ```javascript
-         * editor.setHide()
-         * ```
-         */
+     * 隐藏编辑器
+     * @method setHide
+     * @example
+     * ```javascript
+     * editor.setHide()
+     * ```
+     */
     setHide: function() {
       var me = this;
       if (!me.lastBk) {
@@ -8636,15 +8353,15 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
     },
 
     /**
-         * 根据指定的路径，获取对应的语言资源
-         * @method getLang
-         * @param { String } path 路径根据的是lang目录下的语言文件的路径结构
-         * @return { Object | String } 根据路径返回语言资源的Json格式对象或者语言字符串
-         * @example
-         * ```javascript
-         * editor.getLang('contextMenu.delete'); //如果当前是中文，那返回是的是'删除'
-         * ```
-         */
+     * 根据指定的路径，获取对应的语言资源
+     * @method getLang
+     * @param { String } path 路径根据的是lang目录下的语言文件的路径结构
+     * @return { Object | String } 根据路径返回语言资源的Json格式对象或者语言字符串
+     * @example
+     * ```javascript
+     * editor.getLang('contextMenu.delete'); //如果当前是中文，那返回是的是'删除'
+     * ```
+     */
     getLang: function(path) {
       var lang = UE.I18N[this.options.lang];
       if (!lang) {
@@ -8659,26 +8376,26 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
     },
 
     /**
-         * 计算编辑器html内容字符串的长度
-         * @method  getContentLength
-         * @return { Number } 返回计算的长度
-         * @example
-         * ```javascript
-         * //编辑器html内容<p><strong>132</strong></p>
-         * editor.getContentLength() //返回27
-         * ```
-         */
+     * 计算编辑器html内容字符串的长度
+     * @method  getContentLength
+     * @return { Number } 返回计算的长度
+     * @example
+     * ```javascript
+     * //编辑器html内容<p><strong>132</strong></p>
+     * editor.getContentLength() //返回27
+     * ```
+     */
     /**
-         * 计算编辑器当前纯文本内容的长度
-         * @method  getContentLength
-         * @param { Boolean } ingoneHtml 传入true时，只按照纯文本来计算
-         * @return { Number } 返回计算的长度，内容中有hr/img/iframe标签，长度加1
-         * @example
-         * ```javascript
-         * //编辑器html内容<p><strong>132</strong></p>
-         * editor.getContentLength() //返回3
-         * ```
-         */
+     * 计算编辑器当前纯文本内容的长度
+     * @method  getContentLength
+     * @param { Boolean } ingoneHtml 传入true时，只按照纯文本来计算
+     * @return { Number } 返回计算的长度，内容中有hr/img/iframe标签，长度加1
+     * @example
+     * ```javascript
+     * //编辑器html内容<p><strong>132</strong></p>
+     * editor.getContentLength() //返回3
+     * ```
+     */
     getContentLength: function(ingoneHtml, tagNames) {
       var count = this.getContent(false, false, true).length;
       if (ingoneHtml) {
@@ -8692,33 +8409,33 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
     },
 
     /**
-         * 注册输入过滤规则
-         * @method  addInputRule
-         * @param { Function } rule 要添加的过滤规则
-         * @example
-         * ```javascript
-         * editor.addInputRule(function(root){
-         *   $.each(root.getNodesByTagName('div'),function(i,node){
-         *       node.tagName="p";
-         *   });
-         * });
-         * ```
-         */
+     * 注册输入过滤规则
+     * @method  addInputRule
+     * @param { Function } rule 要添加的过滤规则
+     * @example
+     * ```javascript
+     * editor.addInputRule(function(root){
+     *   $.each(root.getNodesByTagName('div'),function(i,node){
+     *       node.tagName="p";
+     *   });
+     * });
+     * ```
+     */
     addInputRule: function(rule) {
       this.inputRules.push(rule);
     },
 
     /**
-         * 执行注册的过滤规则
-         * @method  filterInputRule
-         * @param { UE.uNode } root 要过滤的uNode节点
-         * @remind 执行editor.setContent方法和执行'inserthtml'命令后，会运行该过滤函数
-         * @example
-         * ```javascript
-         * editor.filterInputRule(editor.body);
-         * ```
-         * @see UE.Editor:addInputRule
-         */
+     * 执行注册的过滤规则
+     * @method  filterInputRule
+     * @param { UE.uNode } root 要过滤的uNode节点
+     * @remind 执行editor.setContent方法和执行'inserthtml'命令后，会运行该过滤函数
+     * @example
+     * ```javascript
+     * editor.filterInputRule(editor.body);
+     * ```
+     * @see UE.Editor:addInputRule
+     */
     filterInputRule: function(root) {
       for (var i = 0, ci; (ci = this.inputRules[i++]); ) {
         ci.call(this, root);
@@ -8726,33 +8443,33 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
     },
 
     /**
-         * 注册输出过滤规则
-         * @method  addOutputRule
-         * @param { Function } rule 要添加的过滤规则
-         * @example
-         * ```javascript
-         * editor.addOutputRule(function(root){
-         *   $.each(root.getNodesByTagName('p'),function(i,node){
-         *       node.tagName="div";
-         *   });
-         * });
-         * ```
-         */
+     * 注册输出过滤规则
+     * @method  addOutputRule
+     * @param { Function } rule 要添加的过滤规则
+     * @example
+     * ```javascript
+     * editor.addOutputRule(function(root){
+     *   $.each(root.getNodesByTagName('p'),function(i,node){
+     *       node.tagName="div";
+     *   });
+     * });
+     * ```
+     */
     addOutputRule: function(rule) {
       this.outputRules.push(rule);
     },
 
     /**
-         * 根据输出过滤规则，过滤编辑器内容
-         * @method  filterOutputRule
-         * @remind 执行editor.getContent方法的时候，会先运行该过滤函数
-         * @param { UE.uNode } root 要过滤的uNode节点
-         * @example
-         * ```javascript
-         * editor.filterOutputRule(editor.body);
-         * ```
-         * @see UE.Editor:addOutputRule
-         */
+     * 根据输出过滤规则，过滤编辑器内容
+     * @method  filterOutputRule
+     * @remind 执行editor.getContent方法的时候，会先运行该过滤函数
+     * @param { UE.uNode } root 要过滤的uNode节点
+     * @example
+     * ```javascript
+     * editor.filterOutputRule(editor.body);
+     * ```
+     * @see UE.Editor:addOutputRule
+     */
     filterOutputRule: function(root) {
       for (var i = 0, ci; (ci = this.outputRules[i++]); ) {
         ci.call(this, root);
@@ -8760,18 +8477,18 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
     },
 
     /**
-         * 根据action名称获取请求的路径
-         * @method  getActionUrl
-         * @remind 假如没有设置serverUrl,会根据imageUrl设置默认的controller路径
-         * @param { String } action action名称
-         * @example
-         * ```javascript
-         * editor.getActionUrl('config'); //返回 "/ueditor/php/controller.php?action=config"
-         * editor.getActionUrl('image'); //返回 "/ueditor/php/controller.php?action=uplaodimage"
-         * editor.getActionUrl('scrawl'); //返回 "/ueditor/php/controller.php?action=uplaodscrawl"
-         * editor.getActionUrl('imageManager'); //返回 "/ueditor/php/controller.php?action=listimage"
-         * ```
-         */
+     * 根据action名称获取请求的路径
+     * @method  getActionUrl
+     * @remind 假如没有设置serverUrl,会根据imageUrl设置默认的controller路径
+     * @param { String } action action名称
+     * @example
+     * ```javascript
+     * editor.getActionUrl('config'); //返回 "/ueditor/php/controller.php?action=config"
+     * editor.getActionUrl('image'); //返回 "/ueditor/php/controller.php?action=uplaodimage"
+     * editor.getActionUrl('scrawl'); //返回 "/ueditor/php/controller.php?action=uplaodscrawl"
+     * editor.getActionUrl('imageManager'); //返回 "/ueditor/php/controller.php?action=listimage"
+     * ```
+     */
     getActionUrl: function(action) {
       var actionName = this.getOpt(action) || action,
         imageUrl = this.getOpt("imageUrl"),
@@ -8782,11 +8499,7 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
       }
 
       if (serverUrl) {
-        serverUrl =
-          serverUrl +
-          (serverUrl.indexOf("?") == -1 ? "?" : "&") +
-          "action=" +
-          (actionName || "");
+        serverUrl = serverUrl + (serverUrl.indexOf("?") == -1 ? "?" : "&") + "action=" + (actionName || "");
         return utils.formatUrl(serverUrl);
       } else {
         return "";
@@ -8837,13 +8550,7 @@ UE.Editor.defaultOptions = function(editor) {
     setTimeout(function() {
       try {
         me.options.imageUrl &&
-          me.setOpt(
-            "serverUrl",
-            me.options.imageUrl.replace(
-              /^(.*[\/]).+([\.].+)$/,
-              "$1controller$2"
-            )
-          );
+          me.setOpt("serverUrl", me.options.imageUrl.replace(/^(.*[\/]).+([\.].+)$/, "$1controller$2"));
 
         var configUrl = me.getActionUrl("config"),
           isJsonp = utils.isCrossDomainUrl(configUrl);
@@ -8931,37 +8638,23 @@ UE.ajax = (function() {
   var creatAjaxRequest = new Function("return new " + fnStr);
 
   /**
-     * 将json参数转化成适合ajax提交的参数列表
-     * @param json
-     */
+   * 将json参数转化成适合ajax提交的参数列表
+   * @param json
+   */
   function json2str(json) {
     var strArr = [];
     for (var i in json) {
       //忽略默认的几个参数
-      if (
-        i == "method" ||
-        i == "timeout" ||
-        i == "async" ||
-        i == "dataType" ||
-        i == "callback"
-      )
-        continue;
+      if (i == "method" || i == "timeout" || i == "async" || i == "dataType" || i == "callback") continue;
       //忽略控制
       if (json[i] == undefined || json[i] == null) continue;
       //传递过来的对象和函数不在提交之列
-      if (
-        !(
-          (typeof json[i]).toLowerCase() == "function" ||
-          (typeof json[i]).toLowerCase() == "object"
-        )
-      ) {
+      if (!((typeof json[i]).toLowerCase() == "function" || (typeof json[i]).toLowerCase() == "object")) {
         strArr.push(encodeURIComponent(i) + "=" + encodeURIComponent(json[i]));
       } else if (utils.isArray(json[i])) {
         //支持传数组内容
         for (var j = 0; j < json[i].length; j++) {
-          strArr.push(
-            encodeURIComponent(i) + "[]=" + encodeURIComponent(json[i][j])
-          );
+          strArr.push(encodeURIComponent(i) + "[]=" + encodeURIComponent(json[i][j]));
         }
       }
     }
@@ -8987,9 +8680,7 @@ UE.ajax = (function() {
       url = ajaxOptions.url;
     }
     if (!xhr || !url) return;
-    var ajaxOpts = ajaxOptions
-      ? utils.extend(defaultAjaxOptions, ajaxOptions)
-      : defaultAjaxOptions;
+    var ajaxOpts = ajaxOptions ? utils.extend(defaultAjaxOptions, ajaxOptions) : defaultAjaxOptions;
 
     var submitStr = json2str(ajaxOpts); // { name:"Jim",city:"Beijing" } --> "name=Jim&city=Beijing"
     //如果用户直接通过data参数传递json对象过来，则也要将此json对象转化为字符串
@@ -9007,9 +8698,7 @@ UE.ajax = (function() {
 
     var method = ajaxOpts.method.toUpperCase();
     var str =
-      url +
-      (url.indexOf("?") == -1 ? "?" : "&") +
-      (method == "POST" ? "" : submitStr + "&noCache=" + +new Date());
+      url + (url.indexOf("?") == -1 ? "?" : "&") + (method == "POST" ? "" : submitStr + "&noCache=" + +new Date());
     xhr.open(method, str, ajaxOpts.async);
     xhr.onreadystatechange = function() {
       if (xhr.readyState == 4) {
@@ -9041,8 +8730,7 @@ UE.ajax = (function() {
       matches;
 
     if (utils.isFunction(successhandler)) {
-      callbackFnName =
-        "bd__editor__" + Math.floor(Math.random() * 2147483648).toString(36);
+      callbackFnName = "bd__editor__" + Math.floor(Math.random() * 2147483648).toString(36);
       window[callbackFnName] = getCallBack(0);
     } else if (utils.isString(successhandler)) {
       callbackFnName = successhandler;
@@ -9055,11 +8743,7 @@ UE.ajax = (function() {
     url = url.replace(reg, "\x241" + callbackField + "=" + callbackFnName);
 
     if (url.search(reg) < 0) {
-      url +=
-        (url.indexOf("?") < 0 ? "?" : "&") +
-        callbackField +
-        "=" +
-        callbackFnName;
+      url += (url.indexOf("?") < 0 ? "?" : "&") + callbackField + "=" + callbackFnName;
     }
 
     var queryStr = json2str(opts); // { name:"Jim",city:"Beijing" } --> "name=Jim&city=Beijing"
@@ -9112,62 +8796,62 @@ UE.ajax = (function() {
 
   return {
     /**
-         * 根据给定的参数项，向指定的url发起一个ajax请求。 ajax请求完成后，会根据请求结果调用相应回调： 如果请求
-         * 成功， 则调用onsuccess回调， 失败则调用 onerror 回调
-         * @method request
-         * @param { URLString } url ajax请求的url地址
-         * @param { Object } ajaxOptions ajax请求选项的键值对，支持的选项如下：
-         * @example
-         * ```javascript
-         * //向sayhello.php发起一个异步的Ajax GET请求, 请求超时时间为10s， 请求完成后执行相应的回调。
-         * UE.ajax.requeset( 'sayhello.php', {
-         *
-         *     //请求方法。可选值： 'GET', 'POST'，默认值是'POST'
-         *     method: 'GET',
-         *
-         *     //超时时间。 默认为5000， 单位是ms
-         *     timeout: 10000,
-         *
-         *     //是否是异步请求。 true为异步请求， false为同步请求
-         *     async: true,
-         *
-         *     //请求携带的数据。如果请求为GET请求， data会经过stringify后附加到请求url之后。
-         *     data: {
-         *         name: 'ueditor'
-         *     },
-         *
-         *     //请求成功后的回调， 该回调接受当前的XMLHttpRequest对象作为参数。
-         *     onsuccess: function ( xhr ) {
-         *         console.log( xhr.responseText );
-         *     },
-         *
-         *     //请求失败或者超时后的回调。
-         *     onerror: function ( xhr ) {
-         *          alert( 'Ajax请求失败' );
-         *     }
-         *
-         * } );
-         * ```
-         */
+     * 根据给定的参数项，向指定的url发起一个ajax请求。 ajax请求完成后，会根据请求结果调用相应回调： 如果请求
+     * 成功， 则调用onsuccess回调， 失败则调用 onerror 回调
+     * @method request
+     * @param { URLString } url ajax请求的url地址
+     * @param { Object } ajaxOptions ajax请求选项的键值对，支持的选项如下：
+     * @example
+     * ```javascript
+     * //向sayhello.php发起一个异步的Ajax GET请求, 请求超时时间为10s， 请求完成后执行相应的回调。
+     * UE.ajax.requeset( 'sayhello.php', {
+     *
+     *     //请求方法。可选值： 'GET', 'POST'，默认值是'POST'
+     *     method: 'GET',
+     *
+     *     //超时时间。 默认为5000， 单位是ms
+     *     timeout: 10000,
+     *
+     *     //是否是异步请求。 true为异步请求， false为同步请求
+     *     async: true,
+     *
+     *     //请求携带的数据。如果请求为GET请求， data会经过stringify后附加到请求url之后。
+     *     data: {
+     *         name: 'ueditor'
+     *     },
+     *
+     *     //请求成功后的回调， 该回调接受当前的XMLHttpRequest对象作为参数。
+     *     onsuccess: function ( xhr ) {
+     *         console.log( xhr.responseText );
+     *     },
+     *
+     *     //请求失败或者超时后的回调。
+     *     onerror: function ( xhr ) {
+     *          alert( 'Ajax请求失败' );
+     *     }
+     *
+     * } );
+     * ```
+     */
 
     /**
-         * 根据给定的参数项发起一个ajax请求， 参数项里必须包含一个url地址。 ajax请求完成后，会根据请求结果调用相应回调： 如果请求
-         * 成功， 则调用onsuccess回调， 失败则调用 onerror 回调。
-         * @method request
-         * @warning 如果在参数项里未提供一个key为“url”的地址值，则该请求将直接退出。
-         * @param { Object } ajaxOptions ajax请求选项的键值对，支持的选项如下：
-         * @example
-         * ```javascript
-         *
-         * //向sayhello.php发起一个异步的Ajax POST请求, 请求超时时间为5s， 请求完成后不执行任何回调。
-         * UE.ajax.requeset( 'sayhello.php', {
-         *
-         *     //请求的地址， 该项是必须的。
-         *     url: 'sayhello.php'
-         *
-         * } );
-         * ```
-         */
+     * 根据给定的参数项发起一个ajax请求， 参数项里必须包含一个url地址。 ajax请求完成后，会根据请求结果调用相应回调： 如果请求
+     * 成功， 则调用onsuccess回调， 失败则调用 onerror 回调。
+     * @method request
+     * @warning 如果在参数项里未提供一个key为“url”的地址值，则该请求将直接退出。
+     * @param { Object } ajaxOptions ajax请求选项的键值对，支持的选项如下：
+     * @example
+     * ```javascript
+     *
+     * //向sayhello.php发起一个异步的Ajax POST请求, 请求超时时间为5s， 请求完成后不执行任何回调。
+     * UE.ajax.requeset( 'sayhello.php', {
+     *
+     *     //请求的地址， 该项是必须的。
+     *     url: 'sayhello.php'
+     *
+     * } );
+     * ```
+     */
     request: function(url, opts) {
       if (opts && opts.dataType == "jsonp") {
         doJsonp(url, opts);
@@ -9212,9 +8896,7 @@ UE.ajax = (function() {
 var filterWord = (UE.filterWord = (function() {
   //是否是word过来的内容
   function isWordDocument(str) {
-    return /(class="?Mso|style="[^"]*\bmso\-|w:WordDocument|<(v|o):|lang=)/gi.test(
-      str
-    );
+    return /(class="?Mso|style="[^"]*\bmso\-|w:WordDocument|<(v|o):|lang=)/gi.test(str);
   }
   //去掉小数
   function transUnit(v) {
@@ -9243,15 +8925,7 @@ var filterWord = (UE.filterWord = (function() {
             var width = str.match(/width:([ \d.]*p[tx])/i)[1],
               height = str.match(/height:([ \d.]*p[tx])/i)[1],
               src = str.match(/src=\s*"([^"]*)"/i)[1];
-            return (
-              '<img width="' +
-              transUnit(width) +
-              '" height="' +
-              transUnit(height) +
-              '" src="' +
-              src +
-              '" />'
-            );
+            return '<img width="' + transUnit(width) + '" height="' + transUnit(height) + '" src="' + src + '" />';
           } catch (e) {
             return "";
           }
@@ -9264,17 +8938,9 @@ var filterWord = (UE.filterWord = (function() {
           /<(!|script[^>]*>.*?<\/script(?=[>\s])|\/?(\?xml(:\w+)?|xml|meta|link|style|\w+:\w+)(?=[\s\/>]))[^>]*>/gi,
           ""
         )
-        .replace(
-          /<p [^>]*class="?MsoHeading"?[^>]*>(.*?)<\/p>/gi,
-          "<p><strong>$1</strong></p>"
-        )
+        .replace(/<p [^>]*class="?MsoHeading"?[^>]*>(.*?)<\/p>/gi, "<p><strong>$1</strong></p>")
         //去掉多余的属性
-        .replace(/\s+(class|lang|align)\s*=\s*(['"]?)([\w-]+)\2/gi, function(
-          str,
-          name,
-          marks,
-          val
-        ) {
+        .replace(/\s+(class|lang|align)\s*=\s*(['"]?)([\w-]+)\2/gi, function(str, name, marks, val) {
           //保留list的标示
           return name == "class" && val == "MsoListParagraph" ? str : "";
         })
@@ -9283,12 +8949,7 @@ var filterWord = (UE.filterWord = (function() {
           return c.replace(/[\t\r\n ]+/g, " ");
         })
         //处理style的问题
-        .replace(/(<[a-z][^>]*)\sstyle=(["'])([^\2]*?)\2/gi, function(
-          str,
-          tag,
-          tmp,
-          style
-        ) {
+        .replace(/(<[a-z][^>]*)\sstyle=(["'])([^\2]*?)\2/gi, function(str, tag, tmp, style) {
           var n = [],
             s = style
               .replace(/^\s+|\s+$/, "")
@@ -9308,8 +8969,7 @@ var filterWord = (UE.filterWord = (function() {
               name = parts[0].toLowerCase();
               value = parts[1].toLowerCase();
               if (
-                (/^(background)\w*/.test(name) &&
-                  value.replace(/(initial|\s)/g, "").length == 0) ||
+                (/^(background)\w*/.test(name) && value.replace(/(initial|\s)/g, "").length == 0) ||
                 (/^(margin)\w*/.test(name) && /^0\w+$/.test(value))
               ) {
                 continue;
@@ -9332,9 +8992,7 @@ var filterWord = (UE.filterWord = (function() {
                 case "mso-width":
                 case "mso-vertical-align-alt":
                   //trace:1819 ff下会解析出padding在table上
-                  if (!/<table/.test(tag))
-                    n[i] =
-                      name.replace(/^mso-|-alt$/g, "") + ":" + transUnit(value);
+                  if (!/<table/.test(tag)) n[i] = name.replace(/^mso-|-alt$/g, "") + ":" + transUnit(value);
                   continue;
                 case "horiz-align":
                   n[i] = "text-align:" + value;
@@ -9363,9 +9021,7 @@ var filterWord = (UE.filterWord = (function() {
                   continue;
 
                 case "mso-padding-between-alt":
-                  n[i] =
-                    "border-collapse:separate;border-spacing:" +
-                    transUnit(value);
+                  n[i] = "border-collapse:separate;border-spacing:" + transUnit(value);
                   continue;
 
                 case "text-line-through":
@@ -9390,8 +9046,7 @@ var filterWord = (UE.filterWord = (function() {
                 /^(mso|column|font-emph|lang|layout|line-break|list-image|nav|panose|punct|row|ruby|sep|size|src|tab-|table-border|text-(?:decor|trans)|top-bar|version|vnd|word-break)/.test(
                   name
                 ) ||
-                (/text\-indent|padding|margin/.test(name) &&
-                  /\-[\d.]+/.test(value))
+                (/text\-indent|padding|margin/.test(name) && /\-[\d.]+/.test(value))
               ) {
                 continue;
               }
@@ -9399,12 +9054,7 @@ var filterWord = (UE.filterWord = (function() {
               n[i] = name + ":" + parts[1];
             }
           }
-          return (
-            tag +
-            (n.length
-              ? ' style="' + n.join(";").replace(/;{2,}/g, ";") + '"'
-              : "")
-          );
+          return tag + (n.length ? ' style="' + n.join(";").replace(/;{2,}/g, ";") + '"' : "");
         })
     );
   }
@@ -9432,25 +9082,25 @@ var filterWord = (UE.filterWord = (function() {
 
 (function() {
   /**
-     * 编辑器模拟的节点类
-     * @unfile
-     * @module UE
-     * @class uNode
-     */
+   * 编辑器模拟的节点类
+   * @unfile
+   * @module UE
+   * @class uNode
+   */
 
   /**
-     * 通过一个键值对，创建一个uNode对象
-     * @constructor
-     * @param { Object } attr 传入要创建的uNode的初始属性
-     * @example
-     * ```javascript
-     * var node = new uNode({
-     *     type:'element',
-     *     tagName:'span',
-     *     attrs:{style:'font-size:14px;'}
-     * })
-     * ```
-     */
+   * 通过一个键值对，创建一个uNode对象
+   * @constructor
+   * @param { Object } attr 传入要创建的uNode的初始属性
+   * @example
+   * ```javascript
+   * var node = new uNode({
+   *     type:'element',
+   *     tagName:'span',
+   *     attrs:{style:'font-size:14px;'}
+   * })
+   * ```
+   */
   var uNode = (UE.uNode = function(obj) {
     this.type = obj.type;
     this.data = obj.data;
@@ -9512,12 +9162,7 @@ var filterWord = (UE.filterWord = (function() {
       case "root":
         for (var i = 0, ci; (ci = node.children[i++]); ) {
           //插入新行
-          if (
-            formatter &&
-            ci.type == "element" &&
-            !dtd.$inlineWithA[ci.tagName] &&
-            i > 1
-          ) {
+          if (formatter && ci.type == "element" && !dtd.$inlineWithA[ci.tagName] && i > 1) {
             insertLine(arr, current, true);
             insertIndent(arr, current);
           }
@@ -9542,9 +9187,7 @@ var filterWord = (UE.filterWord = (function() {
       arr.push(node.data);
     } else {
       arr.push(
-        notTransTagName[node.parentNode.tagName]
-          ? utils.html(node.data)
-          : node.data.replace(/[ ]{2}/g, " &nbsp;")
+        notTransTagName[node.parentNode.tagName] ? utils.html(node.data) : node.data.replace(/[ ]{2}/g, " &nbsp;")
       );
     }
   }
@@ -9563,24 +9206,18 @@ var filterWord = (UE.filterWord = (function() {
           a +
             (attrs[a] !== undefined
               ? '="' +
-                  (notTransAttrs[a]
-                    ? utils.html(attrs[a]).replace(/["]/g, function(a) {
-                        return "&quot;";
-                      })
-                    : utils.unhtml(attrs[a])) +
-                  '"'
+                (notTransAttrs[a]
+                  ? utils.html(attrs[a]).replace(/["]/g, function(a) {
+                      return "&quot;";
+                    })
+                  : utils.unhtml(attrs[a])) +
+                '"'
               : "")
         );
       }
       attrhtml = attrhtml.join(" ");
     }
-    arr.push(
-      "<" +
-        node.tagName +
-        (attrhtml ? " " + attrhtml : "") +
-        (dtd.$empty[node.tagName] ? "/" : "") +
-        ">"
-    );
+    arr.push("<" + node.tagName + (attrhtml ? " " + attrhtml : "") + (dtd.$empty[node.tagName] ? "/" : "") + ">");
     //插入新行
     if (formatter && !dtd.$inlineWithA[node.tagName] && node.tagName != "pre") {
       if (node.children && node.children.length) {
@@ -9590,12 +9227,7 @@ var filterWord = (UE.filterWord = (function() {
     }
     if (node.children && node.children.length) {
       for (var i = 0, ci; (ci = node.children[i++]); ) {
-        if (
-          formatter &&
-          ci.type == "element" &&
-          !dtd.$inlineWithA[ci.tagName] &&
-          i > 1
-        ) {
+        if (formatter && ci.type == "element" && !dtd.$inlineWithA[ci.tagName] && i > 1) {
           insertLine(arr, current);
           insertIndent(arr, current);
         }
@@ -9603,11 +9235,7 @@ var filterWord = (UE.filterWord = (function() {
       }
     }
     if (!dtd.$empty[node.tagName]) {
-      if (
-        formatter &&
-        !dtd.$inlineWithA[node.tagName] &&
-        node.tagName != "pre"
-      ) {
+      if (formatter && !dtd.$inlineWithA[node.tagName] && node.tagName != "pre") {
         if (node.children && node.children.length) {
           current = insertLine(arr, current);
           insertIndent(arr, current);
@@ -9663,25 +9291,25 @@ var filterWord = (UE.filterWord = (function() {
   }
   uNode.prototype = {
     /**
-         * 当前节点对象，转换成html文本
-         * @method toHtml
-         * @return { String } 返回转换后的html字符串
-         * @example
-         * ```javascript
-         * node.toHtml();
-         * ```
-         */
+     * 当前节点对象，转换成html文本
+     * @method toHtml
+     * @return { String } 返回转换后的html字符串
+     * @example
+     * ```javascript
+     * node.toHtml();
+     * ```
+     */
 
     /**
-         * 当前节点对象，转换成html文本
-         * @method toHtml
-         * @param { Boolean } formatter 是否格式化返回值
-         * @return { String } 返回转换后的html字符串
-         * @example
-         * ```javascript
-         * node.toHtml( true );
-         * ```
-         */
+     * 当前节点对象，转换成html文本
+     * @method toHtml
+     * @param { Boolean } formatter 是否格式化返回值
+     * @return { String } 返回转换后的html字符串
+     * @example
+     * ```javascript
+     * node.toHtml( true );
+     * ```
+     */
     toHtml: function(formatter) {
       var arr = [];
       nodeToHtml(this, arr, formatter, 0);
@@ -9689,27 +9317,27 @@ var filterWord = (UE.filterWord = (function() {
     },
 
     /**
-         * 获取节点的html内容
-         * @method innerHTML
-         * @warning 假如节点的type不是'element'，或节点的标签名称不在dtd列表里，直接返回当前节点
-         * @return { String } 返回节点的html内容
-         * @example
-         * ```javascript
-         * var htmlstr = node.innerHTML();
-         * ```
-         */
+     * 获取节点的html内容
+     * @method innerHTML
+     * @warning 假如节点的type不是'element'，或节点的标签名称不在dtd列表里，直接返回当前节点
+     * @return { String } 返回节点的html内容
+     * @example
+     * ```javascript
+     * var htmlstr = node.innerHTML();
+     * ```
+     */
 
     /**
-         * 设置节点的html内容
-         * @method innerHTML
-         * @warning 假如节点的type不是'element'，或节点的标签名称不在dtd列表里，直接返回当前节点
-         * @param { String } htmlstr 传入要设置的html内容
-         * @return { UE.uNode } 返回节点本身
-         * @example
-         * ```javascript
-         * node.innerHTML('<span>text</span>');
-         * ```
-         */
+     * 设置节点的html内容
+     * @method innerHTML
+     * @warning 假如节点的type不是'element'，或节点的标签名称不在dtd列表里，直接返回当前节点
+     * @param { String } htmlstr 传入要设置的html内容
+     * @return { UE.uNode } 返回节点本身
+     * @example
+     * ```javascript
+     * node.innerHTML('<span>text</span>');
+     * ```
+     */
     innerHTML: function(htmlstr) {
       if (this.type != "element" || dtd.$empty[this.tagName]) {
         return this;
@@ -9737,27 +9365,27 @@ var filterWord = (UE.filterWord = (function() {
     },
 
     /**
-         * 获取节点的纯文本内容
-         * @method innerText
-         * @warning 假如节点的type不是'element'，或节点的标签名称不在dtd列表里，直接返回当前节点
-         * @return { String } 返回节点的存文本内容
-         * @example
-         * ```javascript
-         * var textStr = node.innerText();
-         * ```
-         */
+     * 获取节点的纯文本内容
+     * @method innerText
+     * @warning 假如节点的type不是'element'，或节点的标签名称不在dtd列表里，直接返回当前节点
+     * @return { String } 返回节点的存文本内容
+     * @example
+     * ```javascript
+     * var textStr = node.innerText();
+     * ```
+     */
 
     /**
-         * 设置节点的纯文本内容
-         * @method innerText
-         * @warning 假如节点的type不是'element'，或节点的标签名称不在dtd列表里，直接返回当前节点
-         * @param { String } textStr 传入要设置的文本内容
-         * @return { UE.uNode } 返回节点本身
-         * @example
-         * ```javascript
-         * node.innerText('<span>text</span>');
-         * ```
-         */
+     * 设置节点的纯文本内容
+     * @method innerText
+     * @warning 假如节点的type不是'element'，或节点的标签名称不在dtd列表里，直接返回当前节点
+     * @param { String } textStr 传入要设置的文本内容
+     * @return { UE.uNode } 返回节点本身
+     * @example
+     * ```javascript
+     * node.innerText('<span>text</span>');
+     * ```
+     */
     innerText: function(textStr, noTrans) {
       if (this.type != "element" || dtd.$empty[this.tagName]) {
         return this;
@@ -9777,28 +9405,28 @@ var filterWord = (UE.filterWord = (function() {
     },
 
     /**
-         * 获取当前对象的data属性
-         * @method getData
-         * @return { Object } 若节点的type值是elemenet，返回空字符串，否则返回节点的data属性
-         * @example
-         * ```javascript
-         * node.getData();
-         * ```
-         */
+     * 获取当前对象的data属性
+     * @method getData
+     * @return { Object } 若节点的type值是elemenet，返回空字符串，否则返回节点的data属性
+     * @example
+     * ```javascript
+     * node.getData();
+     * ```
+     */
     getData: function() {
       if (this.type == "element") return "";
       return this.data;
     },
 
     /**
-         * 获取当前节点下的第一个子节点
-         * @method firstChild
-         * @return { UE.uNode } 返回第一个子节点
-         * @example
-         * ```javascript
-         * node.firstChild(); //返回第一个子节点
-         * ```
-         */
+     * 获取当前节点下的第一个子节点
+     * @method firstChild
+     * @return { UE.uNode } 返回第一个子节点
+     * @example
+     * ```javascript
+     * node.firstChild(); //返回第一个子节点
+     * ```
+     */
     firstChild: function() {
       //            if (this.type != 'element' || dtd.$empty[this.tagName]) {
       //                return this;
@@ -9807,14 +9435,14 @@ var filterWord = (UE.filterWord = (function() {
     },
 
     /**
-         * 获取当前节点下的最后一个子节点
-         * @method lastChild
-         * @return { UE.uNode } 返回最后一个子节点
-         * @example
-         * ```javascript
-         * node.lastChild(); //返回最后一个子节点
-         * ```
-         */
+     * 获取当前节点下的最后一个子节点
+     * @method lastChild
+     * @return { UE.uNode } 返回最后一个子节点
+     * @example
+     * ```javascript
+     * node.lastChild(); //返回最后一个子节点
+     * ```
+     */
     lastChild: function() {
       //            if (this.type != 'element' || dtd.$empty[this.tagName] ) {
       //                return this;
@@ -9823,14 +9451,14 @@ var filterWord = (UE.filterWord = (function() {
     },
 
     /**
-         * 获取和当前节点有相同父亲节点的前一个节点
-         * @method previousSibling
-         * @return { UE.uNode } 返回前一个节点
-         * @example
-         * ```javascript
-         * node.children[2].previousSibling(); //返回子节点node.children[1]
-         * ```
-         */
+     * 获取和当前节点有相同父亲节点的前一个节点
+     * @method previousSibling
+     * @return { UE.uNode } 返回前一个节点
+     * @example
+     * ```javascript
+     * node.children[2].previousSibling(); //返回子节点node.children[1]
+     * ```
+     */
     previousSibling: function() {
       var parent = this.parentNode;
       for (var i = 0, ci; (ci = parent.children[i]); i++) {
@@ -9841,14 +9469,14 @@ var filterWord = (UE.filterWord = (function() {
     },
 
     /**
-         * 获取和当前节点有相同父亲节点的后一个节点
-         * @method nextSibling
-         * @return { UE.uNode } 返回后一个节点,找不到返回null
-         * @example
-         * ```javascript
-         * node.children[2].nextSibling(); //如果有，返回子节点node.children[3]
-         * ```
-         */
+     * 获取和当前节点有相同父亲节点的后一个节点
+     * @method nextSibling
+     * @return { UE.uNode } 返回后一个节点,找不到返回null
+     * @example
+     * ```javascript
+     * node.children[2].nextSibling(); //如果有，返回子节点node.children[3]
+     * ```
+     */
     nextSibling: function() {
       var parent = this.parentNode;
       for (var i = 0, ci; (ci = parent.children[i++]); ) {
@@ -9859,16 +9487,16 @@ var filterWord = (UE.filterWord = (function() {
     },
 
     /**
-         * 用新的节点替换当前节点
-         * @method replaceChild
-         * @param { UE.uNode } target 要替换成该节点参数
-         * @param { UE.uNode } source 要被替换掉的节点
-         * @return { UE.uNode } 返回替换之后的节点对象
-         * @example
-         * ```javascript
-         * node.replaceChild(newNode, childNode); //用newNode替换childNode,childNode是node的子节点
-         * ```
-         */
+     * 用新的节点替换当前节点
+     * @method replaceChild
+     * @param { UE.uNode } target 要替换成该节点参数
+     * @param { UE.uNode } source 要被替换掉的节点
+     * @return { UE.uNode } 返回替换之后的节点对象
+     * @example
+     * ```javascript
+     * node.replaceChild(newNode, childNode); //用newNode替换childNode,childNode是node的子节点
+     * ```
+     */
     replaceChild: function(target, source) {
       if (this.children) {
         if (target.parentNode) {
@@ -9886,20 +9514,17 @@ var filterWord = (UE.filterWord = (function() {
     },
 
     /**
-         * 在节点的子节点列表最后位置插入一个节点
-         * @method appendChild
-         * @param { UE.uNode } node 要插入的节点
-         * @return { UE.uNode } 返回刚插入的子节点
-         * @example
-         * ```javascript
-         * node.appendChild( newNode ); //在node内插入子节点newNode
-         * ```
-         */
+     * 在节点的子节点列表最后位置插入一个节点
+     * @method appendChild
+     * @param { UE.uNode } node 要插入的节点
+     * @return { UE.uNode } 返回刚插入的子节点
+     * @example
+     * ```javascript
+     * node.appendChild( newNode ); //在node内插入子节点newNode
+     * ```
+     */
     appendChild: function(node) {
-      if (
-        this.type == "root" ||
-        (this.type == "element" && !dtd.$empty[this.tagName])
-      ) {
+      if (this.type == "root" || (this.type == "element" && !dtd.$empty[this.tagName])) {
         if (!this.children) {
           this.children = [];
         }
@@ -9919,16 +9544,16 @@ var filterWord = (UE.filterWord = (function() {
     },
 
     /**
-         * 在传入节点的前面插入一个节点
-         * @method insertBefore
-         * @param { UE.uNode } target 要插入的节点
-         * @param { UE.uNode } source 在该参数节点前面插入
-         * @return { UE.uNode } 返回刚插入的子节点
-         * @example
-         * ```javascript
-         * node.parentNode.insertBefore(newNode, node); //在node节点后面插入newNode
-         * ```
-         */
+     * 在传入节点的前面插入一个节点
+     * @method insertBefore
+     * @param { UE.uNode } target 要插入的节点
+     * @param { UE.uNode } source 在该参数节点前面插入
+     * @return { UE.uNode } 返回刚插入的子节点
+     * @example
+     * ```javascript
+     * node.parentNode.insertBefore(newNode, node); //在node节点后面插入newNode
+     * ```
+     */
     insertBefore: function(target, source) {
       if (this.children) {
         if (target.parentNode) {
@@ -9945,16 +9570,16 @@ var filterWord = (UE.filterWord = (function() {
     },
 
     /**
-         * 在传入节点的后面插入一个节点
-         * @method insertAfter
-         * @param { UE.uNode } target 要插入的节点
-         * @param { UE.uNode } source 在该参数节点后面插入
-         * @return { UE.uNode } 返回刚插入的子节点
-         * @example
-         * ```javascript
-         * node.parentNode.insertAfter(newNode, node); //在node节点后面插入newNode
-         * ```
-         */
+     * 在传入节点的后面插入一个节点
+     * @method insertAfter
+     * @param { UE.uNode } target 要插入的节点
+     * @param { UE.uNode } source 在该参数节点后面插入
+     * @return { UE.uNode } 返回刚插入的子节点
+     * @example
+     * ```javascript
+     * node.parentNode.insertAfter(newNode, node); //在node节点后面插入newNode
+     * ```
+     */
     insertAfter: function(target, source) {
       if (this.children) {
         if (target.parentNode) {
@@ -9971,16 +9596,16 @@ var filterWord = (UE.filterWord = (function() {
     },
 
     /**
-         * 从当前节点的子节点列表中，移除节点
-         * @method removeChild
-         * @param { UE.uNode } node 要移除的节点引用
-         * @param { Boolean } keepChildren 是否保留移除节点的子节点，若传入true，自动把移除节点的子节点插入到移除的位置
-         * @return { * } 返回刚移除的子节点
-         * @example
-         * ```javascript
-         * node.removeChild(childNode,true); //在node的子节点列表中移除child节点，并且吧child的子节点插入到移除的位置
-         * ```
-         */
+     * 从当前节点的子节点列表中，移除节点
+     * @method removeChild
+     * @param { UE.uNode } node 要移除的节点引用
+     * @param { Boolean } keepChildren 是否保留移除节点的子节点，若传入true，自动把移除节点的子节点插入到移除的位置
+     * @return { * } 返回刚移除的子节点
+     * @example
+     * ```javascript
+     * node.removeChild(childNode,true); //在node的子节点列表中移除child节点，并且吧child的子节点插入到移除的位置
+     * ```
+     */
     removeChild: function(node, keepChildren) {
       if (this.children) {
         for (var i = 0, ci; (ci = this.children[i]); i++) {
@@ -10000,30 +9625,30 @@ var filterWord = (UE.filterWord = (function() {
     },
 
     /**
-         * 获取当前节点所代表的元素属性，即获取attrs对象下的属性值
-         * @method getAttr
-         * @param { String } attrName 要获取的属性名称
-         * @return { * } 返回attrs对象下的属性值
-         * @example
-         * ```javascript
-         * node.getAttr('title');
-         * ```
-         */
+     * 获取当前节点所代表的元素属性，即获取attrs对象下的属性值
+     * @method getAttr
+     * @param { String } attrName 要获取的属性名称
+     * @return { * } 返回attrs对象下的属性值
+     * @example
+     * ```javascript
+     * node.getAttr('title');
+     * ```
+     */
     getAttr: function(attrName) {
       return this.attrs && this.attrs[attrName.toLowerCase()];
     },
 
     /**
-         * 设置当前节点所代表的元素属性，即设置attrs对象下的属性值
-         * @method setAttr
-         * @param { String } attrName 要设置的属性名称
-         * @param { * } attrVal 要设置的属性值，类型视设置的属性而定
-         * @return { * } 返回attrs对象下的属性值
-         * @example
-         * ```javascript
-         * node.setAttr('title','标题');
-         * ```
-         */
+     * 设置当前节点所代表的元素属性，即设置attrs对象下的属性值
+     * @method setAttr
+     * @param { String } attrName 要设置的属性名称
+     * @param { * } attrVal 要设置的属性值，类型视设置的属性而定
+     * @return { * } 返回attrs对象下的属性值
+     * @example
+     * ```javascript
+     * node.setAttr('title','标题');
+     * ```
+     */
     setAttr: function(attrName, attrVal) {
       if (!attrName) {
         delete this.attrs;
@@ -10050,14 +9675,14 @@ var filterWord = (UE.filterWord = (function() {
     },
 
     /**
-         * 获取当前节点在父节点下的位置索引
-         * @method getIndex
-         * @return { Number } 返回索引数值，如果没有父节点，返回-1
-         * @example
-         * ```javascript
-         * node.getIndex();
-         * ```
-         */
+     * 获取当前节点在父节点下的位置索引
+     * @method getIndex
+     * @return { Number } 返回索引数值，如果没有父节点，返回-1
+     * @example
+     * ```javascript
+     * node.getIndex();
+     * ```
+     */
     getIndex: function() {
       var parent = this.parentNode;
       for (var i = 0, ci; (ci = parent.children[i]); i++) {
@@ -10069,15 +9694,15 @@ var filterWord = (UE.filterWord = (function() {
     },
 
     /**
-         * 在当前节点下，根据id查找节点
-         * @method getNodeById
-         * @param { String } id 要查找的id
-         * @return { UE.uNode } 返回找到的节点
-         * @example
-         * ```javascript
-         * node.getNodeById('textId');
-         * ```
-         */
+     * 在当前节点下，根据id查找节点
+     * @method getNodeById
+     * @param { String } id 要查找的id
+     * @return { UE.uNode } 返回找到的节点
+     * @example
+     * ```javascript
+     * node.getNodeById('textId');
+     * ```
+     */
     getNodeById: function(id) {
       var node;
       if (this.children && this.children.length) {
@@ -10090,17 +9715,20 @@ var filterWord = (UE.filterWord = (function() {
     },
 
     /**
-         * 在当前节点下，根据元素名称查找节点列表
-         * @method getNodesByTagName
-         * @param { String } tagNames 要查找的元素名称
-         * @return { Array } 返回找到的节点列表
-         * @example
-         * ```javascript
-         * node.getNodesByTagName('span');
-         * ```
-         */
+     * 在当前节点下，根据元素名称查找节点列表
+     * @method getNodesByTagName
+     * @param { String } tagNames 要查找的元素名称
+     * @return { Array } 返回找到的节点列表
+     * @example
+     * ```javascript
+     * node.getNodesByTagName('span');
+     * ```
+     */
     getNodesByTagName: function(tagNames) {
-      tagNames = utils.trim(tagNames).replace(/[ ]{2,}/g, " ").split(" ");
+      tagNames = utils
+        .trim(tagNames)
+        .replace(/[ ]{2,}/g, " ")
+        .split(" ");
       var arr = [],
         me = this;
       utils.each(tagNames, function(tagName) {
@@ -10114,15 +9742,15 @@ var filterWord = (UE.filterWord = (function() {
     },
 
     /**
-         * 根据样式名称，获取节点的样式值
-         * @method getStyle
-         * @param { String } name 要获取的样式名称
-         * @return { String } 返回样式值
-         * @example
-         * ```javascript
-         * node.getStyle('font-size');
-         * ```
-         */
+     * 根据样式名称，获取节点的样式值
+     * @method getStyle
+     * @param { String } name 要获取的样式名称
+     * @return { String } 返回样式值
+     * @example
+     * ```javascript
+     * node.getStyle('font-size');
+     * ```
+     */
     getStyle: function(name) {
       var cssStyle = this.getAttr("style");
       if (!cssStyle) {
@@ -10137,15 +9765,15 @@ var filterWord = (UE.filterWord = (function() {
     },
 
     /**
-         * 给节点设置样式
-         * @method setStyle
-         * @param { String } name 要设置的的样式名称
-         * @param { String } val 要设置的的样值
-         * @example
-         * ```javascript
-         * node.setStyle('font-size', '12px');
-         * ```
-         */
+     * 给节点设置样式
+     * @method setStyle
+     * @param { String } name 要设置的的样式名称
+     * @param { String } val 要设置的的样值
+     * @example
+     * ```javascript
+     * node.setStyle('font-size', '12px');
+     * ```
+     */
     setStyle: function(name, val) {
       function exec(name, val) {
         var reg = new RegExp("(^|;)\\s*" + name + ":([^;]+;?)", "gi");
@@ -10170,16 +9798,16 @@ var filterWord = (UE.filterWord = (function() {
     },
 
     /**
-         * 传入一个函数，递归遍历当前节点下的所有节点
-         * @method traversal
-         * @param { Function } fn 遍历到节点的时，传入节点作为参数，运行此函数
-         * @example
-         * ```javascript
-         * traversal(node, function(){
-         *     console.log(node.type);
-         * });
-         * ```
-         */
+     * 传入一个函数，递归遍历当前节点下的所有节点
+     * @method traversal
+     * @param { Function } fn 遍历到节点的时，传入节点作为参数，运行此函数
+     * @example
+     * ```javascript
+     * traversal(node, function(){
+     *     console.log(node.type);
+     * });
+     * ```
+     */
     traversal: function(fn) {
       if (this.children && this.children.length) {
         nodeTraversal(this, fn);
@@ -10268,10 +9896,7 @@ var htmlparser = (UE.htmlparser = function(htmlstr, ignoreBlank) {
         }
         return a
           .replace(new RegExp("^[\\r\\n" + (ignoreBlank ? "" : " ") + "]+"), "")
-          .replace(
-            new RegExp("[\\r\\n" + (ignoreBlank ? "" : " ") + "]+$"),
-            ""
-          );
+          .replace(new RegExp("[\\r\\n" + (ignoreBlank ? "" : " ") + "]+$"), "");
       }
     );
   }
@@ -10329,10 +9954,7 @@ var htmlparser = (UE.htmlparser = function(htmlstr, ignoreBlank) {
         tmpParent = tmpParent.parentNode;
       }
       if (!hasParent) {
-        parent = element(
-          parent,
-          utils.isArray(needParentTag) ? needParentTag[0] : needParentTag
-        );
+        parent = element(parent, utils.isArray(needParentTag) ? needParentTag[0] : needParentTag);
       }
     }
     //按dtd处理嵌套
@@ -10399,11 +10021,7 @@ var htmlparser = (UE.htmlparser = function(htmlstr, ignoreBlank) {
           text(currentParent, match[0]);
         } else {
           //start tag
-          currentParent = element(
-            currentParent,
-            match[3].toLowerCase(),
-            match[4]
-          );
+          currentParent = element(currentParent, match[3].toLowerCase(), match[4]);
         }
       } else if (match[1]) {
         if (currentParent.type != "root") {
@@ -10411,10 +10029,7 @@ var htmlparser = (UE.htmlparser = function(htmlstr, ignoreBlank) {
             text(currentParent, match[0]);
           } else {
             var tmpParent = currentParent;
-            while (
-              currentParent.type == "element" &&
-              currentParent.tagName != match[1].toLowerCase()
-            ) {
+            while (currentParent.type == "element" && currentParent.tagName != match[1].toLowerCase()) {
               currentParent = currentParent.parentNode;
               if (currentParent.type == "root") {
                 currentParent = tmpParent;
@@ -10860,10 +10475,7 @@ UE.plugins["defaultfilter"] = function() {
           (!node.attrs || utils.isEmptyObject(node.attrs))
         ) {
           if (!node.firstChild()) node.parentNode.removeChild(node);
-          else if (
-            node.tagName == "span" &&
-            (!node.attrs || utils.isEmptyObject(node.attrs))
-          ) {
+          else if (node.tagName == "span" && (!node.attrs || utils.isEmptyObject(node.attrs))) {
             node.parentNode.removeChild(node, true);
           }
           return;
@@ -10898,10 +10510,7 @@ UE.plugins["defaultfilter"] = function() {
             if (browser.webkit && (val = node.getStyle("white-space"))) {
               if (/nowrap|normal/.test(val)) {
                 node.setStyle("white-space", "");
-                if (
-                  me.options.autoClearEmptyNode &&
-                  utils.isEmptyObject(node.attrs)
-                ) {
+                if (me.options.autoClearEmptyNode && utils.isEmptyObject(node.attrs)) {
                   node.parentNode.removeChild(node, true);
                 }
               }
@@ -10957,10 +10566,7 @@ UE.plugins["defaultfilter"] = function() {
             var tmpNode,
               p = UE.uNode.createElement("p");
             while ((tmpNode = node.firstChild())) {
-              if (
-                tmpNode.type == "text" ||
-                !UE.dom.dtd.$block[tmpNode.tagName]
-              ) {
+              if (tmpNode.type == "text" || !UE.dom.dtd.$block[tmpNode.tagName]) {
                 p.appendChild(tmpNode);
               } else {
                 if (p.firstChild()) {
@@ -10997,19 +10603,12 @@ UE.plugins["defaultfilter"] = function() {
           case "th":
           case "caption":
             if (!node.children || !node.children.length) {
-              node.appendChild(
-                browser.ie11below
-                  ? UE.uNode.createText(" ")
-                  : UE.uNode.createElement("br")
-              );
+              node.appendChild(browser.ie11below ? UE.uNode.createText(" ") : UE.uNode.createElement("br"));
             }
             break;
           case "table":
             if (me.options.disabledTableInTable && tdParent(node)) {
-              node.parentNode.insertBefore(
-                UE.uNode.createText(node.innerText()),
-                node
-              );
+              node.parentNode.insertBefore(UE.uNode.createText(node.innerText()), node);
               node.parentNode.removeChild(node);
             }
         }
@@ -11032,10 +10631,7 @@ UE.plugins["defaultfilter"] = function() {
           (!node.attrs || utils.isEmptyObject(node.attrs))
         ) {
           if (!node.firstChild()) node.parentNode.removeChild(node);
-          else if (
-            node.tagName == "span" &&
-            (!node.attrs || utils.isEmptyObject(node.attrs))
-          ) {
+          else if (node.tagName == "span" && (!node.attrs || utils.isEmptyObject(node.attrs))) {
             node.parentNode.removeChild(node, true);
           }
           return;
@@ -11077,10 +10673,7 @@ UE.plugins["defaultfilter"] = function() {
                     if (array.length > 3) return "";
                     value = "#";
                     for (var i = 0, color; (color = array[i++]); ) {
-                      color = parseInt(
-                        color.replace(/[^\d]/gi, ""),
-                        10
-                      ).toString(16);
+                      color = parseInt(color.replace(/[^\d]/gi, ""), 10).toString(16);
                       value += color.length == 1 ? "0" + color : color;
                     }
                     return value.toUpperCase();
@@ -11182,10 +10775,7 @@ UE.commands["inserthtml"] = {
         if (domUtils.isBoundaryNode(tmpNode, "firstChild")) {
           tmpNode = range.endContainer;
           if (
-            range.endOffset ==
-              (tmpNode.nodeType == 3
-                ? tmpNode.nodeValue.length
-                : tmpNode.childNodes.length) &&
+            range.endOffset == (tmpNode.nodeType == 3 ? tmpNode.nodeValue.length : tmpNode.childNodes.length) &&
             domUtils.isBoundaryNode(tmpNode, "lastChild")
           ) {
             me.body.innerHTML = "<p>" + (browser.ie ? "" : "<br/>") + "</p>";
@@ -11197,12 +10787,7 @@ UE.commands["inserthtml"] = {
       if (range.startContainer.nodeType == 1) {
         var child = range.startContainer.childNodes[range.startOffset],
           pre;
-        if (
-          child &&
-          domUtils.isBlockElm(child) &&
-          (pre = child.previousSibling) &&
-          domUtils.isBlockElm(pre)
-        ) {
+        if (child && domUtils.isBlockElm(child) && (pre = child.previousSibling) && domUtils.isBlockElm(pre)) {
           range.setEnd(pre, pre.childNodes.length).collapse();
           while (child.firstChild) {
             pre.appendChild(child.firstChild);
@@ -11236,12 +10821,7 @@ UE.commands["inserthtml"] = {
       var next, last;
       while ((child = div.firstChild)) {
         //针对hr单独处理一下先
-        while (
-          child &&
-          (child.nodeType == 3 ||
-            !domUtils.isBlockElm(child) ||
-            child.tagName == "HR")
-        ) {
+        while (child && (child.nodeType == 3 || !domUtils.isBlockElm(child) || child.tagName == "HR")) {
           next = child.nextSibling;
           range.insertNode(child).collapse();
           last = child;
@@ -11272,7 +10852,10 @@ UE.commands["inserthtml"] = {
         domUtils.remove(li);
       }
       if (last) {
-        range.setStartAfter(last).collapse(true).select(true);
+        range
+          .setStartAfter(last)
+          .collapse(true)
+          .select(true);
       }
     } else {
       while ((child = div.firstChild)) {
@@ -11289,20 +10872,14 @@ UE.commands["inserthtml"] = {
         }
         range.insertNode(child);
         nextNode = child.nextSibling;
-        if (
-          !hadBreak &&
-          child.nodeType == domUtils.NODE_ELEMENT &&
-          domUtils.isBlockElm(child)
-        ) {
+        if (!hadBreak && child.nodeType == domUtils.NODE_ELEMENT && domUtils.isBlockElm(child)) {
           parent = domUtils.findParent(child, function(node) {
             return domUtils.isBlockElm(node);
           });
           if (
             parent &&
             parent.tagName.toLowerCase() != "body" &&
-            !(
-              dtd[parent.tagName][child.nodeName] && child.parentNode === parent
-            )
+            !(dtd[parent.tagName][child.nodeName] && child.parentNode === parent)
           ) {
             if (!dtd[parent.tagName][child.nodeName]) {
               pre = parent;
@@ -11353,7 +10930,10 @@ UE.commands["inserthtml"] = {
         if ((nextNode = child.nextSibling)) {
           domUtils.remove(child);
           if (nextNode.nodeType == 1 && dtd.$block[nextNode.tagName]) {
-            range.setStart(nextNode, 0).collapse(true).shrinkBoundary();
+            range
+              .setStart(nextNode, 0)
+              .collapse(true)
+              .shrinkBoundary();
           }
         } else {
           try {
@@ -11372,10 +10952,7 @@ UE.commands["inserthtml"] = {
 
     setTimeout(function() {
       range = me.selection.getRange();
-      range.scrollToView(
-        me.autoHeightEnabled,
-        me.autoHeightEnabled ? domUtils.getXY(me.iframe).y : 0
-      );
+      range.scrollToView(me.autoHeightEnabled, me.autoHeightEnabled ? domUtils.getXY(me.iframe).y : 0);
       me.fireEvent("afterinserthtml", html);
     }, 200);
   }
@@ -11413,7 +10990,7 @@ UE.plugins["autotypeset"] = function() {
       clearFontFamily: false, //去掉所有的内嵌字体，使用编辑器默认的字体
       removeEmptyNode: false, // 去掉空节点
       //可以去掉的标签
-      removeTagNames: utils.extend({ div: 1 }, dtd.$removeEmpty),
+      removeTagNames: utils.extend({div: 1}, dtd.$removeEmpty),
       indent: false, // 行首缩进
       indentValue: "2em", //行首缩进的大小
       bdc2sb: false,
@@ -11457,29 +11034,20 @@ UE.plugins["autotypeset"] = function() {
     if (!node || node.nodeType == 3) return 0;
     if (domUtils.isBr(node)) return 1;
     if (node && node.parentNode && tags[node.tagName.toLowerCase()]) {
-      if (
-        (highlightCont && highlightCont.contains(node)) ||
-        node.getAttribute("pagebreak")
-      ) {
+      if ((highlightCont && highlightCont.contains(node)) || node.getAttribute("pagebreak")) {
         return 0;
       }
 
       return notEmpty
         ? !domUtils.isEmptyBlock(node)
-        : domUtils.isEmptyBlock(
-            node,
-            new RegExp("[\\s" + domUtils.fillChar + "]", "g")
-          );
+        : domUtils.isEmptyBlock(node, new RegExp("[\\s" + domUtils.fillChar + "]", "g"));
     }
   }
 
   function removeNotAttributeSpan(node) {
     if (!node.style.cssText) {
       domUtils.removeAttributes(node, ["style"]);
-      if (
-        node.tagName.toLowerCase() == "span" &&
-        domUtils.hasNoAttributes(node)
-      ) {
+      if (node.tagName.toLowerCase() == "span" && domUtils.hasNoAttributes(node)) {
         domUtils.remove(node, true);
       }
     }
@@ -11531,11 +11099,7 @@ UE.plugins["autotypeset"] = function() {
           }
         }
         //去掉空行，保留占位的空行
-        if (
-          opt.removeEmptyline &&
-          domUtils.inDoc(ci, cont) &&
-          !remainTag[ci.parentNode.tagName.toLowerCase()]
-        ) {
+        if (opt.removeEmptyline && domUtils.inDoc(ci, cont) && !remainTag[ci.parentNode.tagName.toLowerCase()]) {
           if (domUtils.isBr(ci)) {
             next = ci.nextSibling;
             if (next && !domUtils.isBr(next)) {
@@ -11558,11 +11122,7 @@ UE.plugins["autotypeset"] = function() {
       }
 
       //去掉class,保留的class不去掉
-      if (
-        opt.removeClass &&
-        ci.className &&
-        !remainClass[ci.className.toLowerCase()]
-      ) {
+      if (opt.removeClass && ci.className && !remainClass[ci.className.toLowerCase()]) {
         if (highlightCont && highlightCont.contains(ci)) {
           continue;
         }
@@ -11570,11 +11130,7 @@ UE.plugins["autotypeset"] = function() {
       }
 
       //表情不处理
-      if (
-        opt.imageBlockLine &&
-        ci.tagName.toLowerCase() == "img" &&
-        !ci.getAttribute("emotion")
-      ) {
+      if (opt.imageBlockLine && ci.tagName.toLowerCase() == "img" && !ci.getAttribute("emotion")) {
         if (html) {
           var img = ci;
           switch (opt.imageBlockLine) {
@@ -11589,10 +11145,7 @@ UE.plugins["autotypeset"] = function() {
                 pN = pN.parentNode;
               }
               tmpNode = pN;
-              if (
-                tmpNode.tagName == "P" &&
-                domUtils.getStyle(tmpNode, "text-align") == "center"
-              ) {
+              if (tmpNode.tagName == "P" && domUtils.getStyle(tmpNode, "text-align") == "center") {
                 if (
                   !domUtils.isBody(tmpNode) &&
                   domUtils.getChildCount(tmpNode, function(node) {
@@ -11655,11 +11208,7 @@ UE.plugins["autotypeset"] = function() {
 
       //去掉冗余的标签
       if (opt.removeEmptyNode) {
-        if (
-          opt.removeTagNames[ci.tagName.toLowerCase()] &&
-          domUtils.hasNoAttributes(ci) &&
-          domUtils.isEmptyBlock(ci)
-        ) {
+        if (opt.removeTagNames[ci.tagName.toLowerCase()] && domUtils.hasNoAttributes(ci) && domUtils.isEmptyBlock(ci)) {
           domUtils.remove(ci);
         }
       }
@@ -11812,11 +11361,7 @@ UE.plugin.register("background", function() {
           styles.push(name + ":" + obj[name] + "; ");
         }
       }
-      utils.cssRule(
-        cssRuleId,
-        styles.length ? "body{" + styles.join("") + "}" : "",
-        me.document
-      );
+      utils.cssRule(cssRuleId, styles.length ? "body{" + styles.join("") + "}" : "", me.document);
     } else {
       utils.cssRule(cssRuleId, "", me.document);
     }
@@ -11837,23 +11382,19 @@ UE.plugin.register("background", function() {
           su = domUtils.getComputedStyle(body, "background-image"),
           url = "";
         if (su.indexOf(me.options.imagePath) > 0) {
-          url = su
-            .substring(su.indexOf(me.options.imagePath), su.length - 1)
-            .replace(/"|\(|\)/gi, "");
+          url = su.substring(su.indexOf(me.options.imagePath), su.length - 1).replace(/"|\(|\)/gi, "");
         } else {
           url = su != "none" ? su.replace(/url\("?|"?\)/gi, "") : "";
         }
         var html = '<style type="text/css">body{';
         var bgObj = {
-          "background-color":
-            domUtils.getComputedStyle(body, "background-color") || "#ffffff",
+          "background-color": domUtils.getComputedStyle(body, "background-color") || "#ffffff",
           "background-image": url ? "url(" + url + ")" : "",
-          "background-repeat":
-            domUtils.getComputedStyle(body, "background-repeat") || "",
+          "background-repeat": domUtils.getComputedStyle(body, "background-repeat") || "",
           "background-position": browser.ie
             ? domUtils.getComputedStyle(body, "background-position-x") +
-                " " +
-                domUtils.getComputedStyle(body, "background-position-y")
+              " " +
+              domUtils.getComputedStyle(body, "background-position-y")
             : domUtils.getComputedStyle(body, "background-position"),
           height: domUtils.getComputedStyle(body, "height")
         };
@@ -11882,9 +11423,7 @@ UE.plugin.register("background", function() {
     },
     outputRule: function(root) {
       var me = this,
-        styles = (utils.cssRule(cssRuleId, me.document) || "")
-          .replace(/[\n\r]+/g, "")
-          .match(reg);
+        styles = (utils.cssRule(cssRuleId, me.document) || "").replace(/[\n\r]+/g, "").match(reg);
       if (styles) {
         root.appendChild(
           UE.uNode.createElement(
@@ -11902,9 +11441,7 @@ UE.plugin.register("background", function() {
         },
         queryCommandValue: function() {
           var me = this,
-            styles = (utils.cssRule(cssRuleId, me.document) || "")
-              .replace(/[\n\r]+/g, "")
-              .match(reg);
+            styles = (utils.cssRule(cssRuleId, me.document) || "").replace(/[\n\r]+/g, "").match(reg);
           return styles ? stringToObj(styles[1]) : null;
         },
         notNeedUndo: true
@@ -11966,10 +11503,7 @@ UE.commands["imagefloat"] = {
               pN = pN.parentNode;
             }
             tmpNode = pN;
-            if (
-              tmpNode.tagName == "P" &&
-              domUtils.getStyle(tmpNode, "text-align") == "center"
-            ) {
+            if (tmpNode.tagName == "P" && domUtils.getStyle(tmpNode, "text-align") == "center") {
               if (
                 !domUtils.isBody(tmpNode) &&
                 domUtils.getChildCount(tmpNode, function(node) {
@@ -12028,9 +11562,7 @@ UE.commands["imagefloat"] = {
 
               me.execCommand(
                 "insertHtml",
-                '<p id="_img_parent_tmp" style="text-align:center">' +
-                  pN.innerHTML +
-                  "</p>"
+                '<p id="_img_parent_tmp" style="text-align:center">' + pN.innerHTML + "</p>"
               );
 
               tmpNode = me.document.getElementById("_img_parent_tmp");
@@ -12058,17 +11590,10 @@ UE.commands["imagefloat"] = {
     }
     startNode = range.getClosedNode();
     if (startNode && startNode.nodeType == 1 && startNode.tagName == "IMG") {
-      floatStyle =
-        domUtils.getComputedStyle(startNode, "float") ||
-        startNode.getAttribute("align");
+      floatStyle = domUtils.getComputedStyle(startNode, "float") || startNode.getAttribute("align");
 
       if (floatStyle == "none") {
-        floatStyle = domUtils.getComputedStyle(
-          startNode.parentNode,
-          "text-align"
-        ) == "center"
-          ? "center"
-          : floatStyle;
+        floatStyle = domUtils.getComputedStyle(startNode.parentNode, "text-align") == "center" ? "center" : floatStyle;
       }
       return {
         left: 1,
@@ -12141,8 +11666,7 @@ UE.commands["insertimage"] = {
     if (
       img &&
       /img/i.test(img.tagName) &&
-      (img.className != "edui-faked-video" ||
-        img.className.indexOf("edui-upload-video") != -1) &&
+      (img.className != "edui-faked-video" || img.className.indexOf("edui-upload-video") != -1) &&
       !img.getAttribute("word_img")
     ) {
       var first = opt.shift();
@@ -12176,12 +11700,8 @@ UE.commands["insertimage"] = {
           (ci.title && ci.title != "" ? ' title="' + ci.title + '"' : "") +
           (ci.border && ci.border != "0" ? ' border="' + ci.border + '"' : "") +
           (ci.alt && ci.alt != "" ? ' alt="' + ci.alt + '"' : "") +
-          (ci.hspace && ci.hspace != "0"
-            ? ' hspace = "' + ci.hspace + '"'
-            : "") +
-          (ci.vspace && ci.vspace != "0"
-            ? ' vspace = "' + ci.vspace + '"'
-            : "") +
+          (ci.hspace && ci.hspace != "0" ? ' hspace = "' + ci.hspace + '"' : "") +
+          (ci.vspace && ci.vspace != "0" ? ' vspace = "' + ci.vspace + '"' : "") +
           "/>";
         if (ci["floatStyle"] == "center") {
           str = '<p style="text-align: center">' + str + "</p>";
@@ -12191,9 +11711,7 @@ UE.commands["insertimage"] = {
         for (var i = 0; (ci = opt[i++]); ) {
           str =
             "<p " +
-            (ci["floatStyle"] == "center"
-              ? 'style="text-align: center" '
-              : "") +
+            (ci["floatStyle"] == "center" ? 'style="text-align: center" ' : "") +
             '><img src="' +
             ci.src +
             '" ' +
@@ -12201,9 +11719,7 @@ UE.commands["insertimage"] = {
             (ci._src ? ' _src="' + ci._src + '" ' : "") +
             (ci.height ? ' height="' + ci.height + '" ' : "") +
             ' style="' +
-            (ci["floatStyle"] && ci["floatStyle"] != "center"
-              ? "float:" + ci["floatStyle"] + ";"
-              : "") +
+            (ci["floatStyle"] && ci["floatStyle"] != "center" ? "float:" + ci["floatStyle"] + ";" : "") +
             (ci.border || "") +
             '" ' +
             (ci.title ? ' title="' + ci.title + '"' : "") +
@@ -12263,8 +11779,7 @@ UE.plugins["justify"] = function() {
       var bookmark = range.createBookmark(),
         filterFn = function(node) {
           return node.nodeType == 1
-            ? node.tagName.toLowerCase() != "br" &&
-                !domUtils.isBookmarkNode(node)
+            ? node.tagName.toLowerCase() != "br" && !domUtils.isBookmarkNode(node)
             : !domUtils.isWhitespace(node);
         };
 
@@ -12273,37 +11788,23 @@ UE.plugins["justify"] = function() {
         current = domUtils.getNextDomNode(bookmark2.start, false, filterFn),
         tmpRange = range.cloneRange(),
         tmpNode;
-      while (
-        current &&
-        !(
-          domUtils.getPosition(current, bookmark2.end) &
-          domUtils.POSITION_FOLLOWING
-        )
-      ) {
+      while (current && !(domUtils.getPosition(current, bookmark2.end) & domUtils.POSITION_FOLLOWING)) {
         if (current.nodeType == 3 || !block(current)) {
           tmpRange.setStartBefore(current);
           while (current && current !== bookmark2.end && !block(current)) {
             tmpNode = current;
-            current = domUtils.getNextDomNode(current, false, null, function(
-              node
-            ) {
+            current = domUtils.getNextDomNode(current, false, null, function(node) {
               return !block(node);
             });
           }
           tmpRange.setEndAfter(tmpNode);
           var common = tmpRange.getCommonAncestor();
           if (!domUtils.isBody(common) && block(common)) {
-            domUtils.setStyles(
-              common,
-              utils.isString(style) ? { "text-align": style } : style
-            );
+            domUtils.setStyles(common, utils.isString(style) ? {"text-align": style} : style);
             current = common;
           } else {
             var p = range.document.createElement("p");
-            domUtils.setStyles(
-              p,
-              utils.isString(style) ? { "text-align": style } : style
-            );
+            domUtils.setStyles(p, utils.isString(style) ? {"text-align": style} : style);
             var frag = tmpRange.extractContents();
             p.appendChild(frag);
             tmpRange.insertNode(p);
@@ -12344,9 +11845,7 @@ UE.plugins["justify"] = function() {
     },
     queryCommandState: function() {
       var start = this.selection.getStart(),
-        cell =
-          start &&
-          domUtils.findParentByTagName(start, ["td", "th", "caption"], true);
+        cell = start && domUtils.findParentByTagName(start, ["td", "th", "caption"], true);
 
       return cell ? -1 : 0;
     }
@@ -12497,7 +11996,7 @@ UE.plugins["font"] = function() {
       strikethrough: "text-decoration",
       fontborder: "border"
     },
-    needCmd = { underline: 1, strikethrough: 1, fontborder: 1 },
+    needCmd = {underline: 1, strikethrough: 1, fontborder: 1},
     needSetChild = {
       forecolor: "color",
       backcolor: "background-color",
@@ -12506,17 +12005,17 @@ UE.plugins["font"] = function() {
     };
   me.setOpt({
     fontfamily: [
-      { name: "songti", val: "宋体,SimSun" },
-      { name: "yahei", val: "微软雅黑,Microsoft YaHei" },
-      { name: "kaiti", val: "楷体,楷体_GB2312, SimKai" },
-      { name: "heiti", val: "黑体, SimHei" },
-      { name: "lishu", val: "隶书, SimLi" },
-      { name: "andaleMono", val: "andale mono" },
-      { name: "arial", val: "arial, helvetica,sans-serif" },
-      { name: "arialBlack", val: "arial black,avant garde" },
-      { name: "comicSansMs", val: "comic sans ms" },
-      { name: "impact", val: "impact,chicago" },
-      { name: "timesNewRoman", val: "times new roman" }
+      {name: "songti", val: "宋体,SimSun"},
+      {name: "yahei", val: "微软雅黑,Microsoft YaHei"},
+      {name: "kaiti", val: "楷体,楷体_GB2312, SimKai"},
+      {name: "heiti", val: "黑体, SimHei"},
+      {name: "lishu", val: "隶书, SimLi"},
+      {name: "andaleMono", val: "andale mono"},
+      {name: "arial", val: "arial, helvetica,sans-serif"},
+      {name: "arialBlack", val: "arial black,avant garde"},
+      {name: "comicSansMs", val: "comic sans ms"},
+      {name: "impact", val: "impact,chicago"},
+      {name: "timesNewRoman", val: "times new roman"}
     ],
     fontsize: [10, 11, 12, 14, 16, 18, 20, 24, 36]
   });
@@ -12545,16 +12044,9 @@ UE.plugins["font"] = function() {
         var start = rng.startContainer.childNodes[rng.startOffset];
         if (start && domUtils.isTagNode(start, "span")) {
           var bk = rng.createBookmark();
-          utils.each(domUtils.getElementsByTagName(start, "span"), function(
-            span
-          ) {
+          utils.each(domUtils.getElementsByTagName(start, "span"), function(span) {
             if (!span.parentNode || domUtils.isBookmarkNode(span)) return;
-            if (
-              cmdName == "backcolor" &&
-              domUtils
-                .getComputedStyle(span, "background-color")
-                .toLowerCase() === value
-            ) {
+            if (cmdName == "backcolor" && domUtils.getComputedStyle(span, "background-color").toLowerCase() === value) {
               return;
             }
             domUtils.removeStyle(span, needSetChild[cmdName]);
@@ -12594,10 +12086,7 @@ UE.plugins["font"] = function() {
         span.parentNode.tagName == "SPAN" &&
         /border/i.test(span.parentNode.style.cssText)
       ) {
-        span.style.cssText = span.style.cssText.replace(
-          /border[^:]*:[^;]+;?/gi,
-          ""
-        );
+        span.style.cssText = span.style.cssText.replace(/border[^:]*:[^;]+;?/gi, "");
       }
       if (!(cmdName == "fontborder" && value == "none")) {
         var next = span.nextSibling;
@@ -12620,9 +12109,7 @@ UE.plugins["font"] = function() {
       if (browser.ie && browser.version > 8) {
         //拷贝父亲们的特别的属性,这里只做背景颜色的处理
         var parent = domUtils.findParent(span, function(n) {
-          return (
-            n.tagName == "SPAN" && /background-color/.test(n.style.cssText)
-          );
+          return n.tagName == "SPAN" && /background-color/.test(n.style.cssText);
         });
         if (parent && !/background-color/.test(span.style.cssText)) {
           span.style.backgroundColor = parent.style.backgroundColor;
@@ -12734,8 +12221,10 @@ UE.plugins["font"] = function() {
             (this.queryCommandState(cmdName)
               ? "none"
               : cmdName == "underline"
-                ? "underline"
-                : cmdName == "fontborder" ? "1px solid #000" : "line-through");
+              ? "underline"
+              : cmdName == "fontborder"
+              ? "1px solid #000"
+              : "line-through");
           var me = this,
             range = this.selection.getRange(),
             text;
@@ -12759,23 +12248,16 @@ UE.plugins["font"] = function() {
               }
               range = me.selection.getRange();
 
-              range.applyInlineStyle("span", { style: style + ":" + value });
+              range.applyInlineStyle("span", {style: style + ":" + value});
               mergesibling(range, cmdName, value);
               range.select();
             } else {
-              var span = domUtils.findParentByTagName(
-                range.startContainer,
-                "span",
-                true
-              );
+              var span = domUtils.findParentByTagName(range.startContainer, "span", true);
               text = me.document.createTextNode("font");
               if (
                 span &&
                 !span.children.length &&
-                !span[browser.ie ? "innerText" : "textContent"].replace(
-                  fillCharReg,
-                  ""
-                ).length
+                !span[browser.ie ? "innerText" : "textContent"].replace(fillCharReg, "").length
               ) {
                 //for ie hack when enter
                 range.insertNode(text);
@@ -12812,8 +12294,7 @@ UE.plugins["font"] = function() {
                   while (!domUtils.isBlockElm(spanParent)) {
                     if (spanParent.tagName == "SPAN") {
                       //opera合并style不会加入";"
-                      span.style.cssText =
-                        spanParent.style.cssText + ";" + span.style.cssText;
+                      span.style.cssText = spanParent.style.cssText + ";" + span.style.cssText;
                     }
                     spanParent = spanParent.parentNode;
                   }
@@ -12846,11 +12327,7 @@ UE.plugins["font"] = function() {
           if (cmdName == "underline" || cmdName == "strikethrough") {
             var tmpNode = startNode,
               value;
-            while (
-              tmpNode &&
-              !domUtils.isBlockElm(tmpNode) &&
-              !domUtils.isBody(tmpNode)
-            ) {
+            while (tmpNode && !domUtils.isBlockElm(tmpNode) && !domUtils.isBody(tmpNode)) {
               if (tmpNode.nodeType == 1) {
                 value = domUtils.getComputedStyle(tmpNode, style);
                 if (value != "none") {
@@ -12895,9 +12372,7 @@ UE.plugins["font"] = function() {
           if (cmdName == "fontborder") {
             return /1px/.test(val) && /solid/.test(val);
           } else {
-            return cmdName == "underline"
-              ? /underline/.test(val)
-              : /line\-through/.test(val);
+            return cmdName == "underline" ? /underline/.test(val) : /line\-through/.test(val);
           }
         }
       };
@@ -12968,15 +12443,15 @@ UE.plugins["link"] = function() {
     execCommand: function() {
       var range = this.selection.getRange(),
         bookmark;
-      if (
-        range.collapsed &&
-        !domUtils.findParentByTagName(range.startContainer, "a", true)
-      ) {
+      if (range.collapsed && !domUtils.findParentByTagName(range.startContainer, "a", true)) {
         return;
       }
       bookmark = range.createBookmark();
       optimize(range);
-      range.removeInlineStyle("a").moveToBookmark(bookmark).select();
+      range
+        .removeInlineStyle("a")
+        .moveToBookmark(bookmark)
+        .select();
     },
     queryCommandState: function() {
       return !this.highlight && this.queryCommandValue("link") ? 0 : -1;
@@ -12993,13 +12468,9 @@ UE.plugins["link"] = function() {
         start &&
         start.nodeType == 1 &&
         start.tagName == "A" &&
-        /^(?:https?|ftp|file)\s*:\s*\/\//.test(
-          start[browser.ie ? "innerText" : "textContent"]
-        )
+        /^(?:https?|ftp|file)\s*:\s*\/\//.test(start[browser.ie ? "innerText" : "textContent"])
       ) {
-        start[browser.ie ? "innerText" : "textContent"] = utils.html(
-          opt.textValue || opt.href
-        );
+        start[browser.ie ? "innerText" : "textContent"] = utils.html(opt.textValue || opt.href);
       }
     }
     if (!rngClone.collapsed || link) {
@@ -13056,13 +12527,14 @@ UE.plugins["link"] = function() {
       } else {
         //trace:1111  如果是<p><a>xx</a></p> startContainer是p就会找不到a
         range.shrinkBoundary();
-        var start = range.startContainer.nodeType == 3 ||
-          !range.startContainer.childNodes[range.startOffset]
-          ? range.startContainer
-          : range.startContainer.childNodes[range.startOffset],
-          end = range.endContainer.nodeType == 3 || range.endOffset == 0
-            ? range.endContainer
-            : range.endContainer.childNodes[range.endOffset - 1],
+        var start =
+            range.startContainer.nodeType == 3 || !range.startContainer.childNodes[range.startOffset]
+              ? range.startContainer
+              : range.startContainer.childNodes[range.startOffset],
+          end =
+            range.endContainer.nodeType == 3 || range.endOffset == 0
+              ? range.endContainer
+              : range.endContainer.childNodes[range.endOffset - 1],
           common = range.getCommonAncestor();
         node = domUtils.findParentByTagName(common, "a", true);
         if (!node && common.nodeType == 1) {
@@ -13071,15 +12543,10 @@ UE.plugins["link"] = function() {
             pe;
 
           for (var i = 0, ci; (ci = as[i++]); ) {
-            (ps = domUtils.getPosition(ci, start)), (pe = domUtils.getPosition(
-              ci,
-              end
-            ));
+            (ps = domUtils.getPosition(ci, start)), (pe = domUtils.getPosition(ci, end));
             if (
-              (ps & domUtils.POSITION_FOLLOWING ||
-                ps & domUtils.POSITION_CONTAINS) &&
-              (pe & domUtils.POSITION_PRECEDING ||
-                pe & domUtils.POSITION_CONTAINS)
+              (ps & domUtils.POSITION_FOLLOWING || ps & domUtils.POSITION_CONTAINS) &&
+              (pe & domUtils.POSITION_PRECEDING || pe & domUtils.POSITION_CONTAINS)
             ) {
               node = ci;
               break;
@@ -13093,10 +12560,7 @@ UE.plugins["link"] = function() {
       //判断如果是视频的话连接不可用
       //fix 853
       var img = this.selection.getRange().getClosedNode(),
-        flag =
-          img &&
-          (img.className == "edui-faked-video" ||
-            img.className.indexOf("edui-upload-video") != -1);
+        flag = img && (img.className == "edui-faked-video" || img.className.indexOf("edui-upload-video") != -1);
       return flag ? -1 : 0;
     }
   };
@@ -13160,21 +12624,13 @@ UE.commands["scrawl"] = {
 UE.plugins["removeformat"] = function() {
   var me = this;
   me.setOpt({
-    removeFormatTags:
-      "b,big,code,del,dfn,em,font,i,ins,kbd,q,samp,small,span,strike,strong,sub,sup,tt,u,var",
+    removeFormatTags: "b,big,code,del,dfn,em,font,i,ins,kbd,q,samp,small,span,strike,strong,sub,sup,tt,u,var",
     removeFormatAttributes: "class,style,lang,width,height,align,hspace,valign"
   });
   me.commands["removeformat"] = {
     execCommand: function(cmdName, tags, style, attrs, notIncludeA) {
-      var tagReg = new RegExp(
-        "^(?:" +
-          (tags || this.options.removeFormatTags).replace(/,/g, "|") +
-          ")$",
-        "i"
-      ),
-        removeFormatAttributes = style
-          ? []
-          : (attrs || this.options.removeFormatAttributes).split(","),
+      var tagReg = new RegExp("^(?:" + (tags || this.options.removeFormatTags).replace(/,/g, "|") + ")$", "i"),
+        removeFormatAttributes = style ? [] : (attrs || this.options.removeFormatAttributes).split(","),
         range = new dom.Range(this.document),
         bookmark,
         node,
@@ -13210,11 +12666,7 @@ UE.plugins["removeformat"] = function() {
 
         //不能把a标签切了
         if (!notIncludeA) {
-          var aNode = domUtils.findParentByTagName(
-            range.startContainer,
-            "a",
-            true
-          );
+          var aNode = domUtils.findParentByTagName(range.startContainer, "a", true);
           if (aNode) {
             range.setStartBefore(aNode);
           }
@@ -13253,10 +12705,7 @@ UE.plugins["removeformat"] = function() {
 
             next = domUtils.getNextDomNode(current, true, filter);
 
-            if (
-              !dtd.$empty[current.tagName.toLowerCase()] &&
-              !domUtils.isBookmarkNode(current)
-            ) {
+            if (!dtd.$empty[current.tagName.toLowerCase()] && !domUtils.isBookmarkNode(current)) {
               if (tagReg.test(current.tagName)) {
                 if (style) {
                   domUtils.removeStyle(current, style);
@@ -13268,10 +12717,7 @@ UE.plugins["removeformat"] = function() {
                 }
               } else {
                 //trace:939  不能把list上的样式去掉
-                if (
-                  !dtd.$tableContent[current.tagName] &&
-                  !dtd.$list[current.tagName]
-                ) {
+                if (!dtd.$tableContent[current.tagName] && !dtd.$list[current.tagName]) {
                   domUtils.removeAttributes(current, removeFormatAttributes);
                   if (isRedundantSpan(current)) {
                     domUtils.remove(current, true);
@@ -13285,20 +12731,11 @@ UE.plugins["removeformat"] = function() {
         //trace:1035
         //trace:1096 不能把td上的样式去掉，比如边框
         var pN = bookmark.start.parentNode;
-        if (
-          domUtils.isBlockElm(pN) &&
-          !dtd.$tableContent[pN.tagName] &&
-          !dtd.$list[pN.tagName]
-        ) {
+        if (domUtils.isBlockElm(pN) && !dtd.$tableContent[pN.tagName] && !dtd.$list[pN.tagName]) {
           domUtils.removeAttributes(pN, removeFormatAttributes);
         }
         pN = bookmark.end.parentNode;
-        if (
-          bookmark.end &&
-          domUtils.isBlockElm(pN) &&
-          !dtd.$tableContent[pN.tagName] &&
-          !dtd.$list[pN.tagName]
-        ) {
+        if (bookmark.end && domUtils.isBlockElm(pN) && !dtd.$tableContent[pN.tagName] && !dtd.$list[pN.tagName]) {
           domUtils.removeAttributes(pN, removeFormatAttributes);
         }
         range.moveToBookmark(bookmark).moveToBookmark(bookmark1);
@@ -13306,11 +12743,7 @@ UE.plugins["removeformat"] = function() {
         var node = range.startContainer,
           tmp,
           collapsed = range.collapsed;
-        while (
-          node.nodeType == 1 &&
-          domUtils.isEmptyNode(node) &&
-          dtd.$removeEmpty[node.tagName]
-        ) {
+        while (node.nodeType == 1 && domUtils.isEmptyNode(node) && dtd.$removeEmpty[node.tagName]) {
           tmp = node.parentNode;
           range.setStartBefore(node);
           //trace:937
@@ -13324,11 +12757,7 @@ UE.plugins["removeformat"] = function() {
 
         if (!collapsed) {
           node = range.endContainer;
-          while (
-            node.nodeType == 1 &&
-            domUtils.isEmptyNode(node) &&
-            dtd.$removeEmpty[node.tagName]
-          ) {
+          while (node.nodeType == 1 && domUtils.isEmptyNode(node) && dtd.$removeEmpty[node.tagName]) {
             tmp = node.parentNode;
             range.setEndBefore(node);
             domUtils.remove(node);
@@ -13381,10 +12810,7 @@ UE.plugins["removeformat"] = function() {
 UE.plugins["blockquote"] = function() {
   var me = this;
   function getObj(editor) {
-    return domUtils.filterNodeList(
-      editor.selection.getStartElementPath(),
-      "blockquote"
-    );
+    return domUtils.filterNodeList(editor.selection.getStartElementPath(), "blockquote");
   }
   me.commands["blockquote"] = {
     execCommand: function(cmdName, attrs) {
@@ -13408,10 +12834,8 @@ UE.plugins["blockquote"] = function() {
               });
 
         //处理一下li
-        startBlock =
-          domUtils.findParentByTagName(startBlock, "li", true) || startBlock;
-        endBlock =
-          domUtils.findParentByTagName(endBlock, "li", true) || endBlock;
+        startBlock = domUtils.findParentByTagName(startBlock, "li", true) || startBlock;
+        endBlock = domUtils.findParentByTagName(endBlock, "li", true) || endBlock;
 
         if (
           startBlock.tagName == "LI" ||
@@ -13427,11 +12851,7 @@ UE.plugins["blockquote"] = function() {
         if (startBlock !== endBlock) {
           obj = domUtils.findParentByTagName(endBlock, "blockquote");
           if (obj) {
-            if (
-              endBlock.tagName == "LI" ||
-              endBlock.tagName == "TD" ||
-              domUtils.isBody(endBlock)
-            ) {
+            if (endBlock.tagName == "LI" || endBlock.tagName == "TD" || domUtils.isBody(endBlock)) {
               obj.parentNode && domUtils.remove(obj, true);
             } else {
               domUtils.breakParent(endBlock, obj);
@@ -13439,16 +12859,12 @@ UE.plugins["blockquote"] = function() {
           }
         }
 
-        var blockquotes = domUtils.getElementsByTagName(
-          this.document,
-          "blockquote"
-        );
+        var blockquotes = domUtils.getElementsByTagName(this.document, "blockquote");
         for (var i = 0, bi; (bi = blockquotes[i++]); ) {
           if (!bi.childNodes.length) {
             domUtils.remove(bi);
           } else if (
-            domUtils.getPosition(bi, startBlock) &
-              domUtils.POSITION_FOLLOWING &&
+            domUtils.getPosition(bi, startBlock) & domUtils.POSITION_FOLLOWING &&
             domUtils.getPosition(bi, endBlock) & domUtils.POSITION_PRECEDING
           ) {
             domUtils.remove(bi, true);
@@ -13456,9 +12872,7 @@ UE.plugins["blockquote"] = function() {
         }
       } else {
         var tmpRange = range.cloneRange(),
-          node = tmpRange.startContainer.nodeType == 1
-            ? tmpRange.startContainer
-            : tmpRange.startContainer.parentNode,
+          node = tmpRange.startContainer.nodeType == 1 ? tmpRange.startContainer : tmpRange.startContainer.parentNode,
           preNode = node,
           doEnd = 1;
 
@@ -13493,9 +12907,8 @@ UE.plugins["blockquote"] = function() {
 
         //调整结束
         if (doEnd) {
-          preNode = node = node = tmpRange.endContainer.nodeType == 1
-            ? tmpRange.endContainer
-            : tmpRange.endContainer.parentNode;
+          preNode = node = node =
+            tmpRange.endContainer.nodeType == 1 ? tmpRange.endContainer : tmpRange.endContainer.parentNode;
           while (1) {
             if (domUtils.isBody(node)) {
               if (preNode !== node) {
@@ -13578,14 +12991,9 @@ UE.commands["touppercase"] = UE.commands["tolowercase"] = {
         return !domUtils.isBr(node) && !domUtils.isWhitespace(node);
       },
       curNode = domUtils.getNextDomNode(bk.start, false, filterFn);
-    while (
-      curNode &&
-      domUtils.getPosition(curNode, bkEnd) & domUtils.POSITION_PRECEDING
-    ) {
+    while (curNode && domUtils.getPosition(curNode, bkEnd) & domUtils.POSITION_PRECEDING) {
       if (curNode.nodeType == 3) {
-        curNode.nodeValue = curNode.nodeValue[
-          cmd == "touppercase" ? "toUpperCase" : "toLowerCase"
-        ]();
+        curNode.nodeValue = curNode.nodeValue[cmd == "touppercase" ? "toUpperCase" : "toLowerCase"]();
       }
       curNode = domUtils.getNextDomNode(curNode, true, filterFn);
       if (curNode === bkEnd) {
@@ -13617,16 +13025,11 @@ UE.commands["touppercase"] = UE.commands["tolowercase"] = {
 UE.commands["indent"] = {
   execCommand: function() {
     var me = this,
-      value = me.queryCommandState("indent")
-        ? "0em"
-        : me.options.indentValue || "2em";
-    me.execCommand("Paragraph", "p", { style: "text-indent:" + value });
+      value = me.queryCommandState("indent") ? "0em" : me.options.indentValue || "2em";
+    me.execCommand("Paragraph", "p", {style: "text-indent:" + value});
   },
   queryCommandState: function() {
-    var pN = domUtils.filterNodeList(
-      this.selection.getStartElementPath(),
-      "p h1 h2 h3 h4 h5 h6"
-    );
+    var pN = domUtils.filterNodeList(this.selection.getStartElementPath(), "p h1 h2 h3 h4 h5 h6");
     return pN && pN.style.textIndent && parseInt(pN.style.textIndent) ? 1 : 0;
   }
 };
@@ -13783,8 +13186,7 @@ UE.plugins["paragraph"] = function() {
       var bookmark = range.createBookmark(),
         filterFn = function(node) {
           return node.nodeType == 1
-            ? node.tagName.toLowerCase() != "br" &&
-                !domUtils.isBookmarkNode(node)
+            ? node.tagName.toLowerCase() != "br" && !domUtils.isBookmarkNode(node)
             : !domUtils.isWhitespace(node);
         },
         para;
@@ -13794,20 +13196,12 @@ UE.plugins["paragraph"] = function() {
         current = domUtils.getNextDomNode(bookmark2.start, false, filterFn),
         tmpRange = range.cloneRange(),
         tmpNode;
-      while (
-        current &&
-        !(
-          domUtils.getPosition(current, bookmark2.end) &
-          domUtils.POSITION_FOLLOWING
-        )
-      ) {
+      while (current && !(domUtils.getPosition(current, bookmark2.end) & domUtils.POSITION_FOLLOWING)) {
         if (current.nodeType == 3 || !block(current)) {
           tmpRange.setStartBefore(current);
           while (current && current !== bookmark2.end && !block(current)) {
             tmpNode = current;
-            current = domUtils.getNextDomNode(current, false, null, function(
-              node
-            ) {
+            current = domUtils.getNextDomNode(current, false, null, function(node) {
               return !block(node);
             });
           }
@@ -13816,11 +13210,7 @@ UE.plugins["paragraph"] = function() {
           para = range.document.createElement(style);
           if (attrs) {
             domUtils.setAttributes(para, attrs);
-            if (
-              sourceCmdName &&
-              sourceCmdName == "customstyle" &&
-              attrs.style
-            ) {
+            if (sourceCmdName && sourceCmdName == "customstyle" && attrs.style) {
               para.style.cssText = attrs.style;
             }
           }
@@ -13834,43 +13224,22 @@ UE.plugins["paragraph"] = function() {
 
           var parent = para.parentNode;
           //如果para上一级是一个block元素且不是body,td就删除它
-          if (
-            block(parent) &&
-            !domUtils.isBody(para.parentNode) &&
-            utils.indexOf(notExchange, parent.tagName) == -1
-          ) {
+          if (block(parent) && !domUtils.isBody(para.parentNode) && utils.indexOf(notExchange, parent.tagName) == -1) {
             //存储dir,style
             if (!(sourceCmdName && sourceCmdName == "customstyle")) {
-              parent.getAttribute("dir") &&
-                para.setAttribute("dir", parent.getAttribute("dir"));
+              parent.getAttribute("dir") && para.setAttribute("dir", parent.getAttribute("dir"));
               //trace:1070
-              parent.style.cssText &&
-                (para.style.cssText =
-                  parent.style.cssText + ";" + para.style.cssText);
+              parent.style.cssText && (para.style.cssText = parent.style.cssText + ";" + para.style.cssText);
               //trace:1030
-              parent.style.textAlign &&
-                !para.style.textAlign &&
-                (para.style.textAlign = parent.style.textAlign);
-              parent.style.textIndent &&
-                !para.style.textIndent &&
-                (para.style.textIndent = parent.style.textIndent);
-              parent.style.padding &&
-                !para.style.padding &&
-                (para.style.padding = parent.style.padding);
+              parent.style.textAlign && !para.style.textAlign && (para.style.textAlign = parent.style.textAlign);
+              parent.style.textIndent && !para.style.textIndent && (para.style.textIndent = parent.style.textIndent);
+              parent.style.padding && !para.style.padding && (para.style.padding = parent.style.padding);
             }
 
             //trace:1706 选择的就是h1-6要删除
-            if (
-              attrs &&
-              /h\d/i.test(parent.tagName) &&
-              !/h\d/i.test(para.tagName)
-            ) {
+            if (attrs && /h\d/i.test(parent.tagName) && !/h\d/i.test(para.tagName)) {
               domUtils.setAttributes(parent, attrs);
-              if (
-                sourceCmdName &&
-                sourceCmdName == "customstyle" &&
-                attrs.style
-              ) {
+              if (sourceCmdName && sourceCmdName == "customstyle" && attrs.style) {
                 parent.style.cssText = attrs.style;
               }
               domUtils.remove(para.parentNode, true);
@@ -13932,17 +13301,9 @@ UE.plugins["paragraph"] = function() {
         }
       }
 
-      if (
-        browser.gecko &&
-        range.collapsed &&
-        range.startContainer.nodeType == 1
-      ) {
+      if (browser.gecko && range.collapsed && range.startContainer.nodeType == 1) {
         var child = range.startContainer.childNodes[range.startOffset];
-        if (
-          child &&
-          child.nodeType == 1 &&
-          child.tagName.toLowerCase() == style
-        ) {
+        if (child && child.nodeType == 1 && child.tagName.toLowerCase() == style) {
           range.setStart(child, 0).collapse(true);
         }
       }
@@ -13952,10 +13313,7 @@ UE.plugins["paragraph"] = function() {
       return true;
     },
     queryCommandValue: function() {
-      var node = domUtils.filterNodeList(
-        this.selection.getStartElementPath(),
-        "p h1 h2 h3 h4 h5 h6"
-      );
+      var node = domUtils.filterNodeList(this.selection.getStartElementPath(), "p h1 h2 h3 h4 h5 h6");
       return node ? node.tagName.toLowerCase() : "";
     }
   };
@@ -13982,19 +13340,14 @@ UE.plugins["paragraph"] = function() {
       //                    }
       //                }
       //            }
-      return domUtils.filterNodeList(
-        editor.selection.getStartElementPath(),
-        function(n) {
-          return n && n.nodeType == 1 && n.getAttribute("dir");
-        }
-      );
+      return domUtils.filterNodeList(editor.selection.getStartElementPath(), function(n) {
+        return n && n.nodeType == 1 && n.getAttribute("dir");
+      });
     },
     doDirectionality = function(range, editor, forward) {
       var bookmark,
         filterFn = function(node) {
-          return node.nodeType == 1
-            ? !domUtils.isBookmarkNode(node)
-            : !domUtils.isWhitespace(node);
+          return node.nodeType == 1 ? !domUtils.isBookmarkNode(node) : !domUtils.isWhitespace(node);
         },
         obj = getObj(editor);
 
@@ -14008,20 +13361,12 @@ UE.plugins["paragraph"] = function() {
         current = domUtils.getNextDomNode(bookmark2.start, false, filterFn),
         tmpRange = range.cloneRange(),
         tmpNode;
-      while (
-        current &&
-        !(
-          domUtils.getPosition(current, bookmark2.end) &
-          domUtils.POSITION_FOLLOWING
-        )
-      ) {
+      while (current && !(domUtils.getPosition(current, bookmark2.end) & domUtils.POSITION_FOLLOWING)) {
         if (current.nodeType == 3 || !block(current)) {
           tmpRange.setStartBefore(current);
           while (current && current !== bookmark2.end && !block(current)) {
             tmpNode = current;
-            current = domUtils.getNextDomNode(current, false, null, function(
-              node
-            ) {
+            current = domUtils.getNextDomNode(current, false, null, function(node) {
               return !block(node);
             });
           }
@@ -14050,28 +13395,28 @@ UE.plugins["paragraph"] = function() {
     };
 
   /**
-     * 文字输入方向
-     * @command directionality
-     * @method execCommand
-     * @param { String } cmdName 命令字符串
-     * @param { String } forward 传入'ltr'表示从左向右输入，传入'rtl'表示从右向左输入
-     * @example
-     * ```javascript
-     * editor.execCommand( 'directionality', 'ltr');
-     * ```
-     */
+   * 文字输入方向
+   * @command directionality
+   * @method execCommand
+   * @param { String } cmdName 命令字符串
+   * @param { String } forward 传入'ltr'表示从左向右输入，传入'rtl'表示从右向左输入
+   * @example
+   * ```javascript
+   * editor.execCommand( 'directionality', 'ltr');
+   * ```
+   */
 
   /**
-     * 查询当前选区的文字输入方向
-     * @command directionality
-     * @method queryCommandValue
-     * @param { String } cmdName 命令字符串
-     * @return { String } 返回'ltr'表示从左向右输入，返回'rtl'表示从右向左输入
-     * @example
-     * ```javascript
-     * editor.queryCommandValue( 'directionality');
-     * ```
-     */
+   * 查询当前选区的文字输入方向
+   * @command directionality
+   * @method queryCommandValue
+   * @param { String } cmdName 命令字符串
+   * @return { String } 返回'ltr'表示从左向右输入，返回'rtl'表示从右向左输入
+   * @example
+   * ```javascript
+   * editor.queryCommandValue( 'directionality');
+   * ```
+   */
   UE.commands["directionality"] = {
     execCommand: function(cmdName, forward) {
       var range = this.selection.getRange();
@@ -14144,12 +13489,7 @@ UE.plugins["horizontal"] = function() {
     },
     //边界在table里不能加分隔线
     queryCommandState: function() {
-      return domUtils.filterNodeList(
-        this.selection.getStartElementPath(),
-        "table"
-      )
-        ? -1
-        : 0;
+      return domUtils.filterNodeList(this.selection.getStartElementPath(), "table") ? -1 : 0;
     }
   };
   //    me.addListener('delkeyup',function(){
@@ -14239,7 +13579,10 @@ UE.commands["time"] = UE.commands["date"] = {
         ii = ("0" + date.getMinutes()).slice(-2),
         ss = ("0" + date.getSeconds()).slice(-2);
       format = format || "hh:ii:ss";
-      return format.replace(/hh/gi, hh).replace(/ii/gi, ii).replace(/ss/gi, ss);
+      return format
+        .replace(/hh/gi, hh)
+        .replace(/ii/gi, ii)
+        .replace(/ss/gi, ss);
     }
     function formatDate(date, format) {
       var yyyy = ("000" + date.getFullYear()).slice(-4),
@@ -14254,10 +13597,7 @@ UE.commands["time"] = UE.commands["date"] = {
         .replace(/dd/gi, dd);
     }
 
-    this.execCommand(
-      "insertHtml",
-      cmd == "time" ? formatTime(date, format) : formatDate(date, format)
-    );
+    this.execCommand("insertHtml", cmd == "time" ? formatTime(date, format) : formatDate(date, format));
   }
 };
 
@@ -14296,18 +13636,13 @@ UE.plugins["rowspacing"] = function() {
       return true;
     },
     queryCommandValue: function(cmdName, dir) {
-      var pN = domUtils.filterNodeList(
-        this.selection.getStartElementPath(),
-        function(node) {
+      var pN = domUtils.filterNodeList(this.selection.getStartElementPath(), function(node) {
           return domUtils.isBlockElm(node);
-        }
-      ),
+        }),
         value;
       //trace:1026
       if (pN) {
-        value = domUtils
-          .getComputedStyle(pN, "margin-" + dir)
-          .replace(/[^\d]/g, "");
+        value = domUtils.getComputedStyle(pN, "margin-" + dir).replace(/[^\d]/g, "");
         return !value ? 0 : value;
       }
       return 0;
@@ -14324,30 +13659,30 @@ UE.plugins["rowspacing"] = function() {
  */
 UE.plugins["lineheight"] = function() {
   var me = this;
-  me.setOpt({ lineheight: ["1", "1.5", "1.75", "2", "3", "4", "5"] });
+  me.setOpt({lineheight: ["1", "1.5", "1.75", "2", "3", "4", "5"]});
 
   /**
-     * 行距
-     * @command lineheight
-     * @method execCommand
-     * @param { String } cmdName 命令字符串
-     * @param { String } value 传入的行高值， 该值是当前字体的倍数， 例如： 1.5, 1.75
-     * @example
-     * ```javascript
-     * editor.execCommand( 'lineheight', 1.5);
-     * ```
-     */
+   * 行距
+   * @command lineheight
+   * @method execCommand
+   * @param { String } cmdName 命令字符串
+   * @param { String } value 传入的行高值， 该值是当前字体的倍数， 例如： 1.5, 1.75
+   * @example
+   * ```javascript
+   * editor.execCommand( 'lineheight', 1.5);
+   * ```
+   */
   /**
-     * 查询当前选区内容的行高大小
-     * @command lineheight
-     * @method queryCommandValue
-     * @param { String } cmd 命令字符串
-     * @return { String } 返回当前行高大小
-     * @example
-     * ```javascript
-     * editor.queryCommandValue( 'lineheight' );
-     * ```
-     */
+   * 查询当前选区内容的行高大小
+   * @command lineheight
+   * @method queryCommandValue
+   * @param { String } cmd 命令字符串
+   * @return { String } 返回当前行高大小
+   * @example
+   * ```javascript
+   * editor.queryCommandValue( 'lineheight' );
+   * ```
+   */
 
   me.commands["lineheight"] = {
     execCommand: function(cmdName, value) {
@@ -14357,12 +13692,9 @@ UE.plugins["lineheight"] = function() {
       return true;
     },
     queryCommandValue: function() {
-      var pN = domUtils.filterNodeList(
-        this.selection.getStartElementPath(),
-        function(node) {
-          return domUtils.isBlockElm(node);
-        }
-      );
+      var pN = domUtils.filterNodeList(this.selection.getStartElementPath(), function(node) {
+        return domUtils.isBlockElm(node);
+      });
       if (pN) {
         var value = domUtils.getComputedStyle(pN, "line-height");
         return value == "normal" ? 1 : value.replace(/[^\d.]*/gi, "");
@@ -14382,11 +13714,7 @@ UE.plugins["lineheight"] = function() {
 UE.plugins["insertcode"] = function() {
   var me = this;
   me.ready(function() {
-    utils.cssRule(
-      "pre",
-      "pre{margin:.5em 0;padding:.4em .6em;border-radius:8px;background:#f8f8f8;}",
-      me.document
-    );
+    utils.cssRule("pre", "pre{margin:.5em 0;padding:.4em .6em;border-radius:8px;background:#f8f8f8;}", me.document);
   });
   me.setOpt("insertcode", {
     as3: "ActionScript3",
@@ -14416,28 +13744,28 @@ UE.plugins["insertcode"] = function() {
   });
 
   /**
-     * 插入代码
-     * @command insertcode
-     * @method execCommand
-     * @param { String } cmd 命令字符串
-     * @param { String } lang 插入代码的语言
-     * @example
-     * ```javascript
-     * editor.execCommand( 'insertcode', 'javascript' );
-     * ```
-     */
+   * 插入代码
+   * @command insertcode
+   * @method execCommand
+   * @param { String } cmd 命令字符串
+   * @param { String } lang 插入代码的语言
+   * @example
+   * ```javascript
+   * editor.execCommand( 'insertcode', 'javascript' );
+   * ```
+   */
 
   /**
-     * 如果选区所在位置是插入插入代码区域，返回代码的语言
-     * @command insertcode
-     * @method queryCommandValue
-     * @param { String } cmd 命令字符串
-     * @return { String } 返回代码的语言
-     * @example
-     * ```javascript
-     * editor.queryCommandValue( 'insertcode' );
-     * ```
-     */
+   * 如果选区所在位置是插入插入代码区域，返回代码的语言
+   * @command insertcode
+   * @method queryCommandValue
+   * @param { String } cmd 命令字符串
+   * @return { String } 返回代码的语言
+   * @example
+   * ```javascript
+   * editor.queryCommandValue( 'insertcode' );
+   * ```
+   */
 
   me.commands["insertcode"] = {
     execCommand: function(cmd, lang) {
@@ -14449,19 +13777,14 @@ UE.plugins["insertcode"] = function() {
       } else {
         var code = "";
         if (rng.collapsed) {
-          code = browser.ie && browser.ie11below
-            ? browser.version <= 8 ? "&nbsp;" : ""
-            : "<br/>";
+          code = browser.ie && browser.ie11below ? (browser.version <= 8 ? "&nbsp;" : "") : "<br/>";
         } else {
           var frag = rng.extractContents();
           var div = me.document.createElement("div");
           div.appendChild(frag);
 
           utils.each(
-            UE.filterNode(
-              UE.htmlparser(div.innerHTML.replace(/[\r\t]/g, "")),
-              me.options.filterTxtRules
-            ).children,
+            UE.filterNode(UE.htmlparser(div.innerHTML.replace(/[\r\t]/g, "")), me.options.filterTxtRules).children,
             function(node) {
               if (browser.ie && browser.ie11below && browser.version > 8) {
                 if (node.type == "element") {
@@ -14517,9 +13840,7 @@ UE.plugins["insertcode"] = function() {
                     code = code.replace(/<br>$/, "");
                   }
                 } else {
-                  code += node.type == "element"
-                    ? dtd.$empty[node.tagName] ? "" : node.innerText()
-                    : node.data;
+                  code += node.type == "element" ? (dtd.$empty[node.tagName] ? "" : node.innerText()) : node.data;
                   if (!/br\/?\s*>$/.test(code)) {
                     if (!node.nextSibling()) return;
                     code += "<br>";
@@ -14531,11 +13852,7 @@ UE.plugins["insertcode"] = function() {
         }
         me.execCommand(
           "inserthtml",
-          '<pre id="coder"class="brush:' +
-            lang +
-            ';toolbar:false">' +
-            code +
-            "</pre>",
+          '<pre id="coder"class="brush:' + lang + ';toolbar:false">' + code + "</pre>",
           true
         );
 
@@ -14545,10 +13862,7 @@ UE.plugins["insertcode"] = function() {
 
         if (
           tmpNode &&
-          ((tmpNode.nodeType == 3 &&
-            tmpNode.nodeValue.length == 1 &&
-            browser.ie &&
-            browser.version == 6) ||
+          ((tmpNode.nodeType == 3 && tmpNode.nodeValue.length == 1 && browser.ie && browser.version == 6) ||
             domUtils.isEmptyBlock(tmpNode))
         ) {
           domUtils.remove(tmpNode);
@@ -14641,11 +13955,7 @@ UE.plugins["insertcode"] = function() {
   me.queryCommandState = function(cmd) {
     var me = this;
 
-    if (
-      !me.notNeedCodeQuery[cmd.toLowerCase()] &&
-      me.selection &&
-      me.queryCommandValue("insertcode")
-    ) {
+    if (!me.notNeedCodeQuery[cmd.toLowerCase()] && me.selection && me.queryCommandValue("insertcode")) {
       return -1;
     }
     return UE.Editor.prototype.queryCommandState.apply(this, arguments);
@@ -14661,7 +13971,10 @@ UE.plugins["insertcode"] = function() {
       if (!browser.ie || browser.ie9above) {
         var tmpNode = me.document.createElement("br"),
           pre;
-        rng.insertNode(tmpNode).setStartAfter(tmpNode).collapse(true);
+        rng
+          .insertNode(tmpNode)
+          .setStartAfter(tmpNode)
+          .collapse(true);
         var next = tmpNode.nextSibling;
         if (!next && (!browser.ie || browser.version > 10)) {
           rng.insertNode(tmpNode.cloneNode(false));
@@ -14680,18 +13993,12 @@ UE.plugins["insertcode"] = function() {
         }
         if (pre) {
           var str = "";
-          while (
-            pre &&
-            pre.nodeName != "BR" &&
-            new RegExp("^[\\s" + domUtils.fillChar + "]*$").test(pre.nodeValue)
-          ) {
+          while (pre && pre.nodeName != "BR" && new RegExp("^[\\s" + domUtils.fillChar + "]*$").test(pre.nodeValue)) {
             str += pre.nodeValue;
             pre = pre.nextSibling;
           }
           if (pre.nodeName != "BR") {
-            var match = pre.nodeValue.match(
-              new RegExp("^([\\s" + domUtils.fillChar + "]+)")
-            );
+            var match = pre.nodeValue.match(new RegExp("^([\\s" + domUtils.fillChar + "]+)"));
             if (match && match[1]) {
               str += match[1];
             }
@@ -14748,18 +14055,12 @@ UE.plugins["insertcode"] = function() {
           }
           if (pre) {
             var str = "";
-            while (
-              pre &&
-              pre.nodeName != "BR" &&
-              new RegExp("^[ " + domUtils.fillChar + "]*$").test(pre.nodeValue)
-            ) {
+            while (pre && pre.nodeName != "BR" && new RegExp("^[ " + domUtils.fillChar + "]*$").test(pre.nodeValue)) {
               str += pre.nodeValue;
               pre = pre.nextSibling;
             }
             if (pre.nodeName != "BR") {
-              var match = pre.nodeValue.match(
-                new RegExp("^([ " + domUtils.fillChar + "]+)")
-              );
+              var match = pre.nodeValue.match(new RegExp("^([ " + domUtils.fillChar + "]+)"));
               if (match && match[1]) {
                 str += match[1];
               }
@@ -14794,10 +14095,7 @@ UE.plugins["insertcode"] = function() {
               break;
             }
             if (domUtils.isBr(start)) {
-              pre.insertBefore(
-                me.document.createTextNode("    "),
-                start.nextSibling
-              );
+              pre.insertBefore(me.document.createTextNode("    "), start.nextSibling);
 
               break;
             }
@@ -14806,20 +14104,14 @@ UE.plugins["insertcode"] = function() {
           var end = bk.end;
           start = bk.start.nextSibling;
           if (pre.firstChild === bk.start) {
-            pre.insertBefore(
-              me.document.createTextNode("    "),
-              start.nextSibling
-            );
+            pre.insertBefore(me.document.createTextNode("    "), start.nextSibling);
           }
           while (start && start !== end) {
             if (domUtils.isBr(start) && start.nextSibling) {
               if (start.nextSibling === end) {
                 break;
               }
-              pre.insertBefore(
-                me.document.createTextNode("    "),
-                start.nextSibling
-              );
+              pre.insertBefore(me.document.createTextNode("    "), start.nextSibling);
             }
 
             start = start.nextSibling;
@@ -14850,87 +14142,68 @@ UE.plugins["insertcode"] = function() {
       }
       var htmlstr = "";
       if (browser.ie && browser.version > 8) {
-        utils.each(
-          UE.filterNode(UE.htmlparser(html), me.options.filterTxtRules)
-            .children,
-          function(node) {
-            if (node.type == "element") {
-              if (node.tagName == "br") {
-                htmlstr += "\n";
-              } else if (!dtd.$empty[node.tagName]) {
-                utils.each(node.children, function(cn) {
-                  if (cn.type == "element") {
-                    if (cn.tagName == "br") {
-                      htmlstr += "\n";
-                    } else if (!dtd.$empty[node.tagName]) {
-                      htmlstr += cn.innerText();
-                    }
-                  } else {
-                    htmlstr += cn.data;
+        utils.each(UE.filterNode(UE.htmlparser(html), me.options.filterTxtRules).children, function(node) {
+          if (node.type == "element") {
+            if (node.tagName == "br") {
+              htmlstr += "\n";
+            } else if (!dtd.$empty[node.tagName]) {
+              utils.each(node.children, function(cn) {
+                if (cn.type == "element") {
+                  if (cn.tagName == "br") {
+                    htmlstr += "\n";
+                  } else if (!dtd.$empty[node.tagName]) {
+                    htmlstr += cn.innerText();
                   }
-                });
-                if (!/\n$/.test(htmlstr)) {
-                  htmlstr += "\n";
+                } else {
+                  htmlstr += cn.data;
                 }
+              });
+              if (!/\n$/.test(htmlstr)) {
+                htmlstr += "\n";
               }
-            } else {
-              htmlstr += node.data + "\n";
             }
-            if (!node.nextSibling() && /\n$/.test(htmlstr)) {
-              htmlstr = htmlstr.replace(/\n$/, "");
-            }
+          } else {
+            htmlstr += node.data + "\n";
           }
-        );
-        var tmpNode = me.document.createTextNode(
-          utils.html(htmlstr.replace(/&nbsp;/g, " "))
-        );
-        rng.insertNode(tmpNode).selectNode(tmpNode).select();
+          if (!node.nextSibling() && /\n$/.test(htmlstr)) {
+            htmlstr = htmlstr.replace(/\n$/, "");
+          }
+        });
+        var tmpNode = me.document.createTextNode(utils.html(htmlstr.replace(/&nbsp;/g, " ")));
+        rng
+          .insertNode(tmpNode)
+          .selectNode(tmpNode)
+          .select();
       } else {
         var frag = me.document.createDocumentFragment();
 
-        utils.each(
-          UE.filterNode(UE.htmlparser(html), me.options.filterTxtRules)
-            .children,
-          function(node) {
-            if (node.type == "element") {
-              if (node.tagName == "br") {
-                frag.appendChild(me.document.createElement("br"));
-              } else if (!dtd.$empty[node.tagName]) {
-                utils.each(node.children, function(cn) {
-                  if (cn.type == "element") {
-                    if (cn.tagName == "br") {
-                      frag.appendChild(me.document.createElement("br"));
-                    } else if (!dtd.$empty[node.tagName]) {
-                      frag.appendChild(
-                        me.document.createTextNode(
-                          utils.html(cn.innerText().replace(/&nbsp;/g, " "))
-                        )
-                      );
-                    }
-                  } else {
-                    frag.appendChild(
-                      me.document.createTextNode(
-                        utils.html(cn.data.replace(/&nbsp;/g, " "))
-                      )
-                    );
+        utils.each(UE.filterNode(UE.htmlparser(html), me.options.filterTxtRules).children, function(node) {
+          if (node.type == "element") {
+            if (node.tagName == "br") {
+              frag.appendChild(me.document.createElement("br"));
+            } else if (!dtd.$empty[node.tagName]) {
+              utils.each(node.children, function(cn) {
+                if (cn.type == "element") {
+                  if (cn.tagName == "br") {
+                    frag.appendChild(me.document.createElement("br"));
+                  } else if (!dtd.$empty[node.tagName]) {
+                    frag.appendChild(me.document.createTextNode(utils.html(cn.innerText().replace(/&nbsp;/g, " "))));
                   }
-                });
-                if (frag.lastChild.nodeName != "BR") {
-                  frag.appendChild(me.document.createElement("br"));
+                } else {
+                  frag.appendChild(me.document.createTextNode(utils.html(cn.data.replace(/&nbsp;/g, " "))));
                 }
+              });
+              if (frag.lastChild.nodeName != "BR") {
+                frag.appendChild(me.document.createElement("br"));
               }
-            } else {
-              frag.appendChild(
-                me.document.createTextNode(
-                  utils.html(node.data.replace(/&nbsp;/g, " "))
-                )
-              );
             }
-            if (!node.nextSibling() && frag.lastChild.nodeName == "BR") {
-              frag.removeChild(frag.lastChild);
-            }
+          } else {
+            frag.appendChild(me.document.createTextNode(utils.html(node.data.replace(/&nbsp;/g, " "))));
           }
-        );
+          if (!node.nextSibling() && frag.lastChild.nodeName == "BR") {
+            frag.removeChild(frag.lastChild);
+          }
+        });
         rng.insertNode(frag).select();
       }
 
@@ -14945,20 +14218,12 @@ UE.plugins["insertcode"] = function() {
       var rng = me.selection.getRange(),
         pre,
         start = rng.startContainer;
-      if (
-        rng.collapsed &&
-        (pre = domUtils.findParentByTagName(rng.startContainer, "pre", true)) &&
-        !pre.nextSibling
-      ) {
+      if (rng.collapsed && (pre = domUtils.findParentByTagName(rng.startContainer, "pre", true)) && !pre.nextSibling) {
         var last = pre.lastChild;
         while (last && last.nodeName == "BR") {
           last = last.previousSibling;
         }
-        if (
-          last === start ||
-          (rng.startContainer === pre &&
-            rng.startOffset == pre.childNodes.length)
-        ) {
+        if (last === start || (rng.startContainer === pre && rng.startOffset == pre.childNodes.length)) {
           me.execCommand("insertparagraph");
           domUtils.preventDefault(evt);
         }
@@ -14970,11 +14235,7 @@ UE.plugins["insertcode"] = function() {
     var rng = this.selection.getRange();
     rng.txtToElmBoundary(true);
     var start = rng.startContainer;
-    if (
-      domUtils.isTagNode(start, "pre") &&
-      rng.collapsed &&
-      domUtils.isStartInblock(rng)
-    ) {
+    if (domUtils.isTagNode(start, "pre") && rng.collapsed && domUtils.isStartInblock(rng)) {
       var p = me.document.createElement("p");
       domUtils.fillNode(me.document, p);
       start.parentNode.insertBefore(p, start);
@@ -15079,17 +14340,17 @@ UE.plugin.register("anchor", function() {
     },
     commands: {
       /**
-            * 插入锚点
-            * @command anchor
-            * @method execCommand
-            * @param { String } cmd 命令字符串
-            * @param { String } name 锚点名称字符串
-            * @example
-            * ```javascript
-            * //editor 是编辑器实例
-            * editor.execCommand('anchor', 'anchor1');
-            * ```
-            */
+       * 插入锚点
+       * @command anchor
+       * @method execCommand
+       * @param { String } cmd 命令字符串
+       * @param { String } name 锚点名称字符串
+       * @example
+       * ```javascript
+       * //editor 是编辑器实例
+       * editor.execCommand('anchor', 'anchor1');
+       * ```
+       */
       anchor: {
         execCommand: function(cmd, name) {
           var range = this.selection.getRange(),
@@ -15183,11 +14444,7 @@ UE.plugins["pagebreak"] = function() {
       var firstChild = node.firstChild,
         tmpNode;
 
-      while (
-        firstChild &&
-        firstChild.nodeType == 1 &&
-        domUtils.isEmptyBlock(firstChild)
-      ) {
+      while (firstChild && firstChild.nodeType == 1 && domUtils.isEmptyBlock(firstChild)) {
         tmpNode = firstChild;
         firstChild = firstChild.firstChild;
       }
@@ -15205,12 +14462,7 @@ UE.plugins["pagebreak"] = function() {
     );
   });
   function isHr(node) {
-    return (
-      node &&
-      node.nodeType == 1 &&
-      node.tagName == "HR" &&
-      node.className == "pagebreak"
-    );
+    return node && node.nodeType == 1 && node.tagName == "HR" && node.className == "pagebreak";
   }
   me.addInputRule(function(root) {
     root.traversal(function(node) {
@@ -15234,18 +14486,18 @@ UE.plugins["pagebreak"] = function() {
   });
 
   /**
-     * 插入分页符
-     * @command pagebreak
-     * @method execCommand
-     * @param { String } cmd 命令字符串
-     * @remind 在表格中插入分页符会把表格切分成两部分
-     * @remind 获取编辑器内的数据时， 编辑器会把分页符转换成“_ueditor_page_break_tag_”字符串，
-     *          以便于提交数据到服务器端后处理分页。
-     * @example
-     * ```javascript
-     * editor.execCommand( 'pagebreak'); //插入一个hr标签，带有样式类名pagebreak
-     * ```
-     */
+   * 插入分页符
+   * @command pagebreak
+   * @method execCommand
+   * @param { String } cmd 命令字符串
+   * @remind 在表格中插入分页符会把表格切分成两部分
+   * @remind 获取编辑器内的数据时， 编辑器会把分页符转换成“_ueditor_page_break_tag_”字符串，
+   *          以便于提交数据到服务器端后处理分页。
+   * @example
+   * ```javascript
+   * editor.execCommand( 'pagebreak'); //插入一个hr标签，带有样式类名pagebreak
+   * ```
+   */
 
   me.commands["pagebreak"] = {
     execCommand: function() {
@@ -15258,11 +14510,7 @@ UE.plugins["pagebreak"] = function() {
       });
       domUtils.unSelectable(hr);
       //table单独处理
-      var node = domUtils.findParentByTagName(
-        range.startContainer,
-        notBreakTags,
-        true
-      ),
+      var node = domUtils.findParentByTagName(range.startContainer, notBreakTags, true),
         parents = [],
         pN;
       if (node) {
@@ -15295,11 +14543,7 @@ UE.plugins["pagebreak"] = function() {
         if (!range.collapsed) {
           range.deleteContents();
           var start = range.startContainer;
-          while (
-            !domUtils.isBody(start) &&
-            domUtils.isBlockElm(start) &&
-            domUtils.isEmptyNode(start)
-          ) {
+          while (!domUtils.isBody(start) && domUtils.isBlockElm(start) && domUtils.isEmptyNode(start)) {
             range.setStartBefore(start).collapse(true);
             domUtils.remove(start);
             start = range.startContainer;
@@ -15396,10 +14640,10 @@ UE.plugin.register("wordimage", function() {
             src: src,
             style:
               "background:url(" +
-                (flag
-                  ? opt.themePath + opt.theme + "/images/word.gif"
-                  : opt.langPath + opt.lang + "/images/localimage.png") +
-                ") no-repeat center center;border:1px solid #ddd"
+              (flag
+                ? opt.themePath + opt.theme + "/images/word.gif"
+                : opt.langPath + opt.lang + "/images/localimage.png") +
+              ") no-repeat center center;border:1px solid #ddd"
           });
         }
       });
@@ -15420,11 +14664,7 @@ UE.plugins["dragdrop"] = function() {
         var pre = node.previousSibling,
           next;
         while ((next = node.nextSibling)) {
-          if (
-            next.nodeType == 1 &&
-            next.tagName == "SPAN" &&
-            !next.firstChild
-          ) {
+          if (next.nodeType == 1 && next.tagName == "SPAN" && !next.firstChild) {
             domUtils.remove(next);
           } else {
             break;
@@ -15439,11 +14679,7 @@ UE.plugins["dragdrop"] = function() {
             pre.appendChild(node);
             domUtils.moveChild(next, pre);
             domUtils.remove(next);
-          } else if (
-            next &&
-            next.tagName == "P" &&
-            !domUtils.isEmptyBlock(next)
-          ) {
+          } else if (next && next.tagName == "P" && !domUtils.isEmptyBlock(next)) {
             next.insertBefore(node, next.firstChild);
           }
 
@@ -15464,9 +14700,7 @@ UE.plugins["dragdrop"] = function() {
     if (keyCode == 13) {
       var rng = me.selection.getRange(),
         node;
-      if (
-        (node = domUtils.findParentByTagName(rng.startContainer, "p", true))
-      ) {
+      if ((node = domUtils.findParentByTagName(rng.startContainer, "p", true))) {
         if (domUtils.getComputedStyle(node, "text-align") == "center") {
           domUtils.removeStyle(node, "text-align");
         }
@@ -15552,9 +14786,7 @@ UE.plugins["undo"] = function() {
           this.reset();
           return;
         }
-        while (
-          this.list[this.index].content == this.list[this.index - 1].content
-        ) {
+        while (this.list[this.index].content == this.list[this.index - 1].content) {
           this.index--;
           if (this.index == 0) {
             return this.restore(0);
@@ -15565,9 +14797,7 @@ UE.plugins["undo"] = function() {
     };
     this.redo = function() {
       if (this.hasRedo) {
-        while (
-          this.list[this.index].content == this.list[this.index + 1].content
-        ) {
+        while (this.list[this.index].content == this.list[this.index + 1].content) {
           this.index++;
           if (this.index == this.list.length - 1) {
             return this.restore(this.index);
@@ -15590,21 +14820,16 @@ UE.plugins["undo"] = function() {
       me.fireEvent("afterscencerestore");
       //处理undo后空格不展位的问题
       if (browser.ie) {
-        utils.each(
-          domUtils.getElementsByTagName(me.document, "td th caption p"),
-          function(node) {
-            if (domUtils.isEmptyNode(node)) {
-              domUtils.fillNode(me.document, node);
-            }
+        utils.each(domUtils.getElementsByTagName(me.document, "td th caption p"), function(node) {
+          if (domUtils.isEmptyNode(node)) {
+            domUtils.fillNode(me.document, node);
           }
-        );
+        });
       }
 
       try {
         var rng = new dom.Range(me.document).moveToAddress(scene.address);
-        rng.select(
-          noNeedFillCharTags[rng.startContainer.nodeName.toLowerCase()]
-        );
+        rng.select(noNeedFillCharTags[rng.startContainer.nodeName.toLowerCase()]);
       } catch (e) {}
 
       this.update();
@@ -15645,9 +14870,7 @@ UE.plugins["undo"] = function() {
       if (
         lastScene &&
         lastScene.content == currentScene.content &&
-        (notCompareRange
-          ? 1
-          : compareRangeAddress(lastScene.address, currentScene.address))
+        (notCompareRange ? 1 : compareRangeAddress(lastScene.address, currentScene.address))
       ) {
         return;
       }
@@ -15703,25 +14926,21 @@ UE.plugins["undo"] = function() {
       this.undoManger[cmdName]();
     },
     queryCommandState: function(cmdName) {
-      return this.undoManger[
-        "has" + (cmdName.toLowerCase() == "undo" ? "Undo" : "Redo")
-      ]
-        ? 0
-        : -1;
+      return this.undoManger["has" + (cmdName.toLowerCase() == "undo" ? "Undo" : "Redo")] ? 0 : -1;
     },
     notNeedUndo: 1
   };
 
   var keys = {
-    //  /*Backspace*/ 8:1, /*Delete*/ 46:1,
-    /*Shift*/ 16: 1,
-    /*Ctrl*/ 17: 1,
-    /*Alt*/ 18: 1,
-    37: 1,
-    38: 1,
-    39: 1,
-    40: 1
-  },
+      //  /*Backspace*/ 8:1, /*Delete*/ 46:1,
+      /*Shift*/ 16: 1,
+      /*Ctrl*/ 17: 1,
+      /*Alt*/ 18: 1,
+      37: 1,
+      38: 1,
+      39: 1,
+      40: 1
+    },
     keycont = 0,
     lastKeyCode;
   //输入法状态下不计算字符数
@@ -15743,13 +14962,7 @@ UE.plugins["undo"] = function() {
   me.addListener("keydown", function(type, evt) {
     var me = this;
     var keyCode = evt.keyCode || evt.which;
-    if (
-      !keys[keyCode] &&
-      !evt.ctrlKey &&
-      !evt.metaKey &&
-      !evt.shiftKey &&
-      !evt.altKey
-    ) {
+    if (!keys[keyCode] && !evt.ctrlKey && !evt.metaKey && !evt.shiftKey && !evt.altKey) {
       if (inputType) return;
 
       if (!me.selection.getRange().collapsed) {
@@ -15787,13 +15000,7 @@ UE.plugins["undo"] = function() {
   });
   me.addListener("keyup", function(type, evt) {
     var keyCode = evt.keyCode || evt.which;
-    if (
-      !keys[keyCode] &&
-      !evt.ctrlKey &&
-      !evt.metaKey &&
-      !evt.shiftKey &&
-      !evt.altKey
-    ) {
+    if (!keys[keyCode] && !evt.ctrlKey && !evt.metaKey && !evt.shiftKey && !evt.altKey) {
       if (inputType) return;
       if (!isCollapsed) {
         this.undoManger.save(false, true);
@@ -15914,10 +15121,7 @@ UE.plugins["paste"] = function() {
       pastebin = doc.createElement("div");
     pastebin.id = "baidu_pastebin";
     // Safari 要求div必须有内容，才能粘贴内容进来
-    browser.webkit &&
-      pastebin.appendChild(
-        doc.createTextNode(domUtils.fillChar + domUtils.fillChar)
-      );
+    browser.webkit && pastebin.appendChild(doc.createTextNode(domUtils.fillChar + domUtils.fillChar));
     doc.body.appendChild(pastebin);
     //trace:717 隐藏的span不能得到top
     //bk.start.innerHTML = '&nbsp;';
@@ -15932,11 +15136,7 @@ UE.plugins["paste"] = function() {
 
     setTimeout(function() {
       if (browser.webkit) {
-        for (
-          var i = 0, pastebins = doc.querySelectorAll("#baidu_pastebin"), pi;
-          (pi = pastebins[i++]);
-
-        ) {
+        for (var i = 0, pastebins = doc.querySelectorAll("#baidu_pastebin"), pi; (pi = pastebins[i++]); ) {
           if (domUtils.isEmptyNode(pi)) {
             domUtils.remove(pi);
           } else {
@@ -15962,31 +15162,23 @@ UE.plugins["paste"] = function() {
   var txtContent, htmlContent, address;
 
   function getPureHtml(html) {
-    return html.replace(/<(\/?)([\w\-]+)([^>]*)>/gi, function(
-      a,
-      b,
-      tagName,
-      attrs
-    ) {
+    return html.replace(/<(\/?)([\w\-]+)([^>]*)>/gi, function(a, b, tagName, attrs) {
       tagName = tagName.toLowerCase();
-      if ({ img: 1 }[tagName]) {
+      if ({img: 1}[tagName]) {
         return a;
       }
-      attrs = attrs.replace(
-        /([\w\-]*?)\s*=\s*(("([^"]*)")|('([^']*)')|([^\s>]+))/gi,
-        function(str, atr, val) {
-          if (
-            {
-              src: 1,
-              href: 1,
-              name: 1
-            }[atr.toLowerCase()]
-          ) {
-            return atr + "=" + val + " ";
-          }
-          return "";
+      attrs = attrs.replace(/([\w\-]*?)\s*=\s*(("([^"]*)")|('([^']*)')|([^\s>]+))/gi, function(str, atr, val) {
+        if (
+          {
+            src: 1,
+            href: 1,
+            name: 1
+          }[atr.toLowerCase()]
+        ) {
+          return atr + "=" + val + " ";
         }
-      );
+        return "";
+      });
       if (
         {
           span: 1,
@@ -16079,7 +15271,7 @@ UE.plugins["paste"] = function() {
           }
         });
       }
-      html = { html: root.toHtml() };
+      html = {html: root.toHtml()};
       me.fireEvent("beforepaste", html, root);
       //抢了默认的粘贴，那后边的内容就不执行了，比如表格粘贴
       if (!html.html) {
@@ -16088,11 +15280,7 @@ UE.plugins["paste"] = function() {
       root = UE.htmlparser(html.html, true);
       //如果开启了纯文本模式
       if (me.queryCommandState("pasteplain") === 1) {
-        me.execCommand(
-          "insertHtml",
-          UE.filterNode(root, me.options.filterTxtRules).toHtml(),
-          true
-        );
+        me.execCommand("insertHtml", UE.filterNode(root, me.options.filterTxtRules).toHtml(), true);
       } else {
         //文本模式
         UE.filterNode(root, me.options.filterTxtRules);
@@ -16103,9 +15291,7 @@ UE.plugins["paste"] = function() {
         address = me.selection.getRange().createAddress(true);
         me.execCommand(
           "insertHtml",
-          me.getOpt("retainOnlyLabelPasted") === true
-            ? getPureHtml(htmlContent)
-            : htmlContent,
+          me.getOpt("retainOnlyLabelPasted") === true ? getPureHtml(htmlContent) : htmlContent,
           true
         );
       }
@@ -16129,13 +15315,7 @@ UE.plugins["paste"] = function() {
             }
             var pre = start.previousSibling;
 
-            if (
-              pre &&
-              pre.nodeType == 3 &&
-              new RegExp("^[\n\r\t " + domUtils.fillChar + "]*$").test(
-                pre.nodeValue
-              )
-            ) {
+            if (pre && pre.nodeType == 3 && new RegExp("^[\n\r\t " + domUtils.fillChar + "]*$").test(pre.nodeValue)) {
               range.setStartBefore(pre);
             }
           }
@@ -16154,21 +15334,12 @@ UE.plugins["paste"] = function() {
               continue;
             }
             var next = end.nextSibling;
-            if (
-              next &&
-              next.nodeType == 3 &&
-              new RegExp("^[\n\r\t" + domUtils.fillChar + "]*$").test(
-                next.nodeValue
-              )
-            ) {
+            if (next && next.nodeType == 3 && new RegExp("^[\n\r\t" + domUtils.fillChar + "]*$").test(next.nodeValue)) {
               range.setEndAfter(next);
             }
           }
           if (
-            range.endOffset ==
-            range.endContainer[
-              range.endContainer.nodeType == 3 ? "nodeValue" : "childNodes"
-            ].length
+            range.endOffset == range.endContainer[range.endContainer.nodeType == 3 ? "nodeValue" : "childNodes"].length
           ) {
             range.setEndAfter(range.endContainer);
           } else {
@@ -16192,9 +15363,7 @@ UE.plugins["paste"] = function() {
       while (
         !domUtils.isBody(rng.startContainer) &&
         !rng.startOffset &&
-        rng.startContainer[
-          rng.startContainer.nodeType == 3 ? "nodeValue" : "childNodes"
-        ].length
+        rng.startContainer[rng.startContainer.nodeType == 3 ? "nodeValue" : "childNodes"].length
       ) {
         rng.setStartBefore(rng.startContainer);
       }
@@ -16212,21 +15381,14 @@ UE.plugins["paste"] = function() {
     });
 
     //ie下beforepaste在点击右键时也会触发，所以用监控键盘才处理
-    domUtils.on(
-      me.body,
-      browser.ie || browser.opera ? "keydown" : "paste",
-      function(e) {
-        if (
-          (browser.ie || browser.opera) &&
-          ((!e.ctrlKey && !e.metaKey) || e.keyCode != "86")
-        ) {
-          return;
-        }
-        getClipboardData.call(me, function(div) {
-          filter(div);
-        });
+    domUtils.on(me.body, browser.ie || browser.opera ? "keydown" : "paste", function(e) {
+      if ((browser.ie || browser.opera) && ((!e.ctrlKey && !e.metaKey) || e.keyCode != "86")) {
+        return;
       }
-    );
+      getClipboardData.call(me, function(div) {
+        filter(div);
+      });
+    });
   });
 
   me.commands["paste"] = {
@@ -16266,8 +15428,8 @@ UE.plugins["pasteplain"] = function() {
       return {
         //直接删除及其字节点内容
         "-": "script style object iframe embed input select",
-        p: { $: {} },
-        br: { $: {} },
+        p: {$: {}},
+        br: {$: {}},
         div: function(node) {
           var tmpNode,
             p = UE.uNode.createElement("p");
@@ -16307,10 +15469,7 @@ UE.plugins["pasteplain"] = function() {
           //没有内容的td直接删掉
           var txt = !!node.innerText();
           if (txt) {
-            node.parentNode.insertAfter(
-              UE.uNode.createText(" &nbsp; &nbsp;"),
-              node
-            );
+            node.parentNode.insertAfter(UE.uNode.createText(" &nbsp; &nbsp;"), node);
           }
           node.parentNode.removeChild(node, node.innerText());
         }
@@ -16321,27 +15480,27 @@ UE.plugins["pasteplain"] = function() {
   var pasteplain = me.options.pasteplain;
 
   /**
-     * 启用或取消纯文本粘贴模式
-     * @command pasteplain
-     * @method execCommand
-     * @param { String } cmd 命令字符串
-     * @example
-     * ```javascript
-     * editor.queryCommandState( 'pasteplain' );
-     * ```
-     */
+   * 启用或取消纯文本粘贴模式
+   * @command pasteplain
+   * @method execCommand
+   * @param { String } cmd 命令字符串
+   * @example
+   * ```javascript
+   * editor.queryCommandState( 'pasteplain' );
+   * ```
+   */
 
   /**
-     * 查询当前是否处于纯文本粘贴模式
-     * @command pasteplain
-     * @method queryCommandState
-     * @param { String } cmd 命令字符串
-     * @return { int } 如果处于纯文本模式，返回1，否则，返回0
-     * @example
-     * ```javascript
-     * editor.queryCommandState( 'pasteplain' );
-     * ```
-     */
+   * 查询当前是否处于纯文本粘贴模式
+   * @command pasteplain
+   * @method queryCommandState
+   * @param { String } cmd 命令字符串
+   * @return { int } 如果处于纯文本模式，返回1，否则，返回0
+   * @example
+   * ```javascript
+   * editor.queryCommandState( 'pasteplain' );
+   * ```
+   */
   me.commands["pasteplain"] = {
     queryCommandState: function() {
       return pasteplain ? 1 : 0;
@@ -16421,10 +15580,7 @@ UE.plugins["list"] = function() {
 
   //根据用户配置，调整customStyle
   for (var s in customStyle) {
-    if (
-      !me.options.insertorderedlist.hasOwnProperty(s) &&
-      !me.options.insertunorderedlist.hasOwnProperty(s)
-    ) {
+    if (!me.options.insertorderedlist.hasOwnProperty(s) && !me.options.insertunorderedlist.hasOwnProperty(s)) {
       delete customStyle[s];
     }
   }
@@ -16433,14 +15589,7 @@ UE.plugins["list"] = function() {
     var customCss = [];
     for (var p in customStyle) {
       if (p == "dash" || p == "dot") {
-        customCss.push(
-          "li.list-" +
-            customStyle[p] +
-            "{background-image:url(" +
-            liiconpath +
-            customStyle[p] +
-            ".gif)}"
-        );
+        customCss.push("li.list-" + customStyle[p] + "{background-image:url(" + liiconpath + customStyle[p] + ".gif)}");
         customCss.push(
           "ul.custom_" +
             p +
@@ -16502,23 +15651,12 @@ UE.plugins["list"] = function() {
       }
     }
     customCss.push(".list-paddingleft-1{padding-left:0}");
-    customCss.push(
-      ".list-paddingleft-2{padding-left:" +
-        me.options.listDefaultPaddingLeft +
-        "px}"
-    );
-    customCss.push(
-      ".list-paddingleft-3{padding-left:" +
-        me.options.listDefaultPaddingLeft * 2 +
-        "px}"
-    );
+    customCss.push(".list-paddingleft-2{padding-left:" + me.options.listDefaultPaddingLeft + "px}");
+    customCss.push(".list-paddingleft-3{padding-left:" + me.options.listDefaultPaddingLeft * 2 + "px}");
     //如果不给宽度会在自定应样式里出现滚动条
     utils.cssRule(
       "list",
-      "ol,ul{margin:0;pading:0;" +
-        (browser.ie ? "" : "width:95%") +
-        "}li{clear:both;}" +
-        customCss.join("\n"),
+      "ol,ul{margin:0;pading:0;" + (browser.ie ? "" : "width:95%") + "}li{clear:both;}" + customCss.join("\n"),
       me.document
     );
   });
@@ -16530,9 +15668,7 @@ UE.plugins["list"] = function() {
           li;
         //trace:3416
         if (!rng.collapsed) {
-          if (
-            (li = domUtils.findParentByTagName(rng.startContainer, "li", true))
-          ) {
+          if ((li = domUtils.findParentByTagName(rng.startContainer, "li", true))) {
             if (!li.nextSibling && domUtils.isEmptyBlock(li)) {
               var pn = li.parentNode,
                 node;
@@ -16592,8 +15728,7 @@ UE.plugins["list"] = function() {
           }
         }
         var index = utils.indexOf(listStyle[list.tagName], type);
-        if (n.parentNode !== root)
-          index = index + 1 == listStyle[list.tagName].length ? 0 : index + 1;
+        if (n.parentNode !== root) index = index + 1 == listStyle[list.tagName].length ? 0 : index + 1;
         var currentStyle = listStyle[list.tagName][index];
         if (customStyle[currentStyle]) {
           n.setAttr("class", "custom_" + currentStyle);
@@ -16620,11 +15755,7 @@ UE.plugins["list"] = function() {
               lastNode = tmpNode;
             }
             tmpNode = newChildrens[newChildrens.length - 1];
-            if (
-              !tmpNode ||
-              tmpNode.type != "element" ||
-              tmpNode.tagName != "br"
-            ) {
+            if (!tmpNode || tmpNode.type != "element" || tmpNode.tagName != "br") {
               var br = UE.uNode.createElement("br");
               br.parentNode = li;
               newChildrens.push(br);
@@ -16666,23 +15797,19 @@ UE.plugins["list"] = function() {
       //去掉末尾的空白
       var p = li.firstChild();
       var lastChild = p.lastChild();
-      if (
-        lastChild &&
-        lastChild.type == "text" &&
-        /^\s*$/.test(lastChild.data)
-      ) {
+      if (lastChild && lastChild.type == "text" && /^\s*$/.test(lastChild.data)) {
         p.removeChild(lastChild);
       }
     });
     if (me.options.autoTransWordToList) {
       var orderlisttype = {
-        num1: /^\d+\)/,
-        decimal: /^\d+\./,
-        "lower-alpha": /^[a-z]+\)/,
-        "upper-alpha": /^[A-Z]+\./,
-        cn: /^[\u4E00\u4E8C\u4E09\u56DB\u516d\u4e94\u4e03\u516b\u4e5d]+[\u3001]/,
-        cn2: /^\([\u4E00\u4E8C\u4E09\u56DB\u516d\u4e94\u4e03\u516b\u4e5d]+\)/
-      },
+          num1: /^\d+\)/,
+          decimal: /^\d+\./,
+          "lower-alpha": /^[a-z]+\)/,
+          "upper-alpha": /^[A-Z]+\./,
+          cn: /^[\u4E00\u4E8C\u4E09\u56DB\u516d\u4e94\u4e03\u516b\u4e5d]+[\u3001]/,
+          cn2: /^\([\u4E00\u4E8C\u4E09\u56DB\u516d\u4e94\u4e03\u516b\u4e5d]+\)/
+        },
         unorderlisttype = {
           square: "n"
         };
@@ -16721,11 +15848,7 @@ UE.plugins["list"] = function() {
           if (list.tagName == "ol") {
             if (browser.ie) {
               var first = p.firstChild();
-              if (
-                first.type == "element" &&
-                first.tagName == "span" &&
-                orderlisttype[type].test(first.innerText())
-              ) {
+              if (first.type == "element" && first.tagName == "span" && orderlisttype[type].test(first.innerText())) {
                 p.removeChild(first);
               }
             } else {
@@ -16743,23 +15866,14 @@ UE.plugins["list"] = function() {
           type,
           cacheNode = node;
 
-        if (
-          node.parentNode.tagName != "li" &&
-          (type = checkListType(node.innerText(), node))
-        ) {
-          var list = UE.uNode.createElement(
-            me.options.insertorderedlist.hasOwnProperty(type) ? "ol" : "ul"
-          );
+        if (node.parentNode.tagName != "li" && (type = checkListType(node.innerText(), node))) {
+          var list = UE.uNode.createElement(me.options.insertorderedlist.hasOwnProperty(type) ? "ol" : "ul");
           if (customStyle[type]) {
             list.setAttr("class", "custom_" + type);
           } else {
             list.setStyle("list-style-type", type);
           }
-          while (
-            node &&
-            node.parentNode.tagName != "li" &&
-            checkListType(node.innerText(), node)
-          ) {
+          while (node && node.parentNode.tagName != "li" && checkListType(node.innerText(), node)) {
             tmp = node.nextSibling();
             if (!tmp) {
               node.parentNode.insertBefore(list, node);
@@ -16772,12 +15886,7 @@ UE.plugins["list"] = function() {
           }
         }
         var span = cacheNode.firstChild();
-        if (
-          span &&
-          span.type == "element" &&
-          span.tagName == "span" &&
-          /^\s*(&nbsp;)+\s*$/.test(span.innerText())
-        ) {
+        if (span && span.type == "element" && span.tagName == "span" && /^\s*(&nbsp;)+\s*$/.test(span.innerText())) {
           span.parentNode.removeChild(span);
         }
       });
@@ -16795,47 +15904,29 @@ UE.plugins["list"] = function() {
 
       var parent = node.parentNode;
       if (parent.tagName == node.tagName) {
-        var nodeStyleType =
-          getStyle(node) || (node.tagName == "OL" ? "decimal" : "disc"),
-          parentStyleType =
-            getStyle(parent) || (parent.tagName == "OL" ? "decimal" : "disc");
+        var nodeStyleType = getStyle(node) || (node.tagName == "OL" ? "decimal" : "disc"),
+          parentStyleType = getStyle(parent) || (parent.tagName == "OL" ? "decimal" : "disc");
         if (nodeStyleType == parentStyleType) {
-          var styleIndex = utils.indexOf(
-            listStyle[node.tagName],
-            nodeStyleType
-          );
-          styleIndex = styleIndex + 1 == listStyle[node.tagName].length
-            ? 0
-            : styleIndex + 1;
+          var styleIndex = utils.indexOf(listStyle[node.tagName], nodeStyleType);
+          styleIndex = styleIndex + 1 == listStyle[node.tagName].length ? 0 : styleIndex + 1;
           setListStyle(node, listStyle[node.tagName][styleIndex]);
         }
       }
       var index = 0,
         type = 2;
       if (domUtils.hasClass(node, /custom_/)) {
-        if (
-          !(
-            /[ou]l/i.test(parent.tagName) &&
-            domUtils.hasClass(parent, /custom_/)
-          )
-        ) {
+        if (!(/[ou]l/i.test(parent.tagName) && domUtils.hasClass(parent, /custom_/))) {
           type = 1;
         }
       } else {
-        if (
-          /[ou]l/i.test(parent.tagName) &&
-          domUtils.hasClass(parent, /custom_/)
-        ) {
+        if (/[ou]l/i.test(parent.tagName) && domUtils.hasClass(parent, /custom_/)) {
           type = 3;
         }
       }
 
       var style = domUtils.getStyle(node, "list-style-type");
       style && (node.style.cssText = "list-style-type:" + style);
-      node.className =
-        utils.trim(node.className.replace(/list-paddingleft-\w+/, "")) +
-        " list-paddingleft-" +
-        type;
+      node.className = utils.trim(node.className.replace(/list-paddingleft-\w+/, "")) + " list-paddingleft-" + type;
       utils.each(domUtils.getElementsByTagName(node, "li"), function(li) {
         li.style.cssText && (li.style.cssText = "");
         if (!li.firstChild) {
@@ -16855,10 +15946,7 @@ UE.plugins["list"] = function() {
                 case "cn":
                 case "cn1":
                 case "cn2":
-                  if (
-                    index > 10 &&
-                    (index % 10 == 0 || (index > 10 && index < 20))
-                  ) {
+                  if (index > 10 && (index % 10 == 0 || (index > 10 && index < 20))) {
                     paddingLeft = 2;
                   } else if (index > 20) {
                     paddingLeft = 3;
@@ -16880,13 +15968,7 @@ UE.plugins["list"] = function() {
               "-paddingleft-" +
               paddingLeft;
           } else {
-            li.className =
-              "list-" +
-              customStyle[currentStyle] +
-              " " +
-              "list-" +
-              currentStyle +
-              "-paddingleft";
+            li.className = "list-" + customStyle[currentStyle] + " " + "list-" + currentStyle + "-paddingleft";
           }
         } else {
           li.className = li.className.replace(/list-[\w\-]+/gi, "");
@@ -16911,9 +15993,8 @@ UE.plugins["list"] = function() {
       nextList &&
       nextList.nodeType == 1 &&
       nextList.tagName.toLowerCase() == tag &&
-      (getStyle(nextList) ||
-        domUtils.getStyle(nextList, "list-style-type") ||
-        (tag == "ol" ? "decimal" : "disc")) == style
+      (getStyle(nextList) || domUtils.getStyle(nextList, "list-style-type") || (tag == "ol" ? "decimal" : "disc")) ==
+        style
     ) {
       domUtils.moveChild(nextList, list);
       if (nextList.childNodes.length == 0) {
@@ -16928,9 +16009,8 @@ UE.plugins["list"] = function() {
       preList &&
       preList.nodeType == 1 &&
       preList.tagName.toLowerCase() == tag &&
-      (getStyle(preList) ||
-        domUtils.getStyle(preList, "list-style-type") ||
-        (tag == "ol" ? "decimal" : "disc")) == style
+      (getStyle(preList) || domUtils.getStyle(preList, "list-style-type") || (tag == "ol" ? "decimal" : "disc")) ==
+        style
     ) {
       domUtils.moveChild(list, preList);
     }
@@ -16993,13 +16073,13 @@ UE.plugins["list"] = function() {
         ),
         li = domUtils.findParentByTagName(rng.startContainer, "li", true);
       if (parent && parent.tagName != "PRE" && !li) {
-        var html = parent.innerHTML.replace(
-          new RegExp(domUtils.fillChar, "g"),
-          ""
-        );
+        var html = parent.innerHTML.replace(new RegExp(domUtils.fillChar, "g"), "");
         if (/^\s*1\s*\.[^\d]/.test(html)) {
           parent.innerHTML = html.replace(/^\s*1\s*\./, "");
-          rng.setStartAtLast(parent).collapse(true).select();
+          rng
+            .setStartAtLast(parent)
+            .collapse(true)
+            .select();
           me.__hasEnterExecCommand = true;
           me.execCommand("insertorderedlist");
           me.__hasEnterExecCommand = false;
@@ -17017,11 +16097,7 @@ UE.plugins["list"] = function() {
 
       if (start && end && start === end) {
         if (!range.collapsed) {
-          start = domUtils.findParentByTagName(
-            range.startContainer,
-            "li",
-            true
-          );
+          start = domUtils.findParentByTagName(range.startContainer, "li", true);
           end = domUtils.findParentByTagName(range.endContainer, "li", true);
           if (start && end && start === end) {
             range.deleteContents();
@@ -17034,16 +16110,16 @@ UE.plugins["list"] = function() {
               domUtils.fillNode(me.document, p);
               parentList = li.parentNode;
               if (pre && next) {
-                range.setStart(next, 0).collapse(true).select(true);
+                range
+                  .setStart(next, 0)
+                  .collapse(true)
+                  .select(true);
                 domUtils.remove(li);
               } else {
                 if ((!pre && !next) || !pre) {
                   parentList.parentNode.insertBefore(p, parentList);
                 } else {
-                  li.parentNode.parentNode.insertBefore(
-                    p,
-                    parentList.nextSibling
-                  );
+                  li.parentNode.parentNode.insertBefore(p, parentList.nextSibling);
                 }
                 domUtils.remove(li);
                 if (!parentList.firstChild) {
@@ -17060,11 +16136,7 @@ UE.plugins["list"] = function() {
 
             range.deleteContents();
             tmpRange.moveToBookmark(bk);
-            var li = domUtils.findParentByTagName(
-              tmpRange.startContainer,
-              "li",
-              true
-            );
+            var li = domUtils.findParentByTagName(tmpRange.startContainer, "li", true);
 
             clearEmptySibling(li);
             tmpRange.select();
@@ -17135,7 +16207,11 @@ UE.plugins["list"] = function() {
               domUtils.fillNode(me.document, first);
             }
 
-            range.setStart(first, 0).collapse(true).shrinkBoundary().select();
+            range
+              .setStart(first, 0)
+              .collapse(true)
+              .shrinkBoundary()
+              .select();
             domUtils.remove(span);
             var pre = nextLi.previousSibling;
             if (pre && domUtils.isEmptyBlock(pre)) {
@@ -17195,7 +16271,10 @@ UE.plugins["list"] = function() {
                   pre.innerHTML = "";
                 }
                 domUtils.moveChild(li, pre);
-                range.setStartBefore(span).collapse(true).select(true);
+                range
+                  .setStartBefore(span)
+                  .collapse(true)
+                  .select(true);
 
                 domUtils.remove(span);
               }
@@ -17257,13 +16336,7 @@ UE.plugins["list"] = function() {
     if (keyCode == 8) {
       var rng = me.selection.getRange(),
         list;
-      if (
-        (list = domUtils.findParentByTagName(
-          rng.startContainer,
-          ["ol", "ul"],
-          true
-        ))
-      ) {
+      if ((list = domUtils.findParentByTagName(rng.startContainer, ["ol", "ul"], true))) {
         adjustList(
           list,
           list.tagName.toLowerCase(),
@@ -17302,8 +16375,7 @@ UE.plugins["list"] = function() {
           list = me.document.createElement(parentLi.tagName),
           index = utils.indexOf(
             listStyle[list.tagName],
-            getStyle(parentLi) ||
-              domUtils.getComputedStyle(parentLi, "list-style-type")
+            getStyle(parentLi) || domUtils.getComputedStyle(parentLi, "list-style-type")
           );
         index = index + 1 == listStyle[list.tagName].length ? 0 : index + 1;
         var currentStyle = listStyle[list.tagName][index];
@@ -17321,11 +16393,7 @@ UE.plugins["list"] = function() {
       } else {
         me.fireEvent("saveScene");
         bk = range.createBookmark();
-        for (
-          var i = 0, closeList, parents = domUtils.findParents(li), ci;
-          (ci = parents[i++]);
-
-        ) {
+        for (var i = 0, closeList, parents = domUtils.findParents(li), ci; (ci = parents[i++]); ) {
           if (domUtils.isTagNode(ci, "ol ul")) {
             closeList = ci;
             break;
@@ -17333,17 +16401,9 @@ UE.plugins["list"] = function() {
         }
         var current = li;
         if (bk.end) {
-          while (
-            current &&
-            !(
-              domUtils.getPosition(current, bk.end) &
-              domUtils.POSITION_FOLLOWING
-            )
-          ) {
+          while (current && !(domUtils.getPosition(current, bk.end) & domUtils.POSITION_FOLLOWING)) {
             if (checkLevel(current)) {
-              current = domUtils.getNextDomNode(current, false, null, function(
-                node
-              ) {
+              current = domUtils.getNextDomNode(current, false, null, function(node) {
                 return node !== closeList;
               });
               continue;
@@ -17352,22 +16412,13 @@ UE.plugins["list"] = function() {
               list = me.document.createElement(parentLi.tagName),
               index = utils.indexOf(
                 listStyle[list.tagName],
-                getStyle(parentLi) ||
-                  domUtils.getComputedStyle(parentLi, "list-style-type")
+                getStyle(parentLi) || domUtils.getComputedStyle(parentLi, "list-style-type")
               );
-            var currentIndex = index + 1 == listStyle[list.tagName].length
-              ? 0
-              : index + 1;
+            var currentIndex = index + 1 == listStyle[list.tagName].length ? 0 : index + 1;
             var currentStyle = listStyle[list.tagName][currentIndex];
             setListStyle(list, currentStyle);
             parentLi.insertBefore(list, current);
-            while (
-              current &&
-              !(
-                domUtils.getPosition(current, bk.end) &
-                domUtils.POSITION_FOLLOWING
-              )
-            ) {
+            while (current && !(domUtils.getPosition(current, bk.end) & domUtils.POSITION_FOLLOWING)) {
               li = current.nextSibling;
               list.appendChild(current);
               if (!li || domUtils.isTagNode(li, "ol ul")) {
@@ -17378,9 +16429,7 @@ UE.plugins["list"] = function() {
                     }
                   }
                 } else {
-                  li = domUtils.getNextDomNode(current, false, null, function(
-                    node
-                  ) {
+                  li = domUtils.getNextDomNode(current, false, null, function(node) {
                     return node !== closeList;
                   });
                 }
@@ -17411,86 +16460,82 @@ UE.plugins["list"] = function() {
   }
 
   /**
-     * 有序列表，与“insertunorderedlist”命令互斥
-     * @command insertorderedlist
-     * @method execCommand
-     * @param { String } command 命令字符串
-     * @param { String } style 插入的有序列表类型，值为：decimal,lower-alpha,lower-roman,upper-alpha,upper-roman,cn,cn1,cn2,num,num1,num2
-     * @example
-     * ```javascript
-     * editor.execCommand( 'insertorderedlist','decimal');
-     * ```
-     */
+   * 有序列表，与“insertunorderedlist”命令互斥
+   * @command insertorderedlist
+   * @method execCommand
+   * @param { String } command 命令字符串
+   * @param { String } style 插入的有序列表类型，值为：decimal,lower-alpha,lower-roman,upper-alpha,upper-roman,cn,cn1,cn2,num,num1,num2
+   * @example
+   * ```javascript
+   * editor.execCommand( 'insertorderedlist','decimal');
+   * ```
+   */
   /**
-     * 查询当前选区内容是否有序列表
-     * @command insertorderedlist
-     * @method queryCommandState
-     * @param { String } cmd 命令字符串
-     * @return { int } 如果当前选区是有序列表返回1，否则返回0
-     * @example
-     * ```javascript
-     * editor.queryCommandState( 'insertorderedlist' );
-     * ```
-     */
+   * 查询当前选区内容是否有序列表
+   * @command insertorderedlist
+   * @method queryCommandState
+   * @param { String } cmd 命令字符串
+   * @return { int } 如果当前选区是有序列表返回1，否则返回0
+   * @example
+   * ```javascript
+   * editor.queryCommandState( 'insertorderedlist' );
+   * ```
+   */
   /**
-     * 查询当前选区内容是否有序列表
-     * @command insertorderedlist
-     * @method queryCommandValue
-     * @param { String } cmd 命令字符串
-     * @return { String } 返回当前有序列表的类型，值为null或decimal,lower-alpha,lower-roman,upper-alpha,upper-roman,cn,cn1,cn2,num,num1,num2
-     * @example
-     * ```javascript
-     * editor.queryCommandValue( 'insertorderedlist' );
-     * ```
-     */
+   * 查询当前选区内容是否有序列表
+   * @command insertorderedlist
+   * @method queryCommandValue
+   * @param { String } cmd 命令字符串
+   * @return { String } 返回当前有序列表的类型，值为null或decimal,lower-alpha,lower-roman,upper-alpha,upper-roman,cn,cn1,cn2,num,num1,num2
+   * @example
+   * ```javascript
+   * editor.queryCommandValue( 'insertorderedlist' );
+   * ```
+   */
 
   /**
-     * 无序列表，与“insertorderedlist”命令互斥
-     * @command insertunorderedlist
-     * @method execCommand
-     * @param { String } command 命令字符串
-     * @param { String } style 插入的无序列表类型，值为：circle,disc,square,dash,dot
-     * @example
-     * ```javascript
-     * editor.execCommand( 'insertunorderedlist','circle');
-     * ```
-     */
+   * 无序列表，与“insertorderedlist”命令互斥
+   * @command insertunorderedlist
+   * @method execCommand
+   * @param { String } command 命令字符串
+   * @param { String } style 插入的无序列表类型，值为：circle,disc,square,dash,dot
+   * @example
+   * ```javascript
+   * editor.execCommand( 'insertunorderedlist','circle');
+   * ```
+   */
   /**
-     * 查询当前是否有word文档粘贴进来的图片
-     * @command insertunorderedlist
-     * @method insertunorderedlist
-     * @param { String } command 命令字符串
-     * @return { int } 如果当前选区是无序列表返回1，否则返回0
-     * @example
-     * ```javascript
-     * editor.queryCommandState( 'insertunorderedlist' );
-     * ```
-     */
+   * 查询当前是否有word文档粘贴进来的图片
+   * @command insertunorderedlist
+   * @method insertunorderedlist
+   * @param { String } command 命令字符串
+   * @return { int } 如果当前选区是无序列表返回1，否则返回0
+   * @example
+   * ```javascript
+   * editor.queryCommandState( 'insertunorderedlist' );
+   * ```
+   */
   /**
-     * 查询当前选区内容是否有序列表
-     * @command insertunorderedlist
-     * @method queryCommandValue
-     * @param { String } command 命令字符串
-     * @return { String } 返回当前无序列表的类型，值为null或circle,disc,square,dash,dot
-     * @example
-     * ```javascript
-     * editor.queryCommandValue( 'insertunorderedlist' );
-     * ```
-     */
+   * 查询当前选区内容是否有序列表
+   * @command insertunorderedlist
+   * @method queryCommandValue
+   * @param { String } command 命令字符串
+   * @return { String } 返回当前无序列表的类型，值为null或circle,disc,square,dash,dot
+   * @example
+   * ```javascript
+   * editor.queryCommandValue( 'insertunorderedlist' );
+   * ```
+   */
 
   me.commands["insertorderedlist"] = me.commands["insertunorderedlist"] = {
     execCommand: function(command, style) {
       if (!style) {
-        style = command.toLowerCase() == "insertorderedlist"
-          ? "decimal"
-          : "disc";
+        style = command.toLowerCase() == "insertorderedlist" ? "decimal" : "disc";
       }
       var me = this,
         range = this.selection.getRange(),
         filterFn = function(node) {
-          return node.nodeType == 1
-            ? node.tagName.toLowerCase() != "br"
-            : !domUtils.isWhitespace(node);
+          return node.nodeType == 1 ? node.tagName.toLowerCase() != "br" : !domUtils.isWhitespace(node);
         },
         tag = command.toLowerCase() == "insertorderedlist" ? "ol" : "ul",
         frag = me.document.createDocumentFragment();
@@ -17549,11 +16594,7 @@ UE.plugins["list"] = function() {
             domUtils.getComputedStyle(startParent, "list-style-type") ||
             (command.toLowerCase() == "insertorderedlist" ? "decimal" : "disc");
           if (startParent.tagName.toLowerCase() == tag && nodeStyle == style) {
-            for (
-              var i = 0, ci, tmpFrag = me.document.createDocumentFragment();
-              (ci = frag.firstChild);
-
-            ) {
+            for (var i = 0, ci, tmpFrag = me.document.createDocumentFragment(); (ci = frag.firstChild); ) {
               if (domUtils.isTagNode(ci, "ol ul")) {
                 //                                  删除时，子列表不处理
                 //                                  utils.each(domUtils.getElementsByTagName(ci,'li'),function(li){
@@ -17682,11 +16723,7 @@ UE.plugins["list"] = function() {
         tmpNode,
         block = domUtils.isBlockElm;
 
-      while (
-        current &&
-        current !== bk.end &&
-        domUtils.getPosition(current, bk.end) & domUtils.POSITION_PRECEDING
-      ) {
+      while (current && current !== bk.end && domUtils.getPosition(current, bk.end) & domUtils.POSITION_PRECEDING) {
         if (current.nodeType == 3 || dtd.li[current.tagName]) {
           if (current.nodeType == 1 && dtd.$list[current.tagName]) {
             while (current.firstChild) {
@@ -17700,15 +16737,9 @@ UE.plugins["list"] = function() {
           tmpNode = current;
           tmpRange.setStartBefore(current);
 
-          while (
-            current &&
-            current !== bk.end &&
-            (!block(current) || domUtils.isBookmarkNode(current))
-          ) {
+          while (current && current !== bk.end && (!block(current) || domUtils.isBookmarkNode(current))) {
             tmpNode = current;
-            current = domUtils.getNextDomNode(current, false, null, function(
-              node
-            ) {
+            current = domUtils.getNextDomNode(current, false, null, function(node) {
               return !notExchange[node.tagName];
             });
           }
@@ -17747,11 +16778,7 @@ UE.plugins["list"] = function() {
       //当前list上下看能否合并
       adjustList(list, tag, style);
       //去掉冗余的tmpDiv
-      for (
-        var i = 0, ci, tmpDivs = domUtils.getElementsByTagName(list, "div");
-        (ci = tmpDivs[i++]);
-
-      ) {
+      for (var i = 0, ci, tmpDivs = domUtils.getElementsByTagName(list, "div"); (ci = tmpDivs[i++]); ) {
         if (ci.getAttribute("tmpDiv")) {
           domUtils.remove(ci, true);
         }
@@ -17785,9 +16812,7 @@ UE.plugins["list"] = function() {
           break;
         }
       }
-      return node
-        ? getStyle(node) || domUtils.getComputedStyle(node, "list-style-type")
-        : null;
+      return node ? getStyle(node) || domUtils.getComputedStyle(node, "list-style-type") : null;
     }
   };
 };
@@ -17842,10 +16867,10 @@ UE.plugins["list"] = function() {
           textarea = null;
           holder = null;
         },
-        focus: function (){
+        focus: function() {
           textarea.focus();
         },
-        blur: function (){
+        blur: function() {
           textarea.blur();
         }
       };
@@ -17860,8 +16885,7 @@ UE.plugins["list"] = function() {
       var dom = codeEditor.getWrapperElement();
       dom.style.cssText =
         'position:absolute;left:0;top:0;width:100%;height:100%;font-family:consolas,"Courier new",monospace;font-size:13px;';
-      codeEditor.getScrollerElement().style.cssText =
-        "position:absolute;left:0;top:0;width:100%;height:100%;";
+      codeEditor.getScrollerElement().style.cssText = "position:absolute;left:0;top:0;width:100%;height:100%;";
       codeEditor.refresh();
       return {
         getCodeMirror: function() {
@@ -17881,14 +16905,14 @@ UE.plugins["list"] = function() {
           dom = null;
           codeEditor = null;
         },
-        focus: function (){
+        focus: function() {
           codeEditor.focus();
         },
-        blur: function (){
+        blur: function() {
           // codeEditor.blur();
           // since codemirror not support blur()
-          codeEditor.setOption('readOnly', true);
-          codeEditor.setOption('readOnly', false);
+          codeEditor.setOption("readOnly", true);
+          codeEditor.setOption("readOnly", false);
         }
       };
     }
@@ -17902,19 +16926,16 @@ UE.plugins["list"] = function() {
     var orgSetContent;
     var orgFocus;
     var orgBlur;
-    opt.sourceEditor = browser.ie
-      ? "textarea"
-      : opt.sourceEditor || "codemirror";
+    opt.sourceEditor = browser.ie ? "textarea" : opt.sourceEditor || "codemirror";
 
     me.setOpt({
       sourceEditorFirst: false
     });
     function createSourceEditor(holder) {
-      return sourceEditors[
-        opt.sourceEditor == "codemirror" && window.CodeMirror
-          ? "codemirror"
-          : "textarea"
-      ](me, holder);
+      return sourceEditors[opt.sourceEditor == "codemirror" && window.CodeMirror ? "codemirror" : "textarea"](
+        me,
+        holder
+      );
     }
 
     var bakCssText;
@@ -17922,27 +16943,27 @@ UE.plugins["list"] = function() {
     var oldGetContent, bakAddress;
 
     /**
-         * 切换源码模式和编辑模式
-         * @command source
-         * @method execCommand
-         * @param { String } cmd 命令字符串
-         * @example
-         * ```javascript
-         * editor.execCommand( 'source');
-         * ```
-         */
+     * 切换源码模式和编辑模式
+     * @command source
+     * @method execCommand
+     * @param { String } cmd 命令字符串
+     * @example
+     * ```javascript
+     * editor.execCommand( 'source');
+     * ```
+     */
 
     /**
-         * 查询当前编辑区域的状态是源码模式还是可视化模式
-         * @command source
-         * @method queryCommandState
-         * @param { String } cmd 命令字符串
-         * @return { int } 如果当前是源码编辑模式，返回1，否则返回0
-         * @example
-         * ```javascript
-         * editor.queryCommandState( 'source' );
-         * ```
-         */
+     * 查询当前编辑区域的状态是源码模式还是可视化模式
+     * @command source
+     * @method queryCommandState
+     * @param { String } cmd 命令字符串
+     * @return { int } 如果当前是源码编辑模式，返回1，否则返回0
+     * @example
+     * ```javascript
+     * editor.queryCommandState( 'source' );
+     * ```
+     */
 
     me.commands["source"] = {
       execCommand: function() {
@@ -17955,8 +16976,7 @@ UE.plugins["list"] = function() {
           }
 
           bakCssText = me.iframe.style.cssText;
-          me.iframe.style.cssText +=
-            "position:absolute;left:-32768px;top:-32768px;";
+          me.iframe.style.cssText += "position:absolute;left:-32768px;top:-32768px;";
 
           me.fireEvent("beforegetcontent");
           var root = UE.htmlparser(me.body.innerHTML);
@@ -18009,38 +17029,30 @@ UE.plugins["list"] = function() {
           //重置getContent，源码模式下取值也能是最新的数据
           oldGetContent = me.getContent;
           me.getContent = function() {
-            return (
-              sourceEditor.getContent() ||
-              "<p>" + (browser.ie ? "" : "<br/>") + "</p>"
-            );
+            return sourceEditor.getContent() || "<p>" + (browser.ie ? "" : "<br/>") + "</p>";
           };
 
           orgFocus = me.focus;
           orgBlur = me.blur;
 
-          me.focus = function(){
+          me.focus = function() {
             sourceEditor.focus();
           };
 
-          me.blur = function(){
+          me.blur = function() {
             orgBlur.call(me);
             sourceEditor.blur();
           };
         } else {
           me.iframe.style.cssText = bakCssText;
-          var cont =
-            sourceEditor.getContent() ||
-            "<p>" + (browser.ie ? "" : "<br/>") + "</p>";
+          var cont = sourceEditor.getContent() || "<p>" + (browser.ie ? "" : "<br/>") + "</p>";
           //处理掉block节点前后的空格,有可能会误命中，暂时不考虑
-          cont = cont.replace(
-            new RegExp("[\\r\\t\\n ]*</?(\\w+)\\s*(?:[^>]*)>", "g"),
-            function(a, b) {
-              if (b && !dtd.$inlineWithA[b.toLowerCase()]) {
-                return a.replace(/(^[\n\r\t ]*)|([\n\r\t ]*$)/g, "");
-              }
-              return a.replace(/(^[\n\r\t]*)|([\n\r\t]*$)/g, "");
+          cont = cont.replace(new RegExp("[\\r\\t\\n ]*</?(\\w+)\\s*(?:[^>]*)>", "g"), function(a, b) {
+            if (b && !dtd.$inlineWithA[b.toLowerCase()]) {
+              return a.replace(/(^[\n\r\t ]*)|([\n\r\t ]*$)/g, "");
             }
-          );
+            return a.replace(/(^[\n\r\t]*)|([\n\r\t]*$)/g, "");
+          });
 
           me.setContent = orgSetContent;
 
@@ -18072,18 +17084,24 @@ UE.plugins["list"] = function() {
 
             me.body.contentEditable = false;
             setTimeout(function() {
-              domUtils.setViewportOffset(input, { left: -32768, top: 0 });
+              domUtils.setViewportOffset(input, {left: -32768, top: 0});
               input.focus();
               setTimeout(function() {
                 me.body.contentEditable = true;
-                me.selection.getRange().moveToAddress(bakAddress).select(true);
+                me.selection
+                  .getRange()
+                  .moveToAddress(bakAddress)
+                  .select(true);
                 domUtils.remove(input);
               });
             });
           } else {
             //ie下有可能报错，比如在代码顶头的情况
             try {
-              me.selection.getRange().moveToAddress(bakAddress).select(true);
+              me.selection
+                .getRange()
+                .moveToAddress(bakAddress)
+                .select(true);
             } catch (e) {}
           }
         }
@@ -18116,9 +17134,7 @@ UE.plugins["list"] = function() {
         utils.loadFile(
           document,
           {
-            src:
-              opt.codeMirrorJsUrl ||
-                "https://cdn.jsdelivr.net/npm/codemirror@2.33.0/lib/codemirror.js",
+            src: opt.codeMirrorJsUrl || "https://cdn.jsdelivr.net/npm/codemirror@2.33.0/lib/codemirror.js",
             tag: "script",
             type: "text/javascript",
             defer: "defer"
@@ -18135,9 +17151,7 @@ UE.plugins["list"] = function() {
           tag: "link",
           rel: "stylesheet",
           type: "text/css",
-          href:
-            opt.codeMirrorCssUrl ||
-              "https://cdn.jsdelivr.net/npm/codemirror@2.33.0/lib/codemirror.css"
+          href: opt.codeMirrorCssUrl || "https://cdn.jsdelivr.net/npm/codemirror@2.33.0/lib/codemirror.css"
         });
       });
     }
@@ -18172,17 +17186,7 @@ UE.plugins["enterkey"] = function() {
           if (browser.gecko) {
             var h = domUtils.findParentByTagName(
               start,
-              [
-                "h1",
-                "h2",
-                "h3",
-                "h4",
-                "h5",
-                "h6",
-                "blockquote",
-                "caption",
-                "table"
-              ],
+              ["h1", "h2", "h3", "h4", "h5", "h6", "blockquote", "caption", "table"],
               true
             );
             if (!h) {
@@ -18241,11 +17245,7 @@ UE.plugins["enterkey"] = function() {
           end = range.endContainer,
           startTd = domUtils.findParentByTagName(start, "td", true),
           endTd = domUtils.findParentByTagName(end, "td", true);
-        if (
-          (startTd && endTd && startTd !== endTd) ||
-          (!startTd && endTd) ||
-          (startTd && !endTd)
-        ) {
+        if ((startTd && endTd && startTd !== endTd) || (!startTd && endTd) || (startTd && !endTd)) {
           evt.preventDefault ? evt.preventDefault() : (evt.returnValue = false);
           return;
         }
@@ -18254,19 +17254,7 @@ UE.plugins["enterkey"] = function() {
         if (!browser.ie) {
           start = domUtils.findParentByTagName(
             range.startContainer,
-            [
-              "ol",
-              "ul",
-              "p",
-              "h1",
-              "h2",
-              "h3",
-              "h4",
-              "h5",
-              "h6",
-              "blockquote",
-              "caption"
-            ],
+            ["ol", "ul", "p", "h1", "h2", "h3", "h4", "h5", "h6", "blockquote", "caption"],
             true
           );
 
@@ -18277,18 +17265,12 @@ UE.plugins["enterkey"] = function() {
 
             if (browser.gecko) {
               range = me.selection.getRange();
-              start = domUtils.findParentByTagName(
-                range.startContainer,
-                "p",
-                true
-              );
+              start = domUtils.findParentByTagName(range.startContainer, "p", true);
               start && domUtils.removeDirtyAttr(start);
             }
           } else {
             hTag = start.tagName;
-            start.tagName.toLowerCase() == "p" &&
-              browser.gecko &&
-              domUtils.removeDirtyAttr(start);
+            start.tagName.toLowerCase() == "p" && browser.gecko && domUtils.removeDirtyAttr(start);
           }
         }
       } else {
@@ -18297,10 +17279,7 @@ UE.plugins["enterkey"] = function() {
         if (!range.collapsed) {
           range.deleteContents();
           start = range.startContainer;
-          if (
-            start.nodeType == 1 &&
-            (start = start.childNodes[range.startOffset])
-          ) {
+          if (start.nodeType == 1 && (start = start.childNodes[range.startOffset])) {
             while (start.nodeType == 1) {
               if (dtd.$empty[start.tagName]) {
                 range.setStartBefore(start).setCursor();
@@ -18328,7 +17307,10 @@ UE.plugins["enterkey"] = function() {
             }
           } else {
             br = range.document.createElement("br");
-            range.insertNode(br).setStartAfter(br).setCursor();
+            range
+              .insertNode(br)
+              .setStartAfter(br)
+              .setCursor();
           }
         } else {
           br = range.document.createElement("br");
@@ -18392,10 +17374,7 @@ UE.plugins["keystrokes"] = function() {
         if (domUtils.isBoundaryNode(tmpNode, "firstChild")) {
           tmpNode = rng.endContainer;
           if (
-            rng.endOffset ==
-              (tmpNode.nodeType == 3
-                ? tmpNode.nodeValue.length
-                : tmpNode.childNodes.length) &&
+            rng.endOffset == (tmpNode.nodeType == 3 ? tmpNode.nodeValue.length : tmpNode.childNodes.length) &&
             domUtils.isBoundaryNode(tmpNode, "lastChild")
           ) {
             me.fireEvent("saveScene");
@@ -18421,13 +17400,13 @@ UE.plugins["keystrokes"] = function() {
         start = rng.startContainer;
 
         if (domUtils.isFillChar(start)) {
-          rng.setStartBefore(start).shrinkBoundary(true).collapse(true);
+          rng
+            .setStartBefore(start)
+            .shrinkBoundary(true)
+            .collapse(true);
           domUtils.remove(start);
         } else {
-          start.nodeValue = start.nodeValue.replace(
-            new RegExp("^" + domUtils.fillChar),
-            ""
-          );
+          start.nodeValue = start.nodeValue.replace(new RegExp("^" + domUtils.fillChar), "");
           rng.startOffset--;
           rng.collapse(true).select(true);
         }
@@ -18469,10 +17448,7 @@ UE.plugins["keystrokes"] = function() {
       var range = me.selection.getRange();
       me.fireEvent("saveScene");
       for (
-        var i = 0,
-          txt = "",
-          tabSize = me.options.tabSize || 4,
-          tabNode = me.options.tabNode || "&nbsp;";
+        var i = 0, txt = "", tabSize = me.options.tabSize || 4, tabNode = me.options.tabNode || "&nbsp;";
         i < tabSize;
         i++
       ) {
@@ -18484,10 +17460,7 @@ UE.plugins["keystrokes"] = function() {
         range.insertNode(span.cloneNode(true).firstChild).setCursor(true);
       } else {
         var filterFn = function(node) {
-          return (
-            domUtils.isBlockElm(node) &&
-            !excludeTagNameForTabKey[node.tagName.toLowerCase()]
-          );
+          return domUtils.isBlockElm(node) && !excludeTagNameForTabKey[node.tagName.toLowerCase()];
         };
         //普通的情况
         start = domUtils.findParent(range.startContainer, filterFn, true);
@@ -18500,20 +17473,14 @@ UE.plugins["keystrokes"] = function() {
           range.enlarge(true);
           var bookmark2 = range.createBookmark(),
             current = domUtils.getNextDomNode(bookmark2.start, false, filterFn);
-          while (
-            current &&
-            !(
-              domUtils.getPosition(current, bookmark2.end) &
-              domUtils.POSITION_FOLLOWING
-            )
-          ) {
-            current.insertBefore(
-              span.cloneNode(true).firstChild,
-              current.firstChild
-            );
+          while (current && !(domUtils.getPosition(current, bookmark2.end) & domUtils.POSITION_FOLLOWING)) {
+            current.insertBefore(span.cloneNode(true).firstChild, current.firstChild);
             current = domUtils.getNextDomNode(current, false, filterFn);
           }
-          range.moveToBookmark(bookmark2).moveToBookmark(bookmark).select();
+          range
+            .moveToBookmark(bookmark2)
+            .moveToBookmark(bookmark)
+            .select();
         }
       }
       domUtils.preventDefault(evt);
@@ -18526,10 +17493,7 @@ UE.plugins["keystrokes"] = function() {
         start = range.startContainer;
         if (domUtils.isEmptyBlock(start)) {
           var parent = start.parentNode;
-          while (
-            domUtils.getChildCount(parent) == 1 &&
-            !domUtils.isBody(parent)
-          ) {
+          while (domUtils.getChildCount(parent) == 1 && !domUtils.isBody(parent)) {
             start = parent;
             parent = parent.parentNode;
           }
@@ -18543,10 +17507,7 @@ UE.plugins["keystrokes"] = function() {
     browser.chrome &&
       me.on("keydown", function(type, e) {
         var keyCode = e.keyCode || e.which;
-        if (
-          ((e.metaKey && e.altKey) || (e.ctrlKey && e.shiftKey)) &&
-          keyCode == 73
-        ) {
+        if (((e.metaKey && e.altKey) || (e.ctrlKey && e.shiftKey)) && keyCode == 73) {
           return true;
         }
       });
@@ -18563,13 +17524,7 @@ UE.plugins["keystrokes"] = function() {
       if (rng.collapsed) {
         var tmpNode,
           autoClearTagName = ["h1", "h2", "h3", "h4", "h5", "h6"];
-        if (
-          (tmpNode = domUtils.findParentByTagName(
-            rng.startContainer,
-            autoClearTagName,
-            true
-          ))
-        ) {
+        if ((tmpNode = domUtils.findParentByTagName(rng.startContainer, autoClearTagName, true))) {
           if (domUtils.isEmptyBlock(tmpNode)) {
             var pre = tmpNode.previousSibling;
             if (pre && pre.nodeName != "TABLE") {
@@ -18591,7 +17546,10 @@ UE.plugins["keystrokes"] = function() {
           var tmpNode = domUtils.createElement(me.document, "p", {
             innerHTML: browser.ie ? domUtils.fillChar : "<br/>"
           });
-          rng.insertNode(tmpNode).setStart(tmpNode, 0).setCursor(false, true);
+          rng
+            .insertNode(tmpNode)
+            .setStart(tmpNode, 0)
+            .setCursor(false, true);
         }
       }
 
@@ -18599,12 +17557,14 @@ UE.plugins["keystrokes"] = function() {
       if (
         !collapsed &&
         (rng.startContainer.nodeType == 3 ||
-          (rng.startContainer.nodeType == 1 &&
-            domUtils.isEmptyBlock(rng.startContainer)))
+          (rng.startContainer.nodeType == 1 && domUtils.isEmptyBlock(rng.startContainer)))
       ) {
         if (browser.ie) {
           var span = rng.document.createElement("span");
-          rng.insertNode(span).setStartBefore(span).collapse(true);
+          rng
+            .insertNode(span)
+            .setStartBefore(span)
+            .collapse(true);
           rng.select();
           domUtils.remove(span);
         } else {
@@ -18630,8 +17590,8 @@ UE.plugins["fiximgclick"] = (function() {
     this.resizer = null;
     this.cover = null;
     this.doc = document;
-    this.prePos = { x: 0, y: 0 };
-    this.startPos = { x: 0, y: 0 };
+    this.prePos = {x: 0, y: 0};
+    this.startPos = {x: 0, y: 0};
   }
 
   (function() {
@@ -18651,7 +17611,7 @@ UE.plugins["fiximgclick"] = (function() {
       init: function(editor) {
         var me = this;
         me.editor = editor;
-        me.startPos = this.prePos = { x: 0, y: 0 };
+        me.startPos = this.prePos = {x: 0, y: 0};
         me.dragId = -1;
 
         var hands = [],
@@ -18668,17 +17628,12 @@ UE.plugins["fiximgclick"] = (function() {
         });
 
         for (i = 0; i < 8; i++) {
-          hands.push(
-            '<span class="edui-editor-imagescale-hand' + i + '"></span>'
-          );
+          hands.push('<span class="edui-editor-imagescale-hand' + i + '"></span>');
         }
         resizer.id = me.editor.ui.id + "_imagescale";
         resizer.className = "edui-editor-imagescale";
         resizer.innerHTML = hands.join("");
-        resizer.style.cssText +=
-          ";display:none;border:1px solid #3b77ff;z-index:" +
-          me.editor.options.zIndex +
-          ";";
+        resizer.style.cssText += ";display:none;border:1px solid #3b77ff;z-index:" + me.editor.options.zIndex + ";";
 
         me.editor.ui.getDom().appendChild(cover);
         me.editor.ui.getDom().appendChild(resizer);
@@ -18713,10 +17668,7 @@ UE.plugins["fiximgclick"] = (function() {
           case "mousedown":
             var hand = e.target || e.srcElement,
               hand;
-            if (
-              hand.className.indexOf("edui-editor-imagescale-hand") != -1 &&
-              me.dragId == -1
-            ) {
+            if (hand.className.indexOf("edui-editor-imagescale-hand") != -1 && me.dragId == -1) {
               me.dragId = hand.className.slice(-1);
               me.startPos.x = me.prePos.x = e.clientX;
               me.startPos.y = me.prePos.y = e.clientY;
@@ -18799,26 +17751,26 @@ UE.plugins["fiximgclick"] = (function() {
             return value < 0
               ? 0
               : value + ele.clientWidth > wrap.clientWidth
-                ? wrap.clientWidth - ele.clientWidth
-                : value;
+              ? wrap.clientWidth - ele.clientWidth
+              : value;
           case "top":
             return value < 0
               ? 0
               : value + ele.clientHeight > wrap.clientHeight
-                ? wrap.clientHeight - ele.clientHeight
-                : value;
+              ? wrap.clientHeight - ele.clientHeight
+              : value;
           case "width":
             return value <= 0
               ? 1
               : value + ele.offsetLeft > wrap.clientWidth
-                ? wrap.clientWidth - ele.offsetLeft
-                : value;
+              ? wrap.clientWidth - ele.offsetLeft
+              : value;
           case "height":
             return value <= 0
               ? 1
               : value + ele.offsetTop > wrap.clientHeight
-                ? wrap.clientHeight - ele.offsetTop
-                : value;
+              ? wrap.clientHeight - ele.offsetTop
+              : value;
         }
       },
       hideCover: function() {
@@ -18877,18 +17829,18 @@ UE.plugins["fiximgclick"] = (function() {
           height: target.height + "px",
           left:
             iframePos.x +
-              imgPos.x -
-              me.editor.document.body.scrollLeft -
-              editorPos.x -
-              parseInt(resizer.style.borderLeftWidth) +
-              "px",
+            imgPos.x -
+            me.editor.document.body.scrollLeft -
+            editorPos.x -
+            parseInt(resizer.style.borderLeftWidth) +
+            "px",
           top:
             iframePos.y +
-              imgPos.y -
-              me.editor.document.body.scrollTop -
-              editorPos.y -
-              parseInt(resizer.style.borderTopWidth) +
-              "px"
+            imgPos.y -
+            me.editor.document.body.scrollTop -
+            editorPos.y -
+            parseInt(resizer.style.borderTopWidth) +
+            "px"
         });
       }
     };
@@ -18920,17 +17872,16 @@ UE.plugins["fiximgclick"] = (function() {
             me.ui.getDom().appendChild(imageScale.resizer);
 
             var _keyDownHandler = function(e) {
-              imageScale.hide();
-              if (imageScale.target)
-                me.selection.getRange().selectNode(imageScale.target).select();
-            },
+                imageScale.hide();
+                if (imageScale.target)
+                  me.selection
+                    .getRange()
+                    .selectNode(imageScale.target)
+                    .select();
+              },
               _mouseDownHandler = function(e) {
                 var ele = e.target || e.srcElement;
-                if (
-                  ele &&
-                  (ele.className === undefined ||
-                    ele.className.indexOf("edui-editor-imagescale") == -1)
-                ) {
+                if (ele && (ele.className === undefined || ele.className.indexOf("edui-editor-imagescale") == -1)) {
                   _keyDownHandler(e);
                 }
               },
@@ -18950,38 +17901,37 @@ UE.plugins["fiximgclick"] = (function() {
               domUtils.un(document, "mousedown", _mouseDownHandler);
               var target = imageScale.target;
               if (target.parentNode) {
-                me.selection.getRange().selectNode(target).select();
+                me.selection
+                  .getRange()
+                  .selectNode(target)
+                  .select();
               }
             });
             //TODO 有iframe的情况，mousedown不能往下传。。
             domUtils.on(imageScale.resizer, "mousedown", function(e) {
               me.selection.getNative().removeAllRanges();
               var ele = e.target || e.srcElement;
-              if (
-                ele &&
-                ele.className.indexOf("edui-editor-imagescale-hand") == -1
-              ) {
+              if (ele && ele.className.indexOf("edui-editor-imagescale-hand") == -1) {
                 timer = setTimeout(function() {
                   imageScale.hide();
                   if (imageScale.target)
-                    me.selection.getRange().selectNode(ele).select();
+                    me.selection
+                      .getRange()
+                      .selectNode(ele)
+                      .select();
                 }, 200);
               }
             });
             domUtils.on(imageScale.resizer, "mouseup", function(e) {
               var ele = e.target || e.srcElement;
-              if (
-                ele &&
-                ele.className.indexOf("edui-editor-imagescale-hand") == -1
-              ) {
+              if (ele && ele.className.indexOf("edui-editor-imagescale-hand") == -1) {
                 clearTimeout(timer);
               }
             });
           }
           imageScale.show(img);
         } else {
-          if (imageScale && imageScale.resizer.style.display != "none")
-            imageScale.hide();
+          if (imageScale && imageScale.resizer.style.display != "none") imageScale.hide();
         }
       });
     }
@@ -19031,17 +17981,11 @@ UE.plugin.register(
 
                 var start = range.startContainer;
                 while (start.nodeType == 1 && range.startOffset > 0) {
-                  start =
-                    range.startContainer.childNodes[range.startOffset - 1];
+                  start = range.startContainer.childNodes[range.startOffset - 1];
                   if (!start) {
                     break;
                   }
-                  range.setStart(
-                    start,
-                    start.nodeType == 1
-                      ? start.childNodes.length
-                      : start.nodeValue.length
-                  );
+                  range.setStart(start, start.nodeType == 1 ? start.childNodes.length : start.nodeValue.length);
                   range.collapse(true);
                   start = range.startContainer;
                 }
@@ -19072,18 +18016,11 @@ UE.plugin.register(
                     .match(/(?:https?:\/\/|ssh:\/\/|ftp:\/\/|file:\/|www\.)/i)
                 ) {
                   while (range.toString().length) {
-                    if (
-                      /^(?:https?:\/\/|ssh:\/\/|ftp:\/\/|file:\/|www\.)/i.test(
-                        range.toString()
-                      )
-                    ) {
+                    if (/^(?:https?:\/\/|ssh:\/\/|ftp:\/\/|file:\/|www\.)/i.test(range.toString())) {
                       break;
                     }
                     try {
-                      range.setStart(
-                        range.startContainer,
-                        range.startOffset + 1
-                      );
+                      range.setStart(range.startContainer, range.startOffset + 1);
                     } catch (e) {
                       //trace:2121
                       var start = range.startContainer;
@@ -19097,13 +18034,7 @@ UE.plugin.register(
                     }
                   }
                   //range的开始边界已经在a标签里的不再处理
-                  if (
-                    domUtils.findParentByTagName(
-                      range.startContainer,
-                      "a",
-                      true
-                    )
-                  ) {
+                  if (domUtils.findParentByTagName(range.startContainer, "a", true)) {
                     return;
                   }
                   var a = me.document.createElement("a"),
@@ -19113,12 +18044,8 @@ UE.plugin.register(
                   me.undoManger && me.undoManger.save();
                   a.appendChild(range.extractContents());
                   a.href = a.innerHTML = a.innerHTML.replace(/<[^>]+>/g, "");
-                  href = a
-                    .getAttribute("href")
-                    .replace(new RegExp(domUtils.fillChar, "g"), "");
-                  href = /^(?:https?:\/\/)/gi.test(href)
-                    ? href
-                    : "http://" + href;
+                  href = a.getAttribute("href").replace(new RegExp(domUtils.fillChar, "g"), "");
+                  href = /^(?:https?:\/\/)/gi.test(href) ? href : "http://" + href;
                   a.setAttribute("_src", utils.html(href));
                   a.href = utils.html(href);
 
@@ -19177,11 +18104,7 @@ UE.plugin.register(
           var start = rng.startContainer;
 
           if (keyCode == 13) {
-            while (
-              start &&
-              !domUtils.isBody(start) &&
-              !domUtils.isBlockElm(start)
-            ) {
+            while (start && !domUtils.isBody(start) && !domUtils.isBlockElm(start)) {
               start = start.parentNode;
             }
             if (start && !domUtils.isBody(start) && start.nodeName == "P") {
@@ -19196,11 +18119,7 @@ UE.plugin.register(
           } else if (keyCode == 32) {
             if (start.nodeType == 3 && /^\s$/.test(start.nodeValue)) {
               start = start.previousSibling;
-              if (
-                start &&
-                start.nodeName == "A" &&
-                !start.getAttribute("_href")
-              ) {
+              if (start && start.nodeName == "A" && !start.getAttribute("_href")) {
                 domUtils.remove(start, true);
               }
             }
@@ -19246,10 +18165,7 @@ UE.plugins["autoheight"] = function() {
     var me = this;
     clearTimeout(timer);
     if (isFullscreen) return;
-    if (
-      !me.queryCommandState ||
-      (me.queryCommandState && me.queryCommandState("source") != 1)
-    ) {
+    if (!me.queryCommandState || (me.queryCommandState && me.queryCommandState("source") != 1)) {
       timer = setTimeout(function() {
         var node = me.body.lastChild;
         while (node && node.nodeType != 1) {
@@ -19279,10 +18195,7 @@ UE.plugins["autoheight"] = function() {
   });
   me.addListener("destroy", function() {
     domUtils.un(me.window, "scroll", fixedScrollTop);
-    me.removeListener(
-      "contentchange afterinserthtml keyup mouseup",
-      adjustHeight
-    );
+    me.removeListener("contentchange afterinserthtml keyup mouseup", adjustHeight);
   });
   me.enableAutoHeight = function() {
     var me = this;
@@ -19296,9 +18209,12 @@ UE.plugins["autoheight"] = function() {
     me.addListener("contentchange afterinserthtml keyup mouseup", adjustHeight);
     //ff不给事件算得不对
 
-    setTimeout(function() {
-      adjustHeight.call(me);
-    }, browser.gecko ? 100 : 0);
+    setTimeout(
+      function() {
+        adjustHeight.call(me);
+      },
+      browser.gecko ? 100 : 0
+    );
     me.fireEvent("autoheightchanged", me.autoHeightEnabled);
   };
   me.disableAutoHeight = function() {
@@ -19318,17 +18234,13 @@ UE.plugins["autoheight"] = function() {
     me.enableAutoHeight();
     //trace:1764
     var timer;
-    domUtils.on(
-      browser.ie ? me.body : me.document,
-      browser.webkit ? "dragover" : "drop",
-      function() {
-        clearTimeout(timer);
-        timer = setTimeout(function() {
-          //trace:3681
-          adjustHeight.call(me);
-        }, 100);
-      }
-    );
+    domUtils.on(browser.ie ? me.body : me.document, browser.webkit ? "dragover" : "drop", function() {
+      clearTimeout(timer);
+      timer = setTimeout(function() {
+        //trace:3681
+        adjustHeight.call(me);
+      }, 100);
+    });
     //修复内容过多时，回到顶部，顶部内容被工具栏遮挡问题
     domUtils.on(me.window, "scroll", fixedScrollTop);
   });
@@ -19403,18 +18315,12 @@ UE.plugins["autofloat"] = function() {
         toolbarBox.style.position = "absolute";
       }
       toolbarBox.style.top =
-        (document.body.scrollTop || document.documentElement.scrollTop) -
-        orgTop +
-        topOffset +
-        "px";
+        (document.body.scrollTop || document.documentElement.scrollTop) - orgTop + topOffset + "px";
     } else {
       if (browser.ie7Compat && flag) {
         flag = false;
         toolbarBox.style.left =
-          domUtils.getXY(toolbarBox).x -
-          document.documentElement.getBoundingClientRect().left +
-          2 +
-          "px";
+          domUtils.getXY(toolbarBox).x - document.documentElement.getBoundingClientRect().left + 2 + "px";
       }
       if (toolbarBox.style.position != "fixed") {
         toolbarBox.style.position = "fixed";
@@ -19509,14 +18415,14 @@ UE.plugins["video"] = function() {
   var me = this;
 
   /**
-     * 创建插入视频字符窜
-     * @param url 视频地址
-     * @param width 视频宽度
-     * @param height 视频高度
-     * @param align 视频对齐
-     * @param toEmbed 是否以flash代替显示
-     * @param addParagraph  是否需要添加P 标签
-     */
+   * 创建插入视频字符窜
+   * @param url 视频地址
+   * @param width 视频宽度
+   * @param height 视频高度
+   * @param align 视频对齐
+   * @param toEmbed 是否以flash代替显示
+   * @param addParagraph  是否需要添加P 标签
+   */
   function creatInsertStr(url, width, height, id, align, classname, type) {
     var str;
     switch (type) {
@@ -19584,36 +18490,33 @@ UE.plugins["video"] = function() {
   }
 
   function switchImgAndVideo(root, img2video) {
-    utils.each(
-      root.getNodesByTagName(img2video ? "img" : "embed video"),
-      function(node) {
-        var className = node.getAttr("class");
-        if (className && className.indexOf("edui-faked-video") != -1) {
-          var html = creatInsertStr(
-            img2video ? node.getAttr("_url") : node.getAttr("src"),
-            node.getAttr("width"),
-            node.getAttr("height"),
-            null,
-            node.getStyle("float") || "",
-            className,
-            img2video ? "embed" : "image"
-          );
-          node.parentNode.replaceChild(UE.uNode.createElement(html), node);
-        }
-        if (className && className.indexOf("edui-upload-video") != -1) {
-          var html = creatInsertStr(
-            img2video ? node.getAttr("_url") : node.getAttr("src"),
-            node.getAttr("width"),
-            node.getAttr("height"),
-            null,
-            node.getStyle("float") || "",
-            className,
-            img2video ? "video" : "image"
-          );
-          node.parentNode.replaceChild(UE.uNode.createElement(html), node);
-        }
+    utils.each(root.getNodesByTagName(img2video ? "img" : "embed video"), function(node) {
+      var className = node.getAttr("class");
+      if (className && className.indexOf("edui-faked-video") != -1) {
+        var html = creatInsertStr(
+          img2video ? node.getAttr("_url") : node.getAttr("src"),
+          node.getAttr("width"),
+          node.getAttr("height"),
+          null,
+          node.getStyle("float") || "",
+          className,
+          img2video ? "embed" : "image"
+        );
+        node.parentNode.replaceChild(UE.uNode.createElement(html), node);
       }
-    );
+      if (className && className.indexOf("edui-upload-video") != -1) {
+        var html = creatInsertStr(
+          img2video ? node.getAttr("_url") : node.getAttr("src"),
+          node.getAttr("width"),
+          node.getAttr("height"),
+          null,
+          node.getStyle("float") || "",
+          className,
+          img2video ? "video" : "image"
+        );
+        node.parentNode.replaceChild(UE.uNode.createElement(html), node);
+      }
+    });
   }
 
   me.addOutputRule(function(root) {
@@ -19624,71 +18527,71 @@ UE.plugins["video"] = function() {
   });
 
   /**
-     * 插入视频
-     * @command insertvideo
-     * @method execCommand
-     * @param { String } cmd 命令字符串
-     * @param { Object } videoAttr 键值对对象， 描述一个视频的所有属性
-     * @example
-     * ```javascript
-     *
-     * var videoAttr = {
-     *      //视频地址
-     *      url: 'http://www.youku.com/xxx',
-     *      //视频宽高值， 单位px
-     *      width: 200,
-     *      height: 100
-     * };
-     *
-     * //editor 是编辑器实例
-     * //向编辑器插入单个视频
-     * editor.execCommand( 'insertvideo', videoAttr );
-     * ```
-     */
+   * 插入视频
+   * @command insertvideo
+   * @method execCommand
+   * @param { String } cmd 命令字符串
+   * @param { Object } videoAttr 键值对对象， 描述一个视频的所有属性
+   * @example
+   * ```javascript
+   *
+   * var videoAttr = {
+   *      //视频地址
+   *      url: 'http://www.youku.com/xxx',
+   *      //视频宽高值， 单位px
+   *      width: 200,
+   *      height: 100
+   * };
+   *
+   * //editor 是编辑器实例
+   * //向编辑器插入单个视频
+   * editor.execCommand( 'insertvideo', videoAttr );
+   * ```
+   */
 
   /**
-     * 插入视频
-     * @command insertvideo
-     * @method execCommand
-     * @param { String } cmd 命令字符串
-     * @param { Array } videoArr 需要插入的视频的数组， 其中的每一个元素都是一个键值对对象， 描述了一个视频的所有属性
-     * @example
-     * ```javascript
-     *
-     * var videoAttr1 = {
-     *      //视频地址
-     *      url: 'http://www.youku.com/xxx',
-     *      //视频宽高值， 单位px
-     *      width: 200,
-     *      height: 100
-     * },
-     * videoAttr2 = {
-     *      //视频地址
-     *      url: 'http://www.youku.com/xxx',
-     *      //视频宽高值， 单位px
-     *      width: 200,
-     *      height: 100
-     * }
-     *
-     * //editor 是编辑器实例
-     * //该方法将会向编辑器内插入两个视频
-     * editor.execCommand( 'insertvideo', [ videoAttr1, videoAttr2 ] );
-     * ```
-     */
+   * 插入视频
+   * @command insertvideo
+   * @method execCommand
+   * @param { String } cmd 命令字符串
+   * @param { Array } videoArr 需要插入的视频的数组， 其中的每一个元素都是一个键值对对象， 描述了一个视频的所有属性
+   * @example
+   * ```javascript
+   *
+   * var videoAttr1 = {
+   *      //视频地址
+   *      url: 'http://www.youku.com/xxx',
+   *      //视频宽高值， 单位px
+   *      width: 200,
+   *      height: 100
+   * },
+   * videoAttr2 = {
+   *      //视频地址
+   *      url: 'http://www.youku.com/xxx',
+   *      //视频宽高值， 单位px
+   *      width: 200,
+   *      height: 100
+   * }
+   *
+   * //editor 是编辑器实例
+   * //该方法将会向编辑器内插入两个视频
+   * editor.execCommand( 'insertvideo', [ videoAttr1, videoAttr2 ] );
+   * ```
+   */
 
   /**
-     * 查询当前光标所在处是否是一个视频
-     * @command insertvideo
-     * @method queryCommandState
-     * @param { String } cmd 需要查询的命令字符串
-     * @return { int } 如果当前光标所在处的元素是一个视频对象， 则返回1，否则返回0
-     * @example
-     * ```javascript
-     *
-     * //editor 是编辑器实例
-     * editor.queryCommandState( 'insertvideo' );
-     * ```
-     */
+   * 查询当前光标所在处是否是一个视频
+   * @command insertvideo
+   * @method queryCommandState
+   * @param { String } cmd 需要查询的命令字符串
+   * @return { int } 如果当前光标所在处的元素是一个视频对象， 则返回1，否则返回0
+   * @example
+   * ```javascript
+   *
+   * //editor 是编辑器实例
+   * editor.queryCommandState( 'insertvideo' );
+   * ```
+   */
   me.commands["insertvideo"] = {
     execCommand: function(cmd, videoObjs, type) {
       videoObjs = utils.isArray(videoObjs) ? videoObjs : [videoObjs];
@@ -19702,20 +18605,8 @@ UE.plugins["video"] = function() {
         cl;
       for (var i = 0, vi, len = videoObjs.length; i < len; i++) {
         vi = videoObjs[i];
-        cl = type == "upload"
-          ? "edui-upload-video video-js vjs-default-skin"
-          : "edui-faked-video";
-        html.push(
-          creatInsertStr(
-            vi.url,
-            vi.width || 420,
-            vi.height || 280,
-            id + i,
-            null,
-            cl,
-            "image"
-          )
-        );
+        cl = type == "upload" ? "edui-upload-video video-js vjs-default-skin" : "edui-faked-video";
+        html.push(creatInsertStr(vi.url, vi.width || 420, vi.height || 280, id + i, null, cl, "image"));
       }
       me.execCommand("inserthtml", html.join(""), true);
       var rng = this.selection.getRange();
@@ -19730,10 +18621,7 @@ UE.plugins["video"] = function() {
     },
     queryCommandState: function() {
       var img = me.selection.getRange().getClosedNode(),
-        flag =
-          img &&
-          (img.className == "edui-faked-video" ||
-            img.className.indexOf("edui-upload-video") != -1);
+        flag = img && (img.className == "edui-faked-video" || img.className.indexOf("edui-upload-video") != -1);
       return flag ? 1 : 0;
     }
   };
@@ -19775,11 +18663,7 @@ UE.plugins["video"] = function() {
   };
   UETable.isEmptyBlock = function(node) {
     var reg = new RegExp(domUtils.fillChar, "g");
-    if (
-      node[browser.ie ? "innerText" : "textContent"]
-        .replace(/^\s*$/, "")
-        .replace(reg, "").length > 0
-    ) {
+    if (node[browser.ie ? "innerText" : "textContent"].replace(/^\s*$/, "").replace(reg, "").length > 0) {
       return 0;
     }
     for (var i in dtd.$isNotEmpty)
@@ -19796,11 +18680,11 @@ UE.plugins["video"] = function() {
   };
 
   /**
-     * 获取单元格或者单元格组的“对齐”状态。 如果当前的检测对象是一个单元格组， 只有在满足所有单元格的 水平和竖直 对齐属性都相同的
-     * 条件时才会返回其状态值，否则将返回null； 如果当前只检测了一个单元格， 则直接返回当前单元格的对齐状态；
-     * @param table cell or table cells , 支持单个单元格dom对象 或者 单元格dom对象数组
-     * @return { align: 'left' || 'right' || 'center', valign: 'top' || 'middle' || 'bottom' } 或者 null
-     */
+   * 获取单元格或者单元格组的“对齐”状态。 如果当前的检测对象是一个单元格组， 只有在满足所有单元格的 水平和竖直 对齐属性都相同的
+   * 条件时才会返回其状态值，否则将返回null； 如果当前只检测了一个单元格， 则直接返回当前单元格的对齐状态；
+   * @param table cell or table cells , 支持单个单元格dom对象 或者 单元格dom对象数组
+   * @return { align: 'left' || 'right' || 'center', valign: 'top' || 'middle' || 'bottom' } 或者 null
+   */
   UETable.getTableCellAlignState = function(cells) {
     !utils.isArray(cells) && (cells = [cells]);
 
@@ -19815,10 +18699,7 @@ UE.plugins["video"] = function() {
 
         if (!result[currentState] && tempStatus) {
           result[currentState] = tempStatus;
-        } else if (
-          !result[currentState] ||
-          tempStatus !== result[currentState]
-        ) {
+        } else if (!result[currentState] || tempStatus !== result[currentState]) {
           isSame = false;
           return false;
         }
@@ -19831,19 +18712,14 @@ UE.plugins["video"] = function() {
   };
 
   /**
-     * 根据当前选区获取相关的table信息
-     * @return {Object}
-     */
+   * 根据当前选区获取相关的table信息
+   * @return {Object}
+   */
   UETable.getTableItemsByRange = function(editor) {
     var start = editor.selection.getStart();
 
     //ff下会选中bookmark
-    if (
-      start &&
-      start.id &&
-      start.id.indexOf("_baidu_bookmark_start_") === 0 &&
-      start.nextSibling
-    ) {
+    if (start && start.id && start.id.indexOf("_baidu_bookmark_start_") === 0 && start.nextSibling) {
       start = start.nextSibling;
     }
 
@@ -19870,10 +18746,10 @@ UE.plugins["video"] = function() {
 
   UETable.getDefaultValue = function(editor, table) {
     var borderMap = {
-      thin: "0px",
-      medium: "1px",
-      thick: "2px"
-    },
+        thin: "0px",
+        medium: "1px",
+        thick: "2px"
+      },
       tableBorder,
       tdPadding,
       tdBorder,
@@ -19911,14 +18787,15 @@ UE.plugins["video"] = function() {
     }
   };
   /**
-     * 根据当前点击的td或者table获取索引对象
-     * @param tdOrTable
-     */
+   * 根据当前点击的td或者table获取索引对象
+   * @param tdOrTable
+   */
   UETable.getUETable = function(tdOrTable) {
     var tag = tdOrTable.tagName.toLowerCase();
-    tdOrTable = tag == "td" || tag == "th" || tag == "caption"
-      ? domUtils.findParentByTagName(tdOrTable, "table", true)
-      : tdOrTable;
+    tdOrTable =
+      tag == "td" || tag == "th" || tag == "caption"
+        ? domUtils.findParentByTagName(tdOrTable, "table", true)
+        : tdOrTable;
     if (!tdOrTable.ueTable) {
       tdOrTable.ueTable = new UETable(tdOrTable);
     }
@@ -19963,8 +18840,8 @@ UE.plugins["video"] = function() {
       return maxLen;
     },
     /**
-         * 获取当前表格的最大列数
-         */
+     * 获取当前表格的最大列数
+     */
     getMaxCols: function() {
       var rows = this.table.rows,
         maxLen = 0,
@@ -19990,10 +18867,10 @@ UE.plugins["video"] = function() {
     },
     getCellColIndex: function(cell) {},
     /**
-         * 获取当前cell旁边的单元格，
-         * @param cell
-         * @param right
-         */
+     * 获取当前cell旁边的单元格，
+     * @param cell
+     * @param right
+     */
     getHSideCell: function(cell, right) {
       try {
         var cellInfo = this.getCellInfo(cell),
@@ -20004,19 +18881,20 @@ UE.plugins["video"] = function() {
         //首行或者首列没有前置单元格
         if (
           (!right && (!len ? !cellInfo.colIndex : !range.beginColIndex)) ||
-          (right &&
-            (!len
-              ? cellInfo.colIndex == this.colsNum - 1
-              : range.endColIndex == this.colsNum - 1))
+          (right && (!len ? cellInfo.colIndex == this.colsNum - 1 : range.endColIndex == this.colsNum - 1))
         )
           return null;
 
         previewRowIndex = !len ? cellInfo.rowIndex : range.beginRowIndex;
         previewColIndex = !right
           ? !len
-            ? cellInfo.colIndex < 1 ? 0 : cellInfo.colIndex - 1
+            ? cellInfo.colIndex < 1
+              ? 0
+              : cellInfo.colIndex - 1
             : range.beginColIndex - 1
-          : !len ? cellInfo.colIndex + 1 : range.endColIndex + 1;
+          : !len
+          ? cellInfo.colIndex + 1
+          : range.endColIndex + 1;
         return this.getCell(
           this.indexTable[previewRowIndex][previewColIndex].rowIndex,
           this.indexTable[previewRowIndex][previewColIndex].cellIndex
@@ -20048,10 +18926,10 @@ UE.plugins["video"] = function() {
       return nextCell;
     },
     /**
-         * 获取视觉上的后置单元格
-         * @param cell
-         * @param bottom
-         */
+     * 获取视觉上的后置单元格
+     * @param cell
+     * @param bottom
+     */
     getVSideCell: function(cell, bottom, ignoreRange) {
       try {
         var cellInfo = this.getCellInfo(cell),
@@ -20063,15 +18941,17 @@ UE.plugins["video"] = function() {
         if (
           (!bottom && cellInfo.rowIndex == 0) ||
           (bottom &&
-            (!len
-              ? cellInfo.rowIndex + cellInfo.rowSpan > this.rowsNum - 1
-              : range.endRowIndex == this.rowsNum - 1))
+            (!len ? cellInfo.rowIndex + cellInfo.rowSpan > this.rowsNum - 1 : range.endRowIndex == this.rowsNum - 1))
         )
           return null;
 
         nextRowIndex = !bottom
-          ? !len ? cellInfo.rowIndex - 1 : range.beginRowIndex - 1
-          : !len ? cellInfo.rowIndex + cellInfo.rowSpan : range.endRowIndex + 1;
+          ? !len
+            ? cellInfo.rowIndex - 1
+            : range.beginRowIndex - 1
+          : !len
+          ? cellInfo.rowIndex + cellInfo.rowSpan
+          : range.endRowIndex + 1;
         nextColIndex = !len ? cellInfo.colIndex : range.beginColIndex;
         return this.getCell(
           this.indexTable[nextRowIndex][nextColIndex].rowIndex,
@@ -20082,23 +18962,19 @@ UE.plugins["video"] = function() {
       }
     },
     /**
-         * 获取相同结束位置的单元格，xOrY指代了是获取x轴相同还是y轴相同
-         */
+     * 获取相同结束位置的单元格，xOrY指代了是获取x轴相同还是y轴相同
+     */
     getSameEndPosCells: function(cell, xOrY) {
       try {
         var flag = xOrY.toLowerCase() === "x",
-          end =
-            domUtils.getXY(cell)[flag ? "x" : "y"] +
-            cell["offset" + (flag ? "Width" : "Height")],
+          end = domUtils.getXY(cell)[flag ? "x" : "y"] + cell["offset" + (flag ? "Width" : "Height")],
           rows = this.table.rows,
           cells = null,
           returns = [];
         for (var i = 0; i < this.rowsNum; i++) {
           cells = rows[i].cells;
           for (var j = 0, tmpCell; (tmpCell = cells[j++]); ) {
-            var tmpEnd =
-              domUtils.getXY(tmpCell)[flag ? "x" : "y"] +
-              tmpCell["offset" + (flag ? "Width" : "Height")];
+            var tmpEnd = domUtils.getXY(tmpCell)[flag ? "x" : "y"] + tmpCell["offset" + (flag ? "Width" : "Height")];
             //对应行的td已经被上面行rowSpan了
             if (tmpEnd > end && flag) break;
             if (cell == tmpCell || end == tmpEnd) {
@@ -20121,8 +18997,8 @@ UE.plugins["video"] = function() {
     },
     cloneCell: UETable.cloneCell,
     /**
-         * 获取跟当前单元格的右边竖线为左边的所有未合并单元格
-         */
+     * 获取跟当前单元格的右边竖线为左边的所有未合并单元格
+     */
     getSameStartPosXCells: function(cell) {
       try {
         var start = domUtils.getXY(cell).x + cell.offsetWidth,
@@ -20146,8 +19022,8 @@ UE.plugins["video"] = function() {
       }
     },
     /**
-         * 更新table对应的索引表
-         */
+     * 更新table对应的索引表
+     */
     update: function(table) {
       this.table = table || this.table;
       this.selectedTds = [];
@@ -20167,11 +19043,7 @@ UE.plugins["video"] = function() {
       }
       //填充索引表
       for (var rowIndex = 0, row; (row = rows[rowIndex]); rowIndex++) {
-        for (
-          var cellIndex = 0, cell, cells = row.cells;
-          (cell = cells[cellIndex]);
-          cellIndex++
-        ) {
+        for (var cellIndex = 0, cell, cells = row.cells; (cell = cells[cellIndex]); cellIndex++) {
           //修正整行被rowSpan时导致的行数计算错误
           if (cell.rowSpan > rowsNum) {
             cell.rowSpan = rowsNum;
@@ -20200,9 +19072,7 @@ UE.plugins["video"] = function() {
           if (this.indexTable[j][k] === undefined) {
             row = rows[j];
             cell = row.cells[row.cells.length - 1];
-            cell = cell
-              ? cell.cloneNode(true)
-              : this.table.ownerDocument.createElement("td");
+            cell = cell ? cell.cloneNode(true) : this.table.ownerDocument.createElement("td");
             this.setCellContent(cell);
             if (cell.colSpan !== 1) cell.colSpan = 1;
             if (cell.rowSpan !== 1) cell.rowSpan = 1;
@@ -20247,8 +19117,8 @@ UE.plugins["video"] = function() {
       }
     },
     /**
-         * 获取单元格的索引信息
-         */
+     * 获取单元格的索引信息
+     */
     getCellInfo: function(cell) {
       if (!cell) return;
       var cellIndex = cell.cellIndex,
@@ -20257,44 +19127,30 @@ UE.plugins["video"] = function() {
         numCols = this.colsNum;
       for (var colIndex = cellIndex; colIndex < numCols; colIndex++) {
         var cellInfo = rowInfo[colIndex];
-        if (
-          cellInfo.rowIndex === rowIndex &&
-          cellInfo.cellIndex === cellIndex
-        ) {
+        if (cellInfo.rowIndex === rowIndex && cellInfo.cellIndex === cellIndex) {
           return cellInfo;
         }
       }
     },
     /**
-         * 根据行列号获取单元格
-         */
+     * 根据行列号获取单元格
+     */
     getCell: function(rowIndex, cellIndex) {
-      return (
-        (rowIndex < this.rowsNum &&
-          this.table.rows[rowIndex].cells[cellIndex]) ||
-        null
-      );
+      return (rowIndex < this.rowsNum && this.table.rows[rowIndex].cells[cellIndex]) || null;
     },
     /**
-         * 删除单元格
-         */
+     * 删除单元格
+     */
     deleteCell: function(cell, rowIndex) {
-      rowIndex = typeof rowIndex == "number"
-        ? rowIndex
-        : cell.parentNode.rowIndex;
+      rowIndex = typeof rowIndex == "number" ? rowIndex : cell.parentNode.rowIndex;
       var row = this.table.rows[rowIndex];
       row.deleteCell(cell.cellIndex);
     },
     /**
-         * 根据始末两个单元格获取被框选的所有单元格范围
-         */
+     * 根据始末两个单元格获取被框选的所有单元格范围
+     */
     getCellsRange: function(cellA, cellB) {
-      function checkRange(
-        beginRowIndex,
-        beginColIndex,
-        endRowIndex,
-        endColIndex
-      ) {
+      function checkRange(beginRowIndex, beginColIndex, endRowIndex, endColIndex) {
         var tmpBeginRowIndex = beginRowIndex,
           tmpBeginColIndex = beginColIndex,
           tmpEndRowIndex = endRowIndex,
@@ -20349,12 +19205,7 @@ UE.plugins["video"] = function() {
           tmpEndRowIndex != endRowIndex ||
           tmpEndColIndex != endColIndex
         ) {
-          return checkRange(
-            tmpBeginRowIndex,
-            tmpBeginColIndex,
-            tmpEndRowIndex,
-            tmpEndColIndex
-          );
+          return checkRange(tmpBeginRowIndex, tmpBeginColIndex, tmpEndRowIndex, tmpEndColIndex);
         } else {
           // 不需要扩展TableRange的情况
           return {
@@ -20390,19 +19241,14 @@ UE.plugins["video"] = function() {
             cellBInfo.colIndex + cellBInfo.colSpan - 1
           );
 
-        return checkRange(
-          beginRowIndex,
-          beginColIndex,
-          endRowIndex,
-          endColIndex
-        );
+        return checkRange(beginRowIndex, beginColIndex, endRowIndex, endColIndex);
       } catch (e) {
         //throw e;
       }
     },
     /**
-         * 依据cellsRange获取对应的单元格集合
-         */
+     * 依据cellsRange获取对应的单元格集合
+     */
     getCells: function(range) {
       //每次获取cells之前必须先清除上次的选择，否则会对后续获取操作造成影响
       this.clearSelected();
@@ -20438,16 +19284,16 @@ UE.plugins["video"] = function() {
       return returnTds;
     },
     /**
-         * 清理已经选中的单元格
-         */
+     * 清理已经选中的单元格
+     */
     clearSelected: function() {
       UETable.removeSelectedClass(this.selectedTds);
       this.selectedTds = [];
       this.cellsRange = {};
     },
     /**
-         * 根据range设置已经选中的单元格
-         */
+     * 根据range设置已经选中的单元格
+     */
     setSelected: function(range) {
       var cells = this.getCells(range);
       UETable.addSelectedClass(cells);
@@ -20463,15 +19309,13 @@ UE.plugins["video"] = function() {
         table = this.table,
         ths = table.getElementsByTagName("th"),
         rows = range.endRowIndex - range.beginRowIndex + 1;
-      return !ths.length
-        ? rows == this.rowsNum
-        : rows == this.rowsNum || rows == this.rowsNum - 1;
+      return !ths.length ? rows == this.rowsNum : rows == this.rowsNum || rows == this.rowsNum - 1;
     },
     /**
-         * 获取视觉上的前置单元格，默认是左边，top传入时
-         * @param cell
-         * @param top
-         */
+     * 获取视觉上的前置单元格，默认是左边，top传入时
+     * @param cell
+     * @param top
+     */
     getNextCell: function(cell, bottom, ignoreRange) {
       try {
         var cellInfo = this.getCellInfo(cell),
@@ -20483,15 +19327,17 @@ UE.plugins["video"] = function() {
         if (
           (!bottom && cellInfo.rowIndex == 0) ||
           (bottom &&
-            (!len
-              ? cellInfo.rowIndex + cellInfo.rowSpan > this.rowsNum - 1
-              : range.endRowIndex == this.rowsNum - 1))
+            (!len ? cellInfo.rowIndex + cellInfo.rowSpan > this.rowsNum - 1 : range.endRowIndex == this.rowsNum - 1))
         )
           return null;
 
         nextRowIndex = !bottom
-          ? !len ? cellInfo.rowIndex - 1 : range.beginRowIndex - 1
-          : !len ? cellInfo.rowIndex + cellInfo.rowSpan : range.endRowIndex + 1;
+          ? !len
+            ? cellInfo.rowIndex - 1
+            : range.beginRowIndex - 1
+          : !len
+          ? cellInfo.rowIndex + cellInfo.rowSpan
+          : range.endRowIndex + 1;
         nextColIndex = !len ? cellInfo.colIndex : range.beginColIndex;
         return this.getCell(
           this.indexTable[nextRowIndex][nextColIndex].rowIndex,
@@ -20511,23 +19357,28 @@ UE.plugins["video"] = function() {
         //首行或者首列没有前置单元格
         if (
           (!top && (!len ? !cellInfo.colIndex : !range.beginColIndex)) ||
-          (top &&
-            (!len
-              ? cellInfo.rowIndex > this.colsNum - 1
-              : range.endColIndex == this.colsNum - 1))
+          (top && (!len ? cellInfo.rowIndex > this.colsNum - 1 : range.endColIndex == this.colsNum - 1))
         )
           return null;
 
         previewRowIndex = !top
-          ? !len ? cellInfo.rowIndex : range.beginRowIndex
+          ? !len
+            ? cellInfo.rowIndex
+            : range.beginRowIndex
           : !len
-            ? cellInfo.rowIndex < 1 ? 0 : cellInfo.rowIndex - 1
-            : range.beginRowIndex;
+          ? cellInfo.rowIndex < 1
+            ? 0
+            : cellInfo.rowIndex - 1
+          : range.beginRowIndex;
         previewColIndex = !top
           ? !len
-            ? cellInfo.colIndex < 1 ? 0 : cellInfo.colIndex - 1
+            ? cellInfo.colIndex < 1
+              ? 0
+              : cellInfo.colIndex - 1
             : range.beginColIndex - 1
-          : !len ? cellInfo.colIndex : range.endColIndex + 1;
+          : !len
+          ? cellInfo.colIndex
+          : range.endColIndex + 1;
         return this.getCell(
           this.indexTable[previewRowIndex][previewColIndex].rowIndex,
           this.indexTable[previewRowIndex][previewColIndex].cellIndex
@@ -20537,8 +19388,8 @@ UE.plugins["video"] = function() {
       }
     },
     /**
-         * 移动单元格中的内容
-         */
+     * 移动单元格中的内容
+     */
     moveContent: function(cellTo, cellFrom) {
       if (UETable.isEmptyBlock(cellFrom)) return;
       if (UETable.isEmptyBlock(cellTo)) {
@@ -20554,16 +19405,13 @@ UE.plugins["video"] = function() {
       }
     },
     /**
-         * 向右合并单元格
-         */
+     * 向右合并单元格
+     */
     mergeRight: function(cell) {
       var cellInfo = this.getCellInfo(cell),
         rightColIndex = cellInfo.colIndex + cellInfo.colSpan,
         rightCellInfo = this.indexTable[cellInfo.rowIndex][rightColIndex],
-        rightCell = this.getCell(
-          rightCellInfo.rowIndex,
-          rightCellInfo.cellIndex
-        );
+        rightCell = this.getCell(rightCellInfo.rowIndex, rightCellInfo.cellIndex);
       //合并
       cell.colSpan = cellInfo.colSpan + rightCellInfo.colSpan;
       //被合并的单元格不应存在宽度属性
@@ -20575,8 +19423,8 @@ UE.plugins["video"] = function() {
       this.update();
     },
     /**
-         * 向下合并单元格
-         */
+     * 向下合并单元格
+     */
     mergeDown: function(cell) {
       var cellInfo = this.getCellInfo(cell),
         downRowIndex = cellInfo.rowIndex + cellInfo.rowSpan,
@@ -20589,8 +19437,8 @@ UE.plugins["video"] = function() {
       this.update();
     },
     /**
-         * 合并整个range中的内容
-         */
+     * 合并整个range中的内容
+     */
     mergeRange: function() {
       //由于合并操作可以在任意时刻进行，所以无法通过鼠标位置等信息实时生成range，只能通过缓存实例中的cellsRange对象来访问
       var range = this.cellsRange,
@@ -20638,13 +19486,7 @@ UE.plugins["video"] = function() {
         var rowIndex = leftTopCell.parentNode.rowIndex;
         //解决IE下的表格操作问题
         if (this.table.deleteRow) {
-          for (
-            var i = rowIndex + 1,
-              curIndex = rowIndex + 1,
-              len = leftTopCell.rowSpan;
-            i < len;
-            i++
-          ) {
+          for (var i = rowIndex + 1, curIndex = rowIndex + 1, len = leftTopCell.rowSpan; i < len; i++) {
             this.table.deleteRow(curIndex);
           }
         } else {
@@ -20658,16 +19500,15 @@ UE.plugins["video"] = function() {
       this.update();
     },
     /**
-         * 插入一行单元格
-         */
+     * 插入一行单元格
+     */
     insertRow: function(rowIndex, sourceCell) {
       var numCols = this.colsNum,
         table = this.table,
         row = table.insertRow(rowIndex),
         cell,
         thead = null,
-        isInsertTitle =
-          typeof sourceCell == "string" && sourceCell.toUpperCase() == "TH";
+        isInsertTitle = typeof sourceCell == "string" && sourceCell.toUpperCase() == "TH";
 
       function replaceTdToTh(colIndex, cell, tableRow) {
         if (colIndex == 0) {
@@ -20694,8 +19535,7 @@ UE.plugins["video"] = function() {
         for (var colIndex = 0; colIndex < numCols; colIndex++) {
           cell = this.cloneCell(sourceCell, true);
           this.setCellContent(cell);
-          cell.getAttribute("vAlign") &&
-            cell.setAttribute("vAlign", cell.getAttribute("vAlign"));
+          cell.getAttribute("vAlign") && cell.setAttribute("vAlign", cell.getAttribute("vAlign"));
           row.appendChild(cell);
           if (!isInsertTitle) replaceTdToTh(colIndex, cell, row);
         }
@@ -20726,9 +19566,9 @@ UE.plugins["video"] = function() {
       return row;
     },
     /**
-         * 删除一行单元格
-         * @param rowIndex
-         */
+     * 删除一行单元格
+     * @param rowIndex
+     */
     deleteRow: function(rowIndex) {
       var row = this.table.rows[rowIndex],
         infoRow = this.indexTable[rowIndex],
@@ -20746,15 +19586,13 @@ UE.plugins["video"] = function() {
             var nextRowIndex = rowIndex + 1,
               nextRow = this.table.rows[nextRowIndex],
               insertCellIndex,
-              preMerged =
-                this.getPreviewMergedCellsNum(nextRowIndex, colIndex) - count;
+              preMerged = this.getPreviewMergedCellsNum(nextRowIndex, colIndex) - count;
             if (preMerged < colIndex) {
               insertCellIndex = colIndex - preMerged - 1;
               //nextRow.insertCell(insertCellIndex);
               domUtils.insertAfter(nextRow.cells[insertCellIndex], clone);
             } else {
-              if (nextRow.cells.length)
-                nextRow.insertBefore(clone, nextRow.cells[0]);
+              if (nextRow.cells.length) nextRow.insertBefore(clone, nextRow.cells[0]);
             }
             count += 1;
             //cell.parentNode.removeChild(cell);
@@ -20795,14 +19633,10 @@ UE.plugins["video"] = function() {
         tableRow,
         cell,
         backWidth = parseInt(
-          (this.table.offsetWidth -
-            (this.colsNum + 1) * 20 -
-            (this.colsNum + 1)) /
-            (this.colsNum + 1),
+          (this.table.offsetWidth - (this.colsNum + 1) * 20 - (this.colsNum + 1)) / (this.colsNum + 1),
           10
         ),
-        isInsertTitleCol =
-          typeof sourceCell == "string" && sourceCell.toUpperCase() == "TH";
+        isInsertTitleCol = typeof sourceCell == "string" && sourceCell.toUpperCase() == "TH";
 
       function replaceTdToTh(rowIndex, cell, tableRow) {
         if (rowIndex == 0) {
@@ -20827,8 +19661,7 @@ UE.plugins["video"] = function() {
       if (colIndex == 0 || colIndex == this.colsNum) {
         for (; rowIndex < rowsNum; rowIndex++) {
           tableRow = this.table.rows[rowIndex];
-          preCell =
-            tableRow.cells[colIndex == 0 ? colIndex : tableRow.cells.length];
+          preCell = tableRow.cells[colIndex == 0 ? colIndex : tableRow.cells.length];
           cell = this.cloneCell(sourceCell, true); //tableRow.insertCell(colIndex == 0 ? colIndex : tableRow.cells.length);
           this.setCellContent(cell);
           cell.setAttribute("vAlign", cell.getAttribute("vAlign"));
@@ -20836,10 +19669,7 @@ UE.plugins["video"] = function() {
           if (!colIndex) {
             tableRow.insertBefore(cell, tableRow.cells[0]);
           } else {
-            domUtils.insertAfter(
-              tableRow.cells[tableRow.cells.length - 1],
-              cell
-            );
+            domUtils.insertAfter(tableRow.cells[tableRow.cells.length - 1], cell);
           }
           if (!isInsertTitleCol) replaceTdToTh(rowIndex, cell, tableRow);
         }
@@ -20856,30 +19686,20 @@ UE.plugins["video"] = function() {
             cell = this.cloneCell(sourceCell, true); //tableRow.insertCell(cellInfo.cellIndex);
             this.setCellContent(cell);
             cell.setAttribute("vAlign", cell.getAttribute("vAlign"));
-            preCell &&
-              cell.setAttribute("width", preCell.getAttribute("width"));
+            preCell && cell.setAttribute("width", preCell.getAttribute("width"));
             //防止IE下报错
-            preCell
-              ? tableRow.insertBefore(cell, preCell)
-              : tableRow.appendChild(cell);
+            preCell ? tableRow.insertBefore(cell, preCell) : tableRow.appendChild(cell);
           }
           if (!isInsertTitleCol) replaceTdToTh(rowIndex, cell, tableRow);
         }
       }
       //框选时插入不触发contentchange，需要手动更新索引
       this.update();
-      this.updateWidth(
-        backWidth,
-        defaultValue || { tdPadding: 10, tdBorder: 1 }
-      );
+      this.updateWidth(backWidth, defaultValue || {tdPadding: 10, tdBorder: 1});
     },
     updateWidth: function(width, defaultValue) {
       var table = this.table,
-        tmpWidth =
-          UETable.getWidth(table) -
-          defaultValue.tdPadding * 2 -
-          defaultValue.tdBorder +
-          width;
+        tmpWidth = UETable.getWidth(table) - defaultValue.tdPadding * 2 - defaultValue.tdBorder + width;
       if (tmpWidth < table.ownerDocument.body.offsetWidth) {
         table.setAttribute("width", tmpWidth);
         return;
@@ -20904,9 +19724,7 @@ UE.plugins["video"] = function() {
         if (cacheMap[key]) continue;
         cacheMap[key] = 1;
         var cell = this.getCell(cellInfo.rowIndex, cellInfo.cellIndex);
-        if (!backTdWidth)
-          backTdWidth =
-            cell && parseInt(cell.offsetWidth / cell.colSpan, 10).toFixed(0);
+        if (!backTdWidth) backTdWidth = cell && parseInt(cell.offsetWidth / cell.colSpan, 10).toFixed(0);
         // 如果Cell的colSpan大于1, 就修改colSpan, 否则就删掉这个Cell
         if (cell.colSpan > 1) {
           cell.colSpan--;
@@ -20934,16 +19752,10 @@ UE.plugins["video"] = function() {
       cell.rowSpan = 1;
       results.push(cell);
       // 补齐单元格
-      for (
-        var i = rowIndex, endRow = rowIndex + cellInfo.rowSpan;
-        i < endRow;
-        i++
-      ) {
+      for (var i = rowIndex, endRow = rowIndex + cellInfo.rowSpan; i < endRow; i++) {
         if (i == rowIndex) continue;
         var tableRow = this.table.rows[i],
-          tmpCell = tableRow.insertCell(
-            colIndex - this.getPreviewMergedCellsNum(i, colIndex)
-          );
+          tmpCell = tableRow.insertCell(colIndex - this.getPreviewMergedCellsNum(i, colIndex));
         tmpCell.colSpan = cellInfo.colSpan;
         this.setCellContent(tmpCell);
         tmpCell.setAttribute("vAlign", cell.getAttribute("vAlign"));
@@ -20978,16 +19790,10 @@ UE.plugins["video"] = function() {
       cell.setAttribute("width", backWidth);
       results.push(cell);
       // 补齐单元格
-      for (
-        var j = colIndex, endCol = colIndex + cellInfo.colSpan;
-        j < endCol;
-        j++
-      ) {
+      for (var j = colIndex, endCol = colIndex + cellInfo.colSpan; j < endCol; j++) {
         if (j == colIndex) continue;
         var tableRow = this.table.rows[rowIndex],
-          tmpCell = tableRow.insertCell(
-            this.indexTable[rowIndex][j].cellIndex + 1
-          );
+          tmpCell = tableRow.insertCell(this.indexTable[rowIndex][j].cellIndex + 1);
         tmpCell.rowSpan = cellInfo.rowSpan;
         this.setCellContent(tmpCell);
         tmpCell.setAttribute("vAlign", cell.getAttribute("vAlign"));
@@ -21014,10 +19820,7 @@ UE.plugins["video"] = function() {
       rowsNum = rowsNum || this.rowsNum;
       colsNum = colsNum || this.colsNum;
       var cellInfo = this.getCellInfo(cell);
-      return (
-        cellInfo.rowIndex + cellInfo.rowSpan == rowsNum &&
-        cellInfo.colIndex + cellInfo.colSpan == colsNum
-      );
+      return cellInfo.rowIndex + cellInfo.rowSpan == rowsNum && cellInfo.colIndex + cellInfo.colSpan == colsNum;
     },
     getLastCell: function(cells) {
       cells = cells || this.table.getElementsByTagName("td");
@@ -21044,10 +19847,7 @@ UE.plugins["video"] = function() {
     selectRow: function(rowIndex) {
       var indexRow = this.indexTable[rowIndex],
         start = this.getCell(indexRow[0].rowIndex, indexRow[0].cellIndex),
-        end = this.getCell(
-          indexRow[this.colsNum - 1].rowIndex,
-          indexRow[this.colsNum - 1].cellIndex
-        ),
+        end = this.getCell(indexRow[this.colsNum - 1].rowIndex, indexRow[this.colsNum - 1].cellIndex),
         range = this.getCellsRange(start, end);
       this.setSelected(range);
     },
@@ -21073,9 +19873,7 @@ UE.plugins["video"] = function() {
           count = 0,
           colors = value.colorList,
           getColor = function(list, index, repeat) {
-            return list[index]
-              ? list[index]
-              : repeat ? list[index % list.length] : "";
+            return list[index] ? list[index] : repeat ? list[index % list.length] : "";
           };
         for (var i = 0, cell; (cell = cells[i++]); ) {
           var cellInfo = this.getCellInfo(cell);
@@ -21138,9 +19936,7 @@ UE.plugins["video"] = function() {
                 '"  vAlign="' +
                 opt.tdvalign +
                 '" >' +
-                (browser.ie && browser.version < 11
-                  ? domUtils.fillChar
-                  : "<br/>") +
+                (browser.ie && browser.version < 11 ? domUtils.fillChar : "<br/>") +
                 "</td>"
             );
           }
@@ -21174,11 +19970,7 @@ UE.plugins["video"] = function() {
 
       var defaultValue = getDefaultValue(me),
         tableWidth = firstParentBlock.offsetWidth,
-        tdWidth = Math.floor(
-          tableWidth / opt.numCols -
-            defaultValue.tdPadding * 2 -
-            defaultValue.tdBorder
-        );
+        tdWidth = Math.floor(tableWidth / opt.numCols - defaultValue.tdPadding * 2 - defaultValue.tdBorder);
 
       //todo其他属性
       !opt.tdvalign && (opt.tdvalign = me.options.tdvalign);
@@ -21196,7 +19988,10 @@ UE.plugins["video"] = function() {
         var p = this.document.createElement("p");
         p.innerHTML = browser.ie ? "&nbsp;" : "<br />";
         table.parentNode.insertBefore(p, table);
-        this.selection.getRange().setStart(p, 0).setCursor();
+        this.selection
+          .getRange()
+          .setStart(p, 0)
+          .setCursor();
       }
     }
   };
@@ -21204,15 +19999,11 @@ UE.plugins["video"] = function() {
   UE.commands["deletetable"] = {
     queryCommandState: function() {
       var rng = this.selection.getRange();
-      return domUtils.findParentByTagName(rng.startContainer, "table", true)
-        ? 0
-        : -1;
+      return domUtils.findParentByTagName(rng.startContainer, "table", true) ? 0 : -1;
     },
     execCommand: function(cmd, table) {
       var rng = this.selection.getRange();
-      table =
-        table ||
-        domUtils.findParentByTagName(rng.startContainer, "table", true);
+      table = table || domUtils.findParentByTagName(rng.startContainer, "table", true);
       if (table) {
         var next = table.nextSibling;
         if (!next) {
@@ -21302,11 +20093,7 @@ UE.plugins["video"] = function() {
       var table = getTableItemsByRange(this).table;
       if (table) {
         var firstRow = table.rows[0];
-        return firstRow.cells[
-          firstRow.cells.length - 1
-        ].tagName.toLowerCase() != "th"
-          ? 0
-          : -1;
+        return firstRow.cells[firstRow.cells.length - 1].tagName.toLowerCase() != "th" ? 0 : -1;
       }
       return -1;
     },
@@ -21316,7 +20103,10 @@ UE.plugins["video"] = function() {
         getUETable(table).insertRow(0, "th");
       }
       var th = table.getElementsByTagName("th")[0];
-      this.selection.getRange().setStart(th, 0).setCursor(false, true);
+      this.selection
+        .getRange()
+        .setStart(th, 0)
+        .setCursor(false, true);
     }
   };
   UE.commands["deletetitle"] = {
@@ -21324,11 +20114,7 @@ UE.plugins["video"] = function() {
       var table = getTableItemsByRange(this).table;
       if (table) {
         var firstRow = table.rows[0];
-        return firstRow.cells[
-          firstRow.cells.length - 1
-        ].tagName.toLowerCase() == "th"
-          ? 0
-          : -1;
+        return firstRow.cells[firstRow.cells.length - 1].tagName.toLowerCase() == "th" ? 0 : -1;
       }
       return -1;
     },
@@ -21338,7 +20124,10 @@ UE.plugins["video"] = function() {
         domUtils.remove(table.rows[0]);
       }
       var td = table.getElementsByTagName("td")[0];
-      this.selection.getRange().setStart(td, 0).setCursor(false, true);
+      this.selection
+        .getRange()
+        .setStart(td, 0)
+        .setCursor(false, true);
     }
   };
   UE.commands["inserttitlecol"] = {
@@ -21357,7 +20146,10 @@ UE.plugins["video"] = function() {
       }
       resetTdWidth(table, this);
       var th = table.getElementsByTagName("th")[0];
-      this.selection.getRange().setStart(th, 0).setCursor(false, true);
+      this.selection
+        .getRange()
+        .setStart(th, 0)
+        .setCursor(false, true);
     }
   };
   UE.commands["deletetitlecol"] = {
@@ -21378,7 +20170,10 @@ UE.plugins["video"] = function() {
       }
       resetTdWidth(table, this);
       var td = table.getElementsByTagName("td")[0];
-      this.selection.getRange().setStart(td, 0).setCursor(false, true);
+      this.selection
+        .getRange()
+        .setStart(td, 0)
+        .setCursor(false, true);
     }
   };
 
@@ -21397,15 +20192,11 @@ UE.plugins["video"] = function() {
       if (rightColIndex >= ut.colsNum) return -1; // 如果处于最右边则不能向右合并
 
       var rightCellInfo = ut.indexTable[cellInfo.rowIndex][rightColIndex],
-        rightCell =
-          table.rows[rightCellInfo.rowIndex].cells[rightCellInfo.cellIndex];
+        rightCell = table.rows[rightCellInfo.rowIndex].cells[rightCellInfo.cellIndex];
       if (!rightCell || cell.tagName != rightCell.tagName) return -1; // TH和TD不能相互合并
 
       // 当且仅当两个Cell的开始列号和结束列号一致时能进行合并
-      return rightCellInfo.rowIndex == cellInfo.rowIndex &&
-        rightCellInfo.rowSpan == cellInfo.rowSpan
-        ? 0
-        : -1;
+      return rightCellInfo.rowIndex == cellInfo.rowIndex && rightCellInfo.rowSpan == cellInfo.rowSpan ? 0 : -1;
     },
     execCommand: function(cmd) {
       var rng = this.selection.getRange(),
@@ -21431,15 +20222,11 @@ UE.plugins["video"] = function() {
       if (downRowIndex >= ut.rowsNum) return -1; // 如果处于最下边则不能向下合并
 
       var downCellInfo = ut.indexTable[downRowIndex][cellInfo.colIndex],
-        downCell =
-          table.rows[downCellInfo.rowIndex].cells[downCellInfo.cellIndex];
+        downCell = table.rows[downCellInfo.rowIndex].cells[downCellInfo.cellIndex];
       if (!downCell || cell.tagName != downCell.tagName) return -1; // TH和TD不能相互合并
 
       // 当且仅当两个Cell的开始列号和结束列号一致时能进行合并
-      return downCellInfo.colIndex == cellInfo.colIndex &&
-        downCellInfo.colSpan == cellInfo.colSpan
-        ? 0
-        : -1;
+      return downCellInfo.colIndex == cellInfo.colIndex && downCellInfo.colSpan == cellInfo.colSpan ? 0 : -1;
     },
     execCommand: function() {
       var rng = this.selection.getRange(),
@@ -21474,9 +20261,7 @@ UE.plugins["video"] = function() {
       var tableItems = getTableItemsByRange(this),
         cell = tableItems.cell;
       return cell &&
-        (cell.tagName == "TD" ||
-          (cell.tagName == "TH" &&
-            tableItems.tr !== tableItems.table.rows[0])) &&
+        (cell.tagName == "TD" || (cell.tagName == "TH" && tableItems.tr !== tableItems.table.rows[0])) &&
         getUETable(tableItems.table).rowsNum < this.options.maxRowNum
         ? 0
         : -1;
@@ -21494,17 +20279,12 @@ UE.plugins["video"] = function() {
         ut.insertRow(cellInfo.rowIndex, cell);
       } else {
         var range = ut.cellsRange;
-        for (
-          var i = 0, len = range.endRowIndex - range.beginRowIndex + 1;
-          i < len;
-          i++
-        ) {
+        for (var i = 0, len = range.endRowIndex - range.beginRowIndex + 1; i < len; i++) {
           ut.insertRow(range.beginRowIndex, cell);
         }
       }
       rng.moveToBookmark(bk).select();
-      if (table.getAttribute("interlaced") === "enabled")
-        this.fireEvent("interlacetable", table);
+      if (table.getAttribute("interlaced") === "enabled") this.fireEvent("interlacetable", table);
     }
   };
   //后插入行
@@ -21512,11 +20292,7 @@ UE.plugins["video"] = function() {
     queryCommandState: function() {
       var tableItems = getTableItemsByRange(this),
         cell = tableItems.cell;
-      return cell &&
-        cell.tagName == "TD" &&
-        getUETable(tableItems.table).rowsNum < this.options.maxRowNum
-        ? 0
-        : -1;
+      return cell && cell.tagName == "TD" && getUETable(tableItems.table).rowsNum < this.options.maxRowNum ? 0 : -1;
     },
     execCommand: function() {
       var rng = this.selection.getRange(),
@@ -21531,17 +20307,12 @@ UE.plugins["video"] = function() {
         ut.insertRow(cellInfo.rowIndex + cellInfo.rowSpan, cell);
       } else {
         var range = ut.cellsRange;
-        for (
-          var i = 0, len = range.endRowIndex - range.beginRowIndex + 1;
-          i < len;
-          i++
-        ) {
+        for (var i = 0, len = range.endRowIndex - range.beginRowIndex + 1; i < len; i++) {
           ut.insertRow(range.endRowIndex + 1, cell);
         }
       }
       rng.moveToBookmark(bk).select();
-      if (table.getAttribute("interlaced") === "enabled")
-        this.fireEvent("interlacetable", table);
+      if (table.getAttribute("interlaced") === "enabled") this.fireEvent("interlacetable", table);
     }
   };
   UE.commands["deleterow"] = {
@@ -21560,11 +20331,7 @@ UE.plugins["video"] = function() {
       if (utils.isEmptyObject(cellsRange)) {
         ut.deleteRow(cellInfo.rowIndex);
       } else {
-        for (
-          var i = cellsRange.beginRowIndex;
-          i < cellsRange.endRowIndex + 1;
-          i++
-        ) {
+        for (var i = cellsRange.beginRowIndex; i < cellsRange.endRowIndex + 1; i++) {
           ut.deleteRow(cellsRange.beginRowIndex);
         }
       }
@@ -21576,23 +20343,14 @@ UE.plugins["video"] = function() {
           rng.setStart(nextSibling, 0).setCursor(false, true);
         }
       } else {
-        if (
-          cellInfo.rowSpan == 1 ||
-          cellInfo.rowSpan ==
-            cellsRange.endRowIndex - cellsRange.beginRowIndex + 1
-        ) {
-          if (nextCell || preCell)
-            rng.selectNodeContents(nextCell || preCell).setCursor(false, true);
+        if (cellInfo.rowSpan == 1 || cellInfo.rowSpan == cellsRange.endRowIndex - cellsRange.beginRowIndex + 1) {
+          if (nextCell || preCell) rng.selectNodeContents(nextCell || preCell).setCursor(false, true);
         } else {
-          var newCell = ut.getCell(
-            cellInfo.rowIndex,
-            ut.indexTable[cellInfo.rowIndex][cellInfo.colIndex].cellIndex
-          );
+          var newCell = ut.getCell(cellInfo.rowIndex, ut.indexTable[cellInfo.rowIndex][cellInfo.colIndex].cellIndex);
           if (newCell) rng.selectNodeContents(newCell).setCursor(false, true);
         }
       }
-      if (table.getAttribute("interlaced") === "enabled")
-        this.fireEvent("interlacetable", table);
+      if (table.getAttribute("interlaced") === "enabled") this.fireEvent("interlacetable", table);
     }
   };
   UE.commands["insertcol"] = {
@@ -21600,8 +20358,7 @@ UE.plugins["video"] = function() {
       var tableItems = getTableItemsByRange(this),
         cell = tableItems.cell;
       return cell &&
-        (cell.tagName == "TD" ||
-          (cell.tagName == "TH" && cell !== tableItems.tr.cells[0])) &&
+        (cell.tagName == "TD" || (cell.tagName == "TH" && cell !== tableItems.tr.cells[0])) &&
         getUETable(tableItems.table).colsNum < this.options.maxColNum
         ? 0
         : -1;
@@ -21619,11 +20376,7 @@ UE.plugins["video"] = function() {
         ut.insertCol(cellInfo.colIndex, cell);
       } else {
         var range = ut.cellsRange;
-        for (
-          var i = 0, len = range.endColIndex - range.beginColIndex + 1;
-          i < len;
-          i++
-        ) {
+        for (var i = 0, len = range.endColIndex - range.beginColIndex + 1; i < len; i++) {
           ut.insertCol(range.beginColIndex, cell);
         }
       }
@@ -21634,10 +20387,7 @@ UE.plugins["video"] = function() {
     queryCommandState: function() {
       var tableItems = getTableItemsByRange(this),
         cell = tableItems.cell;
-      return cell &&
-        getUETable(tableItems.table).colsNum < this.options.maxColNum
-        ? 0
-        : -1;
+      return cell && getUETable(tableItems.table).colsNum < this.options.maxColNum ? 0 : -1;
     },
     execCommand: function() {
       var rng = this.selection.getRange(),
@@ -21650,11 +20400,7 @@ UE.plugins["video"] = function() {
         ut.insertCol(cellInfo.colIndex + cellInfo.colSpan, cell);
       } else {
         var range = ut.cellsRange;
-        for (
-          var i = 0, len = range.endColIndex - range.beginColIndex + 1;
-          i < len;
-          i++
-        ) {
+        for (var i = 0, len = range.endColIndex - range.beginColIndex + 1; i < len; i++) {
           ut.insertCol(range.endColIndex + 1, cell);
         }
       }
@@ -21813,22 +20559,15 @@ UE.plugins["video"] = function() {
             colsNum += 1;
           }
         }
-        averageWidth =
-          Math.ceil(sumWidth / colsNum) -
-          tbAttr.tdBorder * 2 -
-          tbAttr.tdPadding * 2;
+        averageWidth = Math.ceil(sumWidth / colsNum) - tbAttr.tdBorder * 2 - tbAttr.tdPadding * 2;
         return averageWidth;
       }
 
       function setAverageWidth(averageWidth) {
-        utils.each(domUtils.getElementsByTagName(ut.table, "th"), function(
-          node
-        ) {
+        utils.each(domUtils.getElementsByTagName(ut.table, "th"), function(node) {
           node.setAttribute("width", "");
         });
-        var cells = ut.isFullRow()
-          ? domUtils.getElementsByTagName(ut.table, "td")
-          : ut.selectedTds;
+        var cells = ut.isFullRow() ? domUtils.getElementsByTagName(ut.table, "td") : ut.selectedTds;
 
         utils.each(cells, function(node) {
           if (node.colSpan == 1) {
@@ -21860,12 +20599,7 @@ UE.plugins["video"] = function() {
           sumHeight = 0,
           tb = ut.table,
           tbAttr = getDefaultValue(me, tb),
-          tdpadding = parseInt(
-            domUtils.getComputedStyle(
-              tb.getElementsByTagName("td")[0],
-              "padding-top"
-            )
-          );
+          tdpadding = parseInt(domUtils.getComputedStyle(tb.getElementsByTagName("td")[0], "padding-top"));
 
         if (ut.isFullCol()) {
           var captionArr = domUtils.getElementsByTagName(tb, "caption"),
@@ -21897,16 +20631,13 @@ UE.plugins["video"] = function() {
         if (browser.ie && browser.version < 9) {
           averageHeight = Math.ceil(sumHeight / rowNum);
         } else {
-          averageHeight =
-            Math.ceil(sumHeight / rowNum) - tbAttr.tdBorder * 2 - tdpadding * 2;
+          averageHeight = Math.ceil(sumHeight / rowNum) - tbAttr.tdBorder * 2 - tdpadding * 2;
         }
         return averageHeight;
       }
 
       function setAverageHeight(averageHeight) {
-        var cells = ut.isFullCol()
-          ? domUtils.getElementsByTagName(ut.table, "td")
-          : ut.selectedTds;
+        var cells = ut.isFullCol() ? domUtils.getElementsByTagName(ut.table, "td") : ut.selectedTds;
         utils.each(cells, function(node) {
           if (node.rowSpan == 1) {
             node.setAttribute("height", averageHeight);
@@ -21931,9 +20662,7 @@ UE.plugins["video"] = function() {
 
       if (!ut) {
         var start = me.selection.getStart(),
-          cell =
-            start &&
-            domUtils.findParentByTagName(start, ["td", "th", "caption"], true);
+          cell = start && domUtils.findParentByTagName(start, ["td", "th", "caption"], true);
         if (!/caption/gi.test(cell.tagName)) {
           domUtils.setAttributes(cell, data);
         } else {
@@ -21948,9 +20677,9 @@ UE.plugins["video"] = function() {
       }
     },
     /**
-         * 查询当前点击的单元格的对齐状态， 如果当前已经选择了多个单元格， 则会返回所有单元格经过统一协调过后的状态
-         * @see UE.UETable.getTableCellAlignState
-         */
+     * 查询当前点击的单元格的对齐状态， 如果当前已经选择了多个单元格， 则会返回所有单元格经过统一协调过后的状态
+     * @see UE.UETable.getTableCellAlignState
+     */
     queryCommandValue: function(cmd) {
       var activeMenuCell = getTableItemsByRange(this).cell;
 
@@ -22000,10 +20729,7 @@ UE.plugins["video"] = function() {
       if (table) {
         var arr = domUtils
           .getElementsByTagName(table, "td")
-          .concat(
-            domUtils.getElementsByTagName(table, "th"),
-            domUtils.getElementsByTagName(table, "caption")
-          );
+          .concat(domUtils.getElementsByTagName(table, "th"), domUtils.getElementsByTagName(table, "caption"));
         utils.each(arr, function(node) {
           node.style.borderColor = color;
         });
@@ -22021,9 +20747,7 @@ UE.plugins["video"] = function() {
 
       if (!ut) {
         var start = me.selection.getStart(),
-          cell =
-            start &&
-            domUtils.findParentByTagName(start, ["td", "th", "caption"], true);
+          cell = start && domUtils.findParentByTagName(start, ["td", "th", "caption"], true);
         if (cell) {
           cell.style.backgroundColor = bkColor;
         }
@@ -22106,10 +20830,7 @@ UE.plugins["video"] = function() {
     utils.each(tds, function(td) {
       td.removeAttribute("width");
     });
-    table.setAttribute(
-      "width",
-      getTableWidth(editor, true, getDefaultValue(editor, table))
-    );
+    table.setAttribute("width", getTableWidth(editor, true, getDefaultValue(editor, table)));
     var tdsWidths = [];
     setTimeout(function() {
       utils.each(tds, function(td) {
@@ -22125,9 +20846,7 @@ UE.plugins["video"] = function() {
     var body = editor.body;
     return (
       body.offsetWidth -
-      (needIEHack
-        ? parseInt(domUtils.getComputedStyle(body, "margin-left"), 10) * 2
-        : 0) -
+      (needIEHack ? parseInt(domUtils.getComputedStyle(body, "margin-left"), 10) * 2 : 0) -
       defaultValue.tableBorder * 2 -
       (editor.options.offsetWidth || 0)
     );
@@ -22228,10 +20947,7 @@ UE.plugins["table"] = function() {
     tdvalign: "top",
     cursorpath: me.options.UEDITOR_HOME_URL + "themes/default/images/cursor_",
     tableDragable: false,
-    classList: [
-      "ue-table-interlace-color-single",
-      "ue-table-interlace-color-double"
-    ]
+    classList: ["ue-table-interlace-color-single", "ue-table-interlace-color-double"]
   });
   me.getUETable = getUETable;
   var commands = {
@@ -22298,11 +21014,7 @@ UE.plugins["table"] = function() {
           domUtils.preventDefault(evt);
         }
 
-        var caption = domUtils.findParentByTagName(
-          me.selection.getStart(),
-          "caption",
-          true
-        ),
+        var caption = domUtils.findParentByTagName(me.selection.getStart(), "caption", true),
           range = me.selection.getRange();
         if (range.collapsed && caption && isEmptyBlock(caption)) {
           me.fireEvent("saveScene");
@@ -22328,11 +21040,7 @@ UE.plugins["table"] = function() {
       }
       if (keyCode == 13) {
         var rng = me.selection.getRange(),
-          caption = domUtils.findParentByTagName(
-            rng.startContainer,
-            "caption",
-            true
-          );
+          caption = domUtils.findParentByTagName(rng.startContainer, "caption", true);
         if (caption) {
           var table = domUtils.findParentByTagName(caption, "table");
           if (!rng.collapsed) {
@@ -22350,16 +21058,11 @@ UE.plugins["table"] = function() {
           var table = domUtils.findParentByTagName(rng.startContainer, "table");
           if (table) {
             var cell = table.rows[0].cells[0],
-              start = domUtils.findParentByTagName(
-                me.selection.getStart(),
-                ["td", "th"],
-                true
-              ),
+              start = domUtils.findParentByTagName(me.selection.getStart(), ["td", "th"], true),
               preNode = table.previousSibling;
             if (
               cell === start &&
-              (!preNode ||
-                (preNode.nodeType == 1 && preNode.tagName == "TABLE")) &&
+              (!preNode || (preNode.nodeType == 1 && preNode.tagName == "TABLE")) &&
               domUtils.isStartInblock(rng)
             ) {
               var first = domUtils.findParent(
@@ -22369,10 +21072,7 @@ UE.plugins["table"] = function() {
                 },
                 true
               );
-              if (
-                first &&
-                (/t(h|d)/i.test(first.tagName) || first === start.firstChild)
-              ) {
+              if (first && (/t(h|d)/i.test(first.tagName) || first === start.firstChild)) {
                 me.execCommand("insertparagraphbeforetable");
                 domUtils.preventDefault(evt);
               }
@@ -22393,9 +21093,7 @@ UE.plugins["table"] = function() {
             if (ci.parentNode !== tds[i - 1].parentNode) {
               tableCopyList.push([ut.cloneCell(ci, null, true)]);
             } else {
-              tableCopyList[tableCopyList.length - 1].push(
-                ut.cloneCell(ci, null, true)
-              );
+              tableCopyList[tableCopyList.length - 1].push(ut.cloneCell(ci, null, true));
             }
           }
         }
@@ -22420,11 +21118,7 @@ UE.plugins["table"] = function() {
       if (tableCopyList) {
         me.fireEvent("saveScene");
         var rng = me.selection.getRange();
-        var td = domUtils.findParentByTagName(
-          rng.startContainer,
-          ["td", "th"],
-          true
-        ),
+        var td = domUtils.findParentByTagName(rng.startContainer, ["td", "th"], true),
           tmpNode,
           preNode;
         if (td) {
@@ -22442,23 +21136,17 @@ UE.plugins["table"] = function() {
                   cell = tr.insertCell(j);
                 }
                 cell.innerHTML = cj.innerHTML;
-                cj.getAttribute("width") &&
-                  cell.setAttribute("width", cj.getAttribute("width"));
-                cj.getAttribute("vAlign") &&
-                  cell.setAttribute("vAlign", cj.getAttribute("vAlign"));
-                cj.getAttribute("align") &&
-                  cell.setAttribute("align", cj.getAttribute("align"));
+                cj.getAttribute("width") && cell.setAttribute("width", cj.getAttribute("width"));
+                cj.getAttribute("vAlign") && cell.setAttribute("vAlign", cj.getAttribute("vAlign"));
+                cj.getAttribute("align") && cell.setAttribute("align", cj.getAttribute("align"));
                 cj.style.cssText && (cell.style.cssText = cj.style.cssText);
               }
               for (var j = 0, cj; (cj = tr.cells[j]); j++) {
                 if (!ci[j]) break;
                 cj.innerHTML = ci[j].innerHTML;
-                ci[j].getAttribute("width") &&
-                  cj.setAttribute("width", ci[j].getAttribute("width"));
-                ci[j].getAttribute("vAlign") &&
-                  cj.setAttribute("vAlign", ci[j].getAttribute("vAlign"));
-                ci[j].getAttribute("align") &&
-                  cj.setAttribute("align", ci[j].getAttribute("align"));
+                ci[j].getAttribute("width") && cj.setAttribute("width", ci[j].getAttribute("width"));
+                ci[j].getAttribute("vAlign") && cj.setAttribute("vAlign", ci[j].getAttribute("vAlign"));
+                ci[j].getAttribute("align") && cj.setAttribute("align", ci[j].getAttribute("align"));
                 ci[j].style.cssText && (cj.style.cssText = ci[j].style.cssText);
               }
             }
@@ -22485,22 +21173,15 @@ UE.plugins["table"] = function() {
                 if (td) {
                   td.innerHTML = cj.innerHTML;
                   //todo 定制处理
-                  cj.getAttribute("width") &&
-                    td.setAttribute("width", cj.getAttribute("width"));
-                  cj.getAttribute("vAlign") &&
-                    td.setAttribute("vAlign", cj.getAttribute("vAlign"));
-                  cj.getAttribute("align") &&
-                    td.setAttribute("align", cj.getAttribute("align"));
+                  cj.getAttribute("width") && td.setAttribute("width", cj.getAttribute("width"));
+                  cj.getAttribute("vAlign") && td.setAttribute("vAlign", cj.getAttribute("vAlign"));
+                  cj.getAttribute("align") && td.setAttribute("align", cj.getAttribute("align"));
                   cj.style.cssText && (td.style.cssText = cj.style.cssText);
                   preNode = td;
                   td = td.nextSibling;
                 } else {
                   var cloneTd = cj.cloneNode(true);
-                  domUtils.removeAttributes(cloneTd, [
-                    "class",
-                    "rowSpan",
-                    "colSpan"
-                  ]);
+                  domUtils.removeAttributes(cloneTd, ["class", "rowSpan", "colSpan"]);
 
                   preNode.parentNode.appendChild(cloneTd);
                 }
@@ -22533,12 +21214,7 @@ UE.plugins["table"] = function() {
           var defaultValue = getDefaultValue(me),
             width =
               me.body.offsetWidth -
-              (needIEHack
-                ? parseInt(
-                    domUtils.getComputedStyle(me.body, "margin-left"),
-                    10
-                  ) * 2
-                : 0) -
+              (needIEHack ? parseInt(domUtils.getComputedStyle(me.body, "margin-left"), 10) * 2 : 0) -
               defaultValue.tableBorder * 2 -
               (me.options.offsetWidth || 0);
           me.execCommand(
@@ -22546,9 +21222,7 @@ UE.plugins["table"] = function() {
             "<table  " +
               (isFullCol && isFullRow ? 'width="' + width + '"' : "") +
               ">" +
-              table.innerHTML
-                .replace(/>\s*</g, "><")
-                .replace(/\bth\b/gi, "td") +
+              table.innerHTML.replace(/>\s*</g, "><").replace(/\bth\b/gi, "td") +
               "</table>"
           );
         }
@@ -22565,22 +21239,14 @@ UE.plugins["table"] = function() {
           utils.each(tables, function(t) {
             domUtils.remove(t);
           });
-          if (
-            domUtils.findParentByTagName(
-              me.selection.getStart(),
-              "caption",
-              true
-            )
-          ) {
+          if (domUtils.findParentByTagName(me.selection.getStart(), "caption", true)) {
             div.innerHTML = div[browser.ie ? "innerText" : "textContent"];
           }
         } else {
           utils.each(tables, function(table) {
             removeStyleSize(table, true);
             domUtils.removeAttributes(table, ["style", "border"]);
-            utils.each(domUtils.getElementsByTagName(table, "td"), function(
-              td
-            ) {
+            utils.each(domUtils.getElementsByTagName(table, "td"), function(td) {
               if (isEmptyBlock(td)) {
                 domUtils.fillNode(me.document, td);
               }
@@ -22594,19 +21260,12 @@ UE.plugins["table"] = function() {
     });
 
     me.addListener("afterpaste", function() {
-      utils.each(domUtils.getElementsByTagName(me.body, "table"), function(
-        table
-      ) {
+      utils.each(domUtils.getElementsByTagName(me.body, "table"), function(table) {
         if (table.offsetWidth > me.body.offsetWidth) {
           var defaultValue = getDefaultValue(me, table);
           table.style.width =
             me.body.offsetWidth -
-            (needIEHack
-              ? parseInt(
-                  domUtils.getComputedStyle(me.body, "margin-left"),
-                  10
-                ) * 2
-              : 0) -
+            (needIEHack ? parseInt(domUtils.getComputedStyle(me.body, "margin-left"), 10) * 2 : 0) -
             defaultValue.tableBorder * 2 -
             (me.options.offsetWidth || 0) +
             "px";
@@ -22621,11 +21280,7 @@ UE.plugins["table"] = function() {
       clearTimeout(timer);
       timer = setTimeout(function() {
         var rng = me.selection.getRange(),
-          cell = domUtils.findParentByTagName(
-            rng.startContainer,
-            ["th", "td"],
-            true
-          );
+          cell = domUtils.findParentByTagName(rng.startContainer, ["th", "td"], true);
         if (cell) {
           var table = cell.parentNode.parentNode.parentNode;
           if (table.offsetWidth > table.getAttribute("width")) {
@@ -22648,9 +21303,7 @@ UE.plugins["table"] = function() {
       var rng = me.selection.getRange();
       var start = rng.startContainer;
       start = domUtils.findParentByTagName(start, ["td", "th"], true);
-      utils.each(domUtils.getElementsByTagName(me.document, "table"), function(
-        table
-      ) {
+      utils.each(domUtils.getElementsByTagName(me.document, "table"), function(table) {
         if (me.fireEvent("excludetable", table) === true) return;
         table.ueTable = new UT(table);
         //trace:3742
@@ -22762,24 +21415,18 @@ UE.plugins["table"] = function() {
       }
     });
     /**
-         * 表格隔行变色
-         */
+     * 表格隔行变色
+     */
     me.addListener("interlacetable", function(type, table, classList) {
       if (!table) return;
       var me = this,
         rows = table.rows,
         len = rows.length,
         getClass = function(list, index, repeat) {
-          return list[index]
-            ? list[index]
-            : repeat ? list[index % list.length] : "";
+          return list[index] ? list[index] : repeat ? list[index % list.length] : "";
         };
       for (var i = 0; i < len; i++) {
-        rows[i].className = getClass(
-          classList || me.options.classList,
-          i,
-          true
-        );
+        rows[i].className = getClass(classList || me.options.classList, i, true);
       }
     });
     me.addListener("uninterlacetable", function(type, table) {
@@ -22824,9 +21471,7 @@ UE.plugins["table"] = function() {
         } else {
           var cell = domUtils.findParentByTagName(common, ["td", "th"], true),
             ua = getUETable(cell);
-          currentRowIndex = cell.rowSpan > 1
-            ? currentRowIndex
-            : ua.getCellInfo(cell).rowIndex;
+          currentRowIndex = cell.rowSpan > 1 ? currentRowIndex : ua.getCellInfo(cell).rowIndex;
           var nextCell = ua.getTabNextCell(cell, currentRowIndex);
           if (nextCell) {
             if (isEmptyBlock(nextCell)) {
@@ -22840,9 +21485,7 @@ UE.plugins["table"] = function() {
             this.execCommand("insertrownext");
             me.__hasEnterExecCommand = false;
             range = this.selection.getRange();
-            range
-              .setStart(table.rows[table.rows.length - 1].cells[0], 0)
-              .setCursor();
+            range.setStart(table.rows[table.rows.length - 1].cells[0], 0).setCursor();
             me.fireEvent("saveScene");
           }
         }
@@ -22860,10 +21503,8 @@ UE.plugins["table"] = function() {
       if (keyCode == 8 || keyCode == 46) {
         return;
       }
-      var notCtrlKey =
-        !evt.ctrlKey && !evt.metaKey && !evt.shiftKey && !evt.altKey;
-      notCtrlKey &&
-        removeSelectedClass(domUtils.getElementsByTagName(me.body, "td"));
+      var notCtrlKey = !evt.ctrlKey && !evt.metaKey && !evt.shiftKey && !evt.altKey;
+      notCtrlKey && removeSelectedClass(domUtils.getElementsByTagName(me.body, "td"));
       var ut = getUETableBySelected(me);
       if (!ut) return;
       notCtrlKey && ut.clearSelected();
@@ -22899,10 +21540,7 @@ UE.plugins["table"] = function() {
           for (var i = 0, td; (td = tds[i]); i++) {
             td.setAttribute("width", Math.floor(backWidths[i] * ratio));
           }
-          table.setAttribute(
-            "width",
-            Math.floor(getTableWidth(me, needIEHack, getDefaultValue(me)))
-          );
+          table.setAttribute("width", Math.floor(getTableWidth(me, needIEHack, getDefaultValue(me))));
         });
       }
     });
@@ -22920,12 +21558,7 @@ UE.plugins["table"] = function() {
         cmdFun = me.commands[cmd] || UE.commands[cmd],
         result;
       if (!cmdFun) return;
-      if (
-        ut &&
-        !commands[cmd] &&
-        !cmdFun.notNeedUndo &&
-        !me.__hasEnterExecCommand
-      ) {
+      if (ut && !commands[cmd] && !cmdFun.notNeedUndo && !me.__hasEnterExecCommand) {
         me.__hasEnterExecCommand = true;
         me.fireEvent("beforeexeccommand", cmd);
         tds = ut.selectedTds;
@@ -22954,7 +21587,10 @@ UE.plugins["table"] = function() {
             }
           }
         }
-        range.setStart(tds[0], 0).shrinkBoundary(true).setCursor(false, true);
+        range
+          .setStart(tds[0], 0)
+          .shrinkBoundary(true)
+          .setCursor(false, true);
         me.fireEvent("contentchange");
         me.fireEvent("afterexeccommand", cmd);
         me.__hasEnterExecCommand = false;
@@ -22966,10 +21602,10 @@ UE.plugins["table"] = function() {
     };
   });
   /**
-     * 删除obj的宽高style，改成属性宽高
-     * @param obj
-     * @param replaceToProperty
-     */
+   * 删除obj的宽高style，改成属性宽高
+   * @param obj
+   * @param replaceToProperty
+   */
   function removeStyleSize(obj, replaceToProperty) {
     removeStyle(obj, "width", true);
     removeStyle(obj, "height", true);
@@ -22977,8 +21613,7 @@ UE.plugins["table"] = function() {
 
   function removeStyle(obj, styleName, replaceToProperty) {
     if (obj.style[styleName]) {
-      replaceToProperty &&
-        obj.setAttribute(styleName, parseInt(obj.style[styleName], 10));
+      replaceToProperty && obj.setAttribute(styleName, parseInt(obj.style[styleName], 10));
       obj.style[styleName] = "";
     }
   }
@@ -22986,22 +21621,14 @@ UE.plugins["table"] = function() {
   function getParentTdOrTh(ele) {
     if (ele.tagName == "TD" || ele.tagName == "TH") return ele;
     var td;
-    if (
-      (td =
-        domUtils.findParentByTagName(ele, "td", true) ||
-        domUtils.findParentByTagName(ele, "th", true))
-    )
+    if ((td = domUtils.findParentByTagName(ele, "td", true) || domUtils.findParentByTagName(ele, "th", true)))
       return td;
     return null;
   }
 
   function isEmptyBlock(node) {
     var reg = new RegExp(domUtils.fillChar, "g");
-    if (
-      node[browser.ie ? "innerText" : "textContent"]
-        .replace(/^\s*$/, "")
-        .replace(reg, "").length > 0
-    ) {
+    if (node[browser.ie ? "innerText" : "textContent"].replace(/^\s*$/, "").replace(reg, "").length > 0) {
       return 0;
     }
     for (var n in dtd.$isNotEmpty) {
@@ -23014,11 +21641,10 @@ UE.plugins["table"] = function() {
 
   function mouseCoords(evt) {
     if (evt.pageX || evt.pageY) {
-      return { x: evt.pageX, y: evt.pageY };
+      return {x: evt.pageX, y: evt.pageY};
     }
     return {
-      x:
-        evt.clientX + me.document.body.scrollLeft - me.document.body.clientLeft,
+      x: evt.clientX + me.document.body.scrollLeft - me.document.body.clientLeft,
       y: evt.clientY + me.document.body.scrollTop - me.document.body.clientTop
     };
   }
@@ -23053,9 +21679,7 @@ UE.plugins["table"] = function() {
       if (onDrag && dragTd) {
         singleClickState = 0;
         me.body.style.webkitUserSelect = "none";
-        me.selection.getNative()[
-          browser.ie9below ? "empty" : "removeAllRanges"
-        ]();
+        me.selection.getNative()[browser.ie9below ? "empty" : "removeAllRanges"]();
         pos = mouseCoords(evt);
         toggleDraggableState(me, true, onDrag, pos, target);
         if (onDrag == "h") {
@@ -23075,12 +21699,10 @@ UE.plugins["table"] = function() {
 
         if (inTableSide(table, target, evt, true)) {
           if (me.fireEvent("excludetable", table) === true) return;
-          me.body.style.cursor =
-            "url(" + me.options.cursorpath + "h.png),pointer";
+          me.body.style.cursor = "url(" + me.options.cursorpath + "h.png),pointer";
         } else if (inTableSide(table, target, evt)) {
           if (me.fireEvent("excludetable", table) === true) return;
-          me.body.style.cursor =
-            "url(" + me.options.cursorpath + "v.png),pointer";
+          me.body.style.cursor = "url(" + me.options.cursorpath + "v.png),pointer";
         } else {
           me.body.style.cursor = "text";
           var curCell = target;
@@ -23089,13 +21711,7 @@ UE.plugins["table"] = function() {
             target = getUETable(target).getPreviewCell(target, state == "v");
           }
           //位于第一行的顶部或者第一列的左边时不可拖动
-          toggleDraggableState(
-            me,
-            target ? !!state : false,
-            target ? state : "",
-            pos,
-            target
-          );
+          toggleDraggableState(me, target ? !!state : false, target ? state : "", pos, target);
         }
       } else {
         toggleDragButton(false, table, me);
@@ -23111,10 +21727,7 @@ UE.plugins["table"] = function() {
     if (!show) {
       if (dragOver) return;
       dragButtonTimer = setTimeout(function() {
-        !dragOver &&
-          dragButton &&
-          dragButton.parentNode &&
-          dragButton.parentNode.removeChild(dragButton);
+        !dragOver && dragButton && dragButton.parentNode && dragButton.parentNode.removeChild(dragButton);
       }, 2000);
     } else {
       createDragButton(table, editor);
@@ -23168,7 +21781,10 @@ UE.plugins["table"] = function() {
         start = table.rows[0].cells[0],
         end = ut.getLastCell(),
         range = ut.getCellsRange(start, end);
-      editor.selection.getRange().setStart(start, 0).setCursor(false, true);
+      editor.selection
+        .getRange()
+        .setStart(start, 0)
+        .setCursor(false, true);
       ut.setSelected(range);
     }
 
@@ -23200,22 +21816,20 @@ UE.plugins["table"] = function() {
   }
 
   /**
-     * 获取拖动时允许的X轴坐标
-     * @param dragTd
-     * @param evt
-     */
+   * 获取拖动时允许的X轴坐标
+   * @param dragTd
+   * @param evt
+   */
   function getPermissionX(dragTd, evt) {
     var ut = getUETable(dragTd);
     if (ut) {
       var preTd = ut.getSameEndPosCells(dragTd, "x")[0],
         nextTd = ut.getSameStartPosXCells(dragTd)[0],
         mouseX = mouseCoords(evt).x,
-        left =
-          (preTd ? domUtils.getXY(preTd).x : domUtils.getXY(ut.table).x) + 20,
+        left = (preTd ? domUtils.getXY(preTd).x : domUtils.getXY(ut.table).x) + 20,
         right = nextTd
           ? domUtils.getXY(nextTd).x + nextTd.offsetWidth - 20
-          : me.body.offsetWidth + 5 ||
-              parseInt(domUtils.getComputedStyle(me.body, "width"), 10);
+          : me.body.offsetWidth + 5 || parseInt(domUtils.getComputedStyle(me.body, "width"), 10);
 
       left += cellMinWidth;
       right -= cellMinWidth;
@@ -23225,8 +21839,8 @@ UE.plugins["table"] = function() {
   }
 
   /**
-     * 获取拖动时允许的Y轴坐标
-     */
+   * 获取拖动时允许的Y轴坐标
+   */
   function getPermissionY(dragTd, evt) {
     try {
       var top = domUtils.getXY(dragTd).y,
@@ -23238,13 +21852,11 @@ UE.plugins["table"] = function() {
   }
 
   /**
-     * 移动状态切换
-     */
+   * 移动状态切换
+   */
   function toggleDraggableState(editor, draggable, dir, mousePos, cell) {
     try {
-      editor.body.style.cursor = dir == "h"
-        ? "col-resize"
-        : dir == "v" ? "row-resize" : "text";
+      editor.body.style.cursor = dir == "h" ? "col-resize" : dir == "v" ? "row-resize" : "text";
       if (browser.ie) {
         if (dir && !mousedown && !getUETableBySelected(editor)) {
           getDragLine(editor, editor.document);
@@ -23260,9 +21872,9 @@ UE.plugins["table"] = function() {
   }
 
   /**
-     * 获取与UETable相关的resize line
-     * @param uetable UETable对象
-     */
+   * 获取与UETable相关的resize line
+   * @param uetable UETable对象
+   */
   function getResizeLineByUETable() {
     var lineId = "_UETableResizeLine",
       line = this.document.getElementById(lineId);
@@ -23296,15 +21908,14 @@ UE.plugins["table"] = function() {
   }
 
   /**
-     * 更新resize-line
-     */
+   * 更新resize-line
+   */
   function updateResizeLine(cell, uetable) {
     var line = getResizeLineByUETable.call(this),
       table = uetable.table,
       styles = {
         top: domUtils.getXY(table).y + "px",
-        left:
-          domUtils.getXY(cell).x + cell.offsetWidth - cellBorderWidth + "px",
+        left: domUtils.getXY(cell).x + cell.offsetWidth - cellBorderWidth + "px",
         display: "block",
         height: table.offsetHeight + "px"
       };
@@ -23313,8 +21924,8 @@ UE.plugins["table"] = function() {
   }
 
   /**
-     * 显示resize-line
-     */
+   * 显示resize-line
+   */
   function showResizeLine(cell) {
     var uetable = getUETable(cell);
 
@@ -23322,10 +21933,10 @@ UE.plugins["table"] = function() {
   }
 
   /**
-     * 获取鼠标与当前单元格的相对位置
-     * @param ele
-     * @param mousePos
-     */
+   * 获取鼠标与当前单元格的相对位置
+   * @param ele
+   * @param mousePos
+   */
   function getRelation(ele, mousePos) {
     var elePos = domUtils.getXY(ele);
 
@@ -23376,7 +21987,10 @@ UE.plugins["table"] = function() {
         } else {
           td = ut.selectedTds[0];
           setTimeout(function() {
-            me.selection.getRange().setStart(td, 0).setCursor(false, true);
+            me.selection
+              .getRange()
+              .setStart(td, 0)
+              .setCursor(false, true);
           }, 0);
         }
       }
@@ -23403,13 +22017,7 @@ UE.plugins["table"] = function() {
 
         if (h == "h1") {
           h = "h";
-          if (
-            inTableSide(
-              domUtils.findParentByTagName(target, "table"),
-              target,
-              evt
-            )
-          ) {
+          if (inTableSide(domUtils.findParentByTagName(target, "table"), target, evt)) {
             me.execCommand("adaptbywindow");
           } else {
             target = getUETable(target).getPreviewCell(target);
@@ -23534,14 +22142,7 @@ UE.plugins["table"] = function() {
   }
 
   function reconstruct(obj) {
-    var attrs = [
-      "pageX",
-      "pageY",
-      "clientX",
-      "clientY",
-      "srcElement",
-      "target"
-    ],
+    var attrs = ["pageX", "pageY", "clientX", "clientY", "srcElement", "target"],
       newObj = {};
 
     if (obj) {
@@ -23612,16 +22213,8 @@ UE.plugins["table"] = function() {
 
     if (start || end) {
       if (start === end) {
-        start = domUtils.findParentByTagName(
-          range.startContainer,
-          ["td", "th", "caption"],
-          true
-        );
-        end = domUtils.findParentByTagName(
-          range.endContainer,
-          ["td", "th", "caption"],
-          true
-        );
+        start = domUtils.findParentByTagName(range.startContainer, ["td", "th", "caption"], true);
+        end = domUtils.findParentByTagName(range.endContainer, ["td", "th", "caption"], true);
         if (start !== end) {
           me.selection.clearRange();
         }
@@ -23633,9 +22226,7 @@ UE.plugins["table"] = function() {
     me.document.body.style.webkitUserSelect = "";
     //拖拽状态下的mouseUP
     if (onDrag && dragTd) {
-      me.selection.getNative()[
-        browser.ie9below ? "empty" : "removeAllRanges"
-      ]();
+      me.selection.getNative()[browser.ie9below ? "empty" : "removeAllRanges"]();
 
       singleClickState = 0;
       dragLine = me.document.getElementById("ue_tableDragLine");
@@ -23650,10 +22241,7 @@ UE.plugins["table"] = function() {
             changeColWidth(dragTd, dragLinePos.x - dragTdPos.x);
             break;
           case "v":
-            changeRowHeight(
-              dragTd,
-              dragLinePos.y - dragTdPos.y - dragTd.offsetHeight
-            );
+            changeRowHeight(dragTd, dragLinePos.y - dragTdPos.y - dragTd.offsetHeight);
             break;
           default:
         }
@@ -23667,17 +22255,8 @@ UE.plugins["table"] = function() {
     }
     //正常状态下的mouseup
     if (!startTd) {
-      var target = domUtils.findParentByTagName(
-        evt.target || evt.srcElement,
-        "td",
-        true
-      );
-      if (!target)
-        target = domUtils.findParentByTagName(
-          evt.target || evt.srcElement,
-          "th",
-          true
-        );
+      var target = domUtils.findParentByTagName(evt.target || evt.srcElement, "td", true);
+      if (!target) target = domUtils.findParentByTagName(evt.target || evt.srcElement, "th", true);
       if (target && (target.tagName == "TD" || target.tagName == "TH")) {
         if (me.fireEvent("excludetable", target) === true) return;
         range = new dom.Range(me.document);
@@ -23699,22 +22278,10 @@ UE.plugins["table"] = function() {
       } else {
         range = me.selection.getRange().shrinkBoundary();
         if (!range.collapsed) {
-          var start = domUtils.findParentByTagName(
-            range.startContainer,
-            ["td", "th"],
-            true
-          ),
-            end = domUtils.findParentByTagName(
-              range.endContainer,
-              ["td", "th"],
-              true
-            );
+          var start = domUtils.findParentByTagName(range.startContainer, ["td", "th"], true),
+            end = domUtils.findParentByTagName(range.endContainer, ["td", "th"], true);
           //在table里边的不能清除
-          if (
-            (start && !end) ||
-            (!start && end) ||
-            (start && end && start !== end)
-          ) {
+          if ((start && !end) || (!start && end) || (start && end && start !== end)) {
             range.setCursor(false, true);
           }
         }
@@ -23732,24 +22299,19 @@ UE.plugins["table"] = function() {
 
     var me = this,
       tar = evt.target || evt.srcElement;
-    currentTd =
-      domUtils.findParentByTagName(tar, "td", true) ||
-      domUtils.findParentByTagName(tar, "th", true);
+    currentTd = domUtils.findParentByTagName(tar, "td", true) || domUtils.findParentByTagName(tar, "th", true);
     //需要判断两个TD是否位于同一个表格内
     if (
       startTd &&
       currentTd &&
       ((startTd.tagName == "TD" && currentTd.tagName == "TD") ||
         (startTd.tagName == "TH" && currentTd.tagName == "TH")) &&
-      domUtils.findParentByTagName(startTd, "table") ==
-        domUtils.findParentByTagName(currentTd, "table")
+      domUtils.findParentByTagName(startTd, "table") == domUtils.findParentByTagName(currentTd, "table")
     ) {
       var ut = getUETable(currentTd);
       if (startTd != currentTd) {
         me.document.body.style.webkitUserSelect = "none";
-        me.selection.getNative()[
-          browser.ie9below ? "empty" : "removeAllRanges"
-        ]();
+        me.selection.getNative()[browser.ie9below ? "empty" : "removeAllRanges"]();
         var range = ut.getCellsRange(startTd, currentTd);
         ut.setSelected(range);
       } else {
@@ -23761,16 +22323,11 @@ UE.plugins["table"] = function() {
   }
 
   function setCellHeight(cell, height, backHeight) {
-    var lineHight = parseInt(
-      domUtils.getComputedStyle(cell, "line-height"),
-      10
-    ),
+    var lineHight = parseInt(domUtils.getComputedStyle(cell, "line-height"), 10),
       tmpHeight = backHeight + height;
     height = tmpHeight < lineHight ? lineHight : tmpHeight;
     if (cell.style.height) cell.style.height = "";
-    cell.rowSpan == 1
-      ? cell.setAttribute("height", height)
-      : cell.removeAttribute && cell.removeAttribute("height");
+    cell.rowSpan == 1 ? cell.setAttribute("height", height) : cell.removeAttribute && cell.removeAttribute("height");
   }
 
   function getWidth(cell) {
@@ -23796,8 +22353,7 @@ UE.plugins["table"] = function() {
 
         utils.each(cells, function(cellGroup) {
           cellGroup.left.width = +cellGroup.left.width + changeValue;
-          cellGroup.right &&
-            (cellGroup.right.width = +cellGroup.right.width - changeValue);
+          cellGroup.right && (cellGroup.right.width = +cellGroup.right.width - changeValue);
         });
       } else {
         utils.each(cells, function(cellGroup) {
@@ -23825,9 +22381,9 @@ UE.plugins["table"] = function() {
   }
 
   /**
-     * 获取调整单元格大小的相关单元格
-     * @isContainMergeCell 返回的结果中是否包含发生合并后的单元格
-     */
+   * 获取调整单元格大小的相关单元格
+   * @isContainMergeCell 返回的结果中是否包含发生合并后的单元格
+   */
   function getCellsByMoveBorder(cell, table, isContainMergeCell) {
     if (!table) {
       table = domUtils.findParentByTagName(cell, "table");
@@ -23886,16 +22442,13 @@ UE.plugins["table"] = function() {
   }
 
   /**
-     * 通过给定的单元格集合获取最小的单元格width
-     */
+   * 通过给定的单元格集合获取最小的单元格width
+   */
   function getMinWidthByTableCells(cells) {
     var minWidth = Number.MAX_VALUE;
 
     for (var i = 0, curCell; (curCell = cells[i]); i++) {
-      minWidth = Math.min(
-        minWidth,
-        curCell.width || getTableCellWidth(curCell)
-      );
+      minWidth = Math.min(minWidth, curCell.width || getTableCellWidth(curCell));
     }
 
     return minWidth;
@@ -23922,10 +22475,7 @@ UE.plugins["table"] = function() {
 
       //为单元格保留最小空间
       if (curCell) {
-        changeValue = Math.min(
-          changeValue,
-          getTableCellWidth(curCell) - cellMinWidth
-        );
+        changeValue = Math.min(changeValue, getTableCellWidth(curCell) - cellMinWidth);
       }
     });
 
@@ -23956,8 +22506,8 @@ UE.plugins["table"] = function() {
   }
 
   /**
-     * 获取单元格所在表格的最末单元格的偏移量
-     */
+   * 获取单元格所在表格的最末单元格的偏移量
+   */
   function getTableCellOffset(cell) {
     tab = domUtils.findParentByTagName(cell, "table", false);
 
@@ -23966,9 +22516,7 @@ UE.plugins["table"] = function() {
 
       if (prev) {
         //最后一个单元格和前一个单元格的width diff结果 如果恰好为一个border width， 则条件成立
-        tab.offsetVal = cell.offsetWidth - prev.offsetWidth === UT.borderWidth
-          ? UT.borderWidth
-          : 0;
+        tab.offsetVal = cell.offsetWidth - prev.offsetWidth === UT.borderWidth ? UT.borderWidth : 0;
       } else {
         tab.offsetVal = 0;
       }
@@ -24046,17 +22594,16 @@ UE.plugins["table"] = function() {
   }
 
   /**
-     * 依据state（v|h）在cell位置显示横线
-     * @param state
-     * @param cell
-     */
+   * 依据state（v|h）在cell位置显示横线
+   * @param state
+   * @param cell
+   */
   function showDragLineAt(state, cell) {
     if (!cell) return;
     var table = domUtils.findParentByTagName(cell, "table"),
       caption = table.getElementsByTagName("caption"),
       width = table.offsetWidth,
-      height =
-        table.offsetHeight - (caption.length > 0 ? caption[0].offsetHeight : 0),
+      height = table.offsetHeight - (caption.length > 0 ? caption[0].offsetHeight : 0),
       tablePos = domUtils.getXY(table),
       cellPos = domUtils.getXY(cell),
       css;
@@ -24074,13 +22621,7 @@ UE.plugins["table"] = function() {
           "px;position: absolute;display:block;background-color:blue;width:1px;border:0; color:blue;opacity:.3;filter:alpha(opacity=30)";
         break;
       case "v":
-        css =
-          "width:" +
-          width +
-          "px;left:" +
-          tablePos.x +
-          "px;top:" +
-          (cellPos.y + cell.offsetHeight);
+        css = "width:" + width + "px;left:" + tablePos.x + "px;top:" + (cellPos.y + cell.offsetHeight);
         //必须加上border:0和color:blue，否则低版ie不支持背景色显示
         dragLine.style.cssText =
           css +
@@ -24091,10 +22632,10 @@ UE.plugins["table"] = function() {
   }
 
   /**
-     * 当表格边框颜色为白色时设置为虚线,true为添加虚线
-     * @param editor
-     * @param flag
-     */
+   * 当表格边框颜色为白色时设置为虚线,true为添加虚线
+   * @param editor
+   * @param flag
+   */
   function switchBorderColor(editor, flag) {
     var tableArr = domUtils.getElementsByTagName(editor.body, "table"),
       color;
@@ -24103,8 +22644,7 @@ UE.plugins["table"] = function() {
       if (td[0]) {
         if (flag) {
           color = td[0].style.borderColor.replace(/\s/g, "");
-          if (/(#ffffff)|(rgb\(255,255,255\))/gi.test(color))
-            domUtils.addClass(node, "noBorderTable");
+          if (/(#ffffff)|(rgb\(255,255,255\))/gi.test(color)) domUtils.addClass(node, "noBorderTable");
         } else {
           domUtils.removeClasses(node, "noBorderTable");
         }
@@ -24116,23 +22656,17 @@ UE.plugins["table"] = function() {
     var body = editor.body;
     return (
       body.offsetWidth -
-      (needIEHack
-        ? parseInt(domUtils.getComputedStyle(body, "margin-left"), 10) * 2
-        : 0) -
+      (needIEHack ? parseInt(domUtils.getComputedStyle(body, "margin-left"), 10) * 2 : 0) -
       defaultValue.tableBorder * 2 -
       (editor.options.offsetWidth || 0)
     );
   }
 
   /**
-     * 获取当前拖动的单元格
-     */
+   * 获取当前拖动的单元格
+   */
   function getTargetTd(editor, evt) {
-    var target = domUtils.findParentByTagName(
-      evt.target || evt.srcElement,
-      ["td", "th"],
-      true
-    ),
+    var target = domUtils.findParentByTagName(evt.target || evt.srcElement, ["td", "th"], true),
       dir = null;
 
     if (!target) {
@@ -24164,9 +22698,7 @@ UE.plugins["table"] = function() {
     }
 
     //排除了非td内部以及用于代码高亮部分的td
-    return target && !(editor.fireEvent("excludetable", target) === true)
-      ? target
-      : null;
+    return target && !(editor.fireEvent("excludetable", target) === true) ? target : null;
   }
 };
 
@@ -24193,9 +22725,7 @@ UE.UETable.prototype.sortTable = function(sortByCellIndex, compareFn) {
       trArray[i] = rows[i];
     }
     trArray.splice(0, range.beginRowIndex);
-    lastRowIndex = range.endRowIndex + 1 === this.rowsNum
-      ? 0
-      : range.endRowIndex + 1;
+    lastRowIndex = range.endRowIndex + 1 === this.rowsNum ? 0 : range.endRowIndex + 1;
   } else {
     for (var i = 0, len = rows.length; i < len; i++) {
       trArray[i] = rows[i];
@@ -24233,35 +22763,20 @@ UE.UETable.prototype.sortTable = function(sortByCellIndex, compareFn) {
   };
 
   //对表格设置排序的标记data-sort-type
-  table.setAttribute(
-    "data-sort-type",
-    compareFn && typeof compareFn === "string" && Fn[compareFn] ? compareFn : ""
-  );
+  table.setAttribute("data-sort-type", compareFn && typeof compareFn === "string" && Fn[compareFn] ? compareFn : "");
 
   //th不参与排序
   flag && trArray.splice(0, 1);
   trArray = utils.sort(trArray, function(tr1, tr2) {
     var result;
     if (compareFn && typeof compareFn === "function") {
-      result = compareFn.call(
-        this,
-        tr1.cells[sortByCellIndex],
-        tr2.cells[sortByCellIndex]
-      );
+      result = compareFn.call(this, tr1.cells[sortByCellIndex], tr2.cells[sortByCellIndex]);
     } else if (compareFn && typeof compareFn === "number") {
       result = 1;
     } else if (compareFn && typeof compareFn === "string" && Fn[compareFn]) {
-      result = Fn[compareFn].call(
-        this,
-        tr1.cells[sortByCellIndex],
-        tr2.cells[sortByCellIndex]
-      );
+      result = Fn[compareFn].call(this, tr1.cells[sortByCellIndex], tr2.cells[sortByCellIndex]);
     } else {
-      result = Fn["orderbyasc"].call(
-        this,
-        tr1.cells[sortByCellIndex],
-        tr2.cells[sortByCellIndex]
-      );
+      result = Fn["orderbyasc"].call(this, tr1.cells[sortByCellIndex], tr2.cells[sortByCellIndex]);
     }
     return result;
   });
@@ -24273,10 +22788,7 @@ UE.UETable.prototype.sortTable = function(sortByCellIndex, compareFn) {
   if (!lastRowIndex) {
     tbody.appendChild(fragment);
   } else {
-    tbody.insertBefore(
-      fragment,
-      rows[lastRowIndex - range.endRowIndex + range.beginRowIndex - 1]
-    );
+    tbody.insertBefore(fragment, rows[lastRowIndex - range.endRowIndex + range.beginRowIndex - 1]);
   }
 };
 
@@ -24346,30 +22858,16 @@ UE.plugins["tablesort"] = function() {
       if (table && cmd == "enablesort") {
         var cells = domUtils.getElementsByTagName(table, "th td");
         for (var i = 0; i < cells.length; i++) {
-          if (
-            cells[i].getAttribute("colspan") > 1 ||
-            cells[i].getAttribute("rowspan") > 1
-          )
-            return -1;
+          if (cells[i].getAttribute("colspan") > 1 || cells[i].getAttribute("rowspan") > 1) return -1;
         }
       }
 
-      return !table
-        ? -1
-        : (cmd == "enablesort") ^
-            (table.getAttribute("data-sort") != "sortEnabled")
-          ? -1
-          : 0;
+      return !table ? -1 : (cmd == "enablesort") ^ (table.getAttribute("data-sort") != "sortEnabled") ? -1 : 0;
     },
     execCommand: function(cmd) {
       var table = getTableItemsByRange(this).table;
-      table.setAttribute(
-        "data-sort",
-        cmd == "enablesort" ? "sortEnabled" : "sortDisabled"
-      );
-      cmd == "enablesort"
-        ? domUtils.addClass(table, "sortEnabled")
-        : domUtils.removeClasses(table, "sortEnabled");
+      table.setAttribute("data-sort", cmd == "enablesort" ? "sortEnabled" : "sortDisabled");
+      cmd == "enablesort" ? domUtils.addClass(table, "sortEnabled") : domUtils.removeClasses(table, "sortEnabled");
     }
   };
 };
@@ -24398,7 +22896,7 @@ UE.plugins["contextmenu"] = function() {
   var lang = me.getLang("contextMenu"),
     menu,
     items = me.options.contextMenu || [
-      { label: lang["selectall"], cmdName: "selectall" },
+      {label: lang["selectall"], cmdName: "selectall"},
       {
         label: lang.cleardoc,
         cmdName: "cleardoc",
@@ -24668,39 +23166,39 @@ UE.plugins["contextmenu"] = function() {
         subMenu: [
           {
             cmdName: "cellalignment",
-            value: { align: "left", vAlign: "top" }
+            value: {align: "left", vAlign: "top"}
           },
           {
             cmdName: "cellalignment",
-            value: { align: "center", vAlign: "top" }
+            value: {align: "center", vAlign: "top"}
           },
           {
             cmdName: "cellalignment",
-            value: { align: "right", vAlign: "top" }
+            value: {align: "right", vAlign: "top"}
           },
           {
             cmdName: "cellalignment",
-            value: { align: "left", vAlign: "middle" }
+            value: {align: "left", vAlign: "middle"}
           },
           {
             cmdName: "cellalignment",
-            value: { align: "center", vAlign: "middle" }
+            value: {align: "center", vAlign: "middle"}
           },
           {
             cmdName: "cellalignment",
-            value: { align: "right", vAlign: "middle" }
+            value: {align: "right", vAlign: "middle"}
           },
           {
             cmdName: "cellalignment",
-            value: { align: "left", vAlign: "bottom" }
+            value: {align: "left", vAlign: "bottom"}
           },
           {
             cmdName: "cellalignment",
-            value: { align: "center", vAlign: "bottom" }
+            value: {align: "center", vAlign: "bottom"}
           },
           {
             cmdName: "cellalignment",
-            value: { align: "right", vAlign: "bottom" }
+            value: {align: "right", vAlign: "bottom"}
           }
         ]
       },
@@ -24776,31 +23274,15 @@ UE.plugins["contextmenu"] = function() {
                 }
               } else {
                 if (
-                  (me.commands[subItem.cmdName] ||
-                    UE.commands[subItem.cmdName] ||
-                    subItem.query) &&
-                  (subItem.query
-                    ? subItem.query()
-                    : me.queryCommandState(subItem.cmdName)) > -1
+                  (me.commands[subItem.cmdName] || UE.commands[subItem.cmdName] || subItem.query) &&
+                  (subItem.query ? subItem.query() : me.queryCommandState(subItem.cmdName)) > -1
                 ) {
                   subMenu.push({
-                    label:
-                      subItem.label ||
-                        me.getLang(
-                          "contextMenu." +
-                            subItem.cmdName +
-                            (subItem.value || "")
-                        ) ||
-                        "",
+                    label: subItem.label || me.getLang("contextMenu." + subItem.cmdName + (subItem.value || "")) || "",
                     className:
                       "edui-for-" +
-                        subItem.cmdName +
-                        (subItem.className
-                          ? " edui-for-" +
-                              subItem.cmdName +
-                              "-" +
-                              subItem.className
-                          : ""),
+                      subItem.cmdName +
+                      (subItem.className ? " edui-for-" + subItem.cmdName + "-" + subItem.className : ""),
                     onclick: subItem.exec
                       ? function() {
                           subItem.exec.call(me);
@@ -24845,18 +23327,12 @@ UE.plugins["contextmenu"] = function() {
         } else {
           //有可能commmand没有加载右键不能出来，或者没有command也想能展示出来添加query方法
           if (
-            (me.commands[item.cmdName] ||
-              UE.commands[item.cmdName] ||
-              item.query) &&
-            (item.query
-              ? item.query.call(me)
-              : me.queryCommandState(item.cmdName)) > -1
+            (me.commands[item.cmdName] || UE.commands[item.cmdName] || item.query) &&
+            (item.query ? item.query.call(me) : me.queryCommandState(item.cmdName)) > -1
           ) {
             contextItems.push({
               label: item.label || me.getLang("contextMenu." + item.cmdName),
-              className:
-                "edui-for-" +
-                  (item.icon ? item.icon : item.cmdName + (item.value || "")),
+              className: "edui-for-" + (item.icon ? item.icon : item.cmdName + (item.value || "")),
               onclick: item.exec
                 ? function() {
                     item.exec.call(me);
@@ -24997,87 +23473,84 @@ UE.plugins["shortcutmenu"] = function() {
 
 UE.plugins["basestyle"] = function() {
   /**
-     * 字体加粗
-     * @command bold
-     * @param { String } cmd 命令字符串
-     * @remind 对已加粗的文本内容执行该命令， 将取消加粗
-     * @method execCommand
-     * @example
-     * ```javascript
-     * //editor是编辑器实例
-     * //对当前选中的文本内容执行加粗操作
-     * //第一次执行， 文本内容加粗
-     * editor.execCommand( 'bold' );
-     *
-     * //第二次执行， 文本内容取消加粗
-     * editor.execCommand( 'bold' );
-     * ```
-     */
+   * 字体加粗
+   * @command bold
+   * @param { String } cmd 命令字符串
+   * @remind 对已加粗的文本内容执行该命令， 将取消加粗
+   * @method execCommand
+   * @example
+   * ```javascript
+   * //editor是编辑器实例
+   * //对当前选中的文本内容执行加粗操作
+   * //第一次执行， 文本内容加粗
+   * editor.execCommand( 'bold' );
+   *
+   * //第二次执行， 文本内容取消加粗
+   * editor.execCommand( 'bold' );
+   * ```
+   */
 
   /**
-     * 字体倾斜
-     * @command italic
-     * @method execCommand
-     * @param { String } cmd 命令字符串
-     * @remind 对已倾斜的文本内容执行该命令， 将取消倾斜
-     * @example
-     * ```javascript
-     * //editor是编辑器实例
-     * //对当前选中的文本内容执行斜体操作
-     * //第一次操作， 文本内容将变成斜体
-     * editor.execCommand( 'italic' );
-     *
-     * //再次对同一文本内容执行， 则文本内容将恢复正常
-     * editor.execCommand( 'italic' );
-     * ```
-     */
+   * 字体倾斜
+   * @command italic
+   * @method execCommand
+   * @param { String } cmd 命令字符串
+   * @remind 对已倾斜的文本内容执行该命令， 将取消倾斜
+   * @example
+   * ```javascript
+   * //editor是编辑器实例
+   * //对当前选中的文本内容执行斜体操作
+   * //第一次操作， 文本内容将变成斜体
+   * editor.execCommand( 'italic' );
+   *
+   * //再次对同一文本内容执行， 则文本内容将恢复正常
+   * editor.execCommand( 'italic' );
+   * ```
+   */
 
   /**
-     * 下标文本，与“superscript”命令互斥
-     * @command subscript
-     * @method execCommand
-     * @remind  把选中的文本内容切换成下标文本， 如果当前选中的文本已经是下标， 则该操作会把文本内容还原成正常文本
-     * @param { String } cmd 命令字符串
-     * @example
-     * ```javascript
-     * //editor是编辑器实例
-     * //对当前选中的文本内容执行下标操作
-     * //第一次操作， 文本内容将变成下标文本
-     * editor.execCommand( 'subscript' );
-     *
-     * //再次对同一文本内容执行， 则文本内容将恢复正常
-     * editor.execCommand( 'subscript' );
-     * ```
-     */
+   * 下标文本，与“superscript”命令互斥
+   * @command subscript
+   * @method execCommand
+   * @remind  把选中的文本内容切换成下标文本， 如果当前选中的文本已经是下标， 则该操作会把文本内容还原成正常文本
+   * @param { String } cmd 命令字符串
+   * @example
+   * ```javascript
+   * //editor是编辑器实例
+   * //对当前选中的文本内容执行下标操作
+   * //第一次操作， 文本内容将变成下标文本
+   * editor.execCommand( 'subscript' );
+   *
+   * //再次对同一文本内容执行， 则文本内容将恢复正常
+   * editor.execCommand( 'subscript' );
+   * ```
+   */
 
   /**
-     * 上标文本，与“subscript”命令互斥
-     * @command superscript
-     * @method execCommand
-     * @remind 把选中的文本内容切换成上标文本， 如果当前选中的文本已经是上标， 则该操作会把文本内容还原成正常文本
-     * @param { String } cmd 命令字符串
-     * @example
-     * ```javascript
-     * //editor是编辑器实例
-     * //对当前选中的文本内容执行上标操作
-     * //第一次操作， 文本内容将变成上标文本
-     * editor.execCommand( 'superscript' );
-     *
-     * //再次对同一文本内容执行， 则文本内容将恢复正常
-     * editor.execCommand( 'superscript' );
-     * ```
-     */
+   * 上标文本，与“subscript”命令互斥
+   * @command superscript
+   * @method execCommand
+   * @remind 把选中的文本内容切换成上标文本， 如果当前选中的文本已经是上标， 则该操作会把文本内容还原成正常文本
+   * @param { String } cmd 命令字符串
+   * @example
+   * ```javascript
+   * //editor是编辑器实例
+   * //对当前选中的文本内容执行上标操作
+   * //第一次操作， 文本内容将变成上标文本
+   * editor.execCommand( 'superscript' );
+   *
+   * //再次对同一文本内容执行， 则文本内容将恢复正常
+   * editor.execCommand( 'superscript' );
+   * ```
+   */
   var basestyles = {
-    bold: ["strong", "b"],
-    italic: ["em", "i"],
-    subscript: ["sub"],
-    superscript: ["sup"]
-  },
+      bold: ["strong", "b"],
+      italic: ["em", "i"],
+      subscript: ["sub"],
+      superscript: ["sup"]
+    },
     getObj = function(editor, tagNames) {
-      return domUtils.filterNodeList(
-        editor.selection.getStartElementPath(),
-        tagNames
-      );
+      return domUtils.filterNodeList(editor.selection.getStartElementPath(), tagNames);
     },
     me = this;
   //添加快捷键
@@ -25128,9 +23601,7 @@ UE.plugins["basestyle"] = function() {
                 range.removeInlineStyle(["sub", "sup"]);
               }
             }
-            obj
-              ? range.removeInlineStyle(tagNames)
-              : range.applyInlineStyle(tagNames[0]);
+            obj ? range.removeInlineStyle(tagNames) : range.applyInlineStyle(tagNames[0]);
           }
           range.select();
         },
@@ -25329,14 +23800,12 @@ UE.plugins["formatmatch"] = function() {
 UE.plugin.register("searchreplace", function() {
   var me = this;
 
-  var _blockElm = { table: 1, tbody: 1, tr: 1, ol: 1, ul: 1 };
+  var _blockElm = {table: 1, tbody: 1, tr: 1, ol: 1, ul: 1};
 
   var lastRng = null;
 
   function getText(node) {
-    var text = node.nodeType == 3
-      ? node.nodeValue
-      : node[browser.ie ? "innerText" : "textContent"];
+    var text = node.nodeType == 3 ? node.nodeValue : node[browser.ie ? "innerText" : "textContent"];
     return text.replace(domUtils.fillChar, "");
   }
 
@@ -25348,8 +23817,14 @@ UE.plugin.register("searchreplace", function() {
 
     if (opt.dir == -1) {
       textContent = textContent.substr(0, currentIndex);
-      textContent = textContent.split("").reverse().join("");
-      str = str.split("").reverse().join("");
+      textContent = textContent
+        .split("")
+        .reverse()
+        .join("");
+      str = str
+        .split("")
+        .reverse()
+        .join("");
       match = reg.exec(textContent);
       if (match) {
         return currentIndex - match.index - str.length;
@@ -25398,10 +23873,7 @@ UE.plugin.register("searchreplace", function() {
       result;
     while (currentNode) {
       if (currentNode.nodeType == 3) {
-        currentNodeLength = getText(currentNode).replace(
-          /(^[\t\r\n]+)|([\t\r\n]+$)/,
-          ""
-        ).length;
+        currentNodeLength = getText(currentNode).replace(/(^[\t\r\n]+)|([\t\r\n]+$)/, "").length;
         currentIndex += currentNodeLength;
         if (currentIndex >= index) {
           return {
@@ -25410,17 +23882,10 @@ UE.plugin.register("searchreplace", function() {
           };
         }
       } else if (!dtd.$empty[currentNode.tagName]) {
-        currentNodeLength = getText(currentNode).replace(
-          /(^[\t\r\n]+)|([\t\r\n]+$)/,
-          ""
-        ).length;
+        currentNodeLength = getText(currentNode).replace(/(^[\t\r\n]+)|([\t\r\n]+$)/, "").length;
         currentIndex += currentNodeLength;
         if (currentIndex >= index) {
-          result = findNTextInBlockElm(
-            currentNode,
-            currentNodeLength - (currentIndex - index),
-            str
-          );
+          result = findNTextInBlockElm(currentNode, currentNodeLength - (currentIndex - index), str);
           if (result) {
             return result;
           }
@@ -25443,12 +23908,7 @@ UE.plugin.register("searchreplace", function() {
     if (!rng.collapsed) {
       rng.select();
       var rngText = me.selection.getText();
-      if (
-        new RegExp(
-          "^" + opt.searchStr + "$",
-          opt.casesensitive ? "" : "i"
-        ).test(rngText)
-      ) {
+      if (new RegExp("^" + opt.searchStr + "$", opt.casesensitive ? "" : "i").test(rngText)) {
         if (opt.replaceStr != undefined) {
           replaceText(rng, opt.replaceStr);
           rng.select();
@@ -25462,22 +23922,14 @@ UE.plugin.register("searchreplace", function() {
     rng.insertNode(span);
     rng.enlargeToBlockElm(true);
     startBlockNode = rng.startContainer;
-    var currentIndex = getText(startBlockNode).indexOf(
-      "$$ueditor_searchreplace_key$$"
-    );
+    var currentIndex = getText(startBlockNode).indexOf("$$ueditor_searchreplace_key$$");
     rng.setStartBefore(span);
     domUtils.remove(span);
     var result = findTextBlockElm(startBlockNode, currentIndex, opt);
     if (result) {
       var rngStart = findNTextInBlockElm(result.node, result.index, searchStr);
-      var rngEnd = findNTextInBlockElm(
-        result.node,
-        result.index + searchStr.length,
-        searchStr
-      );
-      rng
-        .setStart(rngStart.node, rngStart.index)
-        .setEnd(rngEnd.node, rngEnd.index);
+      var rngEnd = findNTextInBlockElm(result.node, result.index + searchStr.length, searchStr);
+      rng.setStart(rngStart.node, rngStart.index).setEnd(rngEnd.node, rngEnd.index);
 
       if (opt.replaceStr !== undefined) {
         replaceText(rng, opt.replaceStr);
@@ -25592,14 +24044,12 @@ UE.plugins["customstyle"] = function() {
       {
         tag: "span",
         name: "im",
-        style:
-          "font-size:16px;font-style:italic;font-weight:bold;line-height:18px;"
+        style: "font-size:16px;font-style:italic;font-weight:bold;line-height:18px;"
       },
       {
         tag: "span",
         name: "hi",
-        style:
-          "font-size:16px;font-style:italic;font-weight:bold;color:rgb(51, 153, 204);line-height:18px;"
+        style: "font-size:16px;font-style:italic;font-weight:bold;color:rgb(51, 153, 204);line-height:18px;"
       }
     ]
   });
@@ -25645,10 +24095,8 @@ UE.plugins["customstyle"] = function() {
               var ps = domUtils.getPosition(ni, bk.start),
                 pe = domUtils.getPosition(ni, bk.end);
               if (
-                (ps & domUtils.POSITION_FOLLOWING ||
-                  ps & domUtils.POSITION_CONTAINS) &&
-                (pe & domUtils.POSITION_PRECEDING ||
-                  pe & domUtils.POSITION_CONTAINS)
+                (ps & domUtils.POSITION_FOLLOWING || ps & domUtils.POSITION_CONTAINS) &&
+                (pe & domUtils.POSITION_PRECEDING || pe & domUtils.POSITION_CONTAINS)
               )
                 if (dtd.$block[tagName]) {
                   var fillNode = me.document.createElement("p");
@@ -25693,23 +24141,26 @@ UE.plugins["customstyle"] = function() {
           if (range.collapsed) {
             node = me.document.createElement(tagName);
             domUtils.setAttributes(node, tmpObj);
-            range.insertNode(node).setStart(node, 0).setCursor();
+            range
+              .insertNode(node)
+              .setStart(node, 0)
+              .setCursor();
 
             return;
           }
 
           bk = range.createBookmark();
-          range.applyInlineStyle(tagName, tmpObj).moveToBookmark(bk).select();
+          range
+            .applyInlineStyle(tagName, tmpObj)
+            .moveToBookmark(bk)
+            .select();
         }
       }
     },
     queryCommandValue: function() {
-      var parent = domUtils.filterNodeList(
-        this.selection.getStartElementPath(),
-        function(node) {
-          return node.getAttribute("label");
-        }
-      );
+      var parent = domUtils.filterNodeList(this.selection.getStartElementPath(), function(node) {
+        return node.getAttribute("label");
+      });
       return parent ? parent.getAttribute("label") : "";
     }
   };
@@ -25769,7 +24220,7 @@ UE.plugins["catchremoteimage"] = function() {
       catcherFieldName = me.getOpt("catcherFieldName");
 
     var remoteImages = [],
-      loadingIMG =  me.options.themePath + me.options.theme + '/images/spacer.gif',
+      loadingIMG = me.options.themePath + me.options.theme + "/images/spacer.gif",
       imgs = me.document.querySelectorAll('[style*="url"],img'),
       test = function(src, urls) {
         if (src.indexOf(location.host) != -1 || /(^\.)|(^\/)/.test(src)) {
@@ -25789,7 +24240,7 @@ UE.plugins["catchremoteimage"] = function() {
       if (ci.getAttribute("word_img")) {
         continue;
       }
-      if(ci.nodeName == "IMG"){
+      if (ci.nodeName == "IMG") {
         var src = ci.getAttribute("_src") || ci.src || "";
         if (/^(https?|ftp):/i.test(src) && !test(src, catcherLocalDomain)) {
           remoteImages.push(src);
@@ -25798,17 +24249,17 @@ UE.plugins["catchremoteimage"] = function() {
             class: "loadingclass",
             _src: src,
             src: loadingIMG
-          })
+          });
         }
       } else {
         // 获取背景图片url
-        var backgroundImageurl = ci.style.cssText.replace(/.*\s?url\([\'\"]?/, '').replace(/[\'\"]?\).*/, '');
+        var backgroundImageurl = ci.style.cssText.replace(/.*\s?url\([\'\"]?/, "").replace(/[\'\"]?\).*/, "");
         if (/^(https?|ftp):/i.test(backgroundImageurl) && !test(backgroundImageurl, catcherLocalDomain)) {
           remoteImages.push(backgroundImageurl);
           ci.style.cssText = ci.style.cssText.replace(backgroundImageurl, loadingIMG);
           domUtils.setAttributes(ci, {
             "data-background": backgroundImageurl
-          })
+          });
         }
       }
     }
@@ -25818,9 +24269,7 @@ UE.plugins["catchremoteimage"] = function() {
         //成功抓取
         success: function(r) {
           try {
-            var info = r.state !== undefined
-              ? r
-              : eval("(" + r.responseText + ")");
+            var info = r.state !== undefined ? r : eval("(" + r.responseText + ")");
           } catch (e) {
             return;
           }
@@ -25839,56 +24288,55 @@ UE.plugins["catchremoteimage"] = function() {
           /* 抓取成功统计 */
           var catchSuccessList = [];
           /* 抓取失败时显示的图片 */
-          var failIMG = me.options.themePath + me.options.theme + '/images/img-cracked.png';
+          var failIMG = me.options.themePath + me.options.theme + "/images/img-cracked.png";
 
-          for (i = 0; ci = imgs[i++];) {
+          for (i = 0; (ci = imgs[i++]); ) {
             oldSrc = ci.getAttribute("_src") || ci.src || "";
             oldBgIMG = ci.getAttribute("data-background") || "";
-            for (j = 0; cj = list[j++];) {
+            for (j = 0; (cj = list[j++]); ) {
               if (oldSrc == cj.source && cj.state == "SUCCESS") {
                 newSrc = catcherUrlPrefix + cj.url;
                 // 上传成功是删除uploading动画
-                domUtils.removeClasses( ci, "loadingclass" );
+                domUtils.removeClasses(ci, "loadingclass");
                 domUtils.setAttributes(ci, {
-                    "src": newSrc,
-                    "_src": newSrc,
-                    "data-catchResult":"img_catchSuccess"   // 添加catch成功标记
+                  src: newSrc,
+                  _src: newSrc,
+                  "data-catchResult": "img_catchSuccess" // 添加catch成功标记
                 });
                 catchSuccessList.push(ci);
                 break;
               } else if (oldSrc == cj.source && cj.state == "FAIL") {
                 // 替换成统一的失败图片
-                domUtils.removeClasses( ci, "loadingclass" );
+                domUtils.removeClasses(ci, "loadingclass");
                 domUtils.setAttributes(ci, {
-                    "src": failIMG,
-                    "_src": failIMG,
-                    "data-catchResult":"img_catchFail" // 添加catch失败标记
+                  src: failIMG,
+                  _src: failIMG,
+                  "data-catchResult": "img_catchFail" // 添加catch失败标记
                 });
                 catchFailList.push(ci);
                 break;
               } else if (oldBgIMG == cj.source && cj.state == "SUCCESS") {
                 newBgIMG = catcherUrlPrefix + cj.url;
                 ci.style.cssText = ci.style.cssText.replace(loadingIMG, newBgIMG);
-                domUtils.removeAttributes(ci,"data-background");
+                domUtils.removeAttributes(ci, "data-background");
                 domUtils.setAttributes(ci, {
-                    "data-catchResult":"img_catchSuccess"   // 添加catch成功标记
+                  "data-catchResult": "img_catchSuccess" // 添加catch成功标记
                 });
                 catchSuccessList.push(ci);
                 break;
-              } else if (oldBgIMG == cj.source && cj.state == "FAIL"){
+              } else if (oldBgIMG == cj.source && cj.state == "FAIL") {
                 ci.style.cssText = ci.style.cssText.replace(loadingIMG, failIMG);
-                domUtils.removeAttributes(ci,"data-background");
+                domUtils.removeAttributes(ci, "data-background");
                 domUtils.setAttributes(ci, {
-                    "data-catchResult":"img_catchFail"   // 添加catch失败标记
+                  "data-catchResult": "img_catchFail" // 添加catch失败标记
                 });
                 catchFailList.push(ci);
                 break;
               }
             }
-
           }
           // 监听事件添加成功抓取和抓取失败的dom列表参数
-          me.fireEvent('catchremotesuccess',catchSuccessList,catchFailList);
+          me.fireEvent("catchremotesuccess", catchSuccessList, catchFailList);
         },
         //回调失败，本次请求超时
         error: function() {
@@ -25898,13 +24346,8 @@ UE.plugins["catchremoteimage"] = function() {
     }
 
     function catchremoteimage(imgs, callbacks) {
-      var params =
-        utils.serializeParam(me.queryCommandValue("serverparam")) || "",
-        url = utils.formatUrl(
-          catcherActionUrl +
-            (catcherActionUrl.indexOf("?") == -1 ? "?" : "&") +
-            params
-        ),
+      var params = utils.serializeParam(me.queryCommandValue("serverparam")) || "",
+        url = utils.formatUrl(catcherActionUrl + (catcherActionUrl.indexOf("?") == -1 ? "?" : "&") + params),
         isJsonp = utils.isCrossDomainUrl(url),
         opt = {
           method: "POST",
@@ -25992,7 +24435,11 @@ UE.plugins["template"] = function() {
       },
       true
     );
-    tnode && range.selectNode(tnode).shrinkBoundary().select();
+    tnode &&
+      range
+        .selectNode(tnode)
+        .shrinkBoundary()
+        .select();
   });
   this.addListener("keydown", function(type, evt) {
     var range = this.selection.getRange();
@@ -26092,7 +24539,7 @@ UE.plugin.register("autoupload", function() {
         var rng = me.selection.getRange(),
           bk = rng.createBookmark();
         rng.selectNode(loader).select();
-        me.execCommand("insertfile", { url: link });
+        me.execCommand("insertfile", {url: link});
         rng.moveToBookmark(bk).select();
       };
     }
@@ -26113,8 +24560,7 @@ UE.plugin.register("autoupload", function() {
     var fileext = file.name ? file.name.substr(file.name.lastIndexOf(".")) : "";
     if (
       (fileext && filetype != "image") ||
-      (allowFiles &&
-        (allowFiles.join("") + ".").indexOf(fileext.toLowerCase() + ".") == -1)
+      (allowFiles && (allowFiles.join("") + ".").indexOf(fileext.toLowerCase() + ".") == -1)
     ) {
       errorHandler(me.getLang("autoupload.exceedTypeError"));
       return;
@@ -26124,15 +24570,9 @@ UE.plugin.register("autoupload", function() {
     var xhr = new XMLHttpRequest(),
       fd = new FormData(),
       params = utils.serializeParam(me.queryCommandValue("serverparam")) || "",
-      url = utils.formatUrl(
-        actionUrl + (actionUrl.indexOf("?") == -1 ? "?" : "&") + params
-      );
+      url = utils.formatUrl(actionUrl + (actionUrl.indexOf("?") == -1 ? "?" : "&") + params);
 
-    fd.append(
-      fieldName,
-      file,
-      file.name || "blob." + file.type.substr("image/".length)
-    );
+    fd.append(fieldName, file, file.name || "blob." + file.type.substr("image/".length));
     fd.append("type", "ajax");
     xhr.open("post", url, true);
     xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
@@ -26310,11 +24750,7 @@ UE.plugin.register("autosave", function() {
         }
 
         //页面地址+编辑器ID 保持唯一
-        saveKey =
-          (location.protocol + location.host + location.pathname).replace(
-            /[.:\/]/g,
-            "_"
-          ) + key;
+        saveKey = (location.protocol + location.host + location.pathname).replace(/[.:\/]/g, "_") + key;
       },
 
       contentchange: function() {
@@ -26361,8 +24797,7 @@ UE.plugin.register("autosave", function() {
       drafts: {
         execCommand: function(cmd, name) {
           if (saveKey) {
-            me.body.innerHTML =
-              me.getPreferences(saveKey) || "<p>" + domUtils.fillHtml + "</p>";
+            me.body.innerHTML = me.getPreferences(saveKey) || "<p>" + domUtils.fillHtml + "</p>";
             me.focus(true);
           }
         },
@@ -26388,11 +24823,7 @@ UE.plugin.register("charts", function() {
     commands: {
       charts: {
         execCommand: function(cmd, data) {
-          var tableNode = domUtils.findParentByTagName(
-            this.selection.getRange().startContainer,
-            "table",
-            true
-          ),
+          var tableNode = domUtils.findParentByTagName(this.selection.getRange().startContainer, "table", true),
             flagText = [],
             config = {};
 
@@ -26428,11 +24859,7 @@ UE.plugin.register("charts", function() {
           domUtils.addClass(tableNode, "edui-charts-table");
         },
         queryCommandState: function(cmd, name) {
-          var tableNode = domUtils.findParentByTagName(
-            this.selection.getRange().startContainer,
-            "table",
-            true
-          );
+          var tableNode = domUtils.findParentByTagName(this.selection.getRange().startContainer, "table", true);
           return tableNode && validData(tableNode) ? 0 : -1;
         }
       }
@@ -26491,9 +24918,7 @@ UE.plugin.register("charts", function() {
       for (var j = 1, cell; (cell = row.cells[j]); j++) {
         var value = utils.trim(cell.innerText || cell.textContent || "");
 
-        value = value
-          .replace(new RegExp(UE.dom.domUtils.fillChar, "g"), "")
-          .replace(/^\s+|\s+$/g, "");
+        value = value.replace(new RegExp(UE.dom.domUtils.fillChar, "g"), "").replace(/^\s+|\s+$/g, "");
 
         //必须是数字
         if (!/^\d*\.?\d+$/.test(value)) {
@@ -26601,7 +25026,7 @@ UE.plugin.register("section", function() {
           }
 
           var me = this,
-            Directory = getSection({ level: -1, title: "root" }),
+            Directory = getSection({level: -1, title: "root"}),
             previous = Directory;
 
           function traversal(node, Directory) {
@@ -26615,9 +25040,9 @@ UE.plugin.register("section", function() {
               level = getSectionLevel(child);
               if (level >= 0) {
                 var address = me.selection
-                  .getRange()
-                  .selectNode(child)
-                  .createAddress(true).startAddress,
+                    .getRange()
+                    .selectNode(child)
+                    .createAddress(true).startAddress,
                   current = getSection({
                     tag: child.tagName,
                     title: child.innerText || child.textContent || "",
@@ -26638,8 +25063,7 @@ UE.plugin.register("section", function() {
                 tmpSection = previous = current;
               } else {
                 child.nodeType === 1 && traversal(child, Directory);
-                tmpSection &&
-                  tmpSection.endAddress[tmpSection.endAddress.length - 1]++;
+                tmpSection && tmpSection.endAddress[tmpSection.endAddress.length - 1]++;
               }
             }
           }
@@ -26654,43 +25078,27 @@ UE.plugin.register("section", function() {
             targetAddress,
             target;
 
-          if (!sourceSection || !targetSection || targetSection.level == -1)
-            return;
+          if (!sourceSection || !targetSection || targetSection.level == -1) return;
 
-          targetAddress = isAfter
-            ? targetSection.endAddress
-            : targetSection.startAddress;
+          targetAddress = isAfter ? targetSection.endAddress : targetSection.startAddress;
           target = getNodeFromAddress(targetAddress, me.body);
 
           /* 判断目标地址是否被源章节包含 */
           if (
             !targetAddress ||
             !target ||
-            isContainsAddress(
-              sourceSection.startAddress,
-              sourceSection.endAddress,
-              targetAddress
-            )
+            isContainsAddress(sourceSection.startAddress, sourceSection.endAddress, targetAddress)
           )
             return;
 
-          var startNode = getNodeFromAddress(
-            sourceSection.startAddress,
-            me.body
-          ),
+          var startNode = getNodeFromAddress(sourceSection.startAddress, me.body),
             endNode = getNodeFromAddress(sourceSection.endAddress, me.body),
             current,
             nextNode;
 
           if (isAfter) {
             current = endNode;
-            while (
-              current &&
-              !(
-                domUtils.getPosition(startNode, current) &
-                domUtils.POSITION_FOLLOWING
-              )
-            ) {
+            while (current && !(domUtils.getPosition(startNode, current) & domUtils.POSITION_FOLLOWING)) {
               nextNode = current.previousSibling;
               domUtils.insertAfter(target, current);
               if (current == startNode) break;
@@ -26698,13 +25106,7 @@ UE.plugin.register("section", function() {
             }
           } else {
             current = startNode;
-            while (
-              current &&
-              !(
-                domUtils.getPosition(current, endNode) &
-                domUtils.POSITION_FOLLOWING
-              )
-            ) {
+            while (current && !(domUtils.getPosition(current, endNode) & domUtils.POSITION_FOLLOWING)) {
               nextNode = current.nextSibling;
               target.parentNode.insertBefore(current, target);
               if (current == endNode) break;
@@ -26764,10 +25166,7 @@ UE.plugin.register("section", function() {
             while (
               current &&
               domUtils.inDoc(endNode, me.document) &&
-              !(
-                domUtils.getPosition(current, endNode) &
-                domUtils.POSITION_FOLLOWING
-              )
+              !(domUtils.getPosition(current, endNode) & domUtils.POSITION_FOLLOWING)
             ) {
               nextNode = current.nextSibling;
               domUtils.remove(current);
@@ -26790,7 +25189,10 @@ UE.plugin.register("section", function() {
               endAddress: utils.clone(section.endAddress, [])
             };
           address.endAddress[address.endAddress.length - 1]++;
-          range.moveToAddress(address).select().scrollToView();
+          range
+            .moveToAddress(address)
+            .select()
+            .scrollToView();
           return true;
         },
         notNeedUndo: true
@@ -26844,8 +25246,7 @@ UE.plugin.register("simpleupload", function() {
         btnIframeDoc,
         btnIframeBody;
 
-      btnIframeDoc =
-        btnIframe.contentDocument || btnIframe.contentWindow.document;
+      btnIframeDoc = btnIframe.contentDocument || btnIframe.contentWindow.document;
       btnIframeBody = btnIframeDoc.body;
       wrapper = btnIframeDoc.createElement("div");
 
@@ -26894,8 +25295,7 @@ UE.plugin.register("simpleupload", function() {
       domUtils.on(input, "change", function() {
         if (!input.value) return;
         var loadingId = "loading_" + (+new Date()).toString(36);
-        var params =
-          utils.serializeParam(me.queryCommandValue("serverparam")) || "";
+        var params = utils.serializeParam(me.queryCommandValue("serverparam")) || "";
 
         var imageActionUrl = me.getActionUrl(me.getOpt("imageActionName"));
         var allowFiles = me.getOpt("imageAllowFiles");
@@ -26916,8 +25316,7 @@ UE.plugin.register("simpleupload", function() {
             var link,
               json,
               loader,
-              body = (iframe.contentDocument || iframe.contentWindow.document)
-                .body,
+              body = (iframe.contentDocument || iframe.contentWindow.document).body,
               result = body.innerText || body.textContent || "";
             json = new Function("return " + result)();
             link = me.options.imageUrlPrefix + json.url;
@@ -26933,8 +25332,7 @@ UE.plugin.register("simpleupload", function() {
               showErrorLoader && showErrorLoader(json.state);
             }
           } catch (er) {
-            showErrorLoader &&
-              showErrorLoader(me.getLang("simpleupload.loadError"));
+            showErrorLoader && showErrorLoader(me.getLang("simpleupload.loadError"));
           }
           form.reset();
           domUtils.un(iframe, "load", callback);
@@ -26960,22 +25358,13 @@ UE.plugin.register("simpleupload", function() {
         // 判断文件格式是否错误
         var filename = input.value,
           fileext = filename ? filename.substr(filename.lastIndexOf(".")) : "";
-        if (
-          !fileext ||
-          (allowFiles &&
-            (allowFiles.join("") + ".").indexOf(fileext.toLowerCase() + ".") ==
-              -1)
-        ) {
+        if (!fileext || (allowFiles && (allowFiles.join("") + ".").indexOf(fileext.toLowerCase() + ".") == -1)) {
           showErrorLoader(me.getLang("simpleupload.exceedTypeError"));
           return;
         }
 
         domUtils.on(iframe, "load", callback);
-        form.action = utils.formatUrl(
-          imageActionUrl +
-            (imageActionUrl.indexOf("?") == -1 ? "?" : "&") +
-            params
-        );
+        form.action = utils.formatUrl(imageActionUrl + (imageActionUrl.indexOf("?") == -1 ? "?" : "&") + params);
         form.submit();
       });
 
@@ -27053,77 +25442,77 @@ UE.plugin.register("serverparam", function() {
   return {
     commands: {
       /**
-             * 修改服务器提交的额外参数列表,清除所有项
-             * @command serverparam
-             * @method execCommand
-             * @param { String } cmd 命令字符串
-             * @example
-             * ```javascript
-             * editor.execCommand('serverparam');
-             * editor.queryCommandValue('serverparam'); //返回空
-             * ```
-             */
+       * 修改服务器提交的额外参数列表,清除所有项
+       * @command serverparam
+       * @method execCommand
+       * @param { String } cmd 命令字符串
+       * @example
+       * ```javascript
+       * editor.execCommand('serverparam');
+       * editor.queryCommandValue('serverparam'); //返回空
+       * ```
+       */
       /**
-             * 修改服务器提交的额外参数列表,删除指定项
-             * @command serverparam
-             * @method execCommand
-             * @param { String } cmd 命令字符串
-             * @param { String } key 要清除的属性
-             * @example
-             * ```javascript
-             * editor.execCommand('serverparam', 'name'); //删除属性name
-             * ```
-             */
+       * 修改服务器提交的额外参数列表,删除指定项
+       * @command serverparam
+       * @method execCommand
+       * @param { String } cmd 命令字符串
+       * @param { String } key 要清除的属性
+       * @example
+       * ```javascript
+       * editor.execCommand('serverparam', 'name'); //删除属性name
+       * ```
+       */
       /**
-             * 修改服务器提交的额外参数列表,使用键值添加项
-             * @command serverparam
-             * @method execCommand
-             * @param { String } cmd 命令字符串
-             * @param { String } key 要添加的属性
-             * @param { String } value 要添加属性的值
-             * @example
-             * ```javascript
-             * editor.execCommand('serverparam', 'name', 'hello');
-             * editor.queryCommandValue('serverparam'); //返回对象 {'name': 'hello'}
-             * ```
-             */
+       * 修改服务器提交的额外参数列表,使用键值添加项
+       * @command serverparam
+       * @method execCommand
+       * @param { String } cmd 命令字符串
+       * @param { String } key 要添加的属性
+       * @param { String } value 要添加属性的值
+       * @example
+       * ```javascript
+       * editor.execCommand('serverparam', 'name', 'hello');
+       * editor.queryCommandValue('serverparam'); //返回对象 {'name': 'hello'}
+       * ```
+       */
       /**
-             * 修改服务器提交的额外参数列表,传入键值对对象添加多项
-             * @command serverparam
-             * @method execCommand
-             * @param { String } cmd 命令字符串
-             * @param { Object } key 传入的键值对对象
-             * @example
-             * ```javascript
-             * editor.execCommand('serverparam', {'name': 'hello'});
-             * editor.queryCommandValue('serverparam'); //返回对象 {'name': 'hello'}
-             * ```
-             */
+       * 修改服务器提交的额外参数列表,传入键值对对象添加多项
+       * @command serverparam
+       * @method execCommand
+       * @param { String } cmd 命令字符串
+       * @param { Object } key 传入的键值对对象
+       * @example
+       * ```javascript
+       * editor.execCommand('serverparam', {'name': 'hello'});
+       * editor.queryCommandValue('serverparam'); //返回对象 {'name': 'hello'}
+       * ```
+       */
       /**
-             * 修改服务器提交的额外参数列表,使用自定义函数添加多项
-             * @command serverparam
-             * @method execCommand
-             * @param { String } cmd 命令字符串
-             * @param { Function } key 自定义获取参数的函数
-             * @example
-             * ```javascript
-             * editor.execCommand('serverparam', function(editor){
-             *     return {'key': 'value'};
-             * });
-             * editor.queryCommandValue('serverparam'); //返回对象 {'key': 'value'}
-             * ```
-             */
+       * 修改服务器提交的额外参数列表,使用自定义函数添加多项
+       * @command serverparam
+       * @method execCommand
+       * @param { String } cmd 命令字符串
+       * @param { Function } key 自定义获取参数的函数
+       * @example
+       * ```javascript
+       * editor.execCommand('serverparam', function(editor){
+       *     return {'key': 'value'};
+       * });
+       * editor.queryCommandValue('serverparam'); //返回对象 {'key': 'value'}
+       * ```
+       */
 
       /**
-             * 获取服务器提交的额外参数列表
-             * @command serverparam
-             * @method queryCommandValue
-             * @param { String } cmd 命令字符串
-             * @example
-             * ```javascript
-             * editor.queryCommandValue( 'serverparam' ); //返回对象 {'key': 'value'}
-             * ```
-             */
+       * 获取服务器提交的额外参数列表
+       * @command serverparam
+       * @method queryCommandValue
+       * @param { String } cmd 命令字符串
+       * @example
+       * ```javascript
+       * editor.queryCommandValue( 'serverparam' ); //返回对象 {'key': 'value'}
+       * ```
+       */
       serverparam: {
         execCommand: function(cmd, key, value) {
           if (key === undefined || key === null) {
@@ -27211,15 +25600,11 @@ UE.plugin.register("insertfile", function() {
             title,
             html = "",
             URL = me.getOpt("UEDITOR_HOME_URL"),
-            iconDir =
-              URL +
-              (URL.substr(URL.length - 1) == "/" ? "" : "/") +
-              "dialogs/attachment/fileTypeImages/";
+            iconDir = URL + (URL.substr(URL.length - 1) == "/" ? "" : "/") + "dialogs/attachment/fileTypeImages/";
           for (i = 0; i < filelist.length; i++) {
             item = filelist[i];
             icon = iconDir + getFileIcon(item.url);
-            title =
-              item.title || item.url.substr(item.url.lastIndexOf("/") + 1);
+            title = item.title || item.url.substr(item.url.lastIndexOf("/") + 1);
             html +=
               '<p style="line-height: 16px;">' +
               '<img style="vertical-align: middle; margin-right: 2px;" src="' +
@@ -27299,9 +25684,7 @@ UE.ui = baidu.editor.ui = {};
       return el;
     },
     getViewportElement: function() {
-      return browser.ie && browser.quirks
-        ? document.body
-        : document.documentElement;
+      return browser.ie && browser.quirks ? document.body : document.documentElement;
     },
     getClientRect: function(element) {
       var bcr;
@@ -27309,7 +25692,7 @@ UE.ui = baidu.editor.ui = {};
       try {
         bcr = element.getBoundingClientRect();
       } catch (e) {
-        bcr = { left: 0, top: 0, height: 0, width: 0 };
+        bcr = {left: 0, top: 0, height: 0, width: 0};
       }
       var rect = {
         left: Math.round(bcr.left),
@@ -27318,10 +25701,7 @@ UE.ui = baidu.editor.ui = {};
         width: Math.round(bcr.right - bcr.left)
       };
       var doc;
-      while (
-        (doc = element.ownerDocument) !== document &&
-        (element = domUtils.getWindow(doc).frameElement)
-      ) {
+      while ((doc = element.ownerDocument) !== document && (element = domUtils.getWindow(doc).frameElement)) {
         bcr = element.getBoundingClientRect();
         rect.left += bcr.left;
         rect.top += bcr.top;
@@ -27388,11 +25768,7 @@ UE.ui = baidu.editor.ui = {};
       var k = attributes.length;
       while (k--) {
         var attrNode = attributes[k];
-        if (
-          attrNode.nodeName != "style" &&
-          attrNode.nodeName != "class" &&
-          (!browser.ie || attrNode.specified)
-        ) {
+        if (attrNode.nodeName != "style" && attrNode.nodeName != "class" && (!browser.ie || attrNode.specified)) {
           tgt.setAttribute(attrNode.nodeName, attrNode.nodeValue);
         }
       }
@@ -27412,13 +25788,7 @@ UE.ui = baidu.editor.ui = {};
     },
     contains: function(elA, elB) {
       return (
-        elA &&
-        elB &&
-        (elA === elB
-          ? false
-          : elA.contains
-            ? elA.contains(elB)
-            : elA.compareDocumentPosition(elB) & 16)
+        elA && elB && (elA === elB ? false : elA.contains ? elA.contains(elB) : elA.compareDocumentPosition(elB) & 16)
       );
     },
     startDrag: function(evt, callbacks, doc) {
@@ -27519,11 +25889,7 @@ UE.ui = baidu.editor.ui = {};
   }
   function bindFixedLayer(adjOffset) {
     domUtils.on(window, "scroll", updateFixedOffset);
-    domUtils.on(
-      window,
-      "resize",
-      baidu.editor.utils.defer(updateFixedOffset, 0, true)
-    );
+    domUtils.on(window, "resize", baidu.editor.utils.defer(updateFixedOffset, 0, true));
   }
 })();
 
@@ -27709,12 +26075,7 @@ UE.ui = baidu.editor.ui = {};
       var pop = allPopups[i];
       if (!pop.isHidden()) {
         if (pop.queryAutoHide(el) !== false) {
-          if (
-            evt &&
-            /scroll/gi.test(evt.type) &&
-            pop.className == "edui-wordpastepop"
-          )
-            return;
+          if (evt && /scroll/gi.test(evt.type) && pop.className == "edui-wordpastepop") return;
           pop.hide();
         }
       }
@@ -27775,9 +26136,7 @@ UE.ui = baidu.editor.ui = {};
       if (this.captureWheel && !this.captured) {
         this.captured = true;
 
-        var winHeight =
-          (document.documentElement.clientHeight ||
-            document.body.clientHeight) - 80,
+        var winHeight = (document.documentElement.clientHeight || document.body.clientHeight) - 80,
           _height = this.getDom().offsetHeight,
           _top = uiUtils.getClientRect(this.combox.getDom()).top,
           content = this.getDom("content"),
@@ -27795,29 +26154,25 @@ UE.ui = baidu.editor.ui = {};
 
         //阻止在combox上的鼠标滚轮事件, 防止用户的正常操作被误解
         if (window.XMLHttpRequest) {
-          domUtils.on(
-            content,
-            "onmousewheel" in document.body ? "mousewheel" : "DOMMouseScroll",
-            function(e) {
-              if (e.preventDefault) {
-                e.preventDefault();
-              } else {
-                e.returnValue = false;
-              }
-
-              if (e.wheelDelta) {
-                content.scrollTop -= e.wheelDelta / 120 * 60;
-              } else {
-                content.scrollTop -= e.detail / -3 * 60;
-              }
+          domUtils.on(content, "onmousewheel" in document.body ? "mousewheel" : "DOMMouseScroll", function(e) {
+            if (e.preventDefault) {
+              e.preventDefault();
+            } else {
+              e.returnValue = false;
             }
-          );
+
+            if (e.wheelDelta) {
+              content.scrollTop -= (e.wheelDelta / 120) * 60;
+            } else {
+              content.scrollTop -= (e.detail / -3) * 60;
+            }
+          });
         } else {
           //ie6
           domUtils.on(this.getDom(), "mousewheel", function(e) {
             e.returnValue = false;
 
-            me.getDom("content").scrollTop -= e.wheelDelta / 120 * 60;
+            me.getDom("content").scrollTop -= (e.wheelDelta / 120) * 60;
           });
         }
       }
@@ -27867,25 +26222,13 @@ UE.ui = baidu.editor.ui = {};
 
       var sideLeft, sideUp, left, top;
       if (hoz) {
-        sideLeft =
-          this.canSideLeft &&
-          (rect.right + popSize.width > vpRect.right &&
-            rect.left > popSize.width);
-        sideUp =
-          this.canSideUp &&
-          (rect.top + popSize.height > vpRect.bottom &&
-            rect.bottom > popSize.height);
+        sideLeft = this.canSideLeft && (rect.right + popSize.width > vpRect.right && rect.left > popSize.width);
+        sideUp = this.canSideUp && (rect.top + popSize.height > vpRect.bottom && rect.bottom > popSize.height);
         left = sideLeft ? rect.left - popSize.width : rect.right;
         top = sideUp ? rect.bottom - popSize.height : rect.top;
       } else {
-        sideLeft =
-          this.canSideLeft &&
-          (rect.right + popSize.width > vpRect.right &&
-            rect.left > popSize.width);
-        sideUp =
-          this.canSideUp &&
-          (rect.top + popSize.height > vpRect.bottom &&
-            rect.bottom > popSize.height);
+        sideLeft = this.canSideLeft && (rect.right + popSize.width > vpRect.right && rect.left > popSize.width);
+        sideUp = this.canSideUp && (rect.top + popSize.height > vpRect.bottom && rect.bottom > popSize.height);
         left = sideLeft ? rect.right - popSize.width : rect.left;
         top = sideUp ? rect.top - popSize.height : rect.bottom;
       }
@@ -27896,12 +26239,10 @@ UE.ui = baidu.editor.ui = {};
         top: top
       });
       domUtils.removeClasses(popEl, ANCHOR_CLASSES);
-      popEl.className +=
-        " " + ANCHOR_CLASSES[(sideUp ? 1 : 0) * 2 + (sideLeft ? 1 : 0)];
+      popEl.className += " " + ANCHOR_CLASSES[(sideUp ? 1 : 0) * 2 + (sideLeft ? 1 : 0)];
       if (this.editor) {
         popEl.style.zIndex = this.editor.container.style.zIndex * 1 + 10;
-        baidu.editor.ui.uiUtils.getFixedLayer().style.zIndex =
-          popEl.style.zIndex - 1;
+        baidu.editor.ui.uiUtils.getFixedLayer().style.zIndex = popEl.style.zIndex - 1;
       }
       this.getDom().style.visibility = "visible";
     },
@@ -28000,15 +26341,15 @@ UE.ui = baidu.editor.ui = {};
   };
   utils.inherits(ColorPicker, UIBase);
 
-  var COLORS = ("ffffff,000000,eeece1,1f497d,4f81bd,c0504d,9bbb59,8064a2,4bacc6,f79646," +
+  var COLORS = (
+    "ffffff,000000,eeece1,1f497d,4f81bd,c0504d,9bbb59,8064a2,4bacc6,f79646," +
     "f2f2f2,7f7f7f,ddd9c3,c6d9f0,dbe5f1,f2dcdb,ebf1dd,e5e0ec,dbeef3,fdeada," +
     "d8d8d8,595959,c4bd97,8db3e2,b8cce4,e5b9b7,d7e3bc,ccc1d9,b7dde8,fbd5b5," +
     "bfbfbf,3f3f3f,938953,548dd4,95b3d7,d99694,c3d69b,b2a2c7,92cddc,fac08f," +
     "a5a5a5,262626,494429,17365d,366092,953734,76923c,5f497a,31859b,e36c09," +
     "7f7f7f,0c0c0c,1d1b10,0f243e,244061,632423,4f6128,3f3151,205867,974806," +
-    "c00000,ff0000,ffc000,ffff00,92d050,00b050,00b0f0,0070c0,002060,7030a0,").split(
-    ","
-  );
+    "c00000,ff0000,ffc000,ffff00,92d050,00b050,00b0f0,0070c0,002060,7030a0,"
+  ).split(",");
 
   function genColorPicker(noColorText, editor) {
     var html =
@@ -28030,15 +26371,16 @@ UE.ui = baidu.editor.ui = {};
           "</tr>" +
           (i == 60
             ? '<tr style="border-bottom: 1px solid #ddd;font-size: 13px;line-height: 25px;color:#39C;"><td colspan="10">' +
-                editor.getLang("standardColor") +
-                "</td></tr>"
+              editor.getLang("standardColor") +
+              "</td></tr>"
             : "") +
           "<tr" +
           (i == 60 ? ' class="edui-colorpicker-tablefirstrow"' : "") +
           ">";
       }
-      html += i < 70
-        ? '<td style="padding: 0 2px;"><a hidefocus title="' +
+      html +=
+        i < 70
+          ? '<td style="padding: 0 2px;"><a hidefocus title="' +
             COLORS[i] +
             '" onclick="return false;" href="javascript:" unselectable="on" class="edui-box edui-colorpicker-colorcell"' +
             ' data-color="#' +
@@ -28050,11 +26392,11 @@ UE.ui = baidu.editor.ui = {};
             (i < 10 || i >= 60
               ? "border-width:1px;"
               : i >= 10 && i < 20
-                ? "border-width:1px 1px 0 1px;"
-                : "border-width:0 1px 0 1px;") +
+              ? "border-width:1px 1px 0 1px;"
+              : "border-width:0 1px 0 1px;") +
             '"' +
             "></a></td>"
-        : "";
+          : "";
     }
     html += "</tr></table></div>";
     return html;
@@ -28108,11 +26450,7 @@ UE.ui = baidu.editor.ui = {};
     _UIBase_render: UIBase.prototype.render,
     render: function(holder) {
       this._UIBase_render(holder);
-      this.getDom("label").innerHTML =
-        "0" +
-        this.editor.getLang("t_row") +
-        " x 0" +
-        this.editor.getLang("t_col");
+      this.getDom("label").innerHTML = "0" + this.editor.getLang("t_row") + " x 0" + this.editor.getLang("t_col");
     },
     _track: function(numCols, numRows) {
       var style = this.getDom("overlay").style;
@@ -28120,34 +26458,21 @@ UE.ui = baidu.editor.ui = {};
       style.width = numCols * sideLen + "px";
       style.height = numRows * sideLen + "px";
       var label = this.getDom("label");
-      label.innerHTML =
-        numCols +
-        this.editor.getLang("t_col") +
-        " x " +
-        numRows +
-        this.editor.getLang("t_row");
+      label.innerHTML = numCols + this.editor.getLang("t_col") + " x " + numRows + this.editor.getLang("t_row");
       this.numCols = numCols;
       this.numRows = numRows;
     },
     _onMouseOver: function(evt, el) {
       var rel = evt.relatedTarget || evt.fromElement;
       if (!uiUtils.contains(el, rel) && el !== rel) {
-        this.getDom("label").innerHTML =
-          "0" +
-          this.editor.getLang("t_col") +
-          " x 0" +
-          this.editor.getLang("t_row");
+        this.getDom("label").innerHTML = "0" + this.editor.getLang("t_col") + " x 0" + this.editor.getLang("t_row");
         this.getDom("overlay").style.visibility = "";
       }
     },
     _onMouseOut: function(evt, el) {
       var rel = evt.relatedTarget || evt.toElement;
       if (!uiUtils.contains(el, rel) && el !== rel) {
-        this.getDom("label").innerHTML =
-          "0" +
-          this.editor.getLang("t_col") +
-          " x 0" +
-          this.editor.getLang("t_row");
+        this.getDom("label").innerHTML = "0" + this.editor.getLang("t_col") + " x 0" + this.editor.getLang("t_row");
         this.getDom("overlay").style.visibility = "hidden";
       }
     },
@@ -28178,9 +26503,8 @@ UE.ui = baidu.editor.ui = {};
     ' onmouseup="$$.Stateful_onMouseUp(event, this);"' +
     (browser.ie
       ? ' onmouseenter="$$.Stateful_onMouseEnter(event, this);"' +
-          ' onmouseleave="$$.Stateful_onMouseLeave(event, this);"'
-      : ' onmouseover="$$.Stateful_onMouseOver(event, this);"' +
-          ' onmouseout="$$.Stateful_onMouseOut(event, this);"');
+        ' onmouseleave="$$.Stateful_onMouseLeave(event, this);"'
+      : ' onmouseover="$$.Stateful_onMouseOver(event, this);"' + ' onmouseout="$$.Stateful_onMouseOut(event, this);"');
 
   baidu.editor.ui.Stateful = {
     alwalysHoverable: false,
@@ -28329,9 +26653,7 @@ UE.ui = baidu.editor.ui = {};
         (this.title ? 'title="' + this.title + '"' : "") +
         ' class="%%-body" onmousedown="return $$._onMouseDown(event, this);" onclick="return $$._onClick(event, this);">' +
         (this.showIcon ? '<div class="edui-box edui-icon"></div>' : "") +
-        (this.showText
-          ? '<div class="edui-box edui-label">' + this.label + "</div>"
-          : "") +
+        (this.showText ? '<div class="edui-box edui-label">' + this.label + "</div>" : "") +
         "</div>" +
         "</div>" +
         "</div></div>"
@@ -28503,9 +26825,7 @@ UE.ui = baidu.editor.ui = {};
     postRender: function() {
       this._SplitButton_postRender();
       this.getDom("button_body").appendChild(
-        uiUtils.createElementByHtml(
-          '<div id="' + this.id + '_colorlump" class="edui-colorlump"></div>'
-        )
+        uiUtils.createElementByHtml('<div id="' + this.id + '_colorlump" class="edui-colorlump"></div>')
       );
       this.getDom().className += " edui-colorbutton";
     },
@@ -28575,9 +26895,7 @@ UE.ui = baidu.editor.ui = {};
   var utils = baidu.editor.utils,
     UIBase = baidu.editor.ui.UIBase;
 
-  var AutoTypeSetPicker = (baidu.editor.ui.AutoTypeSetPicker = function(
-    options
-  ) {
+  var AutoTypeSetPicker = (baidu.editor.ui.AutoTypeSetPicker = function(options) {
     this.initOptions(options);
     this.initAutoTypeSetPicker();
   });
@@ -28657,33 +26975,25 @@ UE.ui = baidu.editor.ui = {};
         '<input type="radio" name="' +
         imageBlockInputName +
         '" value="none" ' +
-        (opt["imageBlockLine"] && opt["imageBlockLine"] == "none"
-          ? "checked"
-          : "") +
+        (opt["imageBlockLine"] && opt["imageBlockLine"] == "none" ? "checked" : "") +
         ">" +
         me.getLang("default") +
         '<input type="radio" name="' +
         imageBlockInputName +
         '" value="left" ' +
-        (opt["imageBlockLine"] && opt["imageBlockLine"] == "left"
-          ? "checked"
-          : "") +
+        (opt["imageBlockLine"] && opt["imageBlockLine"] == "left" ? "checked" : "") +
         ">" +
         me.getLang("justifyleft") +
         '<input type="radio" name="' +
         imageBlockInputName +
         '" value="center" ' +
-        (opt["imageBlockLine"] && opt["imageBlockLine"] == "center"
-          ? "checked"
-          : "") +
+        (opt["imageBlockLine"] && opt["imageBlockLine"] == "center" ? "checked" : "") +
         ">" +
         me.getLang("justifycenter") +
         '<input type="radio" name="' +
         imageBlockInputName +
         '" value="right" ' +
-        (opt["imageBlockLine"] && opt["imageBlockLine"] == "right"
-          ? "checked"
-          : "") +
+        (opt["imageBlockLine"] && opt["imageBlockLine"] == "right" ? "checked" : "") +
         ">" +
         me.getLang("justifyright") +
         "</td>" +
@@ -28769,19 +27079,13 @@ UE.ui = baidu.editor.ui = {};
         attrName = ipt.getAttribute("name");
         opt[attrName] && delete opt[attrName];
         if (ipt.checked) {
-          var attrValue = document.getElementById(
-            attrName + "Value" + editorId
-          );
+          var attrValue = document.getElementById(attrName + "Value" + editorId);
           if (attrValue) {
             if (/input/gi.test(attrValue.tagName)) {
               opt[attrName] = attrValue.value;
             } else {
               var iptChilds = attrValue.getElementsByTagName("input");
-              for (
-                var j = iptChilds.length - 1, iptchild;
-                (iptchild = iptChilds[j--]);
-
-              ) {
+              for (var j = iptChilds.length - 1, iptchild; (iptchild = iptChilds[j--]); ) {
                 if (iptchild.checked) {
                   opt[attrName] = iptchild.value;
                   break;
@@ -28815,7 +27119,7 @@ UE.ui = baidu.editor.ui = {};
       var me = this;
       this.popup = new Popup({
         //传入配置参数
-        content: new AutoTypeSetPicker({ editor: me.editor }),
+        content: new AutoTypeSetPicker({editor: me.editor}),
         editor: me.editor,
         hide: function() {
           if (!this._hidden && this.getDom()) {
@@ -28844,15 +27148,9 @@ UE.ui = baidu.editor.ui = {};
             editorId = me.editor.uid;
           if (target && target.tagName == "INPUT") {
             // 点击图片浮动的checkbox,去除对应的radio
-            if (
-              target.name == "imageBlockLine" ||
-              target.name == "textAlign" ||
-              target.name == "symbolConver"
-            ) {
+            if (target.name == "imageBlockLine" || target.name == "textAlign" || target.name == "symbolConver") {
               var checked = target.checked,
-                radioTd = document.getElementById(
-                  target.name + "Value" + editorId
-                ),
+                radioTd = document.getElementById(target.name + "Value" + editorId),
                 radios = radioTd.getElementsByTagName("input"),
                 defalutSelect = {
                   imageBlockLine: "none",
@@ -28876,9 +27174,7 @@ UE.ui = baidu.editor.ui = {};
               target.name == "textAlignValue" + editorId ||
               target.name == "bdc"
             ) {
-              var checkboxs = target.parentNode.previousSibling.getElementsByTagName(
-                "input"
-              );
+              var checkboxs = target.parentNode.previousSibling.getElementsByTagName("input");
               checkboxs && (checkboxs[0].checked = true);
             }
 
@@ -28905,10 +27201,10 @@ UE.ui = baidu.editor.ui = {};
     UIBase = baidu.editor.ui.UIBase;
 
   /**
-     * 该参数将新增一个参数： selected， 参数类型为一个Object， 形如{ 'align': 'center', 'valign': 'top' }， 表示单元格的初始
-     * 对齐状态为： 竖直居上，水平居中; 其中 align的取值为：'center', 'left', 'right'; valign的取值为: 'top', 'middle', 'bottom'
-     * @update 2013/4/2 hancong03@baidu.com
-     */
+   * 该参数将新增一个参数： selected， 参数类型为一个Object， 形如{ 'align': 'center', 'valign': 'top' }， 表示单元格的初始
+   * 对齐状态为： 竖直居上，水平居中; 其中 align的取值为：'center', 'left', 'right'; valign的取值为: 'top', 'middle', 'bottom'
+   * @update 2013/4/2 hancong03@baidu.com
+   */
   var CellAlignPicker = (baidu.editor.ui.CellAlignPicker = function(options) {
     this.initOptions(options);
     this.initSelected();
@@ -28918,24 +27214,22 @@ UE.ui = baidu.editor.ui = {};
     //初始化选中状态， 该方法将根据传递进来的参数获取到应该选中的对齐方式图标的索引
     initSelected: function() {
       var status = {
-        valign: {
-          top: 0,
-          middle: 1,
-          bottom: 2
+          valign: {
+            top: 0,
+            middle: 1,
+            bottom: 2
+          },
+          align: {
+            left: 0,
+            center: 1,
+            right: 2
+          },
+          count: 3
         },
-        align: {
-          left: 0,
-          center: 1,
-          right: 2
-        },
-        count: 3
-      },
         result = -1;
 
       if (this.selected) {
-        this.selectedIndex =
-          status.valign[this.selected.valign] * status.count +
-          status.align[this.selected.align];
+        this.selectedIndex = status.valign[this.selected.valign] * status.count + status.align[this.selected.align];
       }
     },
     initCellAlignPicker: function() {
@@ -28950,9 +27244,7 @@ UE.ui = baidu.editor.ui = {};
         tmpl = [];
 
       for (var i = 0; i < COUNT; i++) {
-        tempClassName = this.selectedIndex === i
-          ? ' class="edui-cellalign-selected" '
-          : "";
+        tempClassName = this.selectedIndex === i ? ' class="edui-cellalign-selected" ' : "";
         tempIndex = i % 3;
 
         tempIndex === 0 && tmpl.push("<tr>");
@@ -29052,8 +27344,7 @@ UE.ui = baidu.editor.ui = {};
         screenHt = uiUtils.getViewportRect().height,
         subPop = uiUtils.getClientRect(node);
 
-      if (subPop.top + subPop.height > screenHt)
-        node.style.top = -subPop.height - cur.offsetHeight + "px";
+      if (subPop.top + subPop.height > screenHt) node.style.top = -subPop.height - cur.offsetHeight + "px";
       else node.style.top = "";
 
       if (/hidden/gi.test(domUtils.getComputedStyle(node, "visibility"))) {
@@ -29245,9 +27536,9 @@ UE.ui = baidu.editor.ui = {};
   utils.inherits(Menu, Popup);
 
   /**
-     * @update 2013/04/03 hancong03 新增一个参数menu, 该参数存储了menuItem所对应的menu引用
-     * @type {Function}
-     */
+   * @update 2013/04/03 hancong03 新增一个参数menu, 该参数存储了menuItem所对应的menu引用
+   * @type {Function}
+   */
   var MenuItem = (baidu.editor.ui.MenuItem = function(options) {
     this.initOptions(options);
     this.initUIBase();
@@ -29494,10 +27785,7 @@ UE.ui = baidu.editor.ui = {};
       return this.items[index];
     },
     selectByIndex: function(index) {
-      if (
-        index < this.items.length &&
-        this.fireEvent("select", index) !== false
-      ) {
+      if (index < this.items.length && this.fireEvent("select", index) !== false) {
         this.selectedIndex = index;
         this.value = this.items[index].value;
         this.setLabel(this.items[index].label);
@@ -29528,8 +27816,7 @@ UE.ui = baidu.editor.ui = {};
           options.className = "edui-for-" + name;
         }
         if (cssRules) {
-          options.cssRules =
-            ".edui-for-" + name + " .edui-dialog-content  {" + cssRules + "}";
+          options.cssRules = ".edui-for-" + name + " .edui-dialog-content  {" + cssRules + "}";
         }
       }
       this.initOptions(
@@ -29627,10 +27914,8 @@ UE.ui = baidu.editor.ui = {};
             contentRect = UE.ui.uiUtils.getClientRect(contentNode),
             vpRect = uiUtils.getViewportRect();
 
-          contentNode.style.width =
-            vpRect.width - wrapRect.width + contentRect.width + "px";
-          contentNode.style.height =
-            vpRect.height - wrapRect.height + contentRect.height + "px";
+          contentNode.style.width = vpRect.width - wrapRect.width + contentRect.width + "px";
+          contentNode.style.height = vpRect.height - wrapRect.height + contentRect.height + "px";
 
           dialogWrapNode.style.width = vpRect.width + "px";
           dialogWrapNode.style.height = vpRect.height + "px";
@@ -29674,8 +27959,7 @@ UE.ui = baidu.editor.ui = {};
         var popSize = this.fitSize();
         var titleHeight = this.getDom("titlebar").offsetHeight | 0;
         var left = vpRect.width / 2 - popSize.width / 2;
-        var top =
-          vpRect.height / 2 - (popSize.height - titleHeight) / 2 - titleHeight;
+        var top = vpRect.height / 2 - (popSize.height - titleHeight) / 2 - titleHeight;
         var popEl = this.getDom();
         this.safeSetOffset({
           left: Math.max(left | 0, 0),
@@ -29694,10 +27978,8 @@ UE.ui = baidu.editor.ui = {};
           contentRect = UE.ui.uiUtils.getClientRect(contentNode);
         dialogWrapNode.style.left = "-100000px";
 
-        contentNode.style.width =
-          vpRect.width - wrapRect.width + contentRect.width + "px";
-        contentNode.style.height =
-          vpRect.height - wrapRect.height + contentRect.height + "px";
+        contentNode.style.width = vpRect.width - wrapRect.width + contentRect.width + "px";
+        contentNode.style.height = vpRect.height - wrapRect.height + contentRect.height + "px";
 
         dialogWrapNode.style.width = vpRect.width + "px";
         dialogWrapNode.style.height = vpRect.height + "px";
@@ -29748,18 +28030,12 @@ UE.ui = baidu.editor.ui = {};
           buff[i] = this.buttons[i].renderHtml();
         }
         footHtml =
-          '<div class="%%-foot">' +
-          '<div id="##_buttons" class="%%-buttons">' +
-          buff.join("") +
-          "</div>" +
-          "</div>";
+          '<div class="%%-foot">' + '<div id="##_buttons" class="%%-buttons">' + buff.join("") + "</div>" + "</div>";
       }
 
       return (
         '<div id="##" class="%%"><div ' +
-        (!this.fullscreen
-          ? 'class="%%"'
-          : 'class="%%-wrap edui-dialog-fullscreen-flag"') +
+        (!this.fullscreen ? 'class="%%"' : 'class="%%-wrap edui-dialog-fullscreen-flag"') +
         '><div id="##_body" class="%%-body">' +
         '<div class="%%-shadow"></div>' +
         '<div id="##_titlebar" class="%%-titlebar">' +
@@ -29890,12 +28166,10 @@ UE.ui = baidu.editor.ui = {};
 
         //要高过编辑器的zindxe
         this.editor.container.style.zIndex &&
-          (this.getDom().style.zIndex =
-            this.editor.container.style.zIndex * 1 + 10);
+          (this.getDom().style.zIndex = this.editor.container.style.zIndex * 1 + 10);
         this._hidden = false;
         this.fireEvent("show");
-        baidu.editor.ui.uiUtils.getFixedLayer().style.zIndex =
-          this.getDom().style.zIndex - 4;
+        baidu.editor.ui.uiUtils.getFixedLayer().style.zIndex = this.getDom().style.zIndex - 4;
       }
     },
     isHidden: function() {
@@ -30026,14 +28300,8 @@ UE.ui = baidu.editor.ui = {};
           if (!this.iframe_rendered) {
             this.iframe_rendered = true;
             this.getDom("content").innerHTML =
-              '<iframe id="' +
-              me.id +
-              '_iframe" src="' +
-              me.iframeUrl +
-              '" frameborder="0"></iframe>';
-            me.editor.container.style.zIndex &&
-              (this.getDom().style.zIndex =
-                me.editor.container.style.zIndex * 1 + 1);
+              '<iframe id="' + me.id + '_iframe" src="' + me.iframeUrl + '" frameborder="0"></iframe>';
+            me.editor.container.style.zIndex && (this.getDom().style.zIndex = me.editor.container.style.zIndex * 1 + 1);
           }
         }
         // canSideUp:false,
@@ -30182,12 +28450,7 @@ UE.ui = baidu.editor.ui = {};
         if (offset.top < 0) {
           offset.top = 0;
         }
-        el.style.cssText =
-          "position:absolute;left:" +
-          offset.left +
-          "px;top:" +
-          offset.top +
-          "px;";
+        el.style.cssText = "position:absolute;left:" + offset.left + "px;top:" + offset.top + "px;";
       }
 
       function setPosByCxtMenu(menu) {
@@ -30204,11 +28467,7 @@ UE.ui = baidu.editor.ui = {};
       el.style.cssText = "display:block;left:-9999px";
 
       if (e.type == "contextmenu" && hasContextmenu) {
-        var menu = domUtils.getElementsByTagName(
-          fixedlayer,
-          "div",
-          "edui-contextmenu"
-        )[0];
+        var menu = domUtils.getElementsByTagName(fixedlayer, "div", "edui-contextmenu")[0];
         if (menu) {
           setPosByCxtMenu(menu);
         } else {
@@ -30273,10 +28532,7 @@ UE.ui = baidu.editor.ui = {};
       cur = domUtils.findParent(
         tgt,
         function(node) {
-          return (
-            domUtils.hasClass(node, "edui-shortcutmenu") ||
-            domUtils.hasClass(node, "edui-popup")
-          );
+          return domUtils.hasClass(node, "edui-shortcutmenu") || domUtils.hasClass(node, "edui-popup");
         },
         true
       );
@@ -30376,10 +28632,7 @@ UE.ui = baidu.editor.ui = {};
     setType: function(type) {
       type = type || "info";
       var body = this.getDom("body");
-      body.className = body.className.replace(
-        /edui-message-type-[\w-]+/,
-        "edui-message-type-" + type
-      );
+      body.className = body.className.replace(/edui-message-type-[\w-]+/, "edui-message-type-" + type);
     },
     getContent: function() {
       return this.getDom("content").innerHTML;
@@ -30505,10 +28758,7 @@ UE.ui = baidu.editor.ui = {};
       return function(editor) {
         var ui = new editorui.Button({
           className: "edui-for-" + cmd,
-          title:
-            editor.options.labelMap[cmd] ||
-              editor.getLang("labelMap." + cmd) ||
-              "",
+          title: editor.options.labelMap[cmd] || editor.getLang("labelMap." + cmd) || "",
           onclick: function() {
             editor.execCommand(cmd);
           },
@@ -30516,11 +28766,7 @@ UE.ui = baidu.editor.ui = {};
           showText: false
         });
         editorui.buttons[cmd] = ui;
-        editor.addListener("selectionchange", function(
-          type,
-          causeByUi,
-          uiReady
-        ) {
+        editor.addListener("selectionchange", function(type, causeByUi, uiReady) {
           var state = editor.queryCommandState(cmd);
           if (state == -1) {
             ui.setDisabled(true);
@@ -30541,10 +28787,7 @@ UE.ui = baidu.editor.ui = {};
   editorui.cleardoc = function(editor) {
     var ui = new editorui.Button({
       className: "edui-for-cleardoc",
-      title:
-        editor.options.labelMap.cleardoc ||
-          editor.getLang("labelMap.cleardoc") ||
-          "",
+      title: editor.options.labelMap.cleardoc || editor.getLang("labelMap.cleardoc") || "",
       theme: editor.options.theme,
       onclick: function() {
         if (confirm(editor.getLang("confirmClear"))) {
@@ -30575,21 +28818,15 @@ UE.ui = baidu.editor.ui = {};
               className: "edui-for-" + cmd.replace("float", "") + cmd2,
               title:
                 editor.options.labelMap[cmd.replace("float", "") + cmd2] ||
-                  editor.getLang(
-                    "labelMap." + cmd.replace("float", "") + cmd2
-                  ) ||
-                  "",
+                editor.getLang("labelMap." + cmd.replace("float", "") + cmd2) ||
+                "",
               theme: editor.options.theme,
               onclick: function() {
                 editor.execCommand(cmd, cmd2);
               }
             });
             editorui.buttons[cmd] = ui;
-            editor.addListener("selectionchange", function(
-              type,
-              causeByUi,
-              uiReady
-            ) {
+            editor.addListener("selectionchange", function(type, causeByUi, uiReady) {
               ui.setDisabled(editor.queryCommandState(cmd) == -1);
               ui.setChecked(editor.queryCommandValue(cmd) == cmd2 && !uiReady);
             });
@@ -30607,10 +28844,7 @@ UE.ui = baidu.editor.ui = {};
         var ui = new editorui.ColorButton({
           className: "edui-for-" + cmd,
           color: "default",
-          title:
-            editor.options.labelMap[cmd] ||
-              editor.getLang("labelMap." + cmd) ||
-              "",
+          title: editor.options.labelMap[cmd] || editor.getLang("labelMap." + cmd) || "",
           editor: editor,
           onpickcolor: function(t, color) {
             editor.execCommand(cmd, color);
@@ -30665,14 +28899,8 @@ UE.ui = baidu.editor.ui = {};
         }
         (function(cmd) {
           editorui[cmd] = function(editor, iframeUrl, title) {
-            iframeUrl =
-              iframeUrl ||
-              (editor.options.iframeUrlMap || {})[cmd] ||
-              iframeUrlMap[cmd];
-            title =
-              editor.options.labelMap[cmd] ||
-              editor.getLang("labelMap." + cmd) ||
-              "";
+            iframeUrl = iframeUrl || (editor.options.iframeUrlMap || {})[cmd] || iframeUrlMap[cmd];
+            title = editor.options.labelMap[cmd] || editor.getLang("labelMap." + cmd) || "";
 
             var dialog;
             //没有iframeUrl不创建dialog
@@ -30743,14 +28971,12 @@ UE.ui = baidu.editor.ui = {};
                 }
               },
               theme: editor.options.theme,
-              disabled:
-                (cmd == "scrawl" && editor.queryCommandState("scrawl") == -1) ||
-                  cmd == "charts"
+              disabled: (cmd == "scrawl" && editor.queryCommandState("scrawl") == -1) || cmd == "charts"
             });
             editorui.buttons[cmd] = ui;
             editor.addListener("selectionchange", function() {
               //只存在于右键菜单而无工具栏按钮的ui不需要检测状态
-              var unNeedCheckState = { edittable: 1 };
+              var unNeedCheckState = {edittable: 1};
               if (cmd in unNeedCheckState) return;
 
               var state = editor.queryCommandState(cmd);
@@ -30769,10 +28995,7 @@ UE.ui = baidu.editor.ui = {};
 
   editorui.insertcode = function(editor, list, title) {
     list = editor.options["insertcode"] || [];
-    title =
-      editor.options.labelMap["insertcode"] ||
-      editor.getLang("labelMap.insertcode") ||
-      "";
+    title = editor.options.labelMap["insertcode"] || editor.getLang("labelMap.insertcode") || "";
     // if (!list.length) return;
     var items = [];
     utils.each(list, function(key, val) {
@@ -30781,9 +29004,7 @@ UE.ui = baidu.editor.ui = {};
         value: val,
         theme: editor.options.theme,
         renderLabelHtml: function() {
-          return (
-            '<div class="edui-label %%-label" >' + (this.label || "") + "</div>"
-          );
+          return '<div class="edui-label %%-label" >' + (this.label || "") + "</div>";
         }
       });
     });
@@ -30833,10 +29054,7 @@ UE.ui = baidu.editor.ui = {};
   };
   editorui.fontfamily = function(editor, list, title) {
     list = editor.options["fontfamily"] || [];
-    title =
-      editor.options.labelMap["fontfamily"] ||
-      editor.getLang("labelMap.fontfamily") ||
-      "";
+    title = editor.options.labelMap["fontfamily"] || editor.getLang("labelMap.fontfamily") || "";
     if (!list.length) return;
     for (var i = 0, ci, items = []; (ci = list[i]); i++) {
       var langLabel = editor.getLang("fontfamily")[ci.name] || "";
@@ -30898,10 +29116,7 @@ UE.ui = baidu.editor.ui = {};
   };
 
   editorui.fontsize = function(editor, list, title) {
-    title =
-      editor.options.labelMap["fontsize"] ||
-      editor.getLang("labelMap.fontsize") ||
-      "";
+    title = editor.options.labelMap["fontsize"] || editor.getLang("labelMap.fontsize") || "";
     list = list || editor.options["fontsize"] || [];
     if (!list.length) return;
     var items = [];
@@ -30951,10 +29166,7 @@ UE.ui = baidu.editor.ui = {};
   };
 
   editorui.paragraph = function(editor, list, title) {
-    title =
-      editor.options.labelMap["paragraph"] ||
-      editor.getLang("labelMap.paragraph") ||
-      "";
+    title = editor.options.labelMap["paragraph"] || editor.getLang("labelMap.paragraph") || "";
     list = editor.options["paragraph"] || [];
     if (utils.isEmptyObject(list)) return;
     var items = [];
@@ -31011,10 +29223,7 @@ UE.ui = baidu.editor.ui = {};
   //自定义标题
   editorui.customstyle = function(editor) {
     var list = editor.options["customstyle"] || [],
-      title =
-        editor.options.labelMap["customstyle"] ||
-        editor.getLang("labelMap.customstyle") ||
-        "";
+      title = editor.options.labelMap["customstyle"] || editor.getLang("labelMap.customstyle") || "";
     if (!list.length) return;
     var langCs = editor.getLang("customstyle");
     for (var i = 0, items = [], t; (t = list[i++]); ) {
@@ -31090,10 +29299,7 @@ UE.ui = baidu.editor.ui = {};
     return ui;
   };
   editorui.inserttable = function(editor, iframeUrl, title) {
-    title =
-      editor.options.labelMap["inserttable"] ||
-      editor.getLang("labelMap.inserttable") ||
-      "";
+    title = editor.options.labelMap["inserttable"] || editor.getLang("labelMap.inserttable") || "";
     var ui = new editorui.TableButton({
       editor: editor,
       title: title,
@@ -31133,10 +29339,7 @@ UE.ui = baidu.editor.ui = {};
     var ui = new editorui.MenuButton({
       editor: editor,
       className: "edui-for-lineheight",
-      title:
-        editor.options.labelMap["lineheight"] ||
-          editor.getLang("labelMap.lineheight") ||
-          "",
+      title: editor.options.labelMap["lineheight"] || editor.getLang("labelMap.lineheight") || "",
       items: items,
       onbuttonclick: function() {
         var value = editor.queryCommandValue("LineHeight") || this.value;
@@ -31177,14 +29380,10 @@ UE.ui = baidu.editor.ui = {};
         var ui = new editorui.MenuButton({
           editor: editor,
           className: "edui-for-rowspacing" + cmd,
-          title:
-            editor.options.labelMap["rowspacing" + cmd] ||
-              editor.getLang("labelMap.rowspacing" + cmd) ||
-              "",
+          title: editor.options.labelMap["rowspacing" + cmd] || editor.getLang("labelMap.rowspacing" + cmd) || "",
           items: items,
           onbuttonclick: function() {
-            var value =
-              editor.queryCommandValue("rowspacing", cmd) || this.value;
+            var value = editor.queryCommandValue("rowspacing", cmd) || this.value;
             editor.execCommand("rowspacing", value, cmd);
           }
         });
@@ -31250,10 +29449,7 @@ UE.ui = baidu.editor.ui = {};
   }
 
   editorui.fullscreen = function(editor, title) {
-    title =
-      editor.options.labelMap["fullscreen"] ||
-      editor.getLang("labelMap.fullscreen") ||
-      "";
+    title = editor.options.labelMap["fullscreen"] || editor.getLang("labelMap.fullscreen") || "";
     var ui = new editorui.Button({
       className: "edui-for-fullscreen",
       title: title,
@@ -31278,17 +29474,10 @@ UE.ui = baidu.editor.ui = {};
   editorui["emotion"] = function(editor, iframeUrl) {
     var cmd = "emotion";
     var ui = new editorui.MultiMenuPop({
-      title:
-        editor.options.labelMap[cmd] ||
-          editor.getLang("labelMap." + cmd + "") ||
-          "",
+      title: editor.options.labelMap[cmd] || editor.getLang("labelMap." + cmd + "") || "",
       editor: editor,
       className: "edui-for-" + cmd,
-      iframeUrl: editor.ui.mapUrl(
-        iframeUrl ||
-          (editor.options.iframeUrlMap || {})[cmd] ||
-          iframeUrlMap[cmd]
-      )
+      iframeUrl: editor.ui.mapUrl(iframeUrl || (editor.options.iframeUrlMap || {})[cmd] || iframeUrlMap[cmd])
     });
     editorui.buttons[cmd] = ui;
 
@@ -31301,10 +29490,7 @@ UE.ui = baidu.editor.ui = {};
   editorui.autotypeset = function(editor) {
     var ui = new editorui.AutoTypeSetButton({
       editor: editor,
-      title:
-        editor.options.labelMap["autotypeset"] ||
-          editor.getLang("labelMap.autotypeset") ||
-          "",
+      title: editor.options.labelMap["autotypeset"] || editor.getLang("labelMap.autotypeset") || "",
       className: "edui-for-autotypeset",
       onbuttonclick: function() {
         editor.execCommand("autotypeset");
@@ -31322,10 +29508,7 @@ UE.ui = baidu.editor.ui = {};
     var name = "simpleupload",
       ui = new editorui.Button({
         className: "edui-for-" + name,
-        title:
-          editor.options.labelMap[name] ||
-            editor.getLang("labelMap." + name) ||
-            "",
+        title: editor.options.labelMap[name] || editor.getLang("labelMap." + name) || "",
         onclick: function() {},
         theme: editor.options.theme,
         showText: false
@@ -31393,18 +29576,12 @@ UE.ui = baidu.editor.ui = {};
 
         UE.browser.ie &&
           UE.browser.version === 6 &&
-          editor.container.ownerDocument.execCommand(
-            "BackgroundImageCache",
-            false,
-            true
-          );
+          editor.container.ownerDocument.execCommand("BackgroundImageCache", false, true);
 
         //display bottom-bar label based on config
         if (editor.options.elementPathEnabled) {
           editor.ui.getDom("elementpath").innerHTML =
-            '<div class="edui-editor-breadcrumb">' +
-            editor.getLang("elementPathTip") +
-            ":</div>";
+            '<div class="edui-editor-breadcrumb">' + editor.getLang("elementPathTip") + ":</div>";
         }
         if (editor.options.wordCount) {
           function countFn() {
@@ -31412,9 +29589,7 @@ UE.ui = baidu.editor.ui = {};
             domUtils.un(editor.document, "click", arguments.callee);
           }
           domUtils.on(editor.document, "click", countFn);
-          editor.ui.getDom("wordcount").innerHTML = editor.getLang(
-            "wordCountTip"
-          );
+          editor.ui.getDom("wordcount").innerHTML = editor.getLang("wordCountTip");
         }
         editor.ui._scale();
         if (editor.options.scaleEnabled) {
@@ -31425,11 +29600,7 @@ UE.ui = baidu.editor.ui = {};
         } else {
           me.disableScale();
         }
-        if (
-          !editor.options.elementPathEnabled &&
-          !editor.options.wordCount &&
-          !editor.options.scaleEnabled
-        ) {
+        if (!editor.options.elementPathEnabled && !editor.options.wordCount && !editor.options.scaleEnabled) {
           editor.ui.getDom("elementpath").style.display = "none";
           editor.ui.getDom("wordcount").style.display = "none";
           editor.ui.getDom("scale").style.display = "none";
@@ -31458,7 +29629,7 @@ UE.ui = baidu.editor.ui = {};
         if (editor.queryCommandState("pasteplain")) return;
         if (baidu.editor.ui.PastePicker) {
           pastePop = new baidu.editor.ui.Popup({
-            content: new baidu.editor.ui.PastePicker({ editor: editor }),
+            content: new baidu.editor.ui.PastePicker({editor: editor}),
             editor: editor,
             className: "edui-wordpastepop"
           });
@@ -31473,14 +29644,13 @@ UE.ui = baidu.editor.ui = {};
           if (pastePop && (isPaste || editor.ui._isTransfer)) {
             if (pastePop.isHidden()) {
               var span = domUtils.createElement(editor.document, "span", {
-                style: "line-height:0px;",
-                innerHTML: "\ufeff"
-              }),
+                  style: "line-height:0px;",
+                  innerHTML: "\ufeff"
+                }),
                 range = editor.selection.getRange();
               range.insertNode(span);
               var tmp = getDomNode(span, "firstChild", "previousSibling");
-              tmp &&
-                pastePop.showAnchor(tmp.nodeType == 3 ? tmp.parentNode : tmp);
+              tmp && pastePop.showAnchor(tmp.nodeType == 3 ? tmp.parentNode : tmp);
               domUtils.remove(span);
             } else {
               pastePop.show();
@@ -31507,10 +29677,8 @@ UE.ui = baidu.editor.ui = {};
         editor.setOpt({
           wordCount: true,
           maximumWords: 10000,
-          wordCountMsg:
-            editor.options.wordCountMsg || editor.getLang("wordCountMsg"),
-          wordOverFlowMsg:
-            editor.options.wordOverFlowMsg || editor.getLang("wordOverFlowMsg")
+          wordCountMsg: editor.options.wordCountMsg || editor.getLang("wordCountMsg"),
+          wordOverFlowMsg: editor.options.wordOverFlowMsg || editor.getLang("wordOverFlowMsg")
         });
         var opt = editor.options,
           max = opt.maximumWords,
@@ -31525,24 +29693,16 @@ UE.ui = baidu.editor.ui = {};
           countDom.innerHTML = errMsg;
           editor.fireEvent("wordcountoverflow");
         } else {
-          countDom.innerHTML = msg
-            .replace("{#leave}", max - count)
-            .replace("{#count}", count);
+          countDom.innerHTML = msg.replace("{#leave}", max - count).replace("{#count}", count);
         }
       }
 
       editor.addListener("selectionchange", function() {
         if (editor.options.elementPathEnabled) {
-          me[
-            (editor.queryCommandState("elementpath") == -1 ? "dis" : "en") +
-              "ableElementPath"
-          ]();
+          me[(editor.queryCommandState("elementpath") == -1 ? "dis" : "en") + "ableElementPath"]();
         }
         if (editor.options.scaleEnabled) {
-          me[
-            (editor.queryCommandState("scale") == -1 ? "dis" : "en") +
-              "ableScale"
-          ]();
+          me[(editor.queryCommandState("scale") == -1 ? "dis" : "en") + "ableScale"]();
         }
       });
       var popup = new baidu.editor.ui.Popup({
@@ -31583,7 +29743,10 @@ UE.ui = baidu.editor.ui = {};
         _updateIframe: function() {
           var frame = (editor._iframe = popup.anchorEl);
           if (domUtils.hasClass(frame, "ueditor_baidumap")) {
-            editor.selection.getRange().selectNode(frame).select();
+            editor.selection
+              .getRange()
+              .selectNode(frame)
+              .select();
             editor.ui._dialogs.mapDialog.open();
             popup.hide();
           } else {
@@ -31597,10 +29760,7 @@ UE.ui = baidu.editor.ui = {};
         },
         queryAutoHide: function(el) {
           if (el && el.ownerDocument == editor.document) {
-            if (
-              el.tagName.toLowerCase() == "img" ||
-              domUtils.findParentByTagName(el, "a", true)
-            ) {
+            if (el.tagName.toLowerCase() == "img" || domUtils.findParentByTagName(el, "a", true)) {
               return el !== popup.anchorEl;
             }
           }
@@ -31612,10 +29772,7 @@ UE.ui = baidu.editor.ui = {};
         editor.addListener("mouseover", function(t, evt) {
           evt = evt || window.event;
           var el = evt.target || evt.srcElement;
-          if (
-            editor.ui._dialogs.insertframeDialog &&
-            /iframe/gi.test(el.tagName)
-          ) {
+          if (editor.ui._dialogs.insertframeDialog && /iframe/gi.test(el.tagName)) {
             var html = popup.formatHtml(
               "<nobr>" +
                 editor.getLang("property") +
@@ -31647,18 +29804,13 @@ UE.ui = baidu.editor.ui = {};
             dialogs = editor.ui._dialogs;
           if (img && img.tagName == "IMG") {
             var dialogName = "insertimageDialog";
-            if (
-              img.className.indexOf("edui-faked-video") != -1 ||
-              img.className.indexOf("edui-upload-video") != -1
-            ) {
+            if (img.className.indexOf("edui-faked-video") != -1 || img.className.indexOf("edui-upload-video") != -1) {
               dialogName = "insertvideoDialog";
             }
             if (img.src.indexOf("http://api.map.baidu.com") != -1) {
               dialogName = "mapDialog";
             }
-            if (
-              img.src.indexOf("http://maps.google.com/maps/api/staticmap") != -1
-            ) {
+            if (img.src.indexOf("http://maps.google.com/maps/api/staticmap") != -1) {
               dialogName = "gmapDialog";
             }
             if (img.getAttribute("anchorname")) {
@@ -31679,10 +29831,7 @@ UE.ui = baidu.editor.ui = {};
               editor.word_img = [img.getAttribute("word_img")];
               dialogName = "wordimageDialog";
             }
-            if (
-              domUtils.hasClass(img, "loadingclass") ||
-              domUtils.hasClass(img, "loaderrorclass")
-            ) {
+            if (domUtils.hasClass(img, "loadingclass") || domUtils.hasClass(img, "loaderrorclass")) {
               dialogName = "";
             }
             if (!dialogs[dialogName]) {
@@ -31715,10 +29864,7 @@ UE.ui = baidu.editor.ui = {};
           if (editor.ui._dialogs.linkDialog) {
             var link = editor.queryCommandValue("link");
             var url;
-            if (
-              link &&
-              (url = link.getAttribute("_href") || link.getAttribute("href", 2))
-            ) {
+            if (link && (url = link.getAttribute("_href") || link.getAttribute("href", 2))) {
               var txt = url;
               if (url.length > 30) {
                 txt = url.substring(0, 20) + "...";
@@ -31832,8 +29978,8 @@ UE.ui = baidu.editor.ui = {};
         '<div id="##_toolbarbox" class="%%-toolbarbox">' +
         (this.toolbars.length
           ? '<div id="##_toolbarboxouter" class="%%-toolbarboxouter"><div class="%%-toolbarboxinner">' +
-              this.renderToolbarBoxHtml() +
-              "</div></div>"
+            this.renderToolbarBoxHtml() +
+            "</div></div>"
           : "") +
         '<div id="##_toolbarmsg" class="%%-toolbarmsg" style="display:none;">' +
         '<div id = "##_upload_dialog" class="%%-toolbarmsg-upload" onclick="$$.showWordImageDialog();">' +
@@ -31878,10 +30024,7 @@ UE.ui = baidu.editor.ui = {};
         }
         if (fullscreen) {
           while (container.tagName != "BODY") {
-            var position = baidu.editor.dom.domUtils.getComputedStyle(
-              container,
-              "position"
-            );
+            var position = baidu.editor.dom.domUtils.getComputedStyle(container, "position");
             nodeStack.push(position);
             container.style.position = "static";
             container = container.parentNode;
@@ -31889,10 +30032,7 @@ UE.ui = baidu.editor.ui = {};
           this._bakHtmlOverflow = document.documentElement.style.overflow;
           this._bakBodyOverflow = document.body.style.overflow;
           this._bakAutoHeight = this.editor.autoHeightEnabled;
-          this._bakScrollTop = Math.max(
-            document.documentElement.scrollTop,
-            document.body.scrollTop
-          );
+          this._bakScrollTop = Math.max(document.documentElement.scrollTop, document.body.scrollTop);
 
           this._bakEditorContaninerWidth = editor.iframe.parentNode.offsetWidth;
           if (this._bakAutoHeight) {
@@ -31923,8 +30063,7 @@ UE.ui = baidu.editor.ui = {};
 
           document.documentElement.style.overflow = this._bakHtmlOverflow;
           document.body.style.overflow = this._bakBodyOverflow;
-          editor.iframe.parentNode.style.width =
-            this._bakEditorContaninerWidth + "px";
+          editor.iframe.parentNode.style.width = this._bakEditorContaninerWidth + "px";
           window.scrollTo(0, this._bakScrollTop);
         }
         if (browser.gecko && editor.body.contentEditable === "true") {
@@ -31936,7 +30075,10 @@ UE.ui = baidu.editor.ui = {};
             setTimeout(function() {
               editor.body.contentEditable = true;
               editor.fireEvent("fullscreenchanged", fullscreen);
-              editor.selection.getRange().moveToBookmark(bk).select(true);
+              editor.selection
+                .getRange()
+                .moveToBookmark(bk)
+                .select(true);
               baidu.editor.dom.domUtils.remove(input);
               fullscreen && window.scroll(0, 0);
             }, 0);
@@ -31983,10 +30125,7 @@ UE.ui = baidu.editor.ui = {};
     _updateElementPath: function() {
       var bottom = this.getDom("elementpath"),
         list;
-      if (
-        this.elementPathEnabled &&
-        (list = this.editor.queryCommandValue("elementpath"))
-      ) {
+      if (this.elementPathEnabled && (list = this.editor.queryCommandValue("elementpath"))) {
         var buff = [];
         for (var i = 0, ci; (ci = list[i]); i++) {
           buff[i] = this.formatHtml(
@@ -32042,10 +30181,7 @@ UE.ui = baidu.editor.ui = {};
         position = domUtils.getXY(editorHolder);
 
         if (!minEditorHeight) {
-          minEditorHeight =
-            editor.options.minFrameHeight +
-            toolbarBox.offsetHeight +
-            bottombar.offsetHeight;
+          minEditorHeight = editor.options.minFrameHeight + toolbarBox.offsetHeight + bottombar.offsetHeight;
         }
 
         scalelayer.style.cssText =
@@ -32072,10 +30208,7 @@ UE.ui = baidu.editor.ui = {};
             var tmpNode = me.editor.document.createElement("span");
             me.editor.body.appendChild(tmpNode);
             me.editor.body.style.height =
-              Math.max(
-                domUtils.getXY(tmpNode).y,
-                me.editor.iframe.offsetHeight - 20
-              ) + "px";
+              Math.max(domUtils.getXY(tmpNode).y, me.editor.iframe.offsetHeight - 20) + "px";
             domUtils.remove(tmpNode);
           }
         }
@@ -32104,13 +30237,7 @@ UE.ui = baidu.editor.ui = {};
           editor.ui._actualFrameWidth = scalelayer.offsetWidth - 2;
           editorHolder.style.width = editor.ui._actualFrameWidth + "px";
 
-          editor.setHeight(
-            scalelayer.offsetHeight -
-              bottombar.offsetHeight -
-              toolbarBox.offsetHeight -
-              2,
-            true
-          );
+          editor.setHeight(scalelayer.offsetHeight - bottombar.offsetHeight - toolbarBox.offsetHeight - 2, true);
         }
         if (scalelayer) {
           scalelayer.style.display = "none";
@@ -32176,9 +30303,7 @@ UE.ui = baidu.editor.ui = {};
       this.getDom("toolbarmsg").style.display = "none";
     },
     mapUrl: function(url) {
-      return url
-        ? url.replace("~/", this.editor.options.UEDITOR_HOME_URL || "")
-        : "";
+      return url ? url.replace("~/", this.editor.options.UEDITOR_HOME_URL || "") : "";
     },
     triggerLayout: function() {
       var dom = this.getDom();
@@ -32197,8 +30322,7 @@ UE.ui = baidu.editor.ui = {};
     var editor = new UE.Editor(options);
     editor.options.editor = editor;
     utils.loadFile(document, {
-      href:
-        editor.options.themePath + editor.options.theme + "/css/ueditor.css",
+      href: editor.options.themePath + editor.options.theme + "/css/ueditor.css",
       tag: "link",
       type: "text/css",
       rel: "stylesheet"
@@ -32211,9 +30335,7 @@ UE.ui = baidu.editor.ui = {};
         instances[holder] = editor;
       }
       utils.domReady(function() {
-        editor.langIsReady
-          ? renderUI()
-          : editor.addListener("langReady", renderUI);
+        editor.langIsReady ? renderUI() : editor.addListener("langReady", renderUI);
         function renderUI() {
           editor.setOpt({
             labelMap: editor.options.labelMap || editor.getLang("labelMap")
@@ -32223,9 +30345,7 @@ UE.ui = baidu.editor.ui = {};
             if (holder.constructor === String) {
               holder = document.getElementById(holder);
             }
-            holder &&
-              holder.getAttribute("name") &&
-              (editor.options.textarea = holder.getAttribute("name"));
+            holder && holder.getAttribute("name") && (editor.options.textarea = holder.getAttribute("name"));
             if (holder && /script|textarea/gi.test(holder.tagName)) {
               var newDiv = document.createElement("div");
               holder.parentNode.insertBefore(newDiv, holder);
@@ -32237,8 +30357,7 @@ UE.ui = baidu.editor.ui = {};
                     .replace(/[\n\r\t]+([ ]{4})+</g, "<")
                     .replace(/>[\n\r\t]+</g, "><");
               holder.className && (newDiv.className = holder.className);
-              holder.style.cssText &&
-                (newDiv.style.cssText = holder.style.cssText);
+              holder.style.cssText && (newDiv.style.cssText = holder.style.cssText);
               if (/textarea/i.test(holder.tagName)) {
                 editor.textarea = holder;
                 editor.textarea.style.display = "none";
@@ -32286,9 +30405,7 @@ UE.ui = baidu.editor.ui = {};
           if (holder.style.height) {
             holder.style.height = "";
           }
-          editor.container.style.width =
-            opt.initialFrameWidth +
-            (/%$/.test(opt.initialFrameWidth) ? "" : "px");
+          editor.container.style.width = opt.initialFrameWidth + (/%$/.test(opt.initialFrameWidth) ? "" : "px");
           editor.container.style.zIndex = opt.zIndex;
           oldRender.call(editor, editor.ui.getDom("iframeholder"));
           editor.fireEvent("afteruiready");
@@ -32299,26 +30416,26 @@ UE.ui = baidu.editor.ui = {};
   };
 
   /**
-     * @file
-     * @name UE
-     * @short UE
-     * @desc UEditor的顶部命名空间
-     */
+   * @file
+   * @name UE
+   * @short UE
+   * @desc UEditor的顶部命名空间
+   */
   /**
-     * @name getEditor
-     * @since 1.2.4+
-     * @grammar UE.getEditor(id,[opt])  =>  Editor实例
-     * @desc 提供一个全局的方法得到编辑器实例
-     *
-     * * ''id''  放置编辑器的容器id, 如果容器下的编辑器已经存在，就直接返回
-     * * ''opt'' 编辑器的可选参数
-     * @example
-     *  UE.getEditor('containerId',{onready:function(){//创建一个编辑器实例
-     *      this.setContent('hello')
-     *  }});
-     *  UE.getEditor('containerId'); //返回刚创建的实例
-     *
-     */
+   * @name getEditor
+   * @since 1.2.4+
+   * @grammar UE.getEditor(id,[opt])  =>  Editor实例
+   * @desc 提供一个全局的方法得到编辑器实例
+   *
+   * * ''id''  放置编辑器的容器id, 如果容器下的编辑器已经存在，就直接返回
+   * * ''opt'' 编辑器的可选参数
+   * @example
+   *  UE.getEditor('containerId',{onready:function(){//创建一个编辑器实例
+   *      this.setContent('hello')
+   *  }});
+   *  UE.getEditor('containerId'); //返回刚创建的实例
+   *
+   */
   UE.getEditor = function(id, opt) {
     var editor = instances[id];
     if (!editor) {
@@ -32376,12 +30493,12 @@ UE.registerUI("message", function(editor) {
         }
       : opt;
     var message = new Message({
-      timeout: opt.timeout,
-      type: opt.type,
-      content: opt.content,
-      keepshow: opt.keepshow,
-      editor: me
-    }),
+        timeout: opt.timeout,
+        type: opt.type,
+        content: opt.content,
+        keepshow: opt.keepshow,
+        editor: me
+      }),
       mid = opt.id || "msg_" + (+new Date()).toString(36);
     message.render(holder);
     _messageItems[mid] = message;
@@ -32412,8 +30529,7 @@ UE.registerUI("message", function(editor) {
     if (toolbarbox) {
       holder.style.top = toolbarbox.offsetHeight + 3 + "px";
     }
-    holder.style.zIndex =
-      Math.max(me.options.zIndex, me.iframe.style.zIndex) + 1;
+    holder.style.zIndex = Math.max(me.options.zIndex, me.iframe.style.zIndex) + 1;
   }
 });
 

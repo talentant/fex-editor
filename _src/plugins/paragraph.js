@@ -39,8 +39,7 @@ UE.plugins["paragraph"] = function() {
       var bookmark = range.createBookmark(),
         filterFn = function(node) {
           return node.nodeType == 1
-            ? node.tagName.toLowerCase() != "br" &&
-                !domUtils.isBookmarkNode(node)
+            ? node.tagName.toLowerCase() != "br" && !domUtils.isBookmarkNode(node)
             : !domUtils.isWhitespace(node);
         },
         para;
@@ -50,20 +49,12 @@ UE.plugins["paragraph"] = function() {
         current = domUtils.getNextDomNode(bookmark2.start, false, filterFn),
         tmpRange = range.cloneRange(),
         tmpNode;
-      while (
-        current &&
-        !(
-          domUtils.getPosition(current, bookmark2.end) &
-          domUtils.POSITION_FOLLOWING
-        )
-      ) {
+      while (current && !(domUtils.getPosition(current, bookmark2.end) & domUtils.POSITION_FOLLOWING)) {
         if (current.nodeType == 3 || !block(current)) {
           tmpRange.setStartBefore(current);
           while (current && current !== bookmark2.end && !block(current)) {
             tmpNode = current;
-            current = domUtils.getNextDomNode(current, false, null, function(
-              node
-            ) {
+            current = domUtils.getNextDomNode(current, false, null, function(node) {
               return !block(node);
             });
           }
@@ -72,11 +63,7 @@ UE.plugins["paragraph"] = function() {
           para = range.document.createElement(style);
           if (attrs) {
             domUtils.setAttributes(para, attrs);
-            if (
-              sourceCmdName &&
-              sourceCmdName == "customstyle" &&
-              attrs.style
-            ) {
+            if (sourceCmdName && sourceCmdName == "customstyle" && attrs.style) {
               para.style.cssText = attrs.style;
             }
           }
@@ -90,43 +77,22 @@ UE.plugins["paragraph"] = function() {
 
           var parent = para.parentNode;
           //如果para上一级是一个block元素且不是body,td就删除它
-          if (
-            block(parent) &&
-            !domUtils.isBody(para.parentNode) &&
-            utils.indexOf(notExchange, parent.tagName) == -1
-          ) {
+          if (block(parent) && !domUtils.isBody(para.parentNode) && utils.indexOf(notExchange, parent.tagName) == -1) {
             //存储dir,style
             if (!(sourceCmdName && sourceCmdName == "customstyle")) {
-              parent.getAttribute("dir") &&
-                para.setAttribute("dir", parent.getAttribute("dir"));
+              parent.getAttribute("dir") && para.setAttribute("dir", parent.getAttribute("dir"));
               //trace:1070
-              parent.style.cssText &&
-                (para.style.cssText =
-                  parent.style.cssText + ";" + para.style.cssText);
+              parent.style.cssText && (para.style.cssText = parent.style.cssText + ";" + para.style.cssText);
               //trace:1030
-              parent.style.textAlign &&
-                !para.style.textAlign &&
-                (para.style.textAlign = parent.style.textAlign);
-              parent.style.textIndent &&
-                !para.style.textIndent &&
-                (para.style.textIndent = parent.style.textIndent);
-              parent.style.padding &&
-                !para.style.padding &&
-                (para.style.padding = parent.style.padding);
+              parent.style.textAlign && !para.style.textAlign && (para.style.textAlign = parent.style.textAlign);
+              parent.style.textIndent && !para.style.textIndent && (para.style.textIndent = parent.style.textIndent);
+              parent.style.padding && !para.style.padding && (para.style.padding = parent.style.padding);
             }
 
             //trace:1706 选择的就是h1-6要删除
-            if (
-              attrs &&
-              /h\d/i.test(parent.tagName) &&
-              !/h\d/i.test(para.tagName)
-            ) {
+            if (attrs && /h\d/i.test(parent.tagName) && !/h\d/i.test(para.tagName)) {
               domUtils.setAttributes(parent, attrs);
-              if (
-                sourceCmdName &&
-                sourceCmdName == "customstyle" &&
-                attrs.style
-              ) {
+              if (sourceCmdName && sourceCmdName == "customstyle" && attrs.style) {
                 parent.style.cssText = attrs.style;
               }
               domUtils.remove(para.parentNode, true);
@@ -188,17 +154,9 @@ UE.plugins["paragraph"] = function() {
         }
       }
 
-      if (
-        browser.gecko &&
-        range.collapsed &&
-        range.startContainer.nodeType == 1
-      ) {
+      if (browser.gecko && range.collapsed && range.startContainer.nodeType == 1) {
         var child = range.startContainer.childNodes[range.startOffset];
-        if (
-          child &&
-          child.nodeType == 1 &&
-          child.tagName.toLowerCase() == style
-        ) {
+        if (child && child.nodeType == 1 && child.tagName.toLowerCase() == style) {
           range.setStart(child, 0).collapse(true);
         }
       }
@@ -208,10 +166,7 @@ UE.plugins["paragraph"] = function() {
       return true;
     },
     queryCommandValue: function() {
-      var node = domUtils.filterNodeList(
-        this.selection.getStartElementPath(),
-        "p h1 h2 h3 h4 h5 h6"
-      );
+      var node = domUtils.filterNodeList(this.selection.getStartElementPath(), "p h1 h2 h3 h4 h5 h6");
       return node ? node.tagName.toLowerCase() : "";
     }
   };

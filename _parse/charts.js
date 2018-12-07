@@ -1,9 +1,7 @@
 UE.parse.register("charts", function(utils) {
   utils.cssRule(
     "chartsContainerHeight",
-    ".edui-chart-container { height:" +
-      (this.chartContainerHeight || 300) +
-      "px}"
+    ".edui-chart-container { height:" + (this.chartContainerHeight || 300) + "px}"
   );
   var resourceRoot = this.rootPath,
     containers = this.root,
@@ -27,8 +25,8 @@ UE.parse.register("charts", function(utils) {
   }
 
   /**
-     * 提取数据
-     */
+   * 提取数据
+   */
   function extractChartData(rootNode) {
     var data = [],
       tables = rootNode.getElementsByTagName("table");
@@ -152,11 +150,11 @@ UE.parse.register("charts", function(utils) {
   }
 
   /**
-     * 渲染图表
-     * @param container 图表容器节点对象
-     * @param typeConfig 图表类型配置
-     * @param config 图表通用配置
-     * */
+   * 渲染图表
+   * @param container 图表容器节点对象
+   * @param typeConfig 图表类型配置
+   * @param config 图表通用配置
+   * */
   function renderChart(container, typeConfig, config) {
     $(container).highcharts(
       $.extend({}, typeConfig, {
@@ -208,9 +206,9 @@ UE.parse.register("charts", function(utils) {
   }
 
   /**
-     * 创建图表的容器
-     * 新创建的容器会替换掉对应的table对象
-     * */
+   * 创建图表的容器
+   * 新创建的容器会替换掉对应的table对象
+   * */
   function createContainer(tableNode) {
     var container = document.createElement("div");
     container.className = "edui-chart-container";

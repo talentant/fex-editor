@@ -9,11 +9,7 @@ UE.plugins["dragdrop"] = function() {
         var pre = node.previousSibling,
           next;
         while ((next = node.nextSibling)) {
-          if (
-            next.nodeType == 1 &&
-            next.tagName == "SPAN" &&
-            !next.firstChild
-          ) {
+          if (next.nodeType == 1 && next.tagName == "SPAN" && !next.firstChild) {
             domUtils.remove(next);
           } else {
             break;
@@ -28,11 +24,7 @@ UE.plugins["dragdrop"] = function() {
             pre.appendChild(node);
             domUtils.moveChild(next, pre);
             domUtils.remove(next);
-          } else if (
-            next &&
-            next.tagName == "P" &&
-            !domUtils.isEmptyBlock(next)
-          ) {
+          } else if (next && next.tagName == "P" && !domUtils.isEmptyBlock(next)) {
             next.insertBefore(node, next.firstChild);
           }
 
@@ -53,9 +45,7 @@ UE.plugins["dragdrop"] = function() {
     if (keyCode == 13) {
       var rng = me.selection.getRange(),
         node;
-      if (
-        (node = domUtils.findParentByTagName(rng.startContainer, "p", true))
-      ) {
+      if ((node = domUtils.findParentByTagName(rng.startContainer, "p", true))) {
         if (domUtils.getComputedStyle(node, "text-align") == "center") {
           domUtils.removeStyle(node, "text-align");
         }

@@ -35,9 +35,7 @@
     postRender: function() {
       this._SplitButton_postRender();
       this.getDom("button_body").appendChild(
-        uiUtils.createElementByHtml(
-          '<div id="' + this.id + '_colorlump" class="edui-colorlump"></div>'
-        )
+        uiUtils.createElementByHtml('<div id="' + this.id + '_colorlump" class="edui-colorlump"></div>')
       );
       this.getDom().className += " edui-colorbutton";
     },

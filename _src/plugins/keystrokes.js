@@ -41,10 +41,7 @@ UE.plugins["keystrokes"] = function() {
         if (domUtils.isBoundaryNode(tmpNode, "firstChild")) {
           tmpNode = rng.endContainer;
           if (
-            rng.endOffset ==
-              (tmpNode.nodeType == 3
-                ? tmpNode.nodeValue.length
-                : tmpNode.childNodes.length) &&
+            rng.endOffset == (tmpNode.nodeType == 3 ? tmpNode.nodeValue.length : tmpNode.childNodes.length) &&
             domUtils.isBoundaryNode(tmpNode, "lastChild")
           ) {
             me.fireEvent("saveScene");
@@ -70,13 +67,13 @@ UE.plugins["keystrokes"] = function() {
         start = rng.startContainer;
 
         if (domUtils.isFillChar(start)) {
-          rng.setStartBefore(start).shrinkBoundary(true).collapse(true);
+          rng
+            .setStartBefore(start)
+            .shrinkBoundary(true)
+            .collapse(true);
           domUtils.remove(start);
         } else {
-          start.nodeValue = start.nodeValue.replace(
-            new RegExp("^" + domUtils.fillChar),
-            ""
-          );
+          start.nodeValue = start.nodeValue.replace(new RegExp("^" + domUtils.fillChar), "");
           rng.startOffset--;
           rng.collapse(true).select(true);
         }
@@ -118,10 +115,7 @@ UE.plugins["keystrokes"] = function() {
       var range = me.selection.getRange();
       me.fireEvent("saveScene");
       for (
-        var i = 0,
-          txt = "",
-          tabSize = me.options.tabSize || 4,
-          tabNode = me.options.tabNode || "&nbsp;";
+        var i = 0, txt = "", tabSize = me.options.tabSize || 4, tabNode = me.options.tabNode || "&nbsp;";
         i < tabSize;
         i++
       ) {
@@ -133,10 +127,7 @@ UE.plugins["keystrokes"] = function() {
         range.insertNode(span.cloneNode(true).firstChild).setCursor(true);
       } else {
         var filterFn = function(node) {
-          return (
-            domUtils.isBlockElm(node) &&
-            !excludeTagNameForTabKey[node.tagName.toLowerCase()]
-          );
+          return domUtils.isBlockElm(node) && !excludeTagNameForTabKey[node.tagName.toLowerCase()];
         };
         //普通的情况
         start = domUtils.findParent(range.startContainer, filterFn, true);
@@ -149,20 +140,14 @@ UE.plugins["keystrokes"] = function() {
           range.enlarge(true);
           var bookmark2 = range.createBookmark(),
             current = domUtils.getNextDomNode(bookmark2.start, false, filterFn);
-          while (
-            current &&
-            !(
-              domUtils.getPosition(current, bookmark2.end) &
-              domUtils.POSITION_FOLLOWING
-            )
-          ) {
-            current.insertBefore(
-              span.cloneNode(true).firstChild,
-              current.firstChild
-            );
+          while (current && !(domUtils.getPosition(current, bookmark2.end) & domUtils.POSITION_FOLLOWING)) {
+            current.insertBefore(span.cloneNode(true).firstChild, current.firstChild);
             current = domUtils.getNextDomNode(current, false, filterFn);
           }
-          range.moveToBookmark(bookmark2).moveToBookmark(bookmark).select();
+          range
+            .moveToBookmark(bookmark2)
+            .moveToBookmark(bookmark)
+            .select();
         }
       }
       domUtils.preventDefault(evt);
@@ -175,10 +160,7 @@ UE.plugins["keystrokes"] = function() {
         start = range.startContainer;
         if (domUtils.isEmptyBlock(start)) {
           var parent = start.parentNode;
-          while (
-            domUtils.getChildCount(parent) == 1 &&
-            !domUtils.isBody(parent)
-          ) {
+          while (domUtils.getChildCount(parent) == 1 && !domUtils.isBody(parent)) {
             start = parent;
             parent = parent.parentNode;
           }
@@ -192,10 +174,7 @@ UE.plugins["keystrokes"] = function() {
     browser.chrome &&
       me.on("keydown", function(type, e) {
         var keyCode = e.keyCode || e.which;
-        if (
-          ((e.metaKey && e.altKey) || (e.ctrlKey && e.shiftKey)) &&
-          keyCode == 73
-        ) {
+        if (((e.metaKey && e.altKey) || (e.ctrlKey && e.shiftKey)) && keyCode == 73) {
           return true;
         }
       });
@@ -212,13 +191,7 @@ UE.plugins["keystrokes"] = function() {
       if (rng.collapsed) {
         var tmpNode,
           autoClearTagName = ["h1", "h2", "h3", "h4", "h5", "h6"];
-        if (
-          (tmpNode = domUtils.findParentByTagName(
-            rng.startContainer,
-            autoClearTagName,
-            true
-          ))
-        ) {
+        if ((tmpNode = domUtils.findParentByTagName(rng.startContainer, autoClearTagName, true))) {
           if (domUtils.isEmptyBlock(tmpNode)) {
             var pre = tmpNode.previousSibling;
             if (pre && pre.nodeName != "TABLE") {
@@ -240,7 +213,10 @@ UE.plugins["keystrokes"] = function() {
           var tmpNode = domUtils.createElement(me.document, "p", {
             innerHTML: browser.ie ? domUtils.fillChar : "<br/>"
           });
-          rng.insertNode(tmpNode).setStart(tmpNode, 0).setCursor(false, true);
+          rng
+            .insertNode(tmpNode)
+            .setStart(tmpNode, 0)
+            .setCursor(false, true);
         }
       }
 
@@ -248,12 +224,14 @@ UE.plugins["keystrokes"] = function() {
       if (
         !collapsed &&
         (rng.startContainer.nodeType == 3 ||
-          (rng.startContainer.nodeType == 1 &&
-            domUtils.isEmptyBlock(rng.startContainer)))
+          (rng.startContainer.nodeType == 1 && domUtils.isEmptyBlock(rng.startContainer)))
       ) {
         if (browser.ie) {
           var span = rng.document.createElement("span");
-          rng.insertNode(span).setStartBefore(span).collapse(true);
+          rng
+            .insertNode(span)
+            .setStartBefore(span)
+            .collapse(true);
           rng.select();
           domUtils.remove(span);
         } else {

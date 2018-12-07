@@ -8,14 +8,14 @@ UE.plugins["video"] = function() {
   var me = this;
 
   /**
-     * 创建插入视频字符窜
-     * @param url 视频地址
-     * @param width 视频宽度
-     * @param height 视频高度
-     * @param align 视频对齐
-     * @param toEmbed 是否以flash代替显示
-     * @param addParagraph  是否需要添加P 标签
-     */
+   * 创建插入视频字符窜
+   * @param url 视频地址
+   * @param width 视频宽度
+   * @param height 视频高度
+   * @param align 视频对齐
+   * @param toEmbed 是否以flash代替显示
+   * @param addParagraph  是否需要添加P 标签
+   */
   function creatInsertStr(url, width, height, id, align, classname, type) {
     var str;
     switch (type) {
@@ -83,36 +83,33 @@ UE.plugins["video"] = function() {
   }
 
   function switchImgAndVideo(root, img2video) {
-    utils.each(
-      root.getNodesByTagName(img2video ? "img" : "embed video"),
-      function(node) {
-        var className = node.getAttr("class");
-        if (className && className.indexOf("edui-faked-video") != -1) {
-          var html = creatInsertStr(
-            img2video ? node.getAttr("_url") : node.getAttr("src"),
-            node.getAttr("width"),
-            node.getAttr("height"),
-            null,
-            node.getStyle("float") || "",
-            className,
-            img2video ? "embed" : "image"
-          );
-          node.parentNode.replaceChild(UE.uNode.createElement(html), node);
-        }
-        if (className && className.indexOf("edui-upload-video") != -1) {
-          var html = creatInsertStr(
-            img2video ? node.getAttr("_url") : node.getAttr("src"),
-            node.getAttr("width"),
-            node.getAttr("height"),
-            null,
-            node.getStyle("float") || "",
-            className,
-            img2video ? "video" : "image"
-          );
-          node.parentNode.replaceChild(UE.uNode.createElement(html), node);
-        }
+    utils.each(root.getNodesByTagName(img2video ? "img" : "embed video"), function(node) {
+      var className = node.getAttr("class");
+      if (className && className.indexOf("edui-faked-video") != -1) {
+        var html = creatInsertStr(
+          img2video ? node.getAttr("_url") : node.getAttr("src"),
+          node.getAttr("width"),
+          node.getAttr("height"),
+          null,
+          node.getStyle("float") || "",
+          className,
+          img2video ? "embed" : "image"
+        );
+        node.parentNode.replaceChild(UE.uNode.createElement(html), node);
       }
-    );
+      if (className && className.indexOf("edui-upload-video") != -1) {
+        var html = creatInsertStr(
+          img2video ? node.getAttr("_url") : node.getAttr("src"),
+          node.getAttr("width"),
+          node.getAttr("height"),
+          null,
+          node.getStyle("float") || "",
+          className,
+          img2video ? "video" : "image"
+        );
+        node.parentNode.replaceChild(UE.uNode.createElement(html), node);
+      }
+    });
   }
 
   me.addOutputRule(function(root) {
@@ -123,71 +120,71 @@ UE.plugins["video"] = function() {
   });
 
   /**
-     * 插入视频
-     * @command insertvideo
-     * @method execCommand
-     * @param { String } cmd 命令字符串
-     * @param { Object } videoAttr 键值对对象， 描述一个视频的所有属性
-     * @example
-     * ```javascript
-     *
-     * var videoAttr = {
-     *      //视频地址
-     *      url: 'http://www.youku.com/xxx',
-     *      //视频宽高值， 单位px
-     *      width: 200,
-     *      height: 100
-     * };
-     *
-     * //editor 是编辑器实例
-     * //向编辑器插入单个视频
-     * editor.execCommand( 'insertvideo', videoAttr );
-     * ```
-     */
+   * 插入视频
+   * @command insertvideo
+   * @method execCommand
+   * @param { String } cmd 命令字符串
+   * @param { Object } videoAttr 键值对对象， 描述一个视频的所有属性
+   * @example
+   * ```javascript
+   *
+   * var videoAttr = {
+   *      //视频地址
+   *      url: 'http://www.youku.com/xxx',
+   *      //视频宽高值， 单位px
+   *      width: 200,
+   *      height: 100
+   * };
+   *
+   * //editor 是编辑器实例
+   * //向编辑器插入单个视频
+   * editor.execCommand( 'insertvideo', videoAttr );
+   * ```
+   */
 
   /**
-     * 插入视频
-     * @command insertvideo
-     * @method execCommand
-     * @param { String } cmd 命令字符串
-     * @param { Array } videoArr 需要插入的视频的数组， 其中的每一个元素都是一个键值对对象， 描述了一个视频的所有属性
-     * @example
-     * ```javascript
-     *
-     * var videoAttr1 = {
-     *      //视频地址
-     *      url: 'http://www.youku.com/xxx',
-     *      //视频宽高值， 单位px
-     *      width: 200,
-     *      height: 100
-     * },
-     * videoAttr2 = {
-     *      //视频地址
-     *      url: 'http://www.youku.com/xxx',
-     *      //视频宽高值， 单位px
-     *      width: 200,
-     *      height: 100
-     * }
-     *
-     * //editor 是编辑器实例
-     * //该方法将会向编辑器内插入两个视频
-     * editor.execCommand( 'insertvideo', [ videoAttr1, videoAttr2 ] );
-     * ```
-     */
+   * 插入视频
+   * @command insertvideo
+   * @method execCommand
+   * @param { String } cmd 命令字符串
+   * @param { Array } videoArr 需要插入的视频的数组， 其中的每一个元素都是一个键值对对象， 描述了一个视频的所有属性
+   * @example
+   * ```javascript
+   *
+   * var videoAttr1 = {
+   *      //视频地址
+   *      url: 'http://www.youku.com/xxx',
+   *      //视频宽高值， 单位px
+   *      width: 200,
+   *      height: 100
+   * },
+   * videoAttr2 = {
+   *      //视频地址
+   *      url: 'http://www.youku.com/xxx',
+   *      //视频宽高值， 单位px
+   *      width: 200,
+   *      height: 100
+   * }
+   *
+   * //editor 是编辑器实例
+   * //该方法将会向编辑器内插入两个视频
+   * editor.execCommand( 'insertvideo', [ videoAttr1, videoAttr2 ] );
+   * ```
+   */
 
   /**
-     * 查询当前光标所在处是否是一个视频
-     * @command insertvideo
-     * @method queryCommandState
-     * @param { String } cmd 需要查询的命令字符串
-     * @return { int } 如果当前光标所在处的元素是一个视频对象， 则返回1，否则返回0
-     * @example
-     * ```javascript
-     *
-     * //editor 是编辑器实例
-     * editor.queryCommandState( 'insertvideo' );
-     * ```
-     */
+   * 查询当前光标所在处是否是一个视频
+   * @command insertvideo
+   * @method queryCommandState
+   * @param { String } cmd 需要查询的命令字符串
+   * @return { int } 如果当前光标所在处的元素是一个视频对象， 则返回1，否则返回0
+   * @example
+   * ```javascript
+   *
+   * //editor 是编辑器实例
+   * editor.queryCommandState( 'insertvideo' );
+   * ```
+   */
   me.commands["insertvideo"] = {
     execCommand: function(cmd, videoObjs, type) {
       videoObjs = utils.isArray(videoObjs) ? videoObjs : [videoObjs];
@@ -201,20 +198,8 @@ UE.plugins["video"] = function() {
         cl;
       for (var i = 0, vi, len = videoObjs.length; i < len; i++) {
         vi = videoObjs[i];
-        cl = type == "upload"
-          ? "edui-upload-video video-js vjs-default-skin"
-          : "edui-faked-video";
-        html.push(
-          creatInsertStr(
-            vi.url,
-            vi.width || 420,
-            vi.height || 280,
-            id + i,
-            null,
-            cl,
-            "image"
-          )
-        );
+        cl = type == "upload" ? "edui-upload-video video-js vjs-default-skin" : "edui-faked-video";
+        html.push(creatInsertStr(vi.url, vi.width || 420, vi.height || 280, id + i, null, cl, "image"));
       }
       me.execCommand("inserthtml", html.join(""), true);
       var rng = this.selection.getRange();
@@ -229,10 +214,7 @@ UE.plugins["video"] = function() {
     },
     queryCommandState: function() {
       var img = me.selection.getRange().getClosedNode(),
-        flag =
-          img &&
-          (img.className == "edui-faked-video" ||
-            img.className.indexOf("edui-upload-video") != -1);
+        flag = img && (img.className == "edui-faked-video" || img.className.indexOf("edui-upload-video") != -1);
       return flag ? 1 : 0;
     }
   };

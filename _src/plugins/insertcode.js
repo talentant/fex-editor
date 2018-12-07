@@ -7,11 +7,7 @@
 UE.plugins["insertcode"] = function() {
   var me = this;
   me.ready(function() {
-    utils.cssRule(
-      "pre",
-      "pre{margin:.5em 0;padding:.4em .6em;border-radius:8px;background:#f8f8f8;}",
-      me.document
-    );
+    utils.cssRule("pre", "pre{margin:.5em 0;padding:.4em .6em;border-radius:8px;background:#f8f8f8;}", me.document);
   });
   me.setOpt("insertcode", {
     as3: "ActionScript3",
@@ -41,28 +37,28 @@ UE.plugins["insertcode"] = function() {
   });
 
   /**
-     * 插入代码
-     * @command insertcode
-     * @method execCommand
-     * @param { String } cmd 命令字符串
-     * @param { String } lang 插入代码的语言
-     * @example
-     * ```javascript
-     * editor.execCommand( 'insertcode', 'javascript' );
-     * ```
-     */
+   * 插入代码
+   * @command insertcode
+   * @method execCommand
+   * @param { String } cmd 命令字符串
+   * @param { String } lang 插入代码的语言
+   * @example
+   * ```javascript
+   * editor.execCommand( 'insertcode', 'javascript' );
+   * ```
+   */
 
   /**
-     * 如果选区所在位置是插入插入代码区域，返回代码的语言
-     * @command insertcode
-     * @method queryCommandValue
-     * @param { String } cmd 命令字符串
-     * @return { String } 返回代码的语言
-     * @example
-     * ```javascript
-     * editor.queryCommandValue( 'insertcode' );
-     * ```
-     */
+   * 如果选区所在位置是插入插入代码区域，返回代码的语言
+   * @command insertcode
+   * @method queryCommandValue
+   * @param { String } cmd 命令字符串
+   * @return { String } 返回代码的语言
+   * @example
+   * ```javascript
+   * editor.queryCommandValue( 'insertcode' );
+   * ```
+   */
 
   me.commands["insertcode"] = {
     execCommand: function(cmd, lang) {
@@ -74,19 +70,14 @@ UE.plugins["insertcode"] = function() {
       } else {
         var code = "";
         if (rng.collapsed) {
-          code = browser.ie && browser.ie11below
-            ? browser.version <= 8 ? "&nbsp;" : ""
-            : "<br/>";
+          code = browser.ie && browser.ie11below ? (browser.version <= 8 ? "&nbsp;" : "") : "<br/>";
         } else {
           var frag = rng.extractContents();
           var div = me.document.createElement("div");
           div.appendChild(frag);
 
           utils.each(
-            UE.filterNode(
-              UE.htmlparser(div.innerHTML.replace(/[\r\t]/g, "")),
-              me.options.filterTxtRules
-            ).children,
+            UE.filterNode(UE.htmlparser(div.innerHTML.replace(/[\r\t]/g, "")), me.options.filterTxtRules).children,
             function(node) {
               if (browser.ie && browser.ie11below && browser.version > 8) {
                 if (node.type == "element") {
@@ -142,9 +133,7 @@ UE.plugins["insertcode"] = function() {
                     code = code.replace(/<br>$/, "");
                   }
                 } else {
-                  code += node.type == "element"
-                    ? dtd.$empty[node.tagName] ? "" : node.innerText()
-                    : node.data;
+                  code += node.type == "element" ? (dtd.$empty[node.tagName] ? "" : node.innerText()) : node.data;
                   if (!/br\/?\s*>$/.test(code)) {
                     if (!node.nextSibling()) return;
                     code += "<br>";
@@ -156,11 +145,7 @@ UE.plugins["insertcode"] = function() {
         }
         me.execCommand(
           "inserthtml",
-          '<pre id="coder"class="brush:' +
-            lang +
-            ';toolbar:false">' +
-            code +
-            "</pre>",
+          '<pre id="coder"class="brush:' + lang + ';toolbar:false">' + code + "</pre>",
           true
         );
 
@@ -170,10 +155,7 @@ UE.plugins["insertcode"] = function() {
 
         if (
           tmpNode &&
-          ((tmpNode.nodeType == 3 &&
-            tmpNode.nodeValue.length == 1 &&
-            browser.ie &&
-            browser.version == 6) ||
+          ((tmpNode.nodeType == 3 && tmpNode.nodeValue.length == 1 && browser.ie && browser.version == 6) ||
             domUtils.isEmptyBlock(tmpNode))
         ) {
           domUtils.remove(tmpNode);
@@ -266,11 +248,7 @@ UE.plugins["insertcode"] = function() {
   me.queryCommandState = function(cmd) {
     var me = this;
 
-    if (
-      !me.notNeedCodeQuery[cmd.toLowerCase()] &&
-      me.selection &&
-      me.queryCommandValue("insertcode")
-    ) {
+    if (!me.notNeedCodeQuery[cmd.toLowerCase()] && me.selection && me.queryCommandValue("insertcode")) {
       return -1;
     }
     return UE.Editor.prototype.queryCommandState.apply(this, arguments);
@@ -286,7 +264,10 @@ UE.plugins["insertcode"] = function() {
       if (!browser.ie || browser.ie9above) {
         var tmpNode = me.document.createElement("br"),
           pre;
-        rng.insertNode(tmpNode).setStartAfter(tmpNode).collapse(true);
+        rng
+          .insertNode(tmpNode)
+          .setStartAfter(tmpNode)
+          .collapse(true);
         var next = tmpNode.nextSibling;
         if (!next && (!browser.ie || browser.version > 10)) {
           rng.insertNode(tmpNode.cloneNode(false));
@@ -305,18 +286,12 @@ UE.plugins["insertcode"] = function() {
         }
         if (pre) {
           var str = "";
-          while (
-            pre &&
-            pre.nodeName != "BR" &&
-            new RegExp("^[\\s" + domUtils.fillChar + "]*$").test(pre.nodeValue)
-          ) {
+          while (pre && pre.nodeName != "BR" && new RegExp("^[\\s" + domUtils.fillChar + "]*$").test(pre.nodeValue)) {
             str += pre.nodeValue;
             pre = pre.nextSibling;
           }
           if (pre.nodeName != "BR") {
-            var match = pre.nodeValue.match(
-              new RegExp("^([\\s" + domUtils.fillChar + "]+)")
-            );
+            var match = pre.nodeValue.match(new RegExp("^([\\s" + domUtils.fillChar + "]+)"));
             if (match && match[1]) {
               str += match[1];
             }
@@ -373,18 +348,12 @@ UE.plugins["insertcode"] = function() {
           }
           if (pre) {
             var str = "";
-            while (
-              pre &&
-              pre.nodeName != "BR" &&
-              new RegExp("^[ " + domUtils.fillChar + "]*$").test(pre.nodeValue)
-            ) {
+            while (pre && pre.nodeName != "BR" && new RegExp("^[ " + domUtils.fillChar + "]*$").test(pre.nodeValue)) {
               str += pre.nodeValue;
               pre = pre.nextSibling;
             }
             if (pre.nodeName != "BR") {
-              var match = pre.nodeValue.match(
-                new RegExp("^([ " + domUtils.fillChar + "]+)")
-              );
+              var match = pre.nodeValue.match(new RegExp("^([ " + domUtils.fillChar + "]+)"));
               if (match && match[1]) {
                 str += match[1];
               }
@@ -419,10 +388,7 @@ UE.plugins["insertcode"] = function() {
               break;
             }
             if (domUtils.isBr(start)) {
-              pre.insertBefore(
-                me.document.createTextNode("    "),
-                start.nextSibling
-              );
+              pre.insertBefore(me.document.createTextNode("    "), start.nextSibling);
 
               break;
             }
@@ -431,20 +397,14 @@ UE.plugins["insertcode"] = function() {
           var end = bk.end;
           start = bk.start.nextSibling;
           if (pre.firstChild === bk.start) {
-            pre.insertBefore(
-              me.document.createTextNode("    "),
-              start.nextSibling
-            );
+            pre.insertBefore(me.document.createTextNode("    "), start.nextSibling);
           }
           while (start && start !== end) {
             if (domUtils.isBr(start) && start.nextSibling) {
               if (start.nextSibling === end) {
                 break;
               }
-              pre.insertBefore(
-                me.document.createTextNode("    "),
-                start.nextSibling
-              );
+              pre.insertBefore(me.document.createTextNode("    "), start.nextSibling);
             }
 
             start = start.nextSibling;
@@ -475,87 +435,68 @@ UE.plugins["insertcode"] = function() {
       }
       var htmlstr = "";
       if (browser.ie && browser.version > 8) {
-        utils.each(
-          UE.filterNode(UE.htmlparser(html), me.options.filterTxtRules)
-            .children,
-          function(node) {
-            if (node.type == "element") {
-              if (node.tagName == "br") {
-                htmlstr += "\n";
-              } else if (!dtd.$empty[node.tagName]) {
-                utils.each(node.children, function(cn) {
-                  if (cn.type == "element") {
-                    if (cn.tagName == "br") {
-                      htmlstr += "\n";
-                    } else if (!dtd.$empty[node.tagName]) {
-                      htmlstr += cn.innerText();
-                    }
-                  } else {
-                    htmlstr += cn.data;
+        utils.each(UE.filterNode(UE.htmlparser(html), me.options.filterTxtRules).children, function(node) {
+          if (node.type == "element") {
+            if (node.tagName == "br") {
+              htmlstr += "\n";
+            } else if (!dtd.$empty[node.tagName]) {
+              utils.each(node.children, function(cn) {
+                if (cn.type == "element") {
+                  if (cn.tagName == "br") {
+                    htmlstr += "\n";
+                  } else if (!dtd.$empty[node.tagName]) {
+                    htmlstr += cn.innerText();
                   }
-                });
-                if (!/\n$/.test(htmlstr)) {
-                  htmlstr += "\n";
+                } else {
+                  htmlstr += cn.data;
                 }
+              });
+              if (!/\n$/.test(htmlstr)) {
+                htmlstr += "\n";
               }
-            } else {
-              htmlstr += node.data + "\n";
             }
-            if (!node.nextSibling() && /\n$/.test(htmlstr)) {
-              htmlstr = htmlstr.replace(/\n$/, "");
-            }
+          } else {
+            htmlstr += node.data + "\n";
           }
-        );
-        var tmpNode = me.document.createTextNode(
-          utils.html(htmlstr.replace(/&nbsp;/g, " "))
-        );
-        rng.insertNode(tmpNode).selectNode(tmpNode).select();
+          if (!node.nextSibling() && /\n$/.test(htmlstr)) {
+            htmlstr = htmlstr.replace(/\n$/, "");
+          }
+        });
+        var tmpNode = me.document.createTextNode(utils.html(htmlstr.replace(/&nbsp;/g, " ")));
+        rng
+          .insertNode(tmpNode)
+          .selectNode(tmpNode)
+          .select();
       } else {
         var frag = me.document.createDocumentFragment();
 
-        utils.each(
-          UE.filterNode(UE.htmlparser(html), me.options.filterTxtRules)
-            .children,
-          function(node) {
-            if (node.type == "element") {
-              if (node.tagName == "br") {
-                frag.appendChild(me.document.createElement("br"));
-              } else if (!dtd.$empty[node.tagName]) {
-                utils.each(node.children, function(cn) {
-                  if (cn.type == "element") {
-                    if (cn.tagName == "br") {
-                      frag.appendChild(me.document.createElement("br"));
-                    } else if (!dtd.$empty[node.tagName]) {
-                      frag.appendChild(
-                        me.document.createTextNode(
-                          utils.html(cn.innerText().replace(/&nbsp;/g, " "))
-                        )
-                      );
-                    }
-                  } else {
-                    frag.appendChild(
-                      me.document.createTextNode(
-                        utils.html(cn.data.replace(/&nbsp;/g, " "))
-                      )
-                    );
+        utils.each(UE.filterNode(UE.htmlparser(html), me.options.filterTxtRules).children, function(node) {
+          if (node.type == "element") {
+            if (node.tagName == "br") {
+              frag.appendChild(me.document.createElement("br"));
+            } else if (!dtd.$empty[node.tagName]) {
+              utils.each(node.children, function(cn) {
+                if (cn.type == "element") {
+                  if (cn.tagName == "br") {
+                    frag.appendChild(me.document.createElement("br"));
+                  } else if (!dtd.$empty[node.tagName]) {
+                    frag.appendChild(me.document.createTextNode(utils.html(cn.innerText().replace(/&nbsp;/g, " "))));
                   }
-                });
-                if (frag.lastChild.nodeName != "BR") {
-                  frag.appendChild(me.document.createElement("br"));
+                } else {
+                  frag.appendChild(me.document.createTextNode(utils.html(cn.data.replace(/&nbsp;/g, " "))));
                 }
+              });
+              if (frag.lastChild.nodeName != "BR") {
+                frag.appendChild(me.document.createElement("br"));
               }
-            } else {
-              frag.appendChild(
-                me.document.createTextNode(
-                  utils.html(node.data.replace(/&nbsp;/g, " "))
-                )
-              );
             }
-            if (!node.nextSibling() && frag.lastChild.nodeName == "BR") {
-              frag.removeChild(frag.lastChild);
-            }
+          } else {
+            frag.appendChild(me.document.createTextNode(utils.html(node.data.replace(/&nbsp;/g, " "))));
           }
-        );
+          if (!node.nextSibling() && frag.lastChild.nodeName == "BR") {
+            frag.removeChild(frag.lastChild);
+          }
+        });
         rng.insertNode(frag).select();
       }
 
@@ -570,20 +511,12 @@ UE.plugins["insertcode"] = function() {
       var rng = me.selection.getRange(),
         pre,
         start = rng.startContainer;
-      if (
-        rng.collapsed &&
-        (pre = domUtils.findParentByTagName(rng.startContainer, "pre", true)) &&
-        !pre.nextSibling
-      ) {
+      if (rng.collapsed && (pre = domUtils.findParentByTagName(rng.startContainer, "pre", true)) && !pre.nextSibling) {
         var last = pre.lastChild;
         while (last && last.nodeName == "BR") {
           last = last.previousSibling;
         }
-        if (
-          last === start ||
-          (rng.startContainer === pre &&
-            rng.startOffset == pre.childNodes.length)
-        ) {
+        if (last === start || (rng.startContainer === pre && rng.startOffset == pre.childNodes.length)) {
           me.execCommand("insertparagraph");
           domUtils.preventDefault(evt);
         }
@@ -595,11 +528,7 @@ UE.plugins["insertcode"] = function() {
     var rng = this.selection.getRange();
     rng.txtToElmBoundary(true);
     var start = rng.startContainer;
-    if (
-      domUtils.isTagNode(start, "pre") &&
-      rng.collapsed &&
-      domUtils.isStartInblock(rng)
-    ) {
+    if (domUtils.isTagNode(start, "pre") && rng.collapsed && domUtils.isStartInblock(rng)) {
       var p = me.document.createElement("p");
       domUtils.fillNode(me.document, p);
       start.parentNode.insertBefore(p, start);

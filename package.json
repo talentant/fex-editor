@@ -26,6 +26,9 @@
   "bugs": {
     "url": "https://github.com/talentant/fex-editor/issues"
   },
+  "scripts": {
+    "reformat": "prettier \"{_src,_parse,dialogs}/**/**/**/**/*.{js,css,html}\" --write"
+  },
   "devDependencies": {
     "grunt": "^1.0.3",
     "grunt-contrib-clean": "^2.0.0",

@@ -31,18 +31,13 @@ UE.plugins["rowspacing"] = function() {
       return true;
     },
     queryCommandValue: function(cmdName, dir) {
-      var pN = domUtils.filterNodeList(
-        this.selection.getStartElementPath(),
-        function(node) {
+      var pN = domUtils.filterNodeList(this.selection.getStartElementPath(), function(node) {
           return domUtils.isBlockElm(node);
-        }
-      ),
+        }),
         value;
       //trace:1026
       if (pN) {
-        value = domUtils
-          .getComputedStyle(pN, "margin-" + dir)
-          .replace(/[^\d]/g, "");
+        value = domUtils.getComputedStyle(pN, "margin-" + dir).replace(/[^\d]/g, "");
         return !value ? 0 : value;
       }
       return 0;

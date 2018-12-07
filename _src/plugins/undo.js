@@ -73,9 +73,7 @@ UE.plugins["undo"] = function() {
           this.reset();
           return;
         }
-        while (
-          this.list[this.index].content == this.list[this.index - 1].content
-        ) {
+        while (this.list[this.index].content == this.list[this.index - 1].content) {
           this.index--;
           if (this.index == 0) {
             return this.restore(0);
@@ -86,9 +84,7 @@ UE.plugins["undo"] = function() {
     };
     this.redo = function() {
       if (this.hasRedo) {
-        while (
-          this.list[this.index].content == this.list[this.index + 1].content
-        ) {
+        while (this.list[this.index].content == this.list[this.index + 1].content) {
           this.index++;
           if (this.index == this.list.length - 1) {
             return this.restore(this.index);
@@ -111,21 +107,16 @@ UE.plugins["undo"] = function() {
       me.fireEvent("afterscencerestore");
       //处理undo后空格不展位的问题
       if (browser.ie) {
-        utils.each(
-          domUtils.getElementsByTagName(me.document, "td th caption p"),
-          function(node) {
-            if (domUtils.isEmptyNode(node)) {
-              domUtils.fillNode(me.document, node);
-            }
+        utils.each(domUtils.getElementsByTagName(me.document, "td th caption p"), function(node) {
+          if (domUtils.isEmptyNode(node)) {
+            domUtils.fillNode(me.document, node);
           }
-        );
+        });
       }
 
       try {
         var rng = new dom.Range(me.document).moveToAddress(scene.address);
-        rng.select(
-          noNeedFillCharTags[rng.startContainer.nodeName.toLowerCase()]
-        );
+        rng.select(noNeedFillCharTags[rng.startContainer.nodeName.toLowerCase()]);
       } catch (e) {}
 
       this.update();
@@ -166,9 +157,7 @@ UE.plugins["undo"] = function() {
       if (
         lastScene &&
         lastScene.content == currentScene.content &&
-        (notCompareRange
-          ? 1
-          : compareRangeAddress(lastScene.address, currentScene.address))
+        (notCompareRange ? 1 : compareRangeAddress(lastScene.address, currentScene.address))
       ) {
         return;
       }
@@ -224,25 +213,21 @@ UE.plugins["undo"] = function() {
       this.undoManger[cmdName]();
     },
     queryCommandState: function(cmdName) {
-      return this.undoManger[
-        "has" + (cmdName.toLowerCase() == "undo" ? "Undo" : "Redo")
-      ]
-        ? 0
-        : -1;
+      return this.undoManger["has" + (cmdName.toLowerCase() == "undo" ? "Undo" : "Redo")] ? 0 : -1;
     },
     notNeedUndo: 1
   };
 
   var keys = {
-    //  /*Backspace*/ 8:1, /*Delete*/ 46:1,
-    /*Shift*/ 16: 1,
-    /*Ctrl*/ 17: 1,
-    /*Alt*/ 18: 1,
-    37: 1,
-    38: 1,
-    39: 1,
-    40: 1
-  },
+      //  /*Backspace*/ 8:1, /*Delete*/ 46:1,
+      /*Shift*/ 16: 1,
+      /*Ctrl*/ 17: 1,
+      /*Alt*/ 18: 1,
+      37: 1,
+      38: 1,
+      39: 1,
+      40: 1
+    },
     keycont = 0,
     lastKeyCode;
   //输入法状态下不计算字符数
@@ -264,13 +249,7 @@ UE.plugins["undo"] = function() {
   me.addListener("keydown", function(type, evt) {
     var me = this;
     var keyCode = evt.keyCode || evt.which;
-    if (
-      !keys[keyCode] &&
-      !evt.ctrlKey &&
-      !evt.metaKey &&
-      !evt.shiftKey &&
-      !evt.altKey
-    ) {
+    if (!keys[keyCode] && !evt.ctrlKey && !evt.metaKey && !evt.shiftKey && !evt.altKey) {
       if (inputType) return;
 
       if (!me.selection.getRange().collapsed) {
@@ -308,13 +287,7 @@ UE.plugins["undo"] = function() {
   });
   me.addListener("keyup", function(type, evt) {
     var keyCode = evt.keyCode || evt.which;
-    if (
-      !keys[keyCode] &&
-      !evt.ctrlKey &&
-      !evt.metaKey &&
-      !evt.shiftKey &&
-      !evt.altKey
-    ) {
+    if (!keys[keyCode] && !evt.ctrlKey && !evt.metaKey && !evt.shiftKey && !evt.altKey) {
       if (inputType) return;
       if (!isCollapsed) {
         this.undoManger.save(false, true);

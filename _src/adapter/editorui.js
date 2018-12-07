@@ -98,10 +98,7 @@
       return function(editor) {
         var ui = new editorui.Button({
           className: "edui-for-" + cmd,
-          title:
-            editor.options.labelMap[cmd] ||
-              editor.getLang("labelMap." + cmd) ||
-              "",
+          title: editor.options.labelMap[cmd] || editor.getLang("labelMap." + cmd) || "",
           onclick: function() {
             editor.execCommand(cmd);
           },
@@ -109,11 +106,7 @@
           showText: false
         });
         editorui.buttons[cmd] = ui;
-        editor.addListener("selectionchange", function(
-          type,
-          causeByUi,
-          uiReady
-        ) {
+        editor.addListener("selectionchange", function(type, causeByUi, uiReady) {
           var state = editor.queryCommandState(cmd);
           if (state == -1) {
             ui.setDisabled(true);
@@ -134,10 +127,7 @@
   editorui.cleardoc = function(editor) {
     var ui = new editorui.Button({
       className: "edui-for-cleardoc",
-      title:
-        editor.options.labelMap.cleardoc ||
-          editor.getLang("labelMap.cleardoc") ||
-          "",
+      title: editor.options.labelMap.cleardoc || editor.getLang("labelMap.cleardoc") || "",
       theme: editor.options.theme,
       onclick: function() {
         if (confirm(editor.getLang("confirmClear"))) {
@@ -168,21 +158,15 @@
               className: "edui-for-" + cmd.replace("float", "") + cmd2,
               title:
                 editor.options.labelMap[cmd.replace("float", "") + cmd2] ||
-                  editor.getLang(
-                    "labelMap." + cmd.replace("float", "") + cmd2
-                  ) ||
-                  "",
+                editor.getLang("labelMap." + cmd.replace("float", "") + cmd2) ||
+                "",
               theme: editor.options.theme,
               onclick: function() {
                 editor.execCommand(cmd, cmd2);
               }
             });
             editorui.buttons[cmd] = ui;
-            editor.addListener("selectionchange", function(
-              type,
-              causeByUi,
-              uiReady
-            ) {
+            editor.addListener("selectionchange", function(type, causeByUi, uiReady) {
               ui.setDisabled(editor.queryCommandState(cmd) == -1);
               ui.setChecked(editor.queryCommandValue(cmd) == cmd2 && !uiReady);
             });
@@ -200,10 +184,7 @@
         var ui = new editorui.ColorButton({
           className: "edui-for-" + cmd,
           color: "default",
-          title:
-            editor.options.labelMap[cmd] ||
-              editor.getLang("labelMap." + cmd) ||
-              "",
+          title: editor.options.labelMap[cmd] || editor.getLang("labelMap." + cmd) || "",
           editor: editor,
           onpickcolor: function(t, color) {
             editor.execCommand(cmd, color);
@@ -258,14 +239,8 @@
         }
         (function(cmd) {
           editorui[cmd] = function(editor, iframeUrl, title) {
-            iframeUrl =
-              iframeUrl ||
-              (editor.options.iframeUrlMap || {})[cmd] ||
-              iframeUrlMap[cmd];
-            title =
-              editor.options.labelMap[cmd] ||
-              editor.getLang("labelMap." + cmd) ||
-              "";
+            iframeUrl = iframeUrl || (editor.options.iframeUrlMap || {})[cmd] || iframeUrlMap[cmd];
+            title = editor.options.labelMap[cmd] || editor.getLang("labelMap." + cmd) || "";
 
             var dialog;
             //没有iframeUrl不创建dialog
@@ -336,14 +311,12 @@
                 }
               },
               theme: editor.options.theme,
-              disabled:
-                (cmd == "scrawl" && editor.queryCommandState("scrawl") == -1) ||
-                  cmd == "charts"
+              disabled: (cmd == "scrawl" && editor.queryCommandState("scrawl") == -1) || cmd == "charts"
             });
             editorui.buttons[cmd] = ui;
             editor.addListener("selectionchange", function() {
               //只存在于右键菜单而无工具栏按钮的ui不需要检测状态
-              var unNeedCheckState = { edittable: 1 };
+              var unNeedCheckState = {edittable: 1};
               if (cmd in unNeedCheckState) return;
 
               var state = editor.queryCommandState(cmd);
@@ -362,10 +335,7 @@
 
   editorui.insertcode = function(editor, list, title) {
     list = editor.options["insertcode"] || [];
-    title =
-      editor.options.labelMap["insertcode"] ||
-      editor.getLang("labelMap.insertcode") ||
-      "";
+    title = editor.options.labelMap["insertcode"] || editor.getLang("labelMap.insertcode") || "";
     // if (!list.length) return;
     var items = [];
     utils.each(list, function(key, val) {
@@ -374,9 +344,7 @@
         value: val,
         theme: editor.options.theme,
         renderLabelHtml: function() {
-          return (
-            '<div class="edui-label %%-label" >' + (this.label || "") + "</div>"
-          );
+          return '<div class="edui-label %%-label" >' + (this.label || "") + "</div>";
         }
       });
     });
@@ -426,10 +394,7 @@
   };
   editorui.fontfamily = function(editor, list, title) {
     list = editor.options["fontfamily"] || [];
-    title =
-      editor.options.labelMap["fontfamily"] ||
-      editor.getLang("labelMap.fontfamily") ||
-      "";
+    title = editor.options.labelMap["fontfamily"] || editor.getLang("labelMap.fontfamily") || "";
     if (!list.length) return;
     for (var i = 0, ci, items = []; (ci = list[i]); i++) {
       var langLabel = editor.getLang("fontfamily")[ci.name] || "";
@@ -491,10 +456,7 @@
   };
 
   editorui.fontsize = function(editor, list, title) {
-    title =
-      editor.options.labelMap["fontsize"] ||
-      editor.getLang("labelMap.fontsize") ||
-      "";
+    title = editor.options.labelMap["fontsize"] || editor.getLang("labelMap.fontsize") || "";
     list = list || editor.options["fontsize"] || [];
     if (!list.length) return;
     var items = [];
@@ -544,10 +506,7 @@
   };
 
   editorui.paragraph = function(editor, list, title) {
-    title =
-      editor.options.labelMap["paragraph"] ||
-      editor.getLang("labelMap.paragraph") ||
-      "";
+    title = editor.options.labelMap["paragraph"] || editor.getLang("labelMap.paragraph") || "";
     list = editor.options["paragraph"] || [];
     if (utils.isEmptyObject(list)) return;
     var items = [];
@@ -604,10 +563,7 @@
   //自定义标题
   editorui.customstyle = function(editor) {
     var list = editor.options["customstyle"] || [],
-      title =
-        editor.options.labelMap["customstyle"] ||
-        editor.getLang("labelMap.customstyle") ||
-        "";
+      title = editor.options.labelMap["customstyle"] || editor.getLang("labelMap.customstyle") || "";
     if (!list.length) return;
     var langCs = editor.getLang("customstyle");
     for (var i = 0, items = [], t; (t = list[i++]); ) {
@@ -683,10 +639,7 @@
     return ui;
   };
   editorui.inserttable = function(editor, iframeUrl, title) {
-    title =
-      editor.options.labelMap["inserttable"] ||
-      editor.getLang("labelMap.inserttable") ||
-      "";
+    title = editor.options.labelMap["inserttable"] || editor.getLang("labelMap.inserttable") || "";
     var ui = new editorui.TableButton({
       editor: editor,
       title: title,
@@ -726,10 +679,7 @@
     var ui = new editorui.MenuButton({
       editor: editor,
       className: "edui-for-lineheight",
-      title:
-        editor.options.labelMap["lineheight"] ||
-          editor.getLang("labelMap.lineheight") ||
-          "",
+      title: editor.options.labelMap["lineheight"] || editor.getLang("labelMap.lineheight") || "",
       items: items,
       onbuttonclick: function() {
         var value = editor.queryCommandValue("LineHeight") || this.value;
@@ -770,14 +720,10 @@
         var ui = new editorui.MenuButton({
           editor: editor,
           className: "edui-for-rowspacing" + cmd,
-          title:
-            editor.options.labelMap["rowspacing" + cmd] ||
-              editor.getLang("labelMap.rowspacing" + cmd) ||
-              "",
+          title: editor.options.labelMap["rowspacing" + cmd] || editor.getLang("labelMap.rowspacing" + cmd) || "",
           items: items,
           onbuttonclick: function() {
-            var value =
-              editor.queryCommandValue("rowspacing", cmd) || this.value;
+            var value = editor.queryCommandValue("rowspacing", cmd) || this.value;
             editor.execCommand("rowspacing", value, cmd);
           }
         });
@@ -843,10 +789,7 @@
   }
 
   editorui.fullscreen = function(editor, title) {
-    title =
-      editor.options.labelMap["fullscreen"] ||
-      editor.getLang("labelMap.fullscreen") ||
-      "";
+    title = editor.options.labelMap["fullscreen"] || editor.getLang("labelMap.fullscreen") || "";
     var ui = new editorui.Button({
       className: "edui-for-fullscreen",
       title: title,
@@ -871,17 +814,10 @@
   editorui["emotion"] = function(editor, iframeUrl) {
     var cmd = "emotion";
     var ui = new editorui.MultiMenuPop({
-      title:
-        editor.options.labelMap[cmd] ||
-          editor.getLang("labelMap." + cmd + "") ||
-          "",
+      title: editor.options.labelMap[cmd] || editor.getLang("labelMap." + cmd + "") || "",
       editor: editor,
       className: "edui-for-" + cmd,
-      iframeUrl: editor.ui.mapUrl(
-        iframeUrl ||
-          (editor.options.iframeUrlMap || {})[cmd] ||
-          iframeUrlMap[cmd]
-      )
+      iframeUrl: editor.ui.mapUrl(iframeUrl || (editor.options.iframeUrlMap || {})[cmd] || iframeUrlMap[cmd])
     });
     editorui.buttons[cmd] = ui;
 
@@ -894,10 +830,7 @@
   editorui.autotypeset = function(editor) {
     var ui = new editorui.AutoTypeSetButton({
       editor: editor,
-      title:
-        editor.options.labelMap["autotypeset"] ||
-          editor.getLang("labelMap.autotypeset") ||
-          "",
+      title: editor.options.labelMap["autotypeset"] || editor.getLang("labelMap.autotypeset") || "",
       className: "edui-for-autotypeset",
       onbuttonclick: function() {
         editor.execCommand("autotypeset");
@@ -915,10 +848,7 @@
     var name = "simpleupload",
       ui = new editorui.Button({
         className: "edui-for-" + name,
-        title:
-          editor.options.labelMap[name] ||
-            editor.getLang("labelMap." + name) ||
-            "",
+        title: editor.options.labelMap[name] || editor.getLang("labelMap." + name) || "",
         onclick: function() {},
         theme: editor.options.theme,
         showText: false

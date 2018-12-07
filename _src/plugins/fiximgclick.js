@@ -11,8 +11,8 @@ UE.plugins["fiximgclick"] = (function() {
     this.resizer = null;
     this.cover = null;
     this.doc = document;
-    this.prePos = { x: 0, y: 0 };
-    this.startPos = { x: 0, y: 0 };
+    this.prePos = {x: 0, y: 0};
+    this.startPos = {x: 0, y: 0};
   }
 
   (function() {
@@ -32,7 +32,7 @@ UE.plugins["fiximgclick"] = (function() {
       init: function(editor) {
         var me = this;
         me.editor = editor;
-        me.startPos = this.prePos = { x: 0, y: 0 };
+        me.startPos = this.prePos = {x: 0, y: 0};
         me.dragId = -1;
 
         var hands = [],
@@ -49,17 +49,12 @@ UE.plugins["fiximgclick"] = (function() {
         });
 
         for (i = 0; i < 8; i++) {
-          hands.push(
-            '<span class="edui-editor-imagescale-hand' + i + '"></span>'
-          );
+          hands.push('<span class="edui-editor-imagescale-hand' + i + '"></span>');
         }
         resizer.id = me.editor.ui.id + "_imagescale";
         resizer.className = "edui-editor-imagescale";
         resizer.innerHTML = hands.join("");
-        resizer.style.cssText +=
-          ";display:none;border:1px solid #3b77ff;z-index:" +
-          me.editor.options.zIndex +
-          ";";
+        resizer.style.cssText += ";display:none;border:1px solid #3b77ff;z-index:" + me.editor.options.zIndex + ";";
 
         me.editor.ui.getDom().appendChild(cover);
         me.editor.ui.getDom().appendChild(resizer);
@@ -94,10 +89,7 @@ UE.plugins["fiximgclick"] = (function() {
           case "mousedown":
             var hand = e.target || e.srcElement,
               hand;
-            if (
-              hand.className.indexOf("edui-editor-imagescale-hand") != -1 &&
-              me.dragId == -1
-            ) {
+            if (hand.className.indexOf("edui-editor-imagescale-hand") != -1 && me.dragId == -1) {
               me.dragId = hand.className.slice(-1);
               me.startPos.x = me.prePos.x = e.clientX;
               me.startPos.y = me.prePos.y = e.clientY;
@@ -180,26 +172,26 @@ UE.plugins["fiximgclick"] = (function() {
             return value < 0
               ? 0
               : value + ele.clientWidth > wrap.clientWidth
-                ? wrap.clientWidth - ele.clientWidth
-                : value;
+              ? wrap.clientWidth - ele.clientWidth
+              : value;
           case "top":
             return value < 0
               ? 0
               : value + ele.clientHeight > wrap.clientHeight
-                ? wrap.clientHeight - ele.clientHeight
-                : value;
+              ? wrap.clientHeight - ele.clientHeight
+              : value;
           case "width":
             return value <= 0
               ? 1
               : value + ele.offsetLeft > wrap.clientWidth
-                ? wrap.clientWidth - ele.offsetLeft
-                : value;
+              ? wrap.clientWidth - ele.offsetLeft
+              : value;
           case "height":
             return value <= 0
               ? 1
               : value + ele.offsetTop > wrap.clientHeight
-                ? wrap.clientHeight - ele.offsetTop
-                : value;
+              ? wrap.clientHeight - ele.offsetTop
+              : value;
         }
       },
       hideCover: function() {
@@ -258,18 +250,18 @@ UE.plugins["fiximgclick"] = (function() {
           height: target.height + "px",
           left:
             iframePos.x +
-              imgPos.x -
-              me.editor.document.body.scrollLeft -
-              editorPos.x -
-              parseInt(resizer.style.borderLeftWidth) +
-              "px",
+            imgPos.x -
+            me.editor.document.body.scrollLeft -
+            editorPos.x -
+            parseInt(resizer.style.borderLeftWidth) +
+            "px",
           top:
             iframePos.y +
-              imgPos.y -
-              me.editor.document.body.scrollTop -
-              editorPos.y -
-              parseInt(resizer.style.borderTopWidth) +
-              "px"
+            imgPos.y -
+            me.editor.document.body.scrollTop -
+            editorPos.y -
+            parseInt(resizer.style.borderTopWidth) +
+            "px"
         });
       }
     };
@@ -301,17 +293,16 @@ UE.plugins["fiximgclick"] = (function() {
             me.ui.getDom().appendChild(imageScale.resizer);
 
             var _keyDownHandler = function(e) {
-              imageScale.hide();
-              if (imageScale.target)
-                me.selection.getRange().selectNode(imageScale.target).select();
-            },
+                imageScale.hide();
+                if (imageScale.target)
+                  me.selection
+                    .getRange()
+                    .selectNode(imageScale.target)
+                    .select();
+              },
               _mouseDownHandler = function(e) {
                 var ele = e.target || e.srcElement;
-                if (
-                  ele &&
-                  (ele.className === undefined ||
-                    ele.className.indexOf("edui-editor-imagescale") == -1)
-                ) {
+                if (ele && (ele.className === undefined || ele.className.indexOf("edui-editor-imagescale") == -1)) {
                   _keyDownHandler(e);
                 }
               },
@@ -331,38 +322,37 @@ UE.plugins["fiximgclick"] = (function() {
               domUtils.un(document, "mousedown", _mouseDownHandler);
               var target = imageScale.target;
               if (target.parentNode) {
-                me.selection.getRange().selectNode(target).select();
+                me.selection
+                  .getRange()
+                  .selectNode(target)
+                  .select();
               }
             });
             //TODO 有iframe的情况，mousedown不能往下传。。
             domUtils.on(imageScale.resizer, "mousedown", function(e) {
               me.selection.getNative().removeAllRanges();
               var ele = e.target || e.srcElement;
-              if (
-                ele &&
-                ele.className.indexOf("edui-editor-imagescale-hand") == -1
-              ) {
+              if (ele && ele.className.indexOf("edui-editor-imagescale-hand") == -1) {
                 timer = setTimeout(function() {
                   imageScale.hide();
                   if (imageScale.target)
-                    me.selection.getRange().selectNode(ele).select();
+                    me.selection
+                      .getRange()
+                      .selectNode(ele)
+                      .select();
                 }, 200);
               }
             });
             domUtils.on(imageScale.resizer, "mouseup", function(e) {
               var ele = e.target || e.srcElement;
-              if (
-                ele &&
-                ele.className.indexOf("edui-editor-imagescale-hand") == -1
-              ) {
+              if (ele && ele.className.indexOf("edui-editor-imagescale-hand") == -1) {
                 clearTimeout(timer);
               }
             });
           }
           imageScale.show(img);
         } else {
-          if (imageScale && imageScale.resizer.style.display != "none")
-            imageScale.hide();
+          if (imageScale && imageScale.resizer.style.display != "none") imageScale.hide();
         }
       });
     }

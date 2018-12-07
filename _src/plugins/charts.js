@@ -8,11 +8,7 @@ UE.plugin.register("charts", function() {
     commands: {
       charts: {
         execCommand: function(cmd, data) {
-          var tableNode = domUtils.findParentByTagName(
-            this.selection.getRange().startContainer,
-            "table",
-            true
-          ),
+          var tableNode = domUtils.findParentByTagName(this.selection.getRange().startContainer, "table", true),
             flagText = [],
             config = {};
 
@@ -48,11 +44,7 @@ UE.plugin.register("charts", function() {
           domUtils.addClass(tableNode, "edui-charts-table");
         },
         queryCommandState: function(cmd, name) {
-          var tableNode = domUtils.findParentByTagName(
-            this.selection.getRange().startContainer,
-            "table",
-            true
-          );
+          var tableNode = domUtils.findParentByTagName(this.selection.getRange().startContainer, "table", true);
           return tableNode && validData(tableNode) ? 0 : -1;
         }
       }
@@ -111,9 +103,7 @@ UE.plugin.register("charts", function() {
       for (var j = 1, cell; (cell = row.cells[j]); j++) {
         var value = utils.trim(cell.innerText || cell.textContent || "");
 
-        value = value
-          .replace(new RegExp(UE.dom.domUtils.fillChar, "g"), "")
-          .replace(/^\s+|\s+$/g, "");
+        value = value.replace(new RegExp(UE.dom.domUtils.fillChar, "g"), "").replace(/^\s+|\s+$/g, "");
 
         //必须是数字
         if (!/^\d*\.?\d+$/.test(value)) {

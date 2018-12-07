@@ -38,9 +38,7 @@
                 '"  vAlign="' +
                 opt.tdvalign +
                 '" >' +
-                (browser.ie && browser.version < 11
-                  ? domUtils.fillChar
-                  : "<br/>") +
+                (browser.ie && browser.version < 11 ? domUtils.fillChar : "<br/>") +
                 "</td>"
             );
           }
@@ -74,11 +72,7 @@
 
       var defaultValue = getDefaultValue(me),
         tableWidth = firstParentBlock.offsetWidth,
-        tdWidth = Math.floor(
-          tableWidth / opt.numCols -
-            defaultValue.tdPadding * 2 -
-            defaultValue.tdBorder
-        );
+        tdWidth = Math.floor(tableWidth / opt.numCols - defaultValue.tdPadding * 2 - defaultValue.tdBorder);
 
       //todo其他属性
       !opt.tdvalign && (opt.tdvalign = me.options.tdvalign);
@@ -96,7 +90,10 @@
         var p = this.document.createElement("p");
         p.innerHTML = browser.ie ? "&nbsp;" : "<br />";
         table.parentNode.insertBefore(p, table);
-        this.selection.getRange().setStart(p, 0).setCursor();
+        this.selection
+          .getRange()
+          .setStart(p, 0)
+          .setCursor();
       }
     }
   };
@@ -104,15 +101,11 @@
   UE.commands["deletetable"] = {
     queryCommandState: function() {
       var rng = this.selection.getRange();
-      return domUtils.findParentByTagName(rng.startContainer, "table", true)
-        ? 0
-        : -1;
+      return domUtils.findParentByTagName(rng.startContainer, "table", true) ? 0 : -1;
     },
     execCommand: function(cmd, table) {
       var rng = this.selection.getRange();
-      table =
-        table ||
-        domUtils.findParentByTagName(rng.startContainer, "table", true);
+      table = table || domUtils.findParentByTagName(rng.startContainer, "table", true);
       if (table) {
         var next = table.nextSibling;
         if (!next) {
@@ -202,11 +195,7 @@
       var table = getTableItemsByRange(this).table;
       if (table) {
         var firstRow = table.rows[0];
-        return firstRow.cells[
-          firstRow.cells.length - 1
-        ].tagName.toLowerCase() != "th"
-          ? 0
-          : -1;
+        return firstRow.cells[firstRow.cells.length - 1].tagName.toLowerCase() != "th" ? 0 : -1;
       }
       return -1;
     },
@@ -216,7 +205,10 @@
         getUETable(table).insertRow(0, "th");
       }
       var th = table.getElementsByTagName("th")[0];
-      this.selection.getRange().setStart(th, 0).setCursor(false, true);
+      this.selection
+        .getRange()
+        .setStart(th, 0)
+        .setCursor(false, true);
     }
   };
   UE.commands["deletetitle"] = {
@@ -224,11 +216,7 @@
       var table = getTableItemsByRange(this).table;
       if (table) {
         var firstRow = table.rows[0];
-        return firstRow.cells[
-          firstRow.cells.length - 1
-        ].tagName.toLowerCase() == "th"
-          ? 0
-          : -1;
+        return firstRow.cells[firstRow.cells.length - 1].tagName.toLowerCase() == "th" ? 0 : -1;
       }
       return -1;
     },
@@ -238,7 +226,10 @@
         domUtils.remove(table.rows[0]);
       }
       var td = table.getElementsByTagName("td")[0];
-      this.selection.getRange().setStart(td, 0).setCursor(false, true);
+      this.selection
+        .getRange()
+        .setStart(td, 0)
+        .setCursor(false, true);
     }
   };
   UE.commands["inserttitlecol"] = {
@@ -257,7 +248,10 @@
       }
       resetTdWidth(table, this);
       var th = table.getElementsByTagName("th")[0];
-      this.selection.getRange().setStart(th, 0).setCursor(false, true);
+      this.selection
+        .getRange()
+        .setStart(th, 0)
+        .setCursor(false, true);
     }
   };
   UE.commands["deletetitlecol"] = {
@@ -278,7 +272,10 @@
       }
       resetTdWidth(table, this);
       var td = table.getElementsByTagName("td")[0];
-      this.selection.getRange().setStart(td, 0).setCursor(false, true);
+      this.selection
+        .getRange()
+        .setStart(td, 0)
+        .setCursor(false, true);
     }
   };
 
@@ -297,15 +294,11 @@
       if (rightColIndex >= ut.colsNum) return -1; // 如果处于最右边则不能向右合并
 
       var rightCellInfo = ut.indexTable[cellInfo.rowIndex][rightColIndex],
-        rightCell =
-          table.rows[rightCellInfo.rowIndex].cells[rightCellInfo.cellIndex];
+        rightCell = table.rows[rightCellInfo.rowIndex].cells[rightCellInfo.cellIndex];
       if (!rightCell || cell.tagName != rightCell.tagName) return -1; // TH和TD不能相互合并
 
       // 当且仅当两个Cell的开始列号和结束列号一致时能进行合并
-      return rightCellInfo.rowIndex == cellInfo.rowIndex &&
-        rightCellInfo.rowSpan == cellInfo.rowSpan
-        ? 0
-        : -1;
+      return rightCellInfo.rowIndex == cellInfo.rowIndex && rightCellInfo.rowSpan == cellInfo.rowSpan ? 0 : -1;
     },
     execCommand: function(cmd) {
       var rng = this.selection.getRange(),
@@ -331,15 +324,11 @@
       if (downRowIndex >= ut.rowsNum) return -1; // 如果处于最下边则不能向下合并
 
       var downCellInfo = ut.indexTable[downRowIndex][cellInfo.colIndex],
-        downCell =
-          table.rows[downCellInfo.rowIndex].cells[downCellInfo.cellIndex];
+        downCell = table.rows[downCellInfo.rowIndex].cells[downCellInfo.cellIndex];
       if (!downCell || cell.tagName != downCell.tagName) return -1; // TH和TD不能相互合并
 
       // 当且仅当两个Cell的开始列号和结束列号一致时能进行合并
-      return downCellInfo.colIndex == cellInfo.colIndex &&
-        downCellInfo.colSpan == cellInfo.colSpan
-        ? 0
-        : -1;
+      return downCellInfo.colIndex == cellInfo.colIndex && downCellInfo.colSpan == cellInfo.colSpan ? 0 : -1;
     },
     execCommand: function() {
       var rng = this.selection.getRange(),
@@ -374,9 +363,7 @@
       var tableItems = getTableItemsByRange(this),
         cell = tableItems.cell;
       return cell &&
-        (cell.tagName == "TD" ||
-          (cell.tagName == "TH" &&
-            tableItems.tr !== tableItems.table.rows[0])) &&
+        (cell.tagName == "TD" || (cell.tagName == "TH" && tableItems.tr !== tableItems.table.rows[0])) &&
         getUETable(tableItems.table).rowsNum < this.options.maxRowNum
         ? 0
         : -1;
@@ -394,17 +381,12 @@
         ut.insertRow(cellInfo.rowIndex, cell);
       } else {
         var range = ut.cellsRange;
-        for (
-          var i = 0, len = range.endRowIndex - range.beginRowIndex + 1;
-          i < len;
-          i++
-        ) {
+        for (var i = 0, len = range.endRowIndex - range.beginRowIndex + 1; i < len; i++) {
           ut.insertRow(range.beginRowIndex, cell);
         }
       }
       rng.moveToBookmark(bk).select();
-      if (table.getAttribute("interlaced") === "enabled")
-        this.fireEvent("interlacetable", table);
+      if (table.getAttribute("interlaced") === "enabled") this.fireEvent("interlacetable", table);
     }
   };
   //后插入行
@@ -412,11 +394,7 @@
     queryCommandState: function() {
       var tableItems = getTableItemsByRange(this),
         cell = tableItems.cell;
-      return cell &&
-        cell.tagName == "TD" &&
-        getUETable(tableItems.table).rowsNum < this.options.maxRowNum
-        ? 0
-        : -1;
+      return cell && cell.tagName == "TD" && getUETable(tableItems.table).rowsNum < this.options.maxRowNum ? 0 : -1;
     },
     execCommand: function() {
       var rng = this.selection.getRange(),
@@ -431,17 +409,12 @@
         ut.insertRow(cellInfo.rowIndex + cellInfo.rowSpan, cell);
       } else {
         var range = ut.cellsRange;
-        for (
-          var i = 0, len = range.endRowIndex - range.beginRowIndex + 1;
-          i < len;
-          i++
-        ) {
+        for (var i = 0, len = range.endRowIndex - range.beginRowIndex + 1; i < len; i++) {
           ut.insertRow(range.endRowIndex + 1, cell);
         }
       }
       rng.moveToBookmark(bk).select();
-      if (table.getAttribute("interlaced") === "enabled")
-        this.fireEvent("interlacetable", table);
+      if (table.getAttribute("interlaced") === "enabled") this.fireEvent("interlacetable", table);
     }
   };
   UE.commands["deleterow"] = {
@@ -460,11 +433,7 @@
       if (utils.isEmptyObject(cellsRange)) {
         ut.deleteRow(cellInfo.rowIndex);
       } else {
-        for (
-          var i = cellsRange.beginRowIndex;
-          i < cellsRange.endRowIndex + 1;
-          i++
-        ) {
+        for (var i = cellsRange.beginRowIndex; i < cellsRange.endRowIndex + 1; i++) {
           ut.deleteRow(cellsRange.beginRowIndex);
         }
       }
@@ -476,23 +445,14 @@
           rng.setStart(nextSibling, 0).setCursor(false, true);
         }
       } else {
-        if (
-          cellInfo.rowSpan == 1 ||
-          cellInfo.rowSpan ==
-            cellsRange.endRowIndex - cellsRange.beginRowIndex + 1
-        ) {
-          if (nextCell || preCell)
-            rng.selectNodeContents(nextCell || preCell).setCursor(false, true);
+        if (cellInfo.rowSpan == 1 || cellInfo.rowSpan == cellsRange.endRowIndex - cellsRange.beginRowIndex + 1) {
+          if (nextCell || preCell) rng.selectNodeContents(nextCell || preCell).setCursor(false, true);
         } else {
-          var newCell = ut.getCell(
-            cellInfo.rowIndex,
-            ut.indexTable[cellInfo.rowIndex][cellInfo.colIndex].cellIndex
-          );
+          var newCell = ut.getCell(cellInfo.rowIndex, ut.indexTable[cellInfo.rowIndex][cellInfo.colIndex].cellIndex);
           if (newCell) rng.selectNodeContents(newCell).setCursor(false, true);
         }
       }
-      if (table.getAttribute("interlaced") === "enabled")
-        this.fireEvent("interlacetable", table);
+      if (table.getAttribute("interlaced") === "enabled") this.fireEvent("interlacetable", table);
     }
   };
   UE.commands["insertcol"] = {
@@ -500,8 +460,7 @@
       var tableItems = getTableItemsByRange(this),
         cell = tableItems.cell;
       return cell &&
-        (cell.tagName == "TD" ||
-          (cell.tagName == "TH" && cell !== tableItems.tr.cells[0])) &&
+        (cell.tagName == "TD" || (cell.tagName == "TH" && cell !== tableItems.tr.cells[0])) &&
         getUETable(tableItems.table).colsNum < this.options.maxColNum
         ? 0
         : -1;
@@ -519,11 +478,7 @@
         ut.insertCol(cellInfo.colIndex, cell);
       } else {
         var range = ut.cellsRange;
-        for (
-          var i = 0, len = range.endColIndex - range.beginColIndex + 1;
-          i < len;
-          i++
-        ) {
+        for (var i = 0, len = range.endColIndex - range.beginColIndex + 1; i < len; i++) {
           ut.insertCol(range.beginColIndex, cell);
         }
       }
@@ -534,10 +489,7 @@
     queryCommandState: function() {
       var tableItems = getTableItemsByRange(this),
         cell = tableItems.cell;
-      return cell &&
-        getUETable(tableItems.table).colsNum < this.options.maxColNum
-        ? 0
-        : -1;
+      return cell && getUETable(tableItems.table).colsNum < this.options.maxColNum ? 0 : -1;
     },
     execCommand: function() {
       var rng = this.selection.getRange(),
@@ -550,11 +502,7 @@
         ut.insertCol(cellInfo.colIndex + cellInfo.colSpan, cell);
       } else {
         var range = ut.cellsRange;
-        for (
-          var i = 0, len = range.endColIndex - range.beginColIndex + 1;
-          i < len;
-          i++
-        ) {
+        for (var i = 0, len = range.endColIndex - range.beginColIndex + 1; i < len; i++) {
           ut.insertCol(range.endColIndex + 1, cell);
         }
       }
@@ -713,22 +661,15 @@
             colsNum += 1;
           }
         }
-        averageWidth =
-          Math.ceil(sumWidth / colsNum) -
-          tbAttr.tdBorder * 2 -
-          tbAttr.tdPadding * 2;
+        averageWidth = Math.ceil(sumWidth / colsNum) - tbAttr.tdBorder * 2 - tbAttr.tdPadding * 2;
         return averageWidth;
       }
 
       function setAverageWidth(averageWidth) {
-        utils.each(domUtils.getElementsByTagName(ut.table, "th"), function(
-          node
-        ) {
+        utils.each(domUtils.getElementsByTagName(ut.table, "th"), function(node) {
           node.setAttribute("width", "");
         });
-        var cells = ut.isFullRow()
-          ? domUtils.getElementsByTagName(ut.table, "td")
-          : ut.selectedTds;
+        var cells = ut.isFullRow() ? domUtils.getElementsByTagName(ut.table, "td") : ut.selectedTds;
 
         utils.each(cells, function(node) {
           if (node.colSpan == 1) {
@@ -760,12 +701,7 @@
           sumHeight = 0,
           tb = ut.table,
           tbAttr = getDefaultValue(me, tb),
-          tdpadding = parseInt(
-            domUtils.getComputedStyle(
-              tb.getElementsByTagName("td")[0],
-              "padding-top"
-            )
-          );
+          tdpadding = parseInt(domUtils.getComputedStyle(tb.getElementsByTagName("td")[0], "padding-top"));
 
         if (ut.isFullCol()) {
           var captionArr = domUtils.getElementsByTagName(tb, "caption"),
@@ -797,16 +733,13 @@
         if (browser.ie && browser.version < 9) {
           averageHeight = Math.ceil(sumHeight / rowNum);
         } else {
-          averageHeight =
-            Math.ceil(sumHeight / rowNum) - tbAttr.tdBorder * 2 - tdpadding * 2;
+          averageHeight = Math.ceil(sumHeight / rowNum) - tbAttr.tdBorder * 2 - tdpadding * 2;
         }
         return averageHeight;
       }
 
       function setAverageHeight(averageHeight) {
-        var cells = ut.isFullCol()
-          ? domUtils.getElementsByTagName(ut.table, "td")
-          : ut.selectedTds;
+        var cells = ut.isFullCol() ? domUtils.getElementsByTagName(ut.table, "td") : ut.selectedTds;
         utils.each(cells, function(node) {
           if (node.rowSpan == 1) {
             node.setAttribute("height", averageHeight);
@@ -831,9 +764,7 @@
 
       if (!ut) {
         var start = me.selection.getStart(),
-          cell =
-            start &&
-            domUtils.findParentByTagName(start, ["td", "th", "caption"], true);
+          cell = start && domUtils.findParentByTagName(start, ["td", "th", "caption"], true);
         if (!/caption/gi.test(cell.tagName)) {
           domUtils.setAttributes(cell, data);
         } else {
@@ -848,9 +779,9 @@
       }
     },
     /**
-         * 查询当前点击的单元格的对齐状态， 如果当前已经选择了多个单元格， 则会返回所有单元格经过统一协调过后的状态
-         * @see UE.UETable.getTableCellAlignState
-         */
+     * 查询当前点击的单元格的对齐状态， 如果当前已经选择了多个单元格， 则会返回所有单元格经过统一协调过后的状态
+     * @see UE.UETable.getTableCellAlignState
+     */
     queryCommandValue: function(cmd) {
       var activeMenuCell = getTableItemsByRange(this).cell;
 
@@ -900,10 +831,7 @@
       if (table) {
         var arr = domUtils
           .getElementsByTagName(table, "td")
-          .concat(
-            domUtils.getElementsByTagName(table, "th"),
-            domUtils.getElementsByTagName(table, "caption")
-          );
+          .concat(domUtils.getElementsByTagName(table, "th"), domUtils.getElementsByTagName(table, "caption"));
         utils.each(arr, function(node) {
           node.style.borderColor = color;
         });
@@ -921,9 +849,7 @@
 
       if (!ut) {
         var start = me.selection.getStart(),
-          cell =
-            start &&
-            domUtils.findParentByTagName(start, ["td", "th", "caption"], true);
+          cell = start && domUtils.findParentByTagName(start, ["td", "th", "caption"], true);
         if (cell) {
           cell.style.backgroundColor = bkColor;
         }
@@ -1006,10 +932,7 @@
     utils.each(tds, function(td) {
       td.removeAttribute("width");
     });
-    table.setAttribute(
-      "width",
-      getTableWidth(editor, true, getDefaultValue(editor, table))
-    );
+    table.setAttribute("width", getTableWidth(editor, true, getDefaultValue(editor, table)));
     var tdsWidths = [];
     setTimeout(function() {
       utils.each(tds, function(td) {
@@ -1025,9 +948,7 @@
     var body = editor.body;
     return (
       body.offsetWidth -
-      (needIEHack
-        ? parseInt(domUtils.getComputedStyle(body, "margin-left"), 10) * 2
-        : 0) -
+      (needIEHack ? parseInt(domUtils.getComputedStyle(body, "margin-left"), 10) * 2 : 0) -
       defaultValue.tableBorder * 2 -
       (editor.options.offsetWidth || 0)
     );

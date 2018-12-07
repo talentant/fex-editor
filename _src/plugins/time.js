@@ -34,7 +34,10 @@ UE.commands["time"] = UE.commands["date"] = {
         ii = ("0" + date.getMinutes()).slice(-2),
         ss = ("0" + date.getSeconds()).slice(-2);
       format = format || "hh:ii:ss";
-      return format.replace(/hh/gi, hh).replace(/ii/gi, ii).replace(/ss/gi, ss);
+      return format
+        .replace(/hh/gi, hh)
+        .replace(/ii/gi, ii)
+        .replace(/ss/gi, ss);
     }
     function formatDate(date, format) {
       var yyyy = ("000" + date.getFullYear()).slice(-4),
@@ -49,9 +52,6 @@ UE.commands["time"] = UE.commands["date"] = {
         .replace(/dd/gi, dd);
     }
 
-    this.execCommand(
-      "insertHtml",
-      cmd == "time" ? formatTime(date, format) : formatDate(date, format)
-    );
+    this.execCommand("insertHtml", cmd == "time" ? formatTime(date, format) : formatDate(date, format));
   }
 };

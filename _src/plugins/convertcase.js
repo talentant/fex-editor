@@ -38,14 +38,9 @@ UE.commands["touppercase"] = UE.commands["tolowercase"] = {
         return !domUtils.isBr(node) && !domUtils.isWhitespace(node);
       },
       curNode = domUtils.getNextDomNode(bk.start, false, filterFn);
-    while (
-      curNode &&
-      domUtils.getPosition(curNode, bkEnd) & domUtils.POSITION_PRECEDING
-    ) {
+    while (curNode && domUtils.getPosition(curNode, bkEnd) & domUtils.POSITION_PRECEDING) {
       if (curNode.nodeType == 3) {
-        curNode.nodeValue = curNode.nodeValue[
-          cmd == "touppercase" ? "toUpperCase" : "toLowerCase"
-        ]();
+        curNode.nodeValue = curNode.nodeValue[cmd == "touppercase" ? "toUpperCase" : "toLowerCase"]();
       }
       curNode = domUtils.getNextDomNode(curNode, true, filterFn);
       if (curNode === bkEnd) {

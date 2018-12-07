@@ -17,8 +17,7 @@
           options.className = "edui-for-" + name;
         }
         if (cssRules) {
-          options.cssRules =
-            ".edui-for-" + name + " .edui-dialog-content  {" + cssRules + "}";
+          options.cssRules = ".edui-for-" + name + " .edui-dialog-content  {" + cssRules + "}";
         }
       }
       this.initOptions(
@@ -116,10 +115,8 @@
             contentRect = UE.ui.uiUtils.getClientRect(contentNode),
             vpRect = uiUtils.getViewportRect();
 
-          contentNode.style.width =
-            vpRect.width - wrapRect.width + contentRect.width + "px";
-          contentNode.style.height =
-            vpRect.height - wrapRect.height + contentRect.height + "px";
+          contentNode.style.width = vpRect.width - wrapRect.width + contentRect.width + "px";
+          contentNode.style.height = vpRect.height - wrapRect.height + contentRect.height + "px";
 
           dialogWrapNode.style.width = vpRect.width + "px";
           dialogWrapNode.style.height = vpRect.height + "px";
@@ -163,8 +160,7 @@
         var popSize = this.fitSize();
         var titleHeight = this.getDom("titlebar").offsetHeight | 0;
         var left = vpRect.width / 2 - popSize.width / 2;
-        var top =
-          vpRect.height / 2 - (popSize.height - titleHeight) / 2 - titleHeight;
+        var top = vpRect.height / 2 - (popSize.height - titleHeight) / 2 - titleHeight;
         var popEl = this.getDom();
         this.safeSetOffset({
           left: Math.max(left | 0, 0),
@@ -183,10 +179,8 @@
           contentRect = UE.ui.uiUtils.getClientRect(contentNode);
         dialogWrapNode.style.left = "-100000px";
 
-        contentNode.style.width =
-          vpRect.width - wrapRect.width + contentRect.width + "px";
-        contentNode.style.height =
-          vpRect.height - wrapRect.height + contentRect.height + "px";
+        contentNode.style.width = vpRect.width - wrapRect.width + contentRect.width + "px";
+        contentNode.style.height = vpRect.height - wrapRect.height + contentRect.height + "px";
 
         dialogWrapNode.style.width = vpRect.width + "px";
         dialogWrapNode.style.height = vpRect.height + "px";
@@ -237,18 +231,12 @@
           buff[i] = this.buttons[i].renderHtml();
         }
         footHtml =
-          '<div class="%%-foot">' +
-          '<div id="##_buttons" class="%%-buttons">' +
-          buff.join("") +
-          "</div>" +
-          "</div>";
+          '<div class="%%-foot">' + '<div id="##_buttons" class="%%-buttons">' + buff.join("") + "</div>" + "</div>";
       }
 
       return (
         '<div id="##" class="%%"><div ' +
-        (!this.fullscreen
-          ? 'class="%%"'
-          : 'class="%%-wrap edui-dialog-fullscreen-flag"') +
+        (!this.fullscreen ? 'class="%%"' : 'class="%%-wrap edui-dialog-fullscreen-flag"') +
         '><div id="##_body" class="%%-body">' +
         '<div class="%%-shadow"></div>' +
         '<div id="##_titlebar" class="%%-titlebar">' +
@@ -379,12 +367,10 @@
 
         //要高过编辑器的zindxe
         this.editor.container.style.zIndex &&
-          (this.getDom().style.zIndex =
-            this.editor.container.style.zIndex * 1 + 10);
+          (this.getDom().style.zIndex = this.editor.container.style.zIndex * 1 + 10);
         this._hidden = false;
         this.fireEvent("show");
-        baidu.editor.ui.uiUtils.getFixedLayer().style.zIndex =
-          this.getDom().style.zIndex - 4;
+        baidu.editor.ui.uiUtils.getFixedLayer().style.zIndex = this.getDom().style.zIndex - 4;
       }
     },
     isHidden: function() {

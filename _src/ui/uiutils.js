@@ -44,9 +44,7 @@
       return el;
     },
     getViewportElement: function() {
-      return browser.ie && browser.quirks
-        ? document.body
-        : document.documentElement;
+      return browser.ie && browser.quirks ? document.body : document.documentElement;
     },
     getClientRect: function(element) {
       var bcr;
@@ -54,7 +52,7 @@
       try {
         bcr = element.getBoundingClientRect();
       } catch (e) {
-        bcr = { left: 0, top: 0, height: 0, width: 0 };
+        bcr = {left: 0, top: 0, height: 0, width: 0};
       }
       var rect = {
         left: Math.round(bcr.left),
@@ -63,10 +61,7 @@
         width: Math.round(bcr.right - bcr.left)
       };
       var doc;
-      while (
-        (doc = element.ownerDocument) !== document &&
-        (element = domUtils.getWindow(doc).frameElement)
-      ) {
+      while ((doc = element.ownerDocument) !== document && (element = domUtils.getWindow(doc).frameElement)) {
         bcr = element.getBoundingClientRect();
         rect.left += bcr.left;
         rect.top += bcr.top;
@@ -133,11 +128,7 @@
       var k = attributes.length;
       while (k--) {
         var attrNode = attributes[k];
-        if (
-          attrNode.nodeName != "style" &&
-          attrNode.nodeName != "class" &&
-          (!browser.ie || attrNode.specified)
-        ) {
+        if (attrNode.nodeName != "style" && attrNode.nodeName != "class" && (!browser.ie || attrNode.specified)) {
           tgt.setAttribute(attrNode.nodeName, attrNode.nodeValue);
         }
       }
@@ -157,13 +148,7 @@
     },
     contains: function(elA, elB) {
       return (
-        elA &&
-        elB &&
-        (elA === elB
-          ? false
-          : elA.contains
-            ? elA.contains(elB)
-            : elA.compareDocumentPosition(elB) & 16)
+        elA && elB && (elA === elB ? false : elA.contains ? elA.contains(elB) : elA.compareDocumentPosition(elB) & 16)
       );
     },
     startDrag: function(evt, callbacks, doc) {
@@ -264,10 +249,6 @@
   }
   function bindFixedLayer(adjOffset) {
     domUtils.on(window, "scroll", updateFixedOffset);
-    domUtils.on(
-      window,
-      "resize",
-      baidu.editor.utils.defer(updateFixedOffset, 0, true)
-    );
+    domUtils.on(window, "resize", baidu.editor.utils.defer(updateFixedOffset, 0, true));
   }
 })();

@@ -13,11 +13,7 @@ UE.plugins["pagebreak"] = function() {
       var firstChild = node.firstChild,
         tmpNode;
 
-      while (
-        firstChild &&
-        firstChild.nodeType == 1 &&
-        domUtils.isEmptyBlock(firstChild)
-      ) {
+      while (firstChild && firstChild.nodeType == 1 && domUtils.isEmptyBlock(firstChild)) {
         tmpNode = firstChild;
         firstChild = firstChild.firstChild;
       }
@@ -35,12 +31,7 @@ UE.plugins["pagebreak"] = function() {
     );
   });
   function isHr(node) {
-    return (
-      node &&
-      node.nodeType == 1 &&
-      node.tagName == "HR" &&
-      node.className == "pagebreak"
-    );
+    return node && node.nodeType == 1 && node.tagName == "HR" && node.className == "pagebreak";
   }
   me.addInputRule(function(root) {
     root.traversal(function(node) {
@@ -64,18 +55,18 @@ UE.plugins["pagebreak"] = function() {
   });
 
   /**
-     * 插入分页符
-     * @command pagebreak
-     * @method execCommand
-     * @param { String } cmd 命令字符串
-     * @remind 在表格中插入分页符会把表格切分成两部分
-     * @remind 获取编辑器内的数据时， 编辑器会把分页符转换成“_ueditor_page_break_tag_”字符串，
-     *          以便于提交数据到服务器端后处理分页。
-     * @example
-     * ```javascript
-     * editor.execCommand( 'pagebreak'); //插入一个hr标签，带有样式类名pagebreak
-     * ```
-     */
+   * 插入分页符
+   * @command pagebreak
+   * @method execCommand
+   * @param { String } cmd 命令字符串
+   * @remind 在表格中插入分页符会把表格切分成两部分
+   * @remind 获取编辑器内的数据时， 编辑器会把分页符转换成“_ueditor_page_break_tag_”字符串，
+   *          以便于提交数据到服务器端后处理分页。
+   * @example
+   * ```javascript
+   * editor.execCommand( 'pagebreak'); //插入一个hr标签，带有样式类名pagebreak
+   * ```
+   */
 
   me.commands["pagebreak"] = {
     execCommand: function() {
@@ -88,11 +79,7 @@ UE.plugins["pagebreak"] = function() {
       });
       domUtils.unSelectable(hr);
       //table单独处理
-      var node = domUtils.findParentByTagName(
-        range.startContainer,
-        notBreakTags,
-        true
-      ),
+      var node = domUtils.findParentByTagName(range.startContainer, notBreakTags, true),
         parents = [],
         pN;
       if (node) {
@@ -125,11 +112,7 @@ UE.plugins["pagebreak"] = function() {
         if (!range.collapsed) {
           range.deleteContents();
           var start = range.startContainer;
-          while (
-            !domUtils.isBody(start) &&
-            domUtils.isBlockElm(start) &&
-            domUtils.isEmptyNode(start)
-          ) {
+          while (!domUtils.isBody(start) && domUtils.isBlockElm(start) && domUtils.isEmptyNode(start)) {
             range.setStartBefore(start).collapse(true);
             domUtils.remove(start);
             start = range.startContainer;

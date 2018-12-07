@@ -19,8 +19,8 @@ UE.plugins["pasteplain"] = function() {
       return {
         //直接删除及其字节点内容
         "-": "script style object iframe embed input select",
-        p: { $: {} },
-        br: { $: {} },
+        p: {$: {}},
+        br: {$: {}},
         div: function(node) {
           var tmpNode,
             p = UE.uNode.createElement("p");
@@ -60,10 +60,7 @@ UE.plugins["pasteplain"] = function() {
           //没有内容的td直接删掉
           var txt = !!node.innerText();
           if (txt) {
-            node.parentNode.insertAfter(
-              UE.uNode.createText(" &nbsp; &nbsp;"),
-              node
-            );
+            node.parentNode.insertAfter(UE.uNode.createText(" &nbsp; &nbsp;"), node);
           }
           node.parentNode.removeChild(node, node.innerText());
         }
@@ -74,27 +71,27 @@ UE.plugins["pasteplain"] = function() {
   var pasteplain = me.options.pasteplain;
 
   /**
-     * 启用或取消纯文本粘贴模式
-     * @command pasteplain
-     * @method execCommand
-     * @param { String } cmd 命令字符串
-     * @example
-     * ```javascript
-     * editor.queryCommandState( 'pasteplain' );
-     * ```
-     */
+   * 启用或取消纯文本粘贴模式
+   * @command pasteplain
+   * @method execCommand
+   * @param { String } cmd 命令字符串
+   * @example
+   * ```javascript
+   * editor.queryCommandState( 'pasteplain' );
+   * ```
+   */
 
   /**
-     * 查询当前是否处于纯文本粘贴模式
-     * @command pasteplain
-     * @method queryCommandState
-     * @param { String } cmd 命令字符串
-     * @return { int } 如果处于纯文本模式，返回1，否则，返回0
-     * @example
-     * ```javascript
-     * editor.queryCommandState( 'pasteplain' );
-     * ```
-     */
+   * 查询当前是否处于纯文本粘贴模式
+   * @command pasteplain
+   * @method queryCommandState
+   * @param { String } cmd 命令字符串
+   * @return { int } 如果处于纯文本模式，返回1，否则，返回0
+   * @example
+   * ```javascript
+   * editor.queryCommandState( 'pasteplain' );
+   * ```
+   */
   me.commands["pasteplain"] = {
     queryCommandState: function() {
       return pasteplain ? 1 : 0;

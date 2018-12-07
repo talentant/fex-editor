@@ -17,19 +17,14 @@
       //                    }
       //                }
       //            }
-      return domUtils.filterNodeList(
-        editor.selection.getStartElementPath(),
-        function(n) {
-          return n && n.nodeType == 1 && n.getAttribute("dir");
-        }
-      );
+      return domUtils.filterNodeList(editor.selection.getStartElementPath(), function(n) {
+        return n && n.nodeType == 1 && n.getAttribute("dir");
+      });
     },
     doDirectionality = function(range, editor, forward) {
       var bookmark,
         filterFn = function(node) {
-          return node.nodeType == 1
-            ? !domUtils.isBookmarkNode(node)
-            : !domUtils.isWhitespace(node);
+          return node.nodeType == 1 ? !domUtils.isBookmarkNode(node) : !domUtils.isWhitespace(node);
         },
         obj = getObj(editor);
 
@@ -43,20 +38,12 @@
         current = domUtils.getNextDomNode(bookmark2.start, false, filterFn),
         tmpRange = range.cloneRange(),
         tmpNode;
-      while (
-        current &&
-        !(
-          domUtils.getPosition(current, bookmark2.end) &
-          domUtils.POSITION_FOLLOWING
-        )
-      ) {
+      while (current && !(domUtils.getPosition(current, bookmark2.end) & domUtils.POSITION_FOLLOWING)) {
         if (current.nodeType == 3 || !block(current)) {
           tmpRange.setStartBefore(current);
           while (current && current !== bookmark2.end && !block(current)) {
             tmpNode = current;
-            current = domUtils.getNextDomNode(current, false, null, function(
-              node
-            ) {
+            current = domUtils.getNextDomNode(current, false, null, function(node) {
               return !block(node);
             });
           }
@@ -85,28 +72,28 @@
     };
 
   /**
-     * 文字输入方向
-     * @command directionality
-     * @method execCommand
-     * @param { String } cmdName 命令字符串
-     * @param { String } forward 传入'ltr'表示从左向右输入，传入'rtl'表示从右向左输入
-     * @example
-     * ```javascript
-     * editor.execCommand( 'directionality', 'ltr');
-     * ```
-     */
+   * 文字输入方向
+   * @command directionality
+   * @method execCommand
+   * @param { String } cmdName 命令字符串
+   * @param { String } forward 传入'ltr'表示从左向右输入，传入'rtl'表示从右向左输入
+   * @example
+   * ```javascript
+   * editor.execCommand( 'directionality', 'ltr');
+   * ```
+   */
 
   /**
-     * 查询当前选区的文字输入方向
-     * @command directionality
-     * @method queryCommandValue
-     * @param { String } cmdName 命令字符串
-     * @return { String } 返回'ltr'表示从左向右输入，返回'rtl'表示从右向左输入
-     * @example
-     * ```javascript
-     * editor.queryCommandValue( 'directionality');
-     * ```
-     */
+   * 查询当前选区的文字输入方向
+   * @command directionality
+   * @method queryCommandValue
+   * @param { String } cmdName 命令字符串
+   * @return { String } 返回'ltr'表示从左向右输入，返回'rtl'表示从右向左输入
+   * @example
+   * ```javascript
+   * editor.queryCommandValue( 'directionality');
+   * ```
+   */
   UE.commands["directionality"] = {
     execCommand: function(cmdName, forward) {
       var range = this.selection.getRange();

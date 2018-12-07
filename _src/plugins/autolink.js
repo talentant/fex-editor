@@ -30,17 +30,11 @@ UE.plugin.register(
 
                 var start = range.startContainer;
                 while (start.nodeType == 1 && range.startOffset > 0) {
-                  start =
-                    range.startContainer.childNodes[range.startOffset - 1];
+                  start = range.startContainer.childNodes[range.startOffset - 1];
                   if (!start) {
                     break;
                   }
-                  range.setStart(
-                    start,
-                    start.nodeType == 1
-                      ? start.childNodes.length
-                      : start.nodeValue.length
-                  );
+                  range.setStart(start, start.nodeType == 1 ? start.childNodes.length : start.nodeValue.length);
                   range.collapse(true);
                   start = range.startContainer;
                 }
@@ -71,18 +65,11 @@ UE.plugin.register(
                     .match(/(?:https?:\/\/|ssh:\/\/|ftp:\/\/|file:\/|www\.)/i)
                 ) {
                   while (range.toString().length) {
-                    if (
-                      /^(?:https?:\/\/|ssh:\/\/|ftp:\/\/|file:\/|www\.)/i.test(
-                        range.toString()
-                      )
-                    ) {
+                    if (/^(?:https?:\/\/|ssh:\/\/|ftp:\/\/|file:\/|www\.)/i.test(range.toString())) {
                       break;
                     }
                     try {
-                      range.setStart(
-                        range.startContainer,
-                        range.startOffset + 1
-                      );
+                      range.setStart(range.startContainer, range.startOffset + 1);
                     } catch (e) {
                       //trace:2121
                       var start = range.startContainer;
@@ -96,13 +83,7 @@ UE.plugin.register(
                     }
                   }
                   //range的开始边界已经在a标签里的不再处理
-                  if (
-                    domUtils.findParentByTagName(
-                      range.startContainer,
-                      "a",
-                      true
-                    )
-                  ) {
+                  if (domUtils.findParentByTagName(range.startContainer, "a", true)) {
                     return;
                   }
                   var a = me.document.createElement("a"),
@@ -112,12 +93,8 @@ UE.plugin.register(
                   me.undoManger && me.undoManger.save();
                   a.appendChild(range.extractContents());
                   a.href = a.innerHTML = a.innerHTML.replace(/<[^>]+>/g, "");
-                  href = a
-                    .getAttribute("href")
-                    .replace(new RegExp(domUtils.fillChar, "g"), "");
-                  href = /^(?:https?:\/\/)/gi.test(href)
-                    ? href
-                    : "http://" + href;
+                  href = a.getAttribute("href").replace(new RegExp(domUtils.fillChar, "g"), "");
+                  href = /^(?:https?:\/\/)/gi.test(href) ? href : "http://" + href;
                   a.setAttribute("_src", utils.html(href));
                   a.href = utils.html(href);
 
@@ -176,11 +153,7 @@ UE.plugin.register(
           var start = rng.startContainer;
 
           if (keyCode == 13) {
-            while (
-              start &&
-              !domUtils.isBody(start) &&
-              !domUtils.isBlockElm(start)
-            ) {
+            while (start && !domUtils.isBody(start) && !domUtils.isBlockElm(start)) {
               start = start.parentNode;
             }
             if (start && !domUtils.isBody(start) && start.nodeName == "P") {
@@ -195,11 +168,7 @@ UE.plugin.register(
           } else if (keyCode == 32) {
             if (start.nodeType == 3 && /^\s$/.test(start.nodeValue)) {
               start = start.previousSibling;
-              if (
-                start &&
-                start.nodeName == "A" &&
-                !start.getAttribute("_href")
-              ) {
+              if (start && start.nodeName == "A" && !start.getAttribute("_href")) {
                 domUtils.remove(start, true);
               }
             }

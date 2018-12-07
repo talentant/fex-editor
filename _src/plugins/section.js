@@ -91,7 +91,7 @@ UE.plugin.register("section", function() {
           }
 
           var me = this,
-            Directory = getSection({ level: -1, title: "root" }),
+            Directory = getSection({level: -1, title: "root"}),
             previous = Directory;
 
           function traversal(node, Directory) {
@@ -105,9 +105,9 @@ UE.plugin.register("section", function() {
               level = getSectionLevel(child);
               if (level >= 0) {
                 var address = me.selection
-                  .getRange()
-                  .selectNode(child)
-                  .createAddress(true).startAddress,
+                    .getRange()
+                    .selectNode(child)
+                    .createAddress(true).startAddress,
                   current = getSection({
                     tag: child.tagName,
                     title: child.innerText || child.textContent || "",
@@ -128,8 +128,7 @@ UE.plugin.register("section", function() {
                 tmpSection = previous = current;
               } else {
                 child.nodeType === 1 && traversal(child, Directory);
-                tmpSection &&
-                  tmpSection.endAddress[tmpSection.endAddress.length - 1]++;
+                tmpSection && tmpSection.endAddress[tmpSection.endAddress.length - 1]++;
               }
             }
           }
@@ -144,43 +143,27 @@ UE.plugin.register("section", function() {
             targetAddress,
             target;
 
-          if (!sourceSection || !targetSection || targetSection.level == -1)
-            return;
+          if (!sourceSection || !targetSection || targetSection.level == -1) return;
 
-          targetAddress = isAfter
-            ? targetSection.endAddress
-            : targetSection.startAddress;
+          targetAddress = isAfter ? targetSection.endAddress : targetSection.startAddress;
           target = getNodeFromAddress(targetAddress, me.body);
 
           /* 判断目标地址是否被源章节包含 */
           if (
             !targetAddress ||
             !target ||
-            isContainsAddress(
-              sourceSection.startAddress,
-              sourceSection.endAddress,
-              targetAddress
-            )
+            isContainsAddress(sourceSection.startAddress, sourceSection.endAddress, targetAddress)
           )
             return;
 
-          var startNode = getNodeFromAddress(
-            sourceSection.startAddress,
-            me.body
-          ),
+          var startNode = getNodeFromAddress(sourceSection.startAddress, me.body),
             endNode = getNodeFromAddress(sourceSection.endAddress, me.body),
             current,
             nextNode;
 
           if (isAfter) {
             current = endNode;
-            while (
-              current &&
-              !(
-                domUtils.getPosition(startNode, current) &
-                domUtils.POSITION_FOLLOWING
-              )
-            ) {
+            while (current && !(domUtils.getPosition(startNode, current) & domUtils.POSITION_FOLLOWING)) {
               nextNode = current.previousSibling;
               domUtils.insertAfter(target, current);
               if (current == startNode) break;
@@ -188,13 +171,7 @@ UE.plugin.register("section", function() {
             }
           } else {
             current = startNode;
-            while (
-              current &&
-              !(
-                domUtils.getPosition(current, endNode) &
-                domUtils.POSITION_FOLLOWING
-              )
-            ) {
+            while (current && !(domUtils.getPosition(current, endNode) & domUtils.POSITION_FOLLOWING)) {
               nextNode = current.nextSibling;
               target.parentNode.insertBefore(current, target);
               if (current == endNode) break;
@@ -254,10 +231,7 @@ UE.plugin.register("section", function() {
             while (
               current &&
               domUtils.inDoc(endNode, me.document) &&
-              !(
-                domUtils.getPosition(current, endNode) &
-                domUtils.POSITION_FOLLOWING
-              )
+              !(domUtils.getPosition(current, endNode) & domUtils.POSITION_FOLLOWING)
             ) {
               nextNode = current.nextSibling;
               domUtils.remove(current);
@@ -280,7 +254,10 @@ UE.plugin.register("section", function() {
               endAddress: utils.clone(section.endAddress, [])
             };
           address.endAddress[address.endAddress.length - 1]++;
-          range.moveToAddress(address).select().scrollToView();
+          range
+            .moveToAddress(address)
+            .select()
+            .scrollToView();
           return true;
         },
         notNeedUndo: true

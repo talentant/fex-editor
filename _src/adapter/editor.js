@@ -37,18 +37,12 @@
 
         UE.browser.ie &&
           UE.browser.version === 6 &&
-          editor.container.ownerDocument.execCommand(
-            "BackgroundImageCache",
-            false,
-            true
-          );
+          editor.container.ownerDocument.execCommand("BackgroundImageCache", false, true);
 
         //display bottom-bar label based on config
         if (editor.options.elementPathEnabled) {
           editor.ui.getDom("elementpath").innerHTML =
-            '<div class="edui-editor-breadcrumb">' +
-            editor.getLang("elementPathTip") +
-            ":</div>";
+            '<div class="edui-editor-breadcrumb">' + editor.getLang("elementPathTip") + ":</div>";
         }
         if (editor.options.wordCount) {
           function countFn() {
@@ -56,9 +50,7 @@
             domUtils.un(editor.document, "click", arguments.callee);
           }
           domUtils.on(editor.document, "click", countFn);
-          editor.ui.getDom("wordcount").innerHTML = editor.getLang(
-            "wordCountTip"
-          );
+          editor.ui.getDom("wordcount").innerHTML = editor.getLang("wordCountTip");
         }
         editor.ui._scale();
         if (editor.options.scaleEnabled) {
@@ -69,11 +61,7 @@
         } else {
           me.disableScale();
         }
-        if (
-          !editor.options.elementPathEnabled &&
-          !editor.options.wordCount &&
-          !editor.options.scaleEnabled
-        ) {
+        if (!editor.options.elementPathEnabled && !editor.options.wordCount && !editor.options.scaleEnabled) {
           editor.ui.getDom("elementpath").style.display = "none";
           editor.ui.getDom("wordcount").style.display = "none";
           editor.ui.getDom("scale").style.display = "none";
@@ -102,7 +90,7 @@
         if (editor.queryCommandState("pasteplain")) return;
         if (baidu.editor.ui.PastePicker) {
           pastePop = new baidu.editor.ui.Popup({
-            content: new baidu.editor.ui.PastePicker({ editor: editor }),
+            content: new baidu.editor.ui.PastePicker({editor: editor}),
             editor: editor,
             className: "edui-wordpastepop"
           });
@@ -117,14 +105,13 @@
           if (pastePop && (isPaste || editor.ui._isTransfer)) {
             if (pastePop.isHidden()) {
               var span = domUtils.createElement(editor.document, "span", {
-                style: "line-height:0px;",
-                innerHTML: "\ufeff"
-              }),
+                  style: "line-height:0px;",
+                  innerHTML: "\ufeff"
+                }),
                 range = editor.selection.getRange();
               range.insertNode(span);
               var tmp = getDomNode(span, "firstChild", "previousSibling");
-              tmp &&
-                pastePop.showAnchor(tmp.nodeType == 3 ? tmp.parentNode : tmp);
+              tmp && pastePop.showAnchor(tmp.nodeType == 3 ? tmp.parentNode : tmp);
               domUtils.remove(span);
             } else {
               pastePop.show();
@@ -151,10 +138,8 @@
         editor.setOpt({
           wordCount: true,
           maximumWords: 10000,
-          wordCountMsg:
-            editor.options.wordCountMsg || editor.getLang("wordCountMsg"),
-          wordOverFlowMsg:
-            editor.options.wordOverFlowMsg || editor.getLang("wordOverFlowMsg")
+          wordCountMsg: editor.options.wordCountMsg || editor.getLang("wordCountMsg"),
+          wordOverFlowMsg: editor.options.wordOverFlowMsg || editor.getLang("wordOverFlowMsg")
         });
         var opt = editor.options,
           max = opt.maximumWords,
@@ -169,24 +154,16 @@
           countDom.innerHTML = errMsg;
           editor.fireEvent("wordcountoverflow");
         } else {
-          countDom.innerHTML = msg
-            .replace("{#leave}", max - count)
-            .replace("{#count}", count);
+          countDom.innerHTML = msg.replace("{#leave}", max - count).replace("{#count}", count);
         }
       }
 
       editor.addListener("selectionchange", function() {
         if (editor.options.elementPathEnabled) {
-          me[
-            (editor.queryCommandState("elementpath") == -1 ? "dis" : "en") +
-              "ableElementPath"
-          ]();
+          me[(editor.queryCommandState("elementpath") == -1 ? "dis" : "en") + "ableElementPath"]();
         }
         if (editor.options.scaleEnabled) {
-          me[
-            (editor.queryCommandState("scale") == -1 ? "dis" : "en") +
-              "ableScale"
-          ]();
+          me[(editor.queryCommandState("scale") == -1 ? "dis" : "en") + "ableScale"]();
         }
       });
       var popup = new baidu.editor.ui.Popup({
@@ -227,7 +204,10 @@
         _updateIframe: function() {
           var frame = (editor._iframe = popup.anchorEl);
           if (domUtils.hasClass(frame, "ueditor_baidumap")) {
-            editor.selection.getRange().selectNode(frame).select();
+            editor.selection
+              .getRange()
+              .selectNode(frame)
+              .select();
             editor.ui._dialogs.mapDialog.open();
             popup.hide();
           } else {
@@ -241,10 +221,7 @@
         },
         queryAutoHide: function(el) {
           if (el && el.ownerDocument == editor.document) {
-            if (
-              el.tagName.toLowerCase() == "img" ||
-              domUtils.findParentByTagName(el, "a", true)
-            ) {
+            if (el.tagName.toLowerCase() == "img" || domUtils.findParentByTagName(el, "a", true)) {
               return el !== popup.anchorEl;
             }
           }
@@ -256,10 +233,7 @@
         editor.addListener("mouseover", function(t, evt) {
           evt = evt || window.event;
           var el = evt.target || evt.srcElement;
-          if (
-            editor.ui._dialogs.insertframeDialog &&
-            /iframe/gi.test(el.tagName)
-          ) {
+          if (editor.ui._dialogs.insertframeDialog && /iframe/gi.test(el.tagName)) {
             var html = popup.formatHtml(
               "<nobr>" +
                 editor.getLang("property") +
@@ -291,18 +265,13 @@
             dialogs = editor.ui._dialogs;
           if (img && img.tagName == "IMG") {
             var dialogName = "insertimageDialog";
-            if (
-              img.className.indexOf("edui-faked-video") != -1 ||
-              img.className.indexOf("edui-upload-video") != -1
-            ) {
+            if (img.className.indexOf("edui-faked-video") != -1 || img.className.indexOf("edui-upload-video") != -1) {
               dialogName = "insertvideoDialog";
             }
             if (img.src.indexOf("http://api.map.baidu.com") != -1) {
               dialogName = "mapDialog";
             }
-            if (
-              img.src.indexOf("http://maps.google.com/maps/api/staticmap") != -1
-            ) {
+            if (img.src.indexOf("http://maps.google.com/maps/api/staticmap") != -1) {
               dialogName = "gmapDialog";
             }
             if (img.getAttribute("anchorname")) {
@@ -323,10 +292,7 @@
               editor.word_img = [img.getAttribute("word_img")];
               dialogName = "wordimageDialog";
             }
-            if (
-              domUtils.hasClass(img, "loadingclass") ||
-              domUtils.hasClass(img, "loaderrorclass")
-            ) {
+            if (domUtils.hasClass(img, "loadingclass") || domUtils.hasClass(img, "loaderrorclass")) {
               dialogName = "";
             }
             if (!dialogs[dialogName]) {
@@ -359,10 +325,7 @@
           if (editor.ui._dialogs.linkDialog) {
             var link = editor.queryCommandValue("link");
             var url;
-            if (
-              link &&
-              (url = link.getAttribute("_href") || link.getAttribute("href", 2))
-            ) {
+            if (link && (url = link.getAttribute("_href") || link.getAttribute("href", 2))) {
               var txt = url;
               if (url.length > 30) {
                 txt = url.substring(0, 20) + "...";
@@ -476,8 +439,8 @@
         '<div id="##_toolbarbox" class="%%-toolbarbox">' +
         (this.toolbars.length
           ? '<div id="##_toolbarboxouter" class="%%-toolbarboxouter"><div class="%%-toolbarboxinner">' +
-              this.renderToolbarBoxHtml() +
-              "</div></div>"
+            this.renderToolbarBoxHtml() +
+            "</div></div>"
           : "") +
         '<div id="##_toolbarmsg" class="%%-toolbarmsg" style="display:none;">' +
         '<div id = "##_upload_dialog" class="%%-toolbarmsg-upload" onclick="$$.showWordImageDialog();">' +
@@ -522,10 +485,7 @@
         }
         if (fullscreen) {
           while (container.tagName != "BODY") {
-            var position = baidu.editor.dom.domUtils.getComputedStyle(
-              container,
-              "position"
-            );
+            var position = baidu.editor.dom.domUtils.getComputedStyle(container, "position");
             nodeStack.push(position);
             container.style.position = "static";
             container = container.parentNode;
@@ -533,10 +493,7 @@
           this._bakHtmlOverflow = document.documentElement.style.overflow;
           this._bakBodyOverflow = document.body.style.overflow;
           this._bakAutoHeight = this.editor.autoHeightEnabled;
-          this._bakScrollTop = Math.max(
-            document.documentElement.scrollTop,
-            document.body.scrollTop
-          );
+          this._bakScrollTop = Math.max(document.documentElement.scrollTop, document.body.scrollTop);
 
           this._bakEditorContaninerWidth = editor.iframe.parentNode.offsetWidth;
           if (this._bakAutoHeight) {
@@ -567,8 +524,7 @@
 
           document.documentElement.style.overflow = this._bakHtmlOverflow;
           document.body.style.overflow = this._bakBodyOverflow;
-          editor.iframe.parentNode.style.width =
-            this._bakEditorContaninerWidth + "px";
+          editor.iframe.parentNode.style.width = this._bakEditorContaninerWidth + "px";
           window.scrollTo(0, this._bakScrollTop);
         }
         if (browser.gecko && editor.body.contentEditable === "true") {
@@ -580,7 +536,10 @@
             setTimeout(function() {
               editor.body.contentEditable = true;
               editor.fireEvent("fullscreenchanged", fullscreen);
-              editor.selection.getRange().moveToBookmark(bk).select(true);
+              editor.selection
+                .getRange()
+                .moveToBookmark(bk)
+                .select(true);
               baidu.editor.dom.domUtils.remove(input);
               fullscreen && window.scroll(0, 0);
             }, 0);
@@ -627,10 +586,7 @@
     _updateElementPath: function() {
       var bottom = this.getDom("elementpath"),
         list;
-      if (
-        this.elementPathEnabled &&
-        (list = this.editor.queryCommandValue("elementpath"))
-      ) {
+      if (this.elementPathEnabled && (list = this.editor.queryCommandValue("elementpath"))) {
         var buff = [];
         for (var i = 0, ci; (ci = list[i]); i++) {
           buff[i] = this.formatHtml(
@@ -686,10 +642,7 @@
         position = domUtils.getXY(editorHolder);
 
         if (!minEditorHeight) {
-          minEditorHeight =
-            editor.options.minFrameHeight +
-            toolbarBox.offsetHeight +
-            bottombar.offsetHeight;
+          minEditorHeight = editor.options.minFrameHeight + toolbarBox.offsetHeight + bottombar.offsetHeight;
         }
 
         scalelayer.style.cssText =
@@ -716,10 +669,7 @@
             var tmpNode = me.editor.document.createElement("span");
             me.editor.body.appendChild(tmpNode);
             me.editor.body.style.height =
-              Math.max(
-                domUtils.getXY(tmpNode).y,
-                me.editor.iframe.offsetHeight - 20
-              ) + "px";
+              Math.max(domUtils.getXY(tmpNode).y, me.editor.iframe.offsetHeight - 20) + "px";
             domUtils.remove(tmpNode);
           }
         }
@@ -748,13 +698,7 @@
           editor.ui._actualFrameWidth = scalelayer.offsetWidth - 2;
           editorHolder.style.width = editor.ui._actualFrameWidth + "px";
 
-          editor.setHeight(
-            scalelayer.offsetHeight -
-              bottombar.offsetHeight -
-              toolbarBox.offsetHeight -
-              2,
-            true
-          );
+          editor.setHeight(scalelayer.offsetHeight - bottombar.offsetHeight - toolbarBox.offsetHeight - 2, true);
         }
         if (scalelayer) {
           scalelayer.style.display = "none";
@@ -820,9 +764,7 @@
       this.getDom("toolbarmsg").style.display = "none";
     },
     mapUrl: function(url) {
-      return url
-        ? url.replace("~/", this.editor.options.UEDITOR_HOME_URL || "")
-        : "";
+      return url ? url.replace("~/", this.editor.options.UEDITOR_HOME_URL || "") : "";
     },
     triggerLayout: function() {
       var dom = this.getDom();
@@ -841,8 +783,7 @@
     var editor = new UE.Editor(options);
     editor.options.editor = editor;
     utils.loadFile(document, {
-      href:
-        editor.options.themePath + editor.options.theme + "/_css/ueditor.css",
+      href: editor.options.themePath + editor.options.theme + "/_css/ueditor.css",
       tag: "link",
       type: "text/css",
       rel: "stylesheet"
@@ -855,9 +796,7 @@
         instances[holder] = editor;
       }
       utils.domReady(function() {
-        editor.langIsReady
-          ? renderUI()
-          : editor.addListener("langReady", renderUI);
+        editor.langIsReady ? renderUI() : editor.addListener("langReady", renderUI);
         function renderUI() {
           editor.setOpt({
             labelMap: editor.options.labelMap || editor.getLang("labelMap")
@@ -867,9 +806,7 @@
             if (holder.constructor === String) {
               holder = document.getElementById(holder);
             }
-            holder &&
-              holder.getAttribute("name") &&
-              (editor.options.textarea = holder.getAttribute("name"));
+            holder && holder.getAttribute("name") && (editor.options.textarea = holder.getAttribute("name"));
             if (holder && /script|textarea/gi.test(holder.tagName)) {
               var newDiv = document.createElement("div");
               holder.parentNode.insertBefore(newDiv, holder);
@@ -881,8 +818,7 @@
                     .replace(/[\n\r\t]+([ ]{4})+</g, "<")
                     .replace(/>[\n\r\t]+</g, "><");
               holder.className && (newDiv.className = holder.className);
-              holder.style.cssText &&
-                (newDiv.style.cssText = holder.style.cssText);
+              holder.style.cssText && (newDiv.style.cssText = holder.style.cssText);
               if (/textarea/i.test(holder.tagName)) {
                 editor.textarea = holder;
                 editor.textarea.style.display = "none";
@@ -930,9 +866,7 @@
           if (holder.style.height) {
             holder.style.height = "";
           }
-          editor.container.style.width =
-            opt.initialFrameWidth +
-            (/%$/.test(opt.initialFrameWidth) ? "" : "px");
+          editor.container.style.width = opt.initialFrameWidth + (/%$/.test(opt.initialFrameWidth) ? "" : "px");
           editor.container.style.zIndex = opt.zIndex;
           oldRender.call(editor, editor.ui.getDom("iframeholder"));
           editor.fireEvent("afteruiready");
@@ -943,26 +877,26 @@
   };
 
   /**
-     * @file
-     * @name UE
-     * @short UE
-     * @desc UEditor的顶部命名空间
-     */
+   * @file
+   * @name UE
+   * @short UE
+   * @desc UEditor的顶部命名空间
+   */
   /**
-     * @name getEditor
-     * @since 1.2.4+
-     * @grammar UE.getEditor(id,[opt])  =>  Editor实例
-     * @desc 提供一个全局的方法得到编辑器实例
-     *
-     * * ''id''  放置编辑器的容器id, 如果容器下的编辑器已经存在，就直接返回
-     * * ''opt'' 编辑器的可选参数
-     * @example
-     *  UE.getEditor('containerId',{onready:function(){//创建一个编辑器实例
-     *      this.setContent('hello')
-     *  }});
-     *  UE.getEditor('containerId'); //返回刚创建的实例
-     *
-     */
+   * @name getEditor
+   * @since 1.2.4+
+   * @grammar UE.getEditor(id,[opt])  =>  Editor实例
+   * @desc 提供一个全局的方法得到编辑器实例
+   *
+   * * ''id''  放置编辑器的容器id, 如果容器下的编辑器已经存在，就直接返回
+   * * ''opt'' 编辑器的可选参数
+   * @example
+   *  UE.getEditor('containerId',{onready:function(){//创建一个编辑器实例
+   *      this.setContent('hello')
+   *  }});
+   *  UE.getEditor('containerId'); //返回刚创建的实例
+   *
+   */
   UE.getEditor = function(id, opt) {
     var editor = instances[id];
     if (!editor) {

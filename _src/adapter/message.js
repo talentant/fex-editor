@@ -25,12 +25,12 @@ UE.registerUI("message", function(editor) {
         }
       : opt;
     var message = new Message({
-      timeout: opt.timeout,
-      type: opt.type,
-      content: opt.content,
-      keepshow: opt.keepshow,
-      editor: me
-    }),
+        timeout: opt.timeout,
+        type: opt.type,
+        content: opt.content,
+        keepshow: opt.keepshow,
+        editor: me
+      }),
       mid = opt.id || "msg_" + (+new Date()).toString(36);
     message.render(holder);
     _messageItems[mid] = message;
@@ -61,7 +61,6 @@ UE.registerUI("message", function(editor) {
     if (toolbarbox) {
       holder.style.top = toolbarbox.offsetHeight + 3 + "px";
     }
-    holder.style.zIndex =
-      Math.max(me.options.zIndex, me.iframe.style.zIndex) + 1;
+    holder.style.zIndex = Math.max(me.options.zIndex, me.iframe.style.zIndex) + 1;
   }
 });

@@ -23,9 +23,7 @@
 var filterWord = (UE.filterWord = (function() {
   //是否是word过来的内容
   function isWordDocument(str) {
-    return /(class="?Mso|style="[^"]*\bmso\-|w:WordDocument|<(v|o):|lang=)/gi.test(
-      str
-    );
+    return /(class="?Mso|style="[^"]*\bmso\-|w:WordDocument|<(v|o):|lang=)/gi.test(str);
   }
   //去掉小数
   function transUnit(v) {
@@ -54,15 +52,7 @@ var filterWord = (UE.filterWord = (function() {
             var width = str.match(/width:([ \d.]*p[tx])/i)[1],
               height = str.match(/height:([ \d.]*p[tx])/i)[1],
               src = str.match(/src=\s*"([^"]*)"/i)[1];
-            return (
-              '<img width="' +
-              transUnit(width) +
-              '" height="' +
-              transUnit(height) +
-              '" src="' +
-              src +
-              '" />'
-            );
+            return '<img width="' + transUnit(width) + '" height="' + transUnit(height) + '" src="' + src + '" />';
           } catch (e) {
             return "";
           }
@@ -75,17 +65,9 @@ var filterWord = (UE.filterWord = (function() {
           /<(!|script[^>]*>.*?<\/script(?=[>\s])|\/?(\?xml(:\w+)?|xml|meta|link|style|\w+:\w+)(?=[\s\/>]))[^>]*>/gi,
           ""
         )
-        .replace(
-          /<p [^>]*class="?MsoHeading"?[^>]*>(.*?)<\/p>/gi,
-          "<p><strong>$1</strong></p>"
-        )
+        .replace(/<p [^>]*class="?MsoHeading"?[^>]*>(.*?)<\/p>/gi, "<p><strong>$1</strong></p>")
         //去掉多余的属性
-        .replace(/\s+(class|lang|align)\s*=\s*(['"]?)([\w-]+)\2/gi, function(
-          str,
-          name,
-          marks,
-          val
-        ) {
+        .replace(/\s+(class|lang|align)\s*=\s*(['"]?)([\w-]+)\2/gi, function(str, name, marks, val) {
           //保留list的标示
           return name == "class" && val == "MsoListParagraph" ? str : "";
         })
@@ -94,12 +76,7 @@ var filterWord = (UE.filterWord = (function() {
           return c.replace(/[\t\r\n ]+/g, " ");
         })
         //处理style的问题
-        .replace(/(<[a-z][^>]*)\sstyle=(["'])([^\2]*?)\2/gi, function(
-          str,
-          tag,
-          tmp,
-          style
-        ) {
+        .replace(/(<[a-z][^>]*)\sstyle=(["'])([^\2]*?)\2/gi, function(str, tag, tmp, style) {
           var n = [],
             s = style
               .replace(/^\s+|\s+$/, "")
@@ -119,8 +96,7 @@ var filterWord = (UE.filterWord = (function() {
               name = parts[0].toLowerCase();
               value = parts[1].toLowerCase();
               if (
-                (/^(background)\w*/.test(name) &&
-                  value.replace(/(initial|\s)/g, "").length == 0) ||
+                (/^(background)\w*/.test(name) && value.replace(/(initial|\s)/g, "").length == 0) ||
                 (/^(margin)\w*/.test(name) && /^0\w+$/.test(value))
               ) {
                 continue;
@@ -143,9 +119,7 @@ var filterWord = (UE.filterWord = (function() {
                 case "mso-width":
                 case "mso-vertical-align-alt":
                   //trace:1819 ff下会解析出padding在table上
-                  if (!/<table/.test(tag))
-                    n[i] =
-                      name.replace(/^mso-|-alt$/g, "") + ":" + transUnit(value);
+                  if (!/<table/.test(tag)) n[i] = name.replace(/^mso-|-alt$/g, "") + ":" + transUnit(value);
                   continue;
                 case "horiz-align":
                   n[i] = "text-align:" + value;
@@ -174,9 +148,7 @@ var filterWord = (UE.filterWord = (function() {
                   continue;
 
                 case "mso-padding-between-alt":
-                  n[i] =
-                    "border-collapse:separate;border-spacing:" +
-                    transUnit(value);
+                  n[i] = "border-collapse:separate;border-spacing:" + transUnit(value);
                   continue;
 
                 case "text-line-through":
@@ -201,8 +173,7 @@ var filterWord = (UE.filterWord = (function() {
                 /^(mso|column|font-emph|lang|layout|line-break|list-image|nav|panose|punct|row|ruby|sep|size|src|tab-|table-border|text-(?:decor|trans)|top-bar|version|vnd|word-break)/.test(
                   name
                 ) ||
-                (/text\-indent|padding|margin/.test(name) &&
-                  /\-[\d.]+/.test(value))
+                (/text\-indent|padding|margin/.test(name) && /\-[\d.]+/.test(value))
               ) {
                 continue;
               }
@@ -210,12 +181,7 @@ var filterWord = (UE.filterWord = (function() {
               n[i] = name + ":" + parts[1];
             }
           }
-          return (
-            tag +
-            (n.length
-              ? ' style="' + n.join(";").replace(/;{2,}/g, ";") + '"'
-              : "")
-          );
+          return tag + (n.length ? ' style="' + n.join(";").replace(/;{2,}/g, ";") + '"' : "");
         })
     );
   }

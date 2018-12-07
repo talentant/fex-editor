@@ -14,10 +14,10 @@ var dtd = (dom.dtd = (function() {
     return s;
   }
   var X = utils.extend2;
-  var A = _({ isindex: 1, fieldset: 1 }),
-    B = _({ input: 1, button: 1, select: 1, textarea: 1, label: 1 }),
-    C = X(_({ a: 1 }), B),
-    D = X({ iframe: 1 }, C),
+  var A = _({isindex: 1, fieldset: 1}),
+    B = _({input: 1, button: 1, select: 1, textarea: 1, label: 1}),
+    C = X(_({a: 1}), B),
+    D = X({iframe: 1}, C),
     E = _({
       hr: 1,
       ul: 1,
@@ -40,7 +40,7 @@ var dtd = (dom.dtd = (function() {
       h3: 1,
       h2: 1
     }),
-    F = _({ ins: 1, del: 1, script: 1, style: 1 }),
+    F = _({ins: 1, del: 1, script: 1, style: 1}),
     G = X(
       _({
         mark: 1,
@@ -84,8 +84,8 @@ var dtd = (dom.dtd = (function() {
       }),
       G
     ),
-    I = X(_({ p: 1 }), H),
-    J = X(_({ iframe: 1 }), H, B),
+    I = X(_({p: 1}), H),
+    J = X(_({iframe: 1}), H, B),
     K = _({
       img: 1,
       embed: 1,
@@ -154,43 +154,43 @@ var dtd = (dom.dtd = (function() {
       em: 1,
       dfn: 1
     }),
-    L = X(_({ a: 0 }), J), //a不能被切开，所以把他
-    M = _({ tr: 1 }),
-    N = _({ "#": 1 }),
-    O = X(_({ param: 1 }), K),
-    P = X(_({ form: 1 }), A, D, E, I),
-    Q = _({ li: 1, ol: 1, ul: 1 }),
-    R = _({ style: 1, script: 1 }),
-    S = _({ base: 1, link: 1, meta: 1, title: 1 }),
+    L = X(_({a: 0}), J), //a不能被切开，所以把他
+    M = _({tr: 1}),
+    N = _({"#": 1}),
+    O = X(_({param: 1}), K),
+    P = X(_({form: 1}), A, D, E, I),
+    Q = _({li: 1, ol: 1, ul: 1}),
+    R = _({style: 1, script: 1}),
+    S = _({base: 1, link: 1, meta: 1, title: 1}),
     T = X(S, R),
-    U = _({ head: 1, body: 1 }),
-    V = _({ html: 1 });
+    U = _({head: 1, body: 1}),
+    V = _({html: 1});
 
   var block = _({
-    address: 1,
-    blockquote: 1,
-    center: 1,
-    dir: 1,
-    div: 1,
-    dl: 1,
-    fieldset: 1,
-    form: 1,
-    h1: 1,
-    h2: 1,
-    h3: 1,
-    h4: 1,
-    h5: 1,
-    h6: 1,
-    hr: 1,
-    isindex: 1,
-    menu: 1,
-    noframes: 1,
-    ol: 1,
-    p: 1,
-    pre: 1,
-    table: 1,
-    ul: 1
-  }),
+      address: 1,
+      blockquote: 1,
+      center: 1,
+      dir: 1,
+      div: 1,
+      dl: 1,
+      fieldset: 1,
+      form: 1,
+      h1: 1,
+      h2: 1,
+      h3: 1,
+      h4: 1,
+      h5: 1,
+      h6: 1,
+      hr: 1,
+      isindex: 1,
+      menu: 1,
+      noframes: 1,
+      ol: 1,
+      p: 1,
+      pre: 1,
+      table: 1,
+      ul: 1
+    }),
     empty = _({
       area: 1,
       base: 1,
@@ -225,22 +225,22 @@ var dtd = (dom.dtd = (function() {
     //内联元素列表
     $inline: L,
 
-    $inlineWithA: X(_({ a: 1 }), L),
+    $inlineWithA: X(_({a: 1}), L),
 
-    $body: X(_({ script: 1, style: 1 }), block),
+    $body: X(_({script: 1, style: 1}), block),
 
-    $cdata: _({ script: 1, style: 1 }),
+    $cdata: _({script: 1, style: 1}),
 
     //自闭和元素
     $empty: empty,
 
     //不是自闭合，但不能让range选中里边
-    $nonChild: _({ iframe: 1, textarea: 1 }),
+    $nonChild: _({iframe: 1, textarea: 1}),
     //列表元素列表
-    $listItem: _({ dd: 1, dt: 1, li: 1 }),
+    $listItem: _({dd: 1, dt: 1, li: 1}),
 
     //列表根元素列表
-    $list: _({ ul: 1, ol: 1, dl: 1 }),
+    $list: _({ul: 1, ol: 1, dl: 1}),
 
     //不能认为是空的元素
     $isNotEmpty: _({
@@ -301,7 +301,7 @@ var dtd = (dom.dtd = (function() {
       var: 1
     }),
 
-    $removeEmptyBlock: _({ p: 1, div: 1 }),
+    $removeEmptyBlock: _({p: 1, div: 1}),
 
     //在table元素里的元素列表
     $tableContent: _({
@@ -317,7 +317,7 @@ var dtd = (dom.dtd = (function() {
       table: 1
     }),
     //不转换的标签
-    $notTransContent: _({ pre: 1, script: 1, style: 1, textarea: 1 }),
+    $notTransContent: _({pre: 1, script: 1, style: 1, textarea: 1}),
     html: U,
     head: T,
     style: N,
@@ -328,10 +328,10 @@ var dtd = (dom.dtd = (function() {
     meta: {},
     title: N,
     col: {},
-    tr: _({ td: 1, th: 1 }),
+    tr: _({td: 1, th: 1}),
     img: {},
     embed: {},
-    colgroup: _({ thead: 1, col: 1, tbody: 1, tr: 1, tfoot: 1 }),
+    colgroup: _({thead: 1, col: 1, tbody: 1, tr: 1, tfoot: 1}),
     noscript: P,
     td: P,
     br: {},
@@ -350,7 +350,7 @@ var dtd = (dom.dtd = (function() {
     option: N,
     h2: L,
     form: X(A, D, E, I),
-    select: _({ optgroup: 1, option: 1 }),
+    select: _({optgroup: 1, option: 1}),
     font: L,
     ins: L,
     menu: Q,
@@ -393,7 +393,7 @@ var dtd = (dom.dtd = (function() {
     hr: L,
     dt: L,
     sub: L,
-    optgroup: _({ option: 1 }),
+    optgroup: _({option: 1}),
     param: {},
     bdo: L,
     var: L,
@@ -404,18 +404,18 @@ var dtd = (dom.dtd = (function() {
     strike: L,
     area: {},
     dir: Q,
-    map: X(_({ area: 1, form: 1, p: 1 }), A, F, E),
+    map: X(_({area: 1, form: 1, p: 1}), A, F, E),
     applet: O,
-    dl: _({ dt: 1, dd: 1 }),
+    dl: _({dt: 1, dd: 1}),
     del: L,
     isindex: {},
-    fieldset: X(_({ legend: 1 }), K),
+    fieldset: X(_({legend: 1}), K),
     thead: M,
     ul: Q,
     acronym: L,
     b: L,
-    a: X(_({ a: 1 }), J),
-    blockquote: X(_({ td: 1, tr: 1, tbody: 1, li: 1 }), P),
+    a: X(_({a: 1}), J),
+    blockquote: X(_({td: 1, tr: 1, tbody: 1, li: 1}), P),
     caption: L,
     i: L,
     u: L,
@@ -426,7 +426,7 @@ var dtd = (dom.dtd = (function() {
     legend: L,
     q: L,
     pre: X(G, C),
-    p: X(_({ a: 1 }), L),
+    p: X(_({a: 1}), L),
     em: L,
     dfn: L,
     mark: L

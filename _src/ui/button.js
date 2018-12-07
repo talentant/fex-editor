@@ -46,9 +46,7 @@
         (this.title ? 'title="' + this.title + '"' : "") +
         ' class="%%-body" onmousedown="return $$._onMouseDown(event, this);" onclick="return $$._onClick(event, this);">' +
         (this.showIcon ? '<div class="edui-box edui-icon"></div>' : "") +
-        (this.showText
-          ? '<div class="edui-box edui-label">' + this.label + "</div>"
-          : "") +
+        (this.showText ? '<div class="edui-box edui-label">' + this.label + "</div>" : "") +
         "</div>" +
         "</div>" +
         "</div></div>"

@@ -42,10 +42,7 @@
             if (style === undefined) {
               return "";
             }
-            sheetStyle = doc.createStyleSheet(
-              "",
-              (index = doc.styleSheets.length)
-            );
+            sheetStyle = doc.createStyleSheet("", (index = doc.styleSheets.length));
             indexList[key] = index;
           } else {
             sheetStyle = doc.styleSheets[indexList[key]];
@@ -99,11 +96,7 @@
           doc.addEventListener(
             "DOMContentLoaded",
             function() {
-              doc.removeEventListener(
-                "DOMContentLoaded",
-                arguments.callee,
-                false
-              );
+              doc.removeEventListener("DOMContentLoaded", arguments.callee, false);
               onready();
             },
             false
@@ -127,8 +120,7 @@
       } else {
         for (var key in obj) {
           if (obj.hasOwnProperty(key)) {
-            if (iterator.call(context, obj[key], key, obj) === false)
-              return false;
+            if (iterator.call(context, obj[key], key, obj) === false) return false;
           }
         }
       }
@@ -176,7 +168,9 @@
     },
     addClass: function(elm, classNames) {
       if (!elm) return;
-      classNames = this.trim(classNames).replace(/[ ]{2,}/g, " ").split(" ");
+      classNames = this.trim(classNames)
+        .replace(/[ ]{2,}/g, " ")
+        .split(" ");
       for (var i = 0, ci, cls = elm.className; (ci = classNames[i++]); ) {
         if (!new RegExp("\\b" + ci + "\\b").test(cls)) {
           cls += " " + ci;
@@ -187,7 +181,9 @@
     removeClass: function(elm, classNames) {
       classNames = this.isArray(classNames)
         ? classNames
-        : this.trim(classNames).replace(/[ ]{2,}/g, " ").split(" ");
+        : this.trim(classNames)
+            .replace(/[ ]{2,}/g, " ")
+            .split(" ");
       for (var i = 0, ci, cls = elm.className; (ci = classNames[i++]); ) {
         cls = cls.replace(new RegExp("\\b" + ci + "\\b"), "");
       }
@@ -238,10 +234,7 @@
           } else {
             var key = type + handler.toString();
             try {
-              element.detachEvent(
-                "on" + type,
-                handler._d ? handler._d[key] : handler
-              );
+              element.detachEvent("on" + type, handler._d ? handler._d[key] : handler);
             } catch (e) {}
             if (handler._d && handler._d[key]) {
               var index = utils.indexOf(handler._d.els, element);
@@ -287,9 +280,7 @@
             if (p == "tag") continue;
             html.push(p + '="' + obj[p] + '"');
           }
-          doc.write(
-            "<" + obj.tag + " " + html.join(" ") + " ></" + obj.tag + ">"
-          );
+          doc.write("<" + obj.tag + " " + html.join(" ") + " ></" + obj.tag + ">");
           return;
         }
         if (obj.id && doc.getElementById(obj.id)) {
@@ -313,22 +304,17 @@
           }
         };
         element.onerror = function() {
-          throw Error(
-            "The load " + (obj.href || obj.src) + " fails,check the url"
-          );
+          throw Error("The load " + (obj.href || obj.src) + " fails,check the url");
         };
         doc.getElementsByTagName("head")[0].appendChild(element);
       };
     })()
   };
-  utils.each(
-    ["String", "Function", "Array", "Number", "RegExp", "Object", "Boolean"],
-    function(v) {
-      utils["is" + v] = function(obj) {
-        return Object.prototype.toString.apply(obj) == "[object " + v + "]";
-      };
-    }
-  );
+  utils.each(["String", "Function", "Array", "Number", "RegExp", "Object", "Boolean"], function(v) {
+    utils["is" + v] = function(obj) {
+      return Object.prototype.toString.apply(obj) == "[object " + v + "]";
+    };
+  });
   var parselist = {};
   UE.parse = {
     register: function(parseName, fn) {
@@ -351,12 +337,7 @@
         } else if (/^\./.test(selector)) {
           var contents = [];
           utils.each(document.getElementsByTagName("*"), function(node) {
-            if (
-              node.className &&
-              new RegExp("\\b" + selector.replace(/^\./, "") + "\\b", "i").test(
-                node.className
-              )
-            ) {
+            if (node.className && new RegExp("\\b" + selector.replace(/^\./, "") + "\\b", "i").test(node.className)) {
               contents.push(node);
             }
           });
@@ -365,7 +346,7 @@
         }
       }
       utils.each(contents, function(v) {
-        UE.parse.load(utils.extend({ root: v, selector: selector }, opt));
+        UE.parse.load(utils.extend({root: v, selector: selector}, opt));
       });
     });
   };
@@ -532,18 +513,14 @@ UE.parse.register("table", function(utils) {
           return value2.localeCompare(value1);
         },
         orderbynum: function(td1, td2) {
-          var value1 = td1[utils.isIE ? "innerText" : "textContent"].match(
-            /\d+/
-          ),
+          var value1 = td1[utils.isIE ? "innerText" : "textContent"].match(/\d+/),
             value2 = td2[utils.isIE ? "innerText" : "textContent"].match(/\d+/);
           if (value1) value1 = +value1[0];
           if (value2) value2 = +value2[0];
           return (value1 || 0) - (value2 || 0);
         },
         reversebynum: function(td1, td2) {
-          var value1 = td1[utils.isIE ? "innerText" : "textContent"].match(
-            /\d+/
-          ),
+          var value1 = td1[utils.isIE ? "innerText" : "textContent"].match(/\d+/),
             value2 = td2[utils.isIE ? "innerText" : "textContent"].match(/\d+/);
           if (value1) value1 = +value1[0];
           if (value2) value2 = +value2[0];
@@ -554,9 +531,7 @@ UE.parse.register("table", function(utils) {
       //对表格设置排序的标记data-sort-type
       table.setAttribute(
         "data-sort-type",
-        compareFn && typeof compareFn === "string" && Fn[compareFn]
-          ? compareFn
-          : ""
+        compareFn && typeof compareFn === "string" && Fn[compareFn] ? compareFn : ""
       );
 
       //th不参与排序
@@ -564,29 +539,13 @@ UE.parse.register("table", function(utils) {
       trArray = sort(trArray, function(tr1, tr2) {
         var result;
         if (compareFn && typeof compareFn === "function") {
-          result = compareFn.call(
-            this,
-            tr1.cells[sortByCellIndex],
-            tr2.cells[sortByCellIndex]
-          );
+          result = compareFn.call(this, tr1.cells[sortByCellIndex], tr2.cells[sortByCellIndex]);
         } else if (compareFn && typeof compareFn === "number") {
           result = 1;
-        } else if (
-          compareFn &&
-          typeof compareFn === "string" &&
-          Fn[compareFn]
-        ) {
-          result = Fn[compareFn].call(
-            this,
-            tr1.cells[sortByCellIndex],
-            tr2.cells[sortByCellIndex]
-          );
+        } else if (compareFn && typeof compareFn === "string" && Fn[compareFn]) {
+          result = Fn[compareFn].call(this, tr1.cells[sortByCellIndex], tr2.cells[sortByCellIndex]);
         } else {
-          result = Fn["orderbyasc"].call(
-            this,
-            tr1.cells[sortByCellIndex],
-            tr2.cells[sortByCellIndex]
-          );
+          result = Fn["orderbyasc"].call(this, tr1.cells[sortByCellIndex], tr2.cells[sortByCellIndex]);
         }
         return result;
       });
@@ -598,10 +557,7 @@ UE.parse.register("table", function(utils) {
       if (!lastRowIndex) {
         tbody.appendChild(fragment);
       } else {
-        tbody.insertBefore(
-          fragment,
-          rows[lastRowIndex - range.endRowIndex + range.beginRowIndex - 1]
-        );
+        tbody.insertBefore(fragment, rows[lastRowIndex - range.endRowIndex + range.beginRowIndex - 1]);
       }
     }
     //冒泡排序
@@ -638,9 +594,7 @@ UE.parse.register("table", function(utils) {
 UE.parse.register("charts", function(utils) {
   utils.cssRule(
     "chartsContainerHeight",
-    ".edui-chart-container { height:" +
-      (this.chartContainerHeight || 300) +
-      "px}"
+    ".edui-chart-container { height:" + (this.chartContainerHeight || 300) + "px}"
   );
   var resourceRoot = this.rootPath,
     containers = this.root,
@@ -664,8 +618,8 @@ UE.parse.register("charts", function(utils) {
   }
 
   /**
-     * 提取数据
-     */
+   * 提取数据
+   */
   function extractChartData(rootNode) {
     var data = [],
       tables = rootNode.getElementsByTagName("table");
@@ -789,11 +743,11 @@ UE.parse.register("charts", function(utils) {
   }
 
   /**
-     * 渲染图表
-     * @param container 图表容器节点对象
-     * @param typeConfig 图表类型配置
-     * @param config 图表通用配置
-     * */
+   * 渲染图表
+   * @param container 图表容器节点对象
+   * @param typeConfig 图表类型配置
+   * @param config 图表通用配置
+   * */
   function renderChart(container, typeConfig, config) {
     $(container).highcharts(
       $.extend({}, typeConfig, {
@@ -845,9 +799,9 @@ UE.parse.register("charts", function(utils) {
   }
 
   /**
-     * 创建图表的容器
-     * 新创建的容器会替换掉对应的table对象
-     * */
+   * 创建图表的容器
+   * 新创建的容器会替换掉对应的table对象
+   * */
   function createContainer(tableNode) {
     var container = document.createElement("div");
     container.className = "edui-chart-container";
@@ -938,12 +892,7 @@ UE.parse.register("background", function(utils) {
   }
 
   //追加默认的表格样式
-  styles &&
-    utils.cssRule(
-      "ueditor_background",
-      me.selector + "{" + styles + "}",
-      document
-    );
+  styles && utils.cssRule("ueditor_background", me.selector + "{" + styles + "}", document);
 });
 
 UE.parse.register("list", function(utils) {
@@ -979,18 +928,8 @@ UE.parse.register("list", function(utils) {
 
   if (ols.length || uls.length) {
     customCss.push(selector + " .list-paddingleft-1{padding-left:0}");
-    customCss.push(
-      selector +
-        " .list-paddingleft-2{padding-left:" +
-        this.listDefaultPaddingLeft +
-        "px}"
-    );
-    customCss.push(
-      selector +
-        " .list-paddingleft-3{padding-left:" +
-        this.listDefaultPaddingLeft * 2 +
-        "px}"
-    );
+    customCss.push(selector + " .list-paddingleft-2{padding-left:" + this.listDefaultPaddingLeft + "px}");
+    customCss.push(selector + " .list-paddingleft-3{padding-left:" + this.listDefaultPaddingLeft * 2 + "px}");
 
     utils.cssRule(
       "list",
@@ -1065,117 +1004,33 @@ UE.parse.register("list", function(utils) {
         }
         switch (listStyle) {
           case "cn":
-            utils.pushItem(
-              customCss,
-              selector +
-                " li.list-" +
-                listStyle +
-                "-paddingleft-1{padding-left:25px}"
-            );
-            utils.pushItem(
-              customCss,
-              selector +
-                " li.list-" +
-                listStyle +
-                "-paddingleft-2{padding-left:40px}"
-            );
-            utils.pushItem(
-              customCss,
-              selector +
-                " li.list-" +
-                listStyle +
-                "-paddingleft-3{padding-left:55px}"
-            );
+            utils.pushItem(customCss, selector + " li.list-" + listStyle + "-paddingleft-1{padding-left:25px}");
+            utils.pushItem(customCss, selector + " li.list-" + listStyle + "-paddingleft-2{padding-left:40px}");
+            utils.pushItem(customCss, selector + " li.list-" + listStyle + "-paddingleft-3{padding-left:55px}");
             break;
           case "cn1":
-            utils.pushItem(
-              customCss,
-              selector +
-                " li.list-" +
-                listStyle +
-                "-paddingleft-1{padding-left:30px}"
-            );
-            utils.pushItem(
-              customCss,
-              selector +
-                " li.list-" +
-                listStyle +
-                "-paddingleft-2{padding-left:40px}"
-            );
-            utils.pushItem(
-              customCss,
-              selector +
-                " li.list-" +
-                listStyle +
-                "-paddingleft-3{padding-left:55px}"
-            );
+            utils.pushItem(customCss, selector + " li.list-" + listStyle + "-paddingleft-1{padding-left:30px}");
+            utils.pushItem(customCss, selector + " li.list-" + listStyle + "-paddingleft-2{padding-left:40px}");
+            utils.pushItem(customCss, selector + " li.list-" + listStyle + "-paddingleft-3{padding-left:55px}");
             break;
           case "cn2":
-            utils.pushItem(
-              customCss,
-              selector +
-                " li.list-" +
-                listStyle +
-                "-paddingleft-1{padding-left:40px}"
-            );
-            utils.pushItem(
-              customCss,
-              selector +
-                " li.list-" +
-                listStyle +
-                "-paddingleft-2{padding-left:55px}"
-            );
-            utils.pushItem(
-              customCss,
-              selector +
-                " li.list-" +
-                listStyle +
-                "-paddingleft-3{padding-left:68px}"
-            );
+            utils.pushItem(customCss, selector + " li.list-" + listStyle + "-paddingleft-1{padding-left:40px}");
+            utils.pushItem(customCss, selector + " li.list-" + listStyle + "-paddingleft-2{padding-left:55px}");
+            utils.pushItem(customCss, selector + " li.list-" + listStyle + "-paddingleft-3{padding-left:68px}");
             break;
           case "num":
           case "num1":
-            utils.pushItem(
-              customCss,
-              selector +
-                " li.list-" +
-                listStyle +
-                "-paddingleft-1{padding-left:25px}"
-            );
+            utils.pushItem(customCss, selector + " li.list-" + listStyle + "-paddingleft-1{padding-left:25px}");
             break;
           case "num2":
-            utils.pushItem(
-              customCss,
-              selector +
-                " li.list-" +
-                listStyle +
-                "-paddingleft-1{padding-left:35px}"
-            );
-            utils.pushItem(
-              customCss,
-              selector +
-                " li.list-" +
-                listStyle +
-                "-paddingleft-2{padding-left:40px}"
-            );
+            utils.pushItem(customCss, selector + " li.list-" + listStyle + "-paddingleft-1{padding-left:35px}");
+            utils.pushItem(customCss, selector + " li.list-" + listStyle + "-paddingleft-2{padding-left:40px}");
             break;
           case "dash":
-            utils.pushItem(
-              customCss,
-              selector +
-                " li.list-" +
-                listStyle +
-                "-paddingleft{padding-left:35px}"
-            );
+            utils.pushItem(customCss, selector + " li.list-" + listStyle + "-paddingleft{padding-left:35px}");
             break;
           case "dot":
-            utils.pushItem(
-              customCss,
-              selector +
-                " li.list-" +
-                listStyle +
-                "-paddingleft{padding-left:20px}"
-            );
+            utils.pushItem(customCss, selector + " li.list-" + listStyle + "-paddingleft{padding-left:20px}");
         }
       }
     });
@@ -1189,8 +1044,7 @@ UE.parse.register("vedio", function(utils) {
   document.createElement("video");
   document.createElement("audio");
   if (video.length || audio.length) {
-    var
-      jsurl = "https://cdn.jsdelivr.net/npm/video.js@4.3.0/video.js",
+    var jsurl = "https://cdn.jsdelivr.net/npm/video.js@4.3.0/video.js",
       cssurl = "https://cdn.jsdelivr.net/npm/video.js@4.3.0/video-js.min.css",
       swfUrl = "https://cdn.jsdelivr.net/npm/video.js@4.3.0/video-js.swf";
 

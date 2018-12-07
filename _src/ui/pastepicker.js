@@ -52,8 +52,7 @@
         screenHt = uiUtils.getViewportRect().height,
         subPop = uiUtils.getClientRect(node);
 
-      if (subPop.top + subPop.height > screenHt)
-        node.style.top = -subPop.height - cur.offsetHeight + "px";
+      if (subPop.top + subPop.height > screenHt) node.style.top = -subPop.height - cur.offsetHeight + "px";
       else node.style.top = "";
 
       if (/hidden/gi.test(domUtils.getComputedStyle(node, "visibility"))) {

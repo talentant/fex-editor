@@ -32,10 +32,7 @@
 UE.plugins["blockquote"] = function() {
   var me = this;
   function getObj(editor) {
-    return domUtils.filterNodeList(
-      editor.selection.getStartElementPath(),
-      "blockquote"
-    );
+    return domUtils.filterNodeList(editor.selection.getStartElementPath(), "blockquote");
   }
   me.commands["blockquote"] = {
     execCommand: function(cmdName, attrs) {
@@ -59,10 +56,8 @@ UE.plugins["blockquote"] = function() {
               });
 
         //处理一下li
-        startBlock =
-          domUtils.findParentByTagName(startBlock, "li", true) || startBlock;
-        endBlock =
-          domUtils.findParentByTagName(endBlock, "li", true) || endBlock;
+        startBlock = domUtils.findParentByTagName(startBlock, "li", true) || startBlock;
+        endBlock = domUtils.findParentByTagName(endBlock, "li", true) || endBlock;
 
         if (
           startBlock.tagName == "LI" ||
@@ -78,11 +73,7 @@ UE.plugins["blockquote"] = function() {
         if (startBlock !== endBlock) {
           obj = domUtils.findParentByTagName(endBlock, "blockquote");
           if (obj) {
-            if (
-              endBlock.tagName == "LI" ||
-              endBlock.tagName == "TD" ||
-              domUtils.isBody(endBlock)
-            ) {
+            if (endBlock.tagName == "LI" || endBlock.tagName == "TD" || domUtils.isBody(endBlock)) {
               obj.parentNode && domUtils.remove(obj, true);
             } else {
               domUtils.breakParent(endBlock, obj);
@@ -90,16 +81,12 @@ UE.plugins["blockquote"] = function() {
           }
         }
 
-        var blockquotes = domUtils.getElementsByTagName(
-          this.document,
-          "blockquote"
-        );
+        var blockquotes = domUtils.getElementsByTagName(this.document, "blockquote");
         for (var i = 0, bi; (bi = blockquotes[i++]); ) {
           if (!bi.childNodes.length) {
             domUtils.remove(bi);
           } else if (
-            domUtils.getPosition(bi, startBlock) &
-              domUtils.POSITION_FOLLOWING &&
+            domUtils.getPosition(bi, startBlock) & domUtils.POSITION_FOLLOWING &&
             domUtils.getPosition(bi, endBlock) & domUtils.POSITION_PRECEDING
           ) {
             domUtils.remove(bi, true);
@@ -107,9 +94,7 @@ UE.plugins["blockquote"] = function() {
         }
       } else {
         var tmpRange = range.cloneRange(),
-          node = tmpRange.startContainer.nodeType == 1
-            ? tmpRange.startContainer
-            : tmpRange.startContainer.parentNode,
+          node = tmpRange.startContainer.nodeType == 1 ? tmpRange.startContainer : tmpRange.startContainer.parentNode,
           preNode = node,
           doEnd = 1;
 
@@ -144,9 +129,8 @@ UE.plugins["blockquote"] = function() {
 
         //调整结束
         if (doEnd) {
-          preNode = node = node = tmpRange.endContainer.nodeType == 1
-            ? tmpRange.endContainer
-            : tmpRange.endContainer.parentNode;
+          preNode = node = node =
+            tmpRange.endContainer.nodeType == 1 ? tmpRange.endContainer : tmpRange.endContainer.parentNode;
           while (1) {
             if (domUtils.isBody(node)) {
               if (preNode !== node) {

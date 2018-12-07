@@ -23,7 +23,11 @@ UE.plugins["template"] = function() {
       },
       true
     );
-    tnode && range.selectNode(tnode).shrinkBoundary().select();
+    tnode &&
+      range
+        .selectNode(tnode)
+        .shrinkBoundary()
+        .select();
   });
   this.addListener("keydown", function(type, evt) {
     var range = this.selection.getRange();

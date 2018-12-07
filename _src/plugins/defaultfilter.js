@@ -33,10 +33,7 @@ UE.plugins["defaultfilter"] = function() {
           (!node.attrs || utils.isEmptyObject(node.attrs))
         ) {
           if (!node.firstChild()) node.parentNode.removeChild(node);
-          else if (
-            node.tagName == "span" &&
-            (!node.attrs || utils.isEmptyObject(node.attrs))
-          ) {
+          else if (node.tagName == "span" && (!node.attrs || utils.isEmptyObject(node.attrs))) {
             node.parentNode.removeChild(node, true);
           }
           return;
@@ -71,10 +68,7 @@ UE.plugins["defaultfilter"] = function() {
             if (browser.webkit && (val = node.getStyle("white-space"))) {
               if (/nowrap|normal/.test(val)) {
                 node.setStyle("white-space", "");
-                if (
-                  me.options.autoClearEmptyNode &&
-                  utils.isEmptyObject(node.attrs)
-                ) {
+                if (me.options.autoClearEmptyNode && utils.isEmptyObject(node.attrs)) {
                   node.parentNode.removeChild(node, true);
                 }
               }
@@ -130,10 +124,7 @@ UE.plugins["defaultfilter"] = function() {
             var tmpNode,
               p = UE.uNode.createElement("p");
             while ((tmpNode = node.firstChild())) {
-              if (
-                tmpNode.type == "text" ||
-                !UE.dom.dtd.$block[tmpNode.tagName]
-              ) {
+              if (tmpNode.type == "text" || !UE.dom.dtd.$block[tmpNode.tagName]) {
                 p.appendChild(tmpNode);
               } else {
                 if (p.firstChild()) {
@@ -170,19 +161,12 @@ UE.plugins["defaultfilter"] = function() {
           case "th":
           case "caption":
             if (!node.children || !node.children.length) {
-              node.appendChild(
-                browser.ie11below
-                  ? UE.uNode.createText(" ")
-                  : UE.uNode.createElement("br")
-              );
+              node.appendChild(browser.ie11below ? UE.uNode.createText(" ") : UE.uNode.createElement("br"));
             }
             break;
           case "table":
             if (me.options.disabledTableInTable && tdParent(node)) {
-              node.parentNode.insertBefore(
-                UE.uNode.createText(node.innerText()),
-                node
-              );
+              node.parentNode.insertBefore(UE.uNode.createText(node.innerText()), node);
               node.parentNode.removeChild(node);
             }
         }
@@ -205,10 +189,7 @@ UE.plugins["defaultfilter"] = function() {
           (!node.attrs || utils.isEmptyObject(node.attrs))
         ) {
           if (!node.firstChild()) node.parentNode.removeChild(node);
-          else if (
-            node.tagName == "span" &&
-            (!node.attrs || utils.isEmptyObject(node.attrs))
-          ) {
+          else if (node.tagName == "span" && (!node.attrs || utils.isEmptyObject(node.attrs))) {
             node.parentNode.removeChild(node, true);
           }
           return;
@@ -250,10 +231,7 @@ UE.plugins["defaultfilter"] = function() {
                     if (array.length > 3) return "";
                     value = "#";
                     for (var i = 0, color; (color = array[i++]); ) {
-                      color = parseInt(
-                        color.replace(/[^\d]/gi, ""),
-                        10
-                      ).toString(16);
+                      color = parseInt(color.replace(/[^\d]/gi, ""), 10).toString(16);
                       value += color.length == 1 ? "0" + color : color;
                     }
                     return value.toUpperCase();

@@ -24,10 +24,7 @@ UE.plugins["autoheight"] = function() {
     var me = this;
     clearTimeout(timer);
     if (isFullscreen) return;
-    if (
-      !me.queryCommandState ||
-      (me.queryCommandState && me.queryCommandState("source") != 1)
-    ) {
+    if (!me.queryCommandState || (me.queryCommandState && me.queryCommandState("source") != 1)) {
       timer = setTimeout(function() {
         var node = me.body.lastChild;
         while (node && node.nodeType != 1) {
@@ -57,10 +54,7 @@ UE.plugins["autoheight"] = function() {
   });
   me.addListener("destroy", function() {
     domUtils.un(me.window, "scroll", fixedScrollTop);
-    me.removeListener(
-      "contentchange afterinserthtml keyup mouseup",
-      adjustHeight
-    );
+    me.removeListener("contentchange afterinserthtml keyup mouseup", adjustHeight);
   });
   me.enableAutoHeight = function() {
     var me = this;
@@ -74,9 +68,12 @@ UE.plugins["autoheight"] = function() {
     me.addListener("contentchange afterinserthtml keyup mouseup", adjustHeight);
     //ff不给事件算得不对
 
-    setTimeout(function() {
-      adjustHeight.call(me);
-    }, browser.gecko ? 100 : 0);
+    setTimeout(
+      function() {
+        adjustHeight.call(me);
+      },
+      browser.gecko ? 100 : 0
+    );
     me.fireEvent("autoheightchanged", me.autoHeightEnabled);
   };
   me.disableAutoHeight = function() {
@@ -96,17 +93,13 @@ UE.plugins["autoheight"] = function() {
     me.enableAutoHeight();
     //trace:1764
     var timer;
-    domUtils.on(
-      browser.ie ? me.body : me.document,
-      browser.webkit ? "dragover" : "drop",
-      function() {
-        clearTimeout(timer);
-        timer = setTimeout(function() {
-          //trace:3681
-          adjustHeight.call(me);
-        }, 100);
-      }
-    );
+    domUtils.on(browser.ie ? me.body : me.document, browser.webkit ? "dragover" : "drop", function() {
+      clearTimeout(timer);
+      timer = setTimeout(function() {
+        //trace:3681
+        adjustHeight.call(me);
+      }, 100);
+    });
     //修复内容过多时，回到顶部，顶部内容被工具栏遮挡问题
     domUtils.on(me.window, "scroll", fixedScrollTop);
   });

@@ -73,7 +73,7 @@ UE.plugin.register("autoupload", function() {
         var rng = me.selection.getRange(),
           bk = rng.createBookmark();
         rng.selectNode(loader).select();
-        me.execCommand("insertfile", { url: link });
+        me.execCommand("insertfile", {url: link});
         rng.moveToBookmark(bk).select();
       };
     }
@@ -94,8 +94,7 @@ UE.plugin.register("autoupload", function() {
     var fileext = file.name ? file.name.substr(file.name.lastIndexOf(".")) : "";
     if (
       (fileext && filetype != "image") ||
-      (allowFiles &&
-        (allowFiles.join("") + ".").indexOf(fileext.toLowerCase() + ".") == -1)
+      (allowFiles && (allowFiles.join("") + ".").indexOf(fileext.toLowerCase() + ".") == -1)
     ) {
       errorHandler(me.getLang("autoupload.exceedTypeError"));
       return;
@@ -105,15 +104,9 @@ UE.plugin.register("autoupload", function() {
     var xhr = new XMLHttpRequest(),
       fd = new FormData(),
       params = utils.serializeParam(me.queryCommandValue("serverparam")) || "",
-      url = utils.formatUrl(
-        actionUrl + (actionUrl.indexOf("?") == -1 ? "?" : "&") + params
-      );
+      url = utils.formatUrl(actionUrl + (actionUrl.indexOf("?") == -1 ? "?" : "&") + params);
 
-    fd.append(
-      fieldName,
-      file,
-      file.name || "blob." + file.type.substr("image/".length)
-    );
+    fd.append(fieldName, file, file.name || "blob." + file.type.substr("image/".length));
     fd.append("type", "ajax");
     xhr.open("post", url, true);
     xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");

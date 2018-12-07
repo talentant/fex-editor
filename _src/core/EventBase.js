@@ -32,27 +32,27 @@ var EventBase = (UE.EventBase = function() {});
 
 EventBase.prototype = {
   /**
-     * 注册事件监听器
-     * @method addListener
-     * @param { String } types 监听的事件名称，同时监听多个事件使用空格分隔
-     * @param { Function } fn 监听的事件被触发时，会执行该回调函数
-     * @waining 事件被触发时，监听的函数假如返回的值恒等于true，回调函数的队列中后面的函数将不执行
-     * @example
-     * ```javascript
-     * editor.addListener('selectionchange',function(){
-     *      console.log("选区已经变化！");
-     * })
-     * editor.addListener('beforegetcontent aftergetcontent',function(type){
-     *         if(type == 'beforegetcontent'){
-     *             //do something
-     *         }else{
-     *             //do something
-     *         }
-     *         console.log(this.getContent) // this是注册的事件的编辑器实例
-     * })
-     * ```
-     * @see UE.EventBase:fireEvent(String)
-     */
+   * 注册事件监听器
+   * @method addListener
+   * @param { String } types 监听的事件名称，同时监听多个事件使用空格分隔
+   * @param { Function } fn 监听的事件被触发时，会执行该回调函数
+   * @waining 事件被触发时，监听的函数假如返回的值恒等于true，回调函数的队列中后面的函数将不执行
+   * @example
+   * ```javascript
+   * editor.addListener('selectionchange',function(){
+   *      console.log("选区已经变化！");
+   * })
+   * editor.addListener('beforegetcontent aftergetcontent',function(type){
+   *         if(type == 'beforegetcontent'){
+   *             //do something
+   *         }else{
+   *             //do something
+   *         }
+   *         console.log(this.getContent) // this是注册的事件的编辑器实例
+   * })
+   * ```
+   * @see UE.EventBase:fireEvent(String)
+   */
   addListener: function(types, listener) {
     types = utils.trim(types).split(/\s+/);
     for (var i = 0, ti; (ti = types[i++]); ) {
@@ -70,16 +70,16 @@ EventBase.prototype = {
     return this.fireEvent.apply(this, arguments);
   },
   /**
-     * 移除事件监听器
-     * @method removeListener
-     * @param { String } types 移除的事件名称，同时移除多个事件使用空格分隔
-     * @param { Function } fn 移除监听事件的函数引用
-     * @example
-     * ```javascript
-     * //changeCallback为方法体
-     * editor.removeListener("selectionchange",changeCallback);
-     * ```
-     */
+   * 移除事件监听器
+   * @method removeListener
+   * @param { String } types 移除的事件名称，同时移除多个事件使用空格分隔
+   * @param { Function } fn 移除监听事件的函数引用
+   * @example
+   * ```javascript
+   * //changeCallback为方法体
+   * editor.removeListener("selectionchange",changeCallback);
+   * ```
+   */
   removeListener: function(types, listener) {
     types = utils.trim(types).split(/\s+/);
     for (var i = 0, ti; (ti = types[i++]); ) {
@@ -88,37 +88,37 @@ EventBase.prototype = {
   },
 
   /**
-     * 触发事件
-     * @method fireEvent
-     * @param { String } types 触发的事件名称，同时触发多个事件使用空格分隔
-     * @remind 该方法会触发addListener
-     * @return { * } 返回触发事件的队列中，最后执行的回调函数的返回值
-     * @example
-     * ```javascript
-     * editor.fireEvent("selectionchange");
-     * ```
-     */
+   * 触发事件
+   * @method fireEvent
+   * @param { String } types 触发的事件名称，同时触发多个事件使用空格分隔
+   * @remind 该方法会触发addListener
+   * @return { * } 返回触发事件的队列中，最后执行的回调函数的返回值
+   * @example
+   * ```javascript
+   * editor.fireEvent("selectionchange");
+   * ```
+   */
 
   /**
-     * 触发事件
-     * @method fireEvent
-     * @param { String } types 触发的事件名称，同时触发多个事件使用空格分隔
-     * @param { *... } options 可选参数，可以传入一个或多个参数，会传给事件触发的回调函数
-     * @return { * } 返回触发事件的队列中，最后执行的回调函数的返回值
-     * @example
-     * ```javascript
-     *
-     * editor.addListener( "selectionchange", function ( type, arg1, arg2 ) {
-     *
-     *     console.log( arg1 + " " + arg2 );
-     *
-     * } );
-     *
-     * //触发selectionchange事件， 会执行上面的事件监听器
-     * //output: Hello World
-     * editor.fireEvent("selectionchange", "Hello", "World");
-     * ```
-     */
+   * 触发事件
+   * @method fireEvent
+   * @param { String } types 触发的事件名称，同时触发多个事件使用空格分隔
+   * @param { *... } options 可选参数，可以传入一个或多个参数，会传给事件触发的回调函数
+   * @return { * } 返回触发事件的队列中，最后执行的回调函数的返回值
+   * @example
+   * ```javascript
+   *
+   * editor.addListener( "selectionchange", function ( type, arg1, arg2 ) {
+   *
+   *     console.log( arg1 + " " + arg2 );
+   *
+   * } );
+   *
+   * //触发selectionchange事件， 会执行上面的事件监听器
+   * //output: Hello World
+   * editor.fireEvent("selectionchange", "Hello", "World");
+   * ```
+   */
   fireEvent: function() {
     var types = arguments[0];
     types = utils.trim(types).split(" ");
@@ -163,8 +163,7 @@ function getListener(obj, type, force) {
   var allListeners;
   type = type.toLowerCase();
   return (
-    (allListeners =
-      obj.__allListeners || (force && (obj.__allListeners = {}))) &&
+    (allListeners = obj.__allListeners || (force && (obj.__allListeners = {}))) &&
     (allListeners[type] || (force && (allListeners[type] = [])))
   );
 }

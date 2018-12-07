@@ -76,10 +76,7 @@ UE.commands["inserthtml"] = {
         if (domUtils.isBoundaryNode(tmpNode, "firstChild")) {
           tmpNode = range.endContainer;
           if (
-            range.endOffset ==
-              (tmpNode.nodeType == 3
-                ? tmpNode.nodeValue.length
-                : tmpNode.childNodes.length) &&
+            range.endOffset == (tmpNode.nodeType == 3 ? tmpNode.nodeValue.length : tmpNode.childNodes.length) &&
             domUtils.isBoundaryNode(tmpNode, "lastChild")
           ) {
             me.body.innerHTML = "<p>" + (browser.ie ? "" : "<br/>") + "</p>";
@@ -91,12 +88,7 @@ UE.commands["inserthtml"] = {
       if (range.startContainer.nodeType == 1) {
         var child = range.startContainer.childNodes[range.startOffset],
           pre;
-        if (
-          child &&
-          domUtils.isBlockElm(child) &&
-          (pre = child.previousSibling) &&
-          domUtils.isBlockElm(pre)
-        ) {
+        if (child && domUtils.isBlockElm(child) && (pre = child.previousSibling) && domUtils.isBlockElm(pre)) {
           range.setEnd(pre, pre.childNodes.length).collapse();
           while (child.firstChild) {
             pre.appendChild(child.firstChild);
@@ -130,12 +122,7 @@ UE.commands["inserthtml"] = {
       var next, last;
       while ((child = div.firstChild)) {
         //针对hr单独处理一下先
-        while (
-          child &&
-          (child.nodeType == 3 ||
-            !domUtils.isBlockElm(child) ||
-            child.tagName == "HR")
-        ) {
+        while (child && (child.nodeType == 3 || !domUtils.isBlockElm(child) || child.tagName == "HR")) {
           next = child.nextSibling;
           range.insertNode(child).collapse();
           last = child;
@@ -166,7 +153,10 @@ UE.commands["inserthtml"] = {
         domUtils.remove(li);
       }
       if (last) {
-        range.setStartAfter(last).collapse(true).select(true);
+        range
+          .setStartAfter(last)
+          .collapse(true)
+          .select(true);
       }
     } else {
       while ((child = div.firstChild)) {
@@ -183,20 +173,14 @@ UE.commands["inserthtml"] = {
         }
         range.insertNode(child);
         nextNode = child.nextSibling;
-        if (
-          !hadBreak &&
-          child.nodeType == domUtils.NODE_ELEMENT &&
-          domUtils.isBlockElm(child)
-        ) {
+        if (!hadBreak && child.nodeType == domUtils.NODE_ELEMENT && domUtils.isBlockElm(child)) {
           parent = domUtils.findParent(child, function(node) {
             return domUtils.isBlockElm(node);
           });
           if (
             parent &&
             parent.tagName.toLowerCase() != "body" &&
-            !(
-              dtd[parent.tagName][child.nodeName] && child.parentNode === parent
-            )
+            !(dtd[parent.tagName][child.nodeName] && child.parentNode === parent)
           ) {
             if (!dtd[parent.tagName][child.nodeName]) {
               pre = parent;
@@ -247,7 +231,10 @@ UE.commands["inserthtml"] = {
         if ((nextNode = child.nextSibling)) {
           domUtils.remove(child);
           if (nextNode.nodeType == 1 && dtd.$block[nextNode.tagName]) {
-            range.setStart(nextNode, 0).collapse(true).shrinkBoundary();
+            range
+              .setStart(nextNode, 0)
+              .collapse(true)
+              .shrinkBoundary();
           }
         } else {
           try {
@@ -266,10 +253,7 @@ UE.commands["inserthtml"] = {
 
     setTimeout(function() {
       range = me.selection.getRange();
-      range.scrollToView(
-        me.autoHeightEnabled,
-        me.autoHeightEnabled ? domUtils.getXY(me.iframe).y : 0
-      );
+      range.scrollToView(me.autoHeightEnabled, me.autoHeightEnabled ? domUtils.getXY(me.iframe).y : 0);
       me.fireEvent("afterinserthtml", html);
     }, 200);
   }

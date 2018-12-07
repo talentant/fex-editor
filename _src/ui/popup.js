@@ -16,12 +16,7 @@
       var pop = allPopups[i];
       if (!pop.isHidden()) {
         if (pop.queryAutoHide(el) !== false) {
-          if (
-            evt &&
-            /scroll/gi.test(evt.type) &&
-            pop.className == "edui-wordpastepop"
-          )
-            return;
+          if (evt && /scroll/gi.test(evt.type) && pop.className == "edui-wordpastepop") return;
           pop.hide();
         }
       }
@@ -82,9 +77,7 @@
       if (this.captureWheel && !this.captured) {
         this.captured = true;
 
-        var winHeight =
-          (document.documentElement.clientHeight ||
-            document.body.clientHeight) - 80,
+        var winHeight = (document.documentElement.clientHeight || document.body.clientHeight) - 80,
           _height = this.getDom().offsetHeight,
           _top = uiUtils.getClientRect(this.combox.getDom()).top,
           content = this.getDom("content"),
@@ -102,29 +95,25 @@
 
         //阻止在combox上的鼠标滚轮事件, 防止用户的正常操作被误解
         if (window.XMLHttpRequest) {
-          domUtils.on(
-            content,
-            "onmousewheel" in document.body ? "mousewheel" : "DOMMouseScroll",
-            function(e) {
-              if (e.preventDefault) {
-                e.preventDefault();
-              } else {
-                e.returnValue = false;
-              }
-
-              if (e.wheelDelta) {
-                content.scrollTop -= e.wheelDelta / 120 * 60;
-              } else {
-                content.scrollTop -= e.detail / -3 * 60;
-              }
+          domUtils.on(content, "onmousewheel" in document.body ? "mousewheel" : "DOMMouseScroll", function(e) {
+            if (e.preventDefault) {
+              e.preventDefault();
+            } else {
+              e.returnValue = false;
             }
-          );
+
+            if (e.wheelDelta) {
+              content.scrollTop -= (e.wheelDelta / 120) * 60;
+            } else {
+              content.scrollTop -= (e.detail / -3) * 60;
+            }
+          });
         } else {
           //ie6
           domUtils.on(this.getDom(), "mousewheel", function(e) {
             e.returnValue = false;
 
-            me.getDom("content").scrollTop -= e.wheelDelta / 120 * 60;
+            me.getDom("content").scrollTop -= (e.wheelDelta / 120) * 60;
           });
         }
       }
@@ -174,25 +163,13 @@
 
       var sideLeft, sideUp, left, top;
       if (hoz) {
-        sideLeft =
-          this.canSideLeft &&
-          (rect.right + popSize.width > vpRect.right &&
-            rect.left > popSize.width);
-        sideUp =
-          this.canSideUp &&
-          (rect.top + popSize.height > vpRect.bottom &&
-            rect.bottom > popSize.height);
+        sideLeft = this.canSideLeft && (rect.right + popSize.width > vpRect.right && rect.left > popSize.width);
+        sideUp = this.canSideUp && (rect.top + popSize.height > vpRect.bottom && rect.bottom > popSize.height);
         left = sideLeft ? rect.left - popSize.width : rect.right;
         top = sideUp ? rect.bottom - popSize.height : rect.top;
       } else {
-        sideLeft =
-          this.canSideLeft &&
-          (rect.right + popSize.width > vpRect.right &&
-            rect.left > popSize.width);
-        sideUp =
-          this.canSideUp &&
-          (rect.top + popSize.height > vpRect.bottom &&
-            rect.bottom > popSize.height);
+        sideLeft = this.canSideLeft && (rect.right + popSize.width > vpRect.right && rect.left > popSize.width);
+        sideUp = this.canSideUp && (rect.top + popSize.height > vpRect.bottom && rect.bottom > popSize.height);
         left = sideLeft ? rect.right - popSize.width : rect.left;
         top = sideUp ? rect.top - popSize.height : rect.bottom;
       }
@@ -203,12 +180,10 @@
         top: top
       });
       domUtils.removeClasses(popEl, ANCHOR_CLASSES);
-      popEl.className +=
-        " " + ANCHOR_CLASSES[(sideUp ? 1 : 0) * 2 + (sideLeft ? 1 : 0)];
+      popEl.className += " " + ANCHOR_CLASSES[(sideUp ? 1 : 0) * 2 + (sideLeft ? 1 : 0)];
       if (this.editor) {
         popEl.style.zIndex = this.editor.container.style.zIndex * 1 + 10;
-        baidu.editor.ui.uiUtils.getFixedLayer().style.zIndex =
-          popEl.style.zIndex - 1;
+        baidu.editor.ui.uiUtils.getFixedLayer().style.zIndex = popEl.style.zIndex - 1;
       }
       this.getDom().style.visibility = "visible";
     },

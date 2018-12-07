@@ -4,9 +4,7 @@
   var utils = baidu.editor.utils,
     UIBase = baidu.editor.ui.UIBase;
 
-  var AutoTypeSetPicker = (baidu.editor.ui.AutoTypeSetPicker = function(
-    options
-  ) {
+  var AutoTypeSetPicker = (baidu.editor.ui.AutoTypeSetPicker = function(options) {
     this.initOptions(options);
     this.initAutoTypeSetPicker();
   });
@@ -86,33 +84,25 @@
         '<input type="radio" name="' +
         imageBlockInputName +
         '" value="none" ' +
-        (opt["imageBlockLine"] && opt["imageBlockLine"] == "none"
-          ? "checked"
-          : "") +
+        (opt["imageBlockLine"] && opt["imageBlockLine"] == "none" ? "checked" : "") +
         ">" +
         me.getLang("default") +
         '<input type="radio" name="' +
         imageBlockInputName +
         '" value="left" ' +
-        (opt["imageBlockLine"] && opt["imageBlockLine"] == "left"
-          ? "checked"
-          : "") +
+        (opt["imageBlockLine"] && opt["imageBlockLine"] == "left" ? "checked" : "") +
         ">" +
         me.getLang("justifyleft") +
         '<input type="radio" name="' +
         imageBlockInputName +
         '" value="center" ' +
-        (opt["imageBlockLine"] && opt["imageBlockLine"] == "center"
-          ? "checked"
-          : "") +
+        (opt["imageBlockLine"] && opt["imageBlockLine"] == "center" ? "checked" : "") +
         ">" +
         me.getLang("justifycenter") +
         '<input type="radio" name="' +
         imageBlockInputName +
         '" value="right" ' +
-        (opt["imageBlockLine"] && opt["imageBlockLine"] == "right"
-          ? "checked"
-          : "") +
+        (opt["imageBlockLine"] && opt["imageBlockLine"] == "right" ? "checked" : "") +
         ">" +
         me.getLang("justifyright") +
         "</td>" +

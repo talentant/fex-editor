@@ -28,7 +28,7 @@ UE.plugins["autotypeset"] = function() {
       clearFontFamily: false, //去掉所有的内嵌字体，使用编辑器默认的字体
       removeEmptyNode: false, // 去掉空节点
       //可以去掉的标签
-      removeTagNames: utils.extend({ div: 1 }, dtd.$removeEmpty),
+      removeTagNames: utils.extend({div: 1}, dtd.$removeEmpty),
       indent: false, // 行首缩进
       indentValue: "2em", //行首缩进的大小
       bdc2sb: false,
@@ -72,29 +72,20 @@ UE.plugins["autotypeset"] = function() {
     if (!node || node.nodeType == 3) return 0;
     if (domUtils.isBr(node)) return 1;
     if (node && node.parentNode && tags[node.tagName.toLowerCase()]) {
-      if (
-        (highlightCont && highlightCont.contains(node)) ||
-        node.getAttribute("pagebreak")
-      ) {
+      if ((highlightCont && highlightCont.contains(node)) || node.getAttribute("pagebreak")) {
         return 0;
       }
 
       return notEmpty
         ? !domUtils.isEmptyBlock(node)
-        : domUtils.isEmptyBlock(
-            node,
-            new RegExp("[\\s" + domUtils.fillChar + "]", "g")
-          );
+        : domUtils.isEmptyBlock(node, new RegExp("[\\s" + domUtils.fillChar + "]", "g"));
     }
   }
 
   function removeNotAttributeSpan(node) {
     if (!node.style.cssText) {
       domUtils.removeAttributes(node, ["style"]);
-      if (
-        node.tagName.toLowerCase() == "span" &&
-        domUtils.hasNoAttributes(node)
-      ) {
+      if (node.tagName.toLowerCase() == "span" && domUtils.hasNoAttributes(node)) {
         domUtils.remove(node, true);
       }
     }
@@ -146,11 +137,7 @@ UE.plugins["autotypeset"] = function() {
           }
         }
         //去掉空行，保留占位的空行
-        if (
-          opt.removeEmptyline &&
-          domUtils.inDoc(ci, cont) &&
-          !remainTag[ci.parentNode.tagName.toLowerCase()]
-        ) {
+        if (opt.removeEmptyline && domUtils.inDoc(ci, cont) && !remainTag[ci.parentNode.tagName.toLowerCase()]) {
           if (domUtils.isBr(ci)) {
             next = ci.nextSibling;
             if (next && !domUtils.isBr(next)) {
@@ -173,11 +160,7 @@ UE.plugins["autotypeset"] = function() {
       }
 
       //去掉class,保留的class不去掉
-      if (
-        opt.removeClass &&
-        ci.className &&
-        !remainClass[ci.className.toLowerCase()]
-      ) {
+      if (opt.removeClass && ci.className && !remainClass[ci.className.toLowerCase()]) {
         if (highlightCont && highlightCont.contains(ci)) {
           continue;
         }
@@ -185,11 +168,7 @@ UE.plugins["autotypeset"] = function() {
       }
 
       //表情不处理
-      if (
-        opt.imageBlockLine &&
-        ci.tagName.toLowerCase() == "img" &&
-        !ci.getAttribute("emotion")
-      ) {
+      if (opt.imageBlockLine && ci.tagName.toLowerCase() == "img" && !ci.getAttribute("emotion")) {
         if (html) {
           var img = ci;
           switch (opt.imageBlockLine) {
@@ -204,10 +183,7 @@ UE.plugins["autotypeset"] = function() {
                 pN = pN.parentNode;
               }
               tmpNode = pN;
-              if (
-                tmpNode.tagName == "P" &&
-                domUtils.getStyle(tmpNode, "text-align") == "center"
-              ) {
+              if (tmpNode.tagName == "P" && domUtils.getStyle(tmpNode, "text-align") == "center") {
                 if (
                   !domUtils.isBody(tmpNode) &&
                   domUtils.getChildCount(tmpNode, function(node) {
@@ -270,11 +246,7 @@ UE.plugins["autotypeset"] = function() {
 
       //去掉冗余的标签
       if (opt.removeEmptyNode) {
-        if (
-          opt.removeTagNames[ci.tagName.toLowerCase()] &&
-          domUtils.hasNoAttributes(ci) &&
-          domUtils.isEmptyBlock(ci)
-        ) {
+        if (opt.removeTagNames[ci.tagName.toLowerCase()] && domUtils.hasNoAttributes(ci) && domUtils.isEmptyBlock(ci)) {
           domUtils.remove(ci);
         }
       }

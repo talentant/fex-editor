@@ -21,21 +21,13 @@
 UE.plugins["removeformat"] = function() {
   var me = this;
   me.setOpt({
-    removeFormatTags:
-      "b,big,code,del,dfn,em,font,i,ins,kbd,q,samp,small,span,strike,strong,sub,sup,tt,u,var",
+    removeFormatTags: "b,big,code,del,dfn,em,font,i,ins,kbd,q,samp,small,span,strike,strong,sub,sup,tt,u,var",
     removeFormatAttributes: "class,style,lang,width,height,align,hspace,valign"
   });
   me.commands["removeformat"] = {
     execCommand: function(cmdName, tags, style, attrs, notIncludeA) {
-      var tagReg = new RegExp(
-        "^(?:" +
-          (tags || this.options.removeFormatTags).replace(/,/g, "|") +
-          ")$",
-        "i"
-      ),
-        removeFormatAttributes = style
-          ? []
-          : (attrs || this.options.removeFormatAttributes).split(","),
+      var tagReg = new RegExp("^(?:" + (tags || this.options.removeFormatTags).replace(/,/g, "|") + ")$", "i"),
+        removeFormatAttributes = style ? [] : (attrs || this.options.removeFormatAttributes).split(","),
         range = new dom.Range(this.document),
         bookmark,
         node,
@@ -71,11 +63,7 @@ UE.plugins["removeformat"] = function() {
 
         //不能把a标签切了
         if (!notIncludeA) {
-          var aNode = domUtils.findParentByTagName(
-            range.startContainer,
-            "a",
-            true
-          );
+          var aNode = domUtils.findParentByTagName(range.startContainer, "a", true);
           if (aNode) {
             range.setStartBefore(aNode);
           }
@@ -114,10 +102,7 @@ UE.plugins["removeformat"] = function() {
 
             next = domUtils.getNextDomNode(current, true, filter);
 
-            if (
-              !dtd.$empty[current.tagName.toLowerCase()] &&
-              !domUtils.isBookmarkNode(current)
-            ) {
+            if (!dtd.$empty[current.tagName.toLowerCase()] && !domUtils.isBookmarkNode(current)) {
               if (tagReg.test(current.tagName)) {
                 if (style) {
                   domUtils.removeStyle(current, style);
@@ -129,10 +114,7 @@ UE.plugins["removeformat"] = function() {
                 }
               } else {
                 //trace:939  不能把list上的样式去掉
-                if (
-                  !dtd.$tableContent[current.tagName] &&
-                  !dtd.$list[current.tagName]
-                ) {
+                if (!dtd.$tableContent[current.tagName] && !dtd.$list[current.tagName]) {
                   domUtils.removeAttributes(current, removeFormatAttributes);
                   if (isRedundantSpan(current)) {
                     domUtils.remove(current, true);
@@ -146,20 +128,11 @@ UE.plugins["removeformat"] = function() {
         //trace:1035
         //trace:1096 不能把td上的样式去掉，比如边框
         var pN = bookmark.start.parentNode;
-        if (
-          domUtils.isBlockElm(pN) &&
-          !dtd.$tableContent[pN.tagName] &&
-          !dtd.$list[pN.tagName]
-        ) {
+        if (domUtils.isBlockElm(pN) && !dtd.$tableContent[pN.tagName] && !dtd.$list[pN.tagName]) {
           domUtils.removeAttributes(pN, removeFormatAttributes);
         }
         pN = bookmark.end.parentNode;
-        if (
-          bookmark.end &&
-          domUtils.isBlockElm(pN) &&
-          !dtd.$tableContent[pN.tagName] &&
-          !dtd.$list[pN.tagName]
-        ) {
+        if (bookmark.end && domUtils.isBlockElm(pN) && !dtd.$tableContent[pN.tagName] && !dtd.$list[pN.tagName]) {
           domUtils.removeAttributes(pN, removeFormatAttributes);
         }
         range.moveToBookmark(bookmark).moveToBookmark(bookmark1);
@@ -167,11 +140,7 @@ UE.plugins["removeformat"] = function() {
         var node = range.startContainer,
           tmp,
           collapsed = range.collapsed;
-        while (
-          node.nodeType == 1 &&
-          domUtils.isEmptyNode(node) &&
-          dtd.$removeEmpty[node.tagName]
-        ) {
+        while (node.nodeType == 1 && domUtils.isEmptyNode(node) && dtd.$removeEmpty[node.tagName]) {
           tmp = node.parentNode;
           range.setStartBefore(node);
           //trace:937
@@ -185,11 +154,7 @@ UE.plugins["removeformat"] = function() {
 
         if (!collapsed) {
           node = range.endContainer;
-          while (
-            node.nodeType == 1 &&
-            domUtils.isEmptyNode(node) &&
-            dtd.$removeEmpty[node.tagName]
-          ) {
+          while (node.nodeType == 1 && domUtils.isEmptyNode(node) && dtd.$removeEmpty[node.tagName]) {
             tmp = node.parentNode;
             range.setEndBefore(node);
             domUtils.remove(node);

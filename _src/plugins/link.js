@@ -59,15 +59,15 @@ UE.plugins["link"] = function() {
     execCommand: function() {
       var range = this.selection.getRange(),
         bookmark;
-      if (
-        range.collapsed &&
-        !domUtils.findParentByTagName(range.startContainer, "a", true)
-      ) {
+      if (range.collapsed && !domUtils.findParentByTagName(range.startContainer, "a", true)) {
         return;
       }
       bookmark = range.createBookmark();
       optimize(range);
-      range.removeInlineStyle("a").moveToBookmark(bookmark).select();
+      range
+        .removeInlineStyle("a")
+        .moveToBookmark(bookmark)
+        .select();
     },
     queryCommandState: function() {
       return !this.highlight && this.queryCommandValue("link") ? 0 : -1;
@@ -84,13 +84,9 @@ UE.plugins["link"] = function() {
         start &&
         start.nodeType == 1 &&
         start.tagName == "A" &&
-        /^(?:https?|ftp|file)\s*:\s*\/\//.test(
-          start[browser.ie ? "innerText" : "textContent"]
-        )
+        /^(?:https?|ftp|file)\s*:\s*\/\//.test(start[browser.ie ? "innerText" : "textContent"])
       ) {
-        start[browser.ie ? "innerText" : "textContent"] = utils.html(
-          opt.textValue || opt.href
-        );
+        start[browser.ie ? "innerText" : "textContent"] = utils.html(opt.textValue || opt.href);
       }
     }
     if (!rngClone.collapsed || link) {
@@ -147,13 +143,14 @@ UE.plugins["link"] = function() {
       } else {
         //trace:1111  如果是<p><a>xx</a></p> startContainer是p就会找不到a
         range.shrinkBoundary();
-        var start = range.startContainer.nodeType == 3 ||
-          !range.startContainer.childNodes[range.startOffset]
-          ? range.startContainer
-          : range.startContainer.childNodes[range.startOffset],
-          end = range.endContainer.nodeType == 3 || range.endOffset == 0
-            ? range.endContainer
-            : range.endContainer.childNodes[range.endOffset - 1],
+        var start =
+            range.startContainer.nodeType == 3 || !range.startContainer.childNodes[range.startOffset]
+              ? range.startContainer
+              : range.startContainer.childNodes[range.startOffset],
+          end =
+            range.endContainer.nodeType == 3 || range.endOffset == 0
+              ? range.endContainer
+              : range.endContainer.childNodes[range.endOffset - 1],
           common = range.getCommonAncestor();
         node = domUtils.findParentByTagName(common, "a", true);
         if (!node && common.nodeType == 1) {
@@ -162,15 +159,10 @@ UE.plugins["link"] = function() {
             pe;
 
           for (var i = 0, ci; (ci = as[i++]); ) {
-            (ps = domUtils.getPosition(ci, start)), (pe = domUtils.getPosition(
-              ci,
-              end
-            ));
+            (ps = domUtils.getPosition(ci, start)), (pe = domUtils.getPosition(ci, end));
             if (
-              (ps & domUtils.POSITION_FOLLOWING ||
-                ps & domUtils.POSITION_CONTAINS) &&
-              (pe & domUtils.POSITION_PRECEDING ||
-                pe & domUtils.POSITION_CONTAINS)
+              (ps & domUtils.POSITION_FOLLOWING || ps & domUtils.POSITION_CONTAINS) &&
+              (pe & domUtils.POSITION_PRECEDING || pe & domUtils.POSITION_CONTAINS)
             ) {
               node = ci;
               break;
@@ -184,10 +176,7 @@ UE.plugins["link"] = function() {
       //判断如果是视频的话连接不可用
       //fix 853
       var img = this.selection.getRange().getClosedNode(),
-        flag =
-          img &&
-          (img.className == "edui-faked-video" ||
-            img.className.indexOf("edui-upload-video") != -1);
+        flag = img && (img.className == "edui-faked-video" || img.className.indexOf("edui-upload-video") != -1);
       return flag ? -1 : 0;
     }
   };

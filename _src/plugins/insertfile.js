@@ -55,15 +55,11 @@ UE.plugin.register("insertfile", function() {
             title,
             html = "",
             URL = me.getOpt("UEDITOR_HOME_URL"),
-            iconDir =
-              URL +
-              (URL.substr(URL.length - 1) == "/" ? "" : "/") +
-              "dialogs/attachment/fileTypeImages/";
+            iconDir = URL + (URL.substr(URL.length - 1) == "/" ? "" : "/") + "dialogs/attachment/fileTypeImages/";
           for (i = 0; i < filelist.length; i++) {
             item = filelist[i];
             icon = iconDir + getFileIcon(item.url);
-            title =
-              item.title || item.url.substr(item.url.lastIndexOf("/") + 1);
+            title = item.title || item.url.substr(item.url.lastIndexOf("/") + 1);
             html +=
               '<p style="line-height: 16px;">' +
               '<img style="vertical-align: middle; margin-right: 2px;" src="' +

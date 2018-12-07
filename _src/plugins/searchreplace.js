@@ -11,14 +11,12 @@
 UE.plugin.register("searchreplace", function() {
   var me = this;
 
-  var _blockElm = { table: 1, tbody: 1, tr: 1, ol: 1, ul: 1 };
+  var _blockElm = {table: 1, tbody: 1, tr: 1, ol: 1, ul: 1};
 
   var lastRng = null;
 
   function getText(node) {
-    var text = node.nodeType == 3
-      ? node.nodeValue
-      : node[browser.ie ? "innerText" : "textContent"];
+    var text = node.nodeType == 3 ? node.nodeValue : node[browser.ie ? "innerText" : "textContent"];
     return text.replace(domUtils.fillChar, "");
   }
 
@@ -30,8 +28,14 @@ UE.plugin.register("searchreplace", function() {
 
     if (opt.dir == -1) {
       textContent = textContent.substr(0, currentIndex);
-      textContent = textContent.split("").reverse().join("");
-      str = str.split("").reverse().join("");
+      textContent = textContent
+        .split("")
+        .reverse()
+        .join("");
+      str = str
+        .split("")
+        .reverse()
+        .join("");
       match = reg.exec(textContent);
       if (match) {
         return currentIndex - match.index - str.length;
@@ -80,10 +84,7 @@ UE.plugin.register("searchreplace", function() {
       result;
     while (currentNode) {
       if (currentNode.nodeType == 3) {
-        currentNodeLength = getText(currentNode).replace(
-          /(^[\t\r\n]+)|([\t\r\n]+$)/,
-          ""
-        ).length;
+        currentNodeLength = getText(currentNode).replace(/(^[\t\r\n]+)|([\t\r\n]+$)/, "").length;
         currentIndex += currentNodeLength;
         if (currentIndex >= index) {
           return {
@@ -92,17 +93,10 @@ UE.plugin.register("searchreplace", function() {
           };
         }
       } else if (!dtd.$empty[currentNode.tagName]) {
-        currentNodeLength = getText(currentNode).replace(
-          /(^[\t\r\n]+)|([\t\r\n]+$)/,
-          ""
-        ).length;
+        currentNodeLength = getText(currentNode).replace(/(^[\t\r\n]+)|([\t\r\n]+$)/, "").length;
         currentIndex += currentNodeLength;
         if (currentIndex >= index) {
-          result = findNTextInBlockElm(
-            currentNode,
-            currentNodeLength - (currentIndex - index),
-            str
-          );
+          result = findNTextInBlockElm(currentNode, currentNodeLength - (currentIndex - index), str);
           if (result) {
             return result;
           }
@@ -125,12 +119,7 @@ UE.plugin.register("searchreplace", function() {
     if (!rng.collapsed) {
       rng.select();
       var rngText = me.selection.getText();
-      if (
-        new RegExp(
-          "^" + opt.searchStr + "$",
-          opt.casesensitive ? "" : "i"
-        ).test(rngText)
-      ) {
+      if (new RegExp("^" + opt.searchStr + "$", opt.casesensitive ? "" : "i").test(rngText)) {
         if (opt.replaceStr != undefined) {
           replaceText(rng, opt.replaceStr);
           rng.select();
@@ -144,22 +133,14 @@ UE.plugin.register("searchreplace", function() {
     rng.insertNode(span);
     rng.enlargeToBlockElm(true);
     startBlockNode = rng.startContainer;
-    var currentIndex = getText(startBlockNode).indexOf(
-      "$$ueditor_searchreplace_key$$"
-    );
+    var currentIndex = getText(startBlockNode).indexOf("$$ueditor_searchreplace_key$$");
     rng.setStartBefore(span);
     domUtils.remove(span);
     var result = findTextBlockElm(startBlockNode, currentIndex, opt);
     if (result) {
       var rngStart = findNTextInBlockElm(result.node, result.index, searchStr);
-      var rngEnd = findNTextInBlockElm(
-        result.node,
-        result.index + searchStr.length,
-        searchStr
-      );
-      rng
-        .setStart(rngStart.node, rngStart.index)
-        .setEnd(rngEnd.node, rngEnd.index);
+      var rngEnd = findNTextInBlockElm(result.node, result.index + searchStr.length, searchStr);
+      rng.setStart(rngStart.node, rngStart.index).setEnd(rngEnd.node, rngEnd.index);
 
       if (opt.replaceStr !== undefined) {
         replaceText(rng, opt.replaceStr);
