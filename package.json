@@ -1,7 +1,7 @@
 {
   "name": "fex-editor",
   "description": "Rich Text Editor",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "main": "dist/fex-editor.all.min.js",
   "unpkg": "dist/fex-editor.all.min.js",
   "jsdelivr": "dist/fex-editor.all.min.js",
