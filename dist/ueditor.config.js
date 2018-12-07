@@ -94,7 +94,6 @@
         "emotion",
         "scrawl",
         "insertvideo",
-        "music",
         "attachment",
         "map",
         "gmap",

@@ -863,10 +863,6 @@ div.edui-box {
     background-position: -680px -40px;
 }
 
-.edui-default  .edui-for-music .edui-icon {
-    background-position: -18px -40px
-}
-
 .edui-default  .edui-for-formula .edui-icon {
     background-position: -200px -40px
 }
@@ -1436,12 +1432,6 @@ div.edui-box {
 .edui-default .edui-for-edittd .edui-dialog-content {
     width: 240px;
     height: 50px;
-}
-
-/*music-dialog*/
-.edui-default .edui-for-music .edui-dialog-content {
-    width: 515px;
-    height: 360px;
 }
 
 /*段落弹出菜单*/
