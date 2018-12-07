@@ -430,7 +430,7 @@
 
         var html =
           (ie && browser.version < 9 ? "" : "<!DOCTYPE html>") +
-          "<html xmlns='http://www.w3.org/1999/xhtml' class='view' >" +
+          '<html lang="en" class="view">' +
           "<head>" +
           "<style type='text/css'>" +
           //设置四周的留边
@@ -822,7 +822,7 @@
         });
       }
       return (
-        "<html><head>" +
+        '<html lang="en"><head>' +
         (me.options.charset
           ? '<meta http-equiv="Content-Type" content="text/html; charset=' +
               me.options.charset +
