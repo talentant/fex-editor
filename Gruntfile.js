@@ -216,12 +216,28 @@ module.exports = (grunt) => {
         src: distDir + "<%= pkg.name %>.all.js",
         dest: distDir + "<%= pkg.name %>.all.min.js"
       },
+      dist2: {
+        options: {
+          banner,
+          beautify: true
+        },
+        src: distDir + "<%= pkg.name %>.all.js",
+        dest: distDir + "<%= pkg.name %>.all.beautify.js"
+      },
       parse: {
         options: {
           banner
         },
         src: distDir + "<%= pkg.name %>.parse.js",
         dest: distDir + "<%= pkg.name %>.parse.min.js"
+      },
+      parse2: {
+        options: {
+          banner,
+          beautify: true
+        },
+        src: distDir + "<%= pkg.name %>.parse.js",
+        dest: distDir + "<%= pkg.name %>.parse.beautify.js"
       }
     },
     copy: {
