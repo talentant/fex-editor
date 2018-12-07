@@ -25,7 +25,7 @@ UE.I18N['en'] = {
         'imageleft':'ImageLeft', 'imageright':'ImageRight', 'attachment':'Attachment', 'imagecenter':'ImageCenter', 'wordimage':'WordImage',
         'lineheight':'LineHeight','edittip':'EditTip','customstyle':'CustomStyle', 'scrawl':'Scrawl', 'autotypeset':'AutoTypeset',
         'touppercase':'UpperCase', 'tolowercase':'LowerCase','template':'Template','background':'Background','inserttable':'InsertTable',
-        'music':'Music', 'charts': 'charts','drafts': 'Load from Drafts'
+        'charts': 'charts','drafts': 'Load from Drafts'
     },
     'insertorderedlist':{
         'num':'1,2,3...',
@@ -448,17 +448,6 @@ UE.I18N['en'] = {
         'continueBtn':"Try again",
         'imageError':"Image failed to load!",
         'backgroundUploading':'Image is uploading,please wait...'
-    },
-    'music':{
-        'static':{
-            'lang_input_tips':"Input singer/song/album, search you interested in music!",
-            'J_searchBtn':{value:'Search songs'}
-        },
-        'emptyTxt':'Not search to the relevant music results, please change a keyword try.',
-        'chapter':'Songs',
-        'singer':'Singer',
-        'special':'Album',
-        'listenTest':'Audition'
     },
     anchor:{
         'static':{

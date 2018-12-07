@@ -300,9 +300,6 @@
             if (img.src.indexOf("http://api.map.baidu.com") != -1) {
               dialogName = "mapDialog";
             }
-            if (img.className.indexOf("edui-faked-music") != -1) {
-              dialogName = "musicDialog";
-            }
             if (
               img.src.indexOf("http://maps.google.com/maps/api/staticmap") != -1
             ) {

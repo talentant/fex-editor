@@ -46,7 +46,6 @@
     edittable: "~/dialogs/table/edittable.html",
     edittd: "~/dialogs/table/edittd.html",
     scrawl: "~/dialogs/scrawl/scrawl.html",
-    music: "~/dialogs/music/music.html",
     template: "~/dialogs/template/template.html",
     background: "~/dialogs/background/background.html",
     charts: "~/dialogs/charts/charts.html"
@@ -245,7 +244,6 @@
       "edittd",
       "scrawl",
       "template",
-      "music",
       "background",
       "charts"
     ]

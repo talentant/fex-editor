@@ -111,7 +111,6 @@ module.exports = (grunt) => {
           '_src/plugins/catchremoteimage.js',
           '_src/plugins/insertparagraph.js',
           '_src/plugins/template.js',
-          '_src/plugins/music.js',
           '_src/plugins/autoupload.js',
           '_src/plugins/autosave.js',
           '_src/plugins/charts.js',
