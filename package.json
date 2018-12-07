@@ -28,7 +28,7 @@
   },
   "scripts": {
     "reformat": "prettier \"{_src,_parse,dialogs,lang,themes}/**/**/**/**/*.{js,css,html}\" --write",
-    "transform": "lebab --replace '{_src,_parse,dialogs,lang}/*.js' --transform arrow,arrow-return,for-of,for-each,arg-rest,arg-spread,obj-method,obj-shorthand,no-strict,exponent,multi-var"
+    "transform": "lebab --replace '{_src,_parse,dialogs,lang}/**/**/**/**/*.js' --transform arrow,arrow-return,for-of,for-each,arg-rest,arg-spread,obj-method,obj-shorthand,no-strict,exponent,multi-var"
   },
   "devDependencies": {
     "@babel/core": "^7.2.0",
