@@ -243,9 +243,7 @@ var utils = (UE.utils = {
    * ```
    */
   bind(fn, context) {
-    return function(...args) {
-      return fn.apply(context, args);
-    };
+    return (...args) => fn.apply(context, args);
   },
 
   /**
@@ -865,7 +863,7 @@ var utils = (UE.utils = {
       } else {
         doc.isReady && doReady(doc);
         if (browser.ie && browser.version != 11) {
-          (function(...args) {
+          ((...args) => {
             if (doc.isReady) return;
             try {
               doc.documentElement.doScroll("left");
@@ -881,7 +879,7 @@ var utils = (UE.utils = {
         } else {
           doc.addEventListener(
             "DOMContentLoaded",
-            function(...args) {
+            (...args) => {
               doc.removeEventListener("DOMContentLoaded", args.callee, false);
               doReady(doc);
             },

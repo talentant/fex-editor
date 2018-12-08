@@ -52,7 +52,7 @@
   UE.Editor.prototype.afterConfigReady = function(handler) {
     if (!handler || !utils.isFunction(handler)) return;
     var me = this;
-    var readyHandler = function(...args) {
+    var readyHandler = (...args) => {
       handler.apply(me, args);
       me.removeListener("serverConfigLoaded", readyHandler);
     };

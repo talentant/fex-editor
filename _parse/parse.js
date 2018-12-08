@@ -73,7 +73,7 @@
         onready();
       } else {
         if (isIE) {
-          (function(...args) {
+          ((...args) => {
             if (doc.isReady) return;
             try {
               doc.documentElement.doScroll("left");
@@ -89,7 +89,7 @@
         } else {
           doc.addEventListener(
             "DOMContentLoaded",
-            function(...args) {
+            (...args) => {
               doc.removeEventListener("DOMContentLoaded", args.callee, false);
               onready();
             },

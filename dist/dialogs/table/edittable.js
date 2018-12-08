@@ -60,7 +60,7 @@
       domUtils.on(document, "mousedown", () => {
         colorPop.hide();
       });
-      colorPiker.addListener("pickcolor", function(...args) {
+      colorPiker.addListener("pickcolor", (...args) => {
         me.setColor(args[1]);
         colorPop.hide();
       });

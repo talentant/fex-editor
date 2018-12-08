@@ -1,7 +1,7 @@
 /*!
  * fex-editor
  * version: 2.1.1
- * build: 2018-12-07
+ * build: 2018-12-08
  */
 
 "use strict";

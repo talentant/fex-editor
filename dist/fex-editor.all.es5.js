@@ -1,7 +1,7 @@
 "use strict";function _toConsumableArray(arr){return _arrayWithoutHoles(arr)||_iterableToArray(arr)||_nonIterableSpread();}function _nonIterableSpread(){throw new TypeError("Invalid attempt to spread non-iterable instance");}function _iterableToArray(iter){if(Symbol.iterator in Object(iter)||Object.prototype.toString.call(iter)==="[object Arguments]")return Array.from(iter);}function _arrayWithoutHoles(arr){if(Array.isArray(arr)){for(var i=0,arr2=new Array(arr.length);i<arr.length;i++){arr2[i]=arr[i];}return arr2;}}function _typeof(obj){if(typeof Symbol==="function"&&typeof Symbol.iterator==="symbol"){_typeof=function _typeof(obj){return typeof obj;};}else{_typeof=function _typeof(obj){return obj&&typeof Symbol==="function"&&obj.constructor===Symbol&&obj!==Symbol.prototype?"symbol":typeof obj;};}return _typeof(obj);}/*!
  * fex-editor
  * version: 2.1.1
- * build: 2018-12-07
+ * build: 2018-12-08
  */(function(){// editor.js
 UEDITOR_CONFIG=window.UEDITOR_CONFIG||{};var baidu=window.baidu||{};window.baidu=baidu;window.UE=baidu.editor={plugins:{},commands:{},instants:{},I18N:{},_customizeUI:{},version:"1.5.0"};var dom=UE.dom={};// core/browser.js
 /**

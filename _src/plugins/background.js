@@ -36,7 +36,7 @@ UE.plugin.register("background", function() {
   //重写editor.hasContent方法
 
   var orgFn = me.hasContents;
-  me.hasContents = function(...args) {
+  me.hasContents = (...args) => {
     if (me.queryCommandValue("background")) {
       return true;
     }

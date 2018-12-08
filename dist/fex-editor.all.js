@@ -1,7 +1,7 @@
 /*!
  * fex-editor
  * version: 2.1.1
- * build: 2018-12-07
+ * build: 2018-12-08
  */
 (function(){
 
@@ -526,9 +526,7 @@ var utils = (UE.utils = {
    * ```
    */
   bind(fn, context) {
-    return function(...args) {
-      return fn.apply(context, args);
-    };
+    return (...args) => fn.apply(context, args);
   },
 
   /**
@@ -1148,7 +1146,7 @@ var utils = (UE.utils = {
       } else {
         doc.isReady && doReady(doc);
         if (browser.ie && browser.version != 11) {
-          (function(...args) {
+          ((...args) => {
             if (doc.isReady) return;
             try {
               doc.documentElement.doScroll("left");
@@ -1164,7 +1162,7 @@ var utils = (UE.utils = {
         } else {
           doc.addEventListener(
             "DOMContentLoaded",
-            function(...args) {
+            (...args) => {
               doc.removeEventListener("DOMContentLoaded", args.callee, false);
               doReady(doc);
             },
@@ -7414,7 +7412,7 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
       if (options.initialContent) {
         if (options.autoClearinitialContent) {
           var oldExecCommand = me.execCommand;
-          me.execCommand = function(...args) {
+          me.execCommand = (...args) => {
             me.fireEvent("firstBeforeExecCommand");
             return oldExecCommand.apply(me, args);
           };
@@ -8563,7 +8561,7 @@ UE.Editor.defaultOptions = editor => {
   UE.Editor.prototype.afterConfigReady = function(handler) {
     if (!handler || !utils.isFunction(handler)) return;
     var me = this;
-    var readyHandler = function(...args) {
+    var readyHandler = (...args) => {
       handler.apply(me, args);
       me.removeListener("serverConfigLoaded", readyHandler);
     };
@@ -8737,7 +8735,7 @@ UE.ajax = (() => {
     }
 
     function getCallBack(onTimeOut) {
-      return function(...args) {
+      return (...args) => {
         try {
           if (onTimeOut) {
             options.onerror && options.onerror();
@@ -11327,7 +11325,7 @@ UE.plugin.register("background", function() {
   //重写editor.hasContent方法
 
   var orgFn = me.hasContents;
-  me.hasContents = function(...args) {
+  me.hasContents = (...args) => {
     if (me.queryCommandValue("background")) {
       return true;
     }

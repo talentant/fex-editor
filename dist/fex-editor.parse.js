@@ -1,7 +1,7 @@
 /*!
  * fex-editor
  * version: 2.1.1
- * build: 2018-12-07
+ * build: 2018-12-08
  */
 (function(){
 
@@ -80,7 +80,7 @@
         onready();
       } else {
         if (isIE) {
-          (function(...args) {
+          ((...args) => {
             if (doc.isReady) return;
             try {
               doc.documentElement.doScroll("left");
@@ -96,7 +96,7 @@
         } else {
           doc.addEventListener(
             "DOMContentLoaded",
-            function(...args) {
+            (...args) => {
               doc.removeEventListener("DOMContentLoaded", args.callee, false);
               onready();
             },

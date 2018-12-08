@@ -522,7 +522,7 @@
       if (options.initialContent) {
         if (options.autoClearinitialContent) {
           var oldExecCommand = me.execCommand;
-          me.execCommand = function(...args) {
+          me.execCommand = (...args) => {
             me.fireEvent("firstBeforeExecCommand");
             return oldExecCommand.apply(me, args);
           };

@@ -609,7 +609,7 @@ baidu.flash._Base = (() => {
 
     if (baidu.lang.isFunction(fun)) {
       name = _createString();
-      window[name] = function(...args) {
+      window[name] = (...args) => {
         fun.apply(window, args);
       };
 
@@ -1175,7 +1175,7 @@ baidu.sio.callByServer = /**@function*/ (url, callback, opt_options) => {
    */
   function getCallBack(onTimeOut) {
     /*global callbackName, callback, scr, options;*/
-    return function(...args) {
+    return (...args) => {
       try {
         if (onTimeOut) {
           options.onfailure && options.onfailure();

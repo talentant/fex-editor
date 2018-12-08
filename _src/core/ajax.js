@@ -157,7 +157,7 @@ UE.ajax = (() => {
     }
 
     function getCallBack(onTimeOut) {
-      return function(...args) {
+      return (...args) => {
         try {
           if (onTimeOut) {
             options.onerror && options.onerror();
