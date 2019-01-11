@@ -31,8 +31,8 @@
     "transform": "lebab --replace '{_src,_parse,dialogs,lang}/**/**/**/**/*.js' --transform arrow,arrow-return,for-of,for-each,arg-rest,arg-spread,obj-method,obj-shorthand,no-strict,exponent,multi-var"
   },
   "devDependencies": {
-    "@babel/core": "^7.2.0",
-    "@babel/preset-env": "^7.2.0",
+    "@babel/core": "^7.2.2",
+    "@babel/preset-env": "^7.2.3",
     "grunt": "^1.0.3",
     "grunt-babel": "^8.0.0",
     "grunt-contrib-clean": "^2.0.0",
