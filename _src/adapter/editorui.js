@@ -252,7 +252,7 @@
                     fullscreen: /charts|preview/.test(cmd),
                     closeDialog: editor.getLang("closeDialog")
                   },
-                  type == "ok"
+                  type === "ok"
                     ? {
                         buttons: [
                           {
@@ -307,7 +307,7 @@
                 }
               },
               theme: editor.options.theme,
-              disabled: (cmd == "scrawl" && editor.queryCommandState("scrawl") == -1) || cmd == "charts"
+              disabled: (cmd === "scrawl" && editor.queryCommandState("scrawl") == -1) || cmd === "charts"
             });
             editorui.buttons[cmd] = ui;
             editor.addListener("selectionchange", () => {

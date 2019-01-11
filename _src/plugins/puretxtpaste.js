@@ -25,7 +25,7 @@ UE.plugins["pasteplain"] = function() {
           var tmpNode;
           var p = UE.uNode.createElement("p");
           while ((tmpNode = node.firstChild())) {
-            if (tmpNode.type == "text" || !UE.dom.dtd.$block[tmpNode.tagName]) {
+            if (tmpNode.type === "text" || !UE.dom.dtd.$block[tmpNode.tagName]) {
               p.appendChild(tmpNode);
             } else {
               if (p.firstChild()) {

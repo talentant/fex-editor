@@ -46,7 +46,7 @@ UE.plugins["catchremoteimage"] = function() {
       if (ci.getAttribute("word_img")) {
         continue;
       }
-      if (ci.nodeName == "IMG") {
+      if (ci.nodeName === "IMG") {
         var src = ci.getAttribute("_src") || ci.src || "";
         if (/^(https?|ftp):/i.test(src) && !test(src, catcherLocalDomain)) {
           remoteImages.push(src);
@@ -101,7 +101,7 @@ UE.plugins["catchremoteimage"] = function() {
             oldSrc = ci.getAttribute("_src") || ci.src || "";
             oldBgIMG = ci.getAttribute("data-background") || "";
             for (j = 0; (cj = list[j++]); ) {
-              if (oldSrc == cj.source && cj.state == "SUCCESS") {
+              if (oldSrc == cj.source && cj.state === "SUCCESS") {
                 newSrc = catcherUrlPrefix + cj.url;
                 // 上传成功是删除uploading动画
                 domUtils.removeClasses(ci, "loadingclass");
@@ -112,7 +112,7 @@ UE.plugins["catchremoteimage"] = function() {
                 });
                 catchSuccessList.push(ci);
                 break;
-              } else if (oldSrc == cj.source && cj.state == "FAIL") {
+              } else if (oldSrc == cj.source && cj.state === "FAIL") {
                 // 替换成统一的失败图片
                 domUtils.removeClasses(ci, "loadingclass");
                 domUtils.setAttributes(ci, {
@@ -122,7 +122,7 @@ UE.plugins["catchremoteimage"] = function() {
                 });
                 catchFailList.push(ci);
                 break;
-              } else if (oldBgIMG == cj.source && cj.state == "SUCCESS") {
+              } else if (oldBgIMG == cj.source && cj.state === "SUCCESS") {
                 newBgIMG = catcherUrlPrefix + cj.url;
                 ci.style.cssText = ci.style.cssText.replace(loadingIMG, newBgIMG);
                 domUtils.removeAttributes(ci, "data-background");
@@ -131,7 +131,7 @@ UE.plugins["catchremoteimage"] = function() {
                 });
                 catchSuccessList.push(ci);
                 break;
-              } else if (oldBgIMG == cj.source && cj.state == "FAIL") {
+              } else if (oldBgIMG == cj.source && cj.state === "FAIL") {
                 ci.style.cssText = ci.style.cssText.replace(loadingIMG, failIMG);
                 domUtils.removeAttributes(ci, "data-background");
                 domUtils.setAttributes(ci, {

@@ -210,7 +210,7 @@
     },
     getContentHtml() {
       var contentHtml = "";
-      if (typeof this.content == "string") {
+      if (typeof this.content === "string") {
         contentHtml = this.content;
       } else if (this.iframeUrl) {
         contentHtml =

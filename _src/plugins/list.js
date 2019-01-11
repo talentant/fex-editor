@@ -74,7 +74,7 @@ UE.plugins["list"] = function() {
   me.ready(() => {
     var customCss = [];
     for (var p in customStyle) {
-      if (p == "dash" || p == "dot") {
+      if (p === "dash" || p === "dot") {
         customCss.push("li.list-" + customStyle[p] + "{background-image:url(" + liiconpath + customStyle[p] + ".gif)}");
         customCss.push(
           "ul.custom_" +
@@ -196,12 +196,12 @@ UE.plugins["list"] = function() {
     var root = UE.htmlparser(html.html, true);
     if ((li = domUtils.findParentByTagName(rng.startContainer, "li", true))) {
       var list = li.parentNode;
-      var tagName = list.tagName == "OL" ? "ul" : "ol";
+      var tagName = list.tagName === "OL" ? "ul" : "ol";
       utils.each(root.getNodesByTagName(tagName), n => {
         n.tagName = list.tagName;
         n.setAttr();
         if (n.parentNode === root) {
-          type = getStyle(list) || (list.tagName == "OL" ? "decimal" : "disc");
+          type = getStyle(list) || (list.tagName === "OL" ? "decimal" : "disc");
         } else {
           var className = n.parentNode.getAttr("class");
           if (className && /custom_/.test(className)) {
@@ -210,7 +210,7 @@ UE.plugins["list"] = function() {
             type = n.parentNode.getStyle("list-style-type");
           }
           if (!type) {
-            type = list.tagName == "OL" ? "decimal" : "disc";
+            type = list.tagName === "OL" ? "decimal" : "disc";
           }
         }
         var index = utils.indexOf(listStyle[list.tagName], type);
@@ -233,7 +233,7 @@ UE.plugins["list"] = function() {
         var newChildrens = [];
         var index = 0;
         utils.each(li.children, n => {
-          if (n.tagName == "p") {
+          if (n.tagName === "p") {
             var tmpNode;
             while ((tmpNode = n.children.pop())) {
               newChildrens.splice(index, 0, tmpNode);
@@ -260,7 +260,7 @@ UE.plugins["list"] = function() {
     utils.each(root.getNodesByTagName("li"), li => {
       var tmpP = UE.uNode.createElement("p");
       for (var i = 0, ci; (ci = li.children[i]); ) {
-        if (ci.type == "text" || dtd.p[ci.tagName]) {
+        if (ci.type === "text" || dtd.p[ci.tagName]) {
           tmpP.appendChild(ci);
         } else {
           if (tmpP.firstChild()) {
@@ -283,7 +283,7 @@ UE.plugins["list"] = function() {
       //去掉末尾的空白
       var p = li.firstChild();
       var lastChild = p.lastChild();
-      if (lastChild && lastChild.type == "text" && /^\s*$/.test(lastChild.data)) {
+      if (lastChild && lastChild.type === "text" && /^\s*$/.test(lastChild.data)) {
         p.removeChild(lastChild);
       }
     });
@@ -305,8 +305,8 @@ UE.plugins["list"] = function() {
         var span = container.firstChild();
         if (
           span &&
-          span.type == "element" &&
-          span.tagName == "span" &&
+          span.type === "element" &&
+          span.tagName === "span" &&
           /Wingdings|Symbol/.test(span.getStyle("font-family"))
         ) {
           for (var p in unorderlisttype) {
@@ -333,10 +333,10 @@ UE.plugins["list"] = function() {
         node.setAttr("class", "");
 
         function appendLi(list, p, type) {
-          if (list.tagName == "ol") {
+          if (list.tagName === "ol") {
             if (browser.ie) {
               var first = p.firstChild();
-              if (first.type == "element" && first.tagName == "span" && orderlisttype[type].test(first.innerText())) {
+              if (first.type === "element" && first.tagName === "span" && orderlisttype[type].test(first.innerText())) {
                 p.removeChild(first);
               }
             } else {
@@ -374,7 +374,7 @@ UE.plugins["list"] = function() {
           }
         }
         var span = cacheNode.firstChild();
-        if (span && span.type == "element" && span.tagName == "span" && /^\s*(&nbsp;)+\s*$/.test(span.innerText())) {
+        if (span && span.type === "element" && span.tagName === "span" && /^\s*(&nbsp;)+\s*$/.test(span.innerText())) {
           span.parentNode.removeChild(span);
         }
       });
@@ -392,8 +392,8 @@ UE.plugins["list"] = function() {
 
       var parent = node.parentNode;
       if (parent.tagName == node.tagName) {
-        var nodeStyleType = getStyle(node) || (node.tagName == "OL" ? "decimal" : "disc");
-        var parentStyleType = getStyle(parent) || (parent.tagName == "OL" ? "decimal" : "disc");
+        var nodeStyleType = getStyle(node) || (node.tagName === "OL" ? "decimal" : "disc");
+        var parentStyleType = getStyle(parent) || (parent.tagName === "OL" ? "decimal" : "disc");
         if (nodeStyleType == parentStyleType) {
           var styleIndex = utils.indexOf(listStyle[node.tagName], nodeStyleType);
           styleIndex = styleIndex + 1 == listStyle[node.tagName].length ? 0 : styleIndex + 1;
@@ -428,7 +428,7 @@ UE.plugins["list"] = function() {
         if (domUtils.hasClass(node, /custom_/)) {
           var paddingLeft = 1;
           var currentStyle = getStyle(node);
-          if (node.tagName == "OL") {
+          if (node.tagName === "OL") {
             if (currentStyle) {
               switch (currentStyle) {
                 case "cn":
@@ -481,7 +481,7 @@ UE.plugins["list"] = function() {
       nextList &&
       nextList.nodeType == 1 &&
       nextList.tagName.toLowerCase() == tag &&
-      (getStyle(nextList) || domUtils.getStyle(nextList, "list-style-type") || (tag == "ol" ? "decimal" : "disc")) ==
+      (getStyle(nextList) || domUtils.getStyle(nextList, "list-style-type") || (tag === "ol" ? "decimal" : "disc")) ==
         style
     ) {
       domUtils.moveChild(nextList, list);
@@ -497,7 +497,7 @@ UE.plugins["list"] = function() {
       preList &&
       preList.nodeType == 1 &&
       preList.tagName.toLowerCase() == tag &&
-      (getStyle(preList) || domUtils.getStyle(preList, "list-style-type") || (tag == "ol" ? "decimal" : "disc")) ==
+      (getStyle(preList) || domUtils.getStyle(preList, "list-style-type") || (tag === "ol" ? "decimal" : "disc")) ==
         style
     ) {
       domUtils.moveChild(list, preList);
@@ -571,9 +571,9 @@ UE.plugins["list"] = function() {
       }
       var range = me.selection.getRange();
 
-      var start = findList(range.startContainer, node => node.tagName == "TABLE");
+      var start = findList(range.startContainer, node => node.tagName === "TABLE");
 
-      var end = range.collapsed ? start : findList(range.endContainer, node => node.tagName == "TABLE");
+      var end = range.collapsed ? start : findList(range.endContainer, node => node.tagName === "TABLE");
 
       if (start && end && start === end) {
         if (!range.collapsed) {
@@ -906,7 +906,7 @@ UE.plugins["list"] = function() {
               if (!li || domUtils.isTagNode(li, "ol ul")) {
                 if (li) {
                   while ((li = li.firstChild)) {
-                    if (li.tagName == "LI") {
+                    if (li.tagName === "LI") {
                       break;
                     }
                   }
@@ -929,10 +929,10 @@ UE.plugins["list"] = function() {
   });
   function getLi(start) {
     while (start && !domUtils.isBody(start)) {
-      if (start.nodeName == "TABLE") {
+      if (start.nodeName === "TABLE") {
         return null;
       }
-      if (start.nodeName == "LI") {
+      if (start.nodeName === "LI") {
         return start;
       }
       start = start.parentNode;
@@ -1010,14 +1010,14 @@ UE.plugins["list"] = function() {
   me.commands["insertorderedlist"] = me.commands["insertunorderedlist"] = {
     execCommand(command, style) {
       if (!style) {
-        style = command.toLowerCase() == "insertorderedlist" ? "decimal" : "disc";
+        style = command.toLowerCase() === "insertorderedlist" ? "decimal" : "disc";
       }
       var me = this;
       var range = this.selection.getRange();
 
       var filterFn = node => (node.nodeType == 1 ? node.tagName.toLowerCase() != "br" : !domUtils.isWhitespace(node));
 
-      var tag = command.toLowerCase() == "insertorderedlist" ? "ol" : "ul";
+      var tag = command.toLowerCase() === "insertorderedlist" ? "ol" : "ul";
       var frag = me.document.createDocumentFragment();
       //去掉是因为会出现选到末尾，导致adjustmentBoundary缩到ol/ul的位置
       //range.shrinkBoundary();//.adjustmentBoundary();
@@ -1072,7 +1072,7 @@ UE.plugins["list"] = function() {
           var nodeStyle =
             getStyle(startParent) ||
             domUtils.getComputedStyle(startParent, "list-style-type") ||
-            (command.toLowerCase() == "insertorderedlist" ? "decimal" : "disc");
+            (command.toLowerCase() === "insertorderedlist" ? "decimal" : "disc");
           if (startParent.tagName.toLowerCase() == tag && nodeStyle == style) {
             for (var i = 0, ci, tmpFrag = me.document.createDocumentFragment(); (ci = frag.firstChild); ) {
               if (domUtils.isTagNode(ci, "ol ul")) {
@@ -1262,10 +1262,10 @@ UE.plugins["list"] = function() {
       range.moveToBookmark(bko).select();
     },
     queryCommandState(command) {
-      var tag = command.toLowerCase() == "insertorderedlist" ? "ol" : "ul";
+      var tag = command.toLowerCase() === "insertorderedlist" ? "ol" : "ul";
       var path = this.selection.getStartElementPath();
       for (var i = 0, ci; (ci = path[i++]); ) {
-        if (ci.nodeName == "TABLE") {
+        if (ci.nodeName === "TABLE") {
           return 0;
         }
         if (tag == ci.nodeName.toLowerCase()) {
@@ -1275,11 +1275,11 @@ UE.plugins["list"] = function() {
       return 0;
     },
     queryCommandValue(command) {
-      var tag = command.toLowerCase() == "insertorderedlist" ? "ol" : "ul";
+      var tag = command.toLowerCase() === "insertorderedlist" ? "ol" : "ul";
       var path = this.selection.getStartElementPath();
       var node;
       for (var i = 0, ci; (ci = path[i++]); ) {
-        if (ci.nodeName == "TABLE") {
+        if (ci.nodeName === "TABLE") {
           node = null;
           break;
         }

@@ -30,7 +30,7 @@ UE.plugins["formatmatch"] = function() {
 
   function addList(type, evt) {
     if (browser.webkit) {
-      var target = evt.target.tagName == "IMG" ? evt.target : null;
+      var target = evt.target.tagName === "IMG" ? evt.target : null;
     }
 
     function addFormat(range) {
@@ -44,7 +44,7 @@ UE.plugins["formatmatch"] = function() {
 
     var range = me.selection.getRange();
     var imgT = target || range.getClosedNode();
-    if (img && imgT && imgT.tagName == "IMG") {
+    if (img && imgT && imgT.tagName === "IMG") {
       //trace:964
 
       imgT.style.cssText +=
@@ -104,7 +104,7 @@ UE.plugins["formatmatch"] = function() {
         list = domUtils.findParents(start, true, node => !domUtils.isBlockElm(node) && node.nodeType == 1);
         //a不能加入格式刷, 并且克隆节点
         for (var i = 0, ci; (ci = list[i]); i++) {
-          if (ci.tagName == "A") {
+          if (ci.tagName === "A") {
             list.splice(i, 1);
             break;
           }

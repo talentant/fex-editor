@@ -125,13 +125,13 @@ UE.plugin.register(
       if (node.nodeType == 3) {
         return null;
       }
-      if (node.nodeName == "A") {
+      if (node.nodeName === "A") {
         return node;
       }
       var lastChild = node.lastChild;
 
       while (lastChild) {
-        if (lastChild.nodeName == "A") {
+        if (lastChild.nodeName === "A") {
           return lastChild;
         }
         if (lastChild.nodeType == 3) {
@@ -156,7 +156,7 @@ UE.plugin.register(
             while (start && !domUtils.isBody(start) && !domUtils.isBlockElm(start)) {
               start = start.parentNode;
             }
-            if (start && !domUtils.isBody(start) && start.nodeName == "P") {
+            if (start && !domUtils.isBody(start) && start.nodeName === "P") {
               var pre = start.previousSibling;
               if (pre && pre.nodeType == 1) {
                 var pre = checkIsCludeLink(pre);
@@ -168,7 +168,7 @@ UE.plugin.register(
           } else if (keyCode == 32) {
             if (start.nodeType == 3 && /^\s$/.test(start.nodeValue)) {
               start = start.previousSibling;
-              if (start && start.nodeName == "A" && !start.getAttribute("_href")) {
+              if (start && start.nodeName === "A" && !start.getAttribute("_href")) {
                 domUtils.remove(start, true);
               }
             }

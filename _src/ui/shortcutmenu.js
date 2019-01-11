@@ -35,7 +35,7 @@
       domUtils.on(doc, "mousemove", e => {
         if (me.isHidden === false) {
           //有pop显示就不隐藏快捷菜单
-          if (me.getSubMenuMark() || me.eventType == "contextmenu") return;
+          if (me.getSubMenuMark() || me.eventType === "contextmenu") return;
 
           var flag = true; //离中心距离纵坐标
           var el = me.getDom();
@@ -80,7 +80,7 @@
         domUtils.on(doc, "mouseout", e => {
           var relatedTgt = e.relatedTarget || e.toElement;
 
-          if (relatedTgt == null || relatedTgt.tagName == "HTML") {
+          if (relatedTgt == null || relatedTgt.tagName === "HTML") {
             me.hide();
           }
         });
@@ -154,7 +154,7 @@
       me.eventType = e.type;
       el.style.cssText = "display:block;left:-9999px";
 
-      if (e.type == "contextmenu" && hasContextmenu) {
+      if (e.type === "contextmenu" && hasContextmenu) {
         var menu = domUtils.getElementsByTagName(fixedlayer, "div", "edui-contextmenu")[0];
         if (menu) {
           setPosByCxtMenu(menu);

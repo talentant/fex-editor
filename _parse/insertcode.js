@@ -1,7 +1,7 @@
 UE.parse.register("insertcode", function(utils) {
   var pres = this.root.getElementsByTagName("pre");
   if (pres.length) {
-    if (typeof XRegExp == "undefined") {
+    if (typeof XRegExp === "undefined") {
       var jsurl;
       var cssurl;
       if (this.rootPath !== undefined) {

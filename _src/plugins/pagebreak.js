@@ -31,11 +31,11 @@ UE.plugins["pagebreak"] = function() {
     );
   });
   function isHr(node) {
-    return node && node.nodeType == 1 && node.tagName == "HR" && node.className == "pagebreak";
+    return node && node.nodeType == 1 && node.tagName === "HR" && node.className === "pagebreak";
   }
   me.addInputRule(root => {
     root.traversal(node => {
-      if (node.type == "text" && node.data == me.options.pageBreakTag) {
+      if (node.type === "text" && node.data == me.options.pageBreakTag) {
         var hr = UE.uNode.createElement(
           '<hr class="pagebreak" noshade="noshade" size="5" style="-webkit-user-select: none;">'
         );
@@ -46,7 +46,7 @@ UE.plugins["pagebreak"] = function() {
   });
   me.addOutputRule(node => {
     utils.each(node.getNodesByTagName("hr"), n => {
-      if (n.getAttr("class") == "pagebreak") {
+      if (n.getAttr("class") === "pagebreak") {
         var txt = UE.uNode.createText(me.options.pageBreakTag);
         n.parentNode.insertBefore(txt, n);
         n.parentNode.removeChild(n);

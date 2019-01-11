@@ -101,7 +101,7 @@ UE.plugins["paste"] = function() {
       //去掉cut中添加的边界值
       var nodes = domUtils.getElementsByTagName(div, "span");
       for (var i = 0, ni; (ni = nodes[i++]); ) {
-        if (ni.id == "_baidu_cut_start" || ni.id == "_baidu_cut_end") {
+        if (ni.id === "_baidu_cut_start" || ni.id === "_baidu_cut_end") {
           domUtils.remove(ni);
         }
       }
@@ -110,7 +110,7 @@ UE.plugins["paste"] = function() {
         var brs = div.querySelectorAll("div br");
         for (var i = 0, bi; (bi = brs[i++]); ) {
           var pN = bi.parentNode;
-          if (pN.tagName == "DIV" && pN.childNodes.length == 1) {
+          if (pN.tagName === "DIV" && pN.childNodes.length == 1) {
             pN.innerHTML = "<p><br/></p>";
             domUtils.remove(pN);
           }
@@ -166,7 +166,7 @@ UE.plugins["paste"] = function() {
       //针对chrome的处理
       if (browser.webkit) {
         var br = root.lastChild();
-        if (br && br.type == "element" && br.tagName == "br") {
+        if (br && br.type === "element" && br.tagName === "br") {
           root.removeChild(br);
         }
         utils.each(me.body.querySelectorAll("div"), node => {

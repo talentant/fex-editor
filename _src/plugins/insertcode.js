@@ -80,13 +80,13 @@ UE.plugins["insertcode"] = function() {
             UE.filterNode(UE.htmlparser(div.innerHTML.replace(/[\r\t]/g, "")), me.options.filterTxtRules).children,
             node => {
               if (browser.ie && browser.ie11below && browser.version > 8) {
-                if (node.type == "element") {
-                  if (node.tagName == "br") {
+                if (node.type === "element") {
+                  if (node.tagName === "br") {
                     code += "\n";
                   } else if (!dtd.$empty[node.tagName]) {
                     utils.each(node.children, cn => {
-                      if (cn.type == "element") {
-                        if (cn.tagName == "br") {
+                      if (cn.type === "element") {
+                        if (cn.tagName === "br") {
                           code += "\n";
                         } else if (!dtd.$empty[node.tagName]) {
                           code += cn.innerText();
@@ -107,13 +107,13 @@ UE.plugins["insertcode"] = function() {
                 }
               } else {
                 if (browser.ie && browser.ie11below) {
-                  if (node.type == "element") {
-                    if (node.tagName == "br") {
+                  if (node.type === "element") {
+                    if (node.tagName === "br") {
                       code += "<br>";
                     } else if (!dtd.$empty[node.tagName]) {
                       utils.each(node.children, cn => {
-                        if (cn.type == "element") {
-                          if (cn.tagName == "br") {
+                        if (cn.type === "element") {
+                          if (cn.tagName === "br") {
                             code += "<br>";
                           } else if (!dtd.$empty[node.tagName]) {
                             code += cn.innerText();
@@ -133,7 +133,7 @@ UE.plugins["insertcode"] = function() {
                     code = code.replace(/<br>$/, "");
                   }
                 } else {
-                  code += node.type == "element" ? (dtd.$empty[node.tagName] ? "" : node.innerText()) : node.data;
+                  code += node.type === "element" ? (dtd.$empty[node.tagName] ? "" : node.innerText()) : node.data;
                   if (!/br\/?\s*>$/.test(code)) {
                     if (!node.nextSibling()) return;
                     code += "<br>";
@@ -172,7 +172,7 @@ UE.plugins["insertcode"] = function() {
       var path = this.selection.getStartElementPath();
       var lang = "";
       utils.each(path, node => {
-        if (node.nodeName == "PRE") {
+        if (node.nodeName === "PRE") {
           var match = node.className.match(/brush:([^;]+)/);
           lang = match && match[1] ? match[1] : "";
           return false;
@@ -211,12 +211,12 @@ UE.plugins["insertcode"] = function() {
     utils.each(root.getNodesByTagName("pre"), pre => {
       var code = "";
       utils.each(pre.children, n => {
-        if (n.type == "text") {
+        if (n.type === "text") {
           //在ie下文本内容有可能末尾带有\n要去掉
           //trace:3396
           code += n.data.replace(/[ ]/g, "&nbsp;").replace(/\n$/, "");
         } else {
-          if (n.tagName == "br") {
+          if (n.tagName === "br") {
             code += "\n";
           } else {
             code += !dtd.$empty[n.tagName] ? "" : n.innerText();
@@ -279,7 +279,7 @@ UE.plugins["insertcode"] = function() {
         while (pre) {
           tmp = pre;
           pre = pre.previousSibling;
-          if (!pre || pre.nodeName == "BR") {
+          if (!pre || pre.nodeName === "BR") {
             pre = tmp;
             break;
           }
@@ -341,7 +341,7 @@ UE.plugins["insertcode"] = function() {
           while (pre) {
             tmp = pre;
             pre = pre.previousSibling;
-            if (!pre || pre.nodeName == "BR") {
+            if (!pre || pre.nodeName === "BR") {
               pre = tmp;
               break;
             }
@@ -436,13 +436,13 @@ UE.plugins["insertcode"] = function() {
       var htmlstr = "";
       if (browser.ie && browser.version > 8) {
         utils.each(UE.filterNode(UE.htmlparser(html), me.options.filterTxtRules).children, node => {
-          if (node.type == "element") {
-            if (node.tagName == "br") {
+          if (node.type === "element") {
+            if (node.tagName === "br") {
               htmlstr += "\n";
             } else if (!dtd.$empty[node.tagName]) {
               utils.each(node.children, cn => {
-                if (cn.type == "element") {
-                  if (cn.tagName == "br") {
+                if (cn.type === "element") {
+                  if (cn.tagName === "br") {
                     htmlstr += "\n";
                   } else if (!dtd.$empty[node.tagName]) {
                     htmlstr += cn.innerText();
@@ -471,13 +471,13 @@ UE.plugins["insertcode"] = function() {
         var frag = me.document.createDocumentFragment();
 
         utils.each(UE.filterNode(UE.htmlparser(html), me.options.filterTxtRules).children, node => {
-          if (node.type == "element") {
-            if (node.tagName == "br") {
+          if (node.type === "element") {
+            if (node.tagName === "br") {
               frag.appendChild(me.document.createElement("br"));
             } else if (!dtd.$empty[node.tagName]) {
               utils.each(node.children, cn => {
-                if (cn.type == "element") {
-                  if (cn.tagName == "br") {
+                if (cn.type === "element") {
+                  if (cn.tagName === "br") {
                     frag.appendChild(me.document.createElement("br"));
                   } else if (!dtd.$empty[node.tagName]) {
                     frag.appendChild(me.document.createTextNode(utils.html(cn.innerText().replace(/&nbsp;/g, " "))));
@@ -493,7 +493,7 @@ UE.plugins["insertcode"] = function() {
           } else {
             frag.appendChild(me.document.createTextNode(utils.html(node.data.replace(/&nbsp;/g, " "))));
           }
-          if (!node.nextSibling() && frag.lastChild.nodeName == "BR") {
+          if (!node.nextSibling() && frag.lastChild.nodeName === "BR") {
             frag.removeChild(frag.lastChild);
           }
         });
@@ -513,7 +513,7 @@ UE.plugins["insertcode"] = function() {
       var start = rng.startContainer;
       if (rng.collapsed && (pre = domUtils.findParentByTagName(rng.startContainer, "pre", true)) && !pre.nextSibling) {
         var last = pre.lastChild;
-        while (last && last.nodeName == "BR") {
+        while (last && last.nodeName === "BR") {
           last = last.previousSibling;
         }
         if (last === start || (rng.startContainer === pre && rng.startOffset == pre.childNodes.length)) {

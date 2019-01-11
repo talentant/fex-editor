@@ -57,8 +57,8 @@ UE.plugins["blockquote"] = function() {
         endBlock = domUtils.findParentByTagName(endBlock, "li", true) || endBlock;
 
         if (
-          startBlock.tagName == "LI" ||
-          startBlock.tagName == "TD" ||
+          startBlock.tagName === "LI" ||
+          startBlock.tagName === "TD" ||
           startBlock === obj ||
           domUtils.isBody(startBlock)
         ) {
@@ -70,7 +70,7 @@ UE.plugins["blockquote"] = function() {
         if (startBlock !== endBlock) {
           obj = domUtils.findParentByTagName(endBlock, "blockquote");
           if (obj) {
-            if (endBlock.tagName == "LI" || endBlock.tagName == "TD" || domUtils.isBody(endBlock)) {
+            if (endBlock.tagName === "LI" || endBlock.tagName === "TD" || domUtils.isBody(endBlock)) {
               obj.parentNode && domUtils.remove(obj, true);
             } else {
               domUtils.breakParent(endBlock, obj);

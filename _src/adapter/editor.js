@@ -220,7 +220,7 @@
         },
         queryAutoHide(el) {
           if (el && el.ownerDocument == editor.document) {
-            if (el.tagName.toLowerCase() == "img" || domUtils.findParentByTagName(el, "a", true)) {
+            if (el.tagName.toLowerCase() === "img" || domUtils.findParentByTagName(el, "a", true)) {
               return el !== popup.anchorEl;
             }
           }
@@ -262,7 +262,7 @@
           var str = "";
           var img = editor.selection.getRange().getClosedNode();
           var dialogs = editor.ui._dialogs;
-          if (img && img.tagName == "IMG") {
+          if (img && img.tagName === "IMG") {
             var dialogName = "insertimageDialog";
             if (img.className.indexOf("edui-faked-video") != -1 || img.className.indexOf("edui-upload-video") != -1) {
               dialogName = "insertvideoDialog";
@@ -376,12 +376,12 @@
         for (var j = 0; j < toolbar.length; j++) {
           var toolbarItem = toolbar[j];
           var toolbarItemUi = null;
-          if (typeof toolbarItem == "string") {
+          if (typeof toolbarItem === "string") {
             toolbarItem = toolbarItem.toLowerCase();
-            if (toolbarItem == "|") {
+            if (toolbarItem === "|") {
               toolbarItem = "Separator";
             }
-            if (toolbarItem == "||") {
+            if (toolbarItem === "||") {
               toolbarItem = "Breakline";
             }
             var ui = baidu.editor.ui[toolbarItem];
@@ -407,7 +407,7 @@
               }
             }
             //fullscreen这里单独处理一下，放到首行去
-            if (toolbarItem == "fullscreen") {
+            if (toolbarItem === "fullscreen") {
               if (toolbarUis && toolbarUis[0]) {
                 toolbarUis[0].items.splice(0, 0, toolbarItemUi);
               } else {
@@ -768,7 +768,7 @@
     },
     triggerLayout() {
       var dom = this.getDom();
-      if (dom.style.zoom == "1") {
+      if (dom.style.zoom === "1") {
         dom.style.zoom = "100%";
       } else {
         dom.style.zoom = "1";

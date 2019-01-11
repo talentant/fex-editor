@@ -123,7 +123,7 @@ UE.commands["inserthtml"] = {
       var last;
       while ((child = div.firstChild)) {
         //针对hr单独处理一下先
-        while (child && (child.nodeType == 3 || !domUtils.isBlockElm(child) || child.tagName == "HR")) {
+        while (child && (child.nodeType == 3 || !domUtils.isBlockElm(child) || child.tagName === "HR")) {
           next = child.nextSibling;
           range.insertNode(child).collapse();
           last = child;

@@ -34,7 +34,7 @@
     if (editor.options.textarea) {
       if (utils.isString(editor.options.textarea)) {
         for (var i = 0, ti, tis = domUtils.getElementsByTagName(form, "textarea"); (ti = tis[i++]); ) {
-          if (ti.id == "ueditor_textarea_" + editor.options.textarea) {
+          if (ti.id === "ueditor_textarea_" + editor.options.textarea) {
             textarea = ti;
             break;
           }
@@ -505,7 +505,7 @@
       this._initEvents();
       //为form提交提供一个隐藏的textarea
       for (var form = this.iframe.parentNode; !domUtils.isBody(form); form = form.parentNode) {
-        if (form.tagName == "FORM") {
+        if (form.tagName === "FORM") {
           me.form = form;
           if (me.options.autoSyncData) {
             domUtils.on(me.window, "blur", () => {
@@ -568,7 +568,7 @@
       if (!browser.ie9below) {
         domUtils.on(me.window, ["blur", "focus"], e => {
           //chrome下会出现alt+tab切换时，导致选区位置不对
-          if (e.type == "blur") {
+          if (e.type === "blur") {
             me._bakRange = me.selection.getRange();
             try {
               me._bakNativeRange = me.selection.getNative().getRangeAt(0);
@@ -622,7 +622,7 @@
 
       var form = formId
         ? document.getElementById(formId)
-        : domUtils.findParent(me.iframe.parentNode, node => node.tagName == "FORM", true);
+        : domUtils.findParent(me.iframe.parentNode, node => node.tagName === "FORM", true);
 
       form && setValue(form, me);
     },
@@ -697,7 +697,7 @@
             var param = ti[1];
             if (/^(ctrl)(\+shift)?\+(\d+)$/.test(key.toLowerCase()) || /^(\d+)$/.test(key)) {
               if (
-                ((RegExp.$1 == "ctrl" ? e.ctrlKey || e.metaKey : 0) &&
+                ((RegExp.$1 === "ctrl" ? e.ctrlKey || e.metaKey : 0) &&
                   (RegExp.$2 != "" ? e[RegExp.$2.slice(1) + "Key"] : 1) &&
                   keyCode == RegExp.$3) ||
                 keyCode == RegExp.$1
@@ -875,10 +875,10 @@
       me.body.innerHTML = (isAppendTo ? me.body.innerHTML : "") + html;
 
       function isCdataDiv(node) {
-        return node.tagName == "DIV" && node.getAttribute("cdata_tag");
+        return node.tagName === "DIV" && node.getAttribute("cdata_tag");
       }
       //给文本或者inline节点套p标签
-      if (me.options.enterTag == "p") {
+      if (me.options.enterTag === "p") {
         var child = this.body.firstChild;
         var tmpNode;
         if (
@@ -1027,7 +1027,7 @@
       });
       domUtils.on(doc, ["mouseup", "keydown"], evt => {
         //特殊键不触发selectionchange
-        if (evt.type == "keydown" && (evt.ctrlKey || evt.metaKey || evt.shiftKey || evt.altKey)) {
+        if (evt.type === "keydown" && (evt.ctrlKey || evt.metaKey || evt.shiftKey || evt.altKey)) {
           return;
         }
         if (evt.button == 2) return;
@@ -1065,7 +1065,7 @@
       var hackForMouseUp = false;
       var mouseX;
       var mouseY;
-      if (browser.ie && browser.version < 9 && evt && evt.type == "mouseup") {
+      if (browser.ie && browser.version < 9 && evt && evt.type === "mouseup") {
         var range = this.selection.getRange();
         if (!range.collapsed) {
           hackForMouseUp = true;
@@ -1081,7 +1081,7 @@
         //修复一个IE下的bug: 鼠标点击一段已选择的文本中间时，可能在mouseup后的一段时间内取到的range是在selection的type为None下的错误值.
         //IE下如果用户是拖拽一段已选择文本，则不会触发mouseup事件，所以这里的特殊处理不会对其有影响
         var ieRange;
-        if (hackForMouseUp && me.selection.getNative().type == "None") {
+        if (hackForMouseUp && me.selection.getNative().type === "None") {
           ieRange = me.document.body.createTextRange();
           try {
             ieRange.moveToPoint(mouseX, mouseY);
@@ -1123,7 +1123,7 @@
       cmd = this.commands[cmdName] || UE.commands[cmdName];
       cmdFn = cmd && cmd[fnName];
       //没有querycommandstate或者没有command的都默认返回0
-      if ((!cmd || !cmdFn) && fnName == "queryCommandState") {
+      if ((!cmd || !cmdFn) && fnName === "queryCommandState") {
         return 0;
       } else if (cmdFn) {
         return cmdFn.apply(this, args);
@@ -1272,7 +1272,7 @@
     setEnabled() {
       var me = this;
       var range;
-      if (me.body.contentEditable == "false") {
+      if (me.body.contentEditable === "false") {
         me.body.contentEditable = true;
         range = me.selection.getRange();
         //有可能内容丢失了
@@ -1324,7 +1324,7 @@
     setDisabled(except) {
       var me = this;
       except = except ? (utils.isArray(except) ? except : [except]) : [];
-      if (me.body.contentEditable == "true") {
+      if (me.body.contentEditable === "true") {
         if (!me.lastBk) {
           me.lastBk = me.selection.getRange().createBookmark(true);
         }
@@ -1388,7 +1388,7 @@
     setShow() {
       var me = this;
       var range = me.selection.getRange();
-      if (me.container.style.display == "none") {
+      if (me.container.style.display === "none") {
         //有可能内容丢失了
         try {
           range.moveToBookmark(me.lastBk);

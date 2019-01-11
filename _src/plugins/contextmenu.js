@@ -385,14 +385,14 @@ UE.plugins["contextmenu"] = function() {
     for (var i = 0, ti, contextItems = []; (ti = items[i]); i++) {
       var last;
       (item => {
-        if (item == "-") {
+        if (item === "-") {
           if ((last = contextItems[contextItems.length - 1]) && last !== "-") {
             contextItems.push("-");
           }
         } else if (item.hasOwnProperty("group")) {
           for (var j = 0, cj, subMenu = []; (cj = item.subMenu[j]); j++) {
             (subItem => {
-              if (subItem == "-") {
+              if (subItem === "-") {
                 if ((last = subMenu[subMenu.length - 1]) && last !== "-") {
                   subMenu.push("-");
                 } else {
@@ -471,7 +471,7 @@ UE.plugins["contextmenu"] = function() {
         }
       })(ti);
     }
-    if (contextItems[contextItems.length - 1] == "-") {
+    if (contextItems[contextItems.length - 1] === "-") {
       contextItems.pop();
     }
 
@@ -505,7 +505,7 @@ UE.plugins["contextmenu"] = function() {
     if (me.zeroclipboard) {
       var items = menu.items;
       for (var key in items) {
-        if (items[key].className == "edui-for-copy") {
+        if (items[key].className === "edui-for-copy") {
           me.zeroclipboard.clip(items[key].getDom());
         }
       }

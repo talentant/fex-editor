@@ -33,7 +33,7 @@ UE.plugins["lineheight"] = function() {
   me.commands["lineheight"] = {
     execCommand(cmdName, value) {
       this.execCommand("paragraph", "p", {
-        style: "line-height:" + (value == "1" ? "normal" : value + "em")
+        style: "line-height:" + (value === "1" || value === 1 ? "normal" : value + "em")
       });
       return true;
     },
@@ -41,7 +41,7 @@ UE.plugins["lineheight"] = function() {
       var pN = domUtils.filterNodeList(this.selection.getStartElementPath(), node => domUtils.isBlockElm(node));
       if (pN) {
         var value = domUtils.getComputedStyle(pN, "line-height");
-        return value == "normal" ? 1 : value.replace(/[^\d.]*/gi, "");
+        return value === "normal" ? 1 : value.replace(/[^\d.]*/gi, "");
       }
     }
   };

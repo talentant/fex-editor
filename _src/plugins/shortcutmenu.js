@@ -32,7 +32,7 @@ UE.plugins["shortcutmenu"] = function() {
 
     setTimeout(() => {
       var rng = me.selection.getRange();
-      if (rng.collapsed === false || type == "contextmenu") {
+      if (rng.collapsed === false || type === "contextmenu") {
         if (!menu) {
           menu = new baidu.editor.ui.ShortCutMenu({
             editor: me,
@@ -49,7 +49,7 @@ UE.plugins["shortcutmenu"] = function() {
       }
     });
 
-    if (type == "contextmenu") {
+    if (type === "contextmenu") {
       domUtils.preventDefault(e);
       if (browser.ie9below) {
         var ieRange;
@@ -67,7 +67,7 @@ UE.plugins["shortcutmenu"] = function() {
   });
 
   me.addListener("keydown", type => {
-    if (type == "keydown") {
+    if (type === "keydown") {
       menu && !menu.isHidden && menu.hide();
     }
   });

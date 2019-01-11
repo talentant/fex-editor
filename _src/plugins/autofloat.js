@@ -63,7 +63,7 @@ UE.plugins["autofloat"] = function() {
       if (toolbarBox.style.position != "fixed") {
         toolbarBox.style.position = "fixed";
         toolbarBox.style.top = topOffset + "px";
-        (origalFloat == "absolute" || origalFloat == "relative") &&
+        (origalFloat === "absolute" || origalFloat === "relative") &&
           parseFloat(origalLeft) &&
           (toolbarBox.style.left = toobarBoxPos.x + "px");
       }

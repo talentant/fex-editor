@@ -34,7 +34,7 @@
       this.getDom().style.zIndex = "";
     },
     isHidden() {
-      return this.getDom().style.display == "none";
+      return this.getDom().style.display === "none";
     },
     _onMouseDown() {
       return false;

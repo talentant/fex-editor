@@ -607,7 +607,7 @@ var utils = (UE.utils = {
       if (!doc.body) {
         var html = [];
         for (var p in obj) {
-          if (p == "tag") continue;
+          if (p === "tag") continue;
           html.push(p + '="' + obj[p] + '"');
         }
         doc.write("<" + obj.tag + " " + html.join(" ") + " ></" + obj.tag + ">");
@@ -720,7 +720,7 @@ var utils = (UE.utils = {
             margin[name] = val;
             return "";
           case "border":
-            return val == "initial" ? "" : str;
+            return val === "initial" ? "" : str;
         }
       }
       return str;
@@ -783,7 +783,7 @@ var utils = (UE.utils = {
     for (var i in source) {
       if (source.hasOwnProperty(i)) {
         tmp = source[i];
-        if (typeof tmp == "object") {
+        if (typeof tmp === "object") {
           target[i] = utils.isArray(tmp) ? [] : {};
           utils.clone(source[i], target[i]);
         } else {
@@ -992,9 +992,9 @@ var utils = (UE.utils = {
     var strArr = [];
     for (var i in json) {
       //忽略默认的几个参数
-      if (i == "method" || i == "timeout" || i == "async") continue;
+      if (i === "method" || i === "timeout" || i === "async") continue;
       //传递过来的对象和函数不在提交之列
-      if (!((typeof json[i]).toLowerCase() == "function" || (typeof json[i]).toLowerCase() == "object")) {
+      if (!((typeof json[i]).toLowerCase() === "function" || (typeof json[i]).toLowerCase() === "object")) {
         strArr.push(encodeURIComponent(i) + "=" + encodeURIComponent(json[i]));
       } else if (utils.isArray(json[i])) {
         //支持传数组内容
@@ -1022,7 +1022,7 @@ var utils = (UE.utils = {
     return !(
       a.protocol == location.protocol &&
       a.hostname == location.hostname &&
-      (a.port == location.port || (a.port == "80" && location.port == "") || (a.port == "" && location.port == "80"))
+      (a.port == location.port || (a.port === "80" && location.port === "") || (a.port === "" && location.port === "80"))
     );
   },
   clearEmptyAttrs(obj) {
@@ -1212,5 +1212,5 @@ var utils = (UE.utils = {
  * @return { Boolean } 给定的对象是否是普通对象
  */
 utils.each(["String", "Function", "Array", "Number", "RegExp", "Object", "Date"], v => {
-  UE.utils["is" + v] = obj => Object.prototype.toString.apply(obj) == "[object " + v + "]";
+  UE.utils["is" + v] = obj => Object.prototype.toString.apply(obj) === "[object " + v + "]";
 });

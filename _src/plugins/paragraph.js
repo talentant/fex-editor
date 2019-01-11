@@ -63,7 +63,7 @@ UE.plugins["paragraph"] = function() {
         para = range.document.createElement(style);
         if (attrs) {
           domUtils.setAttributes(para, attrs);
-          if (sourceCmdName && sourceCmdName == "customstyle" && attrs.style) {
+          if (sourceCmdName && sourceCmdName === "customstyle" && attrs.style) {
             para.style.cssText = attrs.style;
           }
         }
@@ -79,7 +79,7 @@ UE.plugins["paragraph"] = function() {
         //如果para上一级是一个block元素且不是body,td就删除它
         if (block(parent) && !domUtils.isBody(para.parentNode) && utils.indexOf(notExchange, parent.tagName) == -1) {
           //存储dir,style
-          if (!(sourceCmdName && sourceCmdName == "customstyle")) {
+          if (!(sourceCmdName && sourceCmdName === "customstyle")) {
             parent.getAttribute("dir") && para.setAttribute("dir", parent.getAttribute("dir"));
             //trace:1070
             parent.style.cssText && (para.style.cssText = parent.style.cssText + ";" + para.style.cssText);
@@ -92,7 +92,7 @@ UE.plugins["paragraph"] = function() {
           //trace:1706 选择的就是h1-6要删除
           if (attrs && /h\d/i.test(parent.tagName) && !/h\d/i.test(para.tagName)) {
             domUtils.setAttributes(parent, attrs);
-            if (sourceCmdName && sourceCmdName == "customstyle" && attrs.style) {
+            if (sourceCmdName && sourceCmdName === "customstyle" && attrs.style) {
               parent.style.cssText = attrs.style;
             }
             domUtils.remove(para.parentNode, true);

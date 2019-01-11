@@ -42,7 +42,7 @@
     _onMouseDown(e) {
       var target = e.target || e.srcElement;
       var tagName = target && target.tagName && target.tagName.toLowerCase();
-      if (tagName == "input" || tagName == "object" || tagName == "object") {
+      if (tagName === "input" || tagName === "object" || tagName === "object") {
         return false;
       }
     }

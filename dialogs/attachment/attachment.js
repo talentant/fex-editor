@@ -544,7 +544,7 @@
       uploader.on("filesQueued", file => {
         if (
           !uploader.isInProgress() &&
-          (state == "pedding" || state == "finish" || state == "confirm" || state == "ready")
+          (state === "pedding" || state === "finish" || state === "confirm" || state === "ready")
         ) {
           setState("ready");
         }
@@ -593,7 +593,7 @@
         try {
           var responseText = ret._raw || ret;
           var json = utils.str2json(responseText);
-          if (json.state == "SUCCESS") {
+          if (json.state === "SUCCESS") {
             _this.fileList.push(json);
             $file.append('<span class="success"></span>');
           } else {
@@ -612,7 +612,7 @@
 
       uploader.on("uploadError", (file, code) => {});
       uploader.on("error", (code, file) => {
-        if (code == "Q_TYPE_DENIED" || code == "F_EXCEED_SIZE") {
+        if (code === "Q_TYPE_DENIED" || code === "F_EXCEED_SIZE") {
           addFile(file);
         }
       });
@@ -643,7 +643,7 @@
       var files = this.uploader.getFiles();
       for (i = 0; (file = files[i++]); ) {
         status = file.getStatus();
-        if (status == "queued" || status == "uploading" || status == "progress") readyFile++;
+        if (status === "queued" || status === "uploading" || status === "progress") readyFile++;
       }
       return readyFile;
     },
@@ -704,7 +704,7 @@
         var target = e.target || e.srcElement;
         var li = target.parentNode;
 
-        if (li.tagName.toLowerCase() == "li") {
+        if (li.tagName.toLowerCase() === "li") {
           if (domUtils.hasClass(li, "selected")) {
             domUtils.removeClasses(li, "selected");
           } else {
@@ -743,7 +743,7 @@
           onsuccess(r) {
             try {
               var json = eval("(" + r.responseText + ")");
-              if (json.state == "SUCCESS") {
+              if (json.state === "SUCCESS") {
                 _this.pushData(json.list);
                 _this.listIndex = parseInt(json.start) + parseInt(json.list.length);
                 if (_this.listIndex >= json.total) {
@@ -829,7 +829,7 @@
       var ow = img.width;
       var oh = img.height;
 
-      if (type == "justify") {
+      if (type === "justify") {
         if (ow >= oh) {
           img.width = w;
           img.height = (h * oh) / ow;

@@ -117,7 +117,7 @@ UE.plugins["basestyle"] = function() {
               domUtils.remove(tmpText);
             } else {
               var tmpNode = range.document.createElement(tagNames[0]);
-              if (cmdName == "superscript" || cmdName == "subscript") {
+              if (cmdName === "superscript" || cmdName === "subscript") {
                 tmpText = me.document.createTextNode("");
                 range
                   .insertNode(tmpText)
@@ -129,7 +129,7 @@ UE.plugins["basestyle"] = function() {
             }
             range.collapse(true);
           } else {
-            if (cmdName == "superscript" || cmdName == "subscript") {
+            if (cmdName === "superscript" || cmdName === "subscript") {
               if (!obj || obj.tagName.toLowerCase() != cmdName) {
                 range.removeInlineStyle(["sub", "sup"]);
               }

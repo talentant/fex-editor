@@ -172,7 +172,7 @@ UE.plugins["font"] = function() {
     var parent;
     while ((parent = node.parentNode)) {
       if (
-        parent.tagName == "SPAN" &&
+        parent.tagName === "SPAN" &&
         domUtils.getChildCount(parent, child => !domUtils.isBookmarkNode(child) && !domUtils.isBr(child)) == 1
       ) {
         parent.style.cssText += node.style.cssText;
@@ -192,7 +192,7 @@ UE.plugins["font"] = function() {
           var bk = rng.createBookmark();
           utils.each(domUtils.getElementsByTagName(start, "span"), span => {
             if (!span.parentNode || domUtils.isBookmarkNode(span)) return;
-            if (cmdName == "backcolor" && domUtils.getComputedStyle(span, "background-color").toLowerCase() === value) {
+            if (cmdName === "backcolor" && domUtils.getComputedStyle(span, "background-color").toLowerCase() === value) {
               return;
             }
             domUtils.removeStyle(span, needSetChild[cmdName]);
@@ -229,15 +229,15 @@ UE.plugins["font"] = function() {
       }
       if (
         /border/i.test(span.style.cssText) &&
-        span.parentNode.tagName == "SPAN" &&
+        span.parentNode.tagName === "SPAN" &&
         /border/i.test(span.parentNode.style.cssText)
       ) {
         span.style.cssText = span.style.cssText.replace(/border[^:]*:[^;]+;?/gi, "");
       }
-      if (!(cmdName == "fontborder" && value == "none")) {
+      if (!(cmdName === "fontborder" && value === "none")) {
         var next = span.nextSibling;
-        while (next && next.nodeType == 1 && next.tagName == "SPAN") {
-          if (domUtils.isBookmarkNode(next) && cmdName == "fontborder") {
+        while (next && next.nodeType == 1 && next.tagName === "SPAN") {
+          if (domUtils.isBookmarkNode(next) && cmdName === "fontborder") {
             span.appendChild(next);
             next = span.nextSibling;
             continue;
@@ -254,7 +254,7 @@ UE.plugins["font"] = function() {
       mergeWithParent(span);
       if (browser.ie && browser.version > 8) {
         //拷贝父亲们的特别的属性,这里只做背景颜色的处理
-        var parent = domUtils.findParent(span, n => n.tagName == "SPAN" && /background-color/.test(n.style.cssText));
+        var parent = domUtils.findParent(span, n => n.tagName === "SPAN" && /background-color/.test(n.style.cssText));
         if (parent && !/background-color/.test(span.style.cssText)) {
           span.style.backgroundColor = parent.style.backgroundColor;
         }
@@ -266,7 +266,7 @@ UE.plugins["font"] = function() {
 
   me.addInputRule(root => {
     utils.each(root.getNodesByTagName("u s del font strike"), node => {
-      if (node.tagName == "font") {
+      if (node.tagName === "font") {
         var cssStyle = [];
         for (var p in node.attrs) {
           switch (p) {
@@ -299,7 +299,7 @@ UE.plugins["font"] = function() {
           style: cssStyle.join(";")
         };
       } else {
-        var val = node.tagName == "u" ? "underline" : "line-through";
+        var val = node.tagName === "u" ? "underline" : "line-through";
         node.attrs = {
           style: (node.getAttr("style") || "") + "text-decoration:" + val + ";"
         };
@@ -364,16 +364,16 @@ UE.plugins["font"] = function() {
             value ||
             (this.queryCommandState(cmdName)
               ? "none"
-              : cmdName == "underline"
+              : cmdName === "underline"
               ? "underline"
-              : cmdName == "fontborder"
+              : cmdName === "fontborder"
               ? "1px solid #000"
               : "line-through");
           var me = this;
           var range = this.selection.getRange();
           var text;
 
-          if (value == "default") {
+          if (value === "default") {
             if (range.collapsed) {
               text = me.document.createTextNode("font");
               range.insertNode(text).select();
@@ -436,7 +436,7 @@ UE.plugins["font"] = function() {
                 if (!browser.ie || (browser.ie && browser.version == 9)) {
                   var spanParent = span.parentNode;
                   while (!domUtils.isBlockElm(spanParent)) {
-                    if (spanParent.tagName == "SPAN") {
+                    if (spanParent.tagName === "SPAN") {
                       //opera合并style不会加入";"
                       span.style.cssText = spanParent.style.cssText + ";" + span.style.cssText;
                     }
@@ -468,7 +468,7 @@ UE.plugins["font"] = function() {
           var startNode = this.selection.getStart();
 
           //trace:946
-          if (cmdName == "underline" || cmdName == "strikethrough") {
+          if (cmdName === "underline" || cmdName === "strikethrough") {
             var tmpNode = startNode;
             var value;
             while (tmpNode && !domUtils.isBlockElm(tmpNode) && !domUtils.isBody(tmpNode)) {
@@ -483,7 +483,7 @@ UE.plugins["font"] = function() {
             }
             return "none";
           }
-          if (cmdName == "fontborder") {
+          if (cmdName === "fontborder") {
             var tmp = startNode;
             var val;
             while (tmp && dtd.$inline[tmp.tagName]) {
@@ -497,7 +497,7 @@ UE.plugins["font"] = function() {
             return "";
           }
 
-          if (cmdName == "FontSize") {
+          if (cmdName === "FontSize") {
             var styleVal = domUtils.getComputedStyle(startNode, style);
             var tmp = /^([\d\.]+)(\w+)$/.exec(styleVal);
 
@@ -513,10 +513,10 @@ UE.plugins["font"] = function() {
         queryCommandState(cmdName) {
           if (!needCmd[cmdName]) return 0;
           var val = this.queryCommandValue(cmdName);
-          if (cmdName == "fontborder") {
+          if (cmdName === "fontborder") {
             return /1px/.test(val) && /solid/.test(val);
           } else {
-            return cmdName == "underline" ? /underline/.test(val) : /line\-through/.test(val);
+            return cmdName === "underline" ? /underline/.test(val) : /line\-through/.test(val);
           }
         }
       };

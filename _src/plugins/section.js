@@ -47,7 +47,7 @@ UE.plugin.register("section", function() {
       },
       /* 执行paragraph命令之后 */
       afterexeccommand(type, cmd) {
-        if (cmd == "paragraph") {
+        if (cmd === "paragraph") {
           me.fireEvent("updateSections");
         }
       },
@@ -71,7 +71,7 @@ UE.plugin.register("section", function() {
           var levelFn = levels || ["h1", "h2", "h3", "h4", "h5", "h6"];
 
           for (var i = 0; i < levelFn.length; i++) {
-            if (typeof levelFn[i] == "string") {
+            if (typeof levelFn[i] === "string") {
               levelFn[i] = (fn => node => node.tagName == fn.toUpperCase())(levelFn[i]);
             } else if (typeof levelFn[i] != "function") {
               levelFn[i] = node => null;

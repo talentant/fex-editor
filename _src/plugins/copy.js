@@ -24,9 +24,9 @@ UE.plugin.register("copy", function() {
     client.on("mouseover mouseout", e => {
       var target = e.target;
       if (target) {
-        if (e.type == "mouseover") {
+        if (e.type === "mouseover") {
           domUtils.addClass(target, "edui-state-hover");
-        } else if (e.type == "mouseout") {
+        } else if (e.type === "mouseout") {
           domUtils.removeClasses(target, "edui-state-hover");
         }
       }

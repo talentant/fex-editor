@@ -81,8 +81,8 @@
         $G("url").value = iframe.getAttribute("src") || "";
         $G("width").value = iframe.getAttribute("width") || iframe.style.width.replace("px", "") || "";
         $G("height").value = iframe.getAttribute("height") || iframe.style.height.replace("px", "") || "";
-        $G("scroll").checked = iframe.getAttribute("scrolling") == "yes" ? true : false;
-        $G("frameborder").checked = iframe.getAttribute("frameborder") == "1" ? true : false;
+        $G("scroll").checked = iframe.getAttribute("scrolling") === "yes";
+        $G("frameborder").checked = iframe.getAttribute("frameborder") === "1" || iframe.getAttribute("frameborder") === 1;
         $G("align").value = iframe.align ? iframe.align : "";
       }
       function queding() {

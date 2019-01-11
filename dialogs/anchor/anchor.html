@@ -33,7 +33,7 @@
     <script type="text/javascript">
       var anchorInput = $G("anchorName"),
         node = editor.selection.getRange().getClosedNode();
-      if (node && node.tagName == "IMG" && (node = node.getAttribute("anchorname"))) {
+      if (node && node.tagName === "IMG" && (node = node.getAttribute("anchorname"))) {
         anchorInput.value = node;
       }
       anchorInput.onkeydown = function(evt) {

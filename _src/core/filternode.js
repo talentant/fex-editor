@@ -59,7 +59,7 @@ var filterNode = (UE.filterNode = (() => {
               for (var a in attrs) {
                 tmpVal = node.getAttr(a);
                 //todo 只先对style单独处理
-                if (a == "style" && utils.isArray(attrs[a])) {
+                if (a === "style" && utils.isArray(attrs[a])) {
                   var tmpCssStyle = [];
                   utils.each(attrs[a], v => {
                     var tmp;

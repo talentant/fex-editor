@@ -164,7 +164,7 @@
   UETable.getUETable = tdOrTable => {
     var tag = tdOrTable.tagName.toLowerCase();
     tdOrTable =
-      tag == "td" || tag == "th" || tag == "caption"
+      tag === "td" || tag === "th" || tag === "caption"
         ? domUtils.findParentByTagName(tdOrTable, "table", true)
         : tdOrTable;
     if (!tdOrTable.ueTable) {
@@ -515,7 +515,7 @@
      * 删除单元格
      */
     deleteCell(cell, rowIndex) {
-      rowIndex = typeof rowIndex == "number" ? rowIndex : cell.parentNode.rowIndex;
+      rowIndex = typeof rowIndex === "number" ? rowIndex : cell.parentNode.rowIndex;
       var row = this.table.rows[rowIndex];
       row.deleteCell(cell.cellIndex);
     },
@@ -828,7 +828,7 @@
       // 这段关于行表头或者列表头的特殊处理会导致表头合并范围错误
       // 为什么有这段代码的原因未明，暂且注释掉，希望原作者看到后出面说明下
       // if (
-      //   leftTopCell.tagName == "TH" &&
+      //   leftTopCell.tagName === "TH" &&
       //   range.endRowIndex !== range.beginRowIndex
       // ) {
       //   var index = this.indexTable,
@@ -886,20 +886,20 @@
       var row = table.insertRow(rowIndex);
       var cell;
       var thead = null;
-      var isInsertTitle = typeof sourceCell == "string" && sourceCell.toUpperCase() == "TH";
+      var isInsertTitle = typeof sourceCell === "string" && sourceCell.toUpperCase() === "TH";
 
       function replaceTdToTh(colIndex, cell, tableRow) {
         if (colIndex == 0) {
           var tr = tableRow.nextSibling || tableRow.previousSibling;
           var th = tr.cells[colIndex];
-          if (th.tagName == "TH") {
+          if (th.tagName === "TH") {
             th = cell.ownerDocument.createElement("th");
             th.appendChild(cell.firstChild);
             tableRow.insertBefore(th, cell);
             domUtils.remove(cell);
           }
         } else {
-          if (cell.tagName == "TH") {
+          if (cell.tagName === "TH") {
             var td = cell.ownerDocument.createElement("td");
             td.appendChild(cell.firstChild);
             tableRow.insertBefore(td, cell);
@@ -1016,19 +1016,19 @@
         10
       );
 
-      var isInsertTitleCol = typeof sourceCell == "string" && sourceCell.toUpperCase() == "TH";
+      var isInsertTitleCol = typeof sourceCell === "string" && sourceCell.toUpperCase() === "TH";
 
       function replaceTdToTh(rowIndex, cell, tableRow) {
         if (rowIndex == 0) {
           var th = cell.nextSibling || cell.previousSibling;
-          if (th.tagName == "TH") {
+          if (th.tagName === "TH") {
             th = cell.ownerDocument.createElement("th");
             th.appendChild(cell.firstChild);
             tableRow.insertBefore(th, cell);
             domUtils.remove(cell);
           }
         } else {
-          if (cell.tagName == "TH") {
+          if (cell.tagName === "TH") {
             var td = cell.ownerDocument.createElement("td");
             td.appendChild(cell.firstChild);
             tableRow.insertBefore(td, cell);
@@ -1183,7 +1183,7 @@
           tmpCell.style.cssText = cell.style.cssText;
         }
         //处理th的情况
-        if (cell.tagName == "TH") {
+        if (cell.tagName === "TH") {
           var th = cell.ownerDocument.createElement("th");
           th.appendChild(tmpCell.firstChild);
           th.setAttribute("vAlign", cell.getAttribute("vAlign"));

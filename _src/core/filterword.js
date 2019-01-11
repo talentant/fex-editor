@@ -70,7 +70,7 @@ var filterWord = (UE.filterWord = (() => {
           name,
           marks,
           val //保留list的标示
-        ) => (name == "class" && val == "MsoListParagraph" ? str : ""))
+        ) => (name === "class" && val === "MsoListParagraph" ? str : ""))
         //清除多余的font/span不能匹配&nbsp;有可能是空格
         .replace(/<(font|span)[^>]*>(\s*)<\/\1>/gi, (a, b, c) => c.replace(/[\t\r\n ]+/g, " "))
         //处理style的问题
@@ -149,12 +149,12 @@ var filterWord = (UE.filterWord = (() => {
                   continue;
 
                 case "text-line-through":
-                  if (value == "single" || value == "double") {
+                  if (value === "single" || value === "double") {
                     n[i] = "text-decoration:line-through";
                   }
                   continue;
                 case "mso-zero-height":
-                  if (value == "yes") {
+                  if (value === "yes") {
                     n[i] = "display:none";
                   }
                   continue;

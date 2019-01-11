@@ -211,9 +211,9 @@ var htmlparser = (UE.htmlparser = (htmlstr, ignoreBlank) => {
             text(currentParent, match[0]);
           } else {
             var tmpParent = currentParent;
-            while (currentParent.type == "element" && currentParent.tagName != match[1].toLowerCase()) {
+            while (currentParent.type === "element" && currentParent.tagName != match[1].toLowerCase()) {
               currentParent = currentParent.parentNode;
-              if (currentParent.type == "root") {
+              if (currentParent.type === "root") {
                 currentParent = tmpParent;
                 throw "break";
               }

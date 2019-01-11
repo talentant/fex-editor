@@ -89,7 +89,7 @@ UE.plugins["enterkey"] = function() {
           return;
         }
       }
-      if (tag == "p") {
+      if (tag === "p") {
         if (!browser.ie) {
           start = domUtils.findParentByTagName(
             range.startContainer,
@@ -109,7 +109,7 @@ UE.plugins["enterkey"] = function() {
             }
           } else {
             hTag = start.tagName;
-            start.tagName.toLowerCase() == "p" && browser.gecko && domUtils.removeDirtyAttr(start);
+            start.tagName.toLowerCase() === "p" && browser.gecko && domUtils.removeDirtyAttr(start);
           }
         }
       } else {

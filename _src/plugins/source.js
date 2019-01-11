@@ -111,7 +111,7 @@
       sourceEditorFirst: false
     });
     function createSourceEditor(holder) {
-      return sourceEditors[opt.sourceEditor == "codemirror" && window.CodeMirror ? "codemirror" : "textarea"](
+      return sourceEditors[opt.sourceEditor === "codemirror" && window.CodeMirror ? "codemirror" : "textarea"](
         me,
         holder
       );
@@ -164,13 +164,13 @@
           var root = UE.htmlparser(me.body.innerHTML);
           me.filterOutputRule(root);
           root.traversal(node => {
-            if (node.type == "element") {
+            if (node.type === "element") {
               switch (node.tagName) {
                 case "td":
                 case "th":
                 case "caption":
                   if (node.children && node.children.length == 1) {
-                    if (node.firstChild().tagName == "br") {
+                    if (node.firstChild().tagName === "br") {
                       node.removeChild(node.firstChild());
                     }
                   }
@@ -309,7 +309,7 @@
       return oldQueryCommandState.apply(this, arguments);
     };
 
-    if (opt.sourceEditor == "codemirror") {
+    if (opt.sourceEditor === "codemirror") {
       me.addListener("ready", () => {
         utils.loadFile(
           document,

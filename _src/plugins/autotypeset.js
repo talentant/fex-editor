@@ -89,7 +89,7 @@ UE.plugins["autotypeset"] = function() {
   function removeNotAttributeSpan(node) {
     if (!node.style.cssText) {
       domUtils.removeAttributes(node, ["style"]);
-      if (node.tagName.toLowerCase() == "span" && domUtils.hasNoAttributes(node)) {
+      if (node.tagName.toLowerCase() === "span" && domUtils.hasNoAttributes(node)) {
         domUtils.remove(node, true);
       }
     }
@@ -172,7 +172,7 @@ UE.plugins["autotypeset"] = function() {
       }
 
       //表情不处理
-      if (opt.imageBlockLine && ci.tagName.toLowerCase() == "img" && !ci.getAttribute("emotion")) {
+      if (opt.imageBlockLine && ci.tagName.toLowerCase() === "img" && !ci.getAttribute("emotion")) {
         if (html) {
           var img = ci;
           switch (opt.imageBlockLine) {
@@ -183,11 +183,11 @@ UE.plugins["autotypeset"] = function() {
               var tmpNode;
               var pre;
               var next;
-              while (dtd.$inline[pN.tagName] || pN.tagName == "A") {
+              while (dtd.$inline[pN.tagName] || pN.tagName === "A") {
                 pN = pN.parentNode;
               }
               tmpNode = pN;
-              if (tmpNode.tagName == "P" && domUtils.getStyle(tmpNode, "text-align") == "center") {
+              if (tmpNode.tagName === "P" && domUtils.getStyle(tmpNode, "text-align") === "center") {
                 if (
                   !domUtils.isBody(tmpNode) &&
                   domUtils.getChildCount(tmpNode, node => !domUtils.isBr(node) && !domUtils.isWhitespace(node)) == 1
@@ -223,7 +223,7 @@ UE.plugins["autotypeset"] = function() {
                 while (
                   pN &&
                   domUtils.getChildCount(pN, node => !domUtils.isBr(node) && !domUtils.isWhitespace(node)) == 1 &&
-                  (dtd.$inline[pN.tagName] || pN.tagName == "A")
+                  (dtd.$inline[pN.tagName] || pN.tagName === "A")
                 ) {
                   tmpNode = pN;
                   pN = pN.parentNode;
@@ -254,7 +254,7 @@ UE.plugins["autotypeset"] = function() {
     if (opt.tobdc) {
       var root = UE.htmlparser(cont.innerHTML);
       root.traversal(node => {
-        if (node.type == "text") {
+        if (node.type === "text") {
           node.data = ToDBC(node.data);
         }
       });
@@ -263,7 +263,7 @@ UE.plugins["autotypeset"] = function() {
     if (opt.bdc2sb) {
       var root = UE.htmlparser(cont.innerHTML);
       root.traversal(node => {
-        if (node.type == "text") {
+        if (node.type === "text") {
           node.data = DBC2SB(node.data);
         }
       });

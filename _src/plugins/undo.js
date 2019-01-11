@@ -213,7 +213,7 @@ UE.plugins["undo"] = function() {
       this.undoManger[cmdName]();
     },
     queryCommandState(cmdName) {
-      return this.undoManger["has" + (cmdName.toLowerCase() == "undo" ? "Undo" : "Redo")] ? 0 : -1;
+      return this.undoManger["has" + (cmdName.toLowerCase() === "undo" ? "Undo" : "Redo")] ? 0 : -1;
     },
     notNeedUndo: 1
   };

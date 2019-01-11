@@ -38,7 +38,7 @@ UE.plugin.register("autoupload", () => {
       });
     };
 
-    if (filetype == "image") {
+    if (filetype === "image") {
       loadingHtml =
         '<img class="loadingclass" id="' +
         loadingId +
@@ -115,7 +115,7 @@ UE.plugin.register("autoupload", () => {
     xhr.addEventListener("load", e => {
       try {
         var json = new Function("return " + utils.trim(e.target.response))();
-        if (json.state == "SUCCESS" && json.url) {
+        if (json.state === "SUCCESS" && json.url) {
           successHandler(json);
         } else {
           errorHandler(json.state);
@@ -166,7 +166,7 @@ UE.plugin.register("autoupload", () => {
             var hasImg = false;
             var items;
             //获取粘贴板文件列表或者拖放文件列表
-            items = e.type == "paste" ? getPasteImage(e) : getDropImage(e);
+            items = e.type === "paste" ? getPasteImage(e) : getDropImage(e);
             if (items) {
               var len = items.length;
               var file;
@@ -189,7 +189,7 @@ UE.plugin.register("autoupload", () => {
             domUtils.on(me.body, "drop", handler);
             //取消拖放图片时出现的文字光标位置提示
             domUtils.on(me.body, "dragover", e => {
-              if (e.dataTransfer.types[0] == "Files") {
+              if (e.dataTransfer.types[0] === "Files") {
                 e.preventDefault();
               }
             });

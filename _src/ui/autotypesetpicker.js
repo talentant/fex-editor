@@ -54,19 +54,19 @@
         '<input type="radio" name="' +
         textAlignInputName +
         '" value="left" ' +
-        (opt["textAlign"] && opt["textAlign"] == "left" ? "checked" : "") +
+        (opt["textAlign"] && opt["textAlign"] === "left" ? "checked" : "") +
         ">" +
         me.getLang("justifyleft") +
         '<input type="radio" name="' +
         textAlignInputName +
         '" value="center" ' +
-        (opt["textAlign"] && opt["textAlign"] == "center" ? "checked" : "") +
+        (opt["textAlign"] && opt["textAlign"] === "center" ? "checked" : "") +
         ">" +
         me.getLang("justifycenter") +
         '<input type="radio" name="' +
         textAlignInputName +
         '" value="right" ' +
-        (opt["textAlign"] && opt["textAlign"] == "right" ? "checked" : "") +
+        (opt["textAlign"] && opt["textAlign"] === "right" ? "checked" : "") +
         ">" +
         me.getLang("justifyright") +
         "</td>" +
@@ -83,25 +83,25 @@
         '<input type="radio" name="' +
         imageBlockInputName +
         '" value="none" ' +
-        (opt["imageBlockLine"] && opt["imageBlockLine"] == "none" ? "checked" : "") +
+        (opt["imageBlockLine"] && opt["imageBlockLine"] === "none" ? "checked" : "") +
         ">" +
         me.getLang("default") +
         '<input type="radio" name="' +
         imageBlockInputName +
         '" value="left" ' +
-        (opt["imageBlockLine"] && opt["imageBlockLine"] == "left" ? "checked" : "") +
+        (opt["imageBlockLine"] && opt["imageBlockLine"] === "left" ? "checked" : "") +
         ">" +
         me.getLang("justifyleft") +
         '<input type="radio" name="' +
         imageBlockInputName +
         '" value="center" ' +
-        (opt["imageBlockLine"] && opt["imageBlockLine"] == "center" ? "checked" : "") +
+        (opt["imageBlockLine"] && opt["imageBlockLine"] === "center" ? "checked" : "") +
         ">" +
         me.getLang("justifycenter") +
         '<input type="radio" name="' +
         imageBlockInputName +
         '" value="right" ' +
-        (opt["imageBlockLine"] && opt["imageBlockLine"] == "right" ? "checked" : "") +
+        (opt["imageBlockLine"] && opt["imageBlockLine"] === "right" ? "checked" : "") +
         ">" +
         me.getLang("justifyright") +
         "</td>" +

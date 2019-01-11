@@ -108,7 +108,7 @@ UE.plugins["tablesort"] = function() {
 
     //做单元格合并操作时,清除可排序标识
     me.addListener("afterexeccommand", function(type, cmd) {
-      if (cmd == "mergeright" || cmd == "mergedown" || cmd == "mergecells") {
+      if (cmd === "mergeright" || cmd === "mergedown" || cmd === "mergecells") {
         this.execCommand("disablesort");
       }
     });
@@ -147,19 +147,19 @@ UE.plugins["tablesort"] = function() {
   UE.commands["enablesort"] = UE.commands["disablesort"] = {
     queryCommandState(cmd) {
       var table = getTableItemsByRange(this).table;
-      if (table && cmd == "enablesort") {
+      if (table && cmd === "enablesort") {
         var cells = domUtils.getElementsByTagName(table, "th td");
         for (var i = 0; i < cells.length; i++) {
           if (cells[i].getAttribute("colspan") > 1 || cells[i].getAttribute("rowspan") > 1) return -1;
         }
       }
 
-      return !table ? -1 : (cmd == "enablesort") ^ (table.getAttribute("data-sort") != "sortEnabled") ? -1 : 0;
+      return !table ? -1 : (cmd === "enablesort") ^ (table.getAttribute("data-sort") != "sortEnabled") ? -1 : 0;
     },
     execCommand(cmd) {
       var table = getTableItemsByRange(this).table;
-      table.setAttribute("data-sort", cmd == "enablesort" ? "sortEnabled" : "sortDisabled");
-      cmd == "enablesort" ? domUtils.addClass(table, "sortEnabled") : domUtils.removeClasses(table, "sortEnabled");
+      table.setAttribute("data-sort", cmd === "enablesort" ? "sortEnabled" : "sortDisabled");
+      cmd === "enablesort" ? domUtils.addClass(table, "sortEnabled") : domUtils.removeClasses(table, "sortEnabled");
     }
   };
 };

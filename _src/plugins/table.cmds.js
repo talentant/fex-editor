@@ -206,7 +206,7 @@
       var table = getTableItemsByRange(this).table;
       if (table) {
         var firstRow = table.rows[0];
-        return firstRow.cells[firstRow.cells.length - 1].tagName.toLowerCase() == "th" ? 0 : -1;
+        return firstRow.cells[firstRow.cells.length - 1].tagName.toLowerCase() === "th" ? 0 : -1;
       }
       return -1;
     },
@@ -353,7 +353,7 @@
       var tableItems = getTableItemsByRange(this);
       var cell = tableItems.cell;
       return cell &&
-        (cell.tagName == "TD" || (cell.tagName == "TH" && tableItems.tr !== tableItems.table.rows[0])) &&
+        (cell.tagName === "TD" || (cell.tagName === "TH" && tableItems.tr !== tableItems.table.rows[0])) &&
         getUETable(tableItems.table).rowsNum < this.options.maxRowNum
         ? 0
         : -1;
@@ -384,7 +384,7 @@
     queryCommandState() {
       var tableItems = getTableItemsByRange(this);
       var cell = tableItems.cell;
-      return cell && cell.tagName == "TD" && getUETable(tableItems.table).rowsNum < this.options.maxRowNum ? 0 : -1;
+      return cell && cell.tagName === "TD" && getUETable(tableItems.table).rowsNum < this.options.maxRowNum ? 0 : -1;
     },
     execCommand() {
       var rng = this.selection.getRange();
@@ -450,7 +450,7 @@
       var tableItems = getTableItemsByRange(this);
       var cell = tableItems.cell;
       return cell &&
-        (cell.tagName == "TD" || (cell.tagName == "TH" && cell !== tableItems.tr.cells[0])) &&
+        (cell.tagName === "TD" || (cell.tagName === "TH" && cell !== tableItems.tr.cells[0])) &&
         getUETable(tableItems.table).colsNum < this.options.maxColNum
         ? 0
         : -1;
@@ -606,7 +606,7 @@
       var tableItems = getTableItemsByRange(this);
       var table = tableItems.table;
       if (table) {
-        if (cmd == "adaptbywindow") {
+        if (cmd === "adaptbywindow") {
           resetTdWidth(table, this);
         } else {
           var cells = domUtils.getElementsByTagName(table, "td th");
@@ -885,7 +885,7 @@
       var table = getTableItemsByRange(this).table;
       if (!table) return -1;
       var interlaced = table.getAttribute("interlaced");
-      if (cmd == "interlacetable") {
+      if (cmd === "interlacetable") {
         //TODO 待定
         //是否需要待定，如果设置，则命令只能单次执行成功，但反射具备toggle效果；否则可以覆盖前次命令，但反射将不存在toggle效果
         return interlaced === "enabled" ? -1 : 0;
@@ -895,7 +895,7 @@
     },
     execCommand(cmd, classList) {
       var table = getTableItemsByRange(this).table;
-      if (cmd == "interlacetable") {
+      if (cmd === "interlacetable") {
         table.setAttribute("interlaced", "enabled");
         this.fireEvent("interlacetable", table, classList);
       } else {

@@ -51,7 +51,7 @@ UE.parse.register("charts", function(utils) {
 
       for (var j = 0, cell; (cell = row.cells[j]); j++) {
         var value = cell.innerText || cell.textContent || "";
-        rowData.push(cell.tagName == "TH" ? value : value | 0);
+        rowData.push(cell.tagName === "TH" ? value : value | 0);
       }
 
       data.push(rowData);

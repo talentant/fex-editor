@@ -214,7 +214,7 @@ UE.plugins["table"] = function() {
             var preNode = table.previousSibling;
             if (
               cell === start &&
-              (!preNode || (preNode.nodeType == 1 && preNode.tagName == "TABLE")) &&
+              (!preNode || (preNode.nodeType == 1 && preNode.tagName === "TABLE")) &&
               domUtils.isStartInblock(rng)
             ) {
               var first = domUtils.findParent(me.selection.getStart(), n => domUtils.isBlockElm(n), true);
@@ -227,7 +227,7 @@ UE.plugins["table"] = function() {
         }
       }
 
-      if ((evt.ctrlKey || evt.metaKey) && evt.keyCode == "67") {
+      if ((evt.ctrlKey || evt.metaKey) && (evt.keyCode === "67" || evt.keyCode === 67)) {
         tableCopyList = null;
         var ut = getUETableBySelected(me);
         if (ut) {
@@ -271,7 +271,7 @@ UE.plugins["table"] = function() {
           var ut = getUETable(td);
           if (isFullRow) {
             var rowIndex = ut.getCellInfo(td).rowIndex;
-            if (td.tagName == "TH") {
+            if (td.tagName === "TH") {
               rowIndex++;
             }
             for (var i = 0, ci; (ci = tableCopyList[i++]); ) {
@@ -309,7 +309,7 @@ UE.plugins["table"] = function() {
               }
               me.__hasEnterExecCommand = false;
               td = ut.table.rows[0].cells[cellInfo.cellIndex];
-              if (td.tagName == "TH") {
+              if (td.tagName === "TH") {
                 td = ut.table.rows[1].cells[cellInfo.cellIndex];
               }
             }
@@ -558,7 +558,7 @@ UE.plugins["table"] = function() {
 
     domUtils.on(me.document, "mouseout", evt => {
       var target = evt.target || evt.srcElement;
-      if (target.tagName == "TABLE") {
+      if (target.tagName === "TABLE") {
         toggleDraggableState(me, false, "", null);
       }
     });
@@ -596,7 +596,7 @@ UE.plugins["table"] = function() {
     });
     me.addOutputRule(root => {
       utils.each(root.getNodesByTagName("div"), n => {
-        if (n.getAttr("id") == "ue_tableDragLine") {
+        if (n.getAttr("id") === "ue_tableDragLine") {
           n.parentNode.removeChild(n);
         }
       });
@@ -767,7 +767,7 @@ UE.plugins["table"] = function() {
   }
 
   function getParentTdOrTh(ele) {
-    if (ele.tagName == "TD" || ele.tagName == "TH") return ele;
+    if (ele.tagName === "TD" || ele.tagName === "TH") return ele;
     var td;
     if ((td = domUtils.findParentByTagName(ele, "td", true) || domUtils.findParentByTagName(ele, "th", true)))
       return td;
@@ -831,9 +831,9 @@ UE.plugins["table"] = function() {
         me.selection.getNative()[browser.ie9below ? "empty" : "removeAllRanges"]();
         pos = mouseCoords(evt);
         toggleDraggableState(me, true, onDrag, pos, target);
-        if (onDrag == "h") {
+        if (onDrag === "h") {
           dragLine.style.left = getPermissionX(dragTd, evt) + "px";
-        } else if (onDrag == "v") {
+        } else if (onDrag === "v") {
           dragLine.style.top = getPermissionY(dragTd, evt) + "px";
         }
         return;
@@ -857,7 +857,7 @@ UE.plugins["table"] = function() {
           var curCell = target;
           if (/\d/.test(state)) {
             state = state.replace(/\d/, "");
-            target = getUETable(target).getPreviewCell(target, state == "v");
+            target = getUETable(target).getPreviewCell(target, state === "v");
           }
           //位于第一行的顶部或者第一列的左边时不可拖动
           toggleDraggableState(me, target ? !!state : false, target ? state : "", pos, target);
@@ -958,9 +958,9 @@ UE.plugins["table"] = function() {
     if (top) {
       var caption = table.getElementsByTagName("caption")[0];
       var capHeight = caption ? caption.offsetHeight : 0;
-      return state == "v1" && pos.y - domUtils.getXY(table).y - capHeight < 8;
+      return state === "v1" && pos.y - domUtils.getXY(table).y - capHeight < 8;
     } else {
-      return state == "h1" && pos.x - domUtils.getXY(table).x < 8;
+      return state === "h1" && pos.x - domUtils.getXY(table).x < 8;
     }
   }
 
@@ -1006,7 +1006,7 @@ UE.plugins["table"] = function() {
    */
   function toggleDraggableState(editor, draggable, dir, mousePos, cell) {
     try {
-      editor.body.style.cursor = dir == "h" ? "col-resize" : dir == "v" ? "row-resize" : "text";
+      editor.body.style.cursor = dir === "h" ? "col-resize" : dir === "v" ? "row-resize" : "text";
       if (browser.ie) {
         if (dir && !mousedown && !getUETableBySelected(editor)) {
           getDragLine(editor, editor.document);
@@ -1166,7 +1166,7 @@ UE.plugins["table"] = function() {
       if ((h = getRelation(target, mouseCoords(evt)))) {
         hideDragLine(me);
 
-        if (h == "h1") {
+        if (h === "h1") {
           h = "h";
           if (inTableSide(domUtils.findParentByTagName(target, "table"), target, evt)) {
             me.execCommand("adaptbywindow");
@@ -1178,7 +1178,7 @@ UE.plugins["table"] = function() {
             }
           }
         }
-        if (h == "h") {
+        if (h === "h") {
           var ut = getUETable(target);
           var table = ut.table;
           var cells = getCellsByMoveBorder(target, table, true);
@@ -1315,7 +1315,7 @@ UE.plugins["table"] = function() {
     var state = getRelation(startTd, mouseCoords(evt));
     if (/\d/.test(state)) {
       state = state.replace(/\d/, "");
-      startTd = getUETable(startTd).getPreviewCell(startTd, state == "v");
+      startTd = getUETable(startTd).getPreviewCell(startTd, state === "v");
     }
     hideDragLine(me);
     getDragLine(me, me.document);
@@ -1410,7 +1410,7 @@ UE.plugins["table"] = function() {
     if (!startTd) {
       var target = domUtils.findParentByTagName(evt.target || evt.srcElement, "td", true);
       if (!target) target = domUtils.findParentByTagName(evt.target || evt.srcElement, "th", true);
-      if (target && (target.tagName == "TD" || target.tagName == "TH")) {
+      if (target && (target.tagName === "TD" || target.tagName === "TH")) {
         if (me.fireEvent("excludetable", target) === true) return;
         range = new dom.Range(me.document);
         range.setStart(target, 0).setCursor(false, true);
@@ -1457,8 +1457,8 @@ UE.plugins["table"] = function() {
     if (
       startTd &&
       currentTd &&
-      ((startTd.tagName == "TD" && currentTd.tagName == "TD") ||
-        (startTd.tagName == "TH" && currentTd.tagName == "TH")) &&
+      ((startTd.tagName === "TD" && currentTd.tagName === "TD") ||
+        (startTd.tagName === "TH" && currentTd.tagName === "TH")) &&
       domUtils.findParentByTagName(startTd, "table") == domUtils.findParentByTagName(currentTd, "table")
     ) {
       var ut = getUETable(currentTd);

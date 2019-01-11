@@ -273,7 +273,7 @@ var scrawl = function(options) {
             picBoard.appendChild(scale.init());
             scale.startScale(img);
           } else {
-            if (scaleCon.style.visibility == "visible") {
+            if (scaleCon.style.visibility === "visible") {
               scaleCon.style.visibility = "hidden";
               picBoard.style.position = "";
               picBoard.style.zIndex = "";
@@ -328,7 +328,7 @@ var scrawl = function(options) {
     _originalBrushSelect(text) {
       var brushList = $G("J_brushBar").children;
       for (var i = 0, ele; (ele = brushList[i++]); ) {
-        if (ele.tagName.toLowerCase() == "a") {
+        if (ele.tagName.toLowerCase() === "a") {
           var size = browser.ie ? ele.innerText : ele.text;
           if (size.toLowerCase() == text) {
             ele.style.opacity = 1;
@@ -346,7 +346,7 @@ var scrawl = function(options) {
         cell.children[0].style.opacity = 0.3;
       }
       for (var k = 0, ele; (ele = brushList[k++]); ) {
-        if (ele.tagName.toLowerCase() == "a") {
+        if (ele.tagName.toLowerCase() === "a") {
           ele.style.opacity = 0.3;
           var size = browser.ie ? ele.innerText : ele.text;
           if (size.toLowerCase() == this.brushWidth) {
@@ -355,7 +355,7 @@ var scrawl = function(options) {
         }
       }
       for (var j = 0, node; (node = eraserList[j++]); ) {
-        if (node.tagName.toLowerCase() == "a") {
+        if (node.tagName.toLowerCase() === "a") {
           node.style.opacity = 0.3;
         }
       }
@@ -368,12 +368,12 @@ var scrawl = function(options) {
       var eraserList = $G("J_eraserBar").children;
 
       for (var i = 0, ele; (ele = brushList[i++]); ) {
-        if (ele.tagName.toLowerCase() == "a") {
+        if (ele.tagName.toLowerCase() === "a") {
           ele.style.opacity = 0.3;
         }
       }
       for (var j = 0, node; (node = eraserList[j++]); ) {
-        if (node.tagName.toLowerCase() == "a") {
+        if (node.tagName.toLowerCase() === "a") {
           node.style.opacity = 0.3;
         }
       }
@@ -387,7 +387,7 @@ var scrawl = function(options) {
       if (img) {
         var x;
         var y;
-        if (img.style.position == "absolute") {
+        if (img.style.position === "absolute") {
           x = parseInt(img.style.left);
           y = parseInt(img.style.top);
         } else {
@@ -634,7 +634,7 @@ function ue_callback(url, state) {
   //移除遮罩层
   removeMaskLayer();
   //状态响应
-  if (state == "SUCCESS") {
+  if (state === "SUCCESS") {
     picBorard.innerHTML = "";
     img.onload = function() {
       scale(this, 300);
@@ -676,7 +676,7 @@ function exec(scrawlObj) {
           if (!scrawlObj.isCancelScrawl) {
             var responseObj;
             responseObj = eval("(" + xhr.responseText + ")");
-            if (responseObj.state == "SUCCESS") {
+            if (responseObj.state === "SUCCESS") {
               var imgObj = {};
               var url = editor.options.scrawlUrlPrefix + responseObj.url;
               imgObj.src = url;

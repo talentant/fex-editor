@@ -26,8 +26,8 @@ UE.plugins["horizontal"] = function() {
         if (start.nodeType == 1 && !start.childNodes[range.startOffset]) {
           var tmp;
           if ((tmp = start.childNodes[range.startOffset - 1])) {
-            if (tmp.nodeType == 1 && tmp.tagName == "HR") {
-              if (me.options.enterTag == "p") {
+            if (tmp.nodeType == 1 && tmp.tagName === "HR") {
+              if (me.options.enterTag === "p") {
                 tmp = me.document.createElement("p");
                 range.insertNode(tmp);
                 range.setStart(tmp, 0).setCursor();

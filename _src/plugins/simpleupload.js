@@ -101,7 +101,7 @@ UE.plugin.register("simpleupload", function() {
             var result = body.innerText || body.textContent || "";
             json = new Function("return " + result)();
             link = me.options.imageUrlPrefix + json.url;
-            if (json.state == "SUCCESS" && json.url) {
+            if (json.state === "SUCCESS" && json.url) {
               loader = me.document.getElementById(loadingId);
               domUtils.removeClasses(loader, "loadingclass");
               loader.setAttribute("src", link);

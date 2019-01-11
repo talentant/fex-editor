@@ -21,7 +21,7 @@ UE.commands["cleardoc"] = {
     var me = this;
     var enterTag = me.options.enterTag;
     var range = me.selection.getRange();
-    if (enterTag == "br") {
+    if (enterTag === "br") {
       me.body.innerHTML = "<br/>";
       range.setStart(me.body, 0).setCursor();
     } else {

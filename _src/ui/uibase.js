@@ -39,7 +39,7 @@
         seatEl.parentNode.replaceChild(el, seatEl);
         uiUtils.copyAttributes(el, seatEl);
       } else {
-        if (typeof holder == "string") {
+        if (typeof holder === "string") {
           holder = document.getElementById(holder);
         }
         holder = holder || uiUtils.getFixedLayer();

@@ -1307,7 +1307,7 @@
           }
           elm.appendChild(frag);
           //针对嵌套span的全局样式指定，做容错处理
-          if (elm.tagName == "SPAN" && attrs && attrs.style) {
+          if (elm.tagName === "SPAN" && attrs && attrs.style) {
             utils.each(elm.getElementsByTagName("span"), s => {
               s.style.cssText = s.style.cssText + ";" + attrs.style;
             });
@@ -1316,7 +1316,7 @@
           //处理下滑线在a上的情况
           var aNode;
           if (
-            tagName == "span" &&
+            tagName === "span" &&
             attrs.style &&
             /text\-decoration/.test(attrs.style) &&
             (aNode = domUtils.findParentByTagName(elm, "a", true))
@@ -1371,7 +1371,7 @@
           if (utils.indexOf(tagNames, start.tagName.toLowerCase()) > -1) {
             break;
           }
-          if (start.tagName.toLowerCase() == "body") {
+          if (start.tagName.toLowerCase() === "body") {
             start = null;
             break;
           }
@@ -1383,7 +1383,7 @@
           if (utils.indexOf(tagNames, end.tagName.toLowerCase()) > -1) {
             break;
           }
-          if (end.tagName.toLowerCase() == "body") {
+          if (end.tagName.toLowerCase() === "body") {
             end = null;
             break;
           }

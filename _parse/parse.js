@@ -269,7 +269,7 @@
         if (!doc.body) {
           var html = [];
           for (var p in obj) {
-            if (p == "tag") continue;
+            if (p === "tag") continue;
             html.push(p + '="' + obj[p] + '"');
           }
           doc.write("<" + obj.tag + " " + html.join(" ") + " ></" + obj.tag + ">");
@@ -303,7 +303,7 @@
     })()
   };
   utils.each(["String", "Function", "Array", "Number", "RegExp", "Object", "Boolean"], v => {
-    utils["is" + v] = obj => Object.prototype.toString.apply(obj) == "[object " + v + "]";
+    utils["is" + v] = obj => Object.prototype.toString.apply(obj) === "[object " + v + "]";
   });
   var parselist = {};
   UE.parse = {

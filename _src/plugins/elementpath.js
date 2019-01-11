@@ -28,7 +28,7 @@ UE.plugins["elementpath"] = function() {
           continue;
         }
         var name = ci.tagName.toLowerCase();
-        if (name == "img" && ci.getAttribute("anchorname")) {
+        if (name === "img" && ci.getAttribute("anchorname")) {
           name = "anchor";
         }
         names[i] = name;

@@ -17,7 +17,7 @@
       var pop = allPopups[i];
       if (!pop.isHidden()) {
         if (pop.queryAutoHide(el) !== false) {
-          if (evt && /scroll/gi.test(evt.type) && pop.className == "edui-wordpastepop") return;
+          if (evt && /scroll/gi.test(evt.type) && pop.className === "edui-wordpastepop") return;
           pop.hide();
         }
       }
@@ -60,7 +60,7 @@
     },
     getContentHtmlTpl() {
       if (this.content) {
-        if (typeof this.content == "string") {
+        if (typeof this.content === "string") {
           return this.content;
         }
         return this.content.renderHtml();

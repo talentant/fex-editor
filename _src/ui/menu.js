@@ -36,7 +36,7 @@
     initItems() {
       for (var i = 0; i < this.items.length; i++) {
         var item = this.items[i];
-        if (item == "-") {
+        if (item === "-") {
           this.items[i] = this.getSeparator();
         } else if (!(item instanceof MenuItem)) {
           item.editor = this.editor;

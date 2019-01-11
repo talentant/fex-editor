@@ -52,6 +52,6 @@ UE.commands["time"] = UE.commands["date"] = {
         .replace(/dd/gi, dd);
     }
 
-    this.execCommand("insertHtml", cmd == "time" ? formatTime(date, format) : formatDate(date, format));
+    this.execCommand("insertHtml", cmd === "time" ? formatTime(date, format) : formatDate(date, format));
   }
 };

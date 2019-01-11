@@ -93,7 +93,7 @@
       case "root":
         for (var i = 0, ci; (ci = node.children[i++]); ) {
           //插入新行
-          if (formatter && ci.type == "element" && !dtd.$inlineWithA[ci.tagName] && i > 1) {
+          if (formatter && ci.type === "element" && !dtd.$inlineWithA[ci.tagName] && i > 1) {
             insertLine(arr, current, true);
             insertIndent(arr, current);
           }
@@ -113,7 +113,7 @@
   }
 
   function isText(node, arr) {
-    if (node.parentNode.tagName == "pre") {
+    if (node.parentNode.tagName === "pre") {
       //源码模式下输入html标签，不能做转换处理，直接输出
       arr.push(node.data);
     } else {
@@ -154,7 +154,7 @@
     }
     if (node.children && node.children.length) {
       for (var i = 0, ci; (ci = node.children[i++]); ) {
-        if (formatter && ci.type == "element" && !dtd.$inlineWithA[ci.tagName] && i > 1) {
+        if (formatter && ci.type === "element" && !dtd.$inlineWithA[ci.tagName] && i > 1) {
           insertLine(arr, current);
           insertIndent(arr, current);
         }
@@ -178,7 +178,7 @@
 
   function getNodeById(root, id) {
     var node;
-    if (root.type == "element" && root.getAttr("id") == id) {
+    if (root.type === "element" && root.getAttr("id") == id) {
       return root;
     }
     if (root.children && root.children.length) {
@@ -191,7 +191,7 @@
   }
 
   function getNodesByTagName(node, tagName, arr) {
-    if (node.type == "element" && node.tagName == tagName) {
+    if (node.type === "element" && node.tagName == tagName) {
       arr.push(node);
     }
     if (node.children && node.children.length) {
@@ -341,7 +341,7 @@
      * ```
      */
     getData() {
-      if (this.type == "element") return "";
+      if (this.type === "element") return "";
       return this.data;
     },
 
@@ -451,7 +451,7 @@
      * ```
      */
     appendChild(node) {
-      if (this.type == "root" || (this.type == "element" && !dtd.$empty[this.tagName])) {
+      if (this.type === "root" || (this.type === "element" && !dtd.$empty[this.tagName])) {
         if (!this.children) {
           this.children = [];
         }

@@ -68,7 +68,7 @@ var browser = (UE.browser = (() => {
      * }
      * ```
      */
-    quirks: document.compatMode == "BackCompat"
+    quirks: document.compatMode === "BackCompat"
   };
 
   /**
@@ -80,7 +80,7 @@ var browser = (UE.browser = (() => {
    * }
    * ```
    */
-  browser.gecko = navigator.product == "Gecko" && !browser.webkit && !browser.opera && !browser.ie;
+  browser.gecko = navigator.product === "Gecko" && !browser.webkit && !browser.opera && !browser.ie;
 
   var version = 0;
 

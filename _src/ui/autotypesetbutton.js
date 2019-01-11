@@ -23,7 +23,7 @@
     var ipts = domUtils.getElementsByTagName(cont, "input");
     for (var i = ipts.length - 1, ipt; (ipt = ipts[i--]); ) {
       inputType = ipt.getAttribute("type");
-      if (inputType == "checkbox") {
+      if (inputType === "checkbox") {
         attrName = ipt.getAttribute("name");
         opt[attrName] && delete opt[attrName];
         if (ipt.checked) {
@@ -94,9 +94,9 @@
         domUtils.on(cont, "click", e => {
           var target = e.target || e.srcElement;
           var editorId = me.editor.uid;
-          if (target && target.tagName == "INPUT") {
+          if (target && target.tagName === "INPUT") {
             // 点击图片浮动的checkbox,去除对应的radio
-            if (target.name == "imageBlockLine" || target.name == "textAlign" || target.name == "symbolConver") {
+            if (target.name === "imageBlockLine" || target.name === "textAlign" || target.name === "symbolConver") {
               var checked = target.checked;
               var radioTd = document.getElementById(target.name + "Value" + editorId);
               var radios = radioTd.getElementsByTagName("input");
@@ -119,9 +119,9 @@
             }
             // 点击radio,选中对应的checkbox
             if (
-              target.name == "imageBlockLineValue" + editorId ||
-              target.name == "textAlignValue" + editorId ||
-              target.name == "bdc"
+              target.name === "imageBlockLineValue" + editorId ||
+              target.name === "textAlignValue" + editorId ||
+              target.name === "bdc"
             ) {
               var checkboxs = target.parentNode.previousSibling.getElementsByTagName("input");
               checkboxs && (checkboxs[0].checked = true);

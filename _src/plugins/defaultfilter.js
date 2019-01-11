@@ -14,8 +14,8 @@ UE.plugins["defaultfilter"] = function() {
     var allowDivTransToP = this.options.allowDivTransToP;
     var val;
     function tdParent(node) {
-      while (node && node.type == "element") {
-        if (node.tagName == "td") {
+      while (node && node.type === "element") {
+        if (node.tagName === "td") {
           return true;
         }
         node = node.parentNode;
@@ -24,7 +24,7 @@ UE.plugins["defaultfilter"] = function() {
     }
     //进行默认的处理
     root.traversal(node => {
-      if (node.type == "element") {
+      if (node.type === "element") {
         if (
           !dtd.$cdata[node.tagName] &&
           me.options.autoClearEmptyNode &&
@@ -33,7 +33,7 @@ UE.plugins["defaultfilter"] = function() {
           (!node.attrs || utils.isEmptyObject(node.attrs))
         ) {
           if (!node.firstChild()) node.parentNode.removeChild(node);
-          else if (node.tagName == "span" && (!node.attrs || utils.isEmptyObject(node.attrs))) {
+          else if (node.tagName === "span" && (!node.attrs || utils.isEmptyObject(node.attrs))) {
             node.parentNode.removeChild(node, true);
           }
           return;
@@ -92,7 +92,7 @@ UE.plugins["defaultfilter"] = function() {
             //                        }
             //p标签不允许嵌套
             utils.each(node.children, n => {
-              if (n.type == "element" && n.tagName == "p") {
+              if (n.type === "element" && n.tagName === "p") {
                 var next = n.nextSibling();
                 node.parentNode.insertAfter(n, node);
                 var last = n;
@@ -124,7 +124,7 @@ UE.plugins["defaultfilter"] = function() {
             var tmpNode;
             var p = UE.uNode.createElement("p");
             while ((tmpNode = node.firstChild())) {
-              if (tmpNode.type == "text" || !UE.dom.dtd.$block[tmpNode.tagName]) {
+              if (tmpNode.type === "text" || !UE.dom.dtd.$block[tmpNode.tagName]) {
                 p.appendChild(tmpNode);
               } else {
                 if (p.firstChild()) {
@@ -181,7 +181,7 @@ UE.plugins["defaultfilter"] = function() {
   me.addOutputRule(root => {
     var val;
     root.traversal(node => {
-      if (node.type == "element") {
+      if (node.type === "element") {
         if (
           me.options.autoClearEmptyNode &&
           dtd.$inline[node.tagName] &&
@@ -189,7 +189,7 @@ UE.plugins["defaultfilter"] = function() {
           (!node.attrs || utils.isEmptyObject(node.attrs))
         ) {
           if (!node.firstChild()) node.parentNode.removeChild(node);
-          else if (node.tagName == "span" && (!node.attrs || utils.isEmptyObject(node.attrs))) {
+          else if (node.tagName === "span" && (!node.attrs || utils.isEmptyObject(node.attrs))) {
             node.parentNode.removeChild(node, true);
           }
           return;

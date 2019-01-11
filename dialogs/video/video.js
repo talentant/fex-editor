@@ -51,7 +51,7 @@
       var img = editor.selection.getRange().getClosedNode();
       var url;
       if (img && img.className) {
-        var hasFakedClass = img.className == "edui-faked-video";
+        var hasFakedClass = img.className === "edui-faked-video";
         var hasUploadClass = img.className.indexOf("edui-upload-video") != -1;
         if (hasFakedClass || hasUploadClass) {
           $G("videoUrl").value = url = img.getAttribute("_url");
@@ -105,7 +105,7 @@
           ci.className = "focus";
         }
       } else {
-        if (ci.className == "focus") {
+        if (ci.className === "focus") {
           ci.className = "";
         }
       }
@@ -163,7 +163,7 @@
     var tabs = $G(id).children;
     var property;
     for (var i = 0, ci; (ci = tabs[i++]); ) {
-      if (ci.className == "focus") {
+      if (ci.className === "focus") {
         property = ci.getAttribute(returnProperty);
         break;
       }
@@ -229,7 +229,7 @@
       for (var j in nameMaps) {
         var div = document.createElement("div");
         div.setAttribute("name", j);
-        if (j == "none") div.className = "focus";
+        if (j === "none") div.className = "focus";
         div.style.cssText = "background:url(images/" + j + "_focus.jpg);";
         div.setAttribute("title", nameMaps[j]);
         floatContainer.appendChild(div);
@@ -787,7 +787,7 @@
       uploader.on("filesQueued", file => {
         if (
           !uploader.isInProgress() &&
-          (state == "pedding" || state == "finish" || state == "confirm" || state == "ready")
+          (state === "pedding" || state === "finish" || state === "confirm" || state === "ready")
         ) {
           setState("ready");
         }
@@ -836,7 +836,7 @@
         try {
           var responseText = ret._raw || ret;
           var json = utils.str2json(responseText);
-          if (json.state == "SUCCESS") {
+          if (json.state === "SUCCESS") {
             uploadVideoList.push({
               url: json.url,
               type: json.type,
@@ -859,7 +859,7 @@
 
       uploader.on("uploadError", (file, code) => {});
       uploader.on("error", (code, file) => {
-        if (code == "Q_TYPE_DENIED" || code == "F_EXCEED_SIZE") {
+        if (code === "Q_TYPE_DENIED" || code === "F_EXCEED_SIZE") {
           addFile(file);
         }
       });
@@ -890,7 +890,7 @@
       var files = this.uploader.getFiles();
       for (i = 0; (file = files[i++]); ) {
         status = file.getStatus();
-        if (status == "queued" || status == "uploading" || status == "progress") readyFile++;
+        if (status === "queued" || status === "uploading" || status === "progress") readyFile++;
       }
       return readyFile;
     },

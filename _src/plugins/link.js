@@ -83,7 +83,7 @@ UE.plugins["link"] = () => {
       if (
         start &&
         start.nodeType == 1 &&
-        start.tagName == "A" &&
+        start.tagName === "A" &&
         /^(?:https?|ftp|file)\s*:\s*\/\//.test(start[browser.ie ? "innerText" : "textContent"])
       ) {
         start[browser.ie ? "innerText" : "textContent"] = utils.html(opt.textValue || opt.href);
@@ -180,7 +180,7 @@ UE.plugins["link"] = () => {
       //fix 853
       var img = this.selection.getRange().getClosedNode();
 
-      var flag = img && (img.className == "edui-faked-video" || img.className.indexOf("edui-upload-video") != -1);
+      var flag = img && (img.className === "edui-faked-video" || img.className.indexOf("edui-upload-video") != -1);
       return flag ? -1 : 0;
     }
   };

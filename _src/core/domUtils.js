@@ -15,7 +15,7 @@ function getDomNode(node, start, ltr, startFromChild, fn, guard) {
   var parent;
   !tmpNode && (tmpNode = node[ltr]);
   while (!tmpNode && (parent = (parent || node).parentNode)) {
-    if (parent.tagName == "BODY" || (guard && !guard(parent))) {
+    if (parent.tagName === "BODY" || (guard && !guard(parent))) {
       return null;
     }
     tmpNode = parent[ltr];
@@ -78,7 +78,7 @@ var domUtils = (dom.domUtils = {
   POSITION_IS_CONTAINED: 8,
   POSITION_CONTAINS: 16,
   //ie6使用其他的会有一段空白出现
-  fillChar: ie && browser.version == "6" ? "\ufeff" : "\u200B",
+  fillChar: ie && browser.version === "6" ? "\ufeff" : "\u200B",
   //-------------------------Node部分--------------------------------
   keys: {
     /*Backspace*/ 8: 1,
@@ -867,7 +867,7 @@ var domUtils = (dom.domUtils = {
     var al = 0;
     var bl = 0;
     for (var i = 0; (attrA = thisAttrs[i++]); ) {
-      if (attrA.nodeName == "style") {
+      if (attrA.nodeName === "style") {
         if (attrA.specified) {
           al++;
         }
@@ -1009,7 +1009,7 @@ var domUtils = (dom.domUtils = {
    * ```
    */
   isBody(node) {
-    return node && node.nodeType == 1 && node.tagName.toLowerCase() == "body";
+    return node && node.nodeType == 1 && node.tagName.toLowerCase() === "body";
   },
   /**
    * 以node节点为分界，将该节点的指定祖先节点parent拆分成两个独立的节点，
@@ -1159,7 +1159,7 @@ var domUtils = (dom.domUtils = {
         continue;
       }
       //span单独处理
-      if (ci.tagName.toLowerCase() == "span") {
+      if (ci.tagName.toLowerCase() === "span") {
         if (node === ci.parentNode) {
           domUtils.trimWhiteTextNode(node);
           if (node.childNodes.length == 1) {
@@ -1245,13 +1245,13 @@ var domUtils = (dom.domUtils = {
   mergeToParent(node) {
     var parent = node.parentNode;
     while (parent && dtd.$removeEmpty[parent.tagName]) {
-      if (parent.tagName == node.tagName || parent.tagName == "A") {
+      if (parent.tagName == node.tagName || parent.tagName === "A") {
         //针对a标签单独处理
         domUtils.trimWhiteTextNode(parent);
         //span需要特殊处理  不处理这样的情况 <span stlye="color:#fff">xxx<span style="color:#ccc">xxx</span>xxx</span>
         if (
-          (parent.tagName == "SPAN" && !domUtils.isSameStyle(parent, node)) ||
-          (parent.tagName == "A" && node.tagName == "SPAN")
+          (parent.tagName === "SPAN" && !domUtils.isSameStyle(parent, node)) ||
+          (parent.tagName === "A" && node.tagName === "SPAN")
         ) {
           if (parent.childNodes.length > 1 || parent !== node.parentNode) {
             node.style.cssText = parent.style.cssText + ";" + node.style.cssText;
@@ -1260,7 +1260,7 @@ var domUtils = (dom.domUtils = {
           } else {
             parent.style.cssText += ";" + node.style.cssText;
             //trace:952 a标签要保持下划线
-            if (parent.tagName == "A") {
+            if (parent.tagName === "A") {
               parent.style.textDecoration = "underline";
             }
           }
@@ -1337,7 +1337,7 @@ var domUtils = (dom.domUtils = {
         domUtils.isSameElement(node, next)
       ) {
         while (next.firstChild) {
-          if (start == "firstChild") {
+          if (start === "firstChild") {
             node.insertBefore(next.lastChild, node.firstChild);
           } else {
             node.appendChild(next.firstChild);
@@ -1558,7 +1558,7 @@ var domUtils = (dom.domUtils = {
     if (
       browser.ie &&
       browser.version < 9 &&
-      styleName == "font-size" &&
+      styleName === "font-size" &&
       !element.style.fontSize &&
       !dtd.$empty[element.tagName] &&
       !dtd.$nonChild[element.tagName]
@@ -1795,7 +1795,7 @@ var domUtils = (dom.domUtils = {
   removeStyle(element, name) {
     if (browser.ie) {
       //针对color先单独处理一下
-      if (name == "color") {
+      if (name === "color") {
         name = "(^|;)" + name;
       }
       element.style.cssText = element.style.cssText.replace(new RegExp(name + "[^:]*:[^;]+;?", "ig"), "");
@@ -2004,7 +2004,7 @@ var domUtils = (dom.domUtils = {
   scrollToView(node, win, offsetTop) {
     var getViewPaneSize = () => {
       var doc = win.document;
-      var mode = doc.compatMode == "CSS1Compat";
+      var mode = doc.compatMode === "CSS1Compat";
       return {
         width: (mode ? doc.documentElement.clientWidth : doc.body.clientWidth) || 0,
         height: (mode ? doc.documentElement.clientHeight : doc.body.clientHeight) || 0
@@ -2044,7 +2044,7 @@ var domUtils = (dom.domUtils = {
    * @return { Boolean } 给定的节点是否是br节点
    */
   isBr(node) {
-    return node.nodeType == 1 && node.tagName == "BR";
+    return node.nodeType == 1 && node.tagName === "BR";
   },
   /**
    * 判断给定的节点是否是一个“填充”节点
