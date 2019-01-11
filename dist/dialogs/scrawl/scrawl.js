@@ -263,12 +263,7 @@ var scrawl = function(options) {
         if (img) {
           if (!scaleCon) {
             picBoard.style.cssText = "position:relative;z-index:999;" + picBoard.style.cssText;
-            img.style.cssText =
-              "position: absolute;top:" +
-              (canvas.height - img.height) / 2 +
-              "px;left:" +
-              (canvas.width - img.width) / 2 +
-              "px;";
+            img.style.cssText = "position: absolute;top:" + (canvas.height - img.height) / 2 + "px;left:" + (canvas.width - img.width) / 2 + "px;";
             var scale = new ScaleBoy();
             picBoard.appendChild(scale.init());
             scale.startScale(img);
@@ -514,15 +509,7 @@ var ScaleBoy = function() {
       var Idom = me.dom;
 
       Idom.style.cssText =
-        "visibility:visible;top:" +
-        objElement.style.top +
-        ";left:" +
-        objElement.style.left +
-        ";width:" +
-        objElement.offsetWidth +
-        "px;height:" +
-        objElement.offsetHeight +
-        "px;";
+        "visibility:visible;top:" + objElement.style.top + ";left:" + objElement.style.left + ";width:" + objElement.offsetWidth + "px;height:" + objElement.offsetHeight + "px;";
       me.scalingElement = objElement;
     },
     updateScaledElement(objStyle) {
@@ -581,17 +568,9 @@ var ScaleBoy = function() {
       value = isNaN(value) ? 0 : value;
       switch (prop) {
         case "left":
-          return value < 0
-            ? 0
-            : value + ele.clientWidth > wrap.clientWidth
-            ? wrap.clientWidth - ele.clientWidth
-            : value;
+          return value < 0 ? 0 : value + ele.clientWidth > wrap.clientWidth ? wrap.clientWidth - ele.clientWidth : value;
         case "top":
-          return value < 0
-            ? 0
-            : value + ele.clientHeight > wrap.clientHeight
-            ? wrap.clientHeight - ele.clientHeight
-            : value;
+          return value < 0 ? 0 : value + ele.clientHeight > wrap.clientHeight ? wrap.clientHeight - ele.clientHeight : value;
         case "width":
           return value <= 0 ? 1 : value + ele.offsetLeft > wrap.clientWidth ? wrap.clientWidth - ele.offsetLeft : value;
         case "height":
@@ -702,11 +681,6 @@ function exec(scrawlObj) {
       ajax.request(url, options);
     }
   } else {
-    addMaskLayer(
-      lang.noScarwl +
-        "&nbsp;&nbsp;&nbsp;<input type='button' value='" +
-        lang.continueBtn +
-        "'  onclick='removeMaskLayer()'/>"
-    );
+    addMaskLayer(lang.noScarwl + "&nbsp;&nbsp;&nbsp;<input type='button' value='" + lang.continueBtn + "'  onclick='removeMaskLayer()'/>");
   }
 }

@@ -181,10 +181,7 @@
       .replace(/www\.56\.com\/u\d+\/v_([\w\-]+)\.html/i, "player.56.com/v_$1.swf")
       .replace(/www.56.com\/w\d+\/play_album\-aid\-\d+_vid\-([^.]+)\.html/i, "player.56.com/v_$1.swf")
       .replace(/v\.pps\.tv\/play_([\w]+)\.html.*$/i, "player.pps.tv/player/sid/$1/v.swf")
-      .replace(
-        /www\.letv\.com\/ptv\/vplay\/([\d]+)\.html.*$/i,
-        "i7.imgs.letv.com/player/swfPlayer.swf?id=$1&autoplay=0"
-      )
+      .replace(/www\.letv\.com\/ptv\/vplay\/([\d]+)\.html.*$/i, "i7.imgs.letv.com/player/swfPlayer.swf?id=$1&autoplay=0")
       .replace(/www\.tudou\.com\/programs\/view\/([\w\-]+)\/?/i, "www.tudou.com/v/$1")
       .replace(/v\.qq\.com\/cover\/[\w]+\/[\w]+\/([\w]+)\.html/i, "static.video.qq.com/TPout.swf?vid=$1")
       .replace(/v\.qq\.com\/.+[\?\&]vid=([^&]+).*$/i, "static.video.qq.com/TPout.swf?vid=$1")
@@ -321,9 +318,7 @@
 
     var count = uploadFile.getQueueCount();
     if (count) {
-      $(".info", "#queueList").html(
-        '<span style="color:red;">' + "还有2个未上传文件".replace(/[\d]/, count) + "</span>"
-      );
+      $(".info", "#queueList").html('<span style="color:red;">' + "还有2个未上传文件".replace(/[\d]/, count) + "</span>");
       return false;
     } else {
       editor.execCommand("insertvideo", videoObjs, "upload");
@@ -405,12 +400,7 @@
       var supportTransition = (() => {
         var s = document.createElement("p").style;
 
-        var r =
-          "transition" in s ||
-          "WebkitTransition" in s ||
-          "MozTransition" in s ||
-          "msTransition" in s ||
-          "OTransition" in s;
+        var r = "transition" in s || "WebkitTransition" in s || "MozTransition" in s || "msTransition" in s || "OTransition" in s;
 
         s = null;
         return r;
@@ -463,17 +453,7 @@
 
       // 当有文件添加进来时执行，负责view的创建
       function addFile(file) {
-        var $li = $(
-          '<li id="' +
-            file.id +
-            '">' +
-            '<p class="title">' +
-            file.name +
-            "</p>" +
-            '<p class="imgWrap"></p>' +
-            '<p class="progress"><span></span></p>' +
-            "</li>"
-        );
+        var $li = $('<li id="' + file.id + '">' + '<p class="title">' + file.name + "</p>" + '<p class="imgWrap"></p>' + '<p class="progress"><span></span></p>' + "</li>");
 
         var $btns = $(
           '<div class="file-panel">' +
@@ -524,14 +504,7 @@
             $wrap
               .empty()
               .addClass("notimage")
-              .append(
-                '<i class="file-preview file-type-' +
-                  file.ext.toLowerCase() +
-                  '"></i>' +
-                  '<span class="file-title">' +
-                  file.name +
-                  "</span>"
-              );
+              .append('<i class="file-preview file-type-' + file.ext.toLowerCase() + '"></i>' + '<span class="file-title">' + file.name + "</span>");
           } else {
             if (browser.ie && browser.version <= 7) {
               $wrap.text(lang.uploadNoPreview);
@@ -620,10 +593,7 @@
               transform: deg
             });
           } else {
-            $wrap.css(
-              "filter",
-              "progid:DXImageTransform.Microsoft.BasicImage(rotation=" + (~~(((file.rotation / 90) % 4) + 4) % 4) + ")"
-            );
+            $wrap.css("filter", "progid:DXImageTransform.Microsoft.BasicImage(rotation=" + (~~(((file.rotation / 90) % 4) + 4) % 4) + ")");
           }
         });
 
@@ -785,10 +755,7 @@
       });
 
       uploader.on("filesQueued", file => {
-        if (
-          !uploader.isInProgress() &&
-          (state === "pedding" || state === "finish" || state === "confirm" || state === "ready")
-        ) {
+        if (!uploader.isInProgress() && (state === "pedding" || state === "finish" || state === "confirm" || state === "ready")) {
           setState("ready");
         }
         updateTotalProgress();
@@ -803,9 +770,7 @@
             /* 添加额外的GET参数 */
             var params = utils.serializeParam(editor.queryCommandValue("serverparam")) || "";
 
-            var url = utils.formatUrl(
-              actionUrl + (actionUrl.indexOf("?") == -1 ? "?" : "&") + "encode=utf-8&" + params
-            );
+            var url = utils.formatUrl(actionUrl + (actionUrl.indexOf("?") == -1 ? "?" : "&") + "encode=utf-8&" + params);
             uploader.option("server", url);
             setState("uploading", files);
             break;

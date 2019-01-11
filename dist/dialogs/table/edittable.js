@@ -193,9 +193,7 @@
     setColor(color) {
       var example = $G("J_example");
 
-      var arr = domUtils
-        .getElementsByTagName(example, "td")
-        .concat(domUtils.getElementsByTagName(example, "th"), domUtils.getElementsByTagName(example, "caption"));
+      var arr = domUtils.getElementsByTagName(example, "td").concat(domUtils.getElementsByTagName(example, "th"), domUtils.getElementsByTagName(example, "caption"));
 
       tone.value = color;
       utils.each(arr, node => {

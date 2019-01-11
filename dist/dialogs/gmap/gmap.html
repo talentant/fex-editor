@@ -91,10 +91,7 @@
             "," +
             point.lng() +
             "&sensor=false";
-          editor.execCommand(
-            "inserthtml",
-            '<img width="520" height="340" src="' + url + '"' + (imgcss ? ' style="' + imgcss + '"' : "") + "/>"
-          );
+          editor.execCommand("inserthtml", '<img width="520" height="340" src="' + url + '"' + (imgcss ? ' style="' + imgcss + '"' : "") + "/>");
         };
 
         function getPars(str, par) {

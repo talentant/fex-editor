@@ -158,9 +158,7 @@ baidu.browser = baidu.browser || {};
  * 在Browser identification最后添加Version + 数字进行版本标识
  * opera后面的数字保持在9.80不变
  */
-baidu.browser.opera = /opera(\/| )(\d+(\.\d+)?)(.+?(version\/(\d+(\.\d+)?)))?/i.test(navigator.userAgent)
-  ? +(RegExp["\x246"] || RegExp["\x242"])
-  : undefined;
+baidu.browser.opera = /opera(\/| )(\d+(\.\d+)?)(.+?(version\/(\d+(\.\d+)?)))?/i.test(navigator.userAgent) ? +(RegExp["\x246"] || RegExp["\x242"]) : undefined;
 
 /**
  * 在目标元素的指定位置插入HTML代码
@@ -467,9 +465,7 @@ baidu.swf.create = (options, target) => {
  * @grammar baidu.browser.ie
  * @returns {Number} IE版本号
  */
-baidu.browser.ie = baidu.ie = /msie (\d+\.\d+)/i.test(navigator.userAgent)
-  ? document.documentMode || +RegExp["\x241"]
-  : undefined;
+baidu.browser.ie = baidu.ie = /msie (\d+\.\d+)/i.test(navigator.userAgent) ? document.documentMode || +RegExp["\x241"] : undefined;
 
 /**
  * 移除数组中的项
@@ -870,15 +866,7 @@ baidu.flash.fileUploader =
       options.createOptions || {}
     );
 
-    var _flash = new baidu.flash._Base(options, [
-      "selectFile",
-      "exceedMaxSize",
-      "deleteFile",
-      "uploadStart",
-      "uploadComplete",
-      "uploadError",
-      "uploadProgress"
-    ]);
+    var _flash = new baidu.flash._Base(options, ["selectFile", "exceedMaxSize", "deleteFile", "uploadStart", "uploadComplete", "uploadError", "uploadProgress"]);
 
     _flash.call("setMaxNum", options.maxNum ? [options.maxNum] : [1]);
 

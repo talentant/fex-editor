@@ -154,8 +154,7 @@ UE.I18N["en"] = {
   elementPathTip: "Path",
   wordCountTip: "Word Count",
   wordCountMsg: "{#count} characters entered,{#leave} left. ",
-  wordOverFlowMsg:
-    '<span style="color:red;">The number of characters has exceeded allowable maximum values, the server may refuse to save!</span>',
+  wordOverFlowMsg: '<span style="color:red;">The number of characters has exceeded allowable maximum values, the server may refuse to save!</span>',
   ok: "OK",
   cancel: "Cancel",
   closeDialog: "closeDialog",
@@ -358,8 +357,7 @@ UE.I18N["en"] = {
     updateStatusConfirm: "_ uploaded successfully and _ upload failed",
     updateStatusFinish: "Total _ pictures (_KB), _  uploaded successfully",
     updateStatusError: " and _ upload failed",
-    errorNotSupport:
-      "WebUploader does not support the browser you are using. Please upgrade your browser or flash player",
+    errorNotSupport: "WebUploader does not support the browser you are using. Please upgrade your browser or flash player",
     errorLoadConfig: "Server config not loaded, upload can not work.",
     errorExceedSize: "File Size Exceed",
     errorFileType: "File Type Not Allow",
@@ -396,8 +394,7 @@ UE.I18N["en"] = {
     updateStatusConfirm: "_ uploaded successfully and _ upload failed",
     updateStatusFinish: "Total _ files (_KB), _  uploaded successfully",
     updateStatusError: " and _ upload failed",
-    errorNotSupport:
-      "WebUploader does not support the browser you are using. Please upgrade your browser or flash player",
+    errorNotSupport: "WebUploader does not support the browser you are using. Please upgrade your browser or flash player",
     errorLoadConfig: "Server config not loaded, upload can not work.",
     errorExceedSize: "File Size Exceed",
     errorFileType: "File Type Not Allow",
@@ -483,8 +480,7 @@ UE.I18N["en"] = {
     updateStatusConfirm: "_ uploaded successfully and _ upload failed",
     updateStatusFinish: "Total _ files (_KB), _  uploaded successfully",
     updateStatusError: " and _ upload failed",
-    errorNotSupport:
-      "WebUploader does not support the browser you are using. Please upgrade your browser or flash player",
+    errorNotSupport: "WebUploader does not support the browser you are using. Please upgrade your browser or flash player",
     errorLoadConfig: "Server config not loaded, upload can not work.",
     errorExceedSize: "File Size Exceed",
     errorFileType: "File Type Not Allow",
@@ -694,8 +690,7 @@ UE.I18N["en"] = {
       lang_resave: "The re-save step",
       uploadBtn: {src: "upload.png", alt: "Upload"},
       clipboard: {style: "background: url(copy.png) -153px -1px no-repeat;"},
-      lang_step:
-        " 1. Click top button to copy the url and then open the dialog to paste it. 2. Open after choose photos uploaded process."
+      lang_step: " 1. Click top button to copy the url and then open the dialog to paste it. 2. Open after choose photos uploaded process."
     },
     fileType: "Image",
     flashError: "Flash initialization failed!",
@@ -706,12 +701,8 @@ UE.I18N["en"] = {
       lang: encodeURI(
         '{"UploadingState":"totalNum: ${a},uploadComplete: ${b}", "BeforeUpload":"waitingNum: ${a}", "ExceedSize":"Size exceed${a}", "ErrorInPreview":"Preview failed", "DefaultDescription":"Description", "LoadingImage":"Loading..."}'
       ),
-      uploadingTF: encodeURI(
-        '{"font":"Arial", "size":12, "color":"0x000", "bold":"true", "italic":"false", "underline":"false"}'
-      ),
-      imageTF: encodeURI(
-        '{"font":"Arial", "size":11, "color":"red", "bold":"false", "italic":"false", "underline":"false"}'
-      ),
+      uploadingTF: encodeURI('{"font":"Arial", "size":12, "color":"0x000", "bold":"true", "italic":"false", "underline":"false"}'),
+      imageTF: encodeURI('{"font":"Arial", "size":11, "color":"red", "bold":"false", "italic":"false", "underline":"false"}'),
       textEncoding: "utf-8",
       addImageSkinURL: "addImage.png",
       allDeleteBtnUpSkinURL: "allDeleteBtnUpSkin.png",

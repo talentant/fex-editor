@@ -71,9 +71,7 @@
           list = uploadFile.getInsertList();
           var count = uploadFile.getQueueCount();
           if (count) {
-            $(".info", "#queueList").html(
-              '<span style="color:red;">' + "还有2个未上传文件".replace(/[\d]/, count) + "</span>"
-            );
+            $(".info", "#queueList").html('<span style="color:red;">' + "还有2个未上传文件".replace(/[\d]/, count) + "</span>");
             return false;
           }
           break;
@@ -156,12 +154,7 @@
       var supportTransition = (() => {
         var s = document.createElement("p").style;
 
-        var r =
-          "transition" in s ||
-          "WebkitTransition" in s ||
-          "MozTransition" in s ||
-          "msTransition" in s ||
-          "OTransition" in s;
+        var r = "transition" in s || "WebkitTransition" in s || "MozTransition" in s || "msTransition" in s || "OTransition" in s;
 
         s = null;
         return r;
@@ -214,17 +207,7 @@
 
       // 当有文件添加进来时执行，负责view的创建
       function addFile(file) {
-        var $li = $(
-          '<li id="' +
-            file.id +
-            '">' +
-            '<p class="title">' +
-            file.name +
-            "</p>" +
-            '<p class="imgWrap"></p>' +
-            '<p class="progress"><span></span></p>' +
-            "</li>"
-        );
+        var $li = $('<li id="' + file.id + '">' + '<p class="title">' + file.name + "</p>" + '<p class="imgWrap"></p>' + '<p class="progress"><span></span></p>' + "</li>");
 
         var $btns = $(
           '<div class="file-panel">' +
@@ -275,16 +258,7 @@
             $wrap
               .empty()
               .addClass("notimage")
-              .append(
-                '<i class="file-preview file-type-' +
-                  file.ext.toLowerCase() +
-                  '"></i>' +
-                  '<span class="file-title" title="' +
-                  file.name +
-                  '">' +
-                  file.name +
-                  "</span>"
-              );
+              .append('<i class="file-preview file-type-' + file.ext.toLowerCase() + '"></i>' + '<span class="file-title" title="' + file.name + '">' + file.name + "</span>");
           } else {
             if (browser.ie && browser.version <= 7) {
               $wrap.text(lang.uploadNoPreview);
@@ -373,10 +347,7 @@
               transform: deg
             });
           } else {
-            $wrap.css(
-              "filter",
-              "progid:DXImageTransform.Microsoft.BasicImage(rotation=" + (~~(((file.rotation / 90) % 4) + 4) % 4) + ")"
-            );
+            $wrap.css("filter", "progid:DXImageTransform.Microsoft.BasicImage(rotation=" + (~~(((file.rotation / 90) % 4) + 4) % 4) + ")");
           }
         });
 
@@ -542,10 +513,7 @@
       });
 
       uploader.on("filesQueued", file => {
-        if (
-          !uploader.isInProgress() &&
-          (state === "pedding" || state === "finish" || state === "confirm" || state === "ready")
-        ) {
+        if (!uploader.isInProgress() && (state === "pedding" || state === "finish" || state === "confirm" || state === "ready")) {
           setState("ready");
         }
         updateTotalProgress();
@@ -560,9 +528,7 @@
             /* 添加额外的GET参数 */
             var params = utils.serializeParam(editor.queryCommandValue("serverparam")) || "";
 
-            var url = utils.formatUrl(
-              actionUrl + (actionUrl.indexOf("?") == -1 ? "?" : "&") + "encode=utf-8&" + params
-            );
+            var url = utils.formatUrl(actionUrl + (actionUrl.indexOf("?") == -1 ? "?" : "&") + "encode=utf-8&" + params);
             uploader.option("server", url);
             setState("uploading", files);
             break;
@@ -793,13 +759,7 @@
               })(preview)
             );
             preview.width = 113;
-            preview.setAttribute(
-              "src",
-              urlPrefix +
-                list[i].url +
-                (list[i].url.indexOf("?") == -1 ? "?noCache=" : "&noCache=") +
-                (+new Date()).toString(36)
-            );
+            preview.setAttribute("src", urlPrefix + list[i].url + (list[i].url.indexOf("?") == -1 ? "?noCache=" : "&noCache=") + (+new Date()).toString(36));
           } else {
             var ic = document.createElement("i");
             var textSpan = document.createElement("span");
