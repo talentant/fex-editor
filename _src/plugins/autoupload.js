@@ -39,13 +39,7 @@ UE.plugin.register("autoupload", () => {
     };
 
     if (filetype === "image") {
-      loadingHtml =
-        '<img class="loadingclass" id="' +
-        loadingId +
-        '" src="' +
-        me.options.themePath +
-        me.options.theme +
-        '/images/spacer.gif">';
+      loadingHtml = '<img class="loadingclass" id="' + loadingId + '" src="' + me.options.themePath + me.options.theme + '/images/spacer.gif">';
       successHandler = data => {
         var link = urlPrefix + data.url;
         var loader = me.document.getElementById(loadingId);
@@ -59,15 +53,7 @@ UE.plugin.register("autoupload", () => {
         }
       };
     } else {
-      loadingHtml =
-        "<p>" +
-        '<img class="loadingclass" id="' +
-        loadingId +
-        '" src="' +
-        me.options.themePath +
-        me.options.theme +
-        '/images/spacer.gif">' +
-        "</p>";
+      loadingHtml = "<p>" + '<img class="loadingclass" id="' + loadingId + '" src="' + me.options.themePath + me.options.theme + '/images/spacer.gif">' + "</p>";
       successHandler = data => {
         var link = urlPrefix + data.url;
         var loader = me.document.getElementById(loadingId);
@@ -93,10 +79,7 @@ UE.plugin.register("autoupload", () => {
     }
     /* 判断文件格式是否超出允许 */
     var fileext = file.name ? file.name.substr(file.name.lastIndexOf(".")) : "";
-    if (
-      (fileext && filetype != "image") ||
-      (allowFiles && (allowFiles.join("") + ".").indexOf(fileext.toLowerCase() + ".") == -1)
-    ) {
+    if ((fileext && filetype != "image") || (allowFiles && (allowFiles.join("") + ".").indexOf(fileext.toLowerCase() + ".") == -1)) {
       errorHandler(me.getLang("autoupload.exceedTypeError"));
       return;
     }
@@ -128,12 +111,7 @@ UE.plugin.register("autoupload", () => {
   }
 
   function getPasteImage(e) {
-    return e.clipboardData &&
-      e.clipboardData.items &&
-      e.clipboardData.items.length == 1 &&
-      /^image\//.test(e.clipboardData.items[0].type)
-      ? e.clipboardData.items
-      : null;
+    return e.clipboardData && e.clipboardData.items && e.clipboardData.items.length == 1 && /^image\//.test(e.clipboardData.items[0].type) ? e.clipboardData.items : null;
   }
   function getDropImage(e) {
     return e.dataTransfer && e.dataTransfer.files ? e.dataTransfer.files : null;

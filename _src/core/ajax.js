@@ -84,8 +84,7 @@ UE.ajax = (() => {
     }, ajaxOpts.timeout);
 
     var method = ajaxOpts.method.toUpperCase();
-    var str =
-      url + (url.indexOf("?") == -1 ? "?" : "&") + (method === "POST" ? "" : submitStr + "&noCache=" + +new Date());
+    var str = url + (url.indexOf("?") == -1 ? "?" : "&") + (method === "POST" ? "" : submitStr + "&noCache=" + +new Date());
     xhr.open(method, str, ajaxOpts.async);
     xhr.onreadystatechange = () => {
       if (xhr.readyState == 4) {

@@ -7,8 +7,7 @@
     'onmousedown="$$.Stateful_onMouseDown(event, this);"' +
     ' onmouseup="$$.Stateful_onMouseUp(event, this);"' +
     (browser.ie
-      ? ' onmouseenter="$$.Stateful_onMouseEnter(event, this);"' +
-        ' onmouseleave="$$.Stateful_onMouseLeave(event, this);"'
+      ? ' onmouseenter="$$.Stateful_onMouseEnter(event, this);"' + ' onmouseleave="$$.Stateful_onMouseLeave(event, this);"'
       : ' onmouseover="$$.Stateful_onMouseOver(event, this);"' + ' onmouseout="$$.Stateful_onMouseOut(event, this);"');
 
   baidu.editor.ui.Stateful = {

@@ -530,8 +530,7 @@ var utils = (UE.utils = {
       float: test.cssFloat != undefined ? "cssFloat" : test.styleFloat != undefined ? "styleFloat" : "float"
     };
 
-    return cssName =>
-      cache[cssName] || (cache[cssName] = cssName.toLowerCase().replace(/-./g, match => match.charAt(1).toUpperCase()));
+    return cssName => cache[cssName] || (cache[cssName] = cssName.toLowerCase().replace(/-./g, match => match.charAt(1).toUpperCase()));
   })(),
 
   /**
@@ -740,18 +739,7 @@ var utils = (UE.utils = {
           val += ";" + name + "-" + p + ":" + obj[p] + ";";
         }
       } else {
-        val +=
-          ";" +
-          name +
-          ":" +
-          (t == b && b == l && l == r
-            ? t
-            : t == b && l == r
-            ? t + " " + l
-            : l == r
-            ? t + " " + l + " " + b
-            : t + " " + r + " " + b + " " + l) +
-          ";";
+        val += ";" + name + ":" + (t == b && b == l && l == r ? t : t == b && l == r ? t + " " + l : l == r ? t + " " + l + " " + b : t + " " + r + " " + b + " " + l) + ";";
       }
       return val;
     }

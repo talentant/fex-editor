@@ -21,14 +21,12 @@ UE.plugins["customstyle"] = function() {
       {
         tag: "h1",
         name: "tc",
-        style:
-          "font-size:32px;font-weight:bold;border-bottom:#ccc 2px solid;padding:0 4px 0 0;text-align:center;margin:0 0 20px 0;"
+        style: "font-size:32px;font-weight:bold;border-bottom:#ccc 2px solid;padding:0 4px 0 0;text-align:center;margin:0 0 20px 0;"
       },
       {
         tag: "h1",
         name: "tl",
-        style:
-          "font-size:32px;font-weight:bold;border-bottom:#ccc 2px solid;padding:0 4px 0 0;text-align:left;margin:0 0 10px 0;"
+        style: "font-size:32px;font-weight:bold;border-bottom:#ccc 2px solid;padding:0 4px 0 0;text-align:left;margin:0 0 10px 0;"
       },
       {
         tag: "span",
@@ -79,10 +77,7 @@ UE.plugins["customstyle"] = function() {
             if (ni.getAttribute("label") == obj.label) {
               var ps = domUtils.getPosition(ni, bk.start);
               var pe = domUtils.getPosition(ni, bk.end);
-              if (
-                (ps & domUtils.POSITION_FOLLOWING || ps & domUtils.POSITION_CONTAINS) &&
-                (pe & domUtils.POSITION_PRECEDING || pe & domUtils.POSITION_CONTAINS)
-              )
+              if ((ps & domUtils.POSITION_FOLLOWING || ps & domUtils.POSITION_CONTAINS) && (pe & domUtils.POSITION_PRECEDING || pe & domUtils.POSITION_CONTAINS))
                 if (dtd.$block[tagName]) {
                   var fillNode = me.document.createElement("p");
                   domUtils.moveChild(ni, fillNode);

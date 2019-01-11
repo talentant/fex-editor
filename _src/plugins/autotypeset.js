@@ -80,9 +80,7 @@ UE.plugins["autotypeset"] = function() {
         return 0;
       }
 
-      return notEmpty
-        ? !domUtils.isEmptyBlock(node)
-        : domUtils.isEmptyBlock(node, new RegExp("[\\s" + domUtils.fillChar + "]", "g"));
+      return notEmpty ? !domUtils.isEmptyBlock(node) : domUtils.isEmptyBlock(node, new RegExp("[\\s" + domUtils.fillChar + "]", "g"));
     }
   }
 
@@ -188,20 +186,10 @@ UE.plugins["autotypeset"] = function() {
               }
               tmpNode = pN;
               if (tmpNode.tagName === "P" && domUtils.getStyle(tmpNode, "text-align") === "center") {
-                if (
-                  !domUtils.isBody(tmpNode) &&
-                  domUtils.getChildCount(tmpNode, node => !domUtils.isBr(node) && !domUtils.isWhitespace(node)) == 1
-                ) {
+                if (!domUtils.isBody(tmpNode) && domUtils.getChildCount(tmpNode, node => !domUtils.isBr(node) && !domUtils.isWhitespace(node)) == 1) {
                   pre = tmpNode.previousSibling;
                   next = tmpNode.nextSibling;
-                  if (
-                    pre &&
-                    next &&
-                    pre.nodeType == 1 &&
-                    next.nodeType == 1 &&
-                    pre.tagName == next.tagName &&
-                    domUtils.isBlockElm(pre)
-                  ) {
+                  if (pre && next && pre.nodeType == 1 && next.nodeType == 1 && pre.tagName == next.tagName && domUtils.isBlockElm(pre)) {
                     pre.appendChild(tmpNode.firstChild);
                     while (next.firstChild) {
                       pre.appendChild(next.firstChild);
@@ -220,11 +208,7 @@ UE.plugins["autotypeset"] = function() {
                 pN = img.parentNode;
                 domUtils.setStyle(img, "float", "none");
                 tmpNode = img;
-                while (
-                  pN &&
-                  domUtils.getChildCount(pN, node => !domUtils.isBr(node) && !domUtils.isWhitespace(node)) == 1 &&
-                  (dtd.$inline[pN.tagName] || pN.tagName === "A")
-                ) {
+                while (pN && domUtils.getChildCount(pN, node => !domUtils.isBr(node) && !domUtils.isWhitespace(node)) == 1 && (dtd.$inline[pN.tagName] || pN.tagName === "A")) {
                   tmpNode = pN;
                   pN = pN.parentNode;
                 }

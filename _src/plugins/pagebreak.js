@@ -24,11 +24,7 @@ UE.plugins["pagebreak"] = function() {
   //分页符样式添加
 
   me.ready(() => {
-    utils.cssRule(
-      "pagebreak",
-      ".pagebreak{display:block;clear:both !important;cursor:default !important;width: 100% !important;margin:0;}",
-      me.document
-    );
+    utils.cssRule("pagebreak", ".pagebreak{display:block;clear:both !important;cursor:default !important;width: 100% !important;margin:0;}", me.document);
   });
   function isHr(node) {
     return node && node.nodeType == 1 && node.tagName === "HR" && node.className === "pagebreak";
@@ -36,9 +32,7 @@ UE.plugins["pagebreak"] = function() {
   me.addInputRule(root => {
     root.traversal(node => {
       if (node.type === "text" && node.data == me.options.pageBreakTag) {
-        var hr = UE.uNode.createElement(
-          '<hr class="pagebreak" noshade="noshade" size="5" style="-webkit-user-select: none;">'
-        );
+        var hr = UE.uNode.createElement('<hr class="pagebreak" noshade="noshade" size="5" style="-webkit-user-select: none;">');
         node.parentNode.insertBefore(hr, node);
         node.parentNode.removeChild(node);
       }

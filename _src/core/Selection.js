@@ -297,9 +297,7 @@
         if (sel && sel.rangeCount) {
           var firstRange = sel.getRangeAt(0);
           var lastRange = sel.getRangeAt(sel.rangeCount - 1);
-          range
-            .setStart(firstRange.startContainer, firstRange.startOffset)
-            .setEnd(lastRange.endContainer, lastRange.endOffset);
+          range.setStart(firstRange.startContainer, firstRange.startOffset).setEnd(lastRange.endContainer, lastRange.endOffset);
           if (range.collapsed && domUtils.isBody(range.startContainer) && !range.startOffset) {
             optimze(range);
           }

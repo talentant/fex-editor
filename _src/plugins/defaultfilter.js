@@ -182,12 +182,7 @@ UE.plugins["defaultfilter"] = function() {
     var val;
     root.traversal(node => {
       if (node.type === "element") {
-        if (
-          me.options.autoClearEmptyNode &&
-          dtd.$inline[node.tagName] &&
-          !dtd.$empty[node.tagName] &&
-          (!node.attrs || utils.isEmptyObject(node.attrs))
-        ) {
+        if (me.options.autoClearEmptyNode && dtd.$inline[node.tagName] && !dtd.$empty[node.tagName] && (!node.attrs || utils.isEmptyObject(node.attrs))) {
           if (!node.firstChild()) node.parentNode.removeChild(node);
           else if (node.tagName === "span" && (!node.attrs || utils.isEmptyObject(node.attrs))) {
             node.parentNode.removeChild(node, true);

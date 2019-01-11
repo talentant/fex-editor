@@ -22,11 +22,7 @@ UE.plugins["enterkey"] = function() {
       if (!browser.ie) {
         if (/h\d/i.test(hTag)) {
           if (browser.gecko) {
-            var h = domUtils.findParentByTagName(
-              start,
-              ["h1", "h2", "h3", "h4", "h5", "h6", "blockquote", "caption", "table"],
-              true
-            );
+            var h = domUtils.findParentByTagName(start, ["h1", "h2", "h3", "h4", "h5", "h6", "blockquote", "caption", "table"], true);
             if (!h) {
               me.document.execCommand("formatBlock", false, "<p>");
               doSave = 1;
@@ -91,11 +87,7 @@ UE.plugins["enterkey"] = function() {
       }
       if (tag === "p") {
         if (!browser.ie) {
-          start = domUtils.findParentByTagName(
-            range.startContainer,
-            ["ol", "ul", "p", "h1", "h2", "h3", "h4", "h5", "h6", "blockquote", "caption"],
-            true
-          );
+          start = domUtils.findParentByTagName(range.startContainer, ["ol", "ul", "p", "h1", "h2", "h3", "h4", "h5", "h6", "blockquote", "caption"], true);
 
           //opera下执行formatblock会在table的场景下有问题，回车在opera原生支持很好，所以暂时在opera去掉调用这个原生的command
           //trace:2431

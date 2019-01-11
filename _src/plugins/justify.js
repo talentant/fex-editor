@@ -41,10 +41,7 @@ UE.plugins["justify"] = function() {
   var doJustify = (range, style) => {
     var bookmark = range.createBookmark();
 
-    var filterFn = node =>
-      node.nodeType == 1
-        ? node.tagName.toLowerCase() != "br" && !domUtils.isBookmarkNode(node)
-        : !domUtils.isWhitespace(node);
+    var filterFn = node => (node.nodeType == 1 ? node.tagName.toLowerCase() != "br" && !domUtils.isBookmarkNode(node) : !domUtils.isWhitespace(node));
 
     range.enlarge(true);
     var bookmark2 = range.createBookmark();

@@ -36,9 +36,7 @@
     _SplitButton_postRender: SplitButton.prototype.postRender,
     postRender() {
       this._SplitButton_postRender();
-      this.getDom("button_body").appendChild(
-        uiUtils.createElementByHtml('<div id="' + this.id + '_colorlump" class="edui-colorlump"></div>')
-      );
+      this.getDom("button_body").appendChild(uiUtils.createElementByHtml('<div id="' + this.id + '_colorlump" class="edui-colorlump"></div>'));
       this.getDom().className += " edui-colorbutton";
     },
     setColor(color) {

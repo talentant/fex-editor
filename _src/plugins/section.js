@@ -145,12 +145,7 @@ UE.plugin.register("section", function() {
           target = getNodeFromAddress(targetAddress, me.body);
 
           /* 判断目标地址是否被源章节包含 */
-          if (
-            !targetAddress ||
-            !target ||
-            isContainsAddress(sourceSection.startAddress, sourceSection.endAddress, targetAddress)
-          )
-            return;
+          if (!targetAddress || !target || isContainsAddress(sourceSection.startAddress, sourceSection.endAddress, targetAddress)) return;
 
           var startNode = getNodeFromAddress(sourceSection.startAddress, me.body);
           var endNode = getNodeFromAddress(sourceSection.endAddress, me.body);
@@ -224,11 +219,7 @@ UE.plugin.register("section", function() {
           var nextNode;
 
           if (!keepChildren) {
-            while (
-              current &&
-              domUtils.inDoc(endNode, me.document) &&
-              !(domUtils.getPosition(current, endNode) & domUtils.POSITION_FOLLOWING)
-            ) {
+            while (current && domUtils.inDoc(endNode, me.document) && !(domUtils.getPosition(current, endNode) & domUtils.POSITION_FOLLOWING)) {
               nextNode = current.nextSibling;
               domUtils.remove(current);
               current = nextNode;

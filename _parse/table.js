@@ -129,10 +129,7 @@ UE.parse.register("table", function(utils) {
       };
 
       //对表格设置排序的标记data-sort-type
-      table.setAttribute(
-        "data-sort-type",
-        compareFn && typeof compareFn === "string" && Fn[compareFn] ? compareFn : ""
-      );
+      table.setAttribute("data-sort-type", compareFn && typeof compareFn === "string" && Fn[compareFn] ? compareFn : "");
 
       //th不参与排序
       flag && trArray.splice(0, 1);

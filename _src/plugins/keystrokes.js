@@ -40,10 +40,7 @@ UE.plugins["keystrokes"] = function() {
         tmpNode = rng.startContainer;
         if (domUtils.isBoundaryNode(tmpNode, "firstChild")) {
           tmpNode = rng.endContainer;
-          if (
-            rng.endOffset == (tmpNode.nodeType == 3 ? tmpNode.nodeValue.length : tmpNode.childNodes.length) &&
-            domUtils.isBoundaryNode(tmpNode, "lastChild")
-          ) {
+          if (rng.endOffset == (tmpNode.nodeType == 3 ? tmpNode.nodeValue.length : tmpNode.childNodes.length) && domUtils.isBoundaryNode(tmpNode, "lastChild")) {
             me.fireEvent("saveScene");
             me.body.innerHTML = "<p>" + (browser.ie ? "" : "<br/>") + "</p>";
             rng.setStart(me.body.firstChild, 0).setCursor(false, true);
@@ -115,11 +112,7 @@ UE.plugins["keystrokes"] = function() {
       }
       var range = me.selection.getRange();
       me.fireEvent("saveScene");
-      for (
-        var i = 0, txt = "", tabSize = me.options.tabSize || 4, tabNode = me.options.tabNode || "&nbsp;";
-        i < tabSize;
-        i++
-      ) {
+      for (var i = 0, txt = "", tabSize = me.options.tabSize || 4, tabNode = me.options.tabNode || "&nbsp;"; i < tabSize; i++) {
         txt += tabNode;
       }
       var span = me.document.createElement("span");
@@ -220,11 +213,7 @@ UE.plugins["keystrokes"] = function() {
       }
 
       //chrome下如果删除了inline标签，浏览器会有记忆，在输入文字还是会套上刚才删除的标签，所以这里再选一次就不会了
-      if (
-        !collapsed &&
-        (rng.startContainer.nodeType == 3 ||
-          (rng.startContainer.nodeType == 1 && domUtils.isEmptyBlock(rng.startContainer)))
-      ) {
+      if (!collapsed && (rng.startContainer.nodeType == 3 || (rng.startContainer.nodeType == 1 && domUtils.isEmptyBlock(rng.startContainer)))) {
         if (browser.ie) {
           var span = rng.document.createElement("span");
           rng

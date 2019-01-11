@@ -397,9 +397,7 @@ var domUtils = (dom.domUtils = {
    * @return { Node } 新插入的节点
    */
   insertAfter(node, newNode) {
-    return node.nextSibling
-      ? node.parentNode.insertBefore(newNode, node.nextSibling)
-      : node.parentNode.appendChild(newNode);
+    return node.nextSibling ? node.parentNode.insertBefore(newNode, node.nextSibling) : node.parentNode.appendChild(newNode);
   },
 
   /**
@@ -991,11 +989,7 @@ var domUtils = (dom.domUtils = {
    * ```
    */
   isBlockElm(node) {
-    return (
-      node.nodeType == 1 &&
-      (dtd.$block[node.tagName] || styleBlock[domUtils.getComputedStyle(node, "display")]) &&
-      !dtd.$nonChild[node.tagName]
-    );
+    return node.nodeType == 1 && (dtd.$block[node.tagName] || styleBlock[domUtils.getComputedStyle(node, "display")]) && !dtd.$nonChild[node.tagName];
   },
   /**
    * 检测node节点是否为body节点
@@ -1097,10 +1091,7 @@ var domUtils = (dom.domUtils = {
       if (domUtils.isBookmarkNode(node)) {
         return 0;
       }
-      if (
-        (node.nodeType == 1 && !domUtils.isEmptyInlineElement(node)) ||
-        (node.nodeType == 3 && !domUtils.isWhitespace(node))
-      ) {
+      if ((node.nodeType == 1 && !domUtils.isEmptyInlineElement(node)) || (node.nodeType == 3 && !domUtils.isWhitespace(node))) {
         return 0;
       }
       node = node.nextSibling;
@@ -1249,10 +1240,7 @@ var domUtils = (dom.domUtils = {
         //针对a标签单独处理
         domUtils.trimWhiteTextNode(parent);
         //span需要特殊处理  不处理这样的情况 <span stlye="color:#fff">xxx<span style="color:#ccc">xxx</span>xxx</span>
-        if (
-          (parent.tagName === "SPAN" && !domUtils.isSameStyle(parent, node)) ||
-          (parent.tagName === "A" && node.tagName === "SPAN")
-        ) {
+        if ((parent.tagName === "SPAN" && !domUtils.isSameStyle(parent, node)) || (parent.tagName === "A" && node.tagName === "SPAN")) {
           if (parent.childNodes.length > 1 || parent !== node.parentNode) {
             node.style.cssText = parent.style.cssText + ";" + node.style.cssText;
             parent = parent.parentNode;
@@ -1330,12 +1318,7 @@ var domUtils = (dom.domUtils = {
   mergeSibling(node, ignorePre, ignoreNext) {
     function merge(rtl, start, node) {
       var next;
-      if (
-        (next = node[rtl]) &&
-        !domUtils.isBookmarkNode(next) &&
-        next.nodeType == 1 &&
-        domUtils.isSameElement(node, next)
-      ) {
+      if ((next = node[rtl]) && !domUtils.isBookmarkNode(next) && next.nodeType == 1 && domUtils.isSameElement(node, next)) {
         while (next.firstChild) {
           if (start === "firstChild") {
             node.insertBefore(next.lastChild, node.firstChild);
@@ -1382,8 +1365,7 @@ var domUtils = (dom.domUtils = {
           }
         }
       : node => {
-          node.style.MozUserSelect = node.style.webkitUserSelect = node.style.msUserSelect = node.style.KhtmlUserSelect =
-            "none";
+          node.style.MozUserSelect = node.style.webkitUserSelect = node.style.msUserSelect = node.style.KhtmlUserSelect = "none";
         },
   /**
    * 删除节点node上的指定属性名称的属性
@@ -1555,14 +1537,7 @@ var domUtils = (dom.domUtils = {
       element = element.parentNode;
     }
     //ie下font-size若body下定义了font-size，则从currentStyle里会取到这个font-size. 取不到实际值，故此修改.
-    if (
-      browser.ie &&
-      browser.version < 9 &&
-      styleName === "font-size" &&
-      !element.style.fontSize &&
-      !dtd.$empty[element.tagName] &&
-      !dtd.$nonChild[element.tagName]
-    ) {
+    if (browser.ie && browser.version < 9 && styleName === "font-size" && !element.style.fontSize && !dtd.$empty[element.tagName] && !dtd.$nonChild[element.tagName]) {
       var span = element.ownerDocument.createElement("span");
       span.style.cssText = "padding:0;border:0;font-family:simsun;";
       span.innerHTML = ".";
@@ -1980,13 +1955,7 @@ var domUtils = (dom.domUtils = {
    * ```
    */
   isEmptyNode(node) {
-    return (
-      !node.firstChild ||
-      domUtils.getChildCount(
-        node,
-        node => !domUtils.isBr(node) && !domUtils.isBookmarkNode(node) && !domUtils.isWhitespace(node)
-      ) == 0
-    );
+    return !node.firstChild || domUtils.getChildCount(node, node => !domUtils.isBr(node) && !domUtils.isBookmarkNode(node) && !domUtils.isWhitespace(node)) == 0;
   },
   clearSelectedArr(nodes) {
     var node;

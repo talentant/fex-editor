@@ -405,10 +405,7 @@ UE.plugins["contextmenu"] = function() {
                 ) {
                   subMenu.push({
                     label: subItem.label || me.getLang("contextMenu." + subItem.cmdName + (subItem.value || "")) || "",
-                    className:
-                      "edui-for-" +
-                      subItem.cmdName +
-                      (subItem.className ? " edui-for-" + subItem.cmdName + "-" + subItem.className : ""),
+                    className: "edui-for-" + subItem.cmdName + (subItem.className ? " edui-for-" + subItem.cmdName + "-" + subItem.className : ""),
                     onclick: subItem.exec
                       ? () => {
                           subItem.exec.call(me);
@@ -452,10 +449,7 @@ UE.plugins["contextmenu"] = function() {
           }
         } else {
           //有可能commmand没有加载右键不能出来，或者没有command也想能展示出来添加query方法
-          if (
-            (me.commands[item.cmdName] || UE.commands[item.cmdName] || item.query) &&
-            (item.query ? item.query.call(me) : me.queryCommandState(item.cmdName)) > -1
-          ) {
+          if ((me.commands[item.cmdName] || UE.commands[item.cmdName] || item.query) && (item.query ? item.query.call(me) : me.queryCommandState(item.cmdName)) > -1) {
             contextItems.push({
               label: item.label || me.getLang("contextMenu." + item.cmdName),
               className: "edui-for-" + (item.icon ? item.icon : item.cmdName + (item.value || "")),

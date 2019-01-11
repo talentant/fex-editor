@@ -53,10 +53,7 @@ UE.plugins["undo"] = function() {
     if (rngAddrA.collapsed != rngAddrB.collapsed) {
       return 0;
     }
-    if (
-      !compareAddr(rngAddrA.startAddress, rngAddrB.startAddress) ||
-      !compareAddr(rngAddrA.endAddress, rngAddrB.endAddress)
-    ) {
+    if (!compareAddr(rngAddrA.startAddress, rngAddrB.startAddress) || !compareAddr(rngAddrA.endAddress, rngAddrB.endAddress)) {
       return 0;
     }
     return 1;
@@ -154,11 +151,7 @@ UE.plugins["undo"] = function() {
         me.trigger("contentchange");
       }
       //内容相同位置相同不存
-      if (
-        lastScene &&
-        lastScene.content == currentScene.content &&
-        (notCompareRange ? 1 : compareRangeAddress(lastScene.address, currentScene.address))
-      ) {
+      if (lastScene && lastScene.content == currentScene.content && (notCompareRange ? 1 : compareRangeAddress(lastScene.address, currentScene.address))) {
         return;
       }
       this.list = this.list.slice(0, this.index + 1);

@@ -16,10 +16,7 @@ UE.plugins["dragdrop"] = function() {
           }
         }
 
-        if (
-          ((pre && pre.nodeType == 1 && !domUtils.isEmptyBlock(pre)) || !pre) &&
-          (!next || (next && !domUtils.isEmptyBlock(next)))
-        ) {
+        if (((pre && pre.nodeType == 1 && !domUtils.isEmptyBlock(pre)) || !pre) && (!next || (next && !domUtils.isEmptyBlock(next)))) {
           if (pre && pre.tagName === "P" && !domUtils.isEmptyBlock(pre)) {
             pre.appendChild(node);
             domUtils.moveChild(next, pre);

@@ -39,10 +39,7 @@ UE.plugins["paragraph"] = function() {
   var doParagraph = (range, style, attrs, sourceCmdName) => {
     var bookmark = range.createBookmark();
 
-    var filterFn = node =>
-      node.nodeType == 1
-        ? node.tagName.toLowerCase() != "br" && !domUtils.isBookmarkNode(node)
-        : !domUtils.isWhitespace(node);
+    var filterFn = node => (node.nodeType == 1 ? node.tagName.toLowerCase() != "br" && !domUtils.isBookmarkNode(node) : !domUtils.isWhitespace(node));
 
     var para;
 

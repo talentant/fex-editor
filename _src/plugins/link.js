@@ -80,12 +80,7 @@ UE.plugins["link"] = () => {
     var start = range.startContainer;
     if (start.nodeType == 1 && link) {
       start = start.childNodes[range.startOffset];
-      if (
-        start &&
-        start.nodeType == 1 &&
-        start.tagName === "A" &&
-        /^(?:https?|ftp|file)\s*:\s*\/\//.test(start[browser.ie ? "innerText" : "textContent"])
-      ) {
+      if (start && start.nodeType == 1 && start.tagName === "A" && /^(?:https?|ftp|file)\s*:\s*\/\//.test(start[browser.ie ? "innerText" : "textContent"])) {
         start[browser.ie ? "innerText" : "textContent"] = utils.html(opt.textValue || opt.href);
       }
     }
@@ -133,11 +128,7 @@ UE.plugins["link"] = () => {
         node = range.startContainer;
         node = node.nodeType == 1 ? node : node.parentNode;
 
-        if (
-          node &&
-          (node = domUtils.findParentByTagName(node, "a", true)) &&
-          !domUtils.isInNodeEndBoundary(range, node)
-        ) {
+        if (node && (node = domUtils.findParentByTagName(node, "a", true)) && !domUtils.isInNodeEndBoundary(range, node)) {
           return node;
         }
       } else {
@@ -145,14 +136,9 @@ UE.plugins["link"] = () => {
         range.shrinkBoundary();
 
         var start =
-          range.startContainer.nodeType == 3 || !range.startContainer.childNodes[range.startOffset]
-            ? range.startContainer
-            : range.startContainer.childNodes[range.startOffset];
+          range.startContainer.nodeType == 3 || !range.startContainer.childNodes[range.startOffset] ? range.startContainer : range.startContainer.childNodes[range.startOffset];
 
-        var end =
-          range.endContainer.nodeType == 3 || range.endOffset == 0
-            ? range.endContainer
-            : range.endContainer.childNodes[range.endOffset - 1];
+        var end = range.endContainer.nodeType == 3 || range.endOffset == 0 ? range.endContainer : range.endContainer.childNodes[range.endOffset - 1];
 
         var common = range.getCommonAncestor();
         node = domUtils.findParentByTagName(common, "a", true);
@@ -163,10 +149,7 @@ UE.plugins["link"] = () => {
 
           for (var i = 0, ci; (ci = as[i++]); ) {
             (ps = domUtils.getPosition(ci, start)), (pe = domUtils.getPosition(ci, end));
-            if (
-              (ps & domUtils.POSITION_FOLLOWING || ps & domUtils.POSITION_CONTAINS) &&
-              (pe & domUtils.POSITION_PRECEDING || pe & domUtils.POSITION_CONTAINS)
-            ) {
+            if ((ps & domUtils.POSITION_FOLLOWING || ps & domUtils.POSITION_CONTAINS) && (pe & domUtils.POSITION_PRECEDING || pe & domUtils.POSITION_CONTAINS)) {
               node = ci;
               break;
             }

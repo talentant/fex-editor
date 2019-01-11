@@ -59,9 +59,7 @@ UE.plugin.register("background", function() {
           "background-image": url ? "url(" + url + ")" : "",
           "background-repeat": domUtils.getComputedStyle(body, "background-repeat") || "",
           "background-position": browser.ie
-            ? domUtils.getComputedStyle(body, "background-position-x") +
-              " " +
-              domUtils.getComputedStyle(body, "background-position-y")
+            ? domUtils.getComputedStyle(body, "background-position-x") + " " + domUtils.getComputedStyle(body, "background-position-y")
             : domUtils.getComputedStyle(body, "background-position"),
           height: domUtils.getComputedStyle(body, "height")
         };
@@ -92,13 +90,7 @@ UE.plugin.register("background", function() {
       var me = this;
       var styles = (utils.cssRule(cssRuleId, me.document) || "").replace(/[\n\r]+/g, "").match(reg);
       if (styles) {
-        root.appendChild(
-          UE.uNode.createElement(
-            '<p style="display:none;" data-background="' +
-              utils.trim(styles[1].replace(/"/g, "").replace(/[\s]+/g, " ")) +
-              '"><br/></p>'
-          )
-        );
+        root.appendChild(UE.uNode.createElement('<p style="display:none;" data-background="' + utils.trim(styles[1].replace(/"/g, "").replace(/[\s]+/g, " ")) + '"><br/></p>'));
       }
     },
     commands: {

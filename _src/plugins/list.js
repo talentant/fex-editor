@@ -76,34 +76,12 @@ UE.plugins["list"] = function() {
     for (var p in customStyle) {
       if (p === "dash" || p === "dot") {
         customCss.push("li.list-" + customStyle[p] + "{background-image:url(" + liiconpath + customStyle[p] + ".gif)}");
-        customCss.push(
-          "ul.custom_" +
-            p +
-            "{list-style:none;}ul.custom_" +
-            p +
-            " li{background-position:0 3px;background-repeat:no-repeat}"
-        );
+        customCss.push("ul.custom_" + p + "{list-style:none;}ul.custom_" + p + " li{background-position:0 3px;background-repeat:no-repeat}");
       } else {
         for (var i = 0; i < 99; i++) {
-          customCss.push(
-            "li.list-" +
-              customStyle[p] +
-              i +
-              "{background-image:url(" +
-              liiconpath +
-              "list-" +
-              customStyle[p] +
-              i +
-              ".gif)}"
-          );
+          customCss.push("li.list-" + customStyle[p] + i + "{background-image:url(" + liiconpath + "list-" + customStyle[p] + i + ".gif)}");
         }
-        customCss.push(
-          "ol.custom_" +
-            p +
-            "{list-style:none;}ol.custom_" +
-            p +
-            " li{background-position:0 3px;background-repeat:no-repeat}"
-        );
+        customCss.push("ol.custom_" + p + "{list-style:none;}ol.custom_" + p + " li{background-position:0 3px;background-repeat:no-repeat}");
       }
       switch (p) {
         case "cn":
@@ -140,11 +118,7 @@ UE.plugins["list"] = function() {
     customCss.push(".list-paddingleft-2{padding-left:" + me.options.listDefaultPaddingLeft + "px}");
     customCss.push(".list-paddingleft-3{padding-left:" + me.options.listDefaultPaddingLeft * 2 + "px}");
     //如果不给宽度会在自定应样式里出现滚动条
-    utils.cssRule(
-      "list",
-      "ol,ul{margin:0;pading:0;" + (browser.ie ? "" : "width:95%") + "}li{clear:both;}" + customCss.join("\n"),
-      me.document
-    );
+    utils.cssRule("list", "ol,ul{margin:0;pading:0;" + (browser.ie ? "" : "width:95%") + "}li{clear:both;}" + customCss.join("\n"), me.document);
   });
   //单独处理剪切的问题
   me.ready(() => {
@@ -303,12 +277,7 @@ UE.plugins["list"] = function() {
 
       function checkListType(content, container) {
         var span = container.firstChild();
-        if (
-          span &&
-          span.type === "element" &&
-          span.tagName === "span" &&
-          /Wingdings|Symbol/.test(span.getStyle("font-family"))
-        ) {
+        if (span && span.type === "element" && span.tagName === "span" && /Wingdings|Symbol/.test(span.getStyle("font-family"))) {
           for (var p in unorderlisttype) {
             if (unorderlisttype[p] == span.data) {
               return p;
@@ -446,15 +415,7 @@ UE.plugins["list"] = function() {
                   }
               }
             }
-            li.className =
-              "list-" +
-              customStyle[currentStyle] +
-              index +
-              " " +
-              "list-" +
-              currentStyle +
-              "-paddingleft-" +
-              paddingLeft;
+            li.className = "list-" + customStyle[currentStyle] + index + " " + "list-" + currentStyle + "-paddingleft-" + paddingLeft;
           } else {
             li.className = "list-" + customStyle[currentStyle] + " " + "list-" + currentStyle + "-paddingleft";
           }
@@ -466,13 +427,7 @@ UE.plugins["list"] = function() {
           domUtils.removeAttributes(li, "class");
         }
       });
-      !ignore &&
-        adjustList(
-          node,
-          node.tagName.toLowerCase(),
-          getStyle(node) || domUtils.getStyle(node, "list-style-type"),
-          true
-        );
+      !ignore && adjustList(node, node.tagName.toLowerCase(), getStyle(node) || domUtils.getStyle(node, "list-style-type"), true);
     });
   }
   function adjustList(list, tag, style, ignoreEmpty) {
@@ -481,8 +436,7 @@ UE.plugins["list"] = function() {
       nextList &&
       nextList.nodeType == 1 &&
       nextList.tagName.toLowerCase() == tag &&
-      (getStyle(nextList) || domUtils.getStyle(nextList, "list-style-type") || (tag === "ol" ? "decimal" : "disc")) ==
-        style
+      (getStyle(nextList) || domUtils.getStyle(nextList, "list-style-type") || (tag === "ol" ? "decimal" : "disc")) == style
     ) {
       domUtils.moveChild(nextList, list);
       if (nextList.childNodes.length == 0) {
@@ -497,8 +451,7 @@ UE.plugins["list"] = function() {
       preList &&
       preList.nodeType == 1 &&
       preList.tagName.toLowerCase() == tag &&
-      (getStyle(preList) || domUtils.getStyle(preList, "list-style-type") || (tag === "ol" ? "decimal" : "disc")) ==
-        style
+      (getStyle(preList) || domUtils.getStyle(preList, "list-style-type") || (tag === "ol" ? "decimal" : "disc")) == style
     ) {
       domUtils.moveChild(list, preList);
     }
@@ -817,12 +770,7 @@ UE.plugins["list"] = function() {
       var rng = me.selection.getRange();
       var list;
       if ((list = domUtils.findParentByTagName(rng.startContainer, ["ol", "ul"], true))) {
-        adjustList(
-          list,
-          list.tagName.toLowerCase(),
-          getStyle(list) || domUtils.getComputedStyle(list, "list-style-type"),
-          true
-        );
+        adjustList(list, list.tagName.toLowerCase(), getStyle(list) || domUtils.getComputedStyle(list, "list-style-type"), true);
       }
     }
   });
@@ -854,10 +802,7 @@ UE.plugins["list"] = function() {
         var parentLi = li.parentNode;
         var list = me.document.createElement(parentLi.tagName);
 
-        var index = utils.indexOf(
-          listStyle[list.tagName],
-          getStyle(parentLi) || domUtils.getComputedStyle(parentLi, "list-style-type")
-        );
+        var index = utils.indexOf(listStyle[list.tagName], getStyle(parentLi) || domUtils.getComputedStyle(parentLi, "list-style-type"));
 
         index = index + 1 == listStyle[list.tagName].length ? 0 : index + 1;
         var currentStyle = listStyle[list.tagName][index];
@@ -891,10 +836,7 @@ UE.plugins["list"] = function() {
             var parentLi = current.parentNode;
             var list = me.document.createElement(parentLi.tagName);
 
-            var index = utils.indexOf(
-              listStyle[list.tagName],
-              getStyle(parentLi) || domUtils.getComputedStyle(parentLi, "list-style-type")
-            );
+            var index = utils.indexOf(listStyle[list.tagName], getStyle(parentLi) || domUtils.getComputedStyle(parentLi, "list-style-type"));
 
             var currentIndex = index + 1 == listStyle[list.tagName].length ? 0 : index + 1;
             var currentStyle = listStyle[list.tagName][currentIndex];
@@ -1070,9 +1012,7 @@ UE.plugins["list"] = function() {
             domUtils.remove(tmp.nextSibling);
           }
           var nodeStyle =
-            getStyle(startParent) ||
-            domUtils.getComputedStyle(startParent, "list-style-type") ||
-            (command.toLowerCase() === "insertorderedlist" ? "decimal" : "disc");
+            getStyle(startParent) || domUtils.getComputedStyle(startParent, "list-style-type") || (command.toLowerCase() === "insertorderedlist" ? "decimal" : "disc");
           if (startParent.tagName.toLowerCase() == tag && nodeStyle == style) {
             for (var i = 0, ci, tmpFrag = me.document.createDocumentFragment(); (ci = frag.firstChild); ) {
               if (domUtils.isTagNode(ci, "ol ul")) {

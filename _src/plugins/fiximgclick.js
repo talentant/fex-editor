@@ -40,10 +40,7 @@ UE.plugins["fiximgclick"] = (() => {
         var resizer = (me.resizer = document.createElement("div"));
 
         cover.id = me.editor.ui.id + "_imagescale_cover";
-        cover.style.cssText =
-          "position:absolute;display:none;z-index:" +
-          me.editor.options.zIndex +
-          ";filter:alpha(opacity=0); opacity:0;background:#CCC;";
+        cover.style.cssText = "position:absolute;display:none;z-index:" + me.editor.options.zIndex + ";filter:alpha(opacity=0); opacity:0;background:#CCC;";
         domUtils.on(cover, "mousedown click", () => {
           me.hide();
         });
@@ -169,29 +166,13 @@ UE.plugins["fiximgclick"] = (() => {
         value = isNaN(value) ? 0 : value;
         switch (prop) {
           case "left":
-            return value < 0
-              ? 0
-              : value + ele.clientWidth > wrap.clientWidth
-              ? wrap.clientWidth - ele.clientWidth
-              : value;
+            return value < 0 ? 0 : value + ele.clientWidth > wrap.clientWidth ? wrap.clientWidth - ele.clientWidth : value;
           case "top":
-            return value < 0
-              ? 0
-              : value + ele.clientHeight > wrap.clientHeight
-              ? wrap.clientHeight - ele.clientHeight
-              : value;
+            return value < 0 ? 0 : value + ele.clientHeight > wrap.clientHeight ? wrap.clientHeight - ele.clientHeight : value;
           case "width":
-            return value <= 0
-              ? 1
-              : value + ele.offsetLeft > wrap.clientWidth
-              ? wrap.clientWidth - ele.offsetLeft
-              : value;
+            return value <= 0 ? 1 : value + ele.offsetLeft > wrap.clientWidth ? wrap.clientWidth - ele.offsetLeft : value;
           case "height":
-            return value <= 0
-              ? 1
-              : value + ele.offsetTop > wrap.clientHeight
-              ? wrap.clientHeight - ele.offsetTop
-              : value;
+            return value <= 0 ? 1 : value + ele.offsetTop > wrap.clientHeight ? wrap.clientHeight - ele.offsetTop : value;
         }
       },
       hideCover() {
@@ -248,20 +229,8 @@ UE.plugins["fiximgclick"] = (() => {
         domUtils.setStyles(resizer, {
           width: target.width + "px",
           height: target.height + "px",
-          left:
-            iframePos.x +
-            imgPos.x -
-            me.editor.document.body.scrollLeft -
-            editorPos.x -
-            parseInt(resizer.style.borderLeftWidth) +
-            "px",
-          top:
-            iframePos.y +
-            imgPos.y -
-            me.editor.document.body.scrollTop -
-            editorPos.y -
-            parseInt(resizer.style.borderTopWidth) +
-            "px"
+          left: iframePos.x + imgPos.x - me.editor.document.body.scrollLeft - editorPos.x - parseInt(resizer.style.borderLeftWidth) + "px",
+          top: iframePos.y + imgPos.y - me.editor.document.body.scrollTop - editorPos.y - parseInt(resizer.style.borderTopWidth) + "px"
         });
       }
     };
@@ -279,11 +248,7 @@ UE.plugins["fiximgclick"] = (() => {
         var img = range.getClosedNode();
 
         if (img && img.tagName === "IMG" && me.body.contentEditable != "false") {
-          if (
-            img.getAttribute("anchorname") ||
-            domUtils.hasClass(img, "loadingclass") ||
-            domUtils.hasClass(img, "loaderrorclass")
-          ) {
+          if (img.getAttribute("anchorname") || domUtils.hasClass(img, "loadingclass") || domUtils.hasClass(img, "loaderrorclass")) {
             return;
           }
 

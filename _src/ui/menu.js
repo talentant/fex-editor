@@ -161,13 +161,7 @@
     uiName: "menuitem",
     alwalysHoverable: true,
     getHtmlTpl() {
-      return (
-        '<div id="##" class="%%" stateful onclick="$$._onClick(event, this);">' +
-        '<div class="%%-body">' +
-        this.renderLabelHtml() +
-        "</div>" +
-        "</div>"
-      );
+      return '<div id="##" class="%%" stateful onclick="$$._onClick(event, this);">' + '<div class="%%-body">' + this.renderLabelHtml() + "</div>" + "</div>";
     },
     postRender() {
       var me = this;
@@ -236,13 +230,7 @@
       }
     },
     renderLabelHtml() {
-      return (
-        '<div class="edui-arrow"></div>' +
-        '<div class="edui-box edui-icon"></div>' +
-        '<div class="edui-box edui-label %%-label">' +
-        (this.label || "") +
-        "</div>"
-      );
+      return '<div class="edui-arrow"></div>' + '<div class="edui-box edui-icon"></div>' + '<div class="edui-box edui-label %%-label">' + (this.label || "") + "</div>";
     },
     getStateDom() {
       return this.getDom();

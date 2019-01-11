@@ -35,17 +35,7 @@ UE.parse.register("list", function(utils) {
     customCss.push(selector + " .list-paddingleft-2{padding-left:" + this.listDefaultPaddingLeft + "px}");
     customCss.push(selector + " .list-paddingleft-3{padding-left:" + this.listDefaultPaddingLeft * 2 + "px}");
 
-    utils.cssRule(
-      "list",
-      selector +
-        " ol," +
-        selector +
-        " ul{margin:0;padding:0;}\n" +
-        selector +
-        " li{clear:both;}\n" +
-        customCss.join("\n"),
-      document
-    );
+    utils.cssRule("list", selector + " ol," + selector + " ul{margin:0;padding:0;}\n" + selector + " li{clear:both;}\n" + customCss.join("\n"), document);
   }
   function applyStyle(nodes) {
     var T = this;
@@ -53,26 +43,10 @@ UE.parse.register("list", function(utils) {
       if (list.className && /custom_/i.test(list.className)) {
         var listStyle = list.className.match(/custom_(\w+)/)[1];
         if (listStyle === "dash" || listStyle === "dot") {
+          utils.pushItem(customCss, selector + " li.list-" + customStyle[listStyle] + "{background-image:url(" + T.liiconpath + customStyle[listStyle] + ".gif)}");
           utils.pushItem(
             customCss,
-            selector +
-              " li.list-" +
-              customStyle[listStyle] +
-              "{background-image:url(" +
-              T.liiconpath +
-              customStyle[listStyle] +
-              ".gif)}"
-          );
-          utils.pushItem(
-            customCss,
-            selector +
-              " ul.custom_" +
-              listStyle +
-              "{list-style:none;} " +
-              selector +
-              " ul.custom_" +
-              listStyle +
-              " li{background-position:0 3px;background-repeat:no-repeat}"
+            selector + " ul.custom_" + listStyle + "{list-style:none;} " + selector + " ul.custom_" + listStyle + " li{background-position:0 3px;background-repeat:no-repeat}"
           );
         } else {
           var index = 1;
@@ -80,30 +54,14 @@ UE.parse.register("list", function(utils) {
             if (li.tagName === "LI") {
               utils.pushItem(
                 customCss,
-                selector +
-                  " li.list-" +
-                  customStyle[listStyle] +
-                  index +
-                  "{background-image:url(" +
-                  T.liiconpath +
-                  "list-" +
-                  customStyle[listStyle] +
-                  index +
-                  ".gif)}"
+                selector + " li.list-" + customStyle[listStyle] + index + "{background-image:url(" + T.liiconpath + "list-" + customStyle[listStyle] + index + ".gif)}"
               );
               index++;
             }
           });
           utils.pushItem(
             customCss,
-            selector +
-              " ol.custom_" +
-              listStyle +
-              "{list-style:none;}" +
-              selector +
-              " ol.custom_" +
-              listStyle +
-              " li{background-position:0 3px;background-repeat:no-repeat}"
+            selector + " ol.custom_" + listStyle + "{list-style:none;}" + selector + " ol.custom_" + listStyle + " li{background-position:0 3px;background-repeat:no-repeat}"
           );
         }
         switch (listStyle) {

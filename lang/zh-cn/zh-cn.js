@@ -566,8 +566,7 @@ UE.I18N["zh-cn"] = {
     static: {
       lang_input_about: "关于UEditor",
       lang_input_shortcuts: "快捷键",
-      lang_input_introduction:
-        "UEditor是由百度web前端研发部开发的所见即所得富文本web编辑器，具有轻量，可定制，注重用户体验等特点。开源基于BSD协议，允许自由使用和修改代码。",
+      lang_input_introduction: "UEditor是由百度web前端研发部开发的所见即所得富文本web编辑器，具有轻量，可定制，注重用户体验等特点。开源基于BSD协议，允许自由使用和修改代码。",
       lang_Txt_shortcuts: "快捷键",
       lang_Txt_func: "功能",
       lang_Txt_bold: "给选中字设置为加粗",
@@ -688,8 +687,7 @@ UE.I18N["zh-cn"] = {
       lang_resave: "转存步骤",
       uploadBtn: {src: "upload.png", alt: "上传"},
       clipboard: {style: "background: url(copy.png) -153px -1px no-repeat;"},
-      lang_step:
-        "1、点击顶部复制按钮，将地址复制到剪贴板；2、点击添加照片按钮，在弹出的对话框中使用Ctrl+V粘贴地址；3、点击打开后选择图片上传流程。"
+      lang_step: "1、点击顶部复制按钮，将地址复制到剪贴板；2、点击添加照片按钮，在弹出的对话框中使用Ctrl+V粘贴地址；3、点击打开后选择图片上传流程。"
     },
     fileType: "图片",
     flashError: "FLASH初始化失败，请检查FLASH插件是否正确安装！",

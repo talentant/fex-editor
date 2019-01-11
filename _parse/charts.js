@@ -1,8 +1,5 @@
 UE.parse.register("charts", function(utils) {
-  utils.cssRule(
-    "chartsContainerHeight",
-    ".edui-chart-container { height:" + (this.chartContainerHeight || 300) + "px}"
-  );
+  utils.cssRule("chartsContainerHeight", ".edui-chart-container { height:" + (this.chartContainerHeight || 300) + "px}");
   var resourceRoot = this.rootPath;
   var containers = this.root;
   var sources = null;

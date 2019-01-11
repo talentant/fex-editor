@@ -44,9 +44,7 @@ UE.plugins["blockquote"] = function() {
       if (obj) {
         var start = range.startContainer;
 
-        var startBlock = domUtils.isBlockElm(start)
-          ? start
-          : domUtils.findParent(start, node => domUtils.isBlockElm(node));
+        var startBlock = domUtils.isBlockElm(start) ? start : domUtils.findParent(start, node => domUtils.isBlockElm(node));
 
         var end = range.endContainer;
 
@@ -56,12 +54,7 @@ UE.plugins["blockquote"] = function() {
         startBlock = domUtils.findParentByTagName(startBlock, "li", true) || startBlock;
         endBlock = domUtils.findParentByTagName(endBlock, "li", true) || endBlock;
 
-        if (
-          startBlock.tagName === "LI" ||
-          startBlock.tagName === "TD" ||
-          startBlock === obj ||
-          domUtils.isBody(startBlock)
-        ) {
+        if (startBlock.tagName === "LI" || startBlock.tagName === "TD" || startBlock === obj || domUtils.isBody(startBlock)) {
           domUtils.remove(obj, true);
         } else {
           domUtils.breakParent(startBlock, obj);
@@ -82,10 +75,7 @@ UE.plugins["blockquote"] = function() {
         for (var i = 0, bi; (bi = blockquotes[i++]); ) {
           if (!bi.childNodes.length) {
             domUtils.remove(bi);
-          } else if (
-            domUtils.getPosition(bi, startBlock) & domUtils.POSITION_FOLLOWING &&
-            domUtils.getPosition(bi, endBlock) & domUtils.POSITION_PRECEDING
-          ) {
+          } else if (domUtils.getPosition(bi, startBlock) & domUtils.POSITION_FOLLOWING && domUtils.getPosition(bi, endBlock) & domUtils.POSITION_PRECEDING) {
             domUtils.remove(bi, true);
           }
         }
@@ -126,8 +116,7 @@ UE.plugins["blockquote"] = function() {
 
         //调整结束
         if (doEnd) {
-          preNode = node = node =
-            tmpRange.endContainer.nodeType == 1 ? tmpRange.endContainer : tmpRange.endContainer.parentNode;
+          preNode = node = node = tmpRange.endContainer.nodeType == 1 ? tmpRange.endContainer : tmpRange.endContainer.parentNode;
           while (1) {
             if (domUtils.isBody(node)) {
               if (preNode !== node) {

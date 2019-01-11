@@ -232,8 +232,7 @@
         for (var i = 0; i < this.buttons.length; i++) {
           buff[i] = this.buttons[i].renderHtml();
         }
-        footHtml =
-          '<div class="%%-foot">' + '<div id="##_buttons" class="%%-buttons">' + buff.join("") + "</div>" + "</div>";
+        footHtml = '<div class="%%-foot">' + '<div id="##_buttons" class="%%-buttons">' + buff.join("") + "</div>" + "</div>";
       }
 
       return (
@@ -368,8 +367,7 @@
         this.getDom().style.display = "";
 
         //要高过编辑器的zindxe
-        this.editor.container.style.zIndex &&
-          (this.getDom().style.zIndex = this.editor.container.style.zIndex * 1 + 10);
+        this.editor.container.style.zIndex && (this.getDom().style.zIndex = this.editor.container.style.zIndex * 1 + 10);
         this._hidden = false;
         this.fireEvent("show");
         baidu.editor.ui.uiUtils.getFixedLayer().style.zIndex = this.getDom().style.zIndex - 4;

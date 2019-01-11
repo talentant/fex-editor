@@ -154,10 +154,7 @@
           editorui[cmd.replace("float", "") + cmd2] = editor => {
             var ui = new editorui.Button({
               className: "edui-for-" + cmd.replace("float", "") + cmd2,
-              title:
-                editor.options.labelMap[cmd.replace("float", "") + cmd2] ||
-                editor.getLang("labelMap." + cmd.replace("float", "") + cmd2) ||
-                "",
+              title: editor.options.labelMap[cmd.replace("float", "") + cmd2] || editor.getLang("labelMap." + cmd.replace("float", "") + cmd2) || "",
               theme: editor.options.theme,
               onclick() {
                 editor.execCommand(cmd, cmd2);
@@ -400,13 +397,7 @@
           value: val,
           theme: editor.options.theme,
           renderLabelHtml() {
-            return (
-              '<div class="edui-label %%-label" style="font-family:' +
-              utils.unhtml(this.value) +
-              '">' +
-              (this.label || "") +
-              "</div>"
-            );
+            return '<div class="edui-label %%-label" style="font-family:' + utils.unhtml(this.value) + '">' + (this.label || "") + "</div>";
           }
         });
       })(ci.label || langLabel, ci.val);
@@ -463,13 +454,7 @@
         value: size,
         theme: editor.options.theme,
         renderLabelHtml() {
-          return (
-            '<div class="edui-label %%-label" style="line-height:1;font-size:' +
-            this.value +
-            '">' +
-            (this.label || "") +
-            "</div>"
-          );
+          return '<div class="edui-label %%-label" style="line-height:1;font-size:' + this.value + '">' + (this.label || "") + "</div>";
         }
       });
     }
@@ -512,13 +497,7 @@
         label: list[i] || editor.getLang("paragraph")[i],
         theme: editor.options.theme,
         renderLabelHtml() {
-          return (
-            '<div class="edui-label %%-label"><span class="edui-for-' +
-            this.value +
-            '">' +
-            (this.label || "") +
-            "</span></div>"
-          );
+          return '<div class="edui-label %%-label"><span class="edui-for-' + this.value + '">' + (this.label || "") + "</span></div>";
         }
       });
     }

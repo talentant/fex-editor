@@ -21,8 +21,7 @@
         onshow() {
           if (!this.iframe_rendered) {
             this.iframe_rendered = true;
-            this.getDom("content").innerHTML =
-              '<iframe id="' + me.id + '_iframe" src="' + me.iframeUrl + '" frameborder="0"></iframe>';
+            this.getDom("content").innerHTML = '<iframe id="' + me.id + '_iframe" src="' + me.iframeUrl + '" frameborder="0"></iframe>';
             me.editor.container.style.zIndex && (this.getDom().style.zIndex = me.editor.container.style.zIndex * 1 + 1);
           }
         }

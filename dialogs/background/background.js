@@ -149,8 +149,7 @@
     }
 
     $G("alignment").style.display = coloredRadio.checked && $G("url").value ? "" : "none";
-    $G("custom").style.display =
-      coloredRadio.checked && $G("url").value && $G("repeatType").value === "self" ? "" : "none";
+    $G("custom").style.display = coloredRadio.checked && $G("url").value && $G("repeatType").value === "self" ? "" : "none";
   }
 
   /* 更新背景颜色 */
@@ -317,13 +316,7 @@
             })(img)
           );
           img.width = 113;
-          img.setAttribute(
-            "src",
-            urlPrefix +
-              list[i].url +
-              (list[i].url.indexOf("?") == -1 ? "?noCache=" : "&noCache=") +
-              (+new Date()).toString(36)
-          );
+          img.setAttribute("src", urlPrefix + list[i].url + (list[i].url.indexOf("?") == -1 ? "?noCache=" : "&noCache=") + (+new Date()).toString(36));
           img.setAttribute("_src", urlPrefix + list[i].url);
           domUtils.addClass(icon, "icon");
 

@@ -114,9 +114,7 @@
     getSubMenuMark() {
       isSubMenuShow = false;
       var layerEle = uiUtils.getFixedLayer();
-      var list = domUtils.getElementsByTagName(layerEle, "div", node =>
-        domUtils.hasClass(node, "edui-shortcutsubmenu edui-popup")
-      );
+      var list = domUtils.getElementsByTagName(layerEle, "div", node => domUtils.hasClass(node, "edui-shortcutsubmenu edui-popup"));
 
       for (var i = 0, node; (node = list[i++]); ) {
         if (node.style.display != "none") {
@@ -205,11 +203,7 @@
         buff = this.items;
       }
 
-      return (
-        '<div id="##" class="%% edui-toolbar" data-src="shortcutmenu" onmousedown="return false;" onselectstart="return false;" >' +
-        buff +
-        "</div>"
-      );
+      return '<div id="##" class="%% edui-toolbar" data-src="shortcutmenu" onmousedown="return false;" onselectstart="return false;" >' + buff + "</div>";
     }
   };
 
@@ -218,11 +212,7 @@
   function hideAllMenu(e) {
     var tgt = e.target || e.srcElement;
 
-    var cur = domUtils.findParent(
-      tgt,
-      node => domUtils.hasClass(node, "edui-shortcutmenu") || domUtils.hasClass(node, "edui-popup"),
-      true
-    );
+    var cur = domUtils.findParent(tgt, node => domUtils.hasClass(node, "edui-shortcutmenu") || domUtils.hasClass(node, "edui-popup"), true);
 
     if (!cur) {
       for (var i = 0, menu; (menu = allMenus[i++]); ) {

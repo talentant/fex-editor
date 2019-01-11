@@ -60,25 +60,13 @@ var htmlparser = (UE.htmlparser = (htmlstr, ignoreBlank) => {
   };
   htmlstr = htmlstr.replace(new RegExp(domUtils.fillChar, "g"), "");
   if (!ignoreBlank) {
-    htmlstr = htmlstr.replace(
-      new RegExp(
-        "[\\r\\t\\n" +
-          (ignoreBlank ? "" : " ") +
-          "]*</?(\\w+)\\s*(?:[^>]*)>[\\r\\t\\n" +
-          (ignoreBlank ? "" : " ") +
-          "]*",
-        "g"
-      ),
-      (a, b) => {
-        //br暂时单独处理
-        if (b && allowEmptyTags[b.toLowerCase()]) {
-          return a.replace(/(^[\n\r]+)|([\n\r]+$)/g, "");
-        }
-        return a
-          .replace(new RegExp("^[\\r\\n" + (ignoreBlank ? "" : " ") + "]+"), "")
-          .replace(new RegExp("[\\r\\n" + (ignoreBlank ? "" : " ") + "]+$"), "");
+    htmlstr = htmlstr.replace(new RegExp("[\\r\\t\\n" + (ignoreBlank ? "" : " ") + "]*</?(\\w+)\\s*(?:[^>]*)>[\\r\\t\\n" + (ignoreBlank ? "" : " ") + "]*", "g"), (a, b) => {
+      //br暂时单独处理
+      if (b && allowEmptyTags[b.toLowerCase()]) {
+        return a.replace(/(^[\n\r]+)|([\n\r]+$)/g, "");
       }
-    );
+      return a.replace(new RegExp("^[\\r\\n" + (ignoreBlank ? "" : " ") + "]+"), "").replace(new RegExp("[\\r\\n" + (ignoreBlank ? "" : " ") + "]+$"), "");
+    });
   }
 
   var notTransAttrs = {
@@ -124,11 +112,7 @@ var htmlparser = (UE.htmlparser = (htmlstr, ignoreBlank) => {
       var tmpParent = parent;
       var hasParent;
       while (tmpParent.type != "root") {
-        if (
-          utils.isArray(needParentTag)
-            ? utils.indexOf(needParentTag, tmpParent.tagName) != -1
-            : needParentTag == tmpParent.tagName
-        ) {
+        if (utils.isArray(needParentTag) ? utils.indexOf(needParentTag, tmpParent.tagName) != -1 : needParentTag == tmpParent.tagName) {
           parent = tmpParent;
           hasParent = true;
           break;
@@ -154,9 +138,7 @@ var htmlparser = (UE.htmlparser = (htmlstr, ignoreBlank) => {
       var attrs = {};
       var match;
       while ((match = re_attr.exec(htmlattr))) {
-        attrs[match[1].toLowerCase()] = notTransAttrs[match[1].toLowerCase()]
-          ? match[2] || match[3] || match[4]
-          : utils.unhtml(match[2] || match[3] || match[4]);
+        attrs[match[1].toLowerCase()] = notTransAttrs[match[1].toLowerCase()] ? match[2] || match[3] || match[4] : utils.unhtml(match[2] || match[3] || match[4]);
       }
       elm.attrs = attrs;
     }

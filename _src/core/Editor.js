@@ -55,11 +55,7 @@
       editor.textarea = textarea;
     }
     !textarea.getAttribute("name") && textarea.setAttribute("name", editor.options.textarea);
-    textarea.value = editor.hasContents()
-      ? editor.options.allHtmlEnabled
-        ? editor.getAllHtml()
-        : editor.getContent(null, null, true)
-      : "";
+    textarea.value = editor.hasContents() ? (editor.options.allHtmlEnabled ? editor.getAllHtml() : editor.getContent(null, null, true)) : "";
   }
   function loadPlugins(me) {
     //初始化插件
@@ -401,9 +397,7 @@
           options.initialFrameHeight = options.minFrameHeight = container.offsetHeight;
         }
 
-        container.style.width = /%$/.test(options.initialFrameWidth)
-          ? "100%"
-          : options.initialFrameWidth - getStyleValue("padding-left") - getStyleValue("padding-right") + "px";
+        container.style.width = /%$/.test(options.initialFrameWidth) ? "100%" : options.initialFrameWidth - getStyleValue("padding-left") - getStyleValue("padding-right") + "px";
         container.style.height = /%$/.test(options.initialFrameHeight)
           ? "100%"
           : options.initialFrameHeight - getStyleValue("padding-top") - getStyleValue("padding-bottom") + "px";
@@ -422,9 +416,7 @@
           "body{margin:8px;font-family:sans-serif;font-size:16px;}" +
           //设置段落间距
           "p{margin:5px 0;}</style>" +
-          (options.iframeCssUrl
-            ? "<link rel='stylesheet' type='text/css' href='" + utils.unhtml(options.iframeCssUrl) + "'/>"
-            : "") +
+          (options.iframeCssUrl ? "<link rel='stylesheet' type='text/css' href='" + utils.unhtml(options.iframeCssUrl) + "'/>" : "") +
           (options.initialStyle ? "<style>" + options.initialStyle + "</style>" : "") +
           "</head>" +
           "<body class='view' ></body>" +
@@ -436,9 +428,7 @@
           "'];editor._setup(document);},0);" +
           "var _tmpScript = document.getElementById('_initialScript');_tmpScript.parentNode.removeChild(_tmpScript);" +
           "</script>" +
-          (options.iframeJsUrl
-            ? "<script type='text/javascript' src='" + utils.unhtml(options.iframeJsUrl) + "'></script>"
-            : "") +
+          (options.iframeJsUrl ? "<script type='text/javascript' src='" + utils.unhtml(options.iframeJsUrl) + "'></script>" : "") +
           "</html>";
 
         container.appendChild(
@@ -451,9 +441,7 @@
             //                    scrolling :'no',
             src:
               "javascript:void(function(){document.open();" +
-              (options.customDomain && document.domain != location.hostname
-                ? 'document.domain="' + document.domain + '";'
-                : "") +
+              (options.customDomain && document.domain != location.hostname ? 'document.domain="' + document.domain + '";' : "") +
               'document.write("' +
               html +
               '");document.close();}())'
@@ -620,9 +608,7 @@
     sync(formId) {
       var me = this;
 
-      var form = formId
-        ? document.getElementById(formId)
-        : domUtils.findParent(me.iframe.parentNode, node => node.tagName === "FORM", true);
+      var form = formId ? document.getElementById(formId) : domUtils.findParent(me.iframe.parentNode, node => node.tagName === "FORM", true);
 
       form && setValue(form, me);
     },
@@ -696,12 +682,7 @@
             var key = ti[0];
             var param = ti[1];
             if (/^(ctrl)(\+shift)?\+(\d+)$/.test(key.toLowerCase()) || /^(\d+)$/.test(key)) {
-              if (
-                ((RegExp.$1 === "ctrl" ? e.ctrlKey || e.metaKey : 0) &&
-                  (RegExp.$2 != "" ? e[RegExp.$2.slice(1) + "Key"] : 1) &&
-                  keyCode == RegExp.$3) ||
-                keyCode == RegExp.$1
-              ) {
+              if (((RegExp.$1 === "ctrl" ? e.ctrlKey || e.metaKey : 0) && (RegExp.$2 != "" ? e[RegExp.$2.slice(1) + "Key"] : 1) && keyCode == RegExp.$3) || keyCode == RegExp.$1) {
                 if (me.queryCommandState(i, param) != -1) me.execCommand(i, param);
                 domUtils.preventDefault(e);
               }
@@ -774,9 +755,7 @@
       if (browser.ie && browser.version > 8) {
         var headHtmlForIE9 = "";
         utils.each(me.document.styleSheets, si => {
-          headHtmlForIE9 += si.href
-            ? '<link rel="stylesheet" type="text/css" href="' + si.href + '" />'
-            : "<style>" + si.cssText + "</style>";
+          headHtmlForIE9 += si.href ? '<link rel="stylesheet" type="text/css" href="' + si.href + '" />' : "<style>" + si.cssText + "</style>";
         });
         utils.each(me.document.getElementsByTagName("script"), si => {
           headHtmlForIE9 += si.outerHTML;
@@ -784,9 +763,7 @@
       }
       return (
         '<html lang="en"><head>' +
-        (me.options.charset
-          ? '<meta http-equiv="Content-Type" content="text/html; charset=' + me.options.charset + '"/>'
-          : "") +
+        (me.options.charset ? '<meta http-equiv="Content-Type" content="text/html; charset=' + me.options.charset + '"/>' : "") +
         (headHtmlForIE9 || me.document.getElementsByTagName("head")[0].innerHTML) +
         headHtml.join("\n") +
         "</head>" +
@@ -881,20 +858,12 @@
       if (me.options.enterTag === "p") {
         var child = this.body.firstChild;
         var tmpNode;
-        if (
-          !child ||
-          (child.nodeType == 1 &&
-            (dtd.$cdata[child.tagName] || isCdataDiv(child) || domUtils.isCustomeNode(child)) &&
-            child === this.body.lastChild)
-        ) {
+        if (!child || (child.nodeType == 1 && (dtd.$cdata[child.tagName] || isCdataDiv(child) || domUtils.isCustomeNode(child)) && child === this.body.lastChild)) {
           this.body.innerHTML = "<p>" + (browser.ie ? "&nbsp;" : "<br/>") + "</p>" + this.body.innerHTML;
         } else {
           var p = me.document.createElement("p");
           while (child) {
-            while (
-              child &&
-              (child.nodeType == 3 || (child.nodeType == 1 && dtd.p[child.tagName] && !dtd.$cdata[child.tagName]))
-            ) {
+            while (child && (child.nodeType == 3 || (child.nodeType == 1 && dtd.p[child.tagName] && !dtd.$cdata[child.tagName]))) {
               tmpNode = child.nextSibling;
               p.appendChild(child);
               child = tmpNode;
@@ -1001,22 +970,7 @@
       var doc = me.document;
       var win = me.window;
       me._proxyDomEvent = utils.bind(me._proxyDomEvent, me);
-      domUtils.on(
-        doc,
-        [
-          "click",
-          "contextmenu",
-          "mousedown",
-          "keydown",
-          "keyup",
-          "keypress",
-          "mouseup",
-          "mouseover",
-          "mouseout",
-          "selectstart"
-        ],
-        me._proxyDomEvent
-      );
+      domUtils.on(doc, ["click", "contextmenu", "mousedown", "keydown", "keyup", "keypress", "mouseup", "mouseover", "mouseout", "selectstart"], me._proxyDomEvent);
       domUtils.on(win, ["focus", "blur"], me._proxyDomEvent);
       domUtils.on(me.body, "drop", e => {
         //阻止ff下默认的弹出新页面打开图片
@@ -1163,10 +1117,7 @@
         me.__hasEnterExecCommand = false;
       } else {
         result = this._callCmdFn("execCommand", arguments);
-        !me.__hasEnterExecCommand &&
-          !cmd.ignoreContentChange &&
-          !me._ignoreContentChange &&
-          me.fireEvent("contentchange");
+        !me.__hasEnterExecCommand && !cmd.ignoreContentChange && !me._ignoreContentChange && me.fireEvent("contentchange");
       }
       !me.__hasEnterExecCommand && !cmd.ignoreContentChange && !me._ignoreContentChange && me._selectionChange();
       return result;

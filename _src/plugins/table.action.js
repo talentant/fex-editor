@@ -212,11 +212,7 @@ UE.plugins["table"] = function() {
             var cell = table.rows[0].cells[0];
             var start = domUtils.findParentByTagName(me.selection.getStart(), ["td", "th"], true);
             var preNode = table.previousSibling;
-            if (
-              cell === start &&
-              (!preNode || (preNode.nodeType == 1 && preNode.tagName === "TABLE")) &&
-              domUtils.isStartInblock(rng)
-            ) {
+            if (cell === start && (!preNode || (preNode.nodeType == 1 && preNode.tagName === "TABLE")) && domUtils.isStartInblock(rng)) {
               var first = domUtils.findParent(me.selection.getStart(), n => domUtils.isBlockElm(n), true);
               if (first && (/t(h|d)/i.test(first.tagName) || first === start.firstChild)) {
                 me.execCommand("insertparagraphbeforetable");
@@ -367,11 +363,7 @@ UE.plugins["table"] = function() {
 
           me.execCommand(
             "insertHTML",
-            "<table  " +
-              (isFullCol && isFullRow ? 'width="' + width + '"' : "") +
-              ">" +
-              table.innerHTML.replace(/>\s*</g, "><").replace(/\bth\b/gi, "td") +
-              "</table>"
+            "<table  " + (isFullCol && isFullRow ? 'width="' + width + '"' : "") + ">" + table.innerHTML.replace(/>\s*</g, "><").replace(/\bth\b/gi, "td") + "</table>"
           );
         }
         me.fireEvent("contentchange");
@@ -506,10 +498,7 @@ UE.plugins["table"] = function() {
           //                        return;
           //                    }
           if (inTableSide(table, target, evt, true)) {
-            var endTdCol = ut.getCell(
-              ut.indexTable[ut.rowsNum - 1][cellInfo.colIndex].rowIndex,
-              ut.indexTable[ut.rowsNum - 1][cellInfo.colIndex].cellIndex
-            );
+            var endTdCol = ut.getCell(ut.indexTable[ut.rowsNum - 1][cellInfo.colIndex].rowIndex, ut.indexTable[ut.rowsNum - 1][cellInfo.colIndex].cellIndex);
             if (evt.shiftKey && ut.selectedTds.length) {
               if (ut.selectedTds[0] !== endTdCol) {
                 cellsRange = ut.getCellsRange(ut.selectedTds[0], endTdCol);
@@ -528,10 +517,7 @@ UE.plugins["table"] = function() {
             return;
           }
           if (inTableSide(table, target, evt)) {
-            var endTdRow = ut.getCell(
-              ut.indexTable[cellInfo.rowIndex][ut.colsNum - 1].rowIndex,
-              ut.indexTable[cellInfo.rowIndex][ut.colsNum - 1].cellIndex
-            );
+            var endTdRow = ut.getCell(ut.indexTable[cellInfo.rowIndex][ut.colsNum - 1].rowIndex, ut.indexTable[cellInfo.rowIndex][ut.colsNum - 1].cellIndex);
             if (evt.shiftKey && ut.selectedTds.length) {
               if (ut.selectedTds[0] !== endTdRow) {
                 cellsRange = ut.getCellsRange(ut.selectedTds[0], endTdRow);
@@ -769,8 +755,7 @@ UE.plugins["table"] = function() {
   function getParentTdOrTh(ele) {
     if (ele.tagName === "TD" || ele.tagName === "TH") return ele;
     var td;
-    if ((td = domUtils.findParentByTagName(ele, "td", true) || domUtils.findParentByTagName(ele, "th", true)))
-      return td;
+    if ((td = domUtils.findParentByTagName(ele, "td", true) || domUtils.findParentByTagName(ele, "th", true))) return td;
     return null;
   }
 
@@ -812,10 +797,7 @@ UE.plugins["table"] = function() {
       if (isInResizeBuffer) {
         me.body.style.webkitUserSelect = "none";
 
-        if (
-          Math.abs(userActionStatus.x - evt.clientX) > offsetOfTableCell ||
-          Math.abs(userActionStatus.y - evt.clientY) > offsetOfTableCell
-        ) {
+        if (Math.abs(userActionStatus.x - evt.clientX) > offsetOfTableCell || Math.abs(userActionStatus.y - evt.clientY) > offsetOfTableCell) {
           clearTableDragTimer();
           isInResizeBuffer = false;
           singleClickState = 0;
@@ -977,9 +959,7 @@ UE.plugins["table"] = function() {
       var mouseX = mouseCoords(evt).x;
       var left = (preTd ? domUtils.getXY(preTd).x : domUtils.getXY(ut.table).x) + 20;
 
-      var right = nextTd
-        ? domUtils.getXY(nextTd).x + nextTd.offsetWidth - 20
-        : me.body.offsetWidth + 5 || parseInt(domUtils.getComputedStyle(me.body, "width"), 10);
+      var right = nextTd ? domUtils.getXY(nextTd).x + nextTd.offsetWidth - 20 : me.body.offsetWidth + 5 || parseInt(domUtils.getComputedStyle(me.body, "width"), 10);
 
       left += cellMinWidth;
       right -= cellMinWidth;
@@ -1457,8 +1437,7 @@ UE.plugins["table"] = function() {
     if (
       startTd &&
       currentTd &&
-      ((startTd.tagName === "TD" && currentTd.tagName === "TD") ||
-        (startTd.tagName === "TH" && currentTd.tagName === "TH")) &&
+      ((startTd.tagName === "TD" && currentTd.tagName === "TD") || (startTd.tagName === "TH" && currentTd.tagName === "TH")) &&
       domUtils.findParentByTagName(startTd, "table") == domUtils.findParentByTagName(currentTd, "table")
     ) {
       var ut = getUETable(currentTd);
@@ -1736,8 +1715,7 @@ UE.plugins["table"] = function() {
       onresizestart: "return false",
       ondragstart: "return false",
       onselectstart: "return false",
-      style:
-        "background-color:blue;position:absolute;padding:0;margin:0;background-image:none;border:0px none;opacity:0;filter:alpha(opacity=0)"
+      style: "background-color:blue;position:absolute;padding:0;margin:0;background-image:none;border:0px none;opacity:0;filter:alpha(opacity=0)"
     });
     editor.body.appendChild(dragLine);
   }
@@ -1766,23 +1744,14 @@ UE.plugins["table"] = function() {
     var css;
     switch (state) {
       case "h":
-        css =
-          "height:" +
-          height +
-          "px;top:" +
-          (tablePos.y + (caption.length > 0 ? caption[0].offsetHeight : 0)) +
-          "px;left:" +
-          (cellPos.x + cell.offsetWidth);
-        dragLine.style.cssText =
-          css +
-          "px;position: absolute;display:block;background-color:blue;width:1px;border:0; color:blue;opacity:.3;filter:alpha(opacity=30)";
+        css = "height:" + height + "px;top:" + (tablePos.y + (caption.length > 0 ? caption[0].offsetHeight : 0)) + "px;left:" + (cellPos.x + cell.offsetWidth);
+        dragLine.style.cssText = css + "px;position: absolute;display:block;background-color:blue;width:1px;border:0; color:blue;opacity:.3;filter:alpha(opacity=30)";
         break;
       case "v":
         css = "width:" + width + "px;left:" + tablePos.x + "px;top:" + (cellPos.y + cell.offsetHeight);
         //必须加上border:0和color:blue，否则低版ie不支持背景色显示
         dragLine.style.cssText =
-          css +
-          "px;overflow:hidden;position: absolute;display:block;background-color:blue;height:1px;border:0;color:blue;opacity:.2;filter:alpha(opacity=20)";
+          css + "px;overflow:hidden;position: absolute;display:block;background-color:blue;height:1px;border:0;color:blue;opacity:.2;filter:alpha(opacity=20)";
         break;
       default:
     }
@@ -1812,10 +1781,7 @@ UE.plugins["table"] = function() {
   function getTableWidth(editor, needIEHack, defaultValue) {
     var body = editor.body;
     return (
-      body.offsetWidth -
-      (needIEHack ? parseInt(domUtils.getComputedStyle(body, "margin-left"), 10) * 2 : 0) -
-      defaultValue.tableBorder * 2 -
-      (editor.options.offsetWidth || 0)
+      body.offsetWidth - (needIEHack ? parseInt(domUtils.getComputedStyle(body, "margin-left"), 10) * 2 : 0) - defaultValue.tableBorder * 2 - (editor.options.offsetWidth || 0)
     );
   }
 

@@ -29,20 +29,11 @@
    * @param  {Range}   range    range对象
    */
   function updateCollapse(range) {
-    range.collapsed =
-      range.startContainer &&
-      range.endContainer &&
-      range.startContainer === range.endContainer &&
-      range.startOffset == range.endOffset;
+    range.collapsed = range.startContainer && range.endContainer && range.startContainer === range.endContainer && range.startOffset == range.endOffset;
   }
 
   function selectOneNode(rng) {
-    return (
-      !rng.collapsed &&
-      rng.startContainer.nodeType == 1 &&
-      rng.startContainer === rng.endContainer &&
-      rng.endOffset - rng.startOffset == 1
-    );
+    return !rng.collapsed && rng.startContainer.nodeType == 1 && rng.startContainer === rng.endContainer && rng.endOffset - rng.startOffset == 1;
   }
   function setEndPoint(toStart, node, offset, range) {
     //如果node是自闭合标签要处理
@@ -163,9 +154,7 @@
       clone = currentLevel;
     }
     if (action) {
-      range
-        .setStartBefore(!endParents[i] ? endParents[i - 1] : !startParents[i] ? startParents[i - 1] : endParents[i])
-        .collapse(true);
+      range.setStartBefore(!endParents[i] ? endParents[i - 1] : !startParents[i] ? startParents[i - 1] : endParents[i]).collapse(true);
     }
     tmpStart && domUtils.remove(tmpStart);
     tmpEnd && domUtils.remove(tmpEnd);
@@ -228,9 +217,7 @@
             tmpNode &&
             domUtils.isEmptyInlineElement(tmpNode) &&
             //safari的contains有bug
-            (browser.safari
-              ? !(domUtils.getPosition(tmpNode, excludeNode) & domUtils.POSITION_CONTAINS)
-              : !tmpNode.contains(excludeNode))
+            (browser.safari ? !(domUtils.getPosition(tmpNode, excludeNode) & domUtils.POSITION_CONTAINS) : !tmpNode.contains(excludeNode))
           ) {
             fillData = tmpNode.parentNode;
             domUtils.remove(tmpNode);
@@ -750,12 +737,7 @@
       var child;
       var collapsed = me.collapsed;
       function check(node) {
-        return (
-          node.nodeType == 1 &&
-          !domUtils.isBookmarkNode(node) &&
-          !dtd.$empty[node.tagName] &&
-          !dtd.$nonChild[node.tagName]
-        );
+        return node.nodeType == 1 && !domUtils.isBookmarkNode(node) && !dtd.$empty[node.tagName] && !dtd.$nonChild[node.tagName];
       }
       while (
         me.startContainer.nodeType == 1 && //是element
@@ -1183,10 +1165,7 @@
           }
           this.setStartBefore(this.startContainer);
         }
-        while (
-          this.endOffset ==
-          (this.endContainer.nodeType == 1 ? this.endContainer.childNodes.length : this.endContainer.nodeValue.length)
-        ) {
+        while (this.endOffset == (this.endContainer.nodeType == 1 ? this.endContainer.childNodes.length : this.endContainer.nodeValue.length)) {
           if (stopFn && stopFn(this.endContainer)) {
             break;
           }
@@ -1219,17 +1198,12 @@
       if (!this.collapsed) {
         while (
           !domUtils.isBody(this.startContainer) &&
-          this.startOffset ==
-            this.startContainer[this.startContainer.nodeType == 3 ? "nodeValue" : "childNodes"].length &&
+          this.startOffset == this.startContainer[this.startContainer.nodeType == 3 ? "nodeValue" : "childNodes"].length &&
           this.startContainer[this.startContainer.nodeType == 3 ? "nodeValue" : "childNodes"].length
         ) {
           this.setStartAfter(this.startContainer);
         }
-        while (
-          !domUtils.isBody(this.endContainer) &&
-          !this.endOffset &&
-          this.endContainer[this.endContainer.nodeType == 3 ? "nodeValue" : "childNodes"].length
-        ) {
+        while (!domUtils.isBody(this.endContainer) && !this.endOffset && this.endContainer[this.endContainer.nodeType == 3 ? "nodeValue" : "childNodes"].length) {
           this.setEndBefore(this.endContainer);
         }
       }
@@ -1315,12 +1289,7 @@
           range.insertNode(list ? top : elm);
           //处理下滑线在a上的情况
           var aNode;
-          if (
-            tagName === "span" &&
-            attrs.style &&
-            /text\-decoration/.test(attrs.style) &&
-            (aNode = domUtils.findParentByTagName(elm, "a", true))
-          ) {
+          if (tagName === "span" && attrs.style && /text\-decoration/.test(attrs.style) && (aNode = domUtils.findParentByTagName(elm, "a", true))) {
             domUtils.setAttributes(aNode, attrs);
             domUtils.remove(elm, true);
             elm = aNode;
@@ -1542,9 +1511,7 @@
               }
               if (
                 !(start.nodeType == 3 && this.startOffset) &&
-                (child
-                  ? !child.previousSibling || child.previousSibling.nodeType != 3
-                  : !start.lastChild || start.lastChild.nodeType != 3)
+                (child ? !child.previousSibling || child.previousSibling.nodeType != 3 : !start.lastChild || start.lastChild.nodeType != 3)
               ) {
                 txtNode = this.document.createTextNode(fillChar);
                 //跟着前边走
@@ -1620,11 +1587,7 @@
      */
     inFillChar() {
       var start = this.startContainer;
-      if (
-        this.collapsed &&
-        start.nodeType == 3 &&
-        start.nodeValue.replace(new RegExp("^" + domUtils.fillChar), "").length + 1 == start.nodeValue.length
-      ) {
+      if (this.collapsed && start.nodeType == 3 && start.nodeValue.replace(new RegExp("^" + domUtils.fillChar), "").length + 1 == start.nodeValue.length) {
         return true;
       }
       return false;

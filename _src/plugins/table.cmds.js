@@ -28,15 +28,7 @@
         for (var r = 0; r < rowsNum; r++) {
           html.push("<tr" + (r == 0 ? ' class="firstRow"' : "") + ">");
           for (var c = 0; c < colsNum; c++) {
-            html.push(
-              '<td width="' +
-                tdWidth +
-                '"  vAlign="' +
-                opt.tdvalign +
-                '" >' +
-                (browser.ie && browser.version < 11 ? domUtils.fillChar : "<br/>") +
-                "</td>"
-            );
+            html.push('<td width="' + tdWidth + '"  vAlign="' + opt.tdvalign + '" >' + (browser.ie && browser.version < 11 ? domUtils.fillChar : "<br/>") + "</td>");
           }
           html.push("</tr>");
         }
@@ -449,9 +441,7 @@
     queryCommandState(cmd) {
       var tableItems = getTableItemsByRange(this);
       var cell = tableItems.cell;
-      return cell &&
-        (cell.tagName === "TD" || (cell.tagName === "TH" && cell !== tableItems.tr.cells[0])) &&
-        getUETable(tableItems.table).colsNum < this.options.maxColNum
+      return cell && (cell.tagName === "TD" || (cell.tagName === "TH" && cell !== tableItems.tr.cells[0])) && getUETable(tableItems.table).colsNum < this.options.maxColNum
         ? 0
         : -1;
     },
@@ -819,9 +809,7 @@
       var rng = this.selection.getRange();
       var table = domUtils.findParentByTagName(rng.startContainer, "table");
       if (table) {
-        var arr = domUtils
-          .getElementsByTagName(table, "td")
-          .concat(domUtils.getElementsByTagName(table, "th"), domUtils.getElementsByTagName(table, "caption"));
+        var arr = domUtils.getElementsByTagName(table, "td").concat(domUtils.getElementsByTagName(table, "th"), domUtils.getElementsByTagName(table, "caption"));
         utils.each(arr, node => {
           node.style.borderColor = color;
         });
@@ -938,10 +926,7 @@
   function getTableWidth(editor, needIEHack, defaultValue) {
     var body = editor.body;
     return (
-      body.offsetWidth -
-      (needIEHack ? parseInt(domUtils.getComputedStyle(body, "margin-left"), 10) * 2 : 0) -
-      defaultValue.tableBorder * 2 -
-      (editor.options.offsetWidth || 0)
+      body.offsetWidth - (needIEHack ? parseInt(domUtils.getComputedStyle(body, "margin-left"), 10) * 2 : 0) - defaultValue.tableBorder * 2 - (editor.options.offsetWidth || 0)
     );
   }
 

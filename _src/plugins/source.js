@@ -8,8 +8,7 @@
   var sourceEditors = {
     textarea(editor, holder) {
       var textarea = holder.ownerDocument.createElement("textarea");
-      textarea.style.cssText =
-        "position:absolute;resize:none;width:100%;height:100%;border:0;padding:0;margin:0;overflow-y:auto;";
+      textarea.style.cssText = "position:absolute;resize:none;width:100%;height:100%;border:0;padding:0;margin:0;overflow-y:auto;";
       // todo: IE下只有onresize属性可用... 很纠结
       if (browser.ie && browser.version < 8) {
         textarea.style.width = holder.offsetWidth + "px";
@@ -62,8 +61,7 @@
         lineWrapping: true
       });
       var dom = codeEditor.getWrapperElement();
-      dom.style.cssText =
-        'position:absolute;left:0;top:0;width:100%;height:100%;font-family:consolas,"Courier new",monospace;font-size:13px;';
+      dom.style.cssText = 'position:absolute;left:0;top:0;width:100%;height:100%;font-family:consolas,"Courier new",monospace;font-size:13px;';
       codeEditor.getScrollerElement().style.cssText = "position:absolute;left:0;top:0;width:100%;height:100%;";
       codeEditor.refresh();
       return {
@@ -111,10 +109,7 @@
       sourceEditorFirst: false
     });
     function createSourceEditor(holder) {
-      return sourceEditors[opt.sourceEditor === "codemirror" && window.CodeMirror ? "codemirror" : "textarea"](
-        me,
-        holder
-      );
+      return sourceEditors[opt.sourceEditor === "codemirror" && window.CodeMirror ? "codemirror" : "textarea"](me, holder);
     }
 
     var bakCssText;

@@ -147,9 +147,7 @@
       } else throw "";
     },
     contains(elA, elB) {
-      return (
-        elA && elB && (elA === elB ? false : elA.contains ? elA.contains(elB) : elA.compareDocumentPosition(elB) & 16)
-      );
+      return elA && elB && (elA === elB ? false : elA.contains ? elA.contains(elB) : elA.compareDocumentPosition(elB) & 16);
     },
     startDrag(evt, callbacks, doc) {
       var doc = doc || document;

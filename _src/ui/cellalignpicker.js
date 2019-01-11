@@ -56,15 +56,7 @@
 
         tempIndex === 0 && tmpl.push("<tr>");
 
-        tmpl.push(
-          '<td index="' +
-            i +
-            '" ' +
-            tempClassName +
-            ' stateful><div class="edui-icon edui-' +
-            alignType[tempIndex] +
-            '"></div></td>'
-        );
+        tmpl.push('<td index="' + i + '" ' + tempClassName + ' stateful><div class="edui-icon edui-' + alignType[tempIndex] + '"></div></td>');
 
         tempIndex === 2 && tmpl.push("</tr>");
       }

@@ -59,10 +59,7 @@ var filterWord = (UE.filterWord = (() => {
         .replace(/<\/?div[^>]*>/g, "")
         //去掉多余的属性
         .replace(/v:\w+=(["']?)[^'"]+\1/g, "")
-        .replace(
-          /<(!|script[^>]*>.*?<\/script(?=[>\s])|\/?(\?xml(:\w+)?|xml|meta|link|style|\w+:\w+)(?=[\s\/>]))[^>]*>/gi,
-          ""
-        )
+        .replace(/<(!|script[^>]*>.*?<\/script(?=[>\s])|\/?(\?xml(:\w+)?|xml|meta|link|style|\w+:\w+)(?=[\s\/>]))[^>]*>/gi, "")
         .replace(/<p [^>]*class="?MsoHeading"?[^>]*>(.*?)<\/p>/gi, "<p><strong>$1</strong></p>")
         //去掉多余的属性
         .replace(/\s+(class|lang|align)\s*=\s*(['"]?)([\w-]+)\2/gi, (
@@ -92,10 +89,7 @@ var filterWord = (UE.filterWord = (() => {
             if (parts.length == 2) {
               name = parts[0].toLowerCase();
               value = parts[1].toLowerCase();
-              if (
-                (/^(background)\w*/.test(name) && value.replace(/(initial|\s)/g, "").length == 0) ||
-                (/^(margin)\w*/.test(name) && /^0\w+$/.test(value))
-              ) {
+              if ((/^(background)\w*/.test(name) && value.replace(/(initial|\s)/g, "").length == 0) || (/^(margin)\w*/.test(name) && /^0\w+$/.test(value))) {
                 continue;
               }
 

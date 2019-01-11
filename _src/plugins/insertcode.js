@@ -76,18 +76,43 @@ UE.plugins["insertcode"] = function() {
           var div = me.document.createElement("div");
           div.appendChild(frag);
 
-          utils.each(
-            UE.filterNode(UE.htmlparser(div.innerHTML.replace(/[\r\t]/g, "")), me.options.filterTxtRules).children,
-            node => {
-              if (browser.ie && browser.ie11below && browser.version > 8) {
+          utils.each(UE.filterNode(UE.htmlparser(div.innerHTML.replace(/[\r\t]/g, "")), me.options.filterTxtRules).children, node => {
+            if (browser.ie && browser.ie11below && browser.version > 8) {
+              if (node.type === "element") {
+                if (node.tagName === "br") {
+                  code += "\n";
+                } else if (!dtd.$empty[node.tagName]) {
+                  utils.each(node.children, cn => {
+                    if (cn.type === "element") {
+                      if (cn.tagName === "br") {
+                        code += "\n";
+                      } else if (!dtd.$empty[node.tagName]) {
+                        code += cn.innerText();
+                      }
+                    } else {
+                      code += cn.data;
+                    }
+                  });
+                  if (!/\n$/.test(code)) {
+                    code += "\n";
+                  }
+                }
+              } else {
+                code += node.data + "\n";
+              }
+              if (!node.nextSibling() && /\n$/.test(code)) {
+                code = code.replace(/\n$/, "");
+              }
+            } else {
+              if (browser.ie && browser.ie11below) {
                 if (node.type === "element") {
                   if (node.tagName === "br") {
-                    code += "\n";
+                    code += "<br>";
                   } else if (!dtd.$empty[node.tagName]) {
                     utils.each(node.children, cn => {
                       if (cn.type === "element") {
                         if (cn.tagName === "br") {
-                          code += "\n";
+                          code += "<br>";
                         } else if (!dtd.$empty[node.tagName]) {
                           code += cn.innerText();
                         }
@@ -95,69 +120,33 @@ UE.plugins["insertcode"] = function() {
                         code += cn.data;
                       }
                     });
-                    if (!/\n$/.test(code)) {
-                      code += "\n";
+                    if (!/br>$/.test(code)) {
+                      code += "<br>";
                     }
                   }
                 } else {
-                  code += node.data + "\n";
+                  code += node.data + "<br>";
                 }
-                if (!node.nextSibling() && /\n$/.test(code)) {
-                  code = code.replace(/\n$/, "");
+                if (!node.nextSibling() && /<br>$/.test(code)) {
+                  code = code.replace(/<br>$/, "");
                 }
               } else {
-                if (browser.ie && browser.ie11below) {
-                  if (node.type === "element") {
-                    if (node.tagName === "br") {
-                      code += "<br>";
-                    } else if (!dtd.$empty[node.tagName]) {
-                      utils.each(node.children, cn => {
-                        if (cn.type === "element") {
-                          if (cn.tagName === "br") {
-                            code += "<br>";
-                          } else if (!dtd.$empty[node.tagName]) {
-                            code += cn.innerText();
-                          }
-                        } else {
-                          code += cn.data;
-                        }
-                      });
-                      if (!/br>$/.test(code)) {
-                        code += "<br>";
-                      }
-                    }
-                  } else {
-                    code += node.data + "<br>";
-                  }
-                  if (!node.nextSibling() && /<br>$/.test(code)) {
-                    code = code.replace(/<br>$/, "");
-                  }
-                } else {
-                  code += node.type === "element" ? (dtd.$empty[node.tagName] ? "" : node.innerText()) : node.data;
-                  if (!/br\/?\s*>$/.test(code)) {
-                    if (!node.nextSibling()) return;
-                    code += "<br>";
-                  }
+                code += node.type === "element" ? (dtd.$empty[node.tagName] ? "" : node.innerText()) : node.data;
+                if (!/br\/?\s*>$/.test(code)) {
+                  if (!node.nextSibling()) return;
+                  code += "<br>";
                 }
               }
             }
-          );
+          });
         }
-        me.execCommand(
-          "inserthtml",
-          '<pre id="coder"class="brush:' + lang + ';toolbar:false">' + code + "</pre>",
-          true
-        );
+        me.execCommand("inserthtml", '<pre id="coder"class="brush:' + lang + ';toolbar:false">' + code + "</pre>", true);
 
         pre = me.document.getElementById("coder");
         domUtils.removeAttributes(pre, "id");
         var tmpNode = pre.previousSibling;
 
-        if (
-          tmpNode &&
-          ((tmpNode.nodeType == 3 && tmpNode.nodeValue.length == 1 && browser.ie && browser.version == 6) ||
-            domUtils.isEmptyBlock(tmpNode))
-        ) {
+        if (tmpNode && ((tmpNode.nodeType == 3 && tmpNode.nodeValue.length == 1 && browser.ie && browser.version == 6) || domUtils.isEmptyBlock(tmpNode))) {
           domUtils.remove(tmpNode);
         }
         var rng = me.selection.getRange();

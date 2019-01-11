@@ -50,20 +50,10 @@ UE.commands["imagefloat"] = {
             }
             tmpNode = pN;
             if (tmpNode.tagName === "P" && domUtils.getStyle(tmpNode, "text-align") === "center") {
-              if (
-                !domUtils.isBody(tmpNode) &&
-                domUtils.getChildCount(tmpNode, node => !domUtils.isBr(node) && !domUtils.isWhitespace(node)) == 1
-              ) {
+              if (!domUtils.isBody(tmpNode) && domUtils.getChildCount(tmpNode, node => !domUtils.isBr(node) && !domUtils.isWhitespace(node)) == 1) {
                 pre = tmpNode.previousSibling;
                 next = tmpNode.nextSibling;
-                if (
-                  pre &&
-                  next &&
-                  pre.nodeType == 1 &&
-                  next.nodeType == 1 &&
-                  pre.tagName == next.tagName &&
-                  domUtils.isBlockElm(pre)
-                ) {
+                if (pre && next && pre.nodeType == 1 && next.nodeType == 1 && pre.tagName == next.tagName && domUtils.isBlockElm(pre)) {
                   pre.appendChild(tmpNode.firstChild);
                   while (next.firstChild) {
                     pre.appendChild(next.firstChild);
@@ -89,11 +79,7 @@ UE.commands["imagefloat"] = {
               domUtils.setStyle(img, "float", "");
               domUtils.removeAttributes(img, "align");
               tmpNode = img;
-              while (
-                pN &&
-                domUtils.getChildCount(pN, node => !domUtils.isBr(node) && !domUtils.isWhitespace(node)) == 1 &&
-                (dtd.$inline[pN.tagName] || pN.tagName === "A")
-              ) {
+              while (pN && domUtils.getChildCount(pN, node => !domUtils.isBr(node) && !domUtils.isWhitespace(node)) == 1 && (dtd.$inline[pN.tagName] || pN.tagName === "A")) {
                 tmpNode = pN;
                 pN = pN.parentNode;
               }
@@ -102,10 +88,7 @@ UE.commands["imagefloat"] = {
               pN.appendChild(tmpNode);
               domUtils.setStyle(tmpNode, "float", "");
 
-              me.execCommand(
-                "insertHtml",
-                '<p id="_img_parent_tmp" style="text-align:center">' + pN.innerHTML + "</p>"
-              );
+              me.execCommand("insertHtml", '<p id="_img_parent_tmp" style="text-align:center">' + pN.innerHTML + "</p>");
 
               tmpNode = me.document.getElementById("_img_parent_tmp");
               tmpNode.removeAttribute("id");
@@ -205,12 +188,7 @@ UE.commands["insertimage"] = {
       return;
     }
 
-    if (
-      img &&
-      /img/i.test(img.tagName) &&
-      (img.className != "edui-faked-video" || img.className.indexOf("edui-upload-video") != -1) &&
-      !img.getAttribute("word_img")
-    ) {
+    if (img && /img/i.test(img.tagName) && (img.className != "edui-faked-video" || img.className.indexOf("edui-upload-video") != -1) && !img.getAttribute("word_img")) {
       var first = opt.shift();
       var floatStyle = first["floatStyle"];
       delete first["floatStyle"];
@@ -236,9 +214,7 @@ UE.commands["insertimage"] = {
           (ci._src ? ' _src="' + ci._src + '" ' : "") +
           (ci.width ? 'width="' + ci.width + '" ' : "") +
           (ci.height ? ' height="' + ci.height + '" ' : "") +
-          (ci["floatStyle"] === "left" || ci["floatStyle"] === "right"
-            ? ' style="float:' + ci["floatStyle"] + ';"'
-            : "") +
+          (ci["floatStyle"] === "left" || ci["floatStyle"] === "right" ? ' style="float:' + ci["floatStyle"] + ';"' : "") +
           (ci.title && ci.title != "" ? ' title="' + ci.title + '"' : "") +
           (ci.border && ci.border != "0" ? ' border="' + ci.border + '"' : "") +
           (ci.alt && ci.alt != "" ? ' alt="' + ci.alt + '"' : "") +

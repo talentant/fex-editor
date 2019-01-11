@@ -32,10 +32,7 @@ UE.plugins["autoheight"] = function() {
         }
         if (node && node.nodeType == 1) {
           node.style.clear = "both";
-          currentHeight = Math.max(
-            domUtils.getXY(node).y + node.offsetHeight + 25,
-            Math.max(options.minFrameHeight, options.initialFrameHeight)
-          );
+          currentHeight = Math.max(domUtils.getXY(node).y + node.offsetHeight + 25, Math.max(options.minFrameHeight, options.initialFrameHeight));
           if (currentHeight != lastHeight) {
             if (currentHeight !== parseInt(me.iframe.parentNode.style.height)) {
               me.iframe.parentNode.style.height = currentHeight + "px";

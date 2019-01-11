@@ -171,10 +171,7 @@ UE.plugins["font"] = function() {
   function mergeWithParent(node) {
     var parent;
     while ((parent = node.parentNode)) {
-      if (
-        parent.tagName === "SPAN" &&
-        domUtils.getChildCount(parent, child => !domUtils.isBookmarkNode(child) && !domUtils.isBr(child)) == 1
-      ) {
+      if (parent.tagName === "SPAN" && domUtils.getChildCount(parent, child => !domUtils.isBookmarkNode(child) && !domUtils.isBr(child)) == 1) {
         parent.style.cssText += node.style.cssText;
         domUtils.remove(node, true);
         node = parent;
@@ -227,11 +224,7 @@ UE.plugins["font"] = function() {
         }
         return;
       }
-      if (
-        /border/i.test(span.style.cssText) &&
-        span.parentNode.tagName === "SPAN" &&
-        /border/i.test(span.parentNode.style.cssText)
-      ) {
+      if (/border/i.test(span.style.cssText) && span.parentNode.tagName === "SPAN" && /border/i.test(span.parentNode.style.cssText)) {
         span.style.cssText = span.style.cssText.replace(/border[^:]*:[^;]+;?/gi, "");
       }
       if (!(cmdName === "fontborder" && value === "none")) {
@@ -360,15 +353,7 @@ UE.plugins["font"] = function() {
     ((cmd, style) => {
       UE.commands[cmd] = {
         execCommand(cmdName, value) {
-          value =
-            value ||
-            (this.queryCommandState(cmdName)
-              ? "none"
-              : cmdName === "underline"
-              ? "underline"
-              : cmdName === "fontborder"
-              ? "1px solid #000"
-              : "line-through");
+          value = value || (this.queryCommandState(cmdName) ? "none" : cmdName === "underline" ? "underline" : cmdName === "fontborder" ? "1px solid #000" : "line-through");
           var me = this;
           var range = this.selection.getRange();
           var text;
@@ -398,11 +383,7 @@ UE.plugins["font"] = function() {
             } else {
               var span = domUtils.findParentByTagName(range.startContainer, "span", true);
               text = me.document.createTextNode("font");
-              if (
-                span &&
-                !span.children.length &&
-                !span[browser.ie ? "innerText" : "textContent"].replace(fillCharReg, "").length
-              ) {
+              if (span && !span.children.length && !span[browser.ie ? "innerText" : "textContent"].replace(fillCharReg, "").length) {
                 //for ie hack when enter
                 range.insertNode(text);
                 if (needCmd[cmd]) {

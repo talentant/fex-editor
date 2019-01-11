@@ -3,8 +3,7 @@
     var me = this;
     setTimeout(() => {
       try {
-        me.options.imageUrl &&
-          me.setOpt("serverUrl", me.options.imageUrl.replace(/^(.*[\/]).+([\.].+)$/, "$1controller$2"));
+        me.options.imageUrl && me.setOpt("serverUrl", me.options.imageUrl.replace(/^(.*[\/]).+([\.].+)$/, "$1controller$2"));
 
         var configUrl = me.getActionUrl("config");
         var isJsonp = utils.isCrossDomainUrl(configUrl);

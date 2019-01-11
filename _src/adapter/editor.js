@@ -33,14 +33,11 @@
         //提供编辑器实时宽高(全屏时宽高不变化)
         editor.ui._actualFrameWidth = editor.options.initialFrameWidth;
 
-        UE.browser.ie &&
-          UE.browser.version === 6 &&
-          editor.container.ownerDocument.execCommand("BackgroundImageCache", false, true);
+        UE.browser.ie && UE.browser.version === 6 && editor.container.ownerDocument.execCommand("BackgroundImageCache", false, true);
 
         //display bottom-bar label based on config
         if (editor.options.elementPathEnabled) {
-          editor.ui.getDom("elementpath").innerHTML =
-            '<div class="edui-editor-breadcrumb">' + editor.getLang("elementPathTip") + ":</div>";
+          editor.ui.getDom("elementpath").innerHTML = '<div class="edui-editor-breadcrumb">' + editor.getLang("elementPathTip") + ":</div>";
         }
         if (editor.options.wordCount) {
           function countFn(...args) {
@@ -436,11 +433,7 @@
       return (
         '<div id="##" class="%%">' +
         '<div id="##_toolbarbox" class="%%-toolbarbox">' +
-        (this.toolbars.length
-          ? '<div id="##_toolbarboxouter" class="%%-toolbarboxouter"><div class="%%-toolbarboxinner">' +
-            this.renderToolbarBoxHtml() +
-            "</div></div>"
-          : "") +
+        (this.toolbars.length ? '<div id="##_toolbarboxouter" class="%%-toolbarboxouter"><div class="%%-toolbarboxinner">' + this.renderToolbarBoxHtml() + "</div></div>" : "") +
         '<div id="##_toolbarmsg" class="%%-toolbarmsg" style="display:none;">' +
         '<div id = "##_upload_dialog" class="%%-toolbarmsg-upload" onclick="$$.showWordImageDialog();">' +
         this.editor.getLang("clickToUpload") +
@@ -567,13 +560,7 @@
           left: 0,
           top: this.editor.options.topOffset || 0
         });
-        this.editor.setHeight(
-          vpRect.height -
-            this.getDom("toolbarbox").offsetHeight -
-            this.getDom("bottombar").offsetHeight -
-            (this.editor.options.topOffset || 0),
-          true
-        );
+        this.editor.setHeight(vpRect.height - this.getDom("toolbarbox").offsetHeight - this.getDom("bottombar").offsetHeight - (this.editor.options.topOffset || 0), true);
         //不手动调一下，会导致全屏失效
         if (browser.gecko) {
           try {
@@ -588,20 +575,9 @@
       if (this.elementPathEnabled && (list = this.editor.queryCommandValue("elementpath"))) {
         var buff = [];
         for (var i = 0, ci; (ci = list[i]); i++) {
-          buff[i] = this.formatHtml(
-            '<span unselectable="on" onclick="$$.editor.execCommand(&quot;elementpath&quot;, &quot;' +
-              i +
-              '&quot;);">' +
-              ci +
-              "</span>"
-          );
+          buff[i] = this.formatHtml('<span unselectable="on" onclick="$$.editor.execCommand(&quot;elementpath&quot;, &quot;' + i + '&quot;);">' + ci + "</span>");
         }
-        bottom.innerHTML =
-          '<div class="edui-editor-breadcrumb" onmousedown="return false;">' +
-          this.editor.getLang("elementPathTip") +
-          ": " +
-          buff.join(" &gt; ") +
-          "</div>";
+        bottom.innerHTML = '<div class="edui-editor-breadcrumb" onmousedown="return false;">' + this.editor.getLang("elementPathTip") + ": " + buff.join(" &gt; ") + "</div>";
       } else {
         bottom.style.display = "none";
       }
@@ -666,8 +642,7 @@
             me.enableScale();
             var tmpNode = me.editor.document.createElement("span");
             me.editor.body.appendChild(tmpNode);
-            me.editor.body.style.height =
-              Math.max(domUtils.getXY(tmpNode).y, me.editor.iframe.offsetHeight - 20) + "px";
+            me.editor.body.style.height = Math.max(domUtils.getXY(tmpNode).y, me.editor.iframe.offsetHeight - 20) + "px";
             domUtils.remove(tmpNode);
           }
         }

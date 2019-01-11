@@ -82,15 +82,7 @@ UE.plugin.register("simpleupload", function() {
         var allowFiles = me.getOpt("imageAllowFiles");
 
         me.focus();
-        me.execCommand(
-          "inserthtml",
-          '<img class="loadingclass" id="' +
-            loadingId +
-            '" src="' +
-            me.options.themePath +
-            me.options.theme +
-            '/images/spacer.gif">'
-        );
+        me.execCommand("inserthtml", '<img class="loadingclass" id="' + loadingId + '" src="' + me.options.themePath + me.options.theme + '/images/spacer.gif">');
 
         function callback() {
           try {

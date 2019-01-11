@@ -75,10 +75,7 @@ UE.commands["inserthtml"] = {
         tmpNode = range.startContainer;
         if (domUtils.isBoundaryNode(tmpNode, "firstChild")) {
           tmpNode = range.endContainer;
-          if (
-            range.endOffset == (tmpNode.nodeType == 3 ? tmpNode.nodeValue.length : tmpNode.childNodes.length) &&
-            domUtils.isBoundaryNode(tmpNode, "lastChild")
-          ) {
+          if (range.endOffset == (tmpNode.nodeType == 3 ? tmpNode.nodeValue.length : tmpNode.childNodes.length) && domUtils.isBoundaryNode(tmpNode, "lastChild")) {
             me.body.innerHTML = "<p>" + (browser.ie ? "" : "<br/>") + "</p>";
             range.setStart(me.body.firstChild, 0).collapse(true);
           }
@@ -176,11 +173,7 @@ UE.commands["inserthtml"] = {
         nextNode = child.nextSibling;
         if (!hadBreak && child.nodeType == domUtils.NODE_ELEMENT && domUtils.isBlockElm(child)) {
           parent = domUtils.findParent(child, node => domUtils.isBlockElm(node));
-          if (
-            parent &&
-            parent.tagName.toLowerCase() != "body" &&
-            !(dtd[parent.tagName][child.nodeName] && child.parentNode === parent)
-          ) {
+          if (parent && parent.tagName.toLowerCase() != "body" && !(dtd[parent.tagName][child.nodeName] && child.parentNode === parent)) {
             if (!dtd[parent.tagName][child.nodeName]) {
               pre = parent;
             } else {
@@ -200,13 +193,7 @@ UE.commands["inserthtml"] = {
             }
             //trace:2012,在非ie的情况，切开后剩下的节点有可能不能点入光标添加br占位
 
-            if (
-              !browser.ie &&
-              (next = child.nextSibling) &&
-              domUtils.isBlockElm(next) &&
-              next.lastChild &&
-              !domUtils.isBr(next.lastChild)
-            ) {
+            if (!browser.ie && (next = child.nextSibling) && domUtils.isBlockElm(next) && next.lastChild && !domUtils.isBr(next.lastChild)) {
               next.appendChild(me.document.createElement("br"));
             }
             hadBreak = 1;

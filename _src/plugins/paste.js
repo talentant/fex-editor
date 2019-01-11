@@ -193,11 +193,7 @@ UE.plugins["paste"] = function() {
         htmlContent = html.html;
 
         address = me.selection.getRange().createAddress(true);
-        me.execCommand(
-          "insertHtml",
-          me.getOpt("retainOnlyLabelPasted") === true ? getPureHtml(htmlContent) : htmlContent,
-          true
-        );
+        me.execCommand("insertHtml", me.getOpt("retainOnlyLabelPasted") === true ? getPureHtml(htmlContent) : htmlContent, true);
       }
       me.fireEvent("afterpaste", html);
     }
@@ -242,9 +238,7 @@ UE.plugins["paste"] = function() {
               range.setEndAfter(next);
             }
           }
-          if (
-            range.endOffset == range.endContainer[range.endContainer.nodeType == 3 ? "nodeValue" : "childNodes"].length
-          ) {
+          if (range.endOffset == range.endContainer[range.endContainer.nodeType == 3 ? "nodeValue" : "childNodes"].length) {
             range.setEndAfter(range.endContainer);
           } else {
             break;
@@ -264,11 +258,7 @@ UE.plugins["paste"] = function() {
       me.execCommand("inserthtml", html, true);
       me.__hasEnterExecCommand = false;
       var rng = me.selection.getRange();
-      while (
-        !domUtils.isBody(rng.startContainer) &&
-        !rng.startOffset &&
-        rng.startContainer[rng.startContainer.nodeType == 3 ? "nodeValue" : "childNodes"].length
-      ) {
+      while (!domUtils.isBody(rng.startContainer) && !rng.startOffset && rng.startContainer[rng.startContainer.nodeType == 3 ? "nodeValue" : "childNodes"].length) {
         rng.setStartBefore(rng.startContainer);
       }
       var tmpAddress = rng.createAddress(true);

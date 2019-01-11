@@ -66,9 +66,7 @@
         html +=
           "</tr>" +
           (i == 60
-            ? '<tr style="border-bottom: 1px solid #ddd;font-size: 13px;line-height: 25px;color:#39C;"><td colspan="10">' +
-              editor.getLang("standardColor") +
-              "</td></tr>"
+            ? '<tr style="border-bottom: 1px solid #ddd;font-size: 13px;line-height: 25px;color:#39C;"><td colspan="10">' + editor.getLang("standardColor") + "</td></tr>"
             : "") +
           "<tr" +
           (i == 60 ? ' class="edui-colorpicker-tablefirstrow"' : "") +
@@ -85,11 +83,7 @@
             ' style="background-color:#' +
             COLORS[i] +
             ";border:solid #ccc;" +
-            (i < 10 || i >= 60
-              ? "border-width:1px;"
-              : i >= 10 && i < 20
-              ? "border-width:1px 1px 0 1px;"
-              : "border-width:0 1px 0 1px;") +
+            (i < 10 || i >= 60 ? "border-width:1px;" : i >= 10 && i < 20 ? "border-width:1px 1px 0 1px;" : "border-width:0 1px 0 1px;") +
             '"' +
             "></a></td>"
           : "";
