@@ -74,7 +74,7 @@ UE.commands["imagefloat"] = {
 
             break;
           case "center":
-            if (me.queryCommandValue("imagefloat") != "center") {
+            if (me.queryCommandValue("imagefloat") !== "center") {
               pN = img.parentNode;
               domUtils.setStyle(img, "float", "");
               domUtils.removeAttributes(img, "align");
@@ -188,7 +188,7 @@ UE.commands["insertimage"] = {
       return;
     }
 
-    if (img && /img/i.test(img.tagName) && (img.className != "edui-faked-video" || img.className.indexOf("edui-upload-video") != -1) && !img.getAttribute("word_img")) {
+    if (img && /img/i.test(img.tagName) && (img.className !== "edui-faked-video" || img.className.indexOf("edui-upload-video") != -1) && !img.getAttribute("word_img")) {
       var first = opt.shift();
       var floatStyle = first["floatStyle"];
       delete first["floatStyle"];
@@ -215,11 +215,11 @@ UE.commands["insertimage"] = {
           (ci.width ? 'width="' + ci.width + '" ' : "") +
           (ci.height ? ' height="' + ci.height + '" ' : "") +
           (ci["floatStyle"] === "left" || ci["floatStyle"] === "right" ? ' style="float:' + ci["floatStyle"] + ';"' : "") +
-          (ci.title && ci.title != "" ? ' title="' + ci.title + '"' : "") +
-          (ci.border && ci.border != "0" ? ' border="' + ci.border + '"' : "") +
-          (ci.alt && ci.alt != "" ? ' alt="' + ci.alt + '"' : "") +
-          (ci.hspace && ci.hspace != "0" ? ' hspace = "' + ci.hspace + '"' : "") +
-          (ci.vspace && ci.vspace != "0" ? ' vspace = "' + ci.vspace + '"' : "") +
+          (ci.title && ci.title !== "" ? ' title="' + ci.title + '"' : "") +
+          (ci.border && ci.border !== "0" && ci.border !== 0 ? ' border="' + ci.border + '"' : "") +
+          (ci.alt && ci.alt !== "" ? ' alt="' + ci.alt + '"' : "") +
+          (ci.hspace && ci.hspace !== "0" && ci.hspace !== 0 ? ' hspace = "' + ci.hspace + '"' : "") +
+          (ci.vspace && ci.vspace !== "0" && ci.vspace !== 0 ? ' vspace = "' + ci.vspace + '"' : "") +
           "/>";
         if (ci["floatStyle"] === "center") {
           str = '<p style="text-align: center">' + str + "</p>";
@@ -237,7 +237,7 @@ UE.commands["insertimage"] = {
             (ci._src ? ' _src="' + ci._src + '" ' : "") +
             (ci.height ? ' height="' + ci.height + '" ' : "") +
             ' style="' +
-            (ci["floatStyle"] && ci["floatStyle"] != "center" ? "float:" + ci["floatStyle"] + ";" : "") +
+            (ci["floatStyle"] && ci["floatStyle"] !== "center" ? "float:" + ci["floatStyle"] + ";" : "") +
             (ci.border || "") +
             '" ' +
             (ci.title ? ' title="' + ci.title + '"' : "") +

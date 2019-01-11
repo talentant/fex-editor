@@ -94,7 +94,7 @@ UE.plugins["formatmatch"] = function() {
 
       var range = me.selection.getRange();
       img = range.getClosedNode();
-      if (!img || img.tagName != "IMG") {
+      if (!img || img.tagName !== "IMG") {
         range.collapse(true).shrinkBoundary();
         var start = range.startContainer;
         list = domUtils.findParents(start, true, node => !domUtils.isBlockElm(node) && node.nodeType == 1);

@@ -137,7 +137,7 @@
     }
     arr.push("<" + node.tagName + (attrhtml ? " " + attrhtml : "") + (dtd.$empty[node.tagName] ? "/" : "") + ">");
     //插入新行
-    if (formatter && !dtd.$inlineWithA[node.tagName] && node.tagName != "pre") {
+    if (formatter && !dtd.$inlineWithA[node.tagName] && node.tagName !== "pre") {
       if (node.children && node.children.length) {
         current = insertLine(arr, current, true);
         insertIndent(arr, current);
@@ -153,7 +153,7 @@
       }
     }
     if (!dtd.$empty[node.tagName]) {
-      if (formatter && !dtd.$inlineWithA[node.tagName] && node.tagName != "pre") {
+      if (formatter && !dtd.$inlineWithA[node.tagName] && node.tagName !== "pre") {
         if (node.children && node.children.length) {
           current = insertLine(arr, current);
           insertIndent(arr, current);
@@ -257,7 +257,7 @@
      * ```
      */
     innerHTML(htmlstr) {
-      if (this.type != "element" || dtd.$empty[this.tagName]) {
+      if (this.type !== "element" || dtd.$empty[this.tagName]) {
         return this;
       }
       if (utils.isString(htmlstr)) {
@@ -305,7 +305,7 @@
      * ```
      */
     innerText(textStr, noTrans) {
-      if (this.type != "element" || dtd.$empty[this.tagName]) {
+      if (this.type !== "element" || dtd.$empty[this.tagName]) {
         return this;
       }
       if (textStr) {

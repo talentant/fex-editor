@@ -276,7 +276,7 @@ UE.plugins["paste"] = function() {
 
     //ie下beforepaste在点击右键时也会触发，所以用监控键盘才处理
     domUtils.on(me.body, browser.ie || browser.opera ? "keydown" : "paste", e => {
-      if ((browser.ie || browser.opera) && ((!e.ctrlKey && !e.metaKey) || e.keyCode != "86")) {
+      if ((browser.ie || browser.opera) && ((!e.ctrlKey && !e.metaKey) || (e.keyCode !== "86" && e.keyCode !== 86))) {
         return;
       }
       getClipboardData.call(me, div => {

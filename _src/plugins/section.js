@@ -73,7 +73,7 @@ UE.plugin.register("section", function() {
           for (var i = 0; i < levelFn.length; i++) {
             if (typeof levelFn[i] === "string") {
               levelFn[i] = (fn => node => node.tagName == fn.toUpperCase())(levelFn[i]);
-            } else if (typeof levelFn[i] != "function") {
+            } else if (typeof levelFn[i] !== "function") {
               levelFn[i] = node => null;
             }
           }

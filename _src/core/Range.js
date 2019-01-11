@@ -1248,7 +1248,7 @@
       var bookmark = this.createBookmark();
       var end = bookmark.end;
 
-      var filterFn = node => (node.nodeType == 1 ? node.tagName.toLowerCase() != "br" : !domUtils.isWhitespace(node));
+      var filterFn = node => (node.nodeType == 1 ? node.tagName.toLowerCase() !== "br" : !domUtils.isWhitespace(node));
 
       var current = domUtils.getNextDomNode(bookmark.start, false, filterFn);
       var node;

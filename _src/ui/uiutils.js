@@ -128,7 +128,7 @@
       var k = attributes.length;
       while (k--) {
         var attrNode = attributes[k];
-        if (attrNode.nodeName != "style" && attrNode.nodeName != "class" && (!browser.ie || attrNode.specified)) {
+        if (attrNode.nodeName !== "style" && attrNode.nodeName !== "class" && (!browser.ie || attrNode.specified)) {
           tgt.setAttribute(attrNode.nodeName, attrNode.nodeValue);
         }
       }

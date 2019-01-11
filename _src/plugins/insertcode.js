@@ -275,11 +275,11 @@ UE.plugins["insertcode"] = function() {
         }
         if (pre) {
           var str = "";
-          while (pre && pre.nodeName != "BR" && new RegExp("^[\\s" + domUtils.fillChar + "]*$").test(pre.nodeValue)) {
+          while (pre && pre.nodeName !== "BR" && new RegExp("^[\\s" + domUtils.fillChar + "]*$").test(pre.nodeValue)) {
             str += pre.nodeValue;
             pre = pre.nextSibling;
           }
-          if (pre.nodeName != "BR") {
+          if (pre.nodeName !== "BR") {
             var match = pre.nodeValue.match(new RegExp("^([\\s" + domUtils.fillChar + "]+)"));
             if (match && match[1]) {
               str += match[1];
@@ -337,11 +337,11 @@ UE.plugins["insertcode"] = function() {
           }
           if (pre) {
             var str = "";
-            while (pre && pre.nodeName != "BR" && new RegExp("^[ " + domUtils.fillChar + "]*$").test(pre.nodeValue)) {
+            while (pre && pre.nodeName !== "BR" && new RegExp("^[ " + domUtils.fillChar + "]*$").test(pre.nodeValue)) {
               str += pre.nodeValue;
               pre = pre.nextSibling;
             }
-            if (pre.nodeName != "BR") {
+            if (pre.nodeName !== "BR") {
               var match = pre.nodeValue.match(new RegExp("^([ " + domUtils.fillChar + "]+)"));
               if (match && match[1]) {
                 str += match[1];
@@ -475,7 +475,7 @@ UE.plugins["insertcode"] = function() {
                   frag.appendChild(me.document.createTextNode(utils.html(cn.data.replace(/&nbsp;/g, " "))));
                 }
               });
-              if (frag.lastChild.nodeName != "BR") {
+              if (frag.lastChild.nodeName !== "BR") {
                 frag.appendChild(me.document.createElement("br"));
               }
             }

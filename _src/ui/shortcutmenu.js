@@ -117,7 +117,7 @@
       var list = domUtils.getElementsByTagName(layerEle, "div", node => domUtils.hasClass(node, "edui-shortcutsubmenu edui-popup"));
 
       for (var i = 0, node; (node = list[i++]); ) {
-        if (node.style.display != "none") {
+        if (node.style.display !== "none") {
           isSubMenuShow = true;
         }
       }

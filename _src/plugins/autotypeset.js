@@ -150,7 +150,7 @@ UE.plugins["autotypeset"] = function() {
           continue;
         }
       }
-      if (isLine(ci, true) && ci.tagName != "SPAN") {
+      if (isLine(ci, true) && ci.tagName !== "SPAN") {
         if (opt.indent) {
           ci.style.textIndent = opt.indentValue;
         }
@@ -204,7 +204,7 @@ UE.plugins["autotypeset"] = function() {
               domUtils.setStyle(img, "float", opt.imageBlockLine);
               break;
             case "center":
-              if (me.queryCommandValue("imagefloat") != "center") {
+              if (me.queryCommandValue("imagefloat") !== "center") {
                 pN = img.parentNode;
                 domUtils.setStyle(img, "float", "none");
                 tmpNode = img;

@@ -36,7 +36,7 @@ UE.plugins["removeformat"] = function() {
       var filter = node => node.nodeType == 1;
 
       function isRedundantSpan(node) {
-        if (node.nodeType == 3 || node.tagName.toLowerCase() != "span") {
+        if (node.nodeType == 3 || node.tagName.toLowerCase() !== "span") {
           return 0;
         }
         if (browser.ie) {
@@ -106,7 +106,7 @@ UE.plugins["removeformat"] = function() {
               if (tagReg.test(current.tagName)) {
                 if (style) {
                   domUtils.removeStyle(current, style);
-                  if (isRedundantSpan(current) && style != "text-decoration") {
+                  if (isRedundantSpan(current) && style !== "text-decoration") {
                     domUtils.remove(current, true);
                   }
                 } else {

@@ -173,7 +173,7 @@ UE.commands["inserthtml"] = {
         nextNode = child.nextSibling;
         if (!hadBreak && child.nodeType == domUtils.NODE_ELEMENT && domUtils.isBlockElm(child)) {
           parent = domUtils.findParent(child, node => domUtils.isBlockElm(node));
-          if (parent && parent.tagName.toLowerCase() != "body" && !(dtd[parent.tagName][child.nodeName] && child.parentNode === parent)) {
+          if (parent && parent.tagName.toLowerCase() !== "body" && !(dtd[parent.tagName][child.nodeName] && child.parentNode === parent)) {
             if (!dtd[parent.tagName][child.nodeName]) {
               pre = parent;
             } else {

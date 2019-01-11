@@ -247,7 +247,7 @@ UE.plugins["fiximgclick"] = (() => {
         var range = me.selection.getRange();
         var img = range.getClosedNode();
 
-        if (img && img.tagName === "IMG" && me.body.contentEditable != "false") {
+        if (img && img.tagName === "IMG" && me.body.contentEditable !== "false") {
           if (img.getAttribute("anchorname") || domUtils.hasClass(img, "loadingclass") || domUtils.hasClass(img, "loaderrorclass")) {
             return;
           }
@@ -319,14 +319,14 @@ UE.plugins["fiximgclick"] = (() => {
           }
           imageScale.show(img);
         } else {
-          if (imageScale && imageScale.resizer.style.display != "none") imageScale.hide();
+          if (imageScale && imageScale.resizer.style.display !== "none") imageScale.hide();
         }
       });
     }
 
     if (browser.webkit) {
       me.addListener("click", (type, e) => {
-        if (e.target.tagName === "IMG" && me.body.contentEditable != "false") {
+        if (e.target.tagName === "IMG" && me.body.contentEditable !== "false") {
           var range = new dom.Range(me.document);
           range.selectNode(e.target).select();
         }

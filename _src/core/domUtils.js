@@ -1253,7 +1253,7 @@ var domUtils = (dom.domUtils = {
             }
           }
         }
-        if (parent.tagName != "A") {
+        if (parent.tagName !== "A") {
           parent === node.parentNode && domUtils.remove(node, true);
           break;
         }

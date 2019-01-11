@@ -154,7 +154,7 @@ UE.plugins["tablesort"] = function() {
         }
       }
 
-      return !table ? -1 : (cmd === "enablesort") ^ (table.getAttribute("data-sort") != "sortEnabled") ? -1 : 0;
+      return !table ? -1 : (cmd === "enablesort") ^ (table.getAttribute("data-sort") !== "sortEnabled") ? -1 : 0;
     },
     execCommand(cmd) {
       var table = getTableItemsByRange(this).table;

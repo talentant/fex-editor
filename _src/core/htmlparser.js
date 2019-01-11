@@ -111,7 +111,7 @@ var htmlparser = (UE.htmlparser = (htmlstr, ignoreBlank) => {
     if ((needParentTag = needParentNode[tagName])) {
       var tmpParent = parent;
       var hasParent;
-      while (tmpParent.type != "root") {
+      while (tmpParent.type !== "root") {
         if (utils.isArray(needParentTag) ? utils.indexOf(needParentTag, tmpParent.tagName) != -1 : needParentTag == tmpParent.tagName) {
           parent = tmpParent;
           hasParent = true;
@@ -188,7 +188,7 @@ var htmlparser = (UE.htmlparser = (htmlstr, ignoreBlank) => {
           currentParent = element(currentParent, match[3].toLowerCase(), match[4]);
         }
       } else if (match[1]) {
-        if (currentParent.type != "root") {
+        if (currentParent.type !== "root") {
           if (dtd.$cdata[currentParent.tagName] && !dtd.$cdata[match[1]]) {
             text(currentParent, match[0]);
           } else {

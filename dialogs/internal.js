@@ -63,7 +63,7 @@
               oj.innerHTML = content.options[j++];
             }
             for (var p in content) {
-              p != "options" && dom.setAttribute(p, content[p]);
+              p !== "options" && dom.setAttribute(p, content[p]);
             }
             break;
           default:

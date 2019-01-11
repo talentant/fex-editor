@@ -186,13 +186,13 @@ UE.plugins["keystrokes"] = function() {
         if ((tmpNode = domUtils.findParentByTagName(rng.startContainer, autoClearTagName, true))) {
           if (domUtils.isEmptyBlock(tmpNode)) {
             var pre = tmpNode.previousSibling;
-            if (pre && pre.nodeName != "TABLE") {
+            if (pre && pre.nodeName !== "TABLE") {
               domUtils.remove(tmpNode);
               rng.setStartAtLast(pre).setCursor(false, true);
               return;
             } else {
               var next = tmpNode.nextSibling;
-              if (next && next.nodeName != "TABLE") {
+              if (next && next.nodeName !== "TABLE") {
                 domUtils.remove(tmpNode);
                 rng.setStartAtFirst(next).setCursor(false, true);
                 return;

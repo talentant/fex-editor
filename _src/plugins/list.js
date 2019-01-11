@@ -215,7 +215,7 @@ UE.plugins["list"] = function() {
               lastNode = tmpNode;
             }
             tmpNode = newChildrens[newChildrens.length - 1];
-            if (!tmpNode || tmpNode.type != "element" || tmpNode.tagName != "br") {
+            if (!tmpNode || tmpNode.type !== "element" || tmpNode.tagName !== "br") {
               var br = UE.uNode.createElement("br");
               br.parentNode = li;
               newChildrens.push(br);
@@ -292,7 +292,7 @@ UE.plugins["list"] = function() {
         }
       }
       utils.each(root.getNodesByTagName("p"), node => {
-        if (node.getAttr("class") != "MsoListParagraph") {
+        if (node.getAttr("class") !== "MsoListParagraph") {
           return;
         }
 
@@ -323,14 +323,14 @@ UE.plugins["list"] = function() {
         var type;
         var cacheNode = node;
 
-        if (node.parentNode.tagName != "li" && (type = checkListType(node.innerText(), node))) {
+        if (node.parentNode.tagName !== "li" && (type = checkListType(node.innerText(), node))) {
           var list = UE.uNode.createElement(me.options.insertorderedlist.hasOwnProperty(type) ? "ol" : "ul");
           if (customStyle[type]) {
             list.setAttr("class", "custom_" + type);
           } else {
             list.setStyle("list-style-type", type);
           }
-          while (node && node.parentNode.tagName != "li" && checkListType(node.innerText(), node)) {
+          while (node && node.parentNode.tagName !== "li" && checkListType(node.innerText(), node)) {
             tmp = node.nextSibling();
             if (!tmp) {
               node.parentNode.insertBefore(list, node);
@@ -509,7 +509,7 @@ UE.plugins["list"] = function() {
       var parent = domUtils.findParent(rng.startContainer, node => domUtils.isBlockElm(node), true);
 
       var li = domUtils.findParentByTagName(rng.startContainer, "li", true);
-      if (parent && parent.tagName != "PRE" && !li) {
+      if (parent && parent.tagName !== "PRE" && !li) {
         var html = parent.innerHTML.replace(new RegExp(domUtils.fillChar, "g"), "");
         if (/^\s*1\s*\.[^\d]/.test(html)) {
           parent.innerHTML = html.replace(/^\s*1\s*\./, "");
@@ -957,7 +957,7 @@ UE.plugins["list"] = function() {
       var me = this;
       var range = this.selection.getRange();
 
-      var filterFn = node => (node.nodeType == 1 ? node.tagName.toLowerCase() != "br" : !domUtils.isWhitespace(node));
+      var filterFn = node => (node.nodeType == 1 ? node.tagName.toLowerCase() !== "br" : !domUtils.isWhitespace(node));
 
       var tag = command.toLowerCase() === "insertorderedlist" ? "ol" : "ul";
       var frag = me.document.createDocumentFragment();

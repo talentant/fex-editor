@@ -51,7 +51,7 @@ UE.plugin.register("background", function() {
         if (su.indexOf(me.options.imagePath) > 0) {
           url = su.substring(su.indexOf(me.options.imagePath), su.length - 1).replace(/"|\(|\)/gi, "");
         } else {
-          url = su != "none" ? su.replace(/url\("?|"?\)/gi, "") : "";
+          url = su !== "none" ? su.replace(/url\("?|"?\)/gi, "") : "";
         }
         var html = '<style type="text/css">body{';
         var bgObj = {
