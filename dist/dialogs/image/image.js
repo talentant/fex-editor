@@ -28,7 +28,7 @@
     }
 
     var img = editor.selection.getRange().getClosedNode();
-    if (img && img.tagName && img.tagName.toLowerCase() == "img") {
+    if (img && img.tagName && img.tagName.toLowerCase() === "img") {
       setTabFocus("remote");
     } else {
       setTabFocus("upload");
@@ -142,7 +142,7 @@
   /* 获取对齐方式 */
   function getAlign() {
     var align = $G("align").value || "none";
-    return align == "none" ? "" : align;
+    return align === "none" ? "" : align;
   }
 
   /* 在线图片 */
@@ -763,7 +763,7 @@
       uploader.on("filesQueued", file => {
         if (
           !uploader.isInProgress() &&
-          (state == "pedding" || state == "finish" || state == "confirm" || state == "ready")
+          (state === "pedding" || state === "finish" || state === "confirm" || state === "ready")
         ) {
           setState("ready");
         }
@@ -812,7 +812,7 @@
         try {
           var responseText = ret._raw || ret;
           var json = utils.str2json(responseText);
-          if (json.state == "SUCCESS") {
+          if (json.state === "SUCCESS") {
             _this.imageList.push(json);
             $file.append('<span class="success"></span>');
           } else {
@@ -831,7 +831,7 @@
 
       uploader.on("uploadError", (file, code) => {});
       uploader.on("error", (code, file) => {
-        if (code == "Q_TYPE_DENIED" || code == "F_EXCEED_SIZE") {
+        if (code === "Q_TYPE_DENIED" || code === "F_EXCEED_SIZE") {
           addFile(file);
         }
       });
@@ -862,7 +862,7 @@
       var files = this.uploader.getFiles();
       for (i = 0; (file = files[i++]); ) {
         status = file.getStatus();
-        if (status == "queued" || status == "uploading" || status == "progress") readyFile++;
+        if (status === "queued" || status === "uploading" || status === "progress") readyFile++;
       }
       return readyFile;
     },
@@ -926,7 +926,7 @@
         var target = e.target || e.srcElement;
         var li = target.parentNode;
 
-        if (li.tagName.toLowerCase() == "li") {
+        if (li.tagName.toLowerCase() === "li") {
           if (domUtils.hasClass(li, "selected")) {
             domUtils.removeClasses(li, "selected");
           } else {
@@ -973,7 +973,7 @@
           onsuccess(r) {
             try {
               var json = isJsonp ? r : eval("(" + r.responseText + ")");
-              if (json.state == "SUCCESS") {
+              if (json.state === "SUCCESS") {
                 _this.pushData(json.list);
                 _this.listIndex = parseInt(json.start) + parseInt(json.list.length);
                 if (_this.listIndex >= json.total) {
@@ -1040,7 +1040,7 @@
       var ow = img.width;
       var oh = img.height;
 
-      if (type == "justify") {
+      if (type === "justify") {
         if (ow >= oh) {
           img.width = w;
           img.height = (h * oh) / ow;
@@ -1127,7 +1127,7 @@
         var target = e.target || e.srcElement;
         var li = target.parentNode.parentNode;
 
-        if (li.tagName.toLowerCase() == "li") {
+        if (li.tagName.toLowerCase() === "li") {
           if (domUtils.hasClass(li, "selected")) {
             domUtils.removeClasses(li, "selected");
           } else {
@@ -1236,7 +1236,7 @@
       var items = $G("searchListUl").children;
       for (var i = 0; i < items.length; i++) {
         child = items[i].firstChild && items[i].firstChild.firstChild;
-        if (child.tagName && child.tagName.toLowerCase() == "img" && domUtils.hasClass(items[i], "selected")) {
+        if (child.tagName && child.tagName.toLowerCase() === "img" && domUtils.hasClass(items[i], "selected")) {
           src = child.src;
           list.push({
             src,

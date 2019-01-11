@@ -768,7 +768,7 @@
     },
     triggerLayout() {
       var dom = this.getDom();
-      if (dom.style.zoom === "1") {
+      if (dom.style.zoom === "1" || dom.style.zoom === 1) {
         dom.style.zoom = "100%";
       } else {
         dom.style.zoom = "1";

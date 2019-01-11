@@ -3,7 +3,7 @@
 /*!
  * fex-editor
  * version: 2.2.0
- * build: 2018-12-10
+ * build: 2019-01-11
  */
 (function () {
   (function () {
@@ -306,7 +306,7 @@
             var html = [];
 
             for (var p in obj) {
-              if (p == "tag") continue;
+              if (p === "tag") continue;
               html.push(p + '="' + obj[p] + '"');
             }
 
@@ -351,7 +351,7 @@
     };
     utils.each(["String", "Function", "Array", "Number", "RegExp", "Object", "Boolean"], function (v) {
       utils["is" + v] = function (obj) {
-        return Object.prototype.toString.apply(obj) == "[object " + v + "]";
+        return Object.prototype.toString.apply(obj) === "[object " + v + "]";
       };
     });
     var parselist = {};
@@ -401,7 +401,7 @@
     var pres = this.root.getElementsByTagName("pre");
 
     if (pres.length) {
-      if (typeof XRegExp == "undefined") {
+      if (typeof XRegExp === "undefined") {
         var jsurl;
         var cssurl;
 
@@ -651,7 +651,7 @@
 
         for (var j = 0, cell; cell = row.cells[j]; j++) {
           var value = cell.innerText || cell.textContent || "";
-          rowData.push(cell.tagName == "TH" ? value : value | 0);
+          rowData.push(cell.tagName === "TH" ? value : value | 0);
         }
 
         data.push(rowData);
@@ -923,13 +923,13 @@
         if (list.className && /custom_/i.test(list.className)) {
           var listStyle = list.className.match(/custom_(\w+)/)[1];
 
-          if (listStyle == "dash" || listStyle == "dot") {
+          if (listStyle === "dash" || listStyle === "dot") {
             utils.pushItem(customCss, selector + " li.list-" + customStyle[listStyle] + "{background-image:url(" + T.liiconpath + customStyle[listStyle] + ".gif)}");
             utils.pushItem(customCss, selector + " ul.custom_" + listStyle + "{list-style:none;} " + selector + " ul.custom_" + listStyle + " li{background-position:0 3px;background-repeat:no-repeat}");
           } else {
             var index = 1;
             utils.each(list.childNodes, function (li) {
-              if (li.tagName == "LI") {
+              if (li.tagName === "LI") {
                 utils.pushItem(customCss, selector + " li.list-" + customStyle[listStyle] + index + "{background-image:url(" + T.liiconpath + "list-" + customStyle[listStyle] + index + ".gif)}");
                 index++;
               }

@@ -18,7 +18,7 @@
             tabs[j].className = "focus";
             var contentId = tabs[j].getAttribute("data-content-id");
             $G(contentId).style.display = "block";
-            if (contentId == "imgManager") {
+            if (contentId === "imgManager") {
               initImagePanel();
             }
           } else {
@@ -42,7 +42,7 @@
       var x = parseInt(pos[0]) || 0;
       var y = parseInt(pos[1]) || 0;
 
-      if (repeat == "no-repeat" && (x || y)) repeat = "self";
+      if (repeat === "no-repeat" && (x || y)) repeat = "self";
 
       image = image.match(/url[\s]*\(([^\)]*)\)/);
       image = image ? image[1] : "";
@@ -58,7 +58,7 @@
     domUtils.on($G("nocolorRadio"), "click", updateBackground);
     domUtils.on($G("coloredRadio"), "click", updateHandler);
     domUtils.on($G("url"), "keyup", () => {
-      if ($G("url").value && $G("alignment").style.display == "none") {
+      if ($G("url").value && $G("alignment").style.display === "none") {
         utils.each($G("repeatType").children, item => {
           item.selected = "repeat" == item.getAttribute("value") ? "selected" : false;
         });
@@ -121,8 +121,8 @@
     var coloredRadio = $G("coloredRadio");
 
     if (radio) {
-      nocolorRadio.checked = radio == "colored" ? false : "checked";
-      coloredRadio.checked = radio == "colored" ? "checked" : false;
+      nocolorRadio.checked = radio === "colored" ? false : "checked";
+      coloredRadio.checked = radio === "colored" ? "checked" : false;
     }
     if (color) {
       domUtils.setStyle($G("colorPicker"), "background-color", color);
@@ -150,7 +150,7 @@
 
     $G("alignment").style.display = coloredRadio.checked && $G("url").value ? "" : "none";
     $G("custom").style.display =
-      coloredRadio.checked && $G("url").value && $G("repeatType").value == "self" ? "" : "none";
+      coloredRadio.checked && $G("url").value && $G("repeatType").value === "self" ? "" : "none";
   }
 
   /* 更新背景颜色 */
@@ -167,9 +167,9 @@
 
       if (color) backgroundObj["background-color"] = color;
       if (bgimg) backgroundObj["background-image"] = "url(" + bgimg + ")";
-      if (align == "self") {
+      if (align === "self") {
         backgroundObj["background-position"] = $G("x").value + "px " + $G("y").value + "px";
-      } else if (align == "repeat-x" || align == "repeat-y" || align == "repeat") {
+      } else if (align === "repeat-x" || align === "repeat-y" || align === "repeat") {
         backgroundObj["background-repeat"] = align;
       }
 
@@ -219,7 +219,7 @@
         var li = target.parentNode;
         var nodes = $G("imageListUl").childNodes;
 
-        if (li.tagName.toLowerCase() == "li") {
+        if (li.tagName.toLowerCase() === "li") {
           updateFormState("nocolor", null, "");
           for (var i = 0, node; (node = nodes[i++]); ) {
             if (node == li && !domUtils.hasClass(node, "selected")) {
@@ -271,7 +271,7 @@
           onsuccess(r) {
             try {
               var json = isJsonp ? r : eval("(" + r.responseText + ")");
-              if (json.state == "SUCCESS") {
+              if (json.state === "SUCCESS") {
                 _this.pushData(json.list);
                 _this.listIndex = parseInt(json.start) + parseInt(json.list.length);
                 if (_this.listIndex >= json.total) {
@@ -338,7 +338,7 @@
       var ow = img.width;
       var oh = img.height;
 
-      if (type == "justify") {
+      if (type === "justify") {
         if (ow >= oh) {
           img.width = w;
           img.height = (h * oh) / ow;

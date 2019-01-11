@@ -190,11 +190,11 @@ baidu.dom.insertHTML = (element, position, html) => {
   } else {
     range = element.ownerDocument.createRange();
     position = position.toUpperCase();
-    if (position == "AFTERBEGIN" || position == "BEFOREEND") {
+    if (position === "AFTERBEGIN" || position === "BEFOREEND") {
       range.selectNodeContents(element);
-      range.collapse(position == "AFTERBEGIN");
+      range.collapse(position === "AFTERBEGIN");
     } else {
-      begin = position == "BEFOREBEGIN";
+      begin = position === "BEFOREBEGIN";
       range[begin ? "setStartBefore" : "setEndAfter"](element);
       range.collapse(begin);
     }
@@ -821,13 +821,13 @@ baidu.object = baidu.object || {};
  * @param {Object} source 源对象
  * @see baidu.array.merge
  * @remark
- * 
+ *
 1.目标对象中，与源对象key相同的成员将会被覆盖。<br>
 2.源对象的prototype成员不会拷贝。
-		
+
  * @shortcut extend
  * @meta standard
- *             
+ *
  * @returns {Object} 目标对象
  */
 baidu.extend = baidu.object.extend = (target, source) => {
@@ -1096,7 +1096,7 @@ baidu.sio.callByBrowser = (url, opt_callback, opt_options) => {
     }
 
     var readyState = scr.readyState;
-    if ("undefined" == typeof readyState || readyState == "loaded" || readyState == "complete") {
+    if ("undefined" == typeof readyState || readyState === "loaded" || readyState === "complete") {
       scriptLoaded = 1;
       try {
         callback();

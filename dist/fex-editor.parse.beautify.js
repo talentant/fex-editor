@@ -1,7 +1,7 @@
 /*!
  * fex-editor
  * version: 2.2.0
- * build: 2018-12-10
+ * build: 2019-01-11
  */
 
 "use strict";
@@ -157,7 +157,7 @@
                     }
                 } else {
                     var s = [];
-                    for (var a in n) "tag" != a && s.push(a + '="' + n[a] + '"');
+                    for (var a in n) "tag" !== a && s.push(a + '="' + n[a] + '"');
                     t.write("<" + n.tag + " " + s.join(" ") + " ></" + n.tag + ">");
                 }
             };
@@ -165,7 +165,7 @@
     };
     l.each([ "String", "Function", "Array", "Number", "RegExp", "Object", "Boolean" ], function(t) {
         l["is" + t] = function(e) {
-            return Object.prototype.toString.apply(e) == "[object " + t + "]";
+            return Object.prototype.toString.apply(e) === "[object " + t + "]";
         };
     });
     var n = {};
@@ -295,7 +295,7 @@
         for (var t, n = e.getAttribute("data-chart"), i = {}, r = [], a = 0; t = e.rows[a]; a++) {
             for (var s, l = [], o = 0; s = t.cells[o]; o++) {
                 var d = s.innerText || s.textContent || "";
-                l.push("TH" == s.tagName ? d : 0 | d);
+                l.push("TH" === s.tagName ? d : 0 | d);
             }
             r.push(l);
         }
@@ -435,11 +435,11 @@
         r.each(e, function(e) {
             if (e.className && /custom_/i.test(e.className)) {
                 var t = e.className.match(/custom_(\w+)/)[1];
-                if ("dash" == t || "dot" == t) r.pushItem(a, l + " li.list-" + s[t] + "{background-image:url(" + i.liiconpath + s[t] + ".gif)}"), 
+                if ("dash" === t || "dot" === t) r.pushItem(a, l + " li.list-" + s[t] + "{background-image:url(" + i.liiconpath + s[t] + ".gif)}"), 
                 r.pushItem(a, l + " ul.custom_" + t + "{list-style:none;} " + l + " ul.custom_" + t + " li{background-position:0 3px;background-repeat:no-repeat}"); else {
                     var n = 1;
                     r.each(e.childNodes, function(e) {
-                        "LI" == e.tagName && (r.pushItem(a, l + " li.list-" + s[t] + n + "{background-image:url(" + i.liiconpath + "list-" + s[t] + n + ".gif)}"), 
+                        "LI" === e.tagName && (r.pushItem(a, l + " li.list-" + s[t] + n + "{background-image:url(" + i.liiconpath + "list-" + s[t] + n + ".gif)}"), 
                         n++);
                     }), r.pushItem(a, l + " ol.custom_" + t + "{list-style:none;}" + l + " ol.custom_" + t + " li{background-position:0 3px;background-repeat:no-repeat}");
                 }

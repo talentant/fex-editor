@@ -1022,7 +1022,7 @@ var utils = (UE.utils = {
     return !(
       a.protocol == location.protocol &&
       a.hostname == location.hostname &&
-      (a.port == location.port || (a.port === "80" && location.port === "") || (a.port === "" && location.port === "80"))
+      (a.port == location.port || ((a.port === "80" || a.port === 80) && location.port === "") || (a.port === "" && (location.port === "80" || location.port === 80)))
     );
   },
   clearEmptyAttrs(obj) {

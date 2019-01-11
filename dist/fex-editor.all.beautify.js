@@ -1,7 +1,7 @@
 /*!
  * fex-editor
  * version: 2.2.0
- * build: 2018-12-10
+ * build: 2019-01-11
  */
 
 "use strict";
@@ -50,9 +50,9 @@ function _typeof(e) {
             opera: !!t && t.version,
             webkit: -1 < e.indexOf(" applewebkit/"),
             mac: -1 < e.indexOf("macintosh"),
-            quirks: "BackCompat" == document.compatMode
+            quirks: "BackCompat" === document.compatMode
         };
-        i.gecko = "Gecko" == navigator.product && !i.webkit && !i.opera && !i.ie;
+        i.gecko = "Gecko" === navigator.product && !i.webkit && !i.opera && !i.ie;
         var n = 0;
         if (i.ie) {
             var o = e.match(/(?:msie\s([\w.]+))/), r = e.match(/(?:trident.*rv:([\w.]+))/);
@@ -192,7 +192,7 @@ function _typeof(e) {
                     }
                 } else {
                     var a = [];
-                    for (var r in i) "tag" != r && a.push(r + '="' + i[r] + '"');
+                    for (var r in i) "tag" !== r && a.push(r + '="' + i[r] + '"');
                     t.write("<" + i.tag + " " + a.join(" ") + " ></" + i.tag + ">");
                 }
             };
@@ -230,7 +230,7 @@ function _typeof(e) {
                     return !r && (r = {}), r[i] = n, "";
 
                   case "border":
-                    return "initial" == n ? "" : e;
+                    return "initial" === n ? "" : e;
                 }
                 return e;
             }), (e += t(o, "padding") + t(r, "margin")).replace(/^[ \n\r\t;]*|[ \n\r\t]*$/, "").replace(/;([ \n\r\t]+)|\1;/g, ";").replace(/(&((l|g)t|quot|#39))?;{2,}/g, function(e, t) {
@@ -239,7 +239,7 @@ function _typeof(e) {
         },
         clone: function(e, t) {
             var i;
-            for (var n in t = t || {}, e) e.hasOwnProperty(n) && ("object" == _typeof(i = e[n]) ? (t[n] = utils.isArray(i) ? [] : {}, 
+            for (var n in t = t || {}, e) e.hasOwnProperty(n) && ("object" === _typeof(i = e[n]) ? (t[n] = utils.isArray(i) ? [] : {}, 
             utils.clone(e[n], t[n])) : t[n] = i);
             return t;
         },
@@ -309,7 +309,7 @@ function _typeof(e) {
         },
         serializeParam: function(e) {
             var t = [];
-            for (var i in e) if ("method" != i && "timeout" != i && "async" != i) if ("function" != _typeof(e[i]).toLowerCase() && "object" != _typeof(e[i]).toLowerCase()) t.push(encodeURIComponent(i) + "=" + encodeURIComponent(e[i])); else if (utils.isArray(e[i])) for (var n = 0; n < e[i].length; n++) t.push(encodeURIComponent(i) + "[]=" + encodeURIComponent(e[i][n]));
+            for (var i in e) if ("method" !== i && "timeout" !== i && "async" !== i) if ("function" !== _typeof(e[i]).toLowerCase() && "object" !== _typeof(e[i]).toLowerCase()) t.push(encodeURIComponent(i) + "=" + encodeURIComponent(e[i])); else if (utils.isArray(e[i])) for (var n = 0; n < e[i].length; n++) t.push(encodeURIComponent(i) + "[]=" + encodeURIComponent(e[i][n]));
             return t.join("&");
         },
         formatUrl: function(e) {
@@ -318,7 +318,7 @@ function _typeof(e) {
         },
         isCrossDomainUrl: function(e) {
             var t = document.createElement("a");
-            return t.href = e, browser.ie && (t.href = t.href), !(t.protocol == location.protocol && t.hostname == location.hostname && (t.port == location.port || "80" == t.port && "" == location.port || "" == t.port && "80" == location.port));
+            return t.href = e, browser.ie && (t.href = t.href), !(t.protocol == location.protocol && t.hostname == location.hostname && (t.port == location.port || ("80" === t.port || 80 === t.port) && "" === location.port || "" === t.port && ("80" === location.port || 80 === location.port)));
         },
         clearEmptyAttrs: function(e) {
             for (var t in e) "" === e[t] && delete e[t];
@@ -391,7 +391,7 @@ function _typeof(e) {
     }, Ea, Fa;
     utils.each([ "String", "Function", "Array", "Number", "RegExp", "Object", "Date" ], function(t) {
         UE.utils["is" + t] = function(e) {
-            return Object.prototype.toString.apply(e) == "[object " + t + "]";
+            return Object.prototype.toString.apply(e) === "[object " + t + "]";
         };
     });
     var EventBase = UE.EventBase = function() {};
@@ -909,7 +909,7 @@ function _typeof(e) {
     function getDomNode(e, t, i, n, o, r) {
         var a, s = n && e[t];
         for (!s && (s = e[i]); !s && (a = (a || e).parentNode); ) {
-            if ("BODY" == a.tagName || r && !r(a)) return null;
+            if ("BODY" === a.tagName || r && !r(a)) return null;
             s = a[i];
         }
         return s && o && !o(s) ? getDomNode(s, t, i, !1, o) : s;
@@ -941,7 +941,7 @@ function _typeof(e) {
         POSITION_PRECEDING: 4,
         POSITION_IS_CONTAINED: 8,
         POSITION_CONTAINS: 16,
-        fillChar: ie && "6" == browser.version ? "\ufeff" : "​",
+        fillChar: !ie || "6" !== browser.version && 6 !== browser.version ? "​" : "\ufeff",
         keys: {
             8: 1,
             46: 1,
@@ -1091,7 +1091,7 @@ function _typeof(e) {
             var i, n, o = e.attributes, r = t.attributes;
             if (!ie && o.length != r.length) return !1;
             for (var a = 0, s = 0, l = 0; i = o[l++]; ) {
-                if ("style" == i.nodeName) {
+                if ("style" === i.nodeName) {
                     if (i.specified && a++, domUtils.isSameStyle(e, t)) continue;
                     return !1;
                 }
@@ -1123,7 +1123,7 @@ function _typeof(e) {
             return 1 == e.nodeType && (dtd.$block[e.tagName] || styleBlock[domUtils.getComputedStyle(e, "display")]) && !dtd.$nonChild[e.tagName];
         },
         isBody: function(e) {
-            return e && 1 == e.nodeType && "body" == e.tagName.toLowerCase();
+            return e && 1 == e.nodeType && "body" === e.tagName.toLowerCase();
         },
         breakParent: function(e, t) {
             var i, n, o, r = e, a = e;
@@ -1152,7 +1152,7 @@ function _typeof(e) {
             e("firstChild"), e("lastChild");
         },
         mergeChild: function(e, t, i) {
-            for (var n, o = domUtils.getElementsByTagName(e, e.tagName.toLowerCase()), r = 0; n = o[r++]; ) if (n.parentNode && !domUtils.isBookmarkNode(n)) if ("span" != n.tagName.toLowerCase()) domUtils.isSameElement(e, n) && domUtils.remove(n, !0); else {
+            for (var n, o = domUtils.getElementsByTagName(e, e.tagName.toLowerCase()), r = 0; n = o[r++]; ) if (n.parentNode && !domUtils.isBookmarkNode(n)) if ("span" !== n.tagName.toLowerCase()) domUtils.isSameElement(e, n) && domUtils.remove(n, !0); else {
                 if (e === n.parentNode && (domUtils.trimWhiteTextNode(e), 1 == e.childNodes.length)) {
                     e.style.cssText = n.style.cssText + ";" + e.style.cssText, domUtils.remove(n, !0);
                     continue;
@@ -1180,13 +1180,13 @@ function _typeof(e) {
         },
         mergeToParent: function(e) {
             for (var t = e.parentNode; t && dtd.$removeEmpty[t.tagName]; ) {
-                if (t.tagName == e.tagName || "A" == t.tagName) {
-                    if (domUtils.trimWhiteTextNode(t), "SPAN" == t.tagName && !domUtils.isSameStyle(t, e) || "A" == t.tagName && "SPAN" == e.tagName) {
+                if (t.tagName == e.tagName || "A" === t.tagName) {
+                    if (domUtils.trimWhiteTextNode(t), "SPAN" === t.tagName && !domUtils.isSameStyle(t, e) || "A" === t.tagName && "SPAN" === e.tagName) {
                         if (1 < t.childNodes.length || t !== e.parentNode) {
                             e.style.cssText = t.style.cssText + ";" + e.style.cssText, t = t.parentNode;
                             continue;
                         }
-                        t.style.cssText += ";" + e.style.cssText, "A" == t.tagName && (t.style.textDecoration = "underline");
+                        t.style.cssText += ";" + e.style.cssText, "A" === t.tagName && (t.style.textDecoration = "underline");
                     }
                     if ("A" != t.tagName) {
                         t === e.parentNode && domUtils.remove(e, !0);
@@ -1200,7 +1200,7 @@ function _typeof(e) {
             function n(e, t, i) {
                 var n;
                 if ((n = i[e]) && !domUtils.isBookmarkNode(n) && 1 == n.nodeType && domUtils.isSameElement(i, n)) {
-                    for (;n.firstChild; ) "firstChild" == t ? i.insertBefore(n.lastChild, i.firstChild) : i.appendChild(n.firstChild);
+                    for (;n.firstChild; ) "firstChild" === t ? i.insertBefore(n.lastChild, i.firstChild) : i.appendChild(n.firstChild);
                     domUtils.remove(n);
                 }
             }
@@ -1274,7 +1274,7 @@ function _typeof(e) {
             if (-1 < "width height top left".indexOf(t)) return e["offset" + t.replace(/^\w/, function(e) {
                 return e.toUpperCase();
             })] + "px";
-            if (3 == e.nodeType && (e = e.parentNode), browser.ie && browser.version < 9 && "font-size" == t && !e.style.fontSize && !dtd.$empty[e.tagName] && !dtd.$nonChild[e.tagName]) {
+            if (3 == e.nodeType && (e = e.parentNode), browser.ie && browser.version < 9 && "font-size" === t && !e.style.fontSize && !dtd.$empty[e.tagName] && !dtd.$nonChild[e.tagName]) {
                 var i = e.ownerDocument.createElement("span");
                 i.style.cssText = "padding:0;border:0;font-family:simsun;", i.innerHTML = ".", e.appendChild(i);
                 var n = i.offsetHeight;
@@ -1309,7 +1309,7 @@ function _typeof(e) {
             e.preventDefault ? e.preventDefault() : e.returnValue = !1;
         },
         removeStyle: function(e, t) {
-            browser.ie ? ("color" == t && (t = "(^|;)" + t), e.style.cssText = e.style.cssText.replace(new RegExp(t + "[^:]*:[^;]+;?", "ig"), "")) : e.style.removeProperty ? e.style.removeProperty(t) : e.style.removeAttribute(utils.cssStyleToDomStyle(t)), 
+            browser.ie ? ("color" === t && (t = "(^|;)" + t), e.style.cssText = e.style.cssText.replace(new RegExp(t + "[^:]*:[^;]+;?", "ig"), "")) : e.style.removeProperty ? e.style.removeProperty(t) : e.style.removeAttribute(utils.cssStyleToDomStyle(t)), 
             e.style.cssText || domUtils.removeAttributes(e, [ "style" ]);
         },
         getStyle: function(e, t) {
@@ -1342,7 +1342,7 @@ function _typeof(e) {
             for (var t; t = e.pop(); ) domUtils.removeAttributes(t, [ "class" ]);
         },
         scrollToView: function(e, t, i) {
-            var n, o, r = (n = t.document, o = "CSS1Compat" == n.compatMode, {
+            var n, o, r = (n = t.document, o = "CSS1Compat" === n.compatMode, {
                 width: (o ? n.documentElement.clientWidth : n.body.clientWidth) || 0,
                 height: (o ? n.documentElement.clientHeight : n.body.clientHeight) || 0
             }).height, a = -1 * r + i;
@@ -1361,7 +1361,7 @@ function _typeof(e) {
             (s < a || a < s - r) && t.scrollTo(0, a + (a < 0 ? -20 : 20));
         },
         isBr: function(e) {
-            return 1 == e.nodeType && "BR" == e.tagName;
+            return 1 == e.nodeType && "BR" === e.tagName;
         },
         isFillChar: function(e, t) {
             if (3 != e.nodeType) return !1;
@@ -1676,9 +1676,9 @@ function _typeof(e) {
                         for (var p, g = 1; p = e[g++]; ) f.appendChild(p.cloneNode(!1)), f = f.firstChild;
                         c = f;
                     } else c = d.document.createElement(t);
-                    if (i && domUtils.setAttributes(c, i), c.appendChild(m), "SPAN" == c.tagName && i && i.style && utils.each(c.getElementsByTagName("span"), function(e) {
+                    if (i && domUtils.setAttributes(c, i), c.appendChild(m), "SPAN" === c.tagName && i && i.style && utils.each(c.getElementsByTagName("span"), function(e) {
                         e.style.cssText = e.style.cssText + ";" + i.style;
-                    }), d.insertNode(e ? h : c), "span" == t && i.style && /text\-decoration/.test(i.style) && (u = domUtils.findParentByTagName(c, "a", !0)) ? (domUtils.setAttributes(u, i), 
+                    }), d.insertNode(e ? h : c), "span" === t && i.style && /text\-decoration/.test(i.style) && (u = domUtils.findParentByTagName(c, "a", !0)) ? (domUtils.setAttributes(u, i), 
                     domUtils.remove(c, !0), c = u) : (domUtils.mergeSibling(c), domUtils.clearEmptySibling(c)), 
                     domUtils.mergeChild(c, i), l = domUtils.getNextDomNode(c, !1, s), domUtils.mergeToParent(c), 
                     n === a) break;
@@ -1691,7 +1691,7 @@ function _typeof(e) {
                 for (var t = this.startContainer, i = this.endContainer; ;) {
                     if (1 == t.nodeType) {
                         if (-1 < utils.indexOf(e, t.tagName.toLowerCase())) break;
-                        if ("body" == t.tagName.toLowerCase()) {
+                        if ("body" === t.tagName.toLowerCase()) {
                             t = null;
                             break;
                         }
@@ -1701,7 +1701,7 @@ function _typeof(e) {
                 for (;;) {
                     if (1 == i.nodeType) {
                         if (-1 < utils.indexOf(e, i.tagName.toLowerCase())) break;
-                        if ("body" == i.tagName.toLowerCase()) {
+                        if ("body" === i.tagName.toLowerCase()) {
                             i = null;
                             break;
                         }
@@ -2014,7 +2014,7 @@ function _typeof(e) {
         function c(e, t) {
             var i;
             if (t.options.textarea) if (utils.isString(t.options.textarea)) {
-                for (var n, o = 0, r = domUtils.getElementsByTagName(e, "textarea"); n = r[o++]; ) if (n.id == "ueditor_textarea_" + t.options.textarea) {
+                for (var n, o = 0, r = domUtils.getElementsByTagName(e, "textarea"); n = r[o++]; ) if (n.id === "ueditor_textarea_" + t.options.textarea) {
                     i = n;
                     break;
                 }
@@ -2099,7 +2099,7 @@ function _typeof(e) {
                 e.body.spellcheck = !1, n.document = e, n.window = e.defaultView || e.parentWindow, 
                 n.iframe = n.window.frameElement, n.body = e.body, n.selection = new dom.Selection(e), 
                 browser.gecko && (t = this.selection.getNative()) && t.removeAllRanges(), this._initEvents();
-                for (var o = this.iframe.parentNode; !domUtils.isBody(o); o = o.parentNode) if ("FORM" == o.tagName) {
+                for (var o = this.iframe.parentNode; !domUtils.isBody(o); o = o.parentNode) if ("FORM" === o.tagName) {
                     n.form = o, n.options.autoSyncData ? domUtils.on(n.window, "blur", function() {
                         c(o, n);
                     }) : domUtils.on(o, "submit", function() {
@@ -2130,7 +2130,7 @@ function _typeof(e) {
                 } catch (e) {}
                 n._bindshortcutKeys(), n.isReady = 1, n.fireEvent("ready"), i.onready && i.onready.call(n), 
                 browser.ie9below || domUtils.on(n.window, [ "blur", "focus" ], function(e) {
-                    if ("blur" == e.type) {
+                    if ("blur" === e.type) {
                         n._bakRange = n.selection.getRange();
                         try {
                             n._bakNativeRange = n.selection.getNative().getRangeAt(0), n.selection.getNative().removeAllRanges();
@@ -2148,7 +2148,7 @@ function _typeof(e) {
             },
             sync: function(e) {
                 var t = e ? document.getElementById(e) : domUtils.findParent(this.iframe.parentNode, function(e) {
-                    return "FORM" == e.tagName;
+                    return "FORM" === e.tagName;
                 }, !0);
                 t && c(t, this);
             },
@@ -2167,7 +2167,7 @@ function _typeof(e) {
                     var i = t.keyCode || t.which;
                     for (var n in c) for (var o, r = c[n].split(","), a = 0; o = r[a++]; ) {
                         var s = (o = o.split(":"))[0], l = o[1];
-                        (/^(ctrl)(\+shift)?\+(\d+)$/.test(s.toLowerCase()) || /^(\d+)$/.test(s)) && ("ctrl" == RegExp.$1 && (t.ctrlKey || t.metaKey) && ("" == RegExp.$2 || t[RegExp.$2.slice(1) + "Key"]) && i == RegExp.$3 || i == RegExp.$1) && (-1 != d.queryCommandState(n, l) && d.execCommand(n, l), 
+                        (/^(ctrl)(\+shift)?\+(\d+)$/.test(s.toLowerCase()) || /^(\d+)$/.test(s)) && ("ctrl" === RegExp.$1 && (t.ctrlKey || t.metaKey) && ("" == RegExp.$2 || t[RegExp.$2.slice(1) + "Key"]) && i == RegExp.$3 || i == RegExp.$1) && (-1 != d.queryCommandState(n, l) && d.execCommand(n, l), 
                         domUtils.preventDefault(t));
                     }
                 });
@@ -2205,9 +2205,9 @@ function _typeof(e) {
                 n.fireEvent("beforesetcontent", e);
                 var o, r, a = UE.htmlparser(e);
                 if (n.filterInputRule(a), e = a.toHtml(), n.body.innerHTML = (t ? n.body.innerHTML : "") + e, 
-                "p" == n.options.enterTag) {
+                "p" === n.options.enterTag) {
                     var s, l = this.body.firstChild;
-                    if (!l || 1 == l.nodeType && (dtd.$cdata[l.tagName] || "DIV" == (o = l).tagName && o.getAttribute("cdata_tag") || domUtils.isCustomeNode(l)) && l === this.body.lastChild) this.body.innerHTML = "<p>" + (browser.ie ? "&nbsp;" : "<br/>") + "</p>" + this.body.innerHTML; else for (var d = n.document.createElement("p"); l; ) {
+                    if (!l || 1 == l.nodeType && (dtd.$cdata[l.tagName] || "DIV" === (o = l).tagName && o.getAttribute("cdata_tag") || domUtils.isCustomeNode(l)) && l === this.body.lastChild) this.body.innerHTML = "<p>" + (browser.ie ? "&nbsp;" : "<br/>") + "</p>" + this.body.innerHTML; else for (var d = n.document.createElement("p"); l; ) {
                         for (;l && (3 == l.nodeType || 1 == l.nodeType && dtd.p[l.tagName] && !dtd.$cdata[l.tagName]); ) s = l.nextSibling, 
                         d.appendChild(l), l = s;
                         if (d.firstChild) {
@@ -2254,7 +2254,7 @@ function _typeof(e) {
                 domUtils.on(i, [ "focus", "blur" ], t._proxyDomEvent), domUtils.on(t.body, "drop", function(e) {
                     browser.gecko && e.stopPropagation && e.stopPropagation(), t.fireEvent("contentchange");
                 }), domUtils.on(e, [ "mouseup", "keydown" ], function(e) {
-                    "keydown" == e.type && (e.ctrlKey || e.metaKey || e.shiftKey || e.altKey) || 2 != e.button && t._selectionChange(250, e);
+                    "keydown" === e.type && (e.ctrlKey || e.metaKey || e.shiftKey || e.altKey) || 2 != e.button && t._selectionChange(250, e);
                 });
             },
             _proxyDomEvent: function(e) {
@@ -2262,12 +2262,12 @@ function _typeof(e) {
             },
             _selectionChange: function(e, i) {
                 var n, o, r = this, a = !1;
-                browser.ie && browser.version < 9 && i && "mouseup" == i.type && (this.selection.getRange().collapsed || (a = !0, 
+                browser.ie && browser.version < 9 && i && "mouseup" === i.type && (this.selection.getRange().collapsed || (a = !0, 
                 n = i.clientX, o = i.clientY));
                 clearTimeout(t), t = setTimeout(function() {
                     if (r.selection && r.selection.getNative()) {
                         var t, e;
-                        if (a && "None" == r.selection.getNative().type) {
+                        if (a && "None" === r.selection.getNative().type) {
                             t = r.document.body.createTextRange();
                             try {
                                 t.moveToPoint(n, o);
@@ -2284,7 +2284,7 @@ function _typeof(e) {
             },
             _callCmdFn: function(e, t) {
                 var i, n, o = t[0].toLowerCase();
-                return n = (i = this.commands[o] || UE.commands[o]) && i[e], i && n || "queryCommandState" != e ? n ? n.apply(this, t) : void 0 : 0;
+                return n = (i = this.commands[o] || UE.commands[o]) && i[e], i && n || "queryCommandState" !== e ? n ? n.apply(this, t) : void 0 : 0;
             },
             execCommand: function(e) {
                 e = e.toLowerCase();
@@ -2313,7 +2313,7 @@ function _typeof(e) {
             },
             setEnabled: function() {
                 var t, i = this;
-                if ("false" == i.body.contentEditable) {
+                if ("false" === i.body.contentEditable) {
                     i.body.contentEditable = !0, t = i.selection.getRange();
                     try {
                         t.moveToBookmark(i.lastBk), delete i.lastBk;
@@ -2330,7 +2330,7 @@ function _typeof(e) {
             },
             setDisabled: function(t) {
                 var i = this;
-                t = t ? utils.isArray(t) ? t : [ t ] : [], "true" == i.body.contentEditable && (i.lastBk || (i.lastBk = i.selection.getRange().createBookmark(!0)), 
+                t = t ? utils.isArray(t) ? t : [ t ] : [], "true" === i.body.contentEditable && (i.lastBk || (i.lastBk = i.selection.getRange().createBookmark(!0)), 
                 i.body.contentEditable = !1, i.bkqueryCommandState = i.queryCommandState, i.bkqueryCommandValue = i.queryCommandValue, 
                 i.queryCommandState = function(e) {
                     return -1 != utils.indexOf(t, e) ? i.bkqueryCommandState.apply(i, arguments) : -1;
@@ -2355,7 +2355,7 @@ function _typeof(e) {
             }(),
             setShow: function() {
                 var t = this, i = t.selection.getRange();
-                if ("none" == t.container.style.display) {
+                if ("none" === t.container.style.display) {
                     try {
                         i.moveToBookmark(t.lastBk), delete t.lastBk;
                     } catch (e) {
@@ -2488,7 +2488,7 @@ function _typeof(e) {
         var c = new Function("return new " + t);
         function v(e) {
             var t = [];
-            for (var i in e) if ("method" != i && "timeout" != i && "async" != i && "dataType" != i && "callback" != i && null != e[i] && null != e[i]) if ("function" != _typeof(e[i]).toLowerCase() && "object" != _typeof(e[i]).toLowerCase()) t.push(encodeURIComponent(i) + "=" + encodeURIComponent(e[i])); else if (utils.isArray(e[i])) for (var n = 0; n < e[i].length; n++) t.push(encodeURIComponent(i) + "[]=" + encodeURIComponent(e[i][n]));
+            for (var i in e) if ("method" !== i && "timeout" !== i && "async" !== i && "dataType" !== i && "callback" !== i && null != e[i] && null != e[i]) if ("function" !== _typeof(e[i]).toLowerCase() && "object" !== _typeof(e[i]).toLowerCase()) t.push(encodeURIComponent(i) + "=" + encodeURIComponent(e[i])); else if (utils.isArray(e[i])) for (var n = 0; n < e[i].length; n++) t.push(encodeURIComponent(i) + "[]=" + encodeURIComponent(e[i][n]));
             return t.join("&");
         }
         function n(e, t) {
@@ -2521,7 +2521,7 @@ function _typeof(e) {
         }
         return {
             request: function(e, t) {
-                t && "jsonp" == t.dataType ? n(e, t) : function(e, t) {
+                t && "jsonp" === t.dataType ? n(e, t) : function(e, t) {
                     var i = c(), n = !1, o = {
                         method: "POST",
                         timeout: 5e3,
@@ -2535,10 +2535,10 @@ function _typeof(e) {
                         utils.isEmptyObject(r.data) || (a += (a ? "&" : "") + v(r.data));
                         var s = setTimeout(function() {
                             4 != i.readyState && (n = !0, i.abort(), clearTimeout(s));
-                        }, r.timeout), l = r.method.toUpperCase(), d = e + (-1 == e.indexOf("?") ? "?" : "&") + ("POST" == l ? "" : a + "&noCache=" + +new Date());
+                        }, r.timeout), l = r.method.toUpperCase(), d = e + (-1 == e.indexOf("?") ? "?" : "&") + ("POST" === l ? "" : a + "&noCache=" + +new Date());
                         i.open(l, d, r.async), i.onreadystatechange = function() {
                             4 == i.readyState && (n || 200 != i.status ? r.onerror(i) : r.onsuccess(i));
-                        }, "POST" == l ? (i.setRequestHeader("Content-Type", "application/x-www-form-urlencoded"), 
+                        }, "POST" === l ? (i.setRequestHeader("Content-Type", "application/x-www-form-urlencoded"), 
                         i.send(a)) : i.send(null);
                     }
                 }(e, t);
@@ -2568,7 +2568,7 @@ function _typeof(e) {
                     return "";
                 }
             }).replace(/<\/?div[^>]*>/g, "").replace(/v:\w+=(["']?)[^'"]+\1/g, "").replace(/<(!|script[^>]*>.*?<\/script(?=[>\s])|\/?(\?xml(:\w+)?|xml|meta|link|style|\w+:\w+)(?=[\s\/>]))[^>]*>/gi, "").replace(/<p [^>]*class="?MsoHeading"?[^>]*>(.*?)<\/p>/gi, "<p><strong>$1</strong></p>").replace(/\s+(class|lang|align)\s*=\s*(['"]?)([\w-]+)\2/gi, function(e, t, i, n) {
-                return "class" == t && "MsoListParagraph" == n ? e : "";
+                return "class" === t && "MsoListParagraph" === n ? e : "";
             }).replace(/<(font|span)[^>]*>(\s*)<\/\1>/gi, function(e, t, i) {
                 return i.replace(/[\t\r\n ]+/g, " ");
             }).replace(/(<[a-z][^>]*)\sstyle=(["'])([^\2]*?)\2/gi, function(e, t, i, n) {
@@ -2626,11 +2626,11 @@ function _typeof(e) {
                             continue;
 
                           case "text-line-through":
-                            "single" != d && "double" != d || (r[s] = "text-decoration:line-through");
+                            "single" !== d && "double" !== d || (r[s] = "text-decoration:line-through");
                             continue;
 
                           case "mso-zero-height":
-                            "yes" == d && (r[s] = "display:none");
+                            "yes" === d && (r[s] = "display:none");
                             continue;
 
                           case "margin":
@@ -2667,12 +2667,12 @@ function _typeof(e) {
         function f(e, t, i, n) {
             switch (e.type) {
               case "root":
-                for (var o, r = 0; o = e.children[r++]; ) i && "element" == o.type && !dtd.$inlineWithA[o.tagName] && 1 < r && (u(t, n, !0), 
+                for (var o, r = 0; o = e.children[r++]; ) i && "element" === o.type && !dtd.$inlineWithA[o.tagName] && 1 < r && (u(t, n, !0), 
                 m(t, n)), f(o, t, i, n);
                 break;
 
               case "text":
-                l = t, "pre" == (s = e).parentNode.tagName ? l.push(s.data) : l.push(c[s.parentNode.tagName] ? utils.html(s.data) : s.data.replace(/[ ]{2}/g, " &nbsp;"));
+                l = t, "pre" === (s = e).parentNode.tagName ? l.push(s.data) : l.push(c[s.parentNode.tagName] ? utils.html(s.data) : s.data.replace(/[ ]{2}/g, " &nbsp;"));
                 break;
 
               case "element":
@@ -2689,7 +2689,7 @@ function _typeof(e) {
                     t.push("<" + e.tagName + (o ? " " + o : "") + (dtd.$empty[e.tagName] ? "/" : "") + ">"), 
                     i && !dtd.$inlineWithA[e.tagName] && "pre" != e.tagName && e.children && e.children.length && (n = u(t, n, !0), 
                     m(t, n));
-                    if (e.children && e.children.length) for (var s, l = 0; s = e.children[l++]; ) i && "element" == s.type && !dtd.$inlineWithA[s.tagName] && 1 < l && (u(t, n), 
+                    if (e.children && e.children.length) for (var s, l = 0; s = e.children[l++]; ) i && "element" === s.type && !dtd.$inlineWithA[s.tagName] && 1 < l && (u(t, n), 
                     m(t, n)), f(s, t, i, n);
                     dtd.$empty[e.tagName] || (i && !dtd.$inlineWithA[e.tagName] && "pre" != e.tagName && e.children && e.children.length && (n = u(t, n), 
                     m(t, n)), t.push("</" + e.tagName + ">"));
@@ -2704,11 +2704,11 @@ function _typeof(e) {
         }
         function a(e, t) {
             var i;
-            if ("element" == e.type && e.getAttr("id") == t) return e;
+            if ("element" === e.type && e.getAttr("id") == t) return e;
             if (e.children && e.children.length) for (var n, o = 0; n = e.children[o++]; ) if (i = a(n, t)) return i;
         }
         function s(e, t, i) {
-            if ("element" == e.type && e.tagName == t && i.push(e), e.children && e.children.length) for (var n, o = 0; n = e.children[o++]; ) s(n, t, i);
+            if ("element" === e.type && e.tagName == t && i.push(e), e.children && e.children.length) for (var n, o = 0; n = e.children[o++]; ) s(n, t, i);
         }
         o.createElement = function(e) {
             return /[<>]/.test(e) ? UE.htmlparser(e).children[0] : new o({
@@ -2749,7 +2749,7 @@ function _typeof(e) {
                 return this.toHtml().replace(/<[^>]+>/g, "");
             },
             getData: function() {
-                return "element" == this.type ? "" : this.data;
+                return "element" === this.type ? "" : this.data;
             },
             firstChild: function() {
                 return this.children ? this.children[0] : null;
@@ -2771,7 +2771,7 @@ function _typeof(e) {
                 }
             },
             appendChild: function(e) {
-                if ("root" == this.type || "element" == this.type && !dtd.$empty[this.tagName]) {
+                if ("root" === this.type || "element" === this.type && !dtd.$empty[this.tagName]) {
                     this.children || (this.children = []), e.parentNode && e.parentNode.removeChild(e);
                     for (var t, i = 0; t = this.children[i]; i++) if (t === e) {
                         this.children.splice(i, 1);
@@ -2930,7 +2930,7 @@ function _typeof(e) {
             try {
                 if (p < h && a(v, e.slice(p, h)), o[3]) dtd.$cdata[v.tagName] ? a(v, o[0]) : v = f(v, o[3].toLowerCase(), o[4]); else if (o[1]) {
                     if ("root" != v.type) if (dtd.$cdata[v.tagName] && !dtd.$cdata[o[1]]) a(v, o[0]); else {
-                        for (var b = v; "element" == v.type && v.tagName != o[1].toLowerCase(); ) if ("root" == (v = v.parentNode).type) throw v = b, 
+                        for (var b = v; "element" === v.type && v.tagName != o[1].toLowerCase(); ) if ("root" === (v = v.parentNode).type) throw v = b, 
                         "break";
                         v = v.parentNode;
                     }
@@ -2961,7 +2961,7 @@ function _typeof(e) {
                     if (a && i.attrs) {
                         var s, l = {};
                         for (var d in a) {
-                            if (s = i.getAttr(d), "style" == d && utils.isArray(a[d])) {
+                            if (s = i.getAttr(d), "style" === d && utils.isArray(a[d])) {
                                 var c = [];
                                 utils.each(a[d], function(e) {
                                     var t;
@@ -3132,8 +3132,8 @@ function _typeof(e) {
         }), s.addInputRule(function(e) {
             var r, a = this.options.allowDivTransToP;
             e.traversal(function(o) {
-                if ("element" == o.type) {
-                    if (!dtd.$cdata[o.tagName] && s.options.autoClearEmptyNode && dtd.$inline[o.tagName] && !dtd.$empty[o.tagName] && (!o.attrs || utils.isEmptyObject(o.attrs))) return void (o.firstChild() ? "span" != o.tagName || o.attrs && !utils.isEmptyObject(o.attrs) || o.parentNode.removeChild(o, !0) : o.parentNode.removeChild(o));
+                if ("element" === o.type) {
+                    if (!dtd.$cdata[o.tagName] && s.options.autoClearEmptyNode && dtd.$inline[o.tagName] && !dtd.$empty[o.tagName] && (!o.attrs || utils.isEmptyObject(o.attrs))) return void (o.firstChild() ? "span" !== o.tagName || o.attrs && !utils.isEmptyObject(o.attrs) || o.parentNode.removeChild(o, !0) : o.parentNode.removeChild(o));
                     switch (o.tagName) {
                       case "style":
                       case "script":
@@ -3164,7 +3164,7 @@ function _typeof(e) {
 
                       case "p":
                         (r = o.getAttr("align")) && (o.setAttr("align"), o.setStyle("text-align", r)), utils.each(o.children, function(e) {
-                            if ("element" == e.type && "p" == e.tagName) {
+                            if ("element" === e.type && "p" === e.tagName) {
                                 var t = e.nextSibling();
                                 o.parentNode.insertAfter(e, o);
                                 for (var i = e; t; ) {
@@ -3180,7 +3180,7 @@ function _typeof(e) {
                         if (o.getAttr("cdata_tag")) break;
                         if ((r = o.getAttr("class")) && /^line number\d+/.test(r)) break;
                         if (!a) break;
-                        for (var e, t = UE.uNode.createElement("p"); e = o.firstChild(); ) "text" != e.type && UE.dom.dtd.$block[e.tagName] ? t.firstChild() ? (o.parentNode.insertBefore(t, o), 
+                        for (var e, t = UE.uNode.createElement("p"); e = o.firstChild(); ) "text" !== e.type && UE.dom.dtd.$block[e.tagName] ? t.firstChild() ? (o.parentNode.insertBefore(t, o), 
                         t = UE.uNode.createElement("p")) : o.parentNode.insertBefore(e, o) : t.appendChild(e);
                         t.firstChild() && o.parentNode.insertBefore(t, o), o.parentNode.removeChild(o);
                         break;
@@ -3211,8 +3211,8 @@ function _typeof(e) {
 
                       case "table":
                         s.options.disabledTableInTable && function(e) {
-                            for (;e && "element" == e.type; ) {
-                                if ("td" == e.tagName) return !0;
+                            for (;e && "element" === e.type; ) {
+                                if ("td" === e.tagName) return !0;
                                 e = e.parentNode;
                             }
                             return !1;
@@ -3223,8 +3223,8 @@ function _typeof(e) {
         }), s.addOutputRule(function(e) {
             var i;
             e.traversal(function(e) {
-                if ("element" == e.type) {
-                    if (s.options.autoClearEmptyNode && dtd.$inline[e.tagName] && !dtd.$empty[e.tagName] && (!e.attrs || utils.isEmptyObject(e.attrs))) return void (e.firstChild() ? "span" != e.tagName || e.attrs && !utils.isEmptyObject(e.attrs) || e.parentNode.removeChild(e, !0) : e.parentNode.removeChild(e));
+                if ("element" === e.type) {
+                    if (s.options.autoClearEmptyNode && dtd.$inline[e.tagName] && !dtd.$empty[e.tagName] && (!e.attrs || utils.isEmptyObject(e.attrs))) return void (e.firstChild() ? "span" !== e.tagName || e.attrs && !utils.isEmptyObject(e.attrs) || e.parentNode.removeChild(e, !0) : e.parentNode.removeChild(e));
                     switch (e.tagName) {
                       case "div":
                         (i = e.getAttr("cdata_tag")) && (e.tagName = i, e.appendChild(UE.uNode.createText(e.getAttr("cdata_data"))), 
@@ -3294,7 +3294,7 @@ function _typeof(e) {
                 var f = domUtils.findParentByTagName(n.startContainer, "li", !0);
                 if (f) {
                     for (var h; l = o.firstChild; ) {
-                        for (;l && (3 == l.nodeType || !domUtils.isBlockElm(l) || "HR" == l.tagName); ) b = l.nextSibling, 
+                        for (;l && (3 == l.nodeType || !domUtils.isBlockElm(l) || "HR" === l.tagName); ) b = l.nextSibling, 
                         n.insertNode(l).collapse(), h = l, l = b;
                         if (l) if (/^(ol|ul)$/i.test(l.tagName)) {
                             for (;l.firstChild; ) h = l.firstChild, domUtils.insertAfter(f, l.firstChild), f = f.nextSibling;
@@ -3397,7 +3397,7 @@ function _typeof(e) {
             return e && 3 != e.nodeType ? domUtils.isBr(e) ? 1 : e && e.parentNode && i[e.tagName.toLowerCase()] ? p && p.contains(e) || e.getAttribute("pagebreak") ? 0 : t ? !domUtils.isEmptyBlock(e) : domUtils.isEmptyBlock(e, new RegExp("[\\s" + domUtils.fillChar + "]", "g")) : void 0 : 0;
         }
         function C(e) {
-            e.style.cssText || (domUtils.removeAttributes(e, [ "style" ]), "span" == e.tagName.toLowerCase() && domUtils.hasNoAttributes(e) && domUtils.remove(e, !0));
+            e.style.cssText || (domUtils.removeAttributes(e, [ "style" ]), "span" === e.tagName.toLowerCase() && domUtils.hasNoAttributes(e) && domUtils.remove(e, !0));
         }
         function n(e, t) {
             var i, n = this;
@@ -3422,14 +3422,14 @@ function _typeof(e) {
                     if (p && p.contains(o)) continue;
                     domUtils.removeAttributes(o, [ "class" ]);
                 }
-                if (g.imageBlockLine && "img" == o.tagName.toLowerCase() && !o.getAttribute("emotion")) if (t) {
+                if (g.imageBlockLine && "img" === o.tagName.toLowerCase() && !o.getAttribute("emotion")) if (t) {
                     var c = o;
                     switch (g.imageBlockLine) {
                       case "left":
                       case "right":
                       case "none":
-                        for (var u, m, f = c.parentNode; dtd.$inline[f.tagName] || "A" == f.tagName; ) f = f.parentNode;
-                        if ("P" == (u = f).tagName && "center" == domUtils.getStyle(u, "text-align") && !domUtils.isBody(u) && 1 == domUtils.getChildCount(u, function(e) {
+                        for (var u, m, f = c.parentNode; dtd.$inline[f.tagName] || "A" === f.tagName; ) f = f.parentNode;
+                        if ("P" === (u = f).tagName && "center" === domUtils.getStyle(u, "text-align") && !domUtils.isBody(u) && 1 == domUtils.getChildCount(u, function(e) {
                             return !domUtils.isBr(e) && !domUtils.isWhitespace(e);
                         })) if (m = u.previousSibling, l = u.nextSibling, m && l && 1 == m.nodeType && 1 == l.nodeType && m.tagName == l.tagName && domUtils.isBlockElm(m)) {
                             for (m.appendChild(u.firstChild); l.firstChild; ) m.appendChild(l.firstChild);
@@ -3442,7 +3442,7 @@ function _typeof(e) {
                         if ("center" != n.queryCommandValue("imagefloat")) {
                             for (f = c.parentNode, domUtils.setStyle(c, "float", "none"), u = c; f && 1 == domUtils.getChildCount(f, function(e) {
                                 return !domUtils.isBr(e) && !domUtils.isWhitespace(e);
-                            }) && (dtd.$inline[f.tagName] || "A" == f.tagName); ) f = (u = f).parentNode;
+                            }) && (dtd.$inline[f.tagName] || "A" === f.tagName); ) f = (u = f).parentNode;
                             var h = n.document.createElement("p");
                             domUtils.setAttributes(h, {
                                 style: "text-align:center"
@@ -3455,14 +3455,14 @@ function _typeof(e) {
                 g.removeEmptyNode && g.removeTagNames[o.tagName.toLowerCase()] && domUtils.hasNoAttributes(o) && domUtils.isEmptyBlock(o) && domUtils.remove(o);
             }
             g.tobdc && ((r = UE.htmlparser(i.innerHTML)).traversal(function(e) {
-                "text" == e.type && (e.data = function(e) {
+                "text" === e.type && (e.data = function(e) {
                     e = utils.html(e);
                     for (var t = "", i = 0; i < e.length; i++) 32 == e.charCodeAt(i) ? t += String.fromCharCode(12288) : e.charCodeAt(i) < 127 ? t += String.fromCharCode(e.charCodeAt(i) + 65248) : t += e.charAt(i);
                     return t;
                 }(e.data));
             }), i.innerHTML = r.toHtml());
             g.bdc2sb && ((r = UE.htmlparser(i.innerHTML)).traversal(function(e) {
-                "text" == e.type && (e.data = function(e) {
+                "text" === e.type && (e.data = function(e) {
                     for (var t = "", i = 0; i < e.length; i++) {
                         var n = e.charCodeAt(i);
                         t += 65281 <= n && n <= 65373 ? String.fromCharCode(e.charCodeAt(i) - 65248) : 12288 == n ? String.fromCharCode(e.charCodeAt(i) - 12288 + 32) : e.charAt(i);
@@ -3557,12 +3557,12 @@ function _typeof(e) {
             var i = this, n = i.selection.getRange();
             if (!n.collapsed) {
                 var o = n.getClosedNode();
-                if (o && "IMG" == o.tagName) switch (t) {
+                if (o && "IMG" === o.tagName) switch (t) {
                   case "left":
                   case "right":
                   case "none":
-                    for (var r, a, s, l = o.parentNode; dtd.$inline[l.tagName] || "A" == l.tagName; ) l = l.parentNode;
-                    if ("P" == (r = l).tagName && "center" == domUtils.getStyle(r, "text-align")) {
+                    for (var r, a, s, l = o.parentNode; dtd.$inline[l.tagName] || "A" === l.tagName; ) l = l.parentNode;
+                    if ("P" === (r = l).tagName && "center" === domUtils.getStyle(r, "text-align")) {
                         if (!domUtils.isBody(r) && 1 == domUtils.getChildCount(r, function(e) {
                             return !domUtils.isBr(e) && !domUtils.isWhitespace(e);
                         })) if (a = r.previousSibling, s = r.nextSibling, a && s && 1 == a.nodeType && 1 == s.nodeType && a.tagName == s.tagName && domUtils.isBlockElm(a)) {
@@ -3571,7 +3571,7 @@ function _typeof(e) {
                         } else domUtils.setStyle(r, "text-align", "");
                         n.selectNode(o).select();
                     }
-                    domUtils.setStyle(o, "float", "none" == t ? "" : t), "none" == t && domUtils.removeAttributes(o, "align");
+                    domUtils.setStyle(o, "float", "none" === t ? "" : t), "none" === t && domUtils.removeAttributes(o, "align");
                     break;
 
                   case "center":
@@ -3579,7 +3579,7 @@ function _typeof(e) {
                         for (l = o.parentNode, domUtils.setStyle(o, "float", ""), domUtils.removeAttributes(o, "align"), 
                         r = o; l && 1 == domUtils.getChildCount(l, function(e) {
                             return !domUtils.isBr(e) && !domUtils.isWhitespace(e);
-                        }) && (dtd.$inline[l.tagName] || "A" == l.tagName); ) l = (r = l).parentNode;
+                        }) && (dtd.$inline[l.tagName] || "A" === l.tagName); ) l = (r = l).parentNode;
                         n.setStartBefore(r).setCursor(!1), (l = i.document.createElement("div")).appendChild(r), 
                         domUtils.setStyle(r, "float", ""), i.execCommand("insertHtml", '<p id="_img_parent_tmp" style="text-align:center">' + l.innerHTML + "</p>"), 
                         (r = i.document.getElementById("_img_parent_tmp")).removeAttribute("id"), r = r.firstChild, 
@@ -3590,7 +3590,7 @@ function _typeof(e) {
         },
         queryCommandValue: function() {
             var e, t, i = this.selection.getRange();
-            return i.collapsed ? "none" : (e = i.getClosedNode()) && 1 == e.nodeType && "IMG" == e.tagName ? ("none" == (t = domUtils.getComputedStyle(e, "float") || e.getAttribute("align")) && (t = "center" == domUtils.getComputedStyle(e.parentNode, "text-align") ? "center" : t), 
+            return i.collapsed ? "none" : (e = i.getClosedNode()) && 1 == e.nodeType && "IMG" === e.tagName ? ("none" === (t = domUtils.getComputedStyle(e, "float") || e.getAttribute("align")) && (t = "center" === domUtils.getComputedStyle(e.parentNode, "text-align") ? "center" : t), 
             {
                 left: 1,
                 right: 1,
@@ -3599,7 +3599,7 @@ function _typeof(e) {
         },
         queryCommandState: function() {
             var e, t = this.selection.getRange();
-            return t.collapsed ? -1 : (e = t.getClosedNode()) && 1 == e.nodeType && "IMG" == e.tagName ? 0 : -1;
+            return t.collapsed ? -1 : (e = t.getClosedNode()) && 1 == e.nodeType && "IMG" === e.tagName ? 0 : -1;
         }
     }, UE.commands.insertimage = {
         execCommand: function(e, t) {
@@ -3608,9 +3608,9 @@ function _typeof(e) {
                 if (!0 !== i.fireEvent("beforeinsertimage", t)) {
                     if (!o || !/img/i.test(o.tagName) || "edui-faked-video" == o.className && -1 == o.className.indexOf("edui-upload-video") || o.getAttribute("word_img")) {
                         var r, a = [], s = "";
-                        if (r = t[0], 1 == t.length) s = '<img src="' + r.src + '" ' + (r._src ? ' _src="' + r._src + '" ' : "") + (r.width ? 'width="' + r.width + '" ' : "") + (r.height ? ' height="' + r.height + '" ' : "") + ("left" == r.floatStyle || "right" == r.floatStyle ? ' style="float:' + r.floatStyle + ';"' : "") + (r.title && "" != r.title ? ' title="' + r.title + '"' : "") + (r.border && "0" != r.border ? ' border="' + r.border + '"' : "") + (r.alt && "" != r.alt ? ' alt="' + r.alt + '"' : "") + (r.hspace && "0" != r.hspace ? ' hspace = "' + r.hspace + '"' : "") + (r.vspace && "0" != r.vspace ? ' vspace = "' + r.vspace + '"' : "") + "/>", 
-                        "center" == r.floatStyle && (s = '<p style="text-align: center">' + s + "</p>"), 
-                        a.push(s); else for (var l = 0; r = t[l++]; ) s = "<p " + ("center" == r.floatStyle ? 'style="text-align: center" ' : "") + '><img src="' + r.src + '" ' + (r.width ? 'width="' + r.width + '" ' : "") + (r._src ? ' _src="' + r._src + '" ' : "") + (r.height ? ' height="' + r.height + '" ' : "") + ' style="' + (r.floatStyle && "center" != r.floatStyle ? "float:" + r.floatStyle + ";" : "") + (r.border || "") + '" ' + (r.title ? ' title="' + r.title + '"' : "") + " /></p>", 
+                        if (r = t[0], 1 == t.length) s = '<img src="' + r.src + '" ' + (r._src ? ' _src="' + r._src + '" ' : "") + (r.width ? 'width="' + r.width + '" ' : "") + (r.height ? ' height="' + r.height + '" ' : "") + ("left" === r.floatStyle || "right" === r.floatStyle ? ' style="float:' + r.floatStyle + ';"' : "") + (r.title && "" != r.title ? ' title="' + r.title + '"' : "") + (r.border && "0" != r.border ? ' border="' + r.border + '"' : "") + (r.alt && "" != r.alt ? ' alt="' + r.alt + '"' : "") + (r.hspace && "0" != r.hspace ? ' hspace = "' + r.hspace + '"' : "") + (r.vspace && "0" != r.vspace ? ' vspace = "' + r.vspace + '"' : "") + "/>", 
+                        "center" === r.floatStyle && (s = '<p style="text-align: center">' + s + "</p>"), 
+                        a.push(s); else for (var l = 0; r = t[l++]; ) s = "<p " + ("center" === r.floatStyle ? 'style="text-align: center" ' : "") + '><img src="' + r.src + '" ' + (r.width ? 'width="' + r.width + '" ' : "") + (r._src ? ' _src="' + r._src + '" ' : "") + (r.height ? ' height="' + r.height + '" ' : "") + ' style="' + (r.floatStyle && "center" != r.floatStyle ? "float:" + r.floatStyle + ";" : "") + (r.border || "") + '" ' + (r.title ? ' title="' + r.title + '"' : "") + " /></p>", 
                         a.push(s);
                         i.execCommand("insertHtml", a.join(""));
                     } else {
@@ -3693,20 +3693,20 @@ function _typeof(e) {
             if (i) for (t = r.start.parentNode; dtd.$inline[t.tagName]; ) t = t.parentNode; else t = domUtils.getCommonAncestor(r.start, r.end);
             utils.each(domUtils.getElementsByTagName(t, "span"), function(e) {
                 if (e.parentNode && !domUtils.isBookmarkNode(e)) if (/\s*border\s*:\s*none;?\s*/i.test(e.style.cssText)) /^\s*border\s*:\s*none;?\s*$/.test(e.style.cssText) ? domUtils.remove(e, !0) : domUtils.removeStyle(e, "border"); else {
-                    if (/border/i.test(e.style.cssText) && "SPAN" == e.parentNode.tagName && /border/i.test(e.parentNode.style.cssText) && (e.style.cssText = e.style.cssText.replace(/border[^:]*:[^;]+;?/gi, "")), 
-                    "fontborder" != n || "none" != o) for (var t = e.nextSibling; t && 1 == t.nodeType && "SPAN" == t.tagName; ) if (domUtils.isBookmarkNode(t) && "fontborder" == n) e.appendChild(t), 
+                    if (/border/i.test(e.style.cssText) && "SPAN" === e.parentNode.tagName && /border/i.test(e.parentNode.style.cssText) && (e.style.cssText = e.style.cssText.replace(/border[^:]*:[^;]+;?/gi, "")), 
+                    "fontborder" !== n || "none" !== o) for (var t = e.nextSibling; t && 1 == t.nodeType && "SPAN" === t.tagName; ) if (domUtils.isBookmarkNode(t) && "fontborder" === n) e.appendChild(t), 
                     t = e.nextSibling; else {
                         if (t.style.cssText == e.style.cssText && (domUtils.moveChild(t, e), domUtils.remove(t)), 
                         e.nextSibling === t) break;
                         t = e.nextSibling;
                     }
                     if (function(e) {
-                        for (var t; (t = e.parentNode) && "SPAN" == t.tagName && 1 == domUtils.getChildCount(t, function(e) {
+                        for (var t; (t = e.parentNode) && "SPAN" === t.tagName && 1 == domUtils.getChildCount(t, function(e) {
                             return !domUtils.isBookmarkNode(e) && !domUtils.isBr(e);
                         }); ) t.style.cssText += e.style.cssText, domUtils.remove(e, !0), e = t;
                     }(e), browser.ie && 8 < browser.version) {
                         var i = domUtils.findParent(e, function(e) {
-                            return "SPAN" == e.tagName && /background-color/.test(e.style.cssText);
+                            return "SPAN" === e.tagName && /background-color/.test(e.style.cssText);
                         });
                         i && !/background-color/.test(e.style.cssText) && (e.style.backgroundColor = i.style.backgroundColor);
                     }
@@ -3717,7 +3717,7 @@ function _typeof(e) {
                     if (n && domUtils.isTagNode(n, "span")) {
                         var o = e.createBookmark();
                         utils.each(domUtils.getElementsByTagName(n, "span"), function(e) {
-                            e.parentNode && !domUtils.isBookmarkNode(e) && ("backcolor" == t && domUtils.getComputedStyle(e, "background-color").toLowerCase() === i || (domUtils.removeStyle(e, a[t]), 
+                            e.parentNode && !domUtils.isBookmarkNode(e) && ("backcolor" === t && domUtils.getComputedStyle(e, "background-color").toLowerCase() === i || (domUtils.removeStyle(e, a[t]), 
                             0 == e.style.cssText.replace(/^\s+$/, "").length && domUtils.remove(e, !0)));
                         }), e.moveToBookmark(o);
                     }
@@ -3762,7 +3762,7 @@ function _typeof(e) {
             fontsize: [ 10, 11, 12, 14, 16, 18, 20, 24, 36 ]
         }), this.addInputRule(function(e) {
             utils.each(e.getNodesByTagName("u s del font strike"), function(e) {
-                if ("font" == e.tagName) {
+                if ("font" === e.tagName) {
                     var t = [];
                     for (var i in e.attrs) switch (i) {
                       case "size":
@@ -3792,7 +3792,7 @@ function _typeof(e) {
                         style: t.join(";")
                     };
                 } else {
-                    var n = "u" == e.tagName ? "underline" : "line-through";
+                    var n = "u" === e.tagName ? "underline" : "line-through";
                     e.attrs = {
                         style: (e.getAttr("style") || "") + "text-decoration:" + n + ";"
                     };
@@ -3802,9 +3802,9 @@ function _typeof(e) {
         }), e) !function(s, l) {
             UE.commands[s] = {
                 execCommand: function(e, t) {
-                    t = t || (this.queryCommandState(e) ? "none" : "underline" == e ? "underline" : "fontborder" == e ? "1px solid #000" : "line-through");
+                    t = t || (this.queryCommandState(e) ? "none" : "underline" === e ? "underline" : "fontborder" === e ? "1px solid #000" : "line-through");
                     var i, n = this, o = this.selection.getRange();
-                    if ("default" == t) o.collapsed && (i = n.document.createTextNode("font"), o.insertNode(i).select()), 
+                    if ("default" === t) o.collapsed && (i = n.document.createTextNode("font"), o.insertNode(i).select()), 
                     n.execCommand("removeFormat", "span,a", l), i && (o.setStartBefore(i).collapse(!0), 
                     domUtils.remove(i)), c(o, e, t), o.select(); else if (o.collapsed) {
                         var r = domUtils.findParentByTagName(o.startContainer, "span", !0);
@@ -3815,7 +3815,7 @@ function _typeof(e) {
                                 void domUtils.remove(i);
                                 n.execCommand("removeFormat", "span,a", l);
                             }
-                            if (r.style.cssText = l + ":" + t, i.parentNode.insertBefore(r, i), !browser.ie || browser.ie && 9 == browser.version) for (var a = r.parentNode; !domUtils.isBlockElm(a); ) "SPAN" == a.tagName && (r.style.cssText = a.style.cssText + ";" + r.style.cssText), 
+                            if (r.style.cssText = l + ":" + t, i.parentNode.insertBefore(r, i), !browser.ie || browser.ie && 9 == browser.version) for (var a = r.parentNode; !domUtils.isBlockElm(a); ) "SPAN" === a.tagName && (r.style.cssText = a.style.cssText + ";" + r.style.cssText), 
                             a = a.parentNode;
                             opera ? setTimeout(function() {
                                 o.setStart(r, 0).collapse(!0), c(o, e, t), o.select();
@@ -3832,28 +3832,28 @@ function _typeof(e) {
                 },
                 queryCommandValue: function(e) {
                     var t = this.selection.getStart();
-                    if ("underline" == e || "strikethrough" == e) {
+                    if ("underline" === e || "strikethrough" === e) {
                         for (var i, n = t; n && !domUtils.isBlockElm(n) && !domUtils.isBody(n); ) {
                             if (1 == n.nodeType && "none" != (i = domUtils.getComputedStyle(n, l))) return i;
                             n = n.parentNode;
                         }
                         return "none";
                     }
-                    if ("fontborder" == e) {
+                    if ("fontborder" === e) {
                         for (var o, r = t; r && dtd.$inline[r.tagName]; ) {
                             if ((o = domUtils.getComputedStyle(r, "border")) && /1px/.test(o) && /solid/.test(o)) return o;
                             r = r.parentNode;
                         }
                         return "";
                     }
-                    if ("FontSize" != e) return domUtils.getComputedStyle(t, l);
+                    if ("FontSize" !== e) return domUtils.getComputedStyle(t, l);
                     var a = domUtils.getComputedStyle(t, l);
                     return (r = /^([\d\.]+)(\w+)$/.exec(a)) ? Math.floor(r[1]) + r[2] : a;
                 },
                 queryCommandState: function(e) {
                     if (!d[e]) return 0;
                     var t = this.queryCommandValue(e);
-                    return "fontborder" == e ? /1px/.test(t) && /solid/.test(t) : "underline" == e ? /underline/.test(t) : /line\-through/.test(t);
+                    return "fontborder" === e ? /1px/.test(t) && /solid/.test(t) : "underline" === e ? /underline/.test(t) : /line\-through/.test(t);
                 }
             };
         }(t, e[t]);
@@ -3879,7 +3879,7 @@ function _typeof(e) {
                     var n = e.cloneRange(), o = i.queryCommandValue("link");
                     l(e = e.adjustmentBoundary());
                     var r = e.startContainer;
-                    if (1 == r.nodeType && o && (r = r.childNodes[e.startOffset]) && 1 == r.nodeType && "A" == r.tagName && /^(?:https?|ftp|file)\s*:\s*\/\//.test(r[browser.ie ? "innerText" : "textContent"]) && (r[browser.ie ? "innerText" : "textContent"] = utils.html(t.textValue || t.href)), 
+                    if (1 == r.nodeType && o && (r = r.childNodes[e.startOffset]) && 1 == r.nodeType && "A" === r.tagName && /^(?:https?|ftp|file)\s*:\s*\/\//.test(r[browser.ie ? "innerText" : "textContent"]) && (r[browser.ie ? "innerText" : "textContent"] = utils.html(t.textValue || t.href)), 
                     n.collapsed && !o || (e.removeInlineStyle("a"), n = e.cloneRange()), n.collapsed) {
                         var a = e.document.createElement("a"), s = "";
                         t.textValue ? (s = utils.html(t.textValue), delete t.textValue) : s = utils.html(t.href), 
@@ -3904,7 +3904,7 @@ function _typeof(e) {
             },
             queryCommandState: function() {
                 var e = this.selection.getRange().getClosedNode();
-                return e && ("edui-faked-video" == e.className || -1 != e.className.indexOf("edui-upload-video")) ? -1 : 0;
+                return e && ("edui-faked-video" === e.className || -1 != e.className.indexOf("edui-upload-video")) ? -1 : 0;
             }
         };
     }, UE.plugins.insertframe = function() {
@@ -3978,8 +3978,8 @@ function _typeof(e) {
                         return domUtils.isBlockElm(e);
                     });
                     s = domUtils.findParentByTagName(s, "li", !0) || s, d = domUtils.findParentByTagName(d, "li", !0) || d, 
-                    "LI" == s.tagName || "TD" == s.tagName || s === n || domUtils.isBody(s) ? domUtils.remove(n, !0) : domUtils.breakParent(s, n), 
-                    s !== d && (n = domUtils.findParentByTagName(d, "blockquote")) && ("LI" == d.tagName || "TD" == d.tagName || domUtils.isBody(d) ? n.parentNode && domUtils.remove(n, !0) : domUtils.breakParent(d, n));
+                    "LI" === s.tagName || "TD" === s.tagName || s === n || domUtils.isBody(s) ? domUtils.remove(n, !0) : domUtils.breakParent(s, n), 
+                    s !== d && (n = domUtils.findParentByTagName(d, "blockquote")) && ("LI" === d.tagName || "TD" === d.tagName || domUtils.isBody(d) ? n.parentNode && domUtils.remove(n, !0) : domUtils.breakParent(d, n));
                     for (var c, u = domUtils.getElementsByTagName(this.document, "blockquote"), m = 0; c = u[m++]; ) c.childNodes.length ? domUtils.getPosition(c, s) & domUtils.POSITION_FOLLOWING && domUtils.getPosition(c, d) & domUtils.POSITION_PRECEDING && domUtils.remove(c, !0) : domUtils.remove(c);
                 } else {
                     for (var f = i.cloneRange(), h = 1 == f.startContainer.nodeType ? f.startContainer : f.startContainer.parentNode, p = h, g = 1; ;) {
@@ -4021,7 +4021,7 @@ function _typeof(e) {
             if (t.collapsed) return t;
             for (var i = t.createBookmark(), n = i.end, o = function(e) {
                 return !domUtils.isBr(e) && !domUtils.isWhitespace(e);
-            }, r = domUtils.getNextDomNode(i.start, !1, o); r && domUtils.getPosition(r, n) & domUtils.POSITION_PRECEDING && (3 == r.nodeType && (r.nodeValue = r.nodeValue["touppercase" == e ? "toUpperCase" : "toLowerCase"]()), 
+            }, r = domUtils.getNextDomNode(i.start, !1, o); r && domUtils.getPosition(r, n) & domUtils.POSITION_PRECEDING && (3 == r.nodeType && (r.nodeValue = r.nodeValue["touppercase" === e ? "toUpperCase" : "toLowerCase"]()), 
             (r = domUtils.getNextDomNode(r, !0, o)) !== n); ) ;
             t.moveToBookmark(i).select();
         }
@@ -4089,15 +4089,15 @@ function _typeof(e) {
                             return !m(e);
                         });
                         c.setEndAfter(s), o = e.document.createElement(t), i && (domUtils.setAttributes(o, i), 
-                        n && "customstyle" == n && i.style && (o.style.cssText = i.style)), o.appendChild(c.extractContents()), 
+                        n && "customstyle" === n && i.style && (o.style.cssText = i.style)), o.appendChild(c.extractContents()), 
                         domUtils.isEmptyNode(o) && domUtils.fillChar(e.document, o), c.insertNode(o);
                         var u = o.parentNode;
-                        m(u) && !domUtils.isBody(o.parentNode) && -1 == utils.indexOf(f, u.tagName) && (n && "customstyle" == n || (u.getAttribute("dir") && o.setAttribute("dir", u.getAttribute("dir")), 
+                        m(u) && !domUtils.isBody(o.parentNode) && -1 == utils.indexOf(f, u.tagName) && (n && "customstyle" === n || (u.getAttribute("dir") && o.setAttribute("dir", u.getAttribute("dir")), 
                         u.style.cssText && (o.style.cssText = u.style.cssText + ";" + o.style.cssText), 
                         u.style.textAlign && !o.style.textAlign && (o.style.textAlign = u.style.textAlign), 
                         u.style.textIndent && !o.style.textIndent && (o.style.textIndent = u.style.textIndent), 
                         u.style.padding && !o.style.padding && (o.style.padding = u.style.padding)), i && /h\d/i.test(u.tagName) && !/h\d/i.test(o.tagName) ? (domUtils.setAttributes(u, i), 
-                        n && "customstyle" == n && i.style && (u.style.cssText = i.style), domUtils.remove(o.parentNode, !0), 
+                        n && "customstyle" === n && i.style && (u.style.cssText = i.style), domUtils.remove(o.parentNode, !0), 
                         o = u) : domUtils.remove(o.parentNode, !0)), d = -1 != utils.indexOf(f, u.tagName) ? u : o, 
                         d = domUtils.getNextDomNode(d, !1, a);
                     }
@@ -4161,7 +4161,7 @@ function _typeof(e) {
                 if (-1 !== t.queryCommandState(e)) {
                     t.execCommand("insertHtml", "<hr>");
                     var i, n = t.selection.getRange(), o = n.startContainer;
-                    if (1 == o.nodeType && !o.childNodes[n.startOffset]) (i = o.childNodes[n.startOffset - 1]) && 1 == i.nodeType && "HR" == i.tagName && ("p" == t.options.enterTag ? (i = t.document.createElement("p"), 
+                    if (1 == o.nodeType && !o.childNodes[n.startOffset]) (i = o.childNodes[n.startOffset - 1]) && 1 == i.nodeType && "HR" === i.tagName && ("p" === t.options.enterTag ? (i = t.document.createElement("p"), 
                     n.insertNode(i), n.setStart(i, 0).setCursor()) : (i = t.document.createElement("br"), 
                     n.insertNode(i), n.setStartBefore(i).setCursor()));
                     return !0;
@@ -4181,7 +4181,7 @@ function _typeof(e) {
     }, UE.commands.time = UE.commands.date = {
         execCommand: function(e, t) {
             var i, n, o, r, a, s, l, d, c, u, m, f = new Date();
-            this.execCommand("insertHtml", "time" == e ? (d = t, c = ("0" + (l = f).getHours()).slice(-2), 
+            this.execCommand("insertHtml", "time" === e ? (d = t, c = ("0" + (l = f).getHours()).slice(-2), 
             u = ("0" + l.getMinutes()).slice(-2), m = ("0" + l.getSeconds()).slice(-2), (d = d || "hh:ii:ss").replace(/hh/gi, c).replace(/ii/gi, u).replace(/ss/gi, m)) : (n = t, 
             o = ("000" + (i = f).getFullYear()).slice(-4), r = o.slice(-2), a = ("0" + (i.getMonth() + 1)).slice(-2), 
             s = ("0" + i.getDate()).slice(-2), (n = n || "yyyy-mm-dd").replace(/yyyy/gi, o).replace(/yy/gi, r).replace(/mm/gi, a).replace(/dd/gi, s)));
@@ -4209,7 +4209,7 @@ function _typeof(e) {
         }), this.commands.lineheight = {
             execCommand: function(e, t) {
                 return this.execCommand("paragraph", "p", {
-                    style: "line-height:" + ("1" == t ? "normal" : t + "em")
+                    style: "line-height:" + ("1" === t || 1 === t ? "normal" : t + "em")
                 }), !0;
             },
             queryCommandValue: function() {
@@ -4218,7 +4218,7 @@ function _typeof(e) {
                 });
                 if (e) {
                     var t = domUtils.getComputedStyle(e, "line-height");
-                    return "normal" == t ? 1 : t.replace(/[^\d.]*/gi, "");
+                    return "normal" === t ? 1 : t.replace(/[^\d.]*/gi, "");
                 }
             }
         };
@@ -4259,11 +4259,11 @@ function _typeof(e) {
                     if (n.collapsed) r = browser.ie && browser.ie11below ? browser.version <= 8 ? "&nbsp;" : "" : "<br/>"; else {
                         var a = n.extractContents(), s = i.document.createElement("div");
                         s.appendChild(a), utils.each(UE.filterNode(UE.htmlparser(s.innerHTML.replace(/[\r\t]/g, "")), i.options.filterTxtRules).children, function(t) {
-                            if (browser.ie && browser.ie11below && 8 < browser.version) "element" == t.type ? "br" == t.tagName ? r += "\n" : dtd.$empty[t.tagName] || (utils.each(t.children, function(e) {
-                                "element" == e.type ? "br" == e.tagName ? r += "\n" : dtd.$empty[t.tagName] || (r += e.innerText()) : r += e.data;
-                            }), /\n$/.test(r) || (r += "\n")) : r += t.data + "\n", !t.nextSibling() && /\n$/.test(r) && (r = r.replace(/\n$/, "")); else if (browser.ie && browser.ie11below) "element" == t.type ? "br" == t.tagName ? r += "<br>" : dtd.$empty[t.tagName] || (utils.each(t.children, function(e) {
-                                "element" == e.type ? "br" == e.tagName ? r += "<br>" : dtd.$empty[t.tagName] || (r += e.innerText()) : r += e.data;
-                            }), /br>$/.test(r) || (r += "<br>")) : r += t.data + "<br>", !t.nextSibling() && /<br>$/.test(r) && (r = r.replace(/<br>$/, "")); else if (r += "element" == t.type ? dtd.$empty[t.tagName] ? "" : t.innerText() : t.data, 
+                            if (browser.ie && browser.ie11below && 8 < browser.version) "element" === t.type ? "br" === t.tagName ? r += "\n" : dtd.$empty[t.tagName] || (utils.each(t.children, function(e) {
+                                "element" === e.type ? "br" === e.tagName ? r += "\n" : dtd.$empty[t.tagName] || (r += e.innerText()) : r += e.data;
+                            }), /\n$/.test(r) || (r += "\n")) : r += t.data + "\n", !t.nextSibling() && /\n$/.test(r) && (r = r.replace(/\n$/, "")); else if (browser.ie && browser.ie11below) "element" === t.type ? "br" === t.tagName ? r += "<br>" : dtd.$empty[t.tagName] || (utils.each(t.children, function(e) {
+                                "element" === e.type ? "br" === e.tagName ? r += "<br>" : dtd.$empty[t.tagName] || (r += e.innerText()) : r += e.data;
+                            }), /br>$/.test(r) || (r += "<br>")) : r += t.data + "<br>", !t.nextSibling() && /<br>$/.test(r) && (r = r.replace(/<br>$/, "")); else if (r += "element" === t.type ? dtd.$empty[t.tagName] ? "" : t.innerText() : t.data, 
                             !/br\/?\s*>$/.test(r)) {
                                 if (!t.nextSibling()) return;
                                 r += "<br>";
@@ -4281,7 +4281,7 @@ function _typeof(e) {
             queryCommandValue: function() {
                 var e = this.selection.getStartElementPath(), i = "";
                 return utils.each(e, function(e) {
-                    if ("PRE" == e.nodeName) {
+                    if ("PRE" === e.nodeName) {
                         var t = e.className.match(/brush:([^;]+)/);
                         return i = t && t[1] ? t[1] : "", !1;
                     }
@@ -4304,7 +4304,7 @@ function _typeof(e) {
             utils.each(e.getNodesByTagName("pre"), function(e) {
                 var t = "";
                 utils.each(e.children, function(e) {
-                    "text" == e.type ? t += e.data.replace(/[ ]/g, "&nbsp;").replace(/\n$/, "") : "br" == e.tagName ? t += "\n" : t += dtd.$empty[e.tagName] ? e.innerText() : "";
+                    "text" === e.type ? t += e.data.replace(/[ ]/g, "&nbsp;").replace(/\n$/, "") : "br" === e.tagName ? t += "\n" : t += dtd.$empty[e.tagName] ? e.innerText() : "";
                 }), e.innerText(t.replace(/(&nbsp;|\n)+$/, ""));
             });
         }), d.notNeedCodeQuery = {
@@ -4331,7 +4331,7 @@ function _typeof(e) {
                 if (d.fireEvent("saveScene"), e.collapsed || e.deleteContents(), !browser.ie || browser.ie9above) {
                     var t, i = d.document.createElement("br");
                     for (e.insertNode(i).setStartAfter(i).collapse(!0), i.nextSibling || browser.ie && !(10 < browser.version) ? e.setStartAfter(i) : e.insertNode(i.cloneNode(!1)), 
-                    t = i.previousSibling; t; ) if (!(t = (s = t).previousSibling) || "BR" == t.nodeName) {
+                    t = i.previousSibling; t; ) if (!(t = (s = t).previousSibling) || "BR" === t.nodeName) {
                         t = s;
                         break;
                     }
@@ -4360,7 +4360,7 @@ function _typeof(e) {
                     var s;
                     i = d.document.createElement("br");
                     for (e.insertNode(i), e.insertNode(d.document.createTextNode(domUtils.fillChar)), 
-                    e.setStartAfter(i), t = i.previousSibling; t; ) if (!(t = (s = t).previousSibling) || "BR" == t.nodeName) {
+                    e.setStartAfter(i), t = i.previousSibling; t; ) if (!(t = (s = t).previousSibling) || "BR" === t.nodeName) {
                         t = s;
                         break;
                     }
@@ -4412,8 +4412,8 @@ function _typeof(e) {
                 var o = "";
                 if (browser.ie && 8 < browser.version) {
                     utils.each(UE.filterNode(UE.htmlparser(t), i.options.filterTxtRules).children, function(t) {
-                        "element" == t.type ? "br" == t.tagName ? o += "\n" : dtd.$empty[t.tagName] || (utils.each(t.children, function(e) {
-                            "element" == e.type ? "br" == e.tagName ? o += "\n" : dtd.$empty[t.tagName] || (o += e.innerText()) : o += e.data;
+                        "element" === t.type ? "br" === t.tagName ? o += "\n" : dtd.$empty[t.tagName] || (utils.each(t.children, function(e) {
+                            "element" === e.type ? "br" === e.tagName ? o += "\n" : dtd.$empty[t.tagName] || (o += e.innerText()) : o += e.data;
                         }), /\n$/.test(o) || (o += "\n")) : o += t.data + "\n", !t.nextSibling() && /\n$/.test(o) && (o = o.replace(/\n$/, ""));
                     });
                     var r = i.document.createTextNode(utils.html(o.replace(/&nbsp;/g, " ")));
@@ -4421,10 +4421,10 @@ function _typeof(e) {
                 } else {
                     var a = i.document.createDocumentFragment();
                     utils.each(UE.filterNode(UE.htmlparser(t), i.options.filterTxtRules).children, function(t) {
-                        "element" == t.type ? "br" == t.tagName ? a.appendChild(i.document.createElement("br")) : dtd.$empty[t.tagName] || (utils.each(t.children, function(e) {
-                            "element" == e.type ? "br" == e.tagName ? a.appendChild(i.document.createElement("br")) : dtd.$empty[t.tagName] || a.appendChild(i.document.createTextNode(utils.html(e.innerText().replace(/&nbsp;/g, " ")))) : a.appendChild(i.document.createTextNode(utils.html(e.data.replace(/&nbsp;/g, " "))));
+                        "element" === t.type ? "br" === t.tagName ? a.appendChild(i.document.createElement("br")) : dtd.$empty[t.tagName] || (utils.each(t.children, function(e) {
+                            "element" === e.type ? "br" === e.tagName ? a.appendChild(i.document.createElement("br")) : dtd.$empty[t.tagName] || a.appendChild(i.document.createTextNode(utils.html(e.innerText().replace(/&nbsp;/g, " ")))) : a.appendChild(i.document.createTextNode(utils.html(e.data.replace(/&nbsp;/g, " "))));
                         }), "BR" != a.lastChild.nodeName && a.appendChild(i.document.createElement("br"))) : a.appendChild(i.document.createTextNode(utils.html(t.data.replace(/&nbsp;/g, " ")))), 
-                        t.nextSibling() || "BR" != a.lastChild.nodeName || a.removeChild(a.lastChild);
+                        t.nextSibling() || "BR" !== a.lastChild.nodeName || a.removeChild(a.lastChild);
                     }), n.insertNode(a).select();
                 }
                 return !0;
@@ -4433,7 +4433,7 @@ function _typeof(e) {
             if (40 == (t.keyCode || t.which)) {
                 var i, n = this.selection.getRange(), o = n.startContainer;
                 if (n.collapsed && (i = domUtils.findParentByTagName(n.startContainer, "pre", !0)) && !i.nextSibling) {
-                    for (var r = i.lastChild; r && "BR" == r.nodeName; ) r = r.previousSibling;
+                    for (var r = i.lastChild; r && "BR" === r.nodeName; ) r = r.previousSibling;
                     (r === o || n.startContainer === i && n.startOffset == i.childNodes.length) && (this.execCommand("insertparagraph"), 
                     domUtils.preventDefault(t));
                 }
@@ -4451,7 +4451,7 @@ function _typeof(e) {
     }, UE.commands.cleardoc = {
         execCommand: function(e) {
             var t = this, i = t.options.enterTag, n = t.selection.getRange();
-            "br" == i ? (t.body.innerHTML = "<br/>", n.setStart(t.body, 0).setCursor()) : (t.body.innerHTML = "<p>" + (ie ? "" : "<br/>") + "</p>", 
+            "br" === i ? (t.body.innerHTML = "<br/>", n.setStart(t.body, 0).setCursor()) : (t.body.innerHTML = "<p>" + (ie ? "" : "<br/>") + "</p>", 
             n.setStart(t.body.firstChild, 0).setCursor(!1, !0)), setTimeout(function() {
                 t.fireEvent("clearDoc");
             }, 0);
@@ -4530,20 +4530,20 @@ function _typeof(e) {
             }
         }
         function f(e) {
-            return e && 1 == e.nodeType && "HR" == e.tagName && "pagebreak" == e.className;
+            return e && 1 == e.nodeType && "HR" === e.tagName && "pagebreak" === e.className;
         }
         c.setOpt("pageBreakTag", "_ueditor_page_break_tag_"), c.ready(function() {
             utils.cssRule("pagebreak", ".pagebreak{display:block;clear:both !important;cursor:default !important;width: 100% !important;margin:0;}", c.document);
         }), c.addInputRule(function(e) {
             e.traversal(function(e) {
-                if ("text" == e.type && e.data == c.options.pageBreakTag) {
+                if ("text" === e.type && e.data == c.options.pageBreakTag) {
                     var t = UE.uNode.createElement('<hr class="pagebreak" noshade="noshade" size="5" style="-webkit-user-select: none;">');
                     e.parentNode.insertBefore(t, e), e.parentNode.removeChild(e);
                 }
             });
         }), c.addOutputRule(function(e) {
             utils.each(e.getNodesByTagName("hr"), function(e) {
-                if ("pagebreak" == e.getAttr("class")) {
+                if ("pagebreak" === e.getAttr("class")) {
                     var t = UE.uNode.createText(c.options.pageBreakTag);
                     e.parentNode.insertBefore(t, e), e.parentNode.removeChild(e);
                 }
@@ -4623,18 +4623,18 @@ function _typeof(e) {
         o.ready(function() {
             domUtils.on(this.body, "dragend", function() {
                 var e = o.selection.getRange(), t = e.getClosedNode() || o.selection.getStart();
-                if (t && "IMG" == t.tagName) {
-                    for (var i, n = t.previousSibling; (i = t.nextSibling) && 1 == i.nodeType && "SPAN" == i.tagName && !i.firstChild; ) domUtils.remove(i);
-                    (!n || 1 != n.nodeType || domUtils.isEmptyBlock(n)) && n || i && (!i || domUtils.isEmptyBlock(i)) || (n && "P" == n.tagName && !domUtils.isEmptyBlock(n) ? (n.appendChild(t), 
-                    domUtils.moveChild(i, n), domUtils.remove(i)) : i && "P" == i.tagName && !domUtils.isEmptyBlock(i) && i.insertBefore(t, i.firstChild), 
-                    n && "P" == n.tagName && domUtils.isEmptyBlock(n) && domUtils.remove(n), i && "P" == i.tagName && domUtils.isEmptyBlock(i) && domUtils.remove(i), 
+                if (t && "IMG" === t.tagName) {
+                    for (var i, n = t.previousSibling; (i = t.nextSibling) && 1 == i.nodeType && "SPAN" === i.tagName && !i.firstChild; ) domUtils.remove(i);
+                    (!n || 1 != n.nodeType || domUtils.isEmptyBlock(n)) && n || i && (!i || domUtils.isEmptyBlock(i)) || (n && "P" === n.tagName && !domUtils.isEmptyBlock(n) ? (n.appendChild(t), 
+                    domUtils.moveChild(i, n), domUtils.remove(i)) : i && "P" === i.tagName && !domUtils.isEmptyBlock(i) && i.insertBefore(t, i.firstChild), 
+                    n && "P" === n.tagName && domUtils.isEmptyBlock(n) && domUtils.remove(n), i && "P" === i.tagName && domUtils.isEmptyBlock(i) && domUtils.remove(i), 
                     e.selectNode(t).select(), o.fireEvent("saveScene"));
                 }
             });
         }), o.addListener("keyup", function(e, t) {
             if (13 == (t.keyCode || t.which)) {
                 var i, n = o.selection.getRange();
-                (i = domUtils.findParentByTagName(n.startContainer, "p", !0)) && "center" == domUtils.getComputedStyle(i, "text-align") && domUtils.removeStyle(i, "text-align");
+                (i = domUtils.findParentByTagName(n.startContainer, "p", !0)) && "center" === domUtils.getComputedStyle(i, "text-align") && domUtils.removeStyle(i, "text-align");
             }
         });
     }, UE.plugins.undo = function() {
@@ -4710,7 +4710,7 @@ function _typeof(e) {
                 this.undoManger[e]();
             },
             queryCommandState: function(e) {
-                return this.undoManger["has" + ("undo" == e.toLowerCase() ? "Undo" : "Redo")] ? 0 : -1;
+                return this.undoManger["has" + ("undo" === e.toLowerCase() ? "Undo" : "Redo")] ? 0 : -1;
             },
             notNeedUndo: 1
         };
@@ -4773,7 +4773,7 @@ function _typeof(e) {
                 i.select();
             }), e.on("mouseover mouseout", function(e) {
                 var t = e.target;
-                t && ("mouseover" == e.type ? domUtils.addClass(t, "edui-state-hover") : "mouseout" == e.type && domUtils.removeClasses(t, "edui-state-hover"));
+                t && ("mouseover" === e.type ? domUtils.addClass(t, "edui-state-hover") : "mouseout" === e.type && domUtils.removeClasses(t, "edui-state-hover"));
             }), e.on("wrongflash noflash", function() {
                 ZeroClipboard.destroy();
             }), o.fireEvent("zeroclipboardready", e);
@@ -4841,12 +4841,12 @@ function _typeof(e) {
         function i(e) {
             var t;
             if (e.firstChild) {
-                for (var i, n = domUtils.getElementsByTagName(e, "span"), o = 0; i = n[o++]; ) "_baidu_cut_start" != i.id && "_baidu_cut_end" != i.id || domUtils.remove(i);
+                for (var i, n = domUtils.getElementsByTagName(e, "span"), o = 0; i = n[o++]; ) "_baidu_cut_start" !== i.id && "_baidu_cut_end" !== i.id || domUtils.remove(i);
                 if (browser.webkit) {
                     var r, a = e.querySelectorAll("div br");
                     for (o = 0; r = a[o++]; ) {
                         var s = r.parentNode;
-                        "DIV" == s.tagName && 1 == s.childNodes.length && (s.innerHTML = "<p><br/></p>", 
+                        "DIV" === s.tagName && 1 == s.childNodes.length && (s.innerHTML = "<p><br/></p>", 
                         domUtils.remove(s));
                     }
                     var l, d = e.querySelectorAll("#baidu_pastebin");
@@ -4873,7 +4873,7 @@ function _typeof(e) {
                 if (C.options.filterRules && UE.filterNode(p, C.options.filterRules), C.filterInputRule(p), 
                 browser.webkit) {
                     var g = p.lastChild();
-                    g && "element" == g.type && "br" == g.tagName && p.removeChild(g), utils.each(C.body.querySelectorAll("div"), function(e) {
+                    g && "element" === g.type && "br" === g.tagName && p.removeChild(g), utils.each(C.body.querySelectorAll("div"), function(e) {
                         domUtils.isEmptyBlock(e) && domUtils.remove(e, !0);
                     });
                 }
@@ -4959,7 +4959,7 @@ function _typeof(e) {
                         $: {}
                     },
                     div: function(e) {
-                        for (var t, i = UE.uNode.createElement("p"); t = e.firstChild(); ) "text" != t.type && UE.dom.dtd.$block[t.tagName] ? i.firstChild() ? (e.parentNode.insertBefore(i, e), 
+                        for (var t, i = UE.uNode.createElement("p"); t = e.firstChild(); ) "text" !== t.type && UE.dom.dtd.$block[t.tagName] ? i.firstChild() ? (e.parentNode.insertBefore(i, e), 
                         i = UE.uNode.createElement("p")) : e.parentNode.insertBefore(t, e) : i.appendChild(t);
                         i.firstChild() && e.parentNode.insertBefore(i, e), e.parentNode.removeChild(e);
                     },
@@ -5056,8 +5056,8 @@ function _typeof(e) {
                 if (domUtils.inDoc(o, s)) {
                     var e = o.parentNode;
                     if (e.tagName == o.tagName) {
-                        var t = L(o) || ("OL" == o.tagName ? "decimal" : "disc");
-                        if (t == (L(e) || ("OL" == e.tagName ? "decimal" : "disc"))) {
+                        var t = L(o) || ("OL" === o.tagName ? "decimal" : "disc");
+                        if (t == (L(e) || ("OL" === e.tagName ? "decimal" : "disc"))) {
                             var i = utils.indexOf(h[o.tagName], t);
                             i = i + 1 == h[o.tagName].length ? 0 : i + 1, D(o, h[o.tagName][i]);
                         }
@@ -5071,7 +5071,7 @@ function _typeof(e) {
                             if (e.parentNode === o) {
                                 if (r++, domUtils.hasClass(o, /custom_/)) {
                                     var t = 1, i = L(o);
-                                    if ("OL" == o.tagName) {
+                                    if ("OL" === o.tagName) {
                                         if (i) switch (i) {
                                           case "cn":
                                           case "cn1":
@@ -5095,10 +5095,10 @@ function _typeof(e) {
         }
         function R(e, t, i, n) {
             var o = e.nextSibling;
-            o && 1 == o.nodeType && o.tagName.toLowerCase() == t && (L(o) || domUtils.getStyle(o, "list-style-type") || ("ol" == t ? "decimal" : "disc")) == i && (domUtils.moveChild(o, e), 
+            o && 1 == o.nodeType && o.tagName.toLowerCase() == t && (L(o) || domUtils.getStyle(o, "list-style-type") || ("ol" === t ? "decimal" : "disc")) == i && (domUtils.moveChild(o, e), 
             0 == o.childNodes.length && domUtils.remove(o)), o && domUtils.isFillChar(o) && domUtils.remove(o);
             var r = e.previousSibling;
-            r && 1 == r.nodeType && r.tagName.toLowerCase() == t && (L(r) || domUtils.getStyle(r, "list-style-type") || ("ol" == t ? "decimal" : "disc")) == i && domUtils.moveChild(e, r), 
+            r && 1 == r.nodeType && r.tagName.toLowerCase() == t && (L(r) || domUtils.getStyle(r, "list-style-type") || ("ol" === t ? "decimal" : "disc")) == i && domUtils.moveChild(e, r), 
             r && domUtils.isFillChar(r) && domUtils.remove(r), !n && domUtils.isEmptyBlock(e) && domUtils.remove(e), 
             L(e) && a(e.ownerDocument, !0);
         }
@@ -5114,15 +5114,15 @@ function _typeof(e) {
         }
         function O(e) {
             for (;e && !domUtils.isBody(e); ) {
-                if ("TABLE" == e.nodeName) return null;
-                if ("LI" == e.nodeName) return e;
+                if ("TABLE" === e.nodeName) return null;
+                if ("LI" === e.nodeName) return e;
                 e = e.parentNode;
             }
         }
         C.ready(function() {
             var e = [];
             for (var t in d) {
-                if ("dash" == t || "dot" == t) e.push("li.list-" + d[t] + "{background-image:url(" + n + d[t] + ".gif)}"), 
+                if ("dash" === t || "dot" === t) e.push("li.list-" + d[t] + "{background-image:url(" + n + d[t] + ".gif)}"), 
                 e.push("ul.custom_" + t + "{list-style:none;}ul.custom_" + t + " li{background-position:0 3px;background-repeat:no-repeat}"); else {
                     for (var i = 0; i < 99; i++) e.push("li.list-" + d[t] + i + "{background-image:url(" + n + "list-" + d[t] + i + ".gif)}");
                     e.push("ol.custom_" + t + "{list-style:none;}ol.custom_" + t + " li{background-position:0 3px;background-repeat:no-repeat}");
@@ -5182,11 +5182,11 @@ function _typeof(e) {
         }), C.addListener("beforepaste", function(o, e) {
             var t, i = this.selection.getRange(), r = UE.htmlparser(e.html, !0);
             if (t = domUtils.findParentByTagName(i.startContainer, "li", !0)) {
-                var a = t.parentNode, n = "OL" == a.tagName ? "ul" : "ol";
+                var a = t.parentNode, n = "OL" === a.tagName ? "ul" : "ol";
                 utils.each(r.getNodesByTagName(n), function(e) {
-                    if (e.tagName = a.tagName, e.setAttr(), e.parentNode === r) o = L(a) || ("OL" == a.tagName ? "decimal" : "disc"); else {
+                    if (e.tagName = a.tagName, e.setAttr(), e.parentNode === r) o = L(a) || ("OL" === a.tagName ? "decimal" : "disc"); else {
                         var t = e.parentNode.getAttr("class");
-                        (o = t && /custom_/.test(t) ? t.match(/custom_(\w+)/)[1] : e.parentNode.getStyle("list-style-type")) || (o = "OL" == a.tagName ? "decimal" : "disc");
+                        (o = t && /custom_/.test(t) ? t.match(/custom_(\w+)/)[1] : e.parentNode.getStyle("list-style-type")) || (o = "OL" === a.tagName ? "decimal" : "disc");
                     }
                     var i = utils.indexOf(h[a.tagName], o);
                     e.parentNode !== r && (i = i + 1 == h[a.tagName].length ? 0 : i + 1);
@@ -5199,7 +5199,7 @@ function _typeof(e) {
             utils.each(e.getNodesByTagName("li"), function(n) {
                 var o = [], r = 0;
                 utils.each(n.children, function(e) {
-                    if ("p" == e.tagName) {
+                    if ("p" === e.tagName) {
                         for (var t; t = e.children.pop(); ) o.splice(r, 0, t), t.parentNode = n, lastNode = t;
                         if (!(t = o[o.length - 1]) || "element" != t.type || "br" != t.tagName) {
                             var i = UE.uNode.createElement("br");
@@ -5211,15 +5211,15 @@ function _typeof(e) {
             });
         }), C.addInputRule(function(e) {
             if (utils.each(e.getNodesByTagName("li"), function(e) {
-                for (var t, i = UE.uNode.createElement("p"), n = 0; t = e.children[n]; ) "text" == t.type || dtd.p[t.tagName] ? i.appendChild(t) : i.firstChild() ? (e.insertBefore(i, t), 
+                for (var t, i = UE.uNode.createElement("p"), n = 0; t = e.children[n]; ) "text" === t.type || dtd.p[t.tagName] ? i.appendChild(t) : i.firstChild() ? (e.insertBefore(i, t), 
                 i = UE.uNode.createElement("p"), n += 2) : n++;
                 (i.firstChild() && !i.parentNode || !e.firstChild()) && e.appendChild(i), i.firstChild() || i.innerHTML(browser.ie ? "&nbsp;" : "<br/>");
                 var o = e.firstChild(), r = o.lastChild();
-                r && "text" == r.type && /^\s*$/.test(r.data) && o.removeChild(r);
+                r && "text" === r.type && /^\s*$/.test(r.data) && o.removeChild(r);
             }), C.options.autoTransWordToList) {
                 var s = function(e, t) {
                     var i = t.firstChild();
-                    if (i && "element" == i.type && "span" == i.tagName && /Wingdings|Symbol/.test(i.getStyle("font-family"))) {
+                    if (i && "element" === i.type && "span" === i.tagName && /Wingdings|Symbol/.test(i.getStyle("font-family"))) {
                         for (var n in o) if (o[n] == i.data) return n;
                         return "disc";
                     }
@@ -5245,12 +5245,12 @@ function _typeof(e) {
                             !o.parentNode && e && e.parentNode && e.parentNode.insertBefore(o, e);
                         }
                         var r = n.firstChild();
-                        r && "element" == r.type && "span" == r.tagName && /^\s*(&nbsp;)+\s*$/.test(r.innerText()) && r.parentNode.removeChild(r);
+                        r && "element" === r.type && "span" === r.tagName && /^\s*(&nbsp;)+\s*$/.test(r.innerText()) && r.parentNode.removeChild(r);
                     }
                     function a(e, t, i) {
-                        if ("ol" == e.tagName) if (browser.ie) {
+                        if ("ol" === e.tagName) if (browser.ie) {
                             var n = t.firstChild();
-                            "element" == n.type && "span" == n.tagName && l[i].test(n.innerText()) && t.removeChild(n);
+                            "element" === n.type && "span" === n.tagName && l[i].test(n.innerText()) && t.removeChild(n);
                         } else t.innerHTML(t.innerHTML().replace(l[i], "")); else t.removeChild(t.firstChild());
                         var o = UE.uNode.createElement("li");
                         o.appendChild(t), e.appendChild(o);
@@ -5283,9 +5283,9 @@ function _typeof(e) {
                     C.__hasEnterExecCommand = !0, C.execCommand("insertorderedlist"), C.__hasEnterExecCommand = !1);
                 }
                 var d = C.selection.getRange(), c = n(d.startContainer, function(e) {
-                    return "TABLE" == e.tagName;
+                    return "TABLE" === e.tagName;
                 }), u = d.collapsed ? c : n(d.endContainer, function(e) {
-                    return "TABLE" == e.tagName;
+                    return "TABLE" === e.tagName;
                 });
                 if (c && u && c === u) {
                     if (!d.collapsed) {
@@ -5391,7 +5391,7 @@ function _typeof(e) {
                         var d = (c = utils.indexOf(h[f.tagName], L(m) || domUtils.getComputedStyle(m, "list-style-type"))) + 1 == h[f.tagName].length ? 0 : c + 1;
                         for (D(f, u = h[f.tagName][d]), m.insertBefore(f, l); l && !(domUtils.getPosition(l, n.end) & domUtils.POSITION_FOLLOWING); ) {
                             if (i = l.nextSibling, f.appendChild(l), !i || domUtils.isTagNode(i, "ol ul")) {
-                                if (i) for (;(i = i.firstChild) && "LI" != i.tagName; ) ; else i = domUtils.getNextDomNode(l, !1, null, function(e) {
+                                if (i) for (;(i = i.firstChild) && "LI" !== i.tagName; ) ; else i = domUtils.getNextDomNode(l, !1, null, function(e) {
                                     return e !== o;
                                 });
                                 break;
@@ -5411,10 +5411,10 @@ function _typeof(e) {
             }
         }), C.commands.insertorderedlist = C.commands.insertunorderedlist = {
             execCommand: function(e, t) {
-                t || (t = "insertorderedlist" == e.toLowerCase() ? "decimal" : "disc");
+                t || (t = "insertorderedlist" === e.toLowerCase() ? "decimal" : "disc");
                 var i = this, n = this.selection.getRange(), o = function(e) {
                     return 1 == e.nodeType ? "br" != e.tagName.toLowerCase() : !domUtils.isWhitespace(e);
-                }, r = "insertorderedlist" == e.toLowerCase() ? "ol" : "ul", a = i.document.createDocumentFragment();
+                }, r = "insertorderedlist" === e.toLowerCase() ? "ol" : "ul", a = i.document.createDocumentFragment();
                 n.adjustmentBoundary().shrinkBoundary();
                 var s, l, d, c, u = n.createBookmark(!0), m = O(i.document.getElementById(u.start)), f = 0, h = O(i.document.getElementById(u.end)), p = 0;
                 if (m || h) {
@@ -5432,7 +5432,7 @@ function _typeof(e) {
                         }
                         a.appendChild(h), domUtils.breakParent(c, s), domUtils.isEmptyNode(c.previousSibling) && domUtils.remove(c.previousSibling), 
                         domUtils.isEmptyNode(c.nextSibling) && domUtils.remove(c.nextSibling);
-                        var v = L(s) || domUtils.getComputedStyle(s, "list-style-type") || ("insertorderedlist" == e.toLowerCase() ? "decimal" : "disc");
+                        var v = L(s) || domUtils.getComputedStyle(s, "list-style-type") || ("insertorderedlist" === e.toLowerCase() ? "decimal" : "disc");
                         if (s.tagName.toLowerCase() == r && v == t) {
                             for (var b = 0, y = i.document.createDocumentFragment(); A = a.firstChild; ) if (domUtils.isTagNode(A, "ol ul")) y.appendChild(A); else for (;A.firstChild; ) y.appendChild(A.firstChild), 
                             domUtils.remove(A);
@@ -5503,15 +5503,15 @@ function _typeof(e) {
                 n.moveToBookmark(u).select();
             },
             queryCommandState: function(e) {
-                for (var t, i = "insertorderedlist" == e.toLowerCase() ? "ol" : "ul", n = this.selection.getStartElementPath(), o = 0; t = n[o++]; ) {
-                    if ("TABLE" == t.nodeName) return 0;
+                for (var t, i = "insertorderedlist" === e.toLowerCase() ? "ol" : "ul", n = this.selection.getStartElementPath(), o = 0; t = n[o++]; ) {
+                    if ("TABLE" === t.nodeName) return 0;
                     if (i == t.nodeName.toLowerCase()) return 1;
                 }
                 return 0;
             },
             queryCommandValue: function(e) {
-                for (var t, i, n = "insertorderedlist" == e.toLowerCase() ? "ol" : "ul", o = this.selection.getStartElementPath(), r = 0; i = o[r++]; ) {
-                    if ("TABLE" == i.nodeName) {
+                for (var t, i, n = "insertorderedlist" === e.toLowerCase() ? "ol" : "ul", o = this.selection.getStartElementPath(), r = 0; i = o[r++]; ) {
+                    if ("TABLE" === i.nodeName) {
                         t = null;
                         break;
                     }
@@ -5598,11 +5598,11 @@ function _typeof(e) {
                     f.fireEvent("beforegetcontent");
                     var e = UE.htmlparser(f.body.innerHTML);
                     f.filterOutputRule(e), e.traversal(function(e) {
-                        if ("element" == e.type) switch (e.tagName) {
+                        if ("element" === e.type) switch (e.tagName) {
                           case "td":
                           case "th":
                           case "caption":
-                            e.children && 1 == e.children.length && "br" == e.firstChild().tagName && e.removeChild(e.firstChild());
+                            e.children && 1 == e.children.length && "br" === e.firstChild().tagName && e.removeChild(e.firstChild());
                             break;
 
                           case "pre":
@@ -5610,7 +5610,7 @@ function _typeof(e) {
                         }
                     }), f.fireEvent("aftergetcontent");
                     var t = e.toHtml(!0);
-                    r = f.iframe.parentNode, (a = kT["codemirror" == h.sourceEditor && window.CodeMirror ? "codemirror" : "textarea"](f, r)).setContent(t), 
+                    r = f.iframe.parentNode, (a = kT["codemirror" === h.sourceEditor && window.CodeMirror ? "codemirror" : "textarea"](f, r)).setContent(t), 
                     s = f.setContent, f.setContent = function(e) {
                         var t = UE.htmlparser(e);
                         f.filterInputRule(t), e = t.toHtml(), a.setContent(e);
@@ -5666,7 +5666,7 @@ function _typeof(e) {
                 source: 1,
                 fullscreen: 1
             } ? 1 : -1 : t.apply(this, arguments);
-        }, "codemirror" == h.sourceEditor && f.addListener("ready", function() {
+        }, "codemirror" === h.sourceEditor && f.addListener("ready", function() {
             utils.loadFile(document, {
                 src: h.codeMirrorJsUrl || "https://cdn.jsdelivr.net/npm/codemirror@2.33.0/lib/codemirror.js",
                 tag: "script",
@@ -5714,8 +5714,8 @@ function _typeof(e) {
                     var n = i.startContainer, o = i.endContainer, r = domUtils.findParentByTagName(n, "td", !0), a = domUtils.findParentByTagName(o, "td", !0);
                     if (r && a && r !== a || !r && a || r && !a) return void (t.preventDefault ? t.preventDefault() : t.returnValue = !1);
                 }
-                if ("p" == c) browser.ie || ((n = domUtils.findParentByTagName(i.startContainer, [ "ol", "ul", "p", "h1", "h2", "h3", "h4", "h5", "h6", "blockquote", "caption" ], !0)) || browser.opera ? (l = n.tagName, 
-                "p" == n.tagName.toLowerCase() && browser.gecko && domUtils.removeDirtyAttr(n)) : (d.document.execCommand("formatBlock", !1, "<p>"), 
+                if ("p" === c) browser.ie || ((n = domUtils.findParentByTagName(i.startContainer, [ "ol", "ul", "p", "h1", "h2", "h3", "h4", "h5", "h6", "blockquote", "caption" ], !0)) || browser.opera ? (l = n.tagName, 
+                "p" === n.tagName.toLowerCase() && browser.gecko && domUtils.removeDirtyAttr(n)) : (d.document.execCommand("formatBlock", !1, "<p>"), 
                 browser.gecko && (i = d.selection.getRange(), (n = domUtils.findParentByTagName(i.startContainer, "p", !0)) && domUtils.removeDirtyAttr(n)))); else if (t.preventDefault ? t.preventDefault() : t.returnValue = !1, 
                 i.collapsed) s = i.document.createElement("br"), i.insertNode(s), s.parentNode.lastChild === s ? (s.parentNode.insertBefore(s.cloneNode(!0), s), 
                 i.setStartBefore(s)) : i.setStartAfter(s), i.setCursor(); else if (i.deleteContents(), 
@@ -5955,7 +5955,7 @@ function _typeof(e) {
             var a, s = this;
             s.setOpt("imageScaleEnabled", !0), !browser.ie && s.options.imageScaleEnabled && s.addListener("click", function(e, t) {
                 var i = s.selection.getRange().getClosedNode();
-                if (i && "IMG" == i.tagName && "false" != s.body.contentEditable) {
+                if (i && "IMG" === i.tagName && "false" != s.body.contentEditable) {
                     if (i.getAttribute("anchorname") || domUtils.hasClass(i, "loadingclass") || domUtils.hasClass(i, "loaderrorclass")) return;
                     if (!a) {
                         (a = new l()).init(s), s.ui.getDom().appendChild(a.resizer);
@@ -5987,7 +5987,7 @@ function _typeof(e) {
                     a.show(i);
                 } else a && "none" != a.resizer.style.display && a.hide();
             }), browser.webkit && s.addListener("click", function(e, t) {
-                "IMG" == t.target.tagName && "false" != s.body.contentEditable && new dom.Range(s.document).selectNode(t.target).select();
+                "IMG" === t.target.tagName && "false" != s.body.contentEditable && new dom.Range(s.document).selectNode(t.target).select();
             });
         };
     }(), UE.plugin.register("autolink", function() {
@@ -6047,11 +6047,11 @@ function _typeof(e) {
                 if (13 == i) {
                     for (;o && !domUtils.isBody(o) && !domUtils.isBlockElm(o); ) o = o.parentNode;
                     var r;
-                    if (o && !domUtils.isBody(o) && "P" == o.nodeName) if ((r = o.previousSibling) && 1 == r.nodeType) (r = function(e) {
+                    if (o && !domUtils.isBody(o) && "P" === o.nodeName) if ((r = o.previousSibling) && 1 == r.nodeType) (r = function(e) {
                         if (3 == e.nodeType) return null;
-                        if ("A" == e.nodeName) return e;
+                        if ("A" === e.nodeName) return e;
                         for (var t = e.lastChild; t; ) {
-                            if ("A" == t.nodeName) return t;
+                            if ("A" === t.nodeName) return t;
                             if (3 == t.nodeType) {
                                 if (domUtils.isWhitespace(t)) {
                                     t = t.previousSibling;
@@ -6062,7 +6062,7 @@ function _typeof(e) {
                             t = t.lastChild;
                         }
                     }(r)) && !r.getAttribute("_href") && domUtils.remove(r, !0);
-                } else if (32 == i) 3 == o.nodeType && /^\s$/.test(o.nodeValue) && (o = o.previousSibling) && "A" == o.nodeName && !o.getAttribute("_href") && domUtils.remove(o, !0); else if ((o = domUtils.findParentByTagName(o, "a", !0)) && !o.getAttribute("_href")) {
+                } else if (32 == i) 3 == o.nodeType && /^\s$/.test(o.nodeValue) && (o = o.previousSibling) && "A" === o.nodeName && !o.getAttribute("_href") && domUtils.remove(o, !0); else if ((o = domUtils.findParentByTagName(o, "a", !0)) && !o.getAttribute("_href")) {
                     var a = n.createBookmark();
                     domUtils.remove(o, !0), n.moveToBookmark(a).select(!0);
                 }
@@ -6157,7 +6157,7 @@ function _typeof(e) {
             s.style.top = (document.body.scrollTop || document.documentElement.scrollTop) - l + a + "px") : (browser.ie7Compat && f && (f = !1, 
             s.style.left = domUtils.getXY(s).x - document.documentElement.getBoundingClientRect().left + 2 + "px"), 
             "fixed" != s.style.position && (s.style.position = "fixed", s.style.top = a + "px", 
-            ("absolute" == t || "relative" == t) && parseFloat(i) && (s.style.left = e.x + "px")))) : h();
+            ("absolute" === t || "relative" === t) && parseFloat(i) && (s.style.left = e.x + "px")))) : h();
         }
     }, UE.plugins.video = function() {
         var c = this;
@@ -6174,7 +6174,7 @@ function _typeof(e) {
 
               case "video":
                 var l = e.substr(e.lastIndexOf(".") + 1);
-                "ogv" == l && (l = "ogg"), s = "<video" + (n ? ' id="' + n + '"' : "") + ' class="' + r + ' video-js" ' + (o ? ' style="float:' + o + '"' : "") + ' controls preload="none" width="' + t + '" height="' + i + '" src="' + e + '" data-setup="{}"><source src="' + e + '" type="video/' + l + '" /></video>';
+                "ogv" === l && (l = "ogg"), s = "<video" + (n ? ' id="' + n + '"' : "") + ' class="' + r + ' video-js" ' + (o ? ' style="float:' + o + '"' : "") + ' controls preload="none" width="' + t + '" height="' + i + '" src="' + e + '" data-setup="{}"><source src="' + e + '" type="video/' + l + '" /></video>';
             }
             return s;
         }
@@ -6198,7 +6198,7 @@ function _typeof(e) {
         }), c.commands.insertvideo = {
             execCommand: function(e, t, i) {
                 if (t = utils.isArray(t) ? t : [ t ], !0 !== c.fireEvent("beforeinsertvideo", t)) {
-                    for (var n, o, r = [], a = 0, s = t.length; a < s; a++) o = t[a], n = "upload" == i ? "edui-upload-video video-js vjs-default-skin" : "edui-faked-video", 
+                    for (var n, o, r = [], a = 0, s = t.length; a < s; a++) o = t[a], n = "upload" === i ? "edui-upload-video video-js vjs-default-skin" : "edui-faked-video", 
                     r.push(u(o.url, o.width || 420, o.height || 280, "tmpVedio" + a, null, n, "image"));
                     c.execCommand("inserthtml", r.join(""), !0);
                     var l = this.selection.getRange();
@@ -6211,7 +6211,7 @@ function _typeof(e) {
             },
             queryCommandState: function() {
                 var e = c.selection.getRange().getClosedNode();
-                return e && ("edui-faked-video" == e.className || -1 != e.className.indexOf("edui-upload-video")) ? 1 : 0;
+                return e && ("edui-faked-video" === e.className || -1 != e.className.indexOf("edui-upload-video")) ? 1 : 0;
             }
         };
     }, LY = UE.UETable = function(e) {
@@ -6278,7 +6278,7 @@ function _typeof(e) {
         };
     }, LY.getUETable = function(e) {
         var t = e.tagName.toLowerCase();
-        return (e = "td" == t || "th" == t || "caption" == t ? domUtils.findParentByTagName(e, "table", !0) : e).ueTable || (e.ueTable = new LY(e)), 
+        return (e = "td" === t || "th" === t || "caption" === t ? domUtils.findParentByTagName(e, "table", !0) : e).ueTable || (e.ueTable = new LY(e)), 
         e.ueTable;
     }, LY.cloneCell = function(e, t, i) {
         if (!e || utils.isString(e)) return this.table.ownerDocument.createElement(e || "td");
@@ -6516,13 +6516,13 @@ function _typeof(e) {
             this.update();
         },
         insertRow: function(e, t) {
-            var i, n = this.colsNum, o = this.table, r = o.insertRow(e), a = null, s = "string" == typeof t && "TH" == t.toUpperCase();
+            var i, n = this.colsNum, o = this.table, r = o.insertRow(e), a = null, s = "string" == typeof t && "TH" === t.toUpperCase();
             function l(e, t, i) {
                 if (0 == e) {
                     var n = (i.nextSibling || i.previousSibling).cells[e];
-                    "TH" == n.tagName && ((n = t.ownerDocument.createElement("th")).appendChild(t.firstChild), 
+                    "TH" === n.tagName && ((n = t.ownerDocument.createElement("th")).appendChild(t.firstChild), 
                     i.insertBefore(n, t), domUtils.remove(t));
-                } else if ("TH" == t.tagName) {
+                } else if ("TH" === t.tagName) {
                     var o = t.ownerDocument.createElement("td");
                     o.appendChild(t.firstChild), i.insertBefore(o, t), domUtils.remove(t);
                 }
@@ -6566,13 +6566,13 @@ function _typeof(e) {
             }), t.parentNode.removeChild(t), this.update();
         },
         insertCol: function(e, t, i) {
-            var n, o, r, a = this.rowsNum, s = 0, l = parseInt((this.table.offsetWidth - 20 * (this.colsNum + 1) - (this.colsNum + 1)) / (this.colsNum + 1), 10), d = "string" == typeof t && "TH" == t.toUpperCase();
+            var n, o, r, a = this.rowsNum, s = 0, l = parseInt((this.table.offsetWidth - 20 * (this.colsNum + 1) - (this.colsNum + 1)) / (this.colsNum + 1), 10), d = "string" == typeof t && "TH" === t.toUpperCase();
             function c(e, t, i) {
                 if (0 == e) {
                     var n = t.nextSibling || t.previousSibling;
-                    "TH" == n.tagName && ((n = t.ownerDocument.createElement("th")).appendChild(t.firstChild), 
+                    "TH" === n.tagName && ((n = t.ownerDocument.createElement("th")).appendChild(t.firstChild), 
                     i.insertBefore(n, t), domUtils.remove(t));
-                } else if ("TH" == t.tagName) {
+                } else if ("TH" === t.tagName) {
                     var o = t.ownerDocument.createElement("td");
                     o.appendChild(t.firstChild), i.insertBefore(o, t), domUtils.remove(t);
                 }
@@ -6644,7 +6644,7 @@ function _typeof(e) {
                 var l = this.table.rows[n], d = l.insertCell(this.indexTable[n][a].cellIndex + 1);
                 if (d.rowSpan = i.rowSpan, this.setCellContent(d), d.setAttribute("vAlign", e.getAttribute("vAlign")), 
                 d.setAttribute("align", e.getAttribute("align")), d.setAttribute("width", t), e.style.cssText && (d.style.cssText = e.style.cssText), 
-                "TH" == e.tagName) {
+                "TH" === e.tagName) {
                     var c = e.ownerDocument.createElement("th");
                     c.appendChild(d.firstChild), c.setAttribute("vAlign", e.getAttribute("vAlign")), 
                     c.rowSpan = d.rowSpan, l.insertBefore(c, d), domUtils.remove(d);
@@ -6835,7 +6835,7 @@ function _typeof(e) {
                 var e = u(this).table;
                 if (e) {
                     var t = e.rows[0];
-                    return "th" == t.cells[t.cells.length - 1].tagName.toLowerCase() ? 0 : -1;
+                    return "th" === t.cells[t.cells.length - 1].tagName.toLowerCase() ? 0 : -1;
                 }
                 return -1;
             },
@@ -6915,7 +6915,7 @@ function _typeof(e) {
         }, UE.commands.insertrow = {
             queryCommandState: function() {
                 var e = u(this), t = e.cell;
-                return t && ("TD" == t.tagName || "TH" == t.tagName && e.tr !== e.table.rows[0]) && m(e.table).rowsNum < this.options.maxRowNum ? 0 : -1;
+                return t && ("TD" === t.tagName || "TH" === t.tagName && e.tr !== e.table.rows[0]) && m(e.table).rowsNum < this.options.maxRowNum ? 0 : -1;
             },
             execCommand: function() {
                 var e = this.selection.getRange(), t = e.createBookmark(!0), i = u(this), n = i.cell, o = i.table, r = m(o), a = r.getCellInfo(n);
@@ -6925,7 +6925,7 @@ function _typeof(e) {
         }, UE.commands.insertrownext = {
             queryCommandState: function() {
                 var e = u(this), t = e.cell;
-                return t && "TD" == t.tagName && m(e.table).rowsNum < this.options.maxRowNum ? 0 : -1;
+                return t && "TD" === t.tagName && m(e.table).rowsNum < this.options.maxRowNum ? 0 : -1;
             },
             execCommand: function() {
                 var e = this.selection.getRange(), t = e.createBookmark(!0), i = u(this), n = i.cell, o = i.table, r = m(o), a = r.getCellInfo(n);
@@ -6952,7 +6952,7 @@ function _typeof(e) {
         }, UE.commands.insertcol = {
             queryCommandState: function(e) {
                 var t = u(this), i = t.cell;
-                return i && ("TD" == i.tagName || "TH" == i.tagName && i !== t.tr.cells[0]) && m(t.table).colsNum < this.options.maxColNum ? 0 : -1;
+                return i && ("TD" === i.tagName || "TH" === i.tagName && i !== t.tr.cells[0]) && m(t.table).colsNum < this.options.maxColNum ? 0 : -1;
             },
             execCommand: function(e) {
                 var t = this.selection.getRange(), i = t.createBookmark(!0);
@@ -7018,7 +7018,7 @@ function _typeof(e) {
             },
             execCommand: function(e) {
                 var t = u(this).table;
-                if (t) if ("adaptbywindow" == e) n(t, this); else {
+                if (t) if ("adaptbywindow" === e) n(t, this); else {
                     var i = domUtils.getElementsByTagName(t, "td th");
                     utils.each(i, function(e) {
                         e.removeAttribute("width");
@@ -7151,11 +7151,11 @@ function _typeof(e) {
                 var t = u(this).table;
                 if (!t) return -1;
                 var i = t.getAttribute("interlaced");
-                return "interlacetable" == e ? "enabled" === i ? -1 : 0 : i && "disabled" !== i ? 0 : -1;
+                return "interlacetable" === e ? "enabled" === i ? -1 : 0 : i && "disabled" !== i ? 0 : -1;
             },
             execCommand: function(e, t) {
                 var i = u(this).table;
-                "interlacetable" == e ? (i.setAttribute("interlaced", "enabled"), this.fireEvent("interlacetable", i, t)) : (i.setAttribute("interlaced", "disabled"), 
+                "interlacetable" === e ? (i.setAttribute("interlaced", "enabled"), this.fireEvent("interlacetable", i, t)) : (i.setAttribute("interlaced", "disabled"), 
                 this.fireEvent("uninterlacetable", i));
             }
         }, UE.commands.setbordervisible = {
@@ -7238,7 +7238,7 @@ function _typeof(e) {
             e.style[t] && (i && e.setAttribute(t, parseInt(e.style[t], 10)), e.style[t] = "");
         }
         function _(e) {
-            return "TD" == e.tagName || "TH" == e.tagName ? e : (t = domUtils.findParentByTagName(e, "td", !0) || domUtils.findParentByTagName(e, "th", !0)) ? t : null;
+            return "TD" === e.tagName || "TH" === e.tagName ? e : (t = domUtils.findParentByTagName(e, "td", !0) || domUtils.findParentByTagName(e, "th", !0)) ? t : null;
             var t;
         }
         function L(e) {
@@ -7262,13 +7262,13 @@ function _typeof(e) {
                 if (f && (u.body.style.webkitUserSelect = "none", (Math.abs(p.x - e.clientX) > a || Math.abs(p.y - e.clientY) > a) && (E(), 
                 f = !1, h = 0, P(e))), b && N) return h = 0, u.body.style.webkitUserSelect = "none", 
                 u.selection.getNative()[browser.ie9below ? "empty" : "removeAllRanges"](), t = w(e), 
-                D(u, !0, b, t, i), void ("h" == b ? C.style.left = function(e, t) {
+                D(u, !0, b, t, i), void ("h" === b ? C.style.left = function(e, t) {
                     var i = S(e);
                     if (i) {
                         var n = i.getSameEndPosCells(e, "x")[0], o = i.getSameStartPosXCells(e)[0], r = w(t).x, a = (n ? domUtils.getXY(n).x : domUtils.getXY(i.table).x) + 20, s = o ? domUtils.getXY(o).x + o.offsetWidth - 20 : u.body.offsetWidth + 5 || parseInt(domUtils.getComputedStyle(u.body, "width"), 10);
                         return s -= m, r < (a += m) ? a : s < r ? s : r;
                     }
-                }(N, e) + "px" : "v" == b && (C.style.top = function(e, t) {
+                }(N, e) + "px" : "v" === b && (C.style.top = function(e, t) {
                     try {
                         var i = domUtils.getXY(e).y, n = w(t).y;
                         return n < i ? i : n;
@@ -7285,7 +7285,7 @@ function _typeof(e) {
                         u.body.style.cursor = "url(" + u.options.cursorpath + "v.png),pointer";
                     } else {
                         u.body.style.cursor = "text";
-                        /\d/.test(n) && (n = n.replace(/\d/, ""), i = S(i).getPreviewCell(i, "v" == n)), 
+                        /\d/.test(n) && (n = n.replace(/\d/, ""), i = S(i).getPreviewCell(i, "v" === n)), 
                         D(u, !!i && !!n, i ? n : "", t, i);
                     }
                 } else c(!1, o, u);
@@ -7325,13 +7325,13 @@ function _typeof(e) {
             var o = w(i), r = U(t, o);
             if (n) {
                 var a = e.getElementsByTagName("caption")[0], s = a ? a.offsetHeight : 0;
-                return "v1" == r && o.y - domUtils.getXY(e).y - s < 8;
+                return "v1" === r && o.y - domUtils.getXY(e).y - s < 8;
             }
-            return "h1" == r && o.x - domUtils.getXY(e).x < 8;
+            return "h1" === r && o.x - domUtils.getXY(e).x < 8;
         }
         function D(e, t, i, n, o) {
             try {
-                e.body.style.cursor = "h" == i ? "col-resize" : "v" == i ? "row-resize" : "text", 
+                e.body.style.cursor = "h" === i ? "col-resize" : "v" === i ? "row-resize" : "text", 
                 browser.ie && (!i || x || k(e) ? j(e) : (W(e, e.document), Y(i, o))), y = t;
             } catch (e) {}
         }
@@ -7376,7 +7376,7 @@ function _typeof(e) {
         function P(e) {
             if (f = !1, v = e.target || e.srcElement) {
                 var t = U(v, w(e));
-                /\d/.test(t) && (t = t.replace(/\d/, ""), v = S(v).getPreviewCell(v, "v" == t)), 
+                /\d/.test(t) && (t = t.replace(/\d/, ""), v = S(v).getPreviewCell(v, "v" === t)), 
                 j(u), W(u, u.document), u.fireEvent("saveScene"), Y(t, v), x = !0, b = t, N = v;
             }
         }
@@ -7390,8 +7390,8 @@ function _typeof(e) {
                 }, g), 2 === h)) return h = 0, void function(e) {
                     h = 0;
                     var t, i = _((e = e || u.window.event).target || e.srcElement);
-                    if (i && (t = U(i, w(e))) && (j(u), "h1" == t && (t = "h", R(domUtils.findParentByTagName(i, "table"), i, e) ? u.execCommand("adaptbywindow") : (i = S(i).getPreviewCell(i)) && u.selection.getRange().selectNodeContents(i).setCursor(!0, !0)), 
-                    "h" == t)) {
+                    if (i && (t = U(i, w(e))) && (j(u), "h1" === t && (t = "h", R(domUtils.findParentByTagName(i, "table"), i, e) ? u.execCommand("adaptbywindow") : (i = S(i).getPreviewCell(i)) && u.selection.getRange().selectNodeContents(i).setCursor(!0, !0)), 
+                    "h" === t)) {
                         var n = S(i), o = q(i, n.table, !0);
                         o = function(e, t) {
                             for (var i = [], n = null, o = 0, r = e.length; o < r; o++) (n = e[o][t]) && i.push(n);
@@ -7465,7 +7465,7 @@ function _typeof(e) {
                     } else {
                         var c = domUtils.findParentByTagName(t.target || t.srcElement, "td", !0);
                         if (c || (c = domUtils.findParentByTagName(t.target || t.srcElement, "th", !0)), 
-                        c && ("TD" == c.tagName || "TH" == c.tagName)) {
+                        c && ("TD" === c.tagName || "TH" === c.tagName)) {
                             if (!0 === i.fireEvent("excludetable", c)) return;
                             (n = new dom.Range(i.document)).setStart(c, 0).setCursor(!1, !0);
                         }
@@ -7478,7 +7478,7 @@ function _typeof(e) {
             if (!$()) {
                 var i = t.target || t.srcElement;
                 if (l = domUtils.findParentByTagName(i, "td", !0) || domUtils.findParentByTagName(i, "th", !0), 
-                v && l && ("TD" == v.tagName && "TD" == l.tagName || "TH" == v.tagName && "TH" == l.tagName) && domUtils.findParentByTagName(v, "table") == domUtils.findParentByTagName(l, "table")) {
+                v && l && ("TD" === v.tagName && "TD" === l.tagName || "TH" === v.tagName && "TH" === l.tagName) && domUtils.findParentByTagName(v, "table") == domUtils.findParentByTagName(l, "table")) {
                     var n = S(l);
                     if (v != l) {
                         this.document.body.style.webkitUserSelect = "none", this.selection.getNative()[browser.ie9below ? "empty" : "removeAllRanges"]();
@@ -7622,7 +7622,7 @@ function _typeof(e) {
                     }
                     if (d.collapsed) if (s = domUtils.findParentByTagName(d.startContainer, "table")) {
                         var c = s.rows[0].cells[0], u = domUtils.findParentByTagName(i.selection.getStart(), [ "td", "th" ], !0), m = s.previousSibling;
-                        if (c === u && (!m || 1 == m.nodeType && "TABLE" == m.tagName) && domUtils.isStartInblock(d)) {
+                        if (c === u && (!m || 1 == m.nodeType && "TABLE" === m.tagName) && domUtils.isStartInblock(d)) {
                             var f = domUtils.findParent(i.selection.getStart(), function(e) {
                                 return domUtils.isBlockElm(e);
                             }, !0);
@@ -7631,7 +7631,8 @@ function _typeof(e) {
                         }
                     }
                 }
-                if ((t.ctrlKey || t.metaKey) && "67" == t.keyCode && (w = null, o = k(i))) {
+                if ((t.ctrlKey || t.metaKey) && ("67" === t.keyCode || 67 === t.keyCode) && (w = null, 
+                o = k(i))) {
                     var h = o.selectedTds;
                     U = o.isFullCol(), E = o.isFullRow(), w = [ [ o.cloneCell(h[0], null, !0) ] ];
                     var p;
@@ -7652,7 +7653,7 @@ function _typeof(e) {
                         var c = S(d);
                         if (E) {
                             var u = c.getCellInfo(d).rowIndex;
-                            "TH" == d.tagName && u++;
+                            "TH" === d.tagName && u++;
                             for (var m = 0; v = w[m++]; ) {
                                 for (var f = c.insertRow(u++, "td"), h = 0; C = v[h]; h++) {
                                     var p = f.cells[h];
@@ -7670,7 +7671,7 @@ function _typeof(e) {
                                 y = c.getCellInfo(d);
                                 for (var g = 0, v = (h = 0, w[0]); C = v[h++]; ) g += C.colSpan || 1;
                                 for (i.__hasEnterExecCommand = !0, m = 0; m < g; m++) i.execCommand("insertcol");
-                                i.__hasEnterExecCommand = !1, "TH" == (d = c.table.rows[0].cells[y.cellIndex]).tagName && (d = c.table.rows[1].cells[y.cellIndex]);
+                                i.__hasEnterExecCommand = !1, "TH" === (d = c.table.rows[0].cells[y.cellIndex]).tagName && (d = c.table.rows[1].cells[y.cellIndex]);
                             }
                             for (m = 0; v = w[m++]; ) {
                                 s = d;
@@ -7762,7 +7763,7 @@ function _typeof(e) {
                     }), G(d, !0);
                 }
             }), domUtils.on(u.document, "mousemove", t), domUtils.on(u.document, "mouseout", function(e) {
-                "TABLE" == (e.target || e.srcElement).tagName && D(u, !1, "", null);
+                "TABLE" === (e.target || e.srcElement).tagName && D(u, !1, "", null);
             }), u.addListener("interlacetable", function(e, t, i) {
                 if (t) for (var n, o, r, a = t.rows, s = a.length, l = 0; l < s; l++) a[l].className = (n = i || this.options.classList, 
                 r = !0, n[o = l] ? n[o] : r ? n[o % n.length] : "");
@@ -7772,7 +7773,7 @@ function _typeof(e) {
                 M.call(u, "dragstart", e);
             }), u.addOutputRule(function(e) {
                 utils.each(e.getNodesByTagName("div"), function(e) {
-                    "ue_tableDragLine" == e.getAttr("id") && e.parentNode.removeChild(e);
+                    "ue_tableDragLine" === e.getAttr("id") && e.parentNode.removeChild(e);
                 });
             });
             var a = 0;
@@ -7887,7 +7888,7 @@ function _typeof(e) {
         e.ready(function() {
             utils.cssRule("tablesort", "table.sortEnabled tr.firstRow th,table.sortEnabled tr.firstRow td{padding-right:20px;background-repeat: no-repeat;background-position: center right;   background-image:url(" + e.options.themePath + e.options.theme + "/images/sortable.png);}", e.document), 
             e.addListener("afterexeccommand", function(e, t) {
-                "mergeright" != t && "mergedown" != t && "mergecells" != t || this.execCommand("disablesort");
+                "mergeright" !== t && "mergedown" !== t && "mergecells" !== t || this.execCommand("disablesort");
             });
         }), UE.commands.sorttable = {
             queryCommandState: function() {
@@ -7907,13 +7908,13 @@ function _typeof(e) {
         }, UE.commands.enablesort = UE.commands.disablesort = {
             queryCommandState: function(e) {
                 var t = c(this).table;
-                if (t && "enablesort" == e) for (var i = domUtils.getElementsByTagName(t, "th td"), n = 0; n < i.length; n++) if (1 < i[n].getAttribute("colspan") || 1 < i[n].getAttribute("rowspan")) return -1;
-                return t ? "enablesort" == e ^ "sortEnabled" != t.getAttribute("data-sort") ? -1 : 0 : -1;
+                if (t && "enablesort" === e) for (var i = domUtils.getElementsByTagName(t, "th td"), n = 0; n < i.length; n++) if (1 < i[n].getAttribute("colspan") || 1 < i[n].getAttribute("rowspan")) return -1;
+                return t ? "enablesort" === e ^ "sortEnabled" != t.getAttribute("data-sort") ? -1 : 0 : -1;
             },
             execCommand: function(e) {
                 var t = c(this).table;
-                t.setAttribute("data-sort", "enablesort" == e ? "sortEnabled" : "sortDisabled"), 
-                "enablesort" == e ? domUtils.addClass(t, "sortEnabled") : domUtils.removeClasses(t, "sortEnabled");
+                t.setAttribute("data-sort", "enablesort" === e ? "sortEnabled" : "sortDisabled"), 
+                "enablesort" === e ? domUtils.addClass(t, "sortEnabled") : domUtils.removeClasses(t, "sortEnabled");
             }
         };
     }, UE.plugins.contextmenu = function() {
@@ -8214,9 +8215,9 @@ function _typeof(e) {
                     for (var n, o = 0, r = []; n = u[o]; o++) {
                         var a;
                         !function(e) {
-                            if ("-" == e) (a = r[r.length - 1]) && "-" !== a && r.push("-"); else if (e.hasOwnProperty("group")) {
+                            if ("-" === e) (a = r[r.length - 1]) && "-" !== a && r.push("-"); else if (e.hasOwnProperty("group")) {
                                 for (var t, i = 0, n = []; t = e.subMenu[i]; i++) !function(e) {
-                                    "-" == e ? (a = n[n.length - 1]) && "-" !== a ? n.push("-") : n.splice(n.length - 1) : (l.commands[e.cmdName] || UE.commands[e.cmdName] || e.query) && -1 < (e.query ? e.query() : l.queryCommandState(e.cmdName)) && n.push({
+                                    "-" === e ? (a = n[n.length - 1]) && "-" !== a ? n.push("-") : n.splice(n.length - 1) : (l.commands[e.cmdName] || UE.commands[e.cmdName] || e.query) && -1 < (e.query ? e.query() : l.queryCommandState(e.cmdName)) && n.push({
                                         label: e.label || l.getLang("contextMenu." + e.cmdName + (e.value || "")) || "",
                                         className: "edui-for-" + e.cmdName + (e.className ? " edui-for-" + e.cmdName + "-" + e.className : ""),
                                         onclick: e.exec ? function() {
@@ -8270,7 +8271,7 @@ function _typeof(e) {
                             });
                         }(n);
                     }
-                    if ("-" == r[r.length - 1] && r.pop(), (d = new UE.ui.Menu({
+                    if ("-" === r[r.length - 1] && r.pop(), (d = new UE.ui.Menu({
                         items: r,
                         className: "edui-contextmenu",
                         editor: l
@@ -8287,7 +8288,7 @@ function _typeof(e) {
                 }), l.addListener("aftershowcontextmenu", function(e, t) {
                     if (l.zeroclipboard) {
                         var i = t.items;
-                        for (var n in i) "edui-for-copy" == i[n].className && l.zeroclipboard.clip(i[n].getDom());
+                        for (var n in i) "edui-for-copy" === i[n].className && l.zeroclipboard.clip(i[n].getDom());
                     }
                 });
             }
@@ -8304,13 +8305,13 @@ function _typeof(e) {
                 clientY: t.clientY
             };
             if (setTimeout(function() {
-                !1 !== i.selection.getRange().collapsed && "contextmenu" != e || (r || ((r = new baidu.editor.ui.ShortCutMenu({
+                !1 !== i.selection.getRange().collapsed && "contextmenu" !== e || (r || ((r = new baidu.editor.ui.ShortCutMenu({
                     editor: i,
                     items: a,
                     theme: i.options.theme,
                     className: "edui-shortcutmenu"
                 })).render(), i.fireEvent("afterrendershortcutmenu", r)), r.show(n, !!UE.plugins.contextmenu));
-            }), "contextmenu" == e && (domUtils.preventDefault(t), browser.ie9below)) {
+            }), "contextmenu" === e && (domUtils.preventDefault(t), browser.ie9below)) {
                 var o;
                 try {
                     o = i.selection.getNative().createRange();
@@ -8320,7 +8321,7 @@ function _typeof(e) {
                 if (o.item) new dom.Range(i.document).selectNode(o.item(0)).select(!0, !0);
             }
         }), this.addListener("keydown", function(e) {
-            "keydown" == e && r && !r.isHidden && r.hide();
+            "keydown" === e && r && !r.isHidden && r.hide();
         }));
     }, UE.plugins.basestyle = function() {
         var e = {
@@ -8356,11 +8357,12 @@ function _typeof(e) {
                             t.insertNode(n).removeInlineStyle(r), t.setStartBefore(n), domUtils.remove(n);
                         } else {
                             var o = t.document.createElement(r[0]);
-                            "superscript" != e && "subscript" != e || (n = s.document.createTextNode(""), t.insertNode(n).removeInlineStyle([ "sub", "sup" ]).setStartBefore(n).collapse(!0)), 
+                            "superscript" !== e && "subscript" !== e || (n = s.document.createTextNode(""), 
+                            t.insertNode(n).removeInlineStyle([ "sub", "sup" ]).setStartBefore(n).collapse(!0)), 
                             t.insertNode(o).setStart(o, 0);
                         }
                         t.collapse(!0);
-                    } else "superscript" != e && "subscript" != e || i && i.tagName.toLowerCase() == e || t.removeInlineStyle([ "sub", "sup" ]), 
+                    } else "superscript" !== e && "subscript" !== e || i && i.tagName.toLowerCase() == e || t.removeInlineStyle([ "sub", "sup" ]), 
                     i ? t.removeInlineStyle(r) : t.applyInlineStyle(r[0]);
                     t.select();
                 },
@@ -8381,7 +8383,7 @@ function _typeof(e) {
                 a = e;
                 for (var i, n = 0; i = e[n]; n++) if (3 != i.nodeType) {
                     var o = i.tagName.toLowerCase();
-                    if ("img" == o && i.getAttribute("anchorname") && (o = "anchor"), t[n] = o, r == n) {
+                    if ("img" === o && i.getAttribute("anchorname") && (o = "anchor"), t[n] = o, r == n) {
                         r = -1;
                         break;
                     }
@@ -8392,10 +8394,10 @@ function _typeof(e) {
     }, UE.plugins.formatmatch = function() {
         var l, d = this, c = [], u = 0;
         function m(e, t) {
-            if (browser.webkit) var i = "IMG" == t.target.tagName ? t.target : null;
+            if (browser.webkit) var i = "IMG" === t.target.tagName ? t.target : null;
             d.undoManger && d.undoManger.save();
             var n, o = d.selection.getRange(), r = i || o.getClosedNode();
-            if (l && r && "IMG" == r.tagName) r.style.cssText += ";float:" + (l.style.cssFloat || l.style.styleFloat || "none") + ";display:" + (l.style.display || "inline"), 
+            if (l && r && "IMG" === r.tagName) r.style.cssText += ";float:" + (l.style.cssFloat || l.style.styleFloat || "none") + ";display:" + (l.style.display || "inline"), 
             l = null; else if (!l) {
                 if (o.collapsed) {
                     var a = d.document.createTextNode("match");
@@ -8422,7 +8424,7 @@ function _typeof(e) {
                     c = domUtils.findParents(i, !0, function(e) {
                         return !domUtils.isBlockElm(e) && 1 == e.nodeType;
                     });
-                    for (var n, o = 0; n = c[o]; o++) if ("A" == n.tagName) {
+                    for (var n, o = 0; n = c[o]; o++) if ("A" === n.tagName) {
                         c.splice(o, 1);
                         break;
                     }
@@ -8621,7 +8623,7 @@ function _typeof(e) {
                 if (-1 != e.indexOf(location.host) || /(^\.)|(^\/)/.test(e)) return !0;
                 if (t) for (var i, n = 0; i = t[n++]; ) if (-1 !== e.indexOf(i)) return !0;
                 return !1;
-            }, i = 0, ci; ci = imgs[i++]; ) if (!ci.getAttribute("word_img")) if ("IMG" == ci.nodeName) {
+            }, i = 0, ci; ci = imgs[i++]; ) if (!ci.getAttribute("word_img")) if ("IMG" === ci.nodeName) {
                 var src = ci.getAttribute("_src") || ci.src || "";
                 /^(https?|ftp):/i.test(src) && !test(src, catcherLocalDomain) && (remoteImages.push(src), 
                 domUtils.setAttributes(ci, {
@@ -8656,7 +8658,7 @@ function _typeof(e) {
                     var i, j, ci, cj, oldSrc, newSrc, list = info.list, catchFailList = [], catchSuccessList = [], failIMG = me.options.themePath + me.options.theme + "/images/img-cracked.png";
                     for (i = 0; ci = imgs[i++]; ) for (oldSrc = ci.getAttribute("_src") || ci.src || "", 
                     oldBgIMG = ci.getAttribute("data-background") || "", j = 0; cj = list[j++]; ) {
-                        if (oldSrc == cj.source && "SUCCESS" == cj.state) {
+                        if (oldSrc == cj.source && "SUCCESS" === cj.state) {
                             newSrc = catcherUrlPrefix + cj.url, domUtils.removeClasses(ci, "loadingclass"), 
                             domUtils.setAttributes(ci, {
                                 src: newSrc,
@@ -8665,7 +8667,7 @@ function _typeof(e) {
                             }), catchSuccessList.push(ci);
                             break;
                         }
-                        if (oldSrc == cj.source && "FAIL" == cj.state) {
+                        if (oldSrc == cj.source && "FAIL" === cj.state) {
                             domUtils.removeClasses(ci, "loadingclass"), domUtils.setAttributes(ci, {
                                 src: failIMG,
                                 _src: failIMG,
@@ -8673,14 +8675,14 @@ function _typeof(e) {
                             }), catchFailList.push(ci);
                             break;
                         }
-                        if (oldBgIMG == cj.source && "SUCCESS" == cj.state) {
+                        if (oldBgIMG == cj.source && "SUCCESS" === cj.state) {
                             newBgIMG = catcherUrlPrefix + cj.url, ci.style.cssText = ci.style.cssText.replace(loadingIMG, newBgIMG), 
                             domUtils.removeAttributes(ci, "data-background"), domUtils.setAttributes(ci, {
                                 "data-catchResult": "img_catchSuccess"
                             }), catchSuccessList.push(ci);
                             break;
                         }
-                        if (oldBgIMG == cj.source && "FAIL" == cj.state) {
+                        if (oldBgIMG == cj.source && "FAIL" === cj.state) {
                             ci.style.cssText = ci.style.cssText.replace(loadingIMG, failIMG), domUtils.removeAttributes(ci, "data-background"), 
                             domUtils.setAttributes(ci, {
                                 "data-catchResult": "img_catchFail"
@@ -8736,7 +8738,7 @@ function _typeof(e) {
                     type: "error",
                     timeout: 4e3
                 });
-            }, d = "image" == u ? (s = '<img class="loadingclass" id="' + m + '" src="' + c.options.themePath + c.options.theme + '/images/spacer.gif">', 
+            }, d = "image" === u ? (s = '<img class="loadingclass" id="' + m + '" src="' + c.options.themePath + c.options.theme + '/images/spacer.gif">', 
             function(e) {
                 var t = r + e.url, i = c.document.getElementById(m);
                 i && (domUtils.removeClasses(i, "loadingclass"), i.setAttribute("src", t), i.setAttribute("_src", t), 
@@ -8756,7 +8758,7 @@ function _typeof(e) {
                     h.addEventListener("load", function(e) {
                         try {
                             var t = new Function("return " + utils.trim(e.target.response))();
-                            "SUCCESS" == t.state && t.url ? d(t) : l(t.state);
+                            "SUCCESS" === t.state && t.url ? d(t) : l(t.state);
                         } catch (e) {
                             l(c.getLang("autoupload.loadError"));
                         }
@@ -8785,7 +8787,7 @@ function _typeof(e) {
                     if (window.FormData && window.FileReader) {
                         var t = function(e) {
                             var t, i, n = !1;
-                            if (t = "paste" == e.type ? (i = e).clipboardData && i.clipboardData.items && 1 == i.clipboardData.items.length && /^image\//.test(i.clipboardData.items[0].type) ? i.clipboardData.items : null : l(e)) {
+                            if (t = "paste" === e.type ? (i = e).clipboardData && i.clipboardData.items && 1 == i.clipboardData.items.length && /^image\//.test(i.clipboardData.items[0].type) ? i.clipboardData.items : null : l(e)) {
                                 for (var o, r = t.length; r--; ) (o = t[r]).getAsFile && (o = o.getAsFile()), o && 0 < o.size && (s(o, a), 
                                 n = !0);
                                 n && e.preventDefault();
@@ -8793,7 +8795,7 @@ function _typeof(e) {
                         };
                         !1 !== a.getOpt("enablePasteUpload") && domUtils.on(a.body, "paste ", t), !1 !== a.getOpt("enableDragUpload") ? (domUtils.on(a.body, "drop", t), 
                         domUtils.on(a.body, "dragover", function(e) {
-                            "Files" == e.dataTransfer.types[0] && e.preventDefault();
+                            "Files" === e.dataTransfer.types[0] && e.preventDefault();
                         })) : browser.gecko && domUtils.on(a.body, "drop", function(e) {
                             l(e) && e.preventDefault();
                         }), utils.cssRule("loading", ".loadingclass{display:inline-block;cursor:default;background: url('" + this.options.themePath + this.options.theme + "/images/loading.gif') no-repeat center center transparent;border:1px solid #cccccc;margin-left:1px;height: 22px;width: 22px;}\n.loaderrorclass{display:inline-block;cursor:default;background: url('" + this.options.themePath + this.options.theme + "/images/loaderror.png') no-repeat center center transparent;border:1px solid #cccccc;margin-right:1px;height: 22px;width: 22px;}", this.document);
@@ -8940,7 +8942,7 @@ function _typeof(e) {
                     });
                 },
                 afterexeccommand: function(e, t) {
-                    "paragraph" == t && n.fireEvent("updateSections");
+                    "paragraph" === t && n.fireEvent("updateSections");
                 },
                 keyup: function(e, t) {
                     if (1 != this.selection.getRange().collapsed) this.fireEvent("updateSections"); else {
@@ -9078,7 +9080,7 @@ function _typeof(e) {
                             !o || i && -1 == (i.join("") + ".").indexOf(o.toLowerCase() + ".") ? s(m.getLang("simpleupload.exceedTypeError")) : (domUtils.on(d, "load", function e() {
                                 try {
                                     var t, i, n, o = (d.contentDocument || d.contentWindow.document).body, r = o.innerText || o.textContent || "";
-                                    i = new Function("return " + r)(), t = m.options.imageUrlPrefix + i.url, "SUCCESS" == i.state && i.url ? (n = m.document.getElementById(a), 
+                                    i = new Function("return " + r)(), t = m.options.imageUrlPrefix + i.url, "SUCCESS" === i.state && i.url ? (n = m.document.getElementById(a), 
                                     domUtils.removeClasses(n, "loadingclass"), n.setAttribute("src", t), n.setAttribute("_src", t), 
                                     n.setAttribute("alt", i.original || ""), n.removeAttribute("id"), m.fireEvent("contentchange")) : s(i.state);
                                 } catch (e) {
@@ -9150,7 +9152,7 @@ function _typeof(e) {
                 insertfile: {
                     execCommand: function(e, t) {
                         if (t = utils.isArray(t) ? t : [ t ], !0 !== m.fireEvent("beforeinsertfile", t)) {
-                            var i, n, o, r, a, s, l, d = "", c = m.getOpt("UEDITOR_HOME_URL"), u = c + ("/" == c.substr(c.length - 1) ? "" : "/") + "dialogs/attachment/fileTypeImages/";
+                            var i, n, o, r, a, s, l, d = "", c = m.getOpt("UEDITOR_HOME_URL"), u = c + ("/" === c.substr(c.length - 1) ? "" : "/") + "dialogs/attachment/fileTypeImages/";
                             for (i = 0; i < t.length; i++) n = t[i], o = u + (a = n.url, void 0, s = a.substr(a.lastIndexOf(".") + 1).toLowerCase(), 
                             (l = {
                                 rar: "icon_rar.gif",
@@ -9407,7 +9409,7 @@ function _typeof(e) {
             this.getDom().style.display = "none", this.getDom().style.zIndex = "";
         },
         isHidden: function() {
-            return "none" == this.getDom().style.display;
+            return "none" === this.getDom().style.display;
         },
         _onMouseDown: function() {
             return !1;
@@ -9427,7 +9429,7 @@ function _typeof(e) {
             for (var i = 0; i < o.length; i++) {
                 var n = o[i];
                 if (!n.isHidden() && !1 !== n.queryAutoHide(t)) {
-                    if (e && /scroll/gi.test(e.type) && "edui-wordpastepop" == n.className) return;
+                    if (e && /scroll/gi.test(e.type) && "edui-wordpastepop" === n.className) return;
                     n.hide();
                 }
             }
@@ -9700,7 +9702,7 @@ function _typeof(e) {
         },
         _onMouseDown: function(e) {
             var t = e.target || e.srcElement, i = t && t.tagName && t.tagName.toLowerCase();
-            if ("input" == i || "object" == i || "object" == i) return !1;
+            if ("input" === i || "object" === i || "object" === i) return !1;
         },
         _onClick: function() {
             this.isDisabled() || this.fireEvent("click");
@@ -9815,7 +9817,7 @@ function _typeof(e) {
         },
         getHtmlTpl: function() {
             var e = this.editor, t = e.options.autotypeset, i = e.getLang("autoTypeSet"), n = "textAlignValue" + e.uid, o = "imageBlockLineValue" + e.uid, r = "symbolConverValue" + e.uid;
-            return '<div id="##" class="edui-autotypesetpicker %%"><div class="edui-autotypesetpicker-body"><table ><tr><td nowrap><input type="checkbox" name="mergeEmptyline" ' + (t.mergeEmptyline ? "checked" : "") + ">" + i.mergeLine + '</td><td colspan="2"><input type="checkbox" name="removeEmptyline" ' + (t.removeEmptyline ? "checked" : "") + ">" + i.delLine + '</td></tr><tr><td nowrap><input type="checkbox" name="removeClass" ' + (t.removeClass ? "checked" : "") + ">" + i.removeFormat + '</td><td colspan="2"><input type="checkbox" name="indent" ' + (t.indent ? "checked" : "") + ">" + i.indent + '</td></tr><tr><td nowrap><input type="checkbox" name="textAlign" ' + (t.textAlign ? "checked" : "") + ">" + i.alignment + '</td><td colspan="2" id="' + n + '"><input type="radio" name="' + n + '" value="left" ' + (t.textAlign && "left" == t.textAlign ? "checked" : "") + ">" + e.getLang("justifyleft") + '<input type="radio" name="' + n + '" value="center" ' + (t.textAlign && "center" == t.textAlign ? "checked" : "") + ">" + e.getLang("justifycenter") + '<input type="radio" name="' + n + '" value="right" ' + (t.textAlign && "right" == t.textAlign ? "checked" : "") + ">" + e.getLang("justifyright") + '</td></tr><tr><td nowrap><input type="checkbox" name="imageBlockLine" ' + (t.imageBlockLine ? "checked" : "") + ">" + i.imageFloat + '</td><td nowrap id="' + o + '"><input type="radio" name="' + o + '" value="none" ' + (t.imageBlockLine && "none" == t.imageBlockLine ? "checked" : "") + ">" + e.getLang("default") + '<input type="radio" name="' + o + '" value="left" ' + (t.imageBlockLine && "left" == t.imageBlockLine ? "checked" : "") + ">" + e.getLang("justifyleft") + '<input type="radio" name="' + o + '" value="center" ' + (t.imageBlockLine && "center" == t.imageBlockLine ? "checked" : "") + ">" + e.getLang("justifycenter") + '<input type="radio" name="' + o + '" value="right" ' + (t.imageBlockLine && "right" == t.imageBlockLine ? "checked" : "") + ">" + e.getLang("justifyright") + '</td></tr><tr><td nowrap><input type="checkbox" name="clearFontSize" ' + (t.clearFontSize ? "checked" : "") + ">" + i.removeFontsize + '</td><td colspan="2"><input type="checkbox" name="clearFontFamily" ' + (t.clearFontFamily ? "checked" : "") + ">" + i.removeFontFamily + '</td></tr><tr><td nowrap colspan="3"><input type="checkbox" name="removeEmptyNode" ' + (t.removeEmptyNode ? "checked" : "") + ">" + i.removeHtml + '</td></tr><tr><td nowrap colspan="3"><input type="checkbox" name="pasteFilter" ' + (t.pasteFilter ? "checked" : "") + ">" + i.pasteFilter + '</td></tr><tr><td nowrap><input type="checkbox" name="symbolConver" ' + (t.bdc2sb || t.tobdc ? "checked" : "") + ">" + i.symbol + '</td><td id="' + r + '"><input type="radio" name="bdc" value="bdc2sb" ' + (t.bdc2sb ? "checked" : "") + ">" + i.bdc2sb + '<input type="radio" name="bdc" value="tobdc" ' + (t.tobdc ? "checked" : "") + ">" + i.tobdc + '</td><td nowrap align="right"><button >' + i.run + "</button></td></tr></table></div></div>";
+            return '<div id="##" class="edui-autotypesetpicker %%"><div class="edui-autotypesetpicker-body"><table ><tr><td nowrap><input type="checkbox" name="mergeEmptyline" ' + (t.mergeEmptyline ? "checked" : "") + ">" + i.mergeLine + '</td><td colspan="2"><input type="checkbox" name="removeEmptyline" ' + (t.removeEmptyline ? "checked" : "") + ">" + i.delLine + '</td></tr><tr><td nowrap><input type="checkbox" name="removeClass" ' + (t.removeClass ? "checked" : "") + ">" + i.removeFormat + '</td><td colspan="2"><input type="checkbox" name="indent" ' + (t.indent ? "checked" : "") + ">" + i.indent + '</td></tr><tr><td nowrap><input type="checkbox" name="textAlign" ' + (t.textAlign ? "checked" : "") + ">" + i.alignment + '</td><td colspan="2" id="' + n + '"><input type="radio" name="' + n + '" value="left" ' + (t.textAlign && "left" === t.textAlign ? "checked" : "") + ">" + e.getLang("justifyleft") + '<input type="radio" name="' + n + '" value="center" ' + (t.textAlign && "center" === t.textAlign ? "checked" : "") + ">" + e.getLang("justifycenter") + '<input type="radio" name="' + n + '" value="right" ' + (t.textAlign && "right" === t.textAlign ? "checked" : "") + ">" + e.getLang("justifyright") + '</td></tr><tr><td nowrap><input type="checkbox" name="imageBlockLine" ' + (t.imageBlockLine ? "checked" : "") + ">" + i.imageFloat + '</td><td nowrap id="' + o + '"><input type="radio" name="' + o + '" value="none" ' + (t.imageBlockLine && "none" === t.imageBlockLine ? "checked" : "") + ">" + e.getLang("default") + '<input type="radio" name="' + o + '" value="left" ' + (t.imageBlockLine && "left" === t.imageBlockLine ? "checked" : "") + ">" + e.getLang("justifyleft") + '<input type="radio" name="' + o + '" value="center" ' + (t.imageBlockLine && "center" === t.imageBlockLine ? "checked" : "") + ">" + e.getLang("justifycenter") + '<input type="radio" name="' + o + '" value="right" ' + (t.imageBlockLine && "right" === t.imageBlockLine ? "checked" : "") + ">" + e.getLang("justifyright") + '</td></tr><tr><td nowrap><input type="checkbox" name="clearFontSize" ' + (t.clearFontSize ? "checked" : "") + ">" + i.removeFontsize + '</td><td colspan="2"><input type="checkbox" name="clearFontFamily" ' + (t.clearFontFamily ? "checked" : "") + ">" + i.removeFontFamily + '</td></tr><tr><td nowrap colspan="3"><input type="checkbox" name="removeEmptyNode" ' + (t.removeEmptyNode ? "checked" : "") + ">" + i.removeHtml + '</td></tr><tr><td nowrap colspan="3"><input type="checkbox" name="pasteFilter" ' + (t.pasteFilter ? "checked" : "") + ">" + i.pasteFilter + '</td></tr><tr><td nowrap><input type="checkbox" name="symbolConver" ' + (t.bdc2sb || t.tobdc ? "checked" : "") + ">" + i.symbol + '</td><td id="' + r + '"><input type="radio" name="bdc" value="bdc2sb" ' + (t.bdc2sb ? "checked" : "") + ">" + i.bdc2sb + '<input type="radio" name="bdc" value="tobdc" ' + (t.tobdc ? "checked" : "") + ">" + i.tobdc + '</td><td nowrap align="right"><button >' + i.run + "</button></td></tr></table></div></div>";
         },
         _UIBase_render: WAa.prototype.render
     }, VAa.inherits(XAa, WAa), function() {
@@ -9823,7 +9825,7 @@ function _typeof(e) {
             this.initOptions(e), this.initAutoTypeSetButton();
         };
         function c(e) {
-            for (var t, i = {}, n = e.getDom(), o = e.editor.uid, r = null, a = domUtils.getElementsByTagName(n, "input"), s = a.length - 1; t = a[s--]; ) if ("checkbox" == t.getAttribute("type")) if (i[r = t.getAttribute("name")] && delete i[r], 
+            for (var t, i = {}, n = e.getDom(), o = e.editor.uid, r = null, a = domUtils.getElementsByTagName(n, "input"), s = a.length - 1; t = a[s--]; ) if ("checkbox" === t.getAttribute("type")) if (i[r = t.getAttribute("name")] && delete i[r], 
             t.checked) {
                 var l = document.getElementById(r + "Value" + o);
                 if (l) {
@@ -9862,13 +9864,13 @@ function _typeof(e) {
                             c(l), d.editor.execCommand("autotypeset"), l.hide();
                         }, domUtils.on(e, "click", function(e) {
                             var t = e.target || e.srcElement, i = d.editor.uid;
-                            if (t && "INPUT" == t.tagName) {
-                                if ("imageBlockLine" == t.name || "textAlign" == t.name || "symbolConver" == t.name) for (var n = t.checked, o = document.getElementById(t.name + "Value" + i).getElementsByTagName("input"), r = {
+                            if (t && "INPUT" === t.tagName) {
+                                if ("imageBlockLine" === t.name || "textAlign" === t.name || "symbolConver" === t.name) for (var n = t.checked, o = document.getElementById(t.name + "Value" + i).getElementsByTagName("input"), r = {
                                     imageBlockLine: "none",
                                     textAlign: "left",
                                     symbolConver: "tobdc"
                                 }, a = 0; a < o.length; a++) n ? o[a].value == r[t.name] && (o[a].checked = "checked") : o[a].checked = !1;
-                                if (t.name == "imageBlockLineValue" + i || t.name == "textAlignValue" + i || "bdc" == t.name) {
+                                if (t.name === "imageBlockLineValue" + i || t.name === "textAlignValue" + i || "bdc" === t.name) {
                                     var s = t.parentNode.previousSibling.getElementsByTagName("input");
                                     s && (s[0].checked = !0);
                                 }
@@ -9958,7 +9960,7 @@ function _typeof(e) {
         },
         _onMouseDown: function(e) {
             var t = e.target || e.srcElement, i = t && t.tagName && t.tagName.toLowerCase();
-            if ("input" == i || "object" == i || "object" == i) return !1;
+            if ("input" === i || "object" === i || "object" === i) return !1;
         }
     }, BCa.inherits(ECa, DCa), function() {
         var e = baidu.editor.utils, i = baidu.editor.dom.domUtils, o = baidu.editor.ui.uiUtils, t = baidu.editor.ui.UIBase, n = baidu.editor.ui.Popup, r = baidu.editor.ui.Stateful, a = baidu.editor.ui.CellAlignPicker, s = baidu.editor.ui.Menu = function(e) {
@@ -9981,7 +9983,7 @@ function _typeof(e) {
             initItems: function() {
                 for (var e = 0; e < this.items.length; e++) {
                     var t = this.items[e];
-                    "-" == t ? this.items[e] = this.getSeparator() : t instanceof d || (t.editor = this.editor, 
+                    "-" === t ? this.items[e] = this.getSeparator() : t instanceof d || (t.editor = this.editor, 
                     t.theme = this.editor.options.theme, this.items[e] = this.createItem(t));
                 }
             },
@@ -10420,7 +10422,7 @@ function _typeof(e) {
                 var d = this, e = d.editor.document;
                 u.on(e, "mousemove", function(e) {
                     if (!1 === d.isHidden) {
-                        if (d.getSubMenuMark() || "contextmenu" == d.eventType) return;
+                        if (d.getSubMenuMark() || "contextmenu" === d.eventType) return;
                         var t = !0, i = d.getDom(), n = i.offsetWidth, o = i.offsetHeight, r = n / 2 + d.SPACE, a = o / 2, s = Math.abs(e.screenX - d.left), l = Math.abs(e.screenY - d.top);
                         clearTimeout(c), c = setTimeout(function() {
                             0 < l && l < a ? d.setOpacity(i, "1") : a < l && l < a + 70 ? (d.setOpacity(i, "0.5"), 
@@ -10429,7 +10431,7 @@ function _typeof(e) {
                     }
                 }), browser.chrome && u.on(e, "mouseout", function(e) {
                     var t = e.relatedTarget || e.toElement;
-                    null != t && "HTML" != t.tagName || d.hide();
+                    null != t && "HTML" !== t.tagName || d.hide();
                 }), d.editor.addListener("afterhidepop", function() {
                     d.isHidden || (a = !0);
                 });
@@ -10459,7 +10461,7 @@ function _typeof(e) {
                     e.tagName || (e = e.getDom()), n.left = parseInt(e.style.left), n.top = parseInt(e.style.top), 
                     n.top -= o.offsetHeight + 15, a(n);
                 }
-                if (i.eventType = e.type, o.style.cssText = "display:block;left:-9999px", "contextmenu" == e.type && t) {
+                if (i.eventType = e.type, o.style.cssText = "display:block;left:-9999px", "contextmenu" === e.type && t) {
                     var l = u.getElementsByTagName(r, "div", "edui-contextmenu")[0];
                     l ? s(l) : i.editor.addListener("aftershowcontextmenu", function(e, t) {
                         s(t);
@@ -10675,7 +10677,7 @@ function _typeof(e) {
                         holdScroll: "insertimage" === r,
                         fullscreen: /charts|preview/.test(r),
                         closeDialog: t.getLang("closeDialog")
-                    }, "ok" == a ? {
+                    }, "ok" === a ? {
                         buttons: [ {
                             className: "edui-okbutton",
                             label: t.getLang("ok"),
@@ -10711,7 +10713,7 @@ function _typeof(e) {
                             }
                         },
                         theme: t.options.theme,
-                        disabled: "scrawl" == r && -1 == t.queryCommandState("scrawl") || "charts" == r
+                        disabled: "scrawl" === r && -1 == t.queryCommandState("scrawl") || "charts" === r
                     });
                     return u.buttons[r] = o, t.addListener("selectionchange", function() {
                         if (!(r in {
@@ -11192,7 +11194,7 @@ function _typeof(e) {
                         c.execCommand(e), this.hide();
                     },
                     queryAutoHide: function(e) {
-                        return e && e.ownerDocument == c.document && ("img" == e.tagName.toLowerCase() || N.findParentByTagName(e, "a", !0)) ? e !== u.anchorEl : baidu.editor.ui.Popup.prototype.queryAutoHide.call(this, e);
+                        return e && e.ownerDocument == c.document && ("img" === e.tagName.toLowerCase() || N.findParentByTagName(e, "a", !0)) ? e !== u.anchorEl : baidu.editor.ui.Popup.prototype.queryAutoHide.call(this, e);
                     }
                 });
                 u.render(), c.options.imagePopup && (c.addListener("mouseover", function(e, t) {
@@ -11204,7 +11206,7 @@ function _typeof(e) {
                 }), c.addListener("selectionchange", function(e, t) {
                     if (t) {
                         var i = "", n = "", o = c.selection.getRange().getClosedNode(), r = c.ui._dialogs;
-                        if (o && "IMG" == o.tagName) {
+                        if (o && "IMG" === o.tagName) {
                             var a = "insertimageDialog";
                             if (-1 == o.className.indexOf("edui-faked-video") && -1 == o.className.indexOf("edui-upload-video") || (a = "insertvideoDialog"), 
                             -1 != o.src.indexOf("http://api.map.baidu.com") && (a = "mapDialog"), -1 != o.src.indexOf("http://maps.google.com/maps/api/staticmap") && (a = "gmapDialog"), 
@@ -11235,7 +11237,7 @@ function _typeof(e) {
                     }), s = 0; s < r.length; s++) {
                         var l = r[s], d = null;
                         if ("string" == typeof l) {
-                            "|" == (l = l.toLowerCase()) && (l = "Separator"), "||" == l && (l = "Breakline");
+                            "|" === (l = l.toLowerCase()) && (l = "Separator"), "||" === l && (l = "Breakline");
                             var c = baidu.editor.ui[l];
                             if (c) if (m.isFunction(c)) d = new baidu.editor.ui[l](e); else {
                                 if (c.id && c.id != e.key) continue;
@@ -11251,7 +11253,7 @@ function _typeof(e) {
                                     });
                                 }
                             }
-                            if ("fullscreen" == l) {
+                            if ("fullscreen" === l) {
                                 i && i[0] ? i[0].items.splice(0, 0, d) : d && a.items.splice(0, 0, d);
                                 continue;
                             }
@@ -11401,7 +11403,7 @@ function _typeof(e) {
             },
             triggerLayout: function() {
                 var e = this.getDom();
-                "1" == e.style.zoom ? e.style.zoom = "100%" : e.style.zoom = "1";
+                "1" === e.style.zoom || 1 === e.style.zoom ? e.style.zoom = "100%" : e.style.zoom = "1";
             }
         }, m.inherits(u, baidu.editor.ui.UIBase);
         var n = {};

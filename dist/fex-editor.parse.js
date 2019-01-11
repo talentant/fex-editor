@@ -1,7 +1,7 @@
 /*!
  * fex-editor
  * version: 2.2.0
- * build: 2018-12-10
+ * build: 2019-01-11
  */
 (function(){
 
@@ -276,7 +276,7 @@
         if (!doc.body) {
           var html = [];
           for (var p in obj) {
-            if (p == "tag") continue;
+            if (p === "tag") continue;
             html.push(p + '="' + obj[p] + '"');
           }
           doc.write("<" + obj.tag + " " + html.join(" ") + " ></" + obj.tag + ">");
@@ -310,7 +310,7 @@
     })()
   };
   utils.each(["String", "Function", "Array", "Number", "RegExp", "Object", "Boolean"], v => {
-    utils["is" + v] = obj => Object.prototype.toString.apply(obj) == "[object " + v + "]";
+    utils["is" + v] = obj => Object.prototype.toString.apply(obj) === "[object " + v + "]";
   });
   var parselist = {};
   UE.parse = {
@@ -352,7 +352,7 @@
 UE.parse.register("insertcode", function(utils) {
   var pres = this.root.getElementsByTagName("pre");
   if (pres.length) {
-    if (typeof XRegExp == "undefined") {
+    if (typeof XRegExp === "undefined") {
       var jsurl;
       var cssurl;
       if (this.rootPath !== undefined) {
@@ -638,7 +638,7 @@ UE.parse.register("charts", function(utils) {
 
       for (var j = 0, cell; (cell = row.cells[j]); j++) {
         var value = cell.innerText || cell.textContent || "";
-        rowData.push(cell.tagName == "TH" ? value : value | 0);
+        rowData.push(cell.tagName === "TH" ? value : value | 0);
       }
 
       data.push(rowData);
@@ -945,7 +945,7 @@ UE.parse.register("list", function(utils) {
     utils.each(nodes, list => {
       if (list.className && /custom_/i.test(list.className)) {
         var listStyle = list.className.match(/custom_(\w+)/)[1];
-        if (listStyle == "dash" || listStyle == "dot") {
+        if (listStyle === "dash" || listStyle === "dot") {
           utils.pushItem(
             customCss,
             selector +
@@ -970,7 +970,7 @@ UE.parse.register("list", function(utils) {
         } else {
           var index = 1;
           utils.each(list.childNodes, li => {
-            if (li.tagName == "LI") {
+            if (li.tagName === "LI") {
               utils.pushItem(
                 customCss,
                 selector +
