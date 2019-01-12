@@ -410,26 +410,30 @@
         container.style.zIndex = options.zIndex;
 
         var html =
-          `<!DOCTYPE html>` +
-          `<html lang="en" class="view">` +
-          `<head><title></title>` +
-          `<style type="text/css">` +
+          (ie && browser.version < 9 ? "" : "<!DOCTYPE html>") +
+          "<html lang='en' class='view'>" +
+          "<head>" +
+          "<style type='text/css'>" +
           //设置四周的留边
-          ".view{padding:0;word-wrap:break-word;cursor:text;height:90%;}" +
+          ".view{padding:0;word-wrap:break-word;cursor:text;height:90%;}\n" +
           //设置默认字体和字号
           //font-family不能呢随便改，在safari下fillchar会有解析问题
           "body{margin:8px;font-family:sans-serif;font-size:16px;}" +
           //设置段落间距
           "p{margin:5px 0;}</style>" +
-          (options.iframeCssUrl ? `<link rel="stylesheet" type="text/css" href="${utils.unhtml(options.iframeCssUrl)}" />` : "") +
-          (options.initialStyle ? `<style type="text/css">${options.initialStyle}</style>` : "") +
+          (options.iframeCssUrl ? "<link rel='stylesheet' type='text/css' href='" + utils.unhtml(options.iframeCssUrl) + "'/>" : "") +
+          (options.initialStyle ? "<style>" + options.initialStyle + "</style>" : "") +
           "</head>" +
-          `<body class="view"></body>` +
-          `<script ${ie ? 'defer="defer"' : ""} id="_initialScript">` +
-          `setTimeout(function(){editor = window.parent.UE.instants['ueditorInstant${me.uid}'];editor._setup(document);},0);` +
+          "<body class='view' ></body>" +
+          "<script type='text/javascript' " +
+          (ie ? "defer='defer'" : "") +
+          " id='_initialScript'>" +
+          "setTimeout(function(){editor = window.parent.UE.instants['ueditorInstant" +
+          me.uid +
+          "'];editor._setup(document);},0);" +
           "var _tmpScript = document.getElementById('_initialScript');_tmpScript.parentNode.removeChild(_tmpScript);" +
           "</script>" +
-          (options.iframeJsUrl ? `<script src="${utils.unhtml(options.iframeJsUrl)}"></script>` : "") +
+          (options.iframeJsUrl ? "<script type='text/javascript' src='" + utils.unhtml(options.iframeJsUrl) + "'></script>" : "") +
           "</html>";
 
         container.appendChild(
@@ -442,8 +446,10 @@
             // scrolling :'no',
             src:
               "javascript:void(function(){document.open();" +
-              (options.customDomain && document.domain !== location.hostname ? `document.domain="${document.domain}";` : "") +
-              `document.write("${html}");document.close();}())`
+              (options.customDomain && document.domain != location.hostname ? 'document.domain="' + document.domain + '";' : "") +
+              'document.write("' +
+              html +
+              '");document.close();}())'
           })
         );
         container.style.overflow = "hidden";
