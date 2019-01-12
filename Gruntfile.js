@@ -1,5 +1,6 @@
 "use strict";
 
+const _ = require('lodash');
 const distDir = "dist/";
 
 function updateConfigFile (grunt) {
@@ -9,6 +10,13 @@ function updateConfigFile (grunt) {
   } else {
     grunt.log.warn("config file update error");
   }
+}
+
+function createCommentBlock (filename) {
+  const block = '////////////////////////////////////////////////////////////////////////////';
+  const repeat = _.repeat('/', (block.length - filename.length)/2 - 1);
+
+  return `${block}\n${repeat} ${filename} ${repeat}\n${block}\n`;
 }
 
 module.exports = (grunt) => {
@@ -56,7 +64,7 @@ module.exports = (grunt) => {
           footer: "\n\n})();\n",
           process: (src, s) => {
             const filename = s.substr(s.indexOf("/") + 1);
-            return "// " + filename + "\n" + src.replace("/_css/", "/css/") + "\n";
+            return createCommentBlock(filename) + src.replace("/_css/", "/css/") + "\n";
           }
         },
         src: [
