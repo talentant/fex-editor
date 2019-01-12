@@ -55,7 +55,7 @@ baidu.dom.g = id => {
   if (!id) return null;
   if ("string" == typeof id || id instanceof String) {
     return document.getElementById(id);
-  } else if (id.nodeName && (id.nodeType == 1 || id.nodeType == 9)) {
+  } else if (id.nodeName && (id.nodeType === 1 || id.nodeType === 9)) {
     return id;
   }
   return null;

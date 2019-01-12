@@ -16,7 +16,7 @@ function createCommentBlock (filename) {
   const block = '////////////////////////////////////////////////////////////////////////////';
   const repeat = _.repeat('/', (block.length - filename.length)/2 - 1);
 
-  return `${block}\n${repeat} ${filename} ${repeat}\n${block}\n`;
+  return `\n${block}\n${repeat} ${filename} ${repeat}\n${block}\n`;
 }
 
 module.exports = (grunt) => {

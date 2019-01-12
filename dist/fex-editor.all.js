@@ -5,6 +5,7 @@
  */
 (function(){
 
+
 ////////////////////////////////////////////////////////////////////////////
 //////////////////////////////// editor.js ////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////
@@ -23,6 +24,7 @@ window.UE = baidu.editor = {
   version: "2.3.0-dev"
 };
 var dom = (UE.dom = {});
+
 
 
 ////////////////////////////////////////////////////////////////////////////
@@ -204,7 +206,7 @@ var browser = (UE.browser = (() => {
 
   // Gecko.
   if (browser.gecko) {
-    var geckoRelease = agent.match(/rv:([\d\.]+)/);
+    var geckoRelease = agent.match(/rv:([\d.]+)/);
     if (geckoRelease) {
       geckoRelease = geckoRelease[1].split(".");
       version = geckoRelease[0] * 10000 + (geckoRelease[1] || 0) * 100 + (geckoRelease[2] || 0) * 1;
@@ -286,6 +288,7 @@ var ie = browser.ie;
 var webkit = browser.webkit;
 var gecko = browser.gecko;
 var opera = browser.opera;
+
 
 
 ////////////////////////////////////////////////////////////////////////////
@@ -1213,9 +1216,9 @@ var utils = (UE.utils = {
       ? (key, style, doc) => {
           var indexList;
           var index;
-          if (style === undefined || (style && style.nodeType && style.nodeType == 9)) {
+          if (style === undefined || (style && style.nodeType && style.nodeType === 9)) {
             //获取样式
-            doc = style && style.nodeType && style.nodeType == 9 ? style : doc || document;
+            doc = style && style.nodeType && style.nodeType === 9 ? style : doc || document;
             indexList = doc.indexList || (doc.indexList = {});
             index = indexList[key];
             if (index !== undefined) {
@@ -1248,9 +1251,9 @@ var utils = (UE.utils = {
       : (key, style, doc) => {
           var head;
           var node;
-          if (style === undefined || (style && style.nodeType && style.nodeType == 9)) {
+          if (style === undefined || (style && style.nodeType && style.nodeType === 9)) {
             //获取样式
-            doc = style && style.nodeType && style.nodeType == 9 ? style : doc || document;
+            doc = style && style.nodeType && style.nodeType === 9 ? style : doc || document;
             node = doc.getElementById(key);
             return node ? node.innerHTML : undefined;
           }
@@ -1517,6 +1520,7 @@ utils.each(["String", "Function", "Array", "Number", "RegExp", "Object", "Date"]
 });
 
 
+
 ////////////////////////////////////////////////////////////////////////////
 //////////////////////////// core/EventBase.js ////////////////////////////
 ////////////////////////////////////////////////////////////////////////////
@@ -1692,6 +1696,7 @@ function getListener(obj, type, force) {
 }
 
 
+
 ////////////////////////////////////////////////////////////////////////////
 /////////////////////////////// core/dtd.js ///////////////////////////////
 ////////////////////////////////////////////////////////////////////////////
@@ -1705,8 +1710,10 @@ function getListener(obj, type, force) {
  */
 var dtd = (dom.dtd = (() => {
   function _(s) {
-    for (var k in s) {
-      s[k.toUpperCase()] = s[k];
+    for (let k in s) {
+      if (s.hasOwnProperty(k)) {
+        s[k.toUpperCase()] = s[k];
+      }
     }
     return s;
   }
@@ -2141,6 +2148,7 @@ var dtd = (dom.dtd = (() => {
 })());
 
 
+
 ////////////////////////////////////////////////////////////////////////////
 ///////////////////////////// core/domUtils.js /////////////////////////////
 ////////////////////////////////////////////////////////////////////////////
@@ -2344,7 +2352,7 @@ var domUtils = (dom.domUtils = {
    * 检测节点node在父节点中的索引位置， 根据给定的mergeTextNode参数决定是否要合并多个连续的文本节点为一个节点
    * @method getNodeIndex
    * @param { Node } node 需要检测的节点对象
-   * @param { Boolean } mergeTextNode 是否合并多个连续的文本节点为一个节点
+   * @param { Boolean } ignoreTextNode 是否合并多个连续的文本节点为一个节点
    * @return { Number } 该节点在父节点中的位置
    * @example
    * ```javascript
@@ -2367,8 +2375,8 @@ var domUtils = (dom.domUtils = {
     var preNode = node;
     var i = 0;
     while ((preNode = preNode.previousSibling)) {
-      if (ignoreTextNode && preNode.nodeType == 3) {
-        if (preNode.nodeType != preNode.nextSibling.nodeType) {
+      if (ignoreTextNode && preNode.nodeType === 3) {
+        if (preNode.nodeType !== preNode.nextSibling.nodeType) {
           i++;
         }
         continue;
@@ -2382,7 +2390,7 @@ var domUtils = (dom.domUtils = {
    * 检测节点node是否在给定的document对象上
    * @method inDoc
    * @param { Node } node 需要检测的节点对象
-   * @param { DomDocument } doc 需要检测的document对象
+   * @param { Object } doc 需要检测的document对象
    * @return { Boolean } 该节点node是否在给定的document的dom树上
    * @example
    * ```javascript
@@ -2400,7 +2408,7 @@ var domUtils = (dom.domUtils = {
    * ```
    */
   inDoc(node, doc) {
-    return domUtils.getPosition(node, doc) == 10;
+    return domUtils.getPosition(node, doc) === 10;
   },
   /**
    * 根据给定的过滤规则filterFn， 查找符合该过滤规则的node节点的第一个祖先节点，
@@ -2494,6 +2502,7 @@ var domUtils = (dom.domUtils = {
    * @param { Node } node 需要查找的节点对象
    * @param { Array } tagNames 需要查找的父节点的名称数组
    * @param { Boolean } includeSelf 查找过程是否包含node节点自身
+   * @param { Function } excludeFn ???
    * @warning 查找的终点是到body节点为止
    * @return { Node | NULL } 如果找到符合条件的节点， 则返回该节点， 否则返回NULL
    * @example
@@ -2525,6 +2534,8 @@ var domUtils = (dom.domUtils = {
    * @method findParents
    * @param { Node } node 需要查找的节点对象
    * @param { Boolean } includeSelf 查找的结果中是否允许包含当前查找的节点对象
+   * @param { Function } filterFn ???
+   * @param { Boolean } closerFirst ???
    * @return { Array } 给定节点的祖先节点数组
    */
   findParents(node, includeSelf, filterFn, closerFirst) {
@@ -2643,6 +2654,8 @@ var domUtils = (dom.domUtils = {
    * @method getNextDomNode
    * @param { Node } node 需要获取其后的兄弟节点的节点对象
    * @param { Boolean } startFromChild 查找过程是否从其子节点开始
+   * @param { Function } filterFn ???
+   * @param guard ???
    * @return { Node | NULL } 如果找满足条件的节点， 则返回该节点， 否则返回NULL
    * @see UE.dom.domUtils.getNextDomNode(Node)
    */
@@ -2669,7 +2682,7 @@ var domUtils = (dom.domUtils = {
    * ```
    */
   isBookmarkNode(node) {
-    return node.nodeType == 1 && node.id && /^_baidu_bookmark_/i.test(node.id);
+    return node.nodeType === 1 && node.id && /^_baidu_bookmark_/i.test(node.id);
   },
   /**
    * 获取节点node所属的window对象
@@ -2720,7 +2733,7 @@ var domUtils = (dom.domUtils = {
     parentsA.reverse();
     parentsB.reverse();
     while ((i++, parentsA[i] === parentsB[i])) {}
-    return i == 0 ? null : parentsA[i - 1];
+    return i === 0 ? null : parentsA[i - 1];
   },
   /**
    * 清除node节点左右连续为空的兄弟inline节点
@@ -3135,7 +3148,7 @@ var domUtils = (dom.domUtils = {
    * ```
    */
   isBlockElm(node) {
-    return node.nodeType == 1 && (dtd.$block[node.tagName] || styleBlock[domUtils.getComputedStyle(node, "display")]) && !dtd.$nonChild[node.tagName];
+    return node.nodeType === 1 && (dtd.$block[node.tagName] || styleBlock[domUtils.getComputedStyle(node, "display")]) && !dtd.$nonChild[node.tagName];
   },
   /**
    * 检测node节点是否为body节点
@@ -3149,7 +3162,7 @@ var domUtils = (dom.domUtils = {
    * ```
    */
   isBody(node) {
-    return node && node.nodeType == 1 && node.tagName.toLowerCase() === "body";
+    return node && node.nodeType === 1 && node.tagName.toLowerCase() === "body";
   },
   /**
    * 以node节点为分界，将该节点的指定祖先节点parent拆分成两个独立的节点，
@@ -3228,7 +3241,7 @@ var domUtils = (dom.domUtils = {
    * ```
    */
   isEmptyInlineElement(node) {
-    if (node.nodeType != 1 || !dtd.$removeEmpty[node.tagName]) {
+    if (node.nodeType !== 1 || !dtd.$removeEmpty[node.tagName]) {
       return 0;
     }
     node = node.firstChild;
@@ -3237,7 +3250,7 @@ var domUtils = (dom.domUtils = {
       if (domUtils.isBookmarkNode(node)) {
         return 0;
       }
-      if ((node.nodeType == 1 && !domUtils.isEmptyInlineElement(node)) || (node.nodeType == 3 && !domUtils.isWhitespace(node))) {
+      if ((node.nodeType === 1 && !domUtils.isEmptyInlineElement(node)) || (node.nodeType === 3 && !domUtils.isWhitespace(node))) {
         return 0;
       }
       node = node.nextSibling;
@@ -3271,7 +3284,7 @@ var domUtils = (dom.domUtils = {
   trimWhiteTextNode(node) {
     function remove(dir) {
       var child;
-      while ((child = node[dir]) && child.nodeType == 3 && domUtils.isWhitespace(child)) {
+      while ((child = node[dir]) && child.nodeType === 3 && domUtils.isWhitespace(child)) {
         node.removeChild(child);
       }
     }
@@ -3464,7 +3477,7 @@ var domUtils = (dom.domUtils = {
   mergeSibling(node, ignorePre, ignoreNext) {
     function merge(rtl, start, node) {
       var next;
-      if ((next = node[rtl]) && !domUtils.isBookmarkNode(next) && next.nodeType == 1 && domUtils.isSameElement(node, next)) {
+      if ((next = node[rtl]) && !domUtils.isBookmarkNode(next) && next.nodeType === 1 && domUtils.isSameElement(node, next)) {
         while (next.firstChild) {
           if (start === "firstChild") {
             node.insertBefore(next.lastChild, node.firstChild);
@@ -3580,8 +3593,8 @@ var domUtils = (dom.domUtils = {
   /**
    * 在doc下创建一个标签名为tag，属性为attrs的元素
    * @method createElement
-   * @param { DomDocument } doc 新创建的元素属于该document节点创建
-   * @param { String } tagName 需要创建的元素的标签名
+   * @param { Document } doc 新创建的元素属于该document节点创建
+   * @param { String } tag 需要创建的元素的标签名
    * @param { Object } attrs 新创建的元素的属性key-value集合
    * @return { Element } 新创建的元素对象
    * @example
@@ -3679,7 +3692,7 @@ var domUtils = (dom.domUtils = {
       return element["offset" + styleName.replace(/^\w/, s => s.toUpperCase())] + "px";
     }
     //忽略文本节点
-    if (element.nodeType == 3) {
+    if (element.nodeType === 3) {
       element = element.parentNode;
     }
     //ie下font-size若body下定义了font-size，则从currentStyle里会取到这个font-size. 取不到实际值，故此修改.
@@ -4159,7 +4172,7 @@ var domUtils = (dom.domUtils = {
    * @return { Boolean } 给定的节点是否是br节点
    */
   isBr(node) {
-    return node.nodeType == 1 && node.tagName === "BR";
+    return node.nodeType === 1 && node.tagName === "BR";
   },
   /**
    * 判断给定的节点是否是一个“填充”节点
@@ -4170,7 +4183,7 @@ var domUtils = (dom.domUtils = {
    * @returns { Boolean } 节点是否是填充节点
    */
   isFillChar(node, isInStart) {
-    if (node.nodeType != 3) return false;
+    if (node.nodeType !== 3) return false;
     var text = node.nodeValue;
     if (isInStart) {
       return new RegExp("^" + domUtils.fillChar).test(text);
@@ -4182,7 +4195,7 @@ var domUtils = (dom.domUtils = {
     var flag = 0;
     var start = tmpRange.startContainer;
     var tmp;
-    if (start.nodeType == 1 && start.childNodes[tmpRange.startOffset]) {
+    if (start.nodeType === 1 && start.childNodes[tmpRange.startOffset]) {
       start = start.childNodes[tmpRange.startOffset];
       var pre = start.previousSibling;
       while (pre && domUtils.isFillChar(pre)) {
@@ -4190,7 +4203,7 @@ var domUtils = (dom.domUtils = {
         pre = pre.previousSibling;
       }
     }
-    if (this.isFillChar(start, true) && tmpRange.startOffset == 1) {
+    if (this.isFillChar(start, true) && tmpRange.startOffset === 1) {
       tmpRange.setStartBefore(start);
       start = tmpRange.startContainer;
     }
@@ -4203,7 +4216,7 @@ var domUtils = (dom.domUtils = {
       tmpRange.setStartBefore(tmp);
       start = tmpRange.startContainer;
     }
-    if (start.nodeType == 1 && domUtils.isEmptyNode(start) && tmpRange.startOffset == 1) {
+    if (start.nodeType === 1 && domUtils.isEmptyNode(start) && tmpRange.startOffset === 1) {
       tmpRange.setStart(start, 0).collapse(true);
     }
     while (!tmpRange.startOffset) {
@@ -4255,7 +4268,7 @@ var domUtils = (dom.domUtils = {
    * @return { Boolean } 是否是空元素
    */
   isEmptyBlock(node, reg) {
-    if (node.nodeType != 1) return 0;
+    if (node.nodeType !== 1) return 0;
     reg = reg || new RegExp("[ \xa0\t\r\n" + domUtils.fillChar + "]", "g");
 
     if (node[browser.ie ? "innerText" : "textContent"].replace(reg, "").length > 0) {
@@ -4445,7 +4458,7 @@ var domUtils = (dom.domUtils = {
    * @return { Boolean } 给定的节点是否是一个辅助节点
    */
   isCustomeNode(node) {
-    return node.nodeType == 1 && node.getAttribute("_ue_custom_node_");
+    return node.nodeType === 1 && node.getAttribute("_ue_custom_node_");
   },
 
   /**
@@ -4467,7 +4480,7 @@ var domUtils = (dom.domUtils = {
    * ```
    */
   isTagNode(node, tagNames) {
-    return node.nodeType == 1 && new RegExp("\\b" + node.tagName + "\\b", "i").test(tagNames);
+    return node.nodeType === 1 && new RegExp("\\b" + node.tagName + "\\b", "i").test(tagNames);
   },
 
   /**
@@ -4557,10 +4570,10 @@ var domUtils = (dom.domUtils = {
    */
   isInNodeEndBoundary(rng, node) {
     var start = rng.startContainer;
-    if (start.nodeType == 3 && rng.startOffset != start.nodeValue.length) {
+    if (start.nodeType === 3 && rng.startOffset !== start.nodeValue.length) {
       return 0;
     }
-    if (start.nodeType == 1 && rng.startOffset != start.childNodes.length) {
+    if (start.nodeType === 1 && rng.startOffset !== start.childNodes.length) {
       return 0;
     }
     while (start !== node) {
@@ -4585,6 +4598,7 @@ var domUtils = (dom.domUtils = {
   fillHtml: browser.ie11below ? "&nbsp;" : "<br/>"
 });
 var fillCharReg = new RegExp(domUtils.fillChar, "g");
+
 
 
 ////////////////////////////////////////////////////////////////////////////
@@ -4621,15 +4635,15 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
    * @param  {Range}   range    range对象
    */
   function updateCollapse(range) {
-    range.collapsed = range.startContainer && range.endContainer && range.startContainer === range.endContainer && range.startOffset == range.endOffset;
+    range.collapsed = range.startContainer && range.endContainer && range.startContainer === range.endContainer && range.startOffset === range.endOffset;
   }
 
   function selectOneNode(rng) {
-    return !rng.collapsed && rng.startContainer.nodeType == 1 && rng.startContainer === rng.endContainer && rng.endOffset - rng.startOffset == 1;
+    return !rng.collapsed && rng.startContainer.nodeType === 1 && rng.startContainer === rng.endContainer && rng.endOffset - rng.startOffset === 1;
   }
   function setEndPoint(toStart, node, offset, range) {
     //如果node是自闭合标签要处理
-    if (node.nodeType == 1 && (dtd.$empty[node.tagName] || dtd.$nonChild[node.tagName])) {
+    if (node.nodeType === 1 && (dtd.$empty[node.tagName] || dtd.$nonChild[node.tagName])) {
       offset = domUtils.getNodeIndex(node) + (toStart ? 0 : 1);
       node = node.parentNode;
     }
@@ -4662,13 +4676,13 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
     var frag = doc.createDocumentFragment();
     var tmpStart;
     var tmpEnd;
-    if (start.nodeType == 1) {
+    if (start.nodeType === 1) {
       start = start.childNodes[startOffset] || (tmpStart = start.appendChild(doc.createTextNode("")));
     }
-    if (end.nodeType == 1) {
+    if (end.nodeType === 1) {
       end = end.childNodes[endOffset] || (tmpEnd = end.appendChild(doc.createTextNode("")));
     }
-    if (start === end && start.nodeType == 3) {
+    if (start === end && start.nodeType === 3) {
       frag.appendChild(doc.createTextNode(start.substringData(startOffset, endOffset - startOffset)));
       //is not clone
       if (action) {
@@ -4689,7 +4703,7 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
       current = si.nextSibling;
       if (si == start) {
         if (!tmpStart) {
-          if (range.startContainer.nodeType == 3) {
+          if (range.startContainer.nodeType === 3) {
             clone.appendChild(doc.createTextNode(start.nodeValue.slice(startOffset)));
             //is not clone
             if (action) {
@@ -4721,7 +4735,7 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
     for (var j = i, ei; (ei = endParents[j]); j++) {
       current = ei.previousSibling;
       if (ei == end) {
-        if (!tmpEnd && range.endContainer.nodeType == 3) {
+        if (!tmpEnd && range.endContainer.nodeType === 3) {
           clone.appendChild(doc.createTextNode(end.substringData(0, endOffset)));
           //is not clone
           if (action) {
@@ -4907,7 +4921,7 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
       }
       if (browser.webkit) {
         txt = this.startContainer;
-        if (txt.nodeType == 3 && !txt.nodeValue.length) {
+        if (txt.nodeType === 3 && !txt.nodeValue.length) {
           this.setStartBefore(txt).collapse(true);
           domUtils.remove(txt);
         }
@@ -5133,7 +5147,7 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
      * @return { UE.dom.Range } 当前range对象
      */
     setStartAtLast(node) {
-      return this.setStart(node, node.nodeType == 3 ? node.nodeValue.length : node.childNodes.length);
+      return this.setStart(node, node.nodeType === 3 ? node.nodeValue.length : node.childNodes.length);
     },
 
     /**
@@ -5159,7 +5173,7 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
      * @return { UE.dom.Range } 当前range对象
      */
     setEndAtLast(node) {
-      return this.setEnd(node, node.nodeType == 3 ? node.nodeValue.length : node.childNodes.length);
+      return this.setEnd(node, node.nodeType === 3 ? node.nodeValue.length : node.childNodes.length);
     },
 
     /**
@@ -5329,10 +5343,10 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
       var child;
       var collapsed = me.collapsed;
       function check(node) {
-        return node.nodeType == 1 && !domUtils.isBookmarkNode(node) && !dtd.$empty[node.tagName] && !dtd.$nonChild[node.tagName];
+        return node.nodeType === 1 && !domUtils.isBookmarkNode(node) && !dtd.$empty[node.tagName] && !dtd.$nonChild[node.tagName];
       }
       while (
-        me.startContainer.nodeType == 1 && //是element
+        me.startContainer.nodeType === 1 && //是element
         (child = me.startContainer.childNodes[me.startOffset]) && //子节点也是element
         check(child)
       ) {
@@ -5343,7 +5357,7 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
       }
       if (!ignoreEnd) {
         while (
-          me.endContainer.nodeType == 1 && //是element
+          me.endContainer.nodeType === 1 && //是element
           me.endOffset > 0 && //如果是空元素就退出 endOffset=0那么endOffst-1为负值，childNodes[endOffset]报错
           (child = me.endContainer.childNodes[me.endOffset - 1]) && //子节点也是element
           check(child)
@@ -5441,10 +5455,10 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
       if (start === end) {
         if (includeSelf && selectOneNode(this)) {
           start = start.childNodes[me.startOffset];
-          if (start.nodeType == 1) return start;
+          if (start.nodeType === 1) return start;
         }
         //只有在上来就相等的情况下才会出现是文本的情况
-        return ignoreTextNode && start.nodeType == 3 ? start.parentNode : start;
+        return ignoreTextNode && start.nodeType === 3 ? start.parentNode : start;
       }
       return domUtils.getCommonAncestor(start, end);
     },
@@ -5500,7 +5514,7 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
       var offset = this.startOffset;
       var collapsed = this.collapsed;
       var end = this.endContainer;
-      if (start.nodeType == 3) {
+      if (start.nodeType === 3) {
         if (offset == 0) {
           this.setStartBefore(start);
         } else {
@@ -5524,7 +5538,7 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
       if (!ignoreEnd) {
         offset = this.endOffset;
         end = this.endContainer;
-        if (end.nodeType == 3) {
+        if (end.nodeType === 3) {
           if (offset == 0) {
             this.setEndBefore(end);
           } else {
@@ -5555,7 +5569,7 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
       function adjust(r, c) {
         var container = r[c + "Container"];
         var offset = r[c + "Offset"];
-        if (container.nodeType == 3) {
+        if (container.nodeType === 3) {
           if (!offset) {
             r["set" + c.replace(/(\w)/, a => a.toUpperCase()) + "Before"](container);
           } else if (offset >= container.nodeValue.length) {
@@ -5581,7 +5595,7 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
     insertNode(node) {
       var first = node;
       var length = 1;
-      if (node.nodeType == 11) {
+      if (node.nodeType === 11) {
         first = node.firstChild;
         length = node.childNodes.length;
       }
@@ -5695,7 +5709,7 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
       var tmp = this.document.createTextNode("");
       if (toBlock) {
         node = this.startContainer;
-        if (node.nodeType == 1) {
+        if (node.nodeType === 1) {
           if (node.childNodes[this.startOffset]) {
             pre = node = node.childNodes[this.startOffset];
           } else {
@@ -5718,7 +5732,7 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
           node = node.parentNode;
         }
         node = this.endContainer;
-        if (node.nodeType == 1) {
+        if (node.nodeType === 1) {
           if ((pre = node.childNodes[this.endOffset])) {
             node.insertBefore(tmp, pre);
           } else {
@@ -5748,7 +5762,7 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
 
       // 扩展边界到最大
       if (!this.collapsed) {
-        while (this.startOffset == 0) {
+        while (this.startOffset === 0) {
           if (stopFn && stopFn(this.startContainer)) {
             break;
           }
@@ -5757,7 +5771,7 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
           }
           this.setStartBefore(this.startContainer);
         }
-        while (this.endOffset == (this.endContainer.nodeType == 1 ? this.endContainer.childNodes.length : this.endContainer.nodeValue.length)) {
+        while (this.endOffset === (this.endContainer.nodeType === 1 ? this.endContainer.childNodes.length : this.endContainer.nodeValue.length)) {
           if (stopFn && stopFn(this.endContainer)) {
             break;
           }
@@ -5790,12 +5804,12 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
       if (!this.collapsed) {
         while (
           !domUtils.isBody(this.startContainer) &&
-          this.startOffset == this.startContainer[this.startContainer.nodeType == 3 ? "nodeValue" : "childNodes"].length &&
-          this.startContainer[this.startContainer.nodeType == 3 ? "nodeValue" : "childNodes"].length
+          this.startOffset === this.startContainer[this.startContainer.nodeType === 3 ? "nodeValue" : "childNodes"].length &&
+          this.startContainer[this.startContainer.nodeType === 3 ? "nodeValue" : "childNodes"].length
         ) {
           this.setStartAfter(this.startContainer);
         }
-        while (!domUtils.isBody(this.endContainer) && !this.endOffset && this.endContainer[this.endContainer.nodeType == 3 ? "nodeValue" : "childNodes"].length) {
+        while (!domUtils.isBody(this.endContainer) && !this.endOffset && this.endContainer[this.endContainer.nodeType === 3 ? "nodeValue" : "childNodes"].length) {
           this.setEndBefore(this.endContainer);
         }
       }
@@ -5835,24 +5849,24 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
     applyInlineStyle(tagName, attrs, list) {
       if (this.collapsed) return this;
       this.trimBoundary()
-        .enlarge(false, node => node.nodeType == 1 && domUtils.isBlockElm(node))
+        .enlarge(false, node => node.nodeType === 1 && domUtils.isBlockElm(node))
         .adjustmentBoundary();
       var bookmark = this.createBookmark();
       var end = bookmark.end;
 
-      var filterFn = node => (node.nodeType == 1 ? node.tagName.toLowerCase() !== "br" : !domUtils.isWhitespace(node));
+      var filterFn = node => (node.nodeType === 1 ? node.tagName.toLowerCase() !== "br" : !domUtils.isWhitespace(node));
 
       var current = domUtils.getNextDomNode(bookmark.start, false, filterFn);
       var node;
       var pre;
       var range = this.cloneRange();
       while (current && domUtils.getPosition(current, end) & domUtils.POSITION_PRECEDING) {
-        if (current.nodeType == 3 || dtd[tagName][current.tagName]) {
+        if (current.nodeType === 3 || dtd[tagName][current.tagName]) {
           range.setStartBefore(current);
           node = current;
-          while (node && (node.nodeType == 3 || dtd[tagName][node.tagName]) && node !== end) {
+          while (node && (node.nodeType === 3 || dtd[tagName][node.tagName]) && node !== end) {
             pre = node;
-            node = domUtils.getNextDomNode(node, node.nodeType == 1, null, parent => dtd[tagName][parent.tagName]);
+            node = domUtils.getNextDomNode(node, node.nodeType === 1, null, parent => dtd[tagName][parent.tagName]);
           }
           var frag = range.setEndAfter(pre).extractContents();
           var elm;
@@ -5928,7 +5942,7 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
       var start = this.startContainer;
       var end = this.endContainer;
       while (1) {
-        if (start.nodeType == 1) {
+        if (start.nodeType === 1) {
           if (utils.indexOf(tagNames, start.tagName.toLowerCase()) > -1) {
             break;
           }
@@ -5940,7 +5954,7 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
         start = start.parentNode;
       }
       while (1) {
-        if (end.nodeType == 1) {
+        if (end.nodeType === 1) {
           if (utils.indexOf(tagNames, end.tagName.toLowerCase()) > -1) {
             break;
           }
@@ -5973,11 +5987,11 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
         end.parentNode.insertBefore(bookmark.end, end.nextSibling);
       }
 
-      var current = domUtils.getNextDomNode(bookmark.start, false, node => node.nodeType == 1);
+      var current = domUtils.getNextDomNode(bookmark.start, false, node => node.nodeType === 1);
 
       var next;
       while (current && current !== bookmark.end) {
-        next = domUtils.getNextDomNode(current, true, node => node.nodeType == 1);
+        next = domUtils.getNextDomNode(current, true, node => node.nodeType === 1);
         if (utils.indexOf(tagNames, current.tagName.toLowerCase()) > -1) {
           domUtils.remove(current, true);
         }
@@ -5999,7 +6013,7 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
           .shrinkBoundary();
         if (selectOneNode(range)) {
           var child = range.startContainer.childNodes[range.startOffset];
-          if (child && child.nodeType == 1 && (dtd.$empty[child.tagName] || dtd.$nonChild[child.tagName])) {
+          if (child && child.nodeType === 1 && (dtd.$empty[child.tagName] || dtd.$nonChild[child.tagName])) {
             node = child;
           }
         }
@@ -6038,7 +6052,7 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
             nativeRangeEnd.moveToElementText(end);
             nativeRange.setEndPoint("EndToEnd", nativeRangeEnd);
           } else {
-            if (!noFillData && this.startContainer.nodeType != 3) {
+            if (!noFillData && this.startContainer.nodeType !== 3) {
               //使用<span>|x<span>固定住光标
               var tmpText = this.document.createTextNode(fillChar);
 
@@ -6066,7 +6080,7 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
       : function(notInsertFillData) {
           function checkOffset(rng) {
             function check(node, offset, dir) {
-              if (node.nodeType == 3 && node.nodeValue.length < offset) {
+              if (node.nodeType === 3 && node.nodeValue.length < offset) {
                 rng[dir + "Offset"] = node.nodeValue.length;
               }
             }
@@ -6082,10 +6096,10 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
           if (sel) {
             sel.removeAllRanges();
             // trace:870 chrome/safari后边是br对于闭合得range不能定位 所以去掉了判断
-            // this.startContainer.nodeType != 3 &&! ((child = this.startContainer.childNodes[this.startOffset]) && child.nodeType == 1 && child.tagName == 'BR'
+            // this.startContainer.nodeType !== 3 &&! ((child = this.startContainer.childNodes[this.startOffset]) && child.nodeType === 1 && child.tagName == 'BR'
             if (this.collapsed && !notInsertFillData) {
               //                    //opear如果没有节点接着，原生的不能够定位,不能在body的第一级插入空白节点
-              //                    if (notInsertFillData && browser.opera && !domUtils.isBody(this.startContainer) && this.startContainer.nodeType == 1) {
+              //                    if (notInsertFillData && browser.opera && !domUtils.isBody(this.startContainer) && this.startContainer.nodeType === 1) {
               //                        var tmp = this.document.createTextNode('');
               //                        this.insertNode(tmp).setStart(tmp, 0).collapse(true);
               //                    }
@@ -6098,12 +6112,12 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
               var start = this.startContainer;
 
               var child = start;
-              if (start.nodeType == 1) {
+              if (start.nodeType === 1) {
                 child = start.childNodes[this.startOffset];
               }
               if (
-                !(start.nodeType == 3 && this.startOffset) &&
-                (child ? !child.previousSibling || child.previousSibling.nodeType != 3 : !start.lastChild || start.lastChild.nodeType != 3)
+                !(start.nodeType === 3 && this.startOffset) &&
+                (child ? !child.previousSibling || child.previousSibling.nodeType !== 3 : !start.lastChild || start.lastChild.nodeType !== 3)
               ) {
                 txtNode = this.document.createTextNode(fillChar);
                 //跟着前边走
@@ -6116,7 +6130,7 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
               }
             }
             var nativeRange = this.document.createRange();
-            if (this.collapsed && browser.opera && this.startContainer.nodeType == 1) {
+            if (this.collapsed && browser.opera && this.startContainer.nodeType === 1) {
               var child = this.startContainer.childNodes[this.startOffset];
               if (!child) {
                 //往前靠拢
@@ -6127,7 +6141,7 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
               } else {
                 //向后靠拢
                 while (child && domUtils.isBlockElm(child)) {
-                  if (child.nodeType == 1 && child.childNodes[0]) {
+                  if (child.nodeType === 1 && child.childNodes[0]) {
                     child = child.childNodes[0];
                   } else {
                     break;
@@ -6179,7 +6193,7 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
      */
     inFillChar() {
       var start = this.startContainer;
-      if (this.collapsed && start.nodeType == 3 && start.nodeValue.replace(new RegExp("^" + domUtils.fillChar), "").length + 1 == start.nodeValue.length) {
+      if (this.collapsed && start.nodeType === 3 && start.nodeValue.replace(new RegExp("^" + domUtils.fillChar), "").length + 1 == start.nodeValue.length) {
         return true;
       }
       return false;
@@ -6225,9 +6239,9 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
         var firstIndex = 0;
 
         if (ignoreTxt) {
-          if (node.nodeType == 3) {
+          if (node.nodeType === 3) {
             var tmpNode = node.previousSibling;
-            while (tmpNode && tmpNode.nodeType == 3) {
+            while (tmpNode && tmpNode.nodeType === 3) {
               firstIndex += tmpNode.nodeValue.replace(fillCharReg, "").length;
               tmpNode = tmpNode.previousSibling;
             }
@@ -6245,8 +6259,8 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
                   continue;
                 }
                 firstIndex++;
-                if (first.nodeType == 3) {
-                  while (first && first.nodeType == 3) {
+                if (first.nodeType === 3) {
+                  while (first && first.nodeType === 3) {
                     first = first.nextSibling;
                   }
                 } else {
@@ -6441,6 +6455,7 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
     }
   };
 })();
+
 
 
 ////////////////////////////////////////////////////////////////////////////
@@ -6802,10 +6817,10 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
       } else {
         range.shrinkBoundary();
         start = range.startContainer;
-        if (start.nodeType == 1 && start.hasChildNodes()) {
+        if (start.nodeType === 1 && start.hasChildNodes()) {
           start = start.childNodes[Math.min(start.childNodes.length - 1, range.startOffset)];
         }
-        if (start.nodeType == 3) {
+        if (start.nodeType === 3) {
           return start.parentNode;
         }
       }
@@ -6846,6 +6861,7 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
 })();
 
 
+
 ////////////////////////////////////////////////////////////////////////////
 ////////////////////////////// core/Editor.js //////////////////////////////
 ////////////////////////////////////////////////////////////////////////////
@@ -6878,13 +6894,14 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
    * 获取编辑器的html内容，赋值到编辑器所在表单的textarea文本域里面
    * @private
    * @method setValue
+   * @param form ???
    * @param { UE.Editor } editor 编辑器事例
    */
   function setValue(form, editor) {
-    var textarea;
+    let textarea;
     if (editor.options.textarea) {
-      if (utils.isString(editor.options.textarea)) {
-        for (var i = 0, ti, tis = domUtils.getElementsByTagName(form, "textarea"); (ti = tis[i++]); ) {
+      if (_.isString(editor.options.textarea)) {
+        for (let i = 0, ti, tis = domUtils.getElementsByTagName(form, "textarea"); (ti = tis[i++]); ) {
           if (ti.id === "ueditor_textarea_" + editor.options.textarea) {
             textarea = ti;
             break;
@@ -6910,13 +6927,17 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
   }
   function loadPlugins(me) {
     //初始化插件
-    for (var pi in UE.plugins) {
-      UE.plugins[pi].call(me);
+    for (let pi in UE.plugins) {
+      if (UE.plugins.hasOwnProperty(pi)) {
+        UE.plugins[pi].call(me);
+      }
     }
   }
   function checkCurLang(I18N) {
-    for (var lang in I18N) {
-      return lang;
+    for (let lang in I18N) {
+      if (I18N.hasOwnProperty(lang)) {
+        return lang;
+      }
     }
   }
 
@@ -7060,7 +7081,7 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
    * var editor = new UE.Editor();
    * editor.execCommand('blod');
    * ```
-   * @see UE.Config
+   * see UE.Config
    */
 
   /**
@@ -7073,14 +7094,14 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
    * var editor = new UE.Editor();
    * editor.execCommand('blod');
    * ```
-   * @see UE.Config
+   * see UE.Config
    */
   var Editor = (UE.Editor = function(options) {
     var me = this;
     me.uid = uid++;
     EventBase.call(me);
     me.commands = {};
-    me.options = utils.extend(utils.clone(options || {}), UEDITOR_CONFIG, true);
+    me.options = utils.extend(utils.clone(options || {}), UEDITOR_CONFIG, true); // TODO 优化
     me.shortcutkeys = {};
     me.inputRules = [];
     me.outputRules = [];
@@ -7132,9 +7153,8 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
      * @see UE.Editor.event:ready
      */
     ready(fn) {
-      var me = this;
-      if (fn) {
-        me.isReady ? fn.apply(me) : me.addListener("ready", fn);
+      if (_.isFunction(fn)) {
+        this.isReady ? fn.apply(this) : this.addListener("ready", fn);
       }
     },
 
@@ -7156,7 +7176,8 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
      * @method setOpt
      * @warning 三处设置配置项的优先级: 实例化时传入参数 > setOpt()设置 > config文件里设置
      * @warning 该方法仅供编辑器插件内部和编辑器初始化时调用，其他地方不能调用。
-     * @param { Object } options 将要设置的选项的键值对对象
+     * @param { Object|string } key 将要设置的选项的键
+     * @param { * } val 将要设置的选项的键的值
      * @example
      * ```javascript
      * editor.setOpt( {
@@ -7165,8 +7186,8 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
      * ```
      */
     setOpt(key, val) {
-      var obj = {};
-      if (utils.isString(key)) {
+      let obj = {};
+      if (_.isString(key)) {
         obj[key] = val;
       } else {
         obj = key;
@@ -7223,7 +7244,7 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
     /**
      * 渲染编辑器的DOM到指定容器
      * @method render
-     * @param { Element } containerDom 直接指定容器对象
+     * @param { Element } container 直接指定容器对象
      * @remind 执行该方法,会触发ready事件
      * @warning 必须且只能调用一次
      */
@@ -7256,30 +7277,26 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
         container.style.zIndex = options.zIndex;
 
         var html =
-          (ie && browser.version < 9 ? "" : "<!DOCTYPE html>") +
-          "<html lang='en' class='view'>" +
-          "<head>" +
-          "<style type='text/css'>" +
+          `<!DOCTYPE html>` +
+          `<html lang="en" class="view">` +
+          `<head><title></title>` +
+          `<style type="text/css">` +
           //设置四周的留边
-          ".view{padding:0;word-wrap:break-word;cursor:text;height:90%;}\n" +
+          ".view{padding:0;word-wrap:break-word;cursor:text;height:90%;}" +
           //设置默认字体和字号
           //font-family不能呢随便改，在safari下fillchar会有解析问题
           "body{margin:8px;font-family:sans-serif;font-size:16px;}" +
           //设置段落间距
           "p{margin:5px 0;}</style>" +
-          (options.iframeCssUrl ? "<link rel='stylesheet' type='text/css' href='" + utils.unhtml(options.iframeCssUrl) + "'/>" : "") +
-          (options.initialStyle ? "<style>" + options.initialStyle + "</style>" : "") +
+          (options.iframeCssUrl ? `<link rel="stylesheet" type="text/css" href="${utils.unhtml(options.iframeCssUrl)}" />` : "") +
+          (options.initialStyle ? `<style type="text/css">${options.initialStyle}</style>` : "") +
           "</head>" +
-          "<body class='view' ></body>" +
-          "<script type='text/javascript' " +
-          (ie ? "defer='defer'" : "") +
-          " id='_initialScript'>" +
-          "setTimeout(function(){editor = window.parent.UE.instants['ueditorInstant" +
-          me.uid +
-          "'];editor._setup(document);},0);" +
+          `<body class="view"></body>` +
+          `<script ${ie ? 'defer="defer"' : ""} id="_initialScript">` +
+          `setTimeout(function(){editor = window.parent.UE.instants['ueditorInstant${me.uid}'];editor._setup(document);},0);` +
           "var _tmpScript = document.getElementById('_initialScript');_tmpScript.parentNode.removeChild(_tmpScript);" +
           "</script>" +
-          (options.iframeJsUrl ? "<script type='text/javascript' src='" + utils.unhtml(options.iframeJsUrl) + "'></script>" : "") +
+          (options.iframeJsUrl ? `<script src="${utils.unhtml(options.iframeJsUrl)}"></script>` : "") +
           "</html>";
 
         container.appendChild(
@@ -7289,13 +7306,11 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
             height: "100%",
             frameborder: "0",
             //先注释掉了，加的原因忘记了，但开启会直接导致全屏模式下内容多时不会出现滚动条
-            //                    scrolling :'no',
+            // scrolling :'no',
             src:
               "javascript:void(function(){document.open();" +
-              (options.customDomain && document.domain != location.hostname ? 'document.domain="' + document.domain + '";' : "") +
-              'document.write("' +
-              html +
-              '");document.close();}())'
+              (options.customDomain && document.domain !== location.hostname ? `document.domain="${document.domain}";` : "") +
+              `document.write("${html}");document.close();}())`
           })
         );
         container.style.overflow = "hidden";
@@ -7303,8 +7318,8 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
         setTimeout(() => {
           if (/%$/.test(options.initialFrameWidth)) {
             options.minFrameWidth = options.initialFrameWidth = container.offsetWidth;
-            //如果这里给定宽度，会导致ie在拖动窗口大小时，编辑区域不随着变化
-            //                        container.style.width = options.initialFrameWidth + 'px';
+            // 如果这里给定宽度，会导致ie在拖动窗口大小时，编辑区域不随着变化
+            // container.style.width = options.initialFrameWidth + 'px';
           }
           if (/%$/.test(options.initialFrameHeight)) {
             options.minFrameHeight = options.initialFrameHeight = container.offsetHeight;
@@ -7321,15 +7336,13 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
      * @param { Element } doc 编辑器Iframe中的文档对象
      */
     _setup(doc) {
-      var me = this;
-      var options = me.options;
+      const me = this;
+      const options = me.options;
       if (ie) {
         doc.body.disabled = true;
-        doc.body.contentEditable = true;
         doc.body.disabled = false;
-      } else {
-        doc.body.contentEditable = true;
       }
+      doc.body.contentEditable = true;
       doc.body.spellcheck = false;
       me.document = doc;
       me.window = doc.defaultView || doc.parentWindow;
@@ -7370,7 +7383,6 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
       }
 
       //编辑器不能为空内容
-
       if (domUtils.isEmptyNode(me.body)) {
         me.body.innerHTML = "<p>" + (browser.ie ? "" : "<br/>") + "</p>";
       }
@@ -7454,7 +7466,7 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
      * 根据传入的formId，在页面上查找要同步数据的表单，若找到，就同步编辑内容到找到的form里，为提交数据做准备
      * 后台取得数据的键值，该键值默认使用给定的编辑器容器的name属性，如果没有name属性则使用参数项里给定的“textarea”项
      * @method sync
-     * @param { String } formID 指定一个要同步数据的form的id,编辑器的数据会同步到你指定form下
+     * @param { String } formId 指定一个要同步数据的form的id,编辑器的数据会同步到你指定form下
      */
     sync(formId) {
       var me = this;
@@ -7468,7 +7480,8 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
      * 设置编辑器高度
      * @method setHeight
      * @remind 当配置项autoHeightEnabled为真时,该方法无效
-     * @param { Number } number 设置的高度值，纯数值，不带单位
+     * @param { Number } height 设置的高度值，纯数值，不带单位
+     * @param { boolean } notSetHeight ???
      * @example
      * ```javascript
      * editor.setHeight(number);
@@ -7507,7 +7520,7 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
      * ```
      */
     addshortcutkey(cmd, keys) {
-      var obj = {};
+      let obj = {};
       if (keys) {
         obj[cmd] = keys;
       } else {
@@ -7522,20 +7535,32 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
      * @private
      */
     _bindshortcutKeys() {
-      var me = this;
-      var shortcutkeys = this.shortcutkeys;
+      const me = this;
+      const shortcutkeys = this.shortcutkeys;
       me.addListener("keydown", (type, e) => {
-        var keyCode = e.keyCode || e.which;
-        for (var i in shortcutkeys) {
-          var tmp = shortcutkeys[i].split(",");
-          for (var t = 0, ti; (ti = tmp[t++]); ) {
-            ti = ti.split(":");
-            var key = ti[0];
-            var param = ti[1];
-            if (/^(ctrl)(\+shift)?\+(\d+)$/.test(key.toLowerCase()) || /^(\d+)$/.test(key)) {
-              if (((RegExp.$1 === "ctrl" ? e.ctrlKey || e.metaKey : 0) && (RegExp.$2 !== "" ? e[RegExp.$2.slice(1) + "Key"] : 1) && keyCode == RegExp.$3) || keyCode == RegExp.$1) {
-                if (me.queryCommandState(i, param) != -1) me.execCommand(i, param);
-                domUtils.preventDefault(e);
+        const keyCode = e.keyCode || e.which;
+        for (let i in shortcutkeys) {
+          if (shortcutkeys.hasOwnProperty(i)) {
+            const tmp = shortcutkeys[i].split(",");
+            for (let t = 0, ti; (ti = tmp[t++]); ) {
+              ti = ti.split(":");
+              const key = ti[0];
+              const param = ti[1];
+              if (/^(ctrl)(\+shift)?\+(\d+)$/.test(key.toLowerCase()) || /^(\d+)$/.test(key)) {
+                if (
+                  (
+                    (RegExp.$1 === "ctrl" ? e.ctrlKey || e.metaKey : 0)
+                    && (RegExp.$2 !== "" ? e[RegExp.$2.slice(1) + "Key"] : 1)
+                    && `${keyCode}` === RegExp.$3
+                  )
+                  ||
+                  `${keyCode}` === RegExp.$1
+                ) {
+                  if (me.queryCommandState(i, param) !== -1 && me.queryCommandState(i, param) !== "-1"){
+                    me.execCommand(i, param);
+                  }
+                  domUtils.preventDefault(e);
+                }
               }
             }
           }
@@ -7558,10 +7583,14 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
     /**
      * 获取编辑器的内容。 可以通过参数定义编辑器内置的判空规则
      * @method getContent
+     * @param cmd ???
      * @param { Function } fn 自定的判空规则， 要求该方法返回一个boolean类型的值，
      *                      代表当前编辑器的内容是否空，
      *                      如果返回true， 则该方法将直接返回空字符串；如果返回false，则编辑器将返回
      *                      经过内置过滤规则处理后的内容。
+     * @param notSetCursor ???
+     * @param ignoreBlank ???
+     * @param formatter ???
      * @remind 该方法在处理包含有初始化内容的时候能起到很好的作用。
      * @warning 该方法获取到的是经过编辑器内置的过滤规则进行过滤后得到的内容
      * @return { String } 编辑器的内容字符串
@@ -7574,7 +7603,7 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
      * ```
      */
     getContent(cmd, fn, notSetCursor, ignoreBlank, formatter) {
-      var me = this;
+      const me = this;
       if (cmd && utils.isFunction(cmd)) {
         fn = cmd;
         cmd = "";
@@ -7583,7 +7612,7 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
         return "";
       }
       me.fireEvent("beforegetcontent");
-      var root = UE.htmlparser(me.body.innerHTML, ignoreBlank);
+      const root = UE.htmlparser(me.body.innerHTML, ignoreBlank);
       me.filterOutputRule(root);
       me.fireEvent("aftergetcontent", cmd, root);
       return root.toHtml(formatter);
@@ -7593,6 +7622,7 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
      * 取得完整的html代码，可以直接显示成完整的html文档
      * @method getAllHtml
      * @return { String } 编辑器的内容html文档字符串
+     * @deprecated since 3.0
      * @eaxmple
      * ```javascript
      * editor.getAllHtml(); //返回格式大致是: <html><head>...</head><body>...</body></html>
@@ -7637,8 +7667,8 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
      * ```
      */
     getPlainTxt() {
-      var reg = new RegExp(domUtils.fillChar, "g"); //ie要先去了\n在处理
-      var html = this.body.innerHTML.replace(/[\n\r]/g, "");
+      const reg = new RegExp(domUtils.fillChar, "g"); //ie要先去了\n在处理
+      let html = this.body.innerHTML.replace(/[\n\r]/g, "");
       html = html
         .replace(/<(p|div)[^>]*>(<br\/?>|&nbsp;)<\/\1>/gi, "\n")
         .replace(/<br\/?>/gi, "\n")
@@ -7662,7 +7692,7 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
      * ```
      */
     getContentTxt() {
-      var reg = new RegExp(domUtils.fillChar, "g");
+      const reg = new RegExp(domUtils.fillChar, "g");
       //取出来的空格会有c2a0会变成乱码，处理这种情况\u00a0
       return this.body[browser.ie ? "innerText" : "textContent"].replace(reg, "").replace(/\u00a0/g, " ");
     },
@@ -7686,6 +7716,7 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
      * @warning 该方法会触发selectionchange事件
      * @param { String } html 要插入的html内容
      * @param { Boolean } isAppendTo 若传入true，不清空原来的内容，在最后插入内容，否则，清空内容再插入
+     * @param { Boolean } notFireSelectionchange ???
      * @example
      * ```javascript
      * //假设设置前的编辑器内容是 <p>old text</p>
@@ -7693,10 +7724,10 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
      * ```
      */
     setContent(html, isAppendTo, notFireSelectionchange) {
-      var me = this;
+      const me = this;
 
       me.fireEvent("beforesetcontent", html);
-      var root = UE.htmlparser(html);
+      const root = UE.htmlparser(html);
       me.filterInputRule(root);
       html = root.toHtml();
 
@@ -7709,12 +7740,12 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
       if (me.options.enterTag === "p") {
         var child = this.body.firstChild;
         var tmpNode;
-        if (!child || (child.nodeType == 1 && (dtd.$cdata[child.tagName] || isCdataDiv(child) || domUtils.isCustomeNode(child)) && child === this.body.lastChild)) {
+        if (!child || (child.nodeType === 1 && (dtd.$cdata[child.tagName] || isCdataDiv(child) || domUtils.isCustomeNode(child)) && child === this.body.lastChild)) {
           this.body.innerHTML = "<p>" + (browser.ie ? "&nbsp;" : "<br/>") + "</p>" + this.body.innerHTML;
         } else {
           var p = me.document.createElement("p");
           while (child) {
-            while (child && (child.nodeType == 3 || (child.nodeType == 1 && dtd.p[child.tagName] && !dtd.$cdata[child.tagName]))) {
+            while (child && (child.nodeType === 3 || (child.nodeType === 1 && dtd.p[child.tagName] && !dtd.$cdata[child.tagName]))) {
               tmpNode = child.nextSibling;
               p.appendChild(child);
               child = tmpNode;
@@ -7770,9 +7801,10 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
       try {
         var me = this;
         var rng = me.selection.getRange();
+        var node;
         if (toEnd) {
-          var node = me.body.lastChild;
-          if (node && node.nodeType == 1 && !dtd.$empty[node.tagName]) {
+          node = me.body.lastChild;
+          if (node && node.nodeType === 1 && !dtd.$empty[node.tagName]) {
             if (domUtils.isEmptyBlock(node)) {
               rng.setStartAtFirst(node);
             } else {
@@ -7782,9 +7814,9 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
           }
           rng.setCursor(true);
         } else {
-          if (!rng.collapsed && domUtils.isBody(rng.startContainer) && rng.startOffset == 0) {
-            var node = me.body.firstChild;
-            if (node && node.nodeType == 1 && !dtd.$empty[node.tagName]) {
+          if (!rng.collapsed && domUtils.isBody(rng.startContainer) && rng.startOffset === 0) {
+            node = me.body.firstChild;
+            if (node && node.nodeType === 1 && !dtd.$empty[node.tagName]) {
               rng.setStartAtFirst(node).collapse(true);
             }
           }
@@ -7835,7 +7867,9 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
         if (evt.type === "keydown" && (evt.ctrlKey || evt.metaKey || evt.shiftKey || evt.altKey)) {
           return;
         }
-        if (evt.button == 2) return;
+        if (evt.button === 2){
+          return;
+        }
         me._selectionChange(250, evt);
       });
     },
@@ -7956,7 +7990,7 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
       }
       if (!cmd.notNeedUndo && !me.__hasEnterExecCommand) {
         me.__hasEnterExecCommand = true;
-        if (me.queryCommandState(...arguments) != -1) {
+        if (me.queryCommandState(...arguments) !== -1 && me.queryCommandState(...arguments) !== "-1") {
           me.fireEvent("saveScene");
           me.fireEvent(...["beforeexeccommand", cmdName].concat(arguments));
           result = this._callCmdFn("execCommand", arguments);
@@ -7984,7 +8018,7 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
      * ```javascript
      * editor.queryCommandState(cmdName)  => (-1|0|1)
      * ```
-     * @see COMMAND.LIST
+     * see COMMAND.LIST
      */
     queryCommandState(cmdName) {
       return this._callCmdFn("queryCommandState", arguments);
@@ -7998,7 +8032,7 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
      * @remind 只有部分插件有此方法
      * @return { * } 返回每个命令特定的当前状态值
      * @grammar editor.queryCommandValue(cmdName)  =>  {*}
-     * @see COMMAND.LIST
+     * see COMMAND.LIST
      */
     queryCommandValue(cmdName) {
       return this._callCmdFn("queryCommandValue", arguments);
@@ -8134,13 +8168,13 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
         me.bkqueryCommandState = me.queryCommandState;
         me.bkqueryCommandValue = me.queryCommandValue;
         me.queryCommandState = function(type) {
-          if (utils.indexOf(except, type) != -1) {
+          if (utils.indexOf(except, type) !== -1) {
             return me.bkqueryCommandState(...arguments);
           }
           return -1;
         };
         me.queryCommandValue = function(type) {
-          if (utils.indexOf(except, type) != -1) {
+          if (utils.indexOf(except, type) !== -1) {
             return me.bkqueryCommandValue(...arguments);
           }
           return null;
@@ -8156,7 +8190,6 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
      * 设置默认内容
      * @method _setDefaultContent
      * @private
-     * @param  { String } cont 要存入的内容
      */
     _setDefaultContent: (() => {
       function clear() {
@@ -8264,6 +8297,7 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
      * 计算编辑器当前纯文本内容的长度
      * @method  getContentLength
      * @param { Boolean } ingoneHtml 传入true时，只按照纯文本来计算
+     * @param { Array } tagNames ???
      * @return { Number } 返回计算的长度，内容中有hr/img/iframe标签，长度加1
      * @example
      * ```javascript
@@ -8370,11 +8404,11 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
       var serverUrl = this.getOpt("serverUrl");
 
       if (!serverUrl && imageUrl) {
-        serverUrl = imageUrl.replace(/^(.*[\/]).+([\.].+)$/, "$1controller$2");
+        serverUrl = imageUrl.replace(/^(.*[\/]).+([.].+)$/, "$1controller$2");
       }
 
       if (serverUrl) {
-        serverUrl = serverUrl + (serverUrl.indexOf("?") == -1 ? "?" : "&") + "action=" + (actionName || "");
+        serverUrl = serverUrl + (serverUrl.indexOf("?") === -1 ? "?" : "&") + "action=" + (actionName || "");
         return utils.formatUrl(serverUrl);
       } else {
         return "";
@@ -8383,6 +8417,7 @@ var fillCharReg = new RegExp(domUtils.fillChar, "g");
   };
   utils.inherits(Editor, EventBase);
 })();
+
 
 
 ////////////////////////////////////////////////////////////////////////////
@@ -8418,6 +8453,7 @@ UE.Editor.defaultOptions = editor => {
     fileNameFormat: "{time}{rand:6}"
   };
 };
+
 
 
 ////////////////////////////////////////////////////////////////////////////
@@ -8488,6 +8524,7 @@ UE.Editor.defaultOptions = editor => {
     }
   };
 })();
+
 
 
 ////////////////////////////////////////////////////////////////////////////
@@ -8751,6 +8788,7 @@ UE.ajax = (() => {
 })();
 
 
+
 ////////////////////////////////////////////////////////////////////////////
 //////////////////////////// core/filterword.js ////////////////////////////
 ////////////////////////////////////////////////////////////////////////////
@@ -8935,6 +8973,7 @@ var filterWord = (UE.filterWord = (() => {
 
   return html => (isWordDocument(html) ? filterPasteWord(html) : html);
 })());
+
 
 
 ////////////////////////////////////////////////////////////////////////////
@@ -9323,7 +9362,7 @@ var filterWord = (UE.filterWord = (() => {
       var parent = this.parentNode;
       for (var i = 0, ci; (ci = parent.children[i]); i++) {
         if (ci === this) {
-          return i == 0 ? null : parent.children[i - 1];
+          return i === 0 ? null : parent.children[i - 1];
         }
       }
     },
@@ -9678,6 +9717,7 @@ var filterWord = (UE.filterWord = (() => {
 })();
 
 
+
 ////////////////////////////////////////////////////////////////////////////
 //////////////////////////// core/htmlparser.js ////////////////////////////
 ////////////////////////////////////////////////////////////////////////////
@@ -9904,6 +9944,7 @@ var htmlparser = (UE.htmlparser = (htmlstr, ignoreBlank) => {
 });
 
 
+
 ////////////////////////////////////////////////////////////////////////////
 //////////////////////////// core/filternode.js ////////////////////////////
 ////////////////////////////////////////////////////////////////////////////
@@ -10035,6 +10076,7 @@ var filterNode = (UE.filterNode = (() => {
 })());
 
 
+
 ////////////////////////////////////////////////////////////////////////////
 ////////////////////////////// core/plugin.js //////////////////////////////
 ////////////////////////////////////////////////////////////////////////////
@@ -10119,6 +10161,7 @@ UE.plugin = (() => {
 })();
 
 
+
 ////////////////////////////////////////////////////////////////////////////
 ////////////////////////////// core/keymap.js //////////////////////////////
 ////////////////////////////////////////////////////////////////////////////
@@ -10170,6 +10213,7 @@ var keymap = (UE.keymap = {
 
   n: 78
 });
+
 
 
 ////////////////////////////////////////////////////////////////////////////
@@ -10292,6 +10336,7 @@ var LocalStorage = (UE.LocalStorage = (() => {
     data && LocalStorage.saveLocalData(ROOTKEY, utils.json2str(data));
   };
 })();
+
 
 
 ////////////////////////////////////////////////////////////////////////////
@@ -10548,6 +10593,7 @@ UE.plugins["defaultfilter"] = function() {
 };
 
 
+
 ////////////////////////////////////////////////////////////////////////////
 ////////////////////////// plugins/inserthtml.js //////////////////////////
 ////////////////////////////////////////////////////////////////////////////
@@ -10618,24 +10664,24 @@ UE.commands["inserthtml"] = {
       range.txtToElmBoundary();
       //结束边界可能放到了br的前边，要把br包含进来
       // x[xxx]<br/>
-      if (range.endContainer && range.endContainer.nodeType == 1) {
+      if (range.endContainer && range.endContainer.nodeType === 1) {
         tmpNode = range.endContainer.childNodes[range.endOffset];
         if (tmpNode && domUtils.isBr(tmpNode)) {
           range.setEndAfter(tmpNode);
         }
       }
-      if (range.startOffset == 0) {
+      if (range.startOffset === 0) {
         tmpNode = range.startContainer;
         if (domUtils.isBoundaryNode(tmpNode, "firstChild")) {
           tmpNode = range.endContainer;
-          if (range.endOffset == (tmpNode.nodeType == 3 ? tmpNode.nodeValue.length : tmpNode.childNodes.length) && domUtils.isBoundaryNode(tmpNode, "lastChild")) {
+          if (range.endOffset === (tmpNode.nodeType === 3 ? tmpNode.nodeValue.length : tmpNode.childNodes.length) && domUtils.isBoundaryNode(tmpNode, "lastChild")) {
             me.body.innerHTML = "<p>" + (browser.ie ? "" : "<br/>") + "</p>";
             range.setStart(me.body.firstChild, 0).collapse(true);
           }
         }
       }
       !range.collapsed && range.deleteContents();
-      if (range.startContainer.nodeType == 1) {
+      if (range.startContainer.nodeType === 1) {
         var child = range.startContainer.childNodes[range.startOffset];
         var pre;
         if (child && domUtils.isBlockElm(child) && (pre = child.previousSibling) && domUtils.isBlockElm(pre)) {
@@ -10673,7 +10719,7 @@ UE.commands["inserthtml"] = {
       var last;
       while ((child = div.firstChild)) {
         //针对hr单独处理一下先
-        while (child && (child.nodeType == 3 || !domUtils.isBlockElm(child) || child.tagName === "HR")) {
+        while (child && (child.nodeType === 3 || !domUtils.isBlockElm(child) || child.tagName === "HR")) {
           next = child.nextSibling;
           range.insertNode(child).collapse();
           last = child;
@@ -10713,7 +10759,7 @@ UE.commands["inserthtml"] = {
       while ((child = div.firstChild)) {
         if (hadBreak) {
           var p = me.document.createElement("p");
-          while (child && (child.nodeType == 3 || !dtd.$block[child.tagName])) {
+          while (child && (child.nodeType === 3 || !dtd.$block[child.tagName])) {
             nextNode = child.nextSibling;
             p.appendChild(child);
             child = nextNode;
@@ -10724,7 +10770,7 @@ UE.commands["inserthtml"] = {
         }
         range.insertNode(child);
         nextNode = child.nextSibling;
-        if (!hadBreak && child.nodeType == domUtils.NODE_ELEMENT && domUtils.isBlockElm(child)) {
+        if (!hadBreak && child.nodeType === domUtils.NODE_ELEMENT && domUtils.isBlockElm(child)) {
           parent = domUtils.findParent(child, node => domUtils.isBlockElm(node));
           if (parent && parent.tagName.toLowerCase() !== "body" && !(dtd[parent.tagName][child.nodeName] && child.parentNode === parent)) {
             if (!dtd[parent.tagName][child.nodeName]) {
@@ -10769,7 +10815,7 @@ UE.commands["inserthtml"] = {
       if (domUtils.isBlockElm(child) && domUtils.isEmptyNode(child)) {
         if ((nextNode = child.nextSibling)) {
           domUtils.remove(child);
-          if (nextNode.nodeType == 1 && dtd.$block[nextNode.tagName]) {
+          if (nextNode.nodeType === 1 && dtd.$block[nextNode.tagName]) {
             range
               .setStart(nextNode, 0)
               .collapse(true)
@@ -10797,6 +10843,7 @@ UE.commands["inserthtml"] = {
     }, 200);
   }
 };
+
 
 
 ////////////////////////////////////////////////////////////////////////////
@@ -10877,7 +10924,7 @@ UE.plugins["autotypeset"] = function() {
   readLocalOpts();
 
   function isLine(node, notEmpty) {
-    if (!node || node.nodeType == 3) return 0;
+    if (!node || node.nodeType === 3) return 0;
     if (domUtils.isBr(node)) return 1;
     if (node && node.parentNode && tags[node.tagName.toLowerCase()]) {
       if ((highlightCont && highlightCont.contains(node)) || node.getAttribute("pagebreak")) {
@@ -10993,7 +11040,7 @@ UE.plugins["autotypeset"] = function() {
                 if (!domUtils.isBody(tmpNode) && domUtils.getChildCount(tmpNode, node => !domUtils.isBr(node) && !domUtils.isWhitespace(node)) == 1) {
                   pre = tmpNode.previousSibling;
                   next = tmpNode.nextSibling;
-                  if (pre && next && pre.nodeType == 1 && next.nodeType == 1 && pre.tagName == next.tagName && domUtils.isBlockElm(pre)) {
+                  if (pre && next && pre.nodeType === 1 && next.nodeType === 1 && pre.tagName == next.tagName && domUtils.isBlockElm(pre)) {
                     pre.appendChild(tmpNode.firstChild);
                     while (next.firstChild) {
                       pre.appendChild(next.firstChild);
@@ -11114,6 +11161,7 @@ UE.plugins["autotypeset"] = function() {
 };
 
 
+
 ////////////////////////////////////////////////////////////////////////////
 ////////////////////////// plugins/autosubmit.js //////////////////////////
 ////////////////////////////////////////////////////////////////////////////
@@ -11155,6 +11203,7 @@ UE.plugin.register("autosubmit", () => ({
     }
   }
 }));
+
 
 
 ////////////////////////////////////////////////////////////////////////////
@@ -11272,6 +11321,7 @@ UE.plugin.register("background", function() {
 });
 
 
+
 ////////////////////////////////////////////////////////////////////////////
 ///////////////////////////// plugins/image.js /////////////////////////////
 ////////////////////////////////////////////////////////////////////////////
@@ -11330,7 +11380,7 @@ UE.commands["imagefloat"] = {
               if (!domUtils.isBody(tmpNode) && domUtils.getChildCount(tmpNode, node => !domUtils.isBr(node) && !domUtils.isWhitespace(node)) == 1) {
                 pre = tmpNode.previousSibling;
                 next = tmpNode.nextSibling;
-                if (pre && next && pre.nodeType == 1 && next.nodeType == 1 && pre.tagName == next.tagName && domUtils.isBlockElm(pre)) {
+                if (pre && next && pre.nodeType === 1 && next.nodeType === 1 && pre.tagName == next.tagName && domUtils.isBlockElm(pre)) {
                   pre.appendChild(tmpNode.firstChild);
                   while (next.firstChild) {
                     pre.appendChild(next.firstChild);
@@ -11391,7 +11441,7 @@ UE.commands["imagefloat"] = {
       return "none";
     }
     startNode = range.getClosedNode();
-    if (startNode && startNode.nodeType == 1 && startNode.tagName === "IMG") {
+    if (startNode && startNode.nodeType === 1 && startNode.tagName === "IMG") {
       floatStyle = domUtils.getComputedStyle(startNode, "float") || startNode.getAttribute("align");
 
       if (floatStyle === "none") {
@@ -11414,7 +11464,7 @@ UE.commands["imagefloat"] = {
     if (range.collapsed) return -1;
 
     startNode = range.getClosedNode();
-    if (startNode && startNode.nodeType == 1 && startNode.tagName === "IMG") {
+    if (startNode && startNode.nodeType === 1 && startNode.tagName === "IMG") {
       return 0;
     }
     return -1;
@@ -11531,6 +11581,7 @@ UE.commands["insertimage"] = {
 };
 
 
+
 ////////////////////////////////////////////////////////////////////////////
 //////////////////////////// plugins/justify.js ////////////////////////////
 ////////////////////////////////////////////////////////////////////////////
@@ -11577,7 +11628,7 @@ UE.plugins["justify"] = function() {
   var doJustify = (range, style) => {
     var bookmark = range.createBookmark();
 
-    var filterFn = node => (node.nodeType == 1 ? node.tagName.toLowerCase() !== "br" && !domUtils.isBookmarkNode(node) : !domUtils.isWhitespace(node));
+    var filterFn = node => (node.nodeType === 1 ? node.tagName.toLowerCase() !== "br" && !domUtils.isBookmarkNode(node) : !domUtils.isWhitespace(node));
 
     range.enlarge(true);
     var bookmark2 = range.createBookmark();
@@ -11585,7 +11636,7 @@ UE.plugins["justify"] = function() {
     var tmpRange = range.cloneRange();
     var tmpNode;
     while (current && !(domUtils.getPosition(current, bookmark2.end) & domUtils.POSITION_FOLLOWING)) {
-      if (current.nodeType == 3 || !block(current)) {
+      if (current.nodeType === 3 || !block(current)) {
         tmpRange.setStartBefore(current);
         while (current && current !== bookmark2.end && !block(current)) {
           tmpNode = current;
@@ -11645,6 +11696,7 @@ UE.plugins["justify"] = function() {
     }
   };
 };
+
 
 
 ////////////////////////////////////////////////////////////////////////////
@@ -11835,7 +11887,7 @@ UE.plugins["font"] = function() {
   function mergeChild(rng, cmdName, value) {
     if (needSetChild[cmdName]) {
       rng.adjustmentBoundary();
-      if (!rng.collapsed && rng.startContainer.nodeType == 1) {
+      if (!rng.collapsed && rng.startContainer.nodeType === 1) {
         var start = rng.startContainer.childNodes[rng.startOffset];
         if (start && domUtils.isTagNode(start, "span")) {
           var bk = rng.createBookmark();
@@ -11881,7 +11933,7 @@ UE.plugins["font"] = function() {
       }
       if (!(cmdName === "fontborder" && value === "none")) {
         var next = span.nextSibling;
-        while (next && next.nodeType == 1 && next.tagName === "SPAN") {
+        while (next && next.nodeType === 1 && next.tagName === "SPAN") {
           if (domUtils.isBookmarkNode(next) && cmdName === "fontborder") {
             span.appendChild(next);
             next = span.nextSibling;
@@ -12105,7 +12157,7 @@ UE.plugins["font"] = function() {
             var tmpNode = startNode;
             var value;
             while (tmpNode && !domUtils.isBlockElm(tmpNode) && !domUtils.isBody(tmpNode)) {
-              if (tmpNode.nodeType == 1) {
+              if (tmpNode.nodeType === 1) {
                 value = domUtils.getComputedStyle(tmpNode, style);
                 if (value !== "none") {
                   return value;
@@ -12156,6 +12208,7 @@ UE.plugins["font"] = function() {
     })(p, fonts[p]);
   }
 };
+
 
 
 ////////////////////////////////////////////////////////////////////////////
@@ -12241,9 +12294,9 @@ UE.plugins["link"] = () => {
     var link = me.queryCommandValue("link");
     optimize((range = range.adjustmentBoundary()));
     var start = range.startContainer;
-    if (start.nodeType == 1 && link) {
+    if (start.nodeType === 1 && link) {
       start = start.childNodes[range.startOffset];
-      if (start && start.nodeType == 1 && start.tagName === "A" && /^(?:https?|ftp|file)\s*:\s*\/\//.test(start[browser.ie ? "innerText" : "textContent"])) {
+      if (start && start.nodeType === 1 && start.tagName === "A" && /^(?:https?|ftp|file)\s*:\s*\/\//.test(start[browser.ie ? "innerText" : "textContent"])) {
         start[browser.ie ? "innerText" : "textContent"] = utils.html(opt.textValue || opt.href);
       }
     }
@@ -12289,7 +12342,7 @@ UE.plugins["link"] = () => {
         //                    node = this.selection.getStart();
         //在ie下getstart()取值偏上了
         node = range.startContainer;
-        node = node.nodeType == 1 ? node : node.parentNode;
+        node = node.nodeType === 1 ? node : node.parentNode;
 
         if (node && (node = domUtils.findParentByTagName(node, "a", true)) && !domUtils.isInNodeEndBoundary(range, node)) {
           return node;
@@ -12299,13 +12352,13 @@ UE.plugins["link"] = () => {
         range.shrinkBoundary();
 
         var start =
-          range.startContainer.nodeType == 3 || !range.startContainer.childNodes[range.startOffset] ? range.startContainer : range.startContainer.childNodes[range.startOffset];
+          range.startContainer.nodeType === 3 || !range.startContainer.childNodes[range.startOffset] ? range.startContainer : range.startContainer.childNodes[range.startOffset];
 
-        var end = range.endContainer.nodeType == 3 || range.endOffset == 0 ? range.endContainer : range.endContainer.childNodes[range.endOffset - 1];
+        var end = range.endContainer.nodeType === 3 || range.endOffset === 0 ? range.endContainer : range.endContainer.childNodes[range.endOffset - 1];
 
         var common = range.getCommonAncestor();
         node = domUtils.findParentByTagName(common, "a", true);
-        if (!node && common.nodeType == 1) {
+        if (!node && common.nodeType === 1) {
           var as = common.getElementsByTagName("a");
           var ps;
           var pe;
@@ -12333,6 +12386,7 @@ UE.plugins["link"] = () => {
 };
 
 
+
 ////////////////////////////////////////////////////////////////////////////
 //////////////////////////// plugins/iframe.js ////////////////////////////
 ////////////////////////////////////////////////////////////////////////////
@@ -12355,6 +12409,7 @@ UE.plugins["insertframe"] = function() {
 };
 
 
+
 ////////////////////////////////////////////////////////////////////////////
 //////////////////////////// plugins/scrawl.js ////////////////////////////
 ////////////////////////////////////////////////////////////////////////////
@@ -12368,6 +12423,7 @@ UE.commands["scrawl"] = {
     return browser.ie && browser.version <= 8 ? -1 : 0;
   }
 };
+
 
 
 ////////////////////////////////////////////////////////////////////////////
@@ -12408,10 +12464,10 @@ UE.plugins["removeformat"] = function() {
       var node;
       var parent;
 
-      var filter = node => node.nodeType == 1;
+      var filter = node => node.nodeType === 1;
 
       function isRedundantSpan(node) {
-        if (node.nodeType == 3 || node.tagName.toLowerCase() !== "span") {
+        if (node.nodeType === 3 || node.tagName.toLowerCase() !== "span") {
           return 0;
         }
         if (browser.ie) {
@@ -12517,7 +12573,7 @@ UE.plugins["removeformat"] = function() {
 
         var tmp;
         var collapsed = range.collapsed;
-        while (node.nodeType == 1 && domUtils.isEmptyNode(node) && dtd.$removeEmpty[node.tagName]) {
+        while (node.nodeType === 1 && domUtils.isEmptyNode(node) && dtd.$removeEmpty[node.tagName]) {
           tmp = node.parentNode;
           range.setStartBefore(node);
           //trace:937
@@ -12531,7 +12587,7 @@ UE.plugins["removeformat"] = function() {
 
         if (!collapsed) {
           node = range.endContainer;
-          while (node.nodeType == 1 && domUtils.isEmptyNode(node) && dtd.$removeEmpty[node.tagName]) {
+          while (node.nodeType === 1 && domUtils.isEmptyNode(node) && dtd.$removeEmpty[node.tagName]) {
             tmp = node.parentNode;
             range.setEndBefore(node);
             domUtils.remove(node);
@@ -12547,6 +12603,7 @@ UE.plugins["removeformat"] = function() {
     }
   };
 };
+
 
 
 ////////////////////////////////////////////////////////////////////////////
@@ -12635,7 +12692,7 @@ UE.plugins["blockquote"] = function() {
         }
       } else {
         var tmpRange = range.cloneRange();
-        var node = tmpRange.startContainer.nodeType == 1 ? tmpRange.startContainer : tmpRange.startContainer.parentNode;
+        var node = tmpRange.startContainer.nodeType === 1 ? tmpRange.startContainer : tmpRange.startContainer.parentNode;
         var preNode = node;
         var doEnd = 1;
 
@@ -12670,7 +12727,7 @@ UE.plugins["blockquote"] = function() {
 
         //调整结束
         if (doEnd) {
-          preNode = node = node = tmpRange.endContainer.nodeType == 1 ? tmpRange.endContainer : tmpRange.endContainer.parentNode;
+          preNode = node = node = tmpRange.endContainer.nodeType === 1 ? tmpRange.endContainer : tmpRange.endContainer.parentNode;
           while (1) {
             if (domUtils.isBody(node)) {
               if (preNode !== node) {
@@ -12710,6 +12767,7 @@ UE.plugins["blockquote"] = function() {
     }
   };
 };
+
 
 
 ////////////////////////////////////////////////////////////////////////////
@@ -12756,7 +12814,7 @@ UE.commands["touppercase"] = UE.commands["tolowercase"] = {
 
     var curNode = domUtils.getNextDomNode(bk.start, false, filterFn);
     while (curNode && domUtils.getPosition(curNode, bkEnd) & domUtils.POSITION_PRECEDING) {
-      if (curNode.nodeType == 3) {
+      if (curNode.nodeType === 3) {
         curNode.nodeValue = curNode.nodeValue[cmd === "touppercase" ? "toUpperCase" : "toLowerCase"]();
       }
       curNode = domUtils.getNextDomNode(curNode, true, filterFn);
@@ -12767,6 +12825,7 @@ UE.commands["touppercase"] = UE.commands["tolowercase"] = {
     rng.moveToBookmark(bk).select();
   }
 };
+
 
 
 ////////////////////////////////////////////////////////////////////////////
@@ -12801,6 +12860,7 @@ UE.commands["indent"] = {
 };
 
 
+
 ////////////////////////////////////////////////////////////////////////////
 ///////////////////////////// plugins/print.js /////////////////////////////
 ////////////////////////////////////////////////////////////////////////////
@@ -12826,6 +12886,7 @@ UE.commands["print"] = {
   },
   notNeedUndo: 1
 };
+
 
 
 ////////////////////////////////////////////////////////////////////////////
@@ -12869,6 +12930,7 @@ UE.commands["preview"] = {
 };
 
 
+
 ////////////////////////////////////////////////////////////////////////////
 /////////////////////////// plugins/selectall.js ///////////////////////////
 ////////////////////////////////////////////////////////////////////////////
@@ -12900,7 +12962,7 @@ UE.plugins["selectall"] = function() {
       range.selectNodeContents(body);
       if (domUtils.isEmptyBlock(body)) {
         //opera不能自动合并到元素的里边，要手动处理一下
-        if (browser.opera && body.firstChild && body.firstChild.nodeType == 1) {
+        if (browser.opera && body.firstChild && body.firstChild.nodeType === 1) {
           range.setStartAtFirst(body.firstChild);
         }
         range.collapse(true);
@@ -12915,6 +12977,7 @@ UE.plugins["selectall"] = function() {
     selectAll: "ctrl+65"
   });
 };
+
 
 
 ////////////////////////////////////////////////////////////////////////////
@@ -12961,7 +13024,7 @@ UE.plugins["paragraph"] = function() {
   var doParagraph = (range, style, attrs, sourceCmdName) => {
     var bookmark = range.createBookmark();
 
-    var filterFn = node => (node.nodeType == 1 ? node.tagName.toLowerCase() !== "br" && !domUtils.isBookmarkNode(node) : !domUtils.isWhitespace(node));
+    var filterFn = node => (node.nodeType === 1 ? node.tagName.toLowerCase() !== "br" && !domUtils.isBookmarkNode(node) : !domUtils.isWhitespace(node));
 
     var para;
 
@@ -12971,7 +13034,7 @@ UE.plugins["paragraph"] = function() {
     var tmpRange = range.cloneRange();
     var tmpNode;
     while (current && !(domUtils.getPosition(current, bookmark2.end) & domUtils.POSITION_FOLLOWING)) {
-      if (current.nodeType == 3 || !block(current)) {
+      if (current.nodeType === 3 || !block(current)) {
         tmpRange.setStartBefore(current);
         while (current && current !== bookmark2.end && !block(current)) {
           tmpNode = current;
@@ -13074,9 +13137,9 @@ UE.plugins["paragraph"] = function() {
         }
       }
 
-      if (browser.gecko && range.collapsed && range.startContainer.nodeType == 1) {
+      if (browser.gecko && range.collapsed && range.startContainer.nodeType === 1) {
         var child = range.startContainer.childNodes[range.startOffset];
-        if (child && child.nodeType == 1 && child.tagName.toLowerCase() == style) {
+        if (child && child.nodeType === 1 && child.tagName.toLowerCase() == style) {
           range.setStart(child, 0).collapse(true);
         }
       }
@@ -13091,6 +13154,7 @@ UE.plugins["paragraph"] = function() {
     }
   };
 };
+
 
 
 ////////////////////////////////////////////////////////////////////////////
@@ -13117,12 +13181,12 @@ UE.plugins["paragraph"] = function() {
     //                    }
     //                }
     //            }
-    domUtils.filterNodeList(editor.selection.getStartElementPath(), n => n && n.nodeType == 1 && n.getAttribute("dir"));
+    domUtils.filterNodeList(editor.selection.getStartElementPath(), n => n && n.nodeType === 1 && n.getAttribute("dir"));
 
   var doDirectionality = (range, editor, forward) => {
     var bookmark;
 
-    var filterFn = node => (node.nodeType == 1 ? !domUtils.isBookmarkNode(node) : !domUtils.isWhitespace(node));
+    var filterFn = node => (node.nodeType === 1 ? !domUtils.isBookmarkNode(node) : !domUtils.isWhitespace(node));
 
     var obj = getObj(editor);
 
@@ -13137,7 +13201,7 @@ UE.plugins["paragraph"] = function() {
     var tmpRange = range.cloneRange();
     var tmpNode;
     while (current && !(domUtils.getPosition(current, bookmark2.end) & domUtils.POSITION_FOLLOWING)) {
-      if (current.nodeType == 3 || !block(current)) {
+      if (current.nodeType === 3 || !block(current)) {
         tmpRange.setStartBefore(current);
         while (current && current !== bookmark2.end && !block(current)) {
           tmpNode = current;
@@ -13215,6 +13279,7 @@ UE.plugins["paragraph"] = function() {
 })();
 
 
+
 ////////////////////////////////////////////////////////////////////////////
 ////////////////////////// plugins/horizontal.js //////////////////////////
 ////////////////////////////////////////////////////////////////////////////
@@ -13243,10 +13308,10 @@ UE.plugins["horizontal"] = function() {
         me.execCommand("insertHtml", "<hr>");
         var range = me.selection.getRange();
         var start = range.startContainer;
-        if (start.nodeType == 1 && !start.childNodes[range.startOffset]) {
+        if (start.nodeType === 1 && !start.childNodes[range.startOffset]) {
           var tmp;
           if ((tmp = start.childNodes[range.startOffset - 1])) {
-            if (tmp.nodeType == 1 && tmp.tagName === "HR") {
+            if (tmp.nodeType === 1 && tmp.tagName === "HR") {
               if (me.options.enterTag === "p") {
                 tmp = me.document.createElement("p");
                 range.insertNode(tmp);
@@ -13317,6 +13382,7 @@ UE.plugins["horizontal"] = function() {
 };
 
 
+
 ////////////////////////////////////////////////////////////////////////////
 ///////////////////////////// plugins/time.js /////////////////////////////
 ////////////////////////////////////////////////////////////////////////////
@@ -13379,6 +13445,7 @@ UE.commands["time"] = UE.commands["date"] = {
 };
 
 
+
 ////////////////////////////////////////////////////////////////////////////
 ////////////////////////// plugins/rowspacing.js //////////////////////////
 ////////////////////////////////////////////////////////////////////////////
@@ -13427,6 +13494,7 @@ UE.plugins["rowspacing"] = function() {
     }
   };
 };
+
 
 
 ////////////////////////////////////////////////////////////////////////////
@@ -13480,6 +13548,7 @@ UE.plugins["lineheight"] = function() {
     }
   };
 };
+
 
 
 ////////////////////////////////////////////////////////////////////////////
@@ -13633,7 +13702,7 @@ UE.plugins["insertcode"] = function() {
         domUtils.removeAttributes(pre, "id");
         var tmpNode = pre.previousSibling;
 
-        if (tmpNode && ((tmpNode.nodeType == 3 && tmpNode.nodeValue.length == 1 && browser.ie && browser.version == 6) || domUtils.isEmptyBlock(tmpNode))) {
+        if (tmpNode && ((tmpNode.nodeType === 3 && tmpNode.nodeValue.length == 1 && browser.ie && browser.version == 6) || domUtils.isEmptyBlock(tmpNode))) {
           domUtils.remove(tmpNode);
         }
         var rng = me.selection.getRange();
@@ -13782,7 +13851,7 @@ UE.plugins["insertcode"] = function() {
         if (browser.version > 8) {
           var txt = me.document.createTextNode("\n");
           var start = rng.startContainer;
-          if (rng.startOffset == 0) {
+          if (rng.startOffset === 0) {
             var preNode = start.previousSibling;
             if (preNode) {
               rng.insertNode(txt);
@@ -13992,7 +14061,7 @@ UE.plugins["insertcode"] = function() {
         while (last && last.nodeName === "BR") {
           last = last.previousSibling;
         }
-        if (last === start || (rng.startContainer === pre && rng.startOffset == pre.childNodes.length)) {
+        if (last === start || (rng.startContainer === pre && rng.startOffset === pre.childNodes.length)) {
           me.execCommand("insertparagraph");
           domUtils.preventDefault(evt);
         }
@@ -14015,6 +14084,7 @@ UE.plugins["insertcode"] = function() {
     }
   });
 };
+
 
 
 ////////////////////////////////////////////////////////////////////////////
@@ -14055,6 +14125,7 @@ UE.commands["cleardoc"] = {
     }, 0);
   }
 };
+
 
 
 ////////////////////////////////////////////////////////////////////////////
@@ -14158,6 +14229,7 @@ UE.plugin.register("anchor", () => ({
 }));
 
 
+
 ////////////////////////////////////////////////////////////////////////////
 /////////////////////////// plugins/wordcount.js ///////////////////////////
 ////////////////////////////////////////////////////////////////////////////
@@ -14206,6 +14278,7 @@ UE.plugins["wordcount"] = function() {
 };
 
 
+
 ////////////////////////////////////////////////////////////////////////////
 /////////////////////////// plugins/pagebreak.js ///////////////////////////
 ////////////////////////////////////////////////////////////////////////////
@@ -14224,7 +14297,7 @@ UE.plugins["pagebreak"] = function() {
       var firstChild = node.firstChild;
       var tmpNode;
 
-      while (firstChild && firstChild.nodeType == 1 && domUtils.isEmptyBlock(firstChild)) {
+      while (firstChild && firstChild.nodeType === 1 && domUtils.isEmptyBlock(firstChild)) {
         tmpNode = firstChild;
         firstChild = firstChild.firstChild;
       }
@@ -14238,7 +14311,7 @@ UE.plugins["pagebreak"] = function() {
     utils.cssRule("pagebreak", ".pagebreak{display:block;clear:both !important;cursor:default !important;width: 100% !important;margin:0;}", me.document);
   });
   function isHr(node) {
-    return node && node.nodeType == 1 && node.tagName === "HR" && node.className === "pagebreak";
+    return node && node.nodeType === 1 && node.tagName === "HR" && node.className === "pagebreak";
   }
   me.addInputRule(root => {
     root.traversal(node => {
@@ -14296,7 +14369,7 @@ UE.plugins["pagebreak"] = function() {
             if (!pN.previousSibling) {
               var table = domUtils.findParentByTagName(pN, "table");
               //                            var tableWrapDiv = table.parentNode;
-              //                            if(tableWrapDiv && tableWrapDiv.nodeType == 1
+              //                            if(tableWrapDiv && tableWrapDiv.nodeType === 1
               //                                && tableWrapDiv.tagName == 'DIV'
               //                                && tableWrapDiv.getAttribute('dropdrag')
               //                                ){
@@ -14367,6 +14440,7 @@ UE.plugins["pagebreak"] = function() {
 };
 
 
+
 ////////////////////////////////////////////////////////////////////////////
 /////////////////////////// plugins/wordimage.js ///////////////////////////
 ////////////////////////////////////////////////////////////////////////////
@@ -14428,6 +14502,7 @@ UE.plugin.register("wordimage", function() {
 });
 
 
+
 ////////////////////////////////////////////////////////////////////////////
 /////////////////////////// plugins/dragdrop.js ///////////////////////////
 ////////////////////////////////////////////////////////////////////////////
@@ -14442,14 +14517,14 @@ UE.plugins["dragdrop"] = function() {
         var pre = node.previousSibling;
         var next;
         while ((next = node.nextSibling)) {
-          if (next.nodeType == 1 && next.tagName === "SPAN" && !next.firstChild) {
+          if (next.nodeType === 1 && next.tagName === "SPAN" && !next.firstChild) {
             domUtils.remove(next);
           } else {
             break;
           }
         }
 
-        if (((pre && pre.nodeType == 1 && !domUtils.isEmptyBlock(pre)) || !pre) && (!next || (next && !domUtils.isEmptyBlock(next)))) {
+        if (((pre && pre.nodeType === 1 && !domUtils.isEmptyBlock(pre)) || !pre) && (!next || (next && !domUtils.isEmptyBlock(next)))) {
           if (pre && pre.tagName === "P" && !domUtils.isEmptyBlock(pre)) {
             pre.appendChild(node);
             domUtils.moveChild(next, pre);
@@ -14483,6 +14558,7 @@ UE.plugins["dragdrop"] = function() {
     }
   });
 };
+
 
 
 ////////////////////////////////////////////////////////////////////////////
@@ -14789,6 +14865,7 @@ UE.plugins["undo"] = function() {
 };
 
 
+
 ////////////////////////////////////////////////////////////////////////////
 ///////////////////////////// plugins/copy.js /////////////////////////////
 ////////////////////////////////////////////////////////////////////////////
@@ -14868,6 +14945,7 @@ UE.plugin.register("copy", function() {
     }
   };
 });
+
 
 
 ////////////////////////////////////////////////////////////////////////////
@@ -15082,7 +15160,7 @@ UE.plugins["paste"] = function() {
       if (!range.collapsed) {
         while (!domUtils.isBody(range.startContainer)) {
           var start = range.startContainer;
-          if (start.nodeType == 1) {
+          if (start.nodeType === 1) {
             start = start.childNodes[range.startOffset];
             if (!start) {
               range.setStartBefore(range.startContainer);
@@ -15090,11 +15168,11 @@ UE.plugins["paste"] = function() {
             }
             var pre = start.previousSibling;
 
-            if (pre && pre.nodeType == 3 && new RegExp("^[\n\r\t " + domUtils.fillChar + "]*$").test(pre.nodeValue)) {
+            if (pre && pre.nodeType === 3 && new RegExp("^[\n\r\t " + domUtils.fillChar + "]*$").test(pre.nodeValue)) {
               range.setStartBefore(pre);
             }
           }
-          if (range.startOffset == 0) {
+          if (range.startOffset === 0) {
             range.setStartBefore(range.startContainer);
           } else {
             break;
@@ -15102,18 +15180,18 @@ UE.plugins["paste"] = function() {
         }
         while (!domUtils.isBody(range.endContainer)) {
           var end = range.endContainer;
-          if (end.nodeType == 1) {
+          if (end.nodeType === 1) {
             end = end.childNodes[range.endOffset];
             if (!end) {
               range.setEndAfter(range.endContainer);
               continue;
             }
             var next = end.nextSibling;
-            if (next && next.nodeType == 3 && new RegExp("^[\n\r\t" + domUtils.fillChar + "]*$").test(next.nodeValue)) {
+            if (next && next.nodeType === 3 && new RegExp("^[\n\r\t" + domUtils.fillChar + "]*$").test(next.nodeValue)) {
               range.setEndAfter(next);
             }
           }
-          if (range.endOffset == range.endContainer[range.endContainer.nodeType == 3 ? "nodeValue" : "childNodes"].length) {
+          if (range.endOffset === range.endContainer[range.endContainer.nodeType === 3 ? "nodeValue" : "childNodes"].length) {
             range.setEndAfter(range.endContainer);
           } else {
             break;
@@ -15133,7 +15211,7 @@ UE.plugins["paste"] = function() {
       me.execCommand("inserthtml", html, true);
       me.__hasEnterExecCommand = false;
       var rng = me.selection.getRange();
-      while (!domUtils.isBody(rng.startContainer) && !rng.startOffset && rng.startContainer[rng.startContainer.nodeType == 3 ? "nodeValue" : "childNodes"].length) {
+      while (!domUtils.isBody(rng.startContainer) && !rng.startOffset && rng.startContainer[rng.startContainer.nodeType === 3 ? "nodeValue" : "childNodes"].length) {
         rng.setStartBefore(rng.startContainer);
       }
       var tmpAddress = rng.createAddress(true);
@@ -15173,6 +15251,7 @@ UE.plugins["paste"] = function() {
     }
   };
 };
+
 
 
 ////////////////////////////////////////////////////////////////////////////
@@ -15282,6 +15361,7 @@ UE.plugins["pasteplain"] = function() {
     notNeedUndo: 1
   };
 };
+
 
 
 ////////////////////////////////////////////////////////////////////////////
@@ -15723,7 +15803,7 @@ UE.plugins["list"] = function() {
     var nextList = list.nextSibling;
     if (
       nextList &&
-      nextList.nodeType == 1 &&
+      nextList.nodeType === 1 &&
       nextList.tagName.toLowerCase() == tag &&
       (getStyle(nextList) || domUtils.getStyle(nextList, "list-style-type") || (tag === "ol" ? "decimal" : "disc")) == style
     ) {
@@ -15738,7 +15818,7 @@ UE.plugins["list"] = function() {
     var preList = list.previousSibling;
     if (
       preList &&
-      preList.nodeType == 1 &&
+      preList.nodeType === 1 &&
       preList.tagName.toLowerCase() == tag &&
       (getStyle(preList) || domUtils.getStyle(preList, "list-style-type") || (tag === "ol" ? "decimal" : "disc")) == style
     ) {
@@ -15783,7 +15863,7 @@ UE.plugins["list"] = function() {
         if (filterFn(node)) {
           return null;
         }
-        if (node.nodeType == 1 && /[ou]l/i.test(node.tagName)) {
+        if (node.nodeType === 1 && /[ou]l/i.test(node.tagName)) {
           return node;
         }
         node = node.parentNode;
@@ -16246,7 +16326,7 @@ UE.plugins["list"] = function() {
       var me = this;
       var range = this.selection.getRange();
 
-      var filterFn = node => (node.nodeType == 1 ? node.tagName.toLowerCase() !== "br" : !domUtils.isWhitespace(node));
+      var filterFn = node => (node.nodeType === 1 ? node.tagName.toLowerCase() !== "br" : !domUtils.isWhitespace(node));
 
       var tag = command.toLowerCase() === "insertorderedlist" ? "ol" : "ul";
       var frag = me.document.createDocumentFragment();
@@ -16431,8 +16511,8 @@ UE.plugins["list"] = function() {
       var block = domUtils.isBlockElm;
 
       while (current && current !== bk.end && domUtils.getPosition(current, bk.end) & domUtils.POSITION_PRECEDING) {
-        if (current.nodeType == 3 || dtd.li[current.tagName]) {
-          if (current.nodeType == 1 && dtd.$list[current.tagName]) {
+        if (current.nodeType === 3 || dtd.li[current.tagName]) {
+          if (current.nodeType === 1 && dtd.$list[current.tagName]) {
             while (current.firstChild) {
               frag.appendChild(current.firstChild);
             }
@@ -16521,6 +16601,7 @@ UE.plugins["list"] = function() {
     }
   };
 };
+
 
 
 ////////////////////////////////////////////////////////////////////////////
@@ -16862,6 +16943,7 @@ UE.plugins["list"] = function() {
 })();
 
 
+
 ////////////////////////////////////////////////////////////////////////////
 /////////////////////////// plugins/enterkey.js ///////////////////////////
 ////////////////////////////////////////////////////////////////////////////
@@ -16896,7 +16978,7 @@ UE.plugins["enterkey"] = function() {
             }
           } else {
             //chrome remove div
-            if (start.nodeType == 1) {
+            if (start.nodeType === 1) {
               var tmp = me.document.createTextNode("");
               var div;
               range.insertNode(tmp);
@@ -16977,8 +17059,8 @@ UE.plugins["enterkey"] = function() {
         if (!range.collapsed) {
           range.deleteContents();
           start = range.startContainer;
-          if (start.nodeType == 1 && (start = start.childNodes[range.startOffset])) {
-            while (start.nodeType == 1) {
+          if (start.nodeType === 1 && (start = start.childNodes[range.startOffset])) {
+            while (start.nodeType === 1) {
               if (dtd.$empty[start.tagName]) {
                 range.setStartBefore(start).setCursor();
                 if (me.undoManger) {
@@ -17028,6 +17110,7 @@ UE.plugins["enterkey"] = function() {
 };
 
 
+
 ////////////////////////////////////////////////////////////////////////////
 ////////////////////////// plugins/keystrokes.js //////////////////////////
 ////////////////////////////////////////////////////////////////////////////
@@ -17063,17 +17146,17 @@ UE.plugins["keystrokes"] = function() {
       rng.txtToElmBoundary();
       //结束边界可能放到了br的前边，要把br包含进来
       // x[xxx]<br/>
-      if (rng.endContainer && rng.endContainer.nodeType == 1) {
+      if (rng.endContainer && rng.endContainer.nodeType === 1) {
         tmpNode = rng.endContainer.childNodes[rng.endOffset];
         if (tmpNode && domUtils.isBr(tmpNode)) {
           rng.setEndAfter(tmpNode);
         }
       }
-      if (rng.startOffset == 0) {
+      if (rng.startOffset === 0) {
         tmpNode = rng.startContainer;
         if (domUtils.isBoundaryNode(tmpNode, "firstChild")) {
           tmpNode = rng.endContainer;
-          if (rng.endOffset == (tmpNode.nodeType == 3 ? tmpNode.nodeValue.length : tmpNode.childNodes.length) && domUtils.isBoundaryNode(tmpNode, "lastChild")) {
+          if (rng.endOffset === (tmpNode.nodeType === 3 ? tmpNode.nodeValue.length : tmpNode.childNodes.length) && domUtils.isBoundaryNode(tmpNode, "lastChild")) {
             me.fireEvent("saveScene");
             me.body.innerHTML = "<p>" + (browser.ie ? "" : "<br/>") + "</p>";
             rng.setStart(me.body.firstChild, 0).setCursor(false, true);
@@ -17246,7 +17329,7 @@ UE.plugins["keystrokes"] = function() {
       }
 
       //chrome下如果删除了inline标签，浏览器会有记忆，在输入文字还是会套上刚才删除的标签，所以这里再选一次就不会了
-      if (!collapsed && (rng.startContainer.nodeType == 3 || (rng.startContainer.nodeType == 1 && domUtils.isEmptyBlock(rng.startContainer)))) {
+      if (!collapsed && (rng.startContainer.nodeType === 3 || (rng.startContainer.nodeType === 1 && domUtils.isEmptyBlock(rng.startContainer)))) {
         if (browser.ie) {
           var span = rng.document.createElement("span");
           rng
@@ -17262,6 +17345,7 @@ UE.plugins["keystrokes"] = function() {
     }
   });
 };
+
 
 
 ////////////////////////////////////////////////////////////////////////////
@@ -17605,6 +17689,7 @@ UE.plugins["fiximgclick"] = (() => {
 })();
 
 
+
 ////////////////////////////////////////////////////////////////////////////
 /////////////////////////// plugins/autolink.js ///////////////////////////
 ////////////////////////////////////////////////////////////////////////////
@@ -17639,21 +17724,21 @@ UE.plugin.register(
                 var charCode;
 
                 var start = range.startContainer;
-                while (start.nodeType == 1 && range.startOffset > 0) {
+                while (start.nodeType === 1 && range.startOffset > 0) {
                   start = range.startContainer.childNodes[range.startOffset - 1];
                   if (!start) {
                     break;
                   }
-                  range.setStart(start, start.nodeType == 1 ? start.childNodes.length : start.nodeValue.length);
+                  range.setStart(start, start.nodeType === 1 ? start.childNodes.length : start.nodeValue.length);
                   range.collapse(true);
                   start = range.startContainer;
                 }
 
                 do {
-                  if (range.startOffset == 0) {
+                  if (range.startOffset === 0) {
                     start = range.startContainer.previousSibling;
 
-                    while (start && start.nodeType == 1) {
+                    while (start && start.nodeType === 1) {
                       start = start.lastChild;
                     }
                     if (!start || domUtils.isFillChar(start)) {
@@ -17732,7 +17817,7 @@ UE.plugin.register(
       32: 1
     };
     function checkIsCludeLink(node) {
-      if (node.nodeType == 3) {
+      if (node.nodeType === 3) {
         return null;
       }
       if (node.nodeName === "A") {
@@ -17744,7 +17829,7 @@ UE.plugin.register(
         if (lastChild.nodeName === "A") {
           return lastChild;
         }
-        if (lastChild.nodeType == 3) {
+        if (lastChild.nodeType === 3) {
           if (domUtils.isWhitespace(lastChild)) {
             lastChild = lastChild.previousSibling;
             continue;
@@ -17768,7 +17853,7 @@ UE.plugin.register(
             }
             if (start && !domUtils.isBody(start) && start.nodeName === "P") {
               var pre = start.previousSibling;
-              if (pre && pre.nodeType == 1) {
+              if (pre && pre.nodeType === 1) {
                 var pre = checkIsCludeLink(pre);
                 if (pre && !pre.getAttribute("_href")) {
                   domUtils.remove(pre, true);
@@ -17776,7 +17861,7 @@ UE.plugin.register(
               }
             }
           } else if (keyCode == 32) {
-            if (start.nodeType == 3 && /^\s$/.test(start.nodeValue)) {
+            if (start.nodeType === 3 && /^\s$/.test(start.nodeValue)) {
               start = start.previousSibling;
               if (start && start.nodeName === "A" && !start.getAttribute("_href")) {
                 domUtils.remove(start, true);
@@ -17795,6 +17880,7 @@ UE.plugin.register(
       });
   }
 );
+
 
 
 ////////////////////////////////////////////////////////////////////////////
@@ -17829,10 +17915,10 @@ UE.plugins["autoheight"] = function() {
     if (!me.queryCommandState || (me.queryCommandState && me.queryCommandState("source") != 1)) {
       timer = setTimeout(() => {
         var node = me.body.lastChild;
-        while (node && node.nodeType != 1) {
+        while (node && node.nodeType !== 1) {
           node = node.previousSibling;
         }
-        if (node && node.nodeType == 1) {
+        if (node && node.nodeType === 1) {
           node.style.clear = "both";
           currentHeight = Math.max(domUtils.getXY(node).y + node.offsetHeight + 25, Math.max(options.minFrameHeight, options.initialFrameHeight));
           if (currentHeight != lastHeight) {
@@ -17915,6 +18001,7 @@ UE.plugins["autoheight"] = function() {
     }
   }
 };
+
 
 
 ////////////////////////////////////////////////////////////////////////////
@@ -18058,6 +18145,7 @@ UE.plugins["autofloat"] = function() {
     }
   });
 };
+
 
 
 ////////////////////////////////////////////////////////////////////////////
@@ -18284,6 +18372,7 @@ UE.plugins["video"] = function() {
     }
   };
 };
+
 
 
 ////////////////////////////////////////////////////////////////////////////
@@ -18978,7 +19067,7 @@ UE.plugins["video"] = function() {
         return;
       }
       var child = cellTo.lastChild;
-      if (child.nodeType == 3 || !dtd.$block[child.tagName]) {
+      if (child.nodeType === 3 || !dtd.$block[child.tagName]) {
         cellTo.appendChild(cellTo.ownerDocument.createElement("br"));
       }
       while ((child = cellFrom.firstChild)) {
@@ -19331,7 +19420,7 @@ UE.plugins["video"] = function() {
       results.push(cell);
       // 补齐单元格
       for (var i = rowIndex, endRow = rowIndex + cellInfo.rowSpan; i < endRow; i++) {
-        if (i == rowIndex) continue;
+        if (i === rowIndex) continue;
         var tableRow = this.table.rows[i];
         var tmpCell = tableRow.insertCell(colIndex - this.getPreviewMergedCellsNum(i, colIndex));
         tmpCell.colSpan = cellInfo.colSpan;
@@ -19469,6 +19558,7 @@ UE.plugins["video"] = function() {
 })();
 
 
+
 ////////////////////////////////////////////////////////////////////////////
 ////////////////////////// plugins/table.cmds.js //////////////////////////
 ////////////////////////////////////////////////////////////////////////////
@@ -19572,7 +19662,7 @@ UE.plugins["video"] = function() {
         }
         domUtils.remove(table);
         rng = this.selection.getRange();
-        if (next.nodeType == 3) {
+        if (next.nodeType === 3) {
           rng.setStartBefore(next);
         } else {
           rng.setStart(next, 0);
@@ -20416,6 +20506,7 @@ UE.plugins["video"] = function() {
 })();
 
 
+
 ////////////////////////////////////////////////////////////////////////////
 ///////////////////////// plugins/table.action.js /////////////////////////
 ////////////////////////////////////////////////////////////////////////////
@@ -20633,7 +20724,7 @@ UE.plugins["table"] = function() {
             var cell = table.rows[0].cells[0];
             var start = domUtils.findParentByTagName(me.selection.getStart(), ["td", "th"], true);
             var preNode = table.previousSibling;
-            if (cell === start && (!preNode || (preNode.nodeType == 1 && preNode.tagName === "TABLE")) && domUtils.isStartInblock(rng)) {
+            if (cell === start && (!preNode || (preNode.nodeType === 1 && preNode.tagName === "TABLE")) && domUtils.isStartInblock(rng)) {
               var first = domUtils.findParent(me.selection.getStart(), n => domUtils.isBlockElm(n), true);
               if (first && (/t(h|d)/i.test(first.tagName) || first === start.firstChild)) {
                 me.execCommand("insertparagraphbeforetable");
@@ -22247,6 +22338,7 @@ UE.plugins["table"] = function() {
 };
 
 
+
 ////////////////////////////////////////////////////////////////////////////
 ////////////////////////// plugins/table.sort.js //////////////////////////
 ////////////////////////////////////////////////////////////////////////////
@@ -22415,6 +22507,7 @@ UE.plugins["tablesort"] = function() {
     }
   };
 };
+
 
 
 ////////////////////////////////////////////////////////////////////////////
@@ -22930,6 +23023,7 @@ UE.plugins["contextmenu"] = function() {
 };
 
 
+
 ////////////////////////////////////////////////////////////////////////////
 ///////////////////////// plugins/shortcutmenu.js /////////////////////////
 ////////////////////////////////////////////////////////////////////////////
@@ -23007,6 +23101,7 @@ UE.plugins["shortcutmenu"] = function() {
     }
   });
 };
+
 
 
 ////////////////////////////////////////////////////////////////////////////
@@ -23161,6 +23256,7 @@ UE.plugins["basestyle"] = function() {
 };
 
 
+
 ////////////////////////////////////////////////////////////////////////////
 ////////////////////////// plugins/elementpath.js //////////////////////////
 ////////////////////////////////////////////////////////////////////////////
@@ -23190,7 +23286,7 @@ UE.plugins["elementpath"] = function() {
       var names = [];
       tagNames = parents;
       for (var i = 0, ci; (ci = parents[i]); i++) {
-        if (ci.nodeType == 3) {
+        if (ci.nodeType === 3) {
           continue;
         }
         var name = ci.tagName.toLowerCase();
@@ -23207,6 +23303,7 @@ UE.plugins["elementpath"] = function() {
     }
   };
 };
+
 
 
 ////////////////////////////////////////////////////////////////////////////
@@ -23311,7 +23408,7 @@ UE.plugins["formatmatch"] = function() {
       if (!img || img.tagName !== "IMG") {
         range.collapse(true).shrinkBoundary();
         var start = range.startContainer;
-        list = domUtils.findParents(start, true, node => !domUtils.isBlockElm(node) && node.nodeType == 1);
+        list = domUtils.findParents(start, true, node => !domUtils.isBlockElm(node) && node.nodeType === 1);
         //a不能加入格式刷, 并且克隆节点
         for (var i = 0, ci; (ci = list[i]); i++) {
           if (ci.tagName === "A") {
@@ -23330,6 +23427,7 @@ UE.plugins["formatmatch"] = function() {
     notNeedUndo: 1
   };
 };
+
 
 
 ////////////////////////////////////////////////////////////////////////////
@@ -23353,7 +23451,7 @@ UE.plugin.register("searchreplace", function() {
   var lastRng = null;
 
   function getText(node) {
-    var text = node.nodeType == 3 ? node.nodeValue : node[browser.ie ? "innerText" : "textContent"];
+    var text = node.nodeType === 3 ? node.nodeValue : node[browser.ie ? "innerText" : "textContent"];
     return text.replace(domUtils.fillChar, "");
   }
 
@@ -23420,7 +23518,7 @@ UE.plugin.register("searchreplace", function() {
     var currentNodeLength = 0;
     var result;
     while (currentNode) {
-      if (currentNode.nodeType == 3) {
+      if (currentNode.nodeType === 3) {
         currentNodeLength = getText(currentNode).replace(/(^[\t\r\n]+)|([\t\r\n]+$)/, "").length;
         currentIndex += currentNodeLength;
         if (currentIndex >= index) {
@@ -23510,10 +23608,10 @@ UE.plugin.register("searchreplace", function() {
             lastRng = null;
             var rng = me.selection.getRange();
             var first = me.body.firstChild;
-            if (first && first.nodeType == 1) {
+            if (first && first.nodeType === 1) {
               rng.setStart(first, 0);
               rng.shrinkBoundary(true);
-            } else if (first.nodeType == 3) {
+            } else if (first.nodeType === 3) {
               rng.setStartBefore(first);
             }
             rng.collapse(true).select(true);
@@ -23554,6 +23652,7 @@ UE.plugin.register("searchreplace", function() {
     }
   };
 });
+
 
 
 ////////////////////////////////////////////////////////////////////////////
@@ -23710,6 +23809,7 @@ UE.plugins["customstyle"] = function() {
     }
   });
 };
+
 
 
 ////////////////////////////////////////////////////////////////////////////
@@ -23889,6 +23989,7 @@ UE.plugins["catchremoteimage"] = function() {
 };
 
 
+
 ////////////////////////////////////////////////////////////////////////////
 //////////////////////// plugins/insertparagraph.js ////////////////////////
 ////////////////////////////////////////////////////////////////////////////
@@ -23935,6 +24036,7 @@ UE.commands["insertparagraph"] = {
     }
   }
 };
+
 
 
 ////////////////////////////////////////////////////////////////////////////
@@ -23991,6 +24093,7 @@ UE.plugins["template"] = function() {
     }
   });
 };
+
 
 
 ////////////////////////////////////////////////////////////////////////////
@@ -24200,6 +24303,7 @@ UE.plugin.register("autoupload", () => {
 });
 
 
+
 ////////////////////////////////////////////////////////////////////////////
 /////////////////////////// plugins/autosave.js ///////////////////////////
 ////////////////////////////////////////////////////////////////////////////
@@ -24329,6 +24433,7 @@ UE.plugin.register("autosave", function() {
 });
 
 
+
 ////////////////////////////////////////////////////////////////////////////
 //////////////////////////// plugins/charts.js ////////////////////////////
 ////////////////////////////////////////////////////////////////////////////
@@ -24449,6 +24554,7 @@ UE.plugin.register("charts", function() {
     return true;
   }
 });
+
 
 
 ////////////////////////////////////////////////////////////////////////////
@@ -24729,6 +24835,7 @@ UE.plugin.register("section", function() {
 });
 
 
+
 ////////////////////////////////////////////////////////////////////////////
 ///////////////////////// plugins/simpleupload.js /////////////////////////
 ////////////////////////////////////////////////////////////////////////////
@@ -24938,6 +25045,7 @@ UE.plugin.register("simpleupload", function() {
 });
 
 
+
 ////////////////////////////////////////////////////////////////////////////
 ////////////////////////// plugins/serverparam.js //////////////////////////
 ////////////////////////////////////////////////////////////////////////////
@@ -25053,6 +25161,7 @@ UE.plugin.register("serverparam", function() {
 });
 
 
+
 ////////////////////////////////////////////////////////////////////////////
 ////////////////////////// plugins/insertfile.js //////////////////////////
 ////////////////////////////////////////////////////////////////////////////
@@ -25146,12 +25255,14 @@ UE.plugin.register("insertfile", function() {
 });
 
 
+
 ////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////// ui/ui.js /////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////
 var baidu = baidu || {};
 baidu.editor = baidu.editor || {};
 UE.ui = baidu.editor.ui = {};
+
 
 
 ////////////////////////////////////////////////////////////////////////////
@@ -25376,7 +25487,7 @@ UE.ui = baidu.editor.ui = {};
         element.unselectable = "on";
         if (element.hasChildNodes()) {
           for (var i = 0; i < element.childNodes.length; i++) {
-            if (element.childNodes[i].nodeType == 1) {
+            if (element.childNodes[i].nodeType === 1) {
               uiUtils.makeUnselectable(element.childNodes[i]);
             }
           }
@@ -25409,6 +25520,7 @@ UE.ui = baidu.editor.ui = {};
     domUtils.on(window, "resize", baidu.editor.utils.defer(updateFixedOffset, 0, true));
   }
 })();
+
 
 
 ////////////////////////////////////////////////////////////////////////////
@@ -25498,6 +25610,7 @@ UE.ui = baidu.editor.ui = {};
 })();
 
 
+
 ////////////////////////////////////////////////////////////////////////////
 ///////////////////////////// ui/separator.js /////////////////////////////
 ////////////////////////////////////////////////////////////////////////////
@@ -25521,6 +25634,7 @@ UE.ui = baidu.editor.ui = {};
   };
   utils.inherits(Separator, UIBase);
 })();
+
 
 
 ////////////////////////////////////////////////////////////////////////////
@@ -25579,6 +25693,7 @@ UE.ui = baidu.editor.ui = {};
   };
   utils.inherits(Mask, UIBase);
 })();
+
 
 
 ////////////////////////////////////////////////////////////////////////////
@@ -25828,6 +25943,7 @@ UE.ui = baidu.editor.ui = {};
 })();
 
 
+
 ////////////////////////////////////////////////////////////////////////////
 //////////////////////////// ui/colorpicker.js ////////////////////////////
 ////////////////////////////////////////////////////////////////////////////
@@ -25898,11 +26014,11 @@ UE.ui = baidu.editor.ui = {};
       if (i && i % 10 === 0) {
         html +=
           "</tr>" +
-          (i == 60
+          (i === 60
             ? '<tr style="border-bottom: 1px solid #ddd;font-size: 13px;line-height: 25px;color:#39C;"><td colspan="10">' + editor.getLang("standardColor") + "</td></tr>"
             : "") +
           "<tr" +
-          (i == 60 ? ' class="edui-colorpicker-tablefirstrow"' : "") +
+          (i === 60 ? ' class="edui-colorpicker-tablefirstrow"' : "") +
           ">";
       }
       html +=
@@ -25925,6 +26041,7 @@ UE.ui = baidu.editor.ui = {};
     return html;
   }
 })();
+
 
 
 ////////////////////////////////////////////////////////////////////////////
@@ -26015,6 +26132,7 @@ UE.ui = baidu.editor.ui = {};
   };
   utils.inherits(TablePicker, UIBase);
 })();
+
 
 
 ////////////////////////////////////////////////////////////////////////////
@@ -26128,6 +26246,7 @@ UE.ui = baidu.editor.ui = {};
 })();
 
 
+
 ////////////////////////////////////////////////////////////////////////////
 /////////////////////////////// ui/button.js ///////////////////////////////
 ////////////////////////////////////////////////////////////////////////////
@@ -26204,6 +26323,7 @@ UE.ui = baidu.editor.ui = {};
   utils.inherits(Button, UIBase);
   utils.extend(Button.prototype, Stateful);
 })();
+
 
 
 ////////////////////////////////////////////////////////////////////////////
@@ -26312,6 +26432,7 @@ UE.ui = baidu.editor.ui = {};
 })();
 
 
+
 ////////////////////////////////////////////////////////////////////////////
 //////////////////////////// ui/colorbutton.js ////////////////////////////
 ////////////////////////////////////////////////////////////////////////////
@@ -26376,6 +26497,7 @@ UE.ui = baidu.editor.ui = {};
 })();
 
 
+
 ////////////////////////////////////////////////////////////////////////////
 //////////////////////////// ui/tablebutton.js ////////////////////////////
 ////////////////////////////////////////////////////////////////////////////
@@ -26417,6 +26539,7 @@ UE.ui = baidu.editor.ui = {};
   };
   utils.inherits(TableButton, SplitButton);
 })();
+
 
 
 ////////////////////////////////////////////////////////////////////////////
@@ -26583,6 +26706,7 @@ UE.ui = baidu.editor.ui = {};
 })();
 
 
+
 ////////////////////////////////////////////////////////////////////////////
 ///////////////////////// ui/autotypesetbutton.js /////////////////////////
 ////////////////////////////////////////////////////////////////////////////
@@ -26724,6 +26848,7 @@ UE.ui = baidu.editor.ui = {};
 })();
 
 
+
 ////////////////////////////////////////////////////////////////////////////
 ////////////////////////// ui/cellalignpicker.js //////////////////////////
 ////////////////////////////////////////////////////////////////////////////
@@ -26817,6 +26942,7 @@ UE.ui = baidu.editor.ui = {};
 })();
 
 
+
 ////////////////////////////////////////////////////////////////////////////
 //////////////////////////// ui/pastepicker.js ////////////////////////////
 ////////////////////////////////////////////////////////////////////////////
@@ -26892,6 +27018,7 @@ UE.ui = baidu.editor.ui = {};
 })();
 
 
+
 ////////////////////////////////////////////////////////////////////////////
 ////////////////////////////// ui/toolbar.js //////////////////////////////
 ////////////////////////////////////////////////////////////////////////////
@@ -26942,6 +27069,7 @@ UE.ui = baidu.editor.ui = {};
   };
   utils.inherits(Toolbar, UIBase);
 })();
+
 
 
 ////////////////////////////////////////////////////////////////////////////
@@ -27218,6 +27346,7 @@ UE.ui = baidu.editor.ui = {};
 })();
 
 
+
 ////////////////////////////////////////////////////////////////////////////
 /////////////////////////////// ui/combox.js ///////////////////////////////
 ////////////////////////////////////////////////////////////////////////////
@@ -27320,6 +27449,7 @@ UE.ui = baidu.editor.ui = {};
   };
   utils.inherits(Combox, SplitButton);
 })();
+
 
 
 ////////////////////////////////////////////////////////////////////////////
@@ -27762,6 +27892,7 @@ UE.ui = baidu.editor.ui = {};
 })();
 
 
+
 ////////////////////////////////////////////////////////////////////////////
 ///////////////////////////// ui/menubutton.js /////////////////////////////
 ////////////////////////////////////////////////////////////////////////////
@@ -27808,6 +27939,7 @@ UE.ui = baidu.editor.ui = {};
 })();
 
 
+
 ////////////////////////////////////////////////////////////////////////////
 ///////////////////////////// ui/multiMenu.js /////////////////////////////
 ////////////////////////////////////////////////////////////////////////////
@@ -27850,6 +27982,7 @@ UE.ui = baidu.editor.ui = {};
 
   utils.inherits(MultiMenuPop, SplitButton);
 })();
+
 
 
 ////////////////////////////////////////////////////////////////////////////
@@ -28088,6 +28221,7 @@ UE.ui = baidu.editor.ui = {};
 })();
 
 
+
 ////////////////////////////////////////////////////////////////////////////
 ///////////////////////////// ui/breakline.js /////////////////////////////
 ////////////////////////////////////////////////////////////////////////////
@@ -28111,6 +28245,7 @@ UE.ui = baidu.editor.ui = {};
   };
   utils.inherits(Breakline, UIBase);
 })();
+
 
 
 ////////////////////////////////////////////////////////////////////////////
@@ -28196,6 +28331,7 @@ UE.ui = baidu.editor.ui = {};
 
   utils.inherits(Message, UIBase);
 })();
+
 
 
 ////////////////////////////////////////////////////////////////////////////
@@ -29058,6 +29194,7 @@ UE.ui = baidu.editor.ui = {};
 })();
 
 
+
 ////////////////////////////////////////////////////////////////////////////
 //////////////////////////// adapter/editor.js ////////////////////////////
 ////////////////////////////////////////////////////////////////////////////
@@ -29170,7 +29307,7 @@ UE.ui = baidu.editor.ui = {};
               var range = editor.selection.getRange();
               range.insertNode(span);
               var tmp = getDomNode(span, "firstChild", "previousSibling");
-              tmp && pastePop.showAnchor(tmp.nodeType == 3 ? tmp.parentNode : tmp);
+              tmp && pastePop.showAnchor(tmp.nodeType === 3 ? tmp.parentNode : tmp);
               domUtils.remove(span);
             } else {
               pastePop.show();
@@ -29964,6 +30101,7 @@ UE.ui = baidu.editor.ui = {};
 })();
 
 
+
 ////////////////////////////////////////////////////////////////////////////
 //////////////////////////// adapter/message.js ////////////////////////////
 ////////////////////////////////////////////////////////////////////////////
@@ -30035,6 +30173,7 @@ UE.registerUI("message", editor => {
     holder.style.zIndex = Math.max(me.options.zIndex, me.iframe.style.zIndex) + 1;
   }
 });
+
 
 
 ////////////////////////////////////////////////////////////////////////////

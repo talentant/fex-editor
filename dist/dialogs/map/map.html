@@ -132,7 +132,7 @@
       init();
       document.getElementById("address").onkeydown = function(evt) {
         evt = evt || event;
-        if (evt.keyCode == 13) {
+        if (evt.keyCode === 13) {
           doSearch();
         }
       };
