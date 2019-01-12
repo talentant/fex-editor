@@ -78,9 +78,9 @@ UE.plugins["link"] = () => {
     var link = me.queryCommandValue("link");
     optimize((range = range.adjustmentBoundary()));
     var start = range.startContainer;
-    if (start.nodeType == 1 && link) {
+    if (start.nodeType === 1 && link) {
       start = start.childNodes[range.startOffset];
-      if (start && start.nodeType == 1 && start.tagName === "A" && /^(?:https?|ftp|file)\s*:\s*\/\//.test(start[browser.ie ? "innerText" : "textContent"])) {
+      if (start && start.nodeType === 1 && start.tagName === "A" && /^(?:https?|ftp|file)\s*:\s*\/\//.test(start[browser.ie ? "innerText" : "textContent"])) {
         start[browser.ie ? "innerText" : "textContent"] = utils.html(opt.textValue || opt.href);
       }
     }
@@ -126,7 +126,7 @@ UE.plugins["link"] = () => {
         //                    node = this.selection.getStart();
         //在ie下getstart()取值偏上了
         node = range.startContainer;
-        node = node.nodeType == 1 ? node : node.parentNode;
+        node = node.nodeType === 1 ? node : node.parentNode;
 
         if (node && (node = domUtils.findParentByTagName(node, "a", true)) && !domUtils.isInNodeEndBoundary(range, node)) {
           return node;
@@ -136,13 +136,13 @@ UE.plugins["link"] = () => {
         range.shrinkBoundary();
 
         var start =
-          range.startContainer.nodeType == 3 || !range.startContainer.childNodes[range.startOffset] ? range.startContainer : range.startContainer.childNodes[range.startOffset];
+          range.startContainer.nodeType === 3 || !range.startContainer.childNodes[range.startOffset] ? range.startContainer : range.startContainer.childNodes[range.startOffset];
 
-        var end = range.endContainer.nodeType == 3 || range.endOffset == 0 ? range.endContainer : range.endContainer.childNodes[range.endOffset - 1];
+        var end = range.endContainer.nodeType === 3 || range.endOffset == 0 ? range.endContainer : range.endContainer.childNodes[range.endOffset - 1];
 
         var common = range.getCommonAncestor();
         node = domUtils.findParentByTagName(common, "a", true);
-        if (!node && common.nodeType == 1) {
+        if (!node && common.nodeType === 1) {
           var as = common.getElementsByTagName("a");
           var ps;
           var pe;

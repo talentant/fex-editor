@@ -183,7 +183,7 @@ UE.plugins["font"] = function() {
   function mergeChild(rng, cmdName, value) {
     if (needSetChild[cmdName]) {
       rng.adjustmentBoundary();
-      if (!rng.collapsed && rng.startContainer.nodeType == 1) {
+      if (!rng.collapsed && rng.startContainer.nodeType === 1) {
         var start = rng.startContainer.childNodes[rng.startOffset];
         if (start && domUtils.isTagNode(start, "span")) {
           var bk = rng.createBookmark();
@@ -229,7 +229,7 @@ UE.plugins["font"] = function() {
       }
       if (!(cmdName === "fontborder" && value === "none")) {
         var next = span.nextSibling;
-        while (next && next.nodeType == 1 && next.tagName === "SPAN") {
+        while (next && next.nodeType === 1 && next.tagName === "SPAN") {
           if (domUtils.isBookmarkNode(next) && cmdName === "fontborder") {
             span.appendChild(next);
             next = span.nextSibling;
@@ -453,7 +453,7 @@ UE.plugins["font"] = function() {
             var tmpNode = startNode;
             var value;
             while (tmpNode && !domUtils.isBlockElm(tmpNode) && !domUtils.isBody(tmpNode)) {
-              if (tmpNode.nodeType == 1) {
+              if (tmpNode.nodeType === 1) {
                 value = domUtils.getComputedStyle(tmpNode, style);
                 if (value !== "none") {
                   return value;

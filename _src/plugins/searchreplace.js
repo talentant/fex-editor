@@ -16,7 +16,7 @@ UE.plugin.register("searchreplace", function() {
   var lastRng = null;
 
   function getText(node) {
-    var text = node.nodeType == 3 ? node.nodeValue : node[browser.ie ? "innerText" : "textContent"];
+    var text = node.nodeType === 3 ? node.nodeValue : node[browser.ie ? "innerText" : "textContent"];
     return text.replace(domUtils.fillChar, "");
   }
 
@@ -83,7 +83,7 @@ UE.plugin.register("searchreplace", function() {
     var currentNodeLength = 0;
     var result;
     while (currentNode) {
-      if (currentNode.nodeType == 3) {
+      if (currentNode.nodeType === 3) {
         currentNodeLength = getText(currentNode).replace(/(^[\t\r\n]+)|([\t\r\n]+$)/, "").length;
         currentIndex += currentNodeLength;
         if (currentIndex >= index) {
@@ -173,10 +173,10 @@ UE.plugin.register("searchreplace", function() {
             lastRng = null;
             var rng = me.selection.getRange();
             var first = me.body.firstChild;
-            if (first && first.nodeType == 1) {
+            if (first && first.nodeType === 1) {
               rng.setStart(first, 0);
               rng.shrinkBoundary(true);
-            } else if (first.nodeType == 3) {
+            } else if (first.nodeType === 3) {
               rng.setStartBefore(first);
             }
             rng.collapse(true).select(true);

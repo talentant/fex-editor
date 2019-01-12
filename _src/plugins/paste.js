@@ -207,7 +207,7 @@ UE.plugins["paste"] = function() {
       if (!range.collapsed) {
         while (!domUtils.isBody(range.startContainer)) {
           var start = range.startContainer;
-          if (start.nodeType == 1) {
+          if (start.nodeType === 1) {
             start = start.childNodes[range.startOffset];
             if (!start) {
               range.setStartBefore(range.startContainer);
@@ -215,7 +215,7 @@ UE.plugins["paste"] = function() {
             }
             var pre = start.previousSibling;
 
-            if (pre && pre.nodeType == 3 && new RegExp("^[\n\r\t " + domUtils.fillChar + "]*$").test(pre.nodeValue)) {
+            if (pre && pre.nodeType === 3 && new RegExp("^[\n\r\t " + domUtils.fillChar + "]*$").test(pre.nodeValue)) {
               range.setStartBefore(pre);
             }
           }
@@ -227,18 +227,18 @@ UE.plugins["paste"] = function() {
         }
         while (!domUtils.isBody(range.endContainer)) {
           var end = range.endContainer;
-          if (end.nodeType == 1) {
+          if (end.nodeType === 1) {
             end = end.childNodes[range.endOffset];
             if (!end) {
               range.setEndAfter(range.endContainer);
               continue;
             }
             var next = end.nextSibling;
-            if (next && next.nodeType == 3 && new RegExp("^[\n\r\t" + domUtils.fillChar + "]*$").test(next.nodeValue)) {
+            if (next && next.nodeType === 3 && new RegExp("^[\n\r\t" + domUtils.fillChar + "]*$").test(next.nodeValue)) {
               range.setEndAfter(next);
             }
           }
-          if (range.endOffset == range.endContainer[range.endContainer.nodeType == 3 ? "nodeValue" : "childNodes"].length) {
+          if (range.endOffset == range.endContainer[range.endContainer.nodeType === 3 ? "nodeValue" : "childNodes"].length) {
             range.setEndAfter(range.endContainer);
           } else {
             break;
@@ -258,7 +258,7 @@ UE.plugins["paste"] = function() {
       me.execCommand("inserthtml", html, true);
       me.__hasEnterExecCommand = false;
       var rng = me.selection.getRange();
-      while (!domUtils.isBody(rng.startContainer) && !rng.startOffset && rng.startContainer[rng.startContainer.nodeType == 3 ? "nodeValue" : "childNodes"].length) {
+      while (!domUtils.isBody(rng.startContainer) && !rng.startOffset && rng.startContainer[rng.startContainer.nodeType === 3 ? "nodeValue" : "childNodes"].length) {
         rng.setStartBefore(rng.startContainer);
       }
       var tmpAddress = rng.createAddress(true);

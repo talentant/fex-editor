@@ -528,7 +528,7 @@ var domUtils = (dom.domUtils = {
    * ```
    */
   isBookmarkNode(node) {
-    return node.nodeType == 1 && node.id && /^_baidu_bookmark_/i.test(node.id);
+    return node.nodeType === 1 && node.id && /^_baidu_bookmark_/i.test(node.id);
   },
   /**
    * 获取节点node所属的window对象
@@ -994,7 +994,7 @@ var domUtils = (dom.domUtils = {
    * ```
    */
   isBlockElm(node) {
-    return node.nodeType == 1 && (dtd.$block[node.tagName] || styleBlock[domUtils.getComputedStyle(node, "display")]) && !dtd.$nonChild[node.tagName];
+    return node.nodeType === 1 && (dtd.$block[node.tagName] || styleBlock[domUtils.getComputedStyle(node, "display")]) && !dtd.$nonChild[node.tagName];
   },
   /**
    * 检测node节点是否为body节点
@@ -1008,7 +1008,7 @@ var domUtils = (dom.domUtils = {
    * ```
    */
   isBody(node) {
-    return node && node.nodeType == 1 && node.tagName.toLowerCase() === "body";
+    return node && node.nodeType === 1 && node.tagName.toLowerCase() === "body";
   },
   /**
    * 以node节点为分界，将该节点的指定祖先节点parent拆分成两个独立的节点，
@@ -1096,7 +1096,7 @@ var domUtils = (dom.domUtils = {
       if (domUtils.isBookmarkNode(node)) {
         return 0;
       }
-      if ((node.nodeType == 1 && !domUtils.isEmptyInlineElement(node)) || (node.nodeType == 3 && !domUtils.isWhitespace(node))) {
+      if ((node.nodeType === 1 && !domUtils.isEmptyInlineElement(node)) || (node.nodeType === 3 && !domUtils.isWhitespace(node))) {
         return 0;
       }
       node = node.nextSibling;
@@ -1130,7 +1130,7 @@ var domUtils = (dom.domUtils = {
   trimWhiteTextNode(node) {
     function remove(dir) {
       var child;
-      while ((child = node[dir]) && child.nodeType == 3 && domUtils.isWhitespace(child)) {
+      while ((child = node[dir]) && child.nodeType === 3 && domUtils.isWhitespace(child)) {
         node.removeChild(child);
       }
     }
@@ -1323,7 +1323,7 @@ var domUtils = (dom.domUtils = {
   mergeSibling(node, ignorePre, ignoreNext) {
     function merge(rtl, start, node) {
       var next;
-      if ((next = node[rtl]) && !domUtils.isBookmarkNode(next) && next.nodeType == 1 && domUtils.isSameElement(node, next)) {
+      if ((next = node[rtl]) && !domUtils.isBookmarkNode(next) && next.nodeType === 1 && domUtils.isSameElement(node, next)) {
         while (next.firstChild) {
           if (start === "firstChild") {
             node.insertBefore(next.lastChild, node.firstChild);
@@ -1538,7 +1538,7 @@ var domUtils = (dom.domUtils = {
       return element["offset" + styleName.replace(/^\w/, s => s.toUpperCase())] + "px";
     }
     //忽略文本节点
-    if (element.nodeType == 3) {
+    if (element.nodeType === 3) {
       element = element.parentNode;
     }
     //ie下font-size若body下定义了font-size，则从currentStyle里会取到这个font-size. 取不到实际值，故此修改.
@@ -2018,7 +2018,7 @@ var domUtils = (dom.domUtils = {
    * @return { Boolean } 给定的节点是否是br节点
    */
   isBr(node) {
-    return node.nodeType == 1 && node.tagName === "BR";
+    return node.nodeType === 1 && node.tagName === "BR";
   },
   /**
    * 判断给定的节点是否是一个“填充”节点
@@ -2041,7 +2041,7 @@ var domUtils = (dom.domUtils = {
     var flag = 0;
     var start = tmpRange.startContainer;
     var tmp;
-    if (start.nodeType == 1 && start.childNodes[tmpRange.startOffset]) {
+    if (start.nodeType === 1 && start.childNodes[tmpRange.startOffset]) {
       start = start.childNodes[tmpRange.startOffset];
       var pre = start.previousSibling;
       while (pre && domUtils.isFillChar(pre)) {
@@ -2062,7 +2062,7 @@ var domUtils = (dom.domUtils = {
       tmpRange.setStartBefore(tmp);
       start = tmpRange.startContainer;
     }
-    if (start.nodeType == 1 && domUtils.isEmptyNode(start) && tmpRange.startOffset == 1) {
+    if (start.nodeType === 1 && domUtils.isEmptyNode(start) && tmpRange.startOffset == 1) {
       tmpRange.setStart(start, 0).collapse(true);
     }
     while (!tmpRange.startOffset) {
@@ -2304,7 +2304,7 @@ var domUtils = (dom.domUtils = {
    * @return { Boolean } 给定的节点是否是一个辅助节点
    */
   isCustomeNode(node) {
-    return node.nodeType == 1 && node.getAttribute("_ue_custom_node_");
+    return node.nodeType === 1 && node.getAttribute("_ue_custom_node_");
   },
 
   /**
@@ -2326,7 +2326,7 @@ var domUtils = (dom.domUtils = {
    * ```
    */
   isTagNode(node, tagNames) {
-    return node.nodeType == 1 && new RegExp("\\b" + node.tagName + "\\b", "i").test(tagNames);
+    return node.nodeType === 1 && new RegExp("\\b" + node.tagName + "\\b", "i").test(tagNames);
   },
 
   /**
@@ -2416,10 +2416,10 @@ var domUtils = (dom.domUtils = {
    */
   isInNodeEndBoundary(rng, node) {
     var start = rng.startContainer;
-    if (start.nodeType == 3 && rng.startOffset != start.nodeValue.length) {
+    if (start.nodeType === 3 && rng.startOffset != start.nodeValue.length) {
       return 0;
     }
-    if (start.nodeType == 1 && rng.startOffset != start.childNodes.length) {
+    if (start.nodeType === 1 && rng.startOffset != start.childNodes.length) {
       return 0;
     }
     while (start !== node) {

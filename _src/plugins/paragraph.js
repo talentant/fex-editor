@@ -39,7 +39,7 @@ UE.plugins["paragraph"] = function() {
   var doParagraph = (range, style, attrs, sourceCmdName) => {
     var bookmark = range.createBookmark();
 
-    var filterFn = node => (node.nodeType == 1 ? node.tagName.toLowerCase() !== "br" && !domUtils.isBookmarkNode(node) : !domUtils.isWhitespace(node));
+    var filterFn = node => (node.nodeType === 1 ? node.tagName.toLowerCase() !== "br" && !domUtils.isBookmarkNode(node) : !domUtils.isWhitespace(node));
 
     var para;
 
@@ -49,7 +49,7 @@ UE.plugins["paragraph"] = function() {
     var tmpRange = range.cloneRange();
     var tmpNode;
     while (current && !(domUtils.getPosition(current, bookmark2.end) & domUtils.POSITION_FOLLOWING)) {
-      if (current.nodeType == 3 || !block(current)) {
+      if (current.nodeType === 3 || !block(current)) {
         tmpRange.setStartBefore(current);
         while (current && current !== bookmark2.end && !block(current)) {
           tmpNode = current;
@@ -152,9 +152,9 @@ UE.plugins["paragraph"] = function() {
         }
       }
 
-      if (browser.gecko && range.collapsed && range.startContainer.nodeType == 1) {
+      if (browser.gecko && range.collapsed && range.startContainer.nodeType === 1) {
         var child = range.startContainer.childNodes[range.startOffset];
-        if (child && child.nodeType == 1 && child.tagName.toLowerCase() == style) {
+        if (child && child.nodeType === 1 && child.tagName.toLowerCase() == style) {
           range.setStart(child, 0).collapse(true);
         }
       }

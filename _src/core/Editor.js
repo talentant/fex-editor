@@ -858,12 +858,12 @@
       if (me.options.enterTag === "p") {
         var child = this.body.firstChild;
         var tmpNode;
-        if (!child || (child.nodeType == 1 && (dtd.$cdata[child.tagName] || isCdataDiv(child) || domUtils.isCustomeNode(child)) && child === this.body.lastChild)) {
+        if (!child || (child.nodeType === 1 && (dtd.$cdata[child.tagName] || isCdataDiv(child) || domUtils.isCustomeNode(child)) && child === this.body.lastChild)) {
           this.body.innerHTML = "<p>" + (browser.ie ? "&nbsp;" : "<br/>") + "</p>" + this.body.innerHTML;
         } else {
           var p = me.document.createElement("p");
           while (child) {
-            while (child && (child.nodeType == 3 || (child.nodeType == 1 && dtd.p[child.tagName] && !dtd.$cdata[child.tagName]))) {
+            while (child && (child.nodeType === 3 || (child.nodeType === 1 && dtd.p[child.tagName] && !dtd.$cdata[child.tagName]))) {
               tmpNode = child.nextSibling;
               p.appendChild(child);
               child = tmpNode;
@@ -921,7 +921,7 @@
         var rng = me.selection.getRange();
         if (toEnd) {
           var node = me.body.lastChild;
-          if (node && node.nodeType == 1 && !dtd.$empty[node.tagName]) {
+          if (node && node.nodeType === 1 && !dtd.$empty[node.tagName]) {
             if (domUtils.isEmptyBlock(node)) {
               rng.setStartAtFirst(node);
             } else {
@@ -933,7 +933,7 @@
         } else {
           if (!rng.collapsed && domUtils.isBody(rng.startContainer) && rng.startOffset == 0) {
             var node = me.body.firstChild;
-            if (node && node.nodeType == 1 && !dtd.$empty[node.tagName]) {
+            if (node && node.nodeType === 1 && !dtd.$empty[node.tagName]) {
               rng.setStartAtFirst(node).collapse(true);
             }
           }

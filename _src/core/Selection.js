@@ -354,10 +354,10 @@
       } else {
         range.shrinkBoundary();
         start = range.startContainer;
-        if (start.nodeType == 1 && start.hasChildNodes()) {
+        if (start.nodeType === 1 && start.hasChildNodes()) {
           start = start.childNodes[Math.min(start.childNodes.length - 1, range.startOffset)];
         }
-        if (start.nodeType == 3) {
+        if (start.nodeType === 3) {
           return start.parentNode;
         }
       }

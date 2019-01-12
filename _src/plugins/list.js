@@ -434,7 +434,7 @@ UE.plugins["list"] = function() {
     var nextList = list.nextSibling;
     if (
       nextList &&
-      nextList.nodeType == 1 &&
+      nextList.nodeType === 1 &&
       nextList.tagName.toLowerCase() == tag &&
       (getStyle(nextList) || domUtils.getStyle(nextList, "list-style-type") || (tag === "ol" ? "decimal" : "disc")) == style
     ) {
@@ -449,7 +449,7 @@ UE.plugins["list"] = function() {
     var preList = list.previousSibling;
     if (
       preList &&
-      preList.nodeType == 1 &&
+      preList.nodeType === 1 &&
       preList.tagName.toLowerCase() == tag &&
       (getStyle(preList) || domUtils.getStyle(preList, "list-style-type") || (tag === "ol" ? "decimal" : "disc")) == style
     ) {
@@ -494,7 +494,7 @@ UE.plugins["list"] = function() {
         if (filterFn(node)) {
           return null;
         }
-        if (node.nodeType == 1 && /[ou]l/i.test(node.tagName)) {
+        if (node.nodeType === 1 && /[ou]l/i.test(node.tagName)) {
           return node;
         }
         node = node.parentNode;
@@ -957,7 +957,7 @@ UE.plugins["list"] = function() {
       var me = this;
       var range = this.selection.getRange();
 
-      var filterFn = node => (node.nodeType == 1 ? node.tagName.toLowerCase() !== "br" : !domUtils.isWhitespace(node));
+      var filterFn = node => (node.nodeType === 1 ? node.tagName.toLowerCase() !== "br" : !domUtils.isWhitespace(node));
 
       var tag = command.toLowerCase() === "insertorderedlist" ? "ol" : "ul";
       var frag = me.document.createDocumentFragment();
@@ -1142,8 +1142,8 @@ UE.plugins["list"] = function() {
       var block = domUtils.isBlockElm;
 
       while (current && current !== bk.end && domUtils.getPosition(current, bk.end) & domUtils.POSITION_PRECEDING) {
-        if (current.nodeType == 3 || dtd.li[current.tagName]) {
-          if (current.nodeType == 1 && dtd.$list[current.tagName]) {
+        if (current.nodeType === 3 || dtd.li[current.tagName]) {
+          if (current.nodeType === 1 && dtd.$list[current.tagName]) {
             while (current.firstChild) {
               frag.appendChild(current.firstChild);
             }
