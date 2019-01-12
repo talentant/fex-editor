@@ -381,7 +381,7 @@
       var parent = this.parentNode;
       for (var i = 0, ci; (ci = parent.children[i]); i++) {
         if (ci === this) {
-          return i == 0 ? null : parent.children[i - 1];
+          return i === 0 ? null : parent.children[i - 1];
         }
       }
     },

@@ -1040,7 +1040,7 @@
       results.push(cell);
       // 补齐单元格
       for (var i = rowIndex, endRow = rowIndex + cellInfo.rowSpan; i < endRow; i++) {
-        if (i == rowIndex) continue;
+        if (i === rowIndex) continue;
         var tableRow = this.table.rows[i];
         var tmpCell = tableRow.insertCell(colIndex - this.getPreviewMergedCellsNum(i, colIndex));
         tmpCell.colSpan = cellInfo.colSpan;

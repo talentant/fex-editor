@@ -53,7 +53,7 @@ var charsContent = [
     var span = document.createElement("span");
     span.setAttribute("tabSrc", ci.name);
     span.innerHTML = ci.title;
-    if (i == 1) span.className = "focus";
+    if (i === 1) span.className = "focus";
     domUtils.on(span, "click", function() {
       var tmps = $G("tabHeads").children;
       for (var k = 0, sk; (sk = tmps[k++]); ) {
@@ -70,7 +70,7 @@ var charsContent = [
     domUtils.insertAfter(span, document.createTextNode("\n"));
     var div = document.createElement("div");
     div.id = ci.name;
-    div.style.display = i == 1 ? "" : "none";
+    div.style.display = i === 1 ? "" : "none";
     var cons = ci.content;
     for (var j = 0, con; (con = cons[j++]); ) {
       var charSpan = document.createElement("span");

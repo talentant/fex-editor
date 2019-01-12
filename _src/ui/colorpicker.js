@@ -65,11 +65,11 @@
       if (i && i % 10 === 0) {
         html +=
           "</tr>" +
-          (i == 60
+          (i === 60
             ? '<tr style="border-bottom: 1px solid #ddd;font-size: 13px;line-height: 25px;color:#39C;"><td colspan="10">' + editor.getLang("standardColor") + "</td></tr>"
             : "") +
           "<tr" +
-          (i == 60 ? ' class="edui-colorpicker-tablefirstrow"' : "") +
+          (i === 60 ? ' class="edui-colorpicker-tablefirstrow"' : "") +
           ">";
       }
       html +=

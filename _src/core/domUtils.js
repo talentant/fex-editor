@@ -579,7 +579,7 @@ var domUtils = (dom.domUtils = {
     parentsA.reverse();
     parentsB.reverse();
     while ((i++, parentsA[i] === parentsB[i])) {}
-    return i == 0 ? null : parentsA[i - 1];
+    return i === 0 ? null : parentsA[i - 1];
   },
   /**
    * 清除node节点左右连续为空的兄弟inline节点
