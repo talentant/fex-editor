@@ -198,7 +198,7 @@ var domUtils = (dom.domUtils = {
    * 检测节点node在父节点中的索引位置， 根据给定的mergeTextNode参数决定是否要合并多个连续的文本节点为一个节点
    * @method getNodeIndex
    * @param { Node } node 需要检测的节点对象
-   * @param { Boolean } mergeTextNode 是否合并多个连续的文本节点为一个节点
+   * @param { Boolean } ignoreTextNode 是否合并多个连续的文本节点为一个节点
    * @return { Number } 该节点在父节点中的位置
    * @example
    * ```javascript
@@ -221,8 +221,8 @@ var domUtils = (dom.domUtils = {
     var preNode = node;
     var i = 0;
     while ((preNode = preNode.previousSibling)) {
-      if (ignoreTextNode && preNode.nodeType == 3) {
-        if (preNode.nodeType != preNode.nextSibling.nodeType) {
+      if (ignoreTextNode && preNode.nodeType === 3) {
+        if (preNode.nodeType !== preNode.nextSibling.nodeType) {
           i++;
         }
         continue;
@@ -236,7 +236,7 @@ var domUtils = (dom.domUtils = {
    * 检测节点node是否在给定的document对象上
    * @method inDoc
    * @param { Node } node 需要检测的节点对象
-   * @param { DomDocument } doc 需要检测的document对象
+   * @param { Object } doc 需要检测的document对象
    * @return { Boolean } 该节点node是否在给定的document的dom树上
    * @example
    * ```javascript
@@ -254,7 +254,7 @@ var domUtils = (dom.domUtils = {
    * ```
    */
   inDoc(node, doc) {
-    return domUtils.getPosition(node, doc) == 10;
+    return domUtils.getPosition(node, doc) === 10;
   },
   /**
    * 根据给定的过滤规则filterFn， 查找符合该过滤规则的node节点的第一个祖先节点，
@@ -348,6 +348,7 @@ var domUtils = (dom.domUtils = {
    * @param { Node } node 需要查找的节点对象
    * @param { Array } tagNames 需要查找的父节点的名称数组
    * @param { Boolean } includeSelf 查找过程是否包含node节点自身
+   * @param { Function } excludeFn ???
    * @warning 查找的终点是到body节点为止
    * @return { Node | NULL } 如果找到符合条件的节点， 则返回该节点， 否则返回NULL
    * @example
@@ -379,6 +380,8 @@ var domUtils = (dom.domUtils = {
    * @method findParents
    * @param { Node } node 需要查找的节点对象
    * @param { Boolean } includeSelf 查找的结果中是否允许包含当前查找的节点对象
+   * @param { Function } filterFn ???
+   * @param { Boolean } closerFirst ???
    * @return { Array } 给定节点的祖先节点数组
    */
   findParents(node, includeSelf, filterFn, closerFirst) {
@@ -497,6 +500,8 @@ var domUtils = (dom.domUtils = {
    * @method getNextDomNode
    * @param { Node } node 需要获取其后的兄弟节点的节点对象
    * @param { Boolean } startFromChild 查找过程是否从其子节点开始
+   * @param { Function } filterFn ???
+   * @param guard ???
    * @return { Node | NULL } 如果找满足条件的节点， 则返回该节点， 否则返回NULL
    * @see UE.dom.domUtils.getNextDomNode(Node)
    */
