@@ -11,6 +11,26 @@
  * @unfile
  */
 
+// for prepack
+// if (typeof UE === 'undefined') {
+//   var UE = {};
+// }
+// if (typeof browser === 'undefined') {
+//   var browser = {};
+// }
+//
+// if (typeof document === 'undefined') {
+//   var document = {
+//     createElement () {
+//       return {
+//         style: {
+//           styleFloat: {}, cssFloat: {}
+//         }
+//       }
+//     }
+//   };
+// }
+
 var utils = (UE.utils = {
   /**
    * 用给定的迭代器遍历对象
