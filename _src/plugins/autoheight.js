@@ -30,7 +30,7 @@ UE.plugins["autoheight"] = function() {
         while (node && node.nodeType != 1) {
           node = node.previousSibling;
         }
-        if (node && node.nodeType === 1) {
+        if (node && node.nodeType == 1) {
           node.style.clear = "both";
           currentHeight = Math.max(domUtils.getXY(node).y + node.offsetHeight + 25, Math.max(options.minFrameHeight, options.initialFrameHeight));
           if (currentHeight != lastHeight) {

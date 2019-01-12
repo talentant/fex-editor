@@ -30,7 +30,7 @@ UE.plugins["keystrokes"] = function() {
       rng.txtToElmBoundary();
       //结束边界可能放到了br的前边，要把br包含进来
       // x[xxx]<br/>
-      if (rng.endContainer && rng.endContainer.nodeType === 1) {
+      if (rng.endContainer && rng.endContainer.nodeType == 1) {
         tmpNode = rng.endContainer.childNodes[rng.endOffset];
         if (tmpNode && domUtils.isBr(tmpNode)) {
           rng.setEndAfter(tmpNode);
@@ -40,7 +40,7 @@ UE.plugins["keystrokes"] = function() {
         tmpNode = rng.startContainer;
         if (domUtils.isBoundaryNode(tmpNode, "firstChild")) {
           tmpNode = rng.endContainer;
-          if (rng.endOffset == (tmpNode.nodeType === 3 ? tmpNode.nodeValue.length : tmpNode.childNodes.length) && domUtils.isBoundaryNode(tmpNode, "lastChild")) {
+          if (rng.endOffset == (tmpNode.nodeType == 3 ? tmpNode.nodeValue.length : tmpNode.childNodes.length) && domUtils.isBoundaryNode(tmpNode, "lastChild")) {
             me.fireEvent("saveScene");
             me.body.innerHTML = "<p>" + (browser.ie ? "" : "<br/>") + "</p>";
             rng.setStart(me.body.firstChild, 0).setCursor(false, true);
@@ -213,7 +213,7 @@ UE.plugins["keystrokes"] = function() {
       }
 
       //chrome下如果删除了inline标签，浏览器会有记忆，在输入文字还是会套上刚才删除的标签，所以这里再选一次就不会了
-      if (!collapsed && (rng.startContainer.nodeType === 3 || (rng.startContainer.nodeType === 1 && domUtils.isEmptyBlock(rng.startContainer)))) {
+      if (!collapsed && (rng.startContainer.nodeType == 3 || (rng.startContainer.nodeType == 1 && domUtils.isEmptyBlock(rng.startContainer)))) {
         if (browser.ie) {
           var span = rng.document.createElement("span");
           rng

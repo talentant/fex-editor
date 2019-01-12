@@ -146,7 +146,7 @@ UE.plugins["insertcode"] = function() {
         domUtils.removeAttributes(pre, "id");
         var tmpNode = pre.previousSibling;
 
-        if (tmpNode && ((tmpNode.nodeType === 3 && tmpNode.nodeValue.length == 1 && browser.ie && browser.version == 6) || domUtils.isEmptyBlock(tmpNode))) {
+        if (tmpNode && ((tmpNode.nodeType == 3 && tmpNode.nodeValue.length == 1 && browser.ie && browser.version == 6) || domUtils.isEmptyBlock(tmpNode))) {
           domUtils.remove(tmpNode);
         }
         var rng = me.selection.getRange();

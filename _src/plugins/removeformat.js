@@ -33,10 +33,10 @@ UE.plugins["removeformat"] = function() {
       var node;
       var parent;
 
-      var filter = node => node.nodeType === 1;
+      var filter = node => node.nodeType == 1;
 
       function isRedundantSpan(node) {
-        if (node.nodeType === 3 || node.tagName.toLowerCase() !== "span") {
+        if (node.nodeType == 3 || node.tagName.toLowerCase() !== "span") {
           return 0;
         }
         if (browser.ie) {
@@ -142,7 +142,7 @@ UE.plugins["removeformat"] = function() {
 
         var tmp;
         var collapsed = range.collapsed;
-        while (node.nodeType === 1 && domUtils.isEmptyNode(node) && dtd.$removeEmpty[node.tagName]) {
+        while (node.nodeType == 1 && domUtils.isEmptyNode(node) && dtd.$removeEmpty[node.tagName]) {
           tmp = node.parentNode;
           range.setStartBefore(node);
           //trace:937
@@ -156,7 +156,7 @@ UE.plugins["removeformat"] = function() {
 
         if (!collapsed) {
           node = range.endContainer;
-          while (node.nodeType === 1 && domUtils.isEmptyNode(node) && dtd.$removeEmpty[node.tagName]) {
+          while (node.nodeType == 1 && domUtils.isEmptyNode(node) && dtd.$removeEmpty[node.tagName]) {
             tmp = node.parentNode;
             range.setEndBefore(node);
             domUtils.remove(node);

@@ -53,7 +53,7 @@ UE.commands["imagefloat"] = {
               if (!domUtils.isBody(tmpNode) && domUtils.getChildCount(tmpNode, node => !domUtils.isBr(node) && !domUtils.isWhitespace(node)) == 1) {
                 pre = tmpNode.previousSibling;
                 next = tmpNode.nextSibling;
-                if (pre && next && pre.nodeType === 1 && next.nodeType === 1 && pre.tagName == next.tagName && domUtils.isBlockElm(pre)) {
+                if (pre && next && pre.nodeType == 1 && next.nodeType == 1 && pre.tagName == next.tagName && domUtils.isBlockElm(pre)) {
                   pre.appendChild(tmpNode.firstChild);
                   while (next.firstChild) {
                     pre.appendChild(next.firstChild);
@@ -114,7 +114,7 @@ UE.commands["imagefloat"] = {
       return "none";
     }
     startNode = range.getClosedNode();
-    if (startNode && startNode.nodeType === 1 && startNode.tagName === "IMG") {
+    if (startNode && startNode.nodeType == 1 && startNode.tagName === "IMG") {
       floatStyle = domUtils.getComputedStyle(startNode, "float") || startNode.getAttribute("align");
 
       if (floatStyle === "none") {
@@ -137,7 +137,7 @@ UE.commands["imagefloat"] = {
     if (range.collapsed) return -1;
 
     startNode = range.getClosedNode();
-    if (startNode && startNode.nodeType === 1 && startNode.tagName === "IMG") {
+    if (startNode && startNode.nodeType == 1 && startNode.tagName === "IMG") {
       return 0;
     }
     return -1;

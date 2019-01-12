@@ -9,14 +9,14 @@ UE.plugins["dragdrop"] = function() {
         var pre = node.previousSibling;
         var next;
         while ((next = node.nextSibling)) {
-          if (next.nodeType === 1 && next.tagName === "SPAN" && !next.firstChild) {
+          if (next.nodeType == 1 && next.tagName === "SPAN" && !next.firstChild) {
             domUtils.remove(next);
           } else {
             break;
           }
         }
 
-        if (((pre && pre.nodeType === 1 && !domUtils.isEmptyBlock(pre)) || !pre) && (!next || (next && !domUtils.isEmptyBlock(next)))) {
+        if (((pre && pre.nodeType == 1 && !domUtils.isEmptyBlock(pre)) || !pre) && (!next || (next && !domUtils.isEmptyBlock(next)))) {
           if (pre && pre.tagName === "P" && !domUtils.isEmptyBlock(pre)) {
             pre.appendChild(node);
             domUtils.moveChild(next, pre);

@@ -687,7 +687,7 @@
         return;
       }
       var child = cellTo.lastChild;
-      if (child.nodeType === 3 || !dtd.$block[child.tagName]) {
+      if (child.nodeType == 3 || !dtd.$block[child.tagName]) {
         cellTo.appendChild(cellTo.ownerDocument.createElement("br"));
       }
       while ((child = cellFrom.firstChild)) {

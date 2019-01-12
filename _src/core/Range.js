@@ -33,11 +33,11 @@
   }
 
   function selectOneNode(rng) {
-    return !rng.collapsed && rng.startContainer.nodeType === 1 && rng.startContainer === rng.endContainer && rng.endOffset - rng.startOffset == 1;
+    return !rng.collapsed && rng.startContainer.nodeType == 1 && rng.startContainer === rng.endContainer && rng.endOffset - rng.startOffset == 1;
   }
   function setEndPoint(toStart, node, offset, range) {
     //如果node是自闭合标签要处理
-    if (node.nodeType === 1 && (dtd.$empty[node.tagName] || dtd.$nonChild[node.tagName])) {
+    if (node.nodeType == 1 && (dtd.$empty[node.tagName] || dtd.$nonChild[node.tagName])) {
       offset = domUtils.getNodeIndex(node) + (toStart ? 0 : 1);
       node = node.parentNode;
     }
@@ -70,13 +70,13 @@
     var frag = doc.createDocumentFragment();
     var tmpStart;
     var tmpEnd;
-    if (start.nodeType === 1) {
+    if (start.nodeType == 1) {
       start = start.childNodes[startOffset] || (tmpStart = start.appendChild(doc.createTextNode("")));
     }
-    if (end.nodeType === 1) {
+    if (end.nodeType == 1) {
       end = end.childNodes[endOffset] || (tmpEnd = end.appendChild(doc.createTextNode("")));
     }
-    if (start === end && start.nodeType === 3) {
+    if (start === end && start.nodeType == 3) {
       frag.appendChild(doc.createTextNode(start.substringData(startOffset, endOffset - startOffset)));
       //is not clone
       if (action) {
@@ -97,7 +97,7 @@
       current = si.nextSibling;
       if (si == start) {
         if (!tmpStart) {
-          if (range.startContainer.nodeType === 3) {
+          if (range.startContainer.nodeType == 3) {
             clone.appendChild(doc.createTextNode(start.nodeValue.slice(startOffset)));
             //is not clone
             if (action) {
@@ -129,7 +129,7 @@
     for (var j = i, ei; (ei = endParents[j]); j++) {
       current = ei.previousSibling;
       if (ei == end) {
-        if (!tmpEnd && range.endContainer.nodeType === 3) {
+        if (!tmpEnd && range.endContainer.nodeType == 3) {
           clone.appendChild(doc.createTextNode(end.substringData(0, endOffset)));
           //is not clone
           if (action) {
@@ -315,7 +315,7 @@
       }
       if (browser.webkit) {
         txt = this.startContainer;
-        if (txt.nodeType === 3 && !txt.nodeValue.length) {
+        if (txt.nodeType == 3 && !txt.nodeValue.length) {
           this.setStartBefore(txt).collapse(true);
           domUtils.remove(txt);
         }
@@ -541,7 +541,7 @@
      * @return { UE.dom.Range } 当前range对象
      */
     setStartAtLast(node) {
-      return this.setStart(node, node.nodeType === 3 ? node.nodeValue.length : node.childNodes.length);
+      return this.setStart(node, node.nodeType == 3 ? node.nodeValue.length : node.childNodes.length);
     },
 
     /**
@@ -567,7 +567,7 @@
      * @return { UE.dom.Range } 当前range对象
      */
     setEndAtLast(node) {
-      return this.setEnd(node, node.nodeType === 3 ? node.nodeValue.length : node.childNodes.length);
+      return this.setEnd(node, node.nodeType == 3 ? node.nodeValue.length : node.childNodes.length);
     },
 
     /**
@@ -737,10 +737,10 @@
       var child;
       var collapsed = me.collapsed;
       function check(node) {
-        return node.nodeType === 1 && !domUtils.isBookmarkNode(node) && !dtd.$empty[node.tagName] && !dtd.$nonChild[node.tagName];
+        return node.nodeType == 1 && !domUtils.isBookmarkNode(node) && !dtd.$empty[node.tagName] && !dtd.$nonChild[node.tagName];
       }
       while (
-        me.startContainer.nodeType === 1 && //是element
+        me.startContainer.nodeType == 1 && //是element
         (child = me.startContainer.childNodes[me.startOffset]) && //子节点也是element
         check(child)
       ) {
@@ -751,7 +751,7 @@
       }
       if (!ignoreEnd) {
         while (
-          me.endContainer.nodeType === 1 && //是element
+          me.endContainer.nodeType == 1 && //是element
           me.endOffset > 0 && //如果是空元素就退出 endOffset=0那么endOffst-1为负值，childNodes[endOffset]报错
           (child = me.endContainer.childNodes[me.endOffset - 1]) && //子节点也是element
           check(child)
@@ -849,10 +849,10 @@
       if (start === end) {
         if (includeSelf && selectOneNode(this)) {
           start = start.childNodes[me.startOffset];
-          if (start.nodeType === 1) return start;
+          if (start.nodeType == 1) return start;
         }
         //只有在上来就相等的情况下才会出现是文本的情况
-        return ignoreTextNode && start.nodeType === 3 ? start.parentNode : start;
+        return ignoreTextNode && start.nodeType == 3 ? start.parentNode : start;
       }
       return domUtils.getCommonAncestor(start, end);
     },
@@ -908,7 +908,7 @@
       var offset = this.startOffset;
       var collapsed = this.collapsed;
       var end = this.endContainer;
-      if (start.nodeType === 3) {
+      if (start.nodeType == 3) {
         if (offset == 0) {
           this.setStartBefore(start);
         } else {
@@ -932,7 +932,7 @@
       if (!ignoreEnd) {
         offset = this.endOffset;
         end = this.endContainer;
-        if (end.nodeType === 3) {
+        if (end.nodeType == 3) {
           if (offset == 0) {
             this.setEndBefore(end);
           } else {
@@ -963,7 +963,7 @@
       function adjust(r, c) {
         var container = r[c + "Container"];
         var offset = r[c + "Offset"];
-        if (container.nodeType === 3) {
+        if (container.nodeType == 3) {
           if (!offset) {
             r["set" + c.replace(/(\w)/, a => a.toUpperCase()) + "Before"](container);
           } else if (offset >= container.nodeValue.length) {
@@ -989,7 +989,7 @@
     insertNode(node) {
       var first = node;
       var length = 1;
-      if (node.nodeType === 11) {
+      if (node.nodeType == 11) {
         first = node.firstChild;
         length = node.childNodes.length;
       }
@@ -1103,7 +1103,7 @@
       var tmp = this.document.createTextNode("");
       if (toBlock) {
         node = this.startContainer;
-        if (node.nodeType === 1) {
+        if (node.nodeType == 1) {
           if (node.childNodes[this.startOffset]) {
             pre = node = node.childNodes[this.startOffset];
           } else {
@@ -1126,7 +1126,7 @@
           node = node.parentNode;
         }
         node = this.endContainer;
-        if (node.nodeType === 1) {
+        if (node.nodeType == 1) {
           if ((pre = node.childNodes[this.endOffset])) {
             node.insertBefore(tmp, pre);
           } else {
@@ -1165,7 +1165,7 @@
           }
           this.setStartBefore(this.startContainer);
         }
-        while (this.endOffset == (this.endContainer.nodeType === 1 ? this.endContainer.childNodes.length : this.endContainer.nodeValue.length)) {
+        while (this.endOffset == (this.endContainer.nodeType == 1 ? this.endContainer.childNodes.length : this.endContainer.nodeValue.length)) {
           if (stopFn && stopFn(this.endContainer)) {
             break;
           }
@@ -1198,12 +1198,12 @@
       if (!this.collapsed) {
         while (
           !domUtils.isBody(this.startContainer) &&
-          this.startOffset == this.startContainer[this.startContainer.nodeType === 3 ? "nodeValue" : "childNodes"].length &&
-          this.startContainer[this.startContainer.nodeType === 3 ? "nodeValue" : "childNodes"].length
+          this.startOffset == this.startContainer[this.startContainer.nodeType == 3 ? "nodeValue" : "childNodes"].length &&
+          this.startContainer[this.startContainer.nodeType == 3 ? "nodeValue" : "childNodes"].length
         ) {
           this.setStartAfter(this.startContainer);
         }
-        while (!domUtils.isBody(this.endContainer) && !this.endOffset && this.endContainer[this.endContainer.nodeType === 3 ? "nodeValue" : "childNodes"].length) {
+        while (!domUtils.isBody(this.endContainer) && !this.endOffset && this.endContainer[this.endContainer.nodeType == 3 ? "nodeValue" : "childNodes"].length) {
           this.setEndBefore(this.endContainer);
         }
       }
@@ -1243,24 +1243,24 @@
     applyInlineStyle(tagName, attrs, list) {
       if (this.collapsed) return this;
       this.trimBoundary()
-        .enlarge(false, node => node.nodeType === 1 && domUtils.isBlockElm(node))
+        .enlarge(false, node => node.nodeType == 1 && domUtils.isBlockElm(node))
         .adjustmentBoundary();
       var bookmark = this.createBookmark();
       var end = bookmark.end;
 
-      var filterFn = node => (node.nodeType === 1 ? node.tagName.toLowerCase() !== "br" : !domUtils.isWhitespace(node));
+      var filterFn = node => (node.nodeType == 1 ? node.tagName.toLowerCase() !== "br" : !domUtils.isWhitespace(node));
 
       var current = domUtils.getNextDomNode(bookmark.start, false, filterFn);
       var node;
       var pre;
       var range = this.cloneRange();
       while (current && domUtils.getPosition(current, end) & domUtils.POSITION_PRECEDING) {
-        if (current.nodeType === 3 || dtd[tagName][current.tagName]) {
+        if (current.nodeType == 3 || dtd[tagName][current.tagName]) {
           range.setStartBefore(current);
           node = current;
-          while (node && (node.nodeType === 3 || dtd[tagName][node.tagName]) && node !== end) {
+          while (node && (node.nodeType == 3 || dtd[tagName][node.tagName]) && node !== end) {
             pre = node;
-            node = domUtils.getNextDomNode(node, node.nodeType === 1, null, parent => dtd[tagName][parent.tagName]);
+            node = domUtils.getNextDomNode(node, node.nodeType == 1, null, parent => dtd[tagName][parent.tagName]);
           }
           var frag = range.setEndAfter(pre).extractContents();
           var elm;
@@ -1336,7 +1336,7 @@
       var start = this.startContainer;
       var end = this.endContainer;
       while (1) {
-        if (start.nodeType === 1) {
+        if (start.nodeType == 1) {
           if (utils.indexOf(tagNames, start.tagName.toLowerCase()) > -1) {
             break;
           }
@@ -1348,7 +1348,7 @@
         start = start.parentNode;
       }
       while (1) {
-        if (end.nodeType === 1) {
+        if (end.nodeType == 1) {
           if (utils.indexOf(tagNames, end.tagName.toLowerCase()) > -1) {
             break;
           }
@@ -1381,11 +1381,11 @@
         end.parentNode.insertBefore(bookmark.end, end.nextSibling);
       }
 
-      var current = domUtils.getNextDomNode(bookmark.start, false, node => node.nodeType === 1);
+      var current = domUtils.getNextDomNode(bookmark.start, false, node => node.nodeType == 1);
 
       var next;
       while (current && current !== bookmark.end) {
-        next = domUtils.getNextDomNode(current, true, node => node.nodeType === 1);
+        next = domUtils.getNextDomNode(current, true, node => node.nodeType == 1);
         if (utils.indexOf(tagNames, current.tagName.toLowerCase()) > -1) {
           domUtils.remove(current, true);
         }
@@ -1407,7 +1407,7 @@
           .shrinkBoundary();
         if (selectOneNode(range)) {
           var child = range.startContainer.childNodes[range.startOffset];
-          if (child && child.nodeType === 1 && (dtd.$empty[child.tagName] || dtd.$nonChild[child.tagName])) {
+          if (child && child.nodeType == 1 && (dtd.$empty[child.tagName] || dtd.$nonChild[child.tagName])) {
             node = child;
           }
         }
@@ -1474,7 +1474,7 @@
       : function(notInsertFillData) {
           function checkOffset(rng) {
             function check(node, offset, dir) {
-              if (node.nodeType === 3 && node.nodeValue.length < offset) {
+              if (node.nodeType == 3 && node.nodeValue.length < offset) {
                 rng[dir + "Offset"] = node.nodeValue.length;
               }
             }
@@ -1490,10 +1490,10 @@
           if (sel) {
             sel.removeAllRanges();
             // trace:870 chrome/safari后边是br对于闭合得range不能定位 所以去掉了判断
-            // this.startContainer.nodeType != 3 &&! ((child = this.startContainer.childNodes[this.startOffset]) && child.nodeType === 1 && child.tagName == 'BR'
+            // this.startContainer.nodeType != 3 &&! ((child = this.startContainer.childNodes[this.startOffset]) && child.nodeType == 1 && child.tagName == 'BR'
             if (this.collapsed && !notInsertFillData) {
               //                    //opear如果没有节点接着，原生的不能够定位,不能在body的第一级插入空白节点
-              //                    if (notInsertFillData && browser.opera && !domUtils.isBody(this.startContainer) && this.startContainer.nodeType === 1) {
+              //                    if (notInsertFillData && browser.opera && !domUtils.isBody(this.startContainer) && this.startContainer.nodeType == 1) {
               //                        var tmp = this.document.createTextNode('');
               //                        this.insertNode(tmp).setStart(tmp, 0).collapse(true);
               //                    }
@@ -1506,11 +1506,11 @@
               var start = this.startContainer;
 
               var child = start;
-              if (start.nodeType === 1) {
+              if (start.nodeType == 1) {
                 child = start.childNodes[this.startOffset];
               }
               if (
-                !(start.nodeType === 3 && this.startOffset) &&
+                !(start.nodeType == 3 && this.startOffset) &&
                 (child ? !child.previousSibling || child.previousSibling.nodeType != 3 : !start.lastChild || start.lastChild.nodeType != 3)
               ) {
                 txtNode = this.document.createTextNode(fillChar);
@@ -1524,7 +1524,7 @@
               }
             }
             var nativeRange = this.document.createRange();
-            if (this.collapsed && browser.opera && this.startContainer.nodeType === 1) {
+            if (this.collapsed && browser.opera && this.startContainer.nodeType == 1) {
               var child = this.startContainer.childNodes[this.startOffset];
               if (!child) {
                 //往前靠拢
@@ -1535,7 +1535,7 @@
               } else {
                 //向后靠拢
                 while (child && domUtils.isBlockElm(child)) {
-                  if (child.nodeType === 1 && child.childNodes[0]) {
+                  if (child.nodeType == 1 && child.childNodes[0]) {
                     child = child.childNodes[0];
                   } else {
                     break;
@@ -1587,7 +1587,7 @@
      */
     inFillChar() {
       var start = this.startContainer;
-      if (this.collapsed && start.nodeType === 3 && start.nodeValue.replace(new RegExp("^" + domUtils.fillChar), "").length + 1 == start.nodeValue.length) {
+      if (this.collapsed && start.nodeType == 3 && start.nodeValue.replace(new RegExp("^" + domUtils.fillChar), "").length + 1 == start.nodeValue.length) {
         return true;
       }
       return false;
@@ -1633,9 +1633,9 @@
         var firstIndex = 0;
 
         if (ignoreTxt) {
-          if (node.nodeType === 3) {
+          if (node.nodeType == 3) {
             var tmpNode = node.previousSibling;
-            while (tmpNode && tmpNode.nodeType === 3) {
+            while (tmpNode && tmpNode.nodeType == 3) {
               firstIndex += tmpNode.nodeValue.replace(fillCharReg, "").length;
               tmpNode = tmpNode.previousSibling;
             }
@@ -1653,8 +1653,8 @@
                   continue;
                 }
                 firstIndex++;
-                if (first.nodeType === 3) {
-                  while (first && first.nodeType === 3) {
+                if (first.nodeType == 3) {
+                  while (first && first.nodeType == 3) {
                     first = first.nextSibling;
                   }
                 } else {

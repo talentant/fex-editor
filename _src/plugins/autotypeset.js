@@ -73,7 +73,7 @@ UE.plugins["autotypeset"] = function() {
   readLocalOpts();
 
   function isLine(node, notEmpty) {
-    if (!node || node.nodeType === 3) return 0;
+    if (!node || node.nodeType == 3) return 0;
     if (domUtils.isBr(node)) return 1;
     if (node && node.parentNode && tags[node.tagName.toLowerCase()]) {
       if ((highlightCont && highlightCont.contains(node)) || node.getAttribute("pagebreak")) {
@@ -189,7 +189,7 @@ UE.plugins["autotypeset"] = function() {
                 if (!domUtils.isBody(tmpNode) && domUtils.getChildCount(tmpNode, node => !domUtils.isBr(node) && !domUtils.isWhitespace(node)) == 1) {
                   pre = tmpNode.previousSibling;
                   next = tmpNode.nextSibling;
-                  if (pre && next && pre.nodeType === 1 && next.nodeType === 1 && pre.tagName == next.tagName && domUtils.isBlockElm(pre)) {
+                  if (pre && next && pre.nodeType == 1 && next.nodeType == 1 && pre.tagName == next.tagName && domUtils.isBlockElm(pre)) {
                     pre.appendChild(tmpNode.firstChild);
                     while (next.firstChild) {
                       pre.appendChild(next.firstChild);

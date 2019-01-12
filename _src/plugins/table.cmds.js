@@ -98,7 +98,7 @@
         }
         domUtils.remove(table);
         rng = this.selection.getRange();
-        if (next.nodeType === 3) {
+        if (next.nodeType == 3) {
           rng.setStartBefore(next);
         } else {
           rng.setStart(next, 0);

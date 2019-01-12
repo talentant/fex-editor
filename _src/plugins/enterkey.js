@@ -29,7 +29,7 @@ UE.plugins["enterkey"] = function() {
             }
           } else {
             //chrome remove div
-            if (start.nodeType === 1) {
+            if (start.nodeType == 1) {
               var tmp = me.document.createTextNode("");
               var div;
               range.insertNode(tmp);
@@ -110,8 +110,8 @@ UE.plugins["enterkey"] = function() {
         if (!range.collapsed) {
           range.deleteContents();
           start = range.startContainer;
-          if (start.nodeType === 1 && (start = start.childNodes[range.startOffset])) {
-            while (start.nodeType === 1) {
+          if (start.nodeType == 1 && (start = start.childNodes[range.startOffset])) {
+            while (start.nodeType == 1) {
               if (dtd.$empty[start.tagName]) {
                 range.setStartBefore(start).setCursor();
                 if (me.undoManger) {

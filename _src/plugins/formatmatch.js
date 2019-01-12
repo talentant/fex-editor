@@ -97,7 +97,7 @@ UE.plugins["formatmatch"] = function() {
       if (!img || img.tagName !== "IMG") {
         range.collapse(true).shrinkBoundary();
         var start = range.startContainer;
-        list = domUtils.findParents(start, true, node => !domUtils.isBlockElm(node) && node.nodeType === 1);
+        list = domUtils.findParents(start, true, node => !domUtils.isBlockElm(node) && node.nodeType == 1);
         //a不能加入格式刷, 并且克隆节点
         for (var i = 0, ci; (ci = list[i]); i++) {
           if (ci.tagName === "A") {

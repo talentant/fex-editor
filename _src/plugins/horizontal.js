@@ -23,10 +23,10 @@ UE.plugins["horizontal"] = function() {
         me.execCommand("insertHtml", "<hr>");
         var range = me.selection.getRange();
         var start = range.startContainer;
-        if (start.nodeType === 1 && !start.childNodes[range.startOffset]) {
+        if (start.nodeType == 1 && !start.childNodes[range.startOffset]) {
           var tmp;
           if ((tmp = start.childNodes[range.startOffset - 1])) {
-            if (tmp.nodeType === 1 && tmp.tagName === "HR") {
+            if (tmp.nodeType == 1 && tmp.tagName === "HR") {
               if (me.options.enterTag === "p") {
                 tmp = me.document.createElement("p");
                 range.insertNode(tmp);

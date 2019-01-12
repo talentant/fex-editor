@@ -212,7 +212,7 @@ UE.plugins["table"] = function() {
             var cell = table.rows[0].cells[0];
             var start = domUtils.findParentByTagName(me.selection.getStart(), ["td", "th"], true);
             var preNode = table.previousSibling;
-            if (cell === start && (!preNode || (preNode.nodeType === 1 && preNode.tagName === "TABLE")) && domUtils.isStartInblock(rng)) {
+            if (cell === start && (!preNode || (preNode.nodeType == 1 && preNode.tagName === "TABLE")) && domUtils.isStartInblock(rng)) {
               var first = domUtils.findParent(me.selection.getStart(), n => domUtils.isBlockElm(n), true);
               if (first && (/t(h|d)/i.test(first.tagName) || first === start.firstChild)) {
                 me.execCommand("insertparagraphbeforetable");

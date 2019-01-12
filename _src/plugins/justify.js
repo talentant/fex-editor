@@ -41,7 +41,7 @@ UE.plugins["justify"] = function() {
   var doJustify = (range, style) => {
     var bookmark = range.createBookmark();
 
-    var filterFn = node => (node.nodeType === 1 ? node.tagName.toLowerCase() !== "br" && !domUtils.isBookmarkNode(node) : !domUtils.isWhitespace(node));
+    var filterFn = node => (node.nodeType == 1 ? node.tagName.toLowerCase() !== "br" && !domUtils.isBookmarkNode(node) : !domUtils.isWhitespace(node));
 
     range.enlarge(true);
     var bookmark2 = range.createBookmark();
@@ -49,7 +49,7 @@ UE.plugins["justify"] = function() {
     var tmpRange = range.cloneRange();
     var tmpNode;
     while (current && !(domUtils.getPosition(current, bookmark2.end) & domUtils.POSITION_FOLLOWING)) {
-      if (current.nodeType === 3 || !block(current)) {
+      if (current.nodeType == 3 || !block(current)) {
         tmpRange.setStartBefore(current);
         while (current && current !== bookmark2.end && !block(current)) {
           tmpNode = current;

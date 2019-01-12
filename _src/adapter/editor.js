@@ -107,7 +107,7 @@
               var range = editor.selection.getRange();
               range.insertNode(span);
               var tmp = getDomNode(span, "firstChild", "previousSibling");
-              tmp && pastePop.showAnchor(tmp.nodeType === 3 ? tmp.parentNode : tmp);
+              tmp && pastePop.showAnchor(tmp.nodeType == 3 ? tmp.parentNode : tmp);
               domUtils.remove(span);
             } else {
               pastePop.show();

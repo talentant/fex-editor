@@ -19,12 +19,12 @@
     //                    }
     //                }
     //            }
-    domUtils.filterNodeList(editor.selection.getStartElementPath(), n => n && n.nodeType === 1 && n.getAttribute("dir"));
+    domUtils.filterNodeList(editor.selection.getStartElementPath(), n => n && n.nodeType == 1 && n.getAttribute("dir"));
 
   var doDirectionality = (range, editor, forward) => {
     var bookmark;
 
-    var filterFn = node => (node.nodeType === 1 ? !domUtils.isBookmarkNode(node) : !domUtils.isWhitespace(node));
+    var filterFn = node => (node.nodeType == 1 ? !domUtils.isBookmarkNode(node) : !domUtils.isWhitespace(node));
 
     var obj = getObj(editor);
 
@@ -39,7 +39,7 @@
     var tmpRange = range.cloneRange();
     var tmpNode;
     while (current && !(domUtils.getPosition(current, bookmark2.end) & domUtils.POSITION_FOLLOWING)) {
-      if (current.nodeType === 3 || !block(current)) {
+      if (current.nodeType == 3 || !block(current)) {
         tmpRange.setStartBefore(current);
         while (current && current !== bookmark2.end && !block(current)) {
           tmpNode = current;
