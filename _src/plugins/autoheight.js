@@ -27,7 +27,7 @@ UE.plugins["autoheight"] = function() {
     if (!me.queryCommandState || (me.queryCommandState && me.queryCommandState("source") != 1)) {
       timer = setTimeout(() => {
         var node = me.body.lastChild;
-        while (node && node.nodeType !== 1) {
+        while (node && node.nodeType != 1) {
           node = node.previousSibling;
         }
         if (node && node.nodeType === 1) {
