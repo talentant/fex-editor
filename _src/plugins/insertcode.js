@@ -295,7 +295,7 @@ UE.plugins["insertcode"] = function() {
         if (browser.version > 8) {
           var txt = me.document.createTextNode("\n");
           var start = rng.startContainer;
-          if (rng.startOffset == 0) {
+          if (rng.startOffset === 0) {
             var preNode = start.previousSibling;
             if (preNode) {
               rng.insertNode(txt);
@@ -505,7 +505,7 @@ UE.plugins["insertcode"] = function() {
         while (last && last.nodeName === "BR") {
           last = last.previousSibling;
         }
-        if (last === start || (rng.startContainer === pre && rng.startOffset == pre.childNodes.length)) {
+        if (last === start || (rng.startContainer === pre && rng.startOffset === pre.childNodes.length)) {
           me.execCommand("insertparagraph");
           domUtils.preventDefault(evt);
         }

@@ -40,7 +40,7 @@ UE.plugin.register(
                 }
 
                 do {
-                  if (range.startOffset == 0) {
+                  if (range.startOffset === 0) {
                     start = range.startContainer.previousSibling;
 
                     while (start && start.nodeType === 1) {

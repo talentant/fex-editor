@@ -219,7 +219,7 @@ UE.plugins["paste"] = function() {
               range.setStartBefore(pre);
             }
           }
-          if (range.startOffset == 0) {
+          if (range.startOffset === 0) {
             range.setStartBefore(range.startContainer);
           } else {
             break;
@@ -238,7 +238,7 @@ UE.plugins["paste"] = function() {
               range.setEndAfter(next);
             }
           }
-          if (range.endOffset == range.endContainer[range.endContainer.nodeType === 3 ? "nodeValue" : "childNodes"].length) {
+          if (range.endOffset === range.endContainer[range.endContainer.nodeType === 3 ? "nodeValue" : "childNodes"].length) {
             range.setEndAfter(range.endContainer);
           } else {
             break;

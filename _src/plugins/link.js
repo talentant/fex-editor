@@ -138,7 +138,7 @@ UE.plugins["link"] = () => {
         var start =
           range.startContainer.nodeType === 3 || !range.startContainer.childNodes[range.startOffset] ? range.startContainer : range.startContainer.childNodes[range.startOffset];
 
-        var end = range.endContainer.nodeType === 3 || range.endOffset == 0 ? range.endContainer : range.endContainer.childNodes[range.endOffset - 1];
+        var end = range.endContainer.nodeType === 3 || range.endOffset === 0 ? range.endContainer : range.endContainer.childNodes[range.endOffset - 1];
 
         var common = range.getCommonAncestor();
         node = domUtils.findParentByTagName(common, "a", true);

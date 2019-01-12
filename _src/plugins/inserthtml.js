@@ -71,11 +71,11 @@ UE.commands["inserthtml"] = {
           range.setEndAfter(tmpNode);
         }
       }
-      if (range.startOffset == 0) {
+      if (range.startOffset === 0) {
         tmpNode = range.startContainer;
         if (domUtils.isBoundaryNode(tmpNode, "firstChild")) {
           tmpNode = range.endContainer;
-          if (range.endOffset == (tmpNode.nodeType === 3 ? tmpNode.nodeValue.length : tmpNode.childNodes.length) && domUtils.isBoundaryNode(tmpNode, "lastChild")) {
+          if (range.endOffset === (tmpNode.nodeType === 3 ? tmpNode.nodeValue.length : tmpNode.childNodes.length) && domUtils.isBoundaryNode(tmpNode, "lastChild")) {
             me.body.innerHTML = "<p>" + (browser.ie ? "" : "<br/>") + "</p>";
             range.setStart(me.body.firstChild, 0).collapse(true);
           }

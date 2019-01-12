@@ -29,11 +29,11 @@
    * @param  {Range}   range    range对象
    */
   function updateCollapse(range) {
-    range.collapsed = range.startContainer && range.endContainer && range.startContainer === range.endContainer && range.startOffset == range.endOffset;
+    range.collapsed = range.startContainer && range.endContainer && range.startContainer === range.endContainer && range.startOffset === range.endOffset;
   }
 
   function selectOneNode(rng) {
-    return !rng.collapsed && rng.startContainer.nodeType === 1 && rng.startContainer === rng.endContainer && rng.endOffset - rng.startOffset == 1;
+    return !rng.collapsed && rng.startContainer.nodeType === 1 && rng.startContainer === rng.endContainer && rng.endOffset - rng.startOffset === 1;
   }
   function setEndPoint(toStart, node, offset, range) {
     //如果node是自闭合标签要处理
@@ -1156,7 +1156,7 @@
 
       // 扩展边界到最大
       if (!this.collapsed) {
-        while (this.startOffset == 0) {
+        while (this.startOffset === 0) {
           if (stopFn && stopFn(this.startContainer)) {
             break;
           }
@@ -1165,7 +1165,7 @@
           }
           this.setStartBefore(this.startContainer);
         }
-        while (this.endOffset == (this.endContainer.nodeType === 1 ? this.endContainer.childNodes.length : this.endContainer.nodeValue.length)) {
+        while (this.endOffset === (this.endContainer.nodeType === 1 ? this.endContainer.childNodes.length : this.endContainer.nodeValue.length)) {
           if (stopFn && stopFn(this.endContainer)) {
             break;
           }
@@ -1198,7 +1198,7 @@
       if (!this.collapsed) {
         while (
           !domUtils.isBody(this.startContainer) &&
-          this.startOffset == this.startContainer[this.startContainer.nodeType === 3 ? "nodeValue" : "childNodes"].length &&
+          this.startOffset === this.startContainer[this.startContainer.nodeType === 3 ? "nodeValue" : "childNodes"].length &&
           this.startContainer[this.startContainer.nodeType === 3 ? "nodeValue" : "childNodes"].length
         ) {
           this.setStartAfter(this.startContainer);

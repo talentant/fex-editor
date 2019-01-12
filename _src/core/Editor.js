@@ -27,13 +27,14 @@
    * 获取编辑器的html内容，赋值到编辑器所在表单的textarea文本域里面
    * @private
    * @method setValue
+   * @param form ???
    * @param { UE.Editor } editor 编辑器事例
    */
   function setValue(form, editor) {
-    var textarea;
+    let textarea;
     if (editor.options.textarea) {
-      if (utils.isString(editor.options.textarea)) {
-        for (var i = 0, ti, tis = domUtils.getElementsByTagName(form, "textarea"); (ti = tis[i++]); ) {
+      if (_.isString(editor.options.textarea)) {
+        for (let i = 0, ti, tis = domUtils.getElementsByTagName(form, "textarea"); (ti = tis[i++]); ) {
           if (ti.id === "ueditor_textarea_" + editor.options.textarea) {
             textarea = ti;
             break;
@@ -59,13 +60,17 @@
   }
   function loadPlugins(me) {
     //初始化插件
-    for (var pi in UE.plugins) {
-      UE.plugins[pi].call(me);
+    for (let pi in UE.plugins) {
+      if (UE.plugins.hasOwnProperty(pi)) {
+        UE.plugins[pi].call(me);
+      }
     }
   }
   function checkCurLang(I18N) {
-    for (var lang in I18N) {
-      return lang;
+    for (let lang in I18N) {
+      if (I18N.hasOwnProperty(lang)) {
+        return lang;
+      }
     }
   }
 
@@ -209,7 +214,7 @@
    * var editor = new UE.Editor();
    * editor.execCommand('blod');
    * ```
-   * @see UE.Config
+   * see UE.Config
    */
 
   /**
@@ -222,14 +227,14 @@
    * var editor = new UE.Editor();
    * editor.execCommand('blod');
    * ```
-   * @see UE.Config
+   * see UE.Config
    */
   var Editor = (UE.Editor = function(options) {
     var me = this;
     me.uid = uid++;
     EventBase.call(me);
     me.commands = {};
-    me.options = utils.extend(utils.clone(options || {}), UEDITOR_CONFIG, true);
+    me.options = utils.extend(utils.clone(options || {}), UEDITOR_CONFIG, true); // TODO 优化
     me.shortcutkeys = {};
     me.inputRules = [];
     me.outputRules = [];
@@ -281,9 +286,8 @@
      * @see UE.Editor.event:ready
      */
     ready(fn) {
-      var me = this;
-      if (fn) {
-        me.isReady ? fn.apply(me) : me.addListener("ready", fn);
+      if (_.isFunction(fn)) {
+        this.isReady ? fn.apply(this) : this.addListener("ready", fn);
       }
     },
 
@@ -305,7 +309,8 @@
      * @method setOpt
      * @warning 三处设置配置项的优先级: 实例化时传入参数 > setOpt()设置 > config文件里设置
      * @warning 该方法仅供编辑器插件内部和编辑器初始化时调用，其他地方不能调用。
-     * @param { Object } options 将要设置的选项的键值对对象
+     * @param { Object|string } key 将要设置的选项的键
+     * @param { * } val 将要设置的选项的键的值
      * @example
      * ```javascript
      * editor.setOpt( {
@@ -314,8 +319,8 @@
      * ```
      */
     setOpt(key, val) {
-      var obj = {};
-      if (utils.isString(key)) {
+      let obj = {};
+      if (_.isString(key)) {
         obj[key] = val;
       } else {
         obj = key;
@@ -372,7 +377,7 @@
     /**
      * 渲染编辑器的DOM到指定容器
      * @method render
-     * @param { Element } containerDom 直接指定容器对象
+     * @param { Element } container 直接指定容器对象
      * @remind 执行该方法,会触发ready事件
      * @warning 必须且只能调用一次
      */
@@ -405,30 +410,26 @@
         container.style.zIndex = options.zIndex;
 
         var html =
-          (ie && browser.version < 9 ? "" : "<!DOCTYPE html>") +
-          "<html lang='en' class='view'>" +
-          "<head>" +
-          "<style type='text/css'>" +
+          `<!DOCTYPE html>` +
+          `<html lang="en" class="view">` +
+          `<head><title></title>` +
+          `<style type="text/css">` +
           //设置四周的留边
-          ".view{padding:0;word-wrap:break-word;cursor:text;height:90%;}\n" +
+          ".view{padding:0;word-wrap:break-word;cursor:text;height:90%;}" +
           //设置默认字体和字号
           //font-family不能呢随便改，在safari下fillchar会有解析问题
           "body{margin:8px;font-family:sans-serif;font-size:16px;}" +
           //设置段落间距
           "p{margin:5px 0;}</style>" +
-          (options.iframeCssUrl ? "<link rel='stylesheet' type='text/css' href='" + utils.unhtml(options.iframeCssUrl) + "'/>" : "") +
-          (options.initialStyle ? "<style>" + options.initialStyle + "</style>" : "") +
+          (options.iframeCssUrl ? `<link rel="stylesheet" type="text/css" href="${utils.unhtml(options.iframeCssUrl)}" />` : "") +
+          (options.initialStyle ? `<style type="text/css">${options.initialStyle}</style>` : "") +
           "</head>" +
-          "<body class='view' ></body>" +
-          "<script type='text/javascript' " +
-          (ie ? "defer='defer'" : "") +
-          " id='_initialScript'>" +
-          "setTimeout(function(){editor = window.parent.UE.instants['ueditorInstant" +
-          me.uid +
-          "'];editor._setup(document);},0);" +
+          `<body class="view"></body>` +
+          `<script ${ie ? 'defer="defer"' : ""} id="_initialScript">` +
+          `setTimeout(function(){editor = window.parent.UE.instants['ueditorInstant${me.uid}'];editor._setup(document);},0);` +
           "var _tmpScript = document.getElementById('_initialScript');_tmpScript.parentNode.removeChild(_tmpScript);" +
           "</script>" +
-          (options.iframeJsUrl ? "<script type='text/javascript' src='" + utils.unhtml(options.iframeJsUrl) + "'></script>" : "") +
+          (options.iframeJsUrl ? `<script src="${utils.unhtml(options.iframeJsUrl)}"></script>` : "") +
           "</html>";
 
         container.appendChild(
@@ -438,13 +439,11 @@
             height: "100%",
             frameborder: "0",
             //先注释掉了，加的原因忘记了，但开启会直接导致全屏模式下内容多时不会出现滚动条
-            //                    scrolling :'no',
+            // scrolling :'no',
             src:
               "javascript:void(function(){document.open();" +
-              (options.customDomain && document.domain != location.hostname ? 'document.domain="' + document.domain + '";' : "") +
-              'document.write("' +
-              html +
-              '");document.close();}())'
+              (options.customDomain && document.domain !== location.hostname ? `document.domain="${document.domain}";` : "") +
+              `document.write("${html}");document.close();}())`
           })
         );
         container.style.overflow = "hidden";
@@ -452,8 +451,8 @@
         setTimeout(() => {
           if (/%$/.test(options.initialFrameWidth)) {
             options.minFrameWidth = options.initialFrameWidth = container.offsetWidth;
-            //如果这里给定宽度，会导致ie在拖动窗口大小时，编辑区域不随着变化
-            //                        container.style.width = options.initialFrameWidth + 'px';
+            // 如果这里给定宽度，会导致ie在拖动窗口大小时，编辑区域不随着变化
+            // container.style.width = options.initialFrameWidth + 'px';
           }
           if (/%$/.test(options.initialFrameHeight)) {
             options.minFrameHeight = options.initialFrameHeight = container.offsetHeight;
@@ -470,15 +469,13 @@
      * @param { Element } doc 编辑器Iframe中的文档对象
      */
     _setup(doc) {
-      var me = this;
-      var options = me.options;
+      const me = this;
+      const options = me.options;
       if (ie) {
         doc.body.disabled = true;
-        doc.body.contentEditable = true;
         doc.body.disabled = false;
-      } else {
-        doc.body.contentEditable = true;
       }
+      doc.body.contentEditable = true;
       doc.body.spellcheck = false;
       me.document = doc;
       me.window = doc.defaultView || doc.parentWindow;
@@ -519,7 +516,6 @@
       }
 
       //编辑器不能为空内容
-
       if (domUtils.isEmptyNode(me.body)) {
         me.body.innerHTML = "<p>" + (browser.ie ? "" : "<br/>") + "</p>";
       }
@@ -603,7 +599,7 @@
      * 根据传入的formId，在页面上查找要同步数据的表单，若找到，就同步编辑内容到找到的form里，为提交数据做准备
      * 后台取得数据的键值，该键值默认使用给定的编辑器容器的name属性，如果没有name属性则使用参数项里给定的“textarea”项
      * @method sync
-     * @param { String } formID 指定一个要同步数据的form的id,编辑器的数据会同步到你指定form下
+     * @param { String } formId 指定一个要同步数据的form的id,编辑器的数据会同步到你指定form下
      */
     sync(formId) {
       var me = this;
@@ -617,7 +613,8 @@
      * 设置编辑器高度
      * @method setHeight
      * @remind 当配置项autoHeightEnabled为真时,该方法无效
-     * @param { Number } number 设置的高度值，纯数值，不带单位
+     * @param { Number } height 设置的高度值，纯数值，不带单位
+     * @param { boolean } notSetHeight ???
      * @example
      * ```javascript
      * editor.setHeight(number);
@@ -656,7 +653,7 @@
      * ```
      */
     addshortcutkey(cmd, keys) {
-      var obj = {};
+      let obj = {};
       if (keys) {
         obj[cmd] = keys;
       } else {
@@ -671,20 +668,32 @@
      * @private
      */
     _bindshortcutKeys() {
-      var me = this;
-      var shortcutkeys = this.shortcutkeys;
+      const me = this;
+      const shortcutkeys = this.shortcutkeys;
       me.addListener("keydown", (type, e) => {
-        var keyCode = e.keyCode || e.which;
-        for (var i in shortcutkeys) {
-          var tmp = shortcutkeys[i].split(",");
-          for (var t = 0, ti; (ti = tmp[t++]); ) {
-            ti = ti.split(":");
-            var key = ti[0];
-            var param = ti[1];
-            if (/^(ctrl)(\+shift)?\+(\d+)$/.test(key.toLowerCase()) || /^(\d+)$/.test(key)) {
-              if (((RegExp.$1 === "ctrl" ? e.ctrlKey || e.metaKey : 0) && (RegExp.$2 !== "" ? e[RegExp.$2.slice(1) + "Key"] : 1) && keyCode == RegExp.$3) || keyCode == RegExp.$1) {
-                if (me.queryCommandState(i, param) != -1) me.execCommand(i, param);
-                domUtils.preventDefault(e);
+        const keyCode = e.keyCode || e.which;
+        for (let i in shortcutkeys) {
+          if (shortcutkeys.hasOwnProperty(i)) {
+            const tmp = shortcutkeys[i].split(",");
+            for (let t = 0, ti; (ti = tmp[t++]); ) {
+              ti = ti.split(":");
+              const key = ti[0];
+              const param = ti[1];
+              if (/^(ctrl)(\+shift)?\+(\d+)$/.test(key.toLowerCase()) || /^(\d+)$/.test(key)) {
+                if (
+                  (
+                    (RegExp.$1 === "ctrl" ? e.ctrlKey || e.metaKey : 0)
+                    && (RegExp.$2 !== "" ? e[RegExp.$2.slice(1) + "Key"] : 1)
+                    && `${keyCode}` === RegExp.$3
+                  )
+                  ||
+                  `${keyCode}` === RegExp.$1
+                ) {
+                  if (me.queryCommandState(i, param) !== -1 && me.queryCommandState(i, param) !== "-1"){
+                    me.execCommand(i, param);
+                  }
+                  domUtils.preventDefault(e);
+                }
               }
             }
           }
@@ -707,10 +716,14 @@
     /**
      * 获取编辑器的内容。 可以通过参数定义编辑器内置的判空规则
      * @method getContent
+     * @param cmd ???
      * @param { Function } fn 自定的判空规则， 要求该方法返回一个boolean类型的值，
      *                      代表当前编辑器的内容是否空，
      *                      如果返回true， 则该方法将直接返回空字符串；如果返回false，则编辑器将返回
      *                      经过内置过滤规则处理后的内容。
+     * @param notSetCursor ???
+     * @param ignoreBlank ???
+     * @param formatter ???
      * @remind 该方法在处理包含有初始化内容的时候能起到很好的作用。
      * @warning 该方法获取到的是经过编辑器内置的过滤规则进行过滤后得到的内容
      * @return { String } 编辑器的内容字符串
@@ -723,7 +736,7 @@
      * ```
      */
     getContent(cmd, fn, notSetCursor, ignoreBlank, formatter) {
-      var me = this;
+      const me = this;
       if (cmd && utils.isFunction(cmd)) {
         fn = cmd;
         cmd = "";
@@ -732,7 +745,7 @@
         return "";
       }
       me.fireEvent("beforegetcontent");
-      var root = UE.htmlparser(me.body.innerHTML, ignoreBlank);
+      const root = UE.htmlparser(me.body.innerHTML, ignoreBlank);
       me.filterOutputRule(root);
       me.fireEvent("aftergetcontent", cmd, root);
       return root.toHtml(formatter);
@@ -742,6 +755,7 @@
      * 取得完整的html代码，可以直接显示成完整的html文档
      * @method getAllHtml
      * @return { String } 编辑器的内容html文档字符串
+     * @deprecated since 3.0
      * @eaxmple
      * ```javascript
      * editor.getAllHtml(); //返回格式大致是: <html><head>...</head><body>...</body></html>
@@ -786,8 +800,8 @@
      * ```
      */
     getPlainTxt() {
-      var reg = new RegExp(domUtils.fillChar, "g"); //ie要先去了\n在处理
-      var html = this.body.innerHTML.replace(/[\n\r]/g, "");
+      const reg = new RegExp(domUtils.fillChar, "g"); //ie要先去了\n在处理
+      let html = this.body.innerHTML.replace(/[\n\r]/g, "");
       html = html
         .replace(/<(p|div)[^>]*>(<br\/?>|&nbsp;)<\/\1>/gi, "\n")
         .replace(/<br\/?>/gi, "\n")
@@ -811,7 +825,7 @@
      * ```
      */
     getContentTxt() {
-      var reg = new RegExp(domUtils.fillChar, "g");
+      const reg = new RegExp(domUtils.fillChar, "g");
       //取出来的空格会有c2a0会变成乱码，处理这种情况\u00a0
       return this.body[browser.ie ? "innerText" : "textContent"].replace(reg, "").replace(/\u00a0/g, " ");
     },
@@ -835,6 +849,7 @@
      * @warning 该方法会触发selectionchange事件
      * @param { String } html 要插入的html内容
      * @param { Boolean } isAppendTo 若传入true，不清空原来的内容，在最后插入内容，否则，清空内容再插入
+     * @param { Boolean } notFireSelectionchange ???
      * @example
      * ```javascript
      * //假设设置前的编辑器内容是 <p>old text</p>
@@ -842,10 +857,10 @@
      * ```
      */
     setContent(html, isAppendTo, notFireSelectionchange) {
-      var me = this;
+      const me = this;
 
       me.fireEvent("beforesetcontent", html);
-      var root = UE.htmlparser(html);
+      const root = UE.htmlparser(html);
       me.filterInputRule(root);
       html = root.toHtml();
 
@@ -919,8 +934,9 @@
       try {
         var me = this;
         var rng = me.selection.getRange();
+        var node;
         if (toEnd) {
-          var node = me.body.lastChild;
+          node = me.body.lastChild;
           if (node && node.nodeType === 1 && !dtd.$empty[node.tagName]) {
             if (domUtils.isEmptyBlock(node)) {
               rng.setStartAtFirst(node);
@@ -931,8 +947,8 @@
           }
           rng.setCursor(true);
         } else {
-          if (!rng.collapsed && domUtils.isBody(rng.startContainer) && rng.startOffset == 0) {
-            var node = me.body.firstChild;
+          if (!rng.collapsed && domUtils.isBody(rng.startContainer) && rng.startOffset === 0) {
+            node = me.body.firstChild;
             if (node && node.nodeType === 1 && !dtd.$empty[node.tagName]) {
               rng.setStartAtFirst(node).collapse(true);
             }
@@ -984,7 +1000,9 @@
         if (evt.type === "keydown" && (evt.ctrlKey || evt.metaKey || evt.shiftKey || evt.altKey)) {
           return;
         }
-        if (evt.button == 2) return;
+        if (evt.button === 2){
+          return;
+        }
         me._selectionChange(250, evt);
       });
     },
@@ -1105,7 +1123,7 @@
       }
       if (!cmd.notNeedUndo && !me.__hasEnterExecCommand) {
         me.__hasEnterExecCommand = true;
-        if (me.queryCommandState(...arguments) != -1) {
+        if (me.queryCommandState(...arguments) !== -1 && me.queryCommandState(...arguments) !== "-1") {
           me.fireEvent("saveScene");
           me.fireEvent(...["beforeexeccommand", cmdName].concat(arguments));
           result = this._callCmdFn("execCommand", arguments);
@@ -1133,7 +1151,7 @@
      * ```javascript
      * editor.queryCommandState(cmdName)  => (-1|0|1)
      * ```
-     * @see COMMAND.LIST
+     * see COMMAND.LIST
      */
     queryCommandState(cmdName) {
       return this._callCmdFn("queryCommandState", arguments);
@@ -1147,7 +1165,7 @@
      * @remind 只有部分插件有此方法
      * @return { * } 返回每个命令特定的当前状态值
      * @grammar editor.queryCommandValue(cmdName)  =>  {*}
-     * @see COMMAND.LIST
+     * see COMMAND.LIST
      */
     queryCommandValue(cmdName) {
       return this._callCmdFn("queryCommandValue", arguments);
@@ -1283,13 +1301,13 @@
         me.bkqueryCommandState = me.queryCommandState;
         me.bkqueryCommandValue = me.queryCommandValue;
         me.queryCommandState = function(type) {
-          if (utils.indexOf(except, type) != -1) {
+          if (utils.indexOf(except, type) !== -1) {
             return me.bkqueryCommandState(...arguments);
           }
           return -1;
         };
         me.queryCommandValue = function(type) {
-          if (utils.indexOf(except, type) != -1) {
+          if (utils.indexOf(except, type) !== -1) {
             return me.bkqueryCommandValue(...arguments);
           }
           return null;
@@ -1305,7 +1323,6 @@
      * 设置默认内容
      * @method _setDefaultContent
      * @private
-     * @param  { String } cont 要存入的内容
      */
     _setDefaultContent: (() => {
       function clear() {
@@ -1413,6 +1430,7 @@
      * 计算编辑器当前纯文本内容的长度
      * @method  getContentLength
      * @param { Boolean } ingoneHtml 传入true时，只按照纯文本来计算
+     * @param { Array } tagNames ???
      * @return { Number } 返回计算的长度，内容中有hr/img/iframe标签，长度加1
      * @example
      * ```javascript
@@ -1519,11 +1537,11 @@
       var serverUrl = this.getOpt("serverUrl");
 
       if (!serverUrl && imageUrl) {
-        serverUrl = imageUrl.replace(/^(.*[\/]).+([\.].+)$/, "$1controller$2");
+        serverUrl = imageUrl.replace(/^(.*[\/]).+([.].+)$/, "$1controller$2");
       }
 
       if (serverUrl) {
-        serverUrl = serverUrl + (serverUrl.indexOf("?") == -1 ? "?" : "&") + "action=" + (actionName || "");
+        serverUrl = serverUrl + (serverUrl.indexOf("?") === -1 ? "?" : "&") + "action=" + (actionName || "");
         return utils.formatUrl(serverUrl);
       } else {
         return "";

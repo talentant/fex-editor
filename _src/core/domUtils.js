@@ -1439,8 +1439,8 @@ var domUtils = (dom.domUtils = {
   /**
    * 在doc下创建一个标签名为tag，属性为attrs的元素
    * @method createElement
-   * @param { DomDocument } doc 新创建的元素属于该document节点创建
-   * @param { String } tagName 需要创建的元素的标签名
+   * @param { Document } doc 新创建的元素属于该document节点创建
+   * @param { String } tag 需要创建的元素的标签名
    * @param { Object } attrs 新创建的元素的属性key-value集合
    * @return { Element } 新创建的元素对象
    * @example
@@ -2049,7 +2049,7 @@ var domUtils = (dom.domUtils = {
         pre = pre.previousSibling;
       }
     }
-    if (this.isFillChar(start, true) && tmpRange.startOffset == 1) {
+    if (this.isFillChar(start, true) && tmpRange.startOffset === 1) {
       tmpRange.setStartBefore(start);
       start = tmpRange.startContainer;
     }
@@ -2062,7 +2062,7 @@ var domUtils = (dom.domUtils = {
       tmpRange.setStartBefore(tmp);
       start = tmpRange.startContainer;
     }
-    if (start.nodeType === 1 && domUtils.isEmptyNode(start) && tmpRange.startOffset == 1) {
+    if (start.nodeType === 1 && domUtils.isEmptyNode(start) && tmpRange.startOffset === 1) {
       tmpRange.setStart(start, 0).collapse(true);
     }
     while (!tmpRange.startOffset) {
@@ -2416,10 +2416,10 @@ var domUtils = (dom.domUtils = {
    */
   isInNodeEndBoundary(rng, node) {
     var start = rng.startContainer;
-    if (start.nodeType === 3 && rng.startOffset != start.nodeValue.length) {
+    if (start.nodeType === 3 && rng.startOffset !== start.nodeValue.length) {
       return 0;
     }
-    if (start.nodeType === 1 && rng.startOffset != start.childNodes.length) {
+    if (start.nodeType === 1 && rng.startOffset !== start.childNodes.length) {
       return 0;
     }
     while (start !== node) {

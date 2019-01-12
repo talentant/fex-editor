@@ -36,11 +36,11 @@ UE.plugins["keystrokes"] = function() {
           rng.setEndAfter(tmpNode);
         }
       }
-      if (rng.startOffset == 0) {
+      if (rng.startOffset === 0) {
         tmpNode = rng.startContainer;
         if (domUtils.isBoundaryNode(tmpNode, "firstChild")) {
           tmpNode = rng.endContainer;
-          if (rng.endOffset == (tmpNode.nodeType === 3 ? tmpNode.nodeValue.length : tmpNode.childNodes.length) && domUtils.isBoundaryNode(tmpNode, "lastChild")) {
+          if (rng.endOffset === (tmpNode.nodeType === 3 ? tmpNode.nodeValue.length : tmpNode.childNodes.length) && domUtils.isBoundaryNode(tmpNode, "lastChild")) {
             me.fireEvent("saveScene");
             me.body.innerHTML = "<p>" + (browser.ie ? "" : "<br/>") + "</p>";
             rng.setStart(me.body.firstChild, 0).setCursor(false, true);
