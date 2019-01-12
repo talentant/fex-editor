@@ -1087,7 +1087,7 @@ var domUtils = (dom.domUtils = {
    * ```
    */
   isEmptyInlineElement(node) {
-    if (node.nodeType != 1 || !dtd.$removeEmpty[node.tagName]) {
+    if (node.nodeType !== 1 || !dtd.$removeEmpty[node.tagName]) {
       return 0;
     }
     node = node.firstChild;
@@ -2029,7 +2029,7 @@ var domUtils = (dom.domUtils = {
    * @returns { Boolean } 节点是否是填充节点
    */
   isFillChar(node, isInStart) {
-    if (node.nodeType != 3) return false;
+    if (node.nodeType !== 3) return false;
     var text = node.nodeValue;
     if (isInStart) {
       return new RegExp("^" + domUtils.fillChar).test(text);
@@ -2114,7 +2114,7 @@ var domUtils = (dom.domUtils = {
    * @return { Boolean } 是否是空元素
    */
   isEmptyBlock(node, reg) {
-    if (node.nodeType != 1) return 0;
+    if (node.nodeType !== 1) return 0;
     reg = reg || new RegExp("[ \xa0\t\r\n" + domUtils.fillChar + "]", "g");
 
     if (node[browser.ie ? "innerText" : "textContent"].replace(reg, "").length > 0) {
