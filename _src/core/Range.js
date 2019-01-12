@@ -1446,7 +1446,7 @@
             nativeRangeEnd.moveToElementText(end);
             nativeRange.setEndPoint("EndToEnd", nativeRangeEnd);
           } else {
-            if (!noFillData && this.startContainer.nodeType != 3) {
+            if (!noFillData && this.startContainer.nodeType !== 3) {
               //使用<span>|x<span>固定住光标
               var tmpText = this.document.createTextNode(fillChar);
 
@@ -1490,7 +1490,7 @@
           if (sel) {
             sel.removeAllRanges();
             // trace:870 chrome/safari后边是br对于闭合得range不能定位 所以去掉了判断
-            // this.startContainer.nodeType != 3 &&! ((child = this.startContainer.childNodes[this.startOffset]) && child.nodeType === 1 && child.tagName == 'BR'
+            // this.startContainer.nodeType !== 3 &&! ((child = this.startContainer.childNodes[this.startOffset]) && child.nodeType === 1 && child.tagName == 'BR'
             if (this.collapsed && !notInsertFillData) {
               //                    //opear如果没有节点接着，原生的不能够定位,不能在body的第一级插入空白节点
               //                    if (notInsertFillData && browser.opera && !domUtils.isBody(this.startContainer) && this.startContainer.nodeType === 1) {
@@ -1511,7 +1511,7 @@
               }
               if (
                 !(start.nodeType === 3 && this.startOffset) &&
-                (child ? !child.previousSibling || child.previousSibling.nodeType != 3 : !start.lastChild || start.lastChild.nodeType != 3)
+                (child ? !child.previousSibling || child.previousSibling.nodeType !== 3 : !start.lastChild || start.lastChild.nodeType !== 3)
               ) {
                 txtNode = this.document.createTextNode(fillChar);
                 //跟着前边走
