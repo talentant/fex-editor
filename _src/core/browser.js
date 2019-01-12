@@ -98,7 +98,11 @@ var browser = (UE.browser = (() => {
       version = 0;
     }
 
-    browser.ie11Compat = document.documentMode == 11;
+    if (_.isNumber(version)) {
+      console.warn("variable `version` is not a number");
+    }
+
+    browser.ie11Compat = document.documentMode === 11;
     /**
      * @property { boolean } ie9Compat 检测浏览器模式是否为 IE9 兼容模式
      * @warning 如果浏览器不是IE， 则该值为undefined
@@ -109,7 +113,7 @@ var browser = (UE.browser = (() => {
      * }
      * ```
      */
-    browser.ie9Compat = document.documentMode == 9;
+    browser.ie9Compat = document.documentMode === 9;
 
     /**
      * @property { boolean } ie8 检测浏览器是否是IE8浏览器
@@ -133,7 +137,7 @@ var browser = (UE.browser = (() => {
      * }
      * ```
      */
-    browser.ie8Compat = document.documentMode == 8;
+    browser.ie8Compat = document.documentMode === 8;
 
     /**
      * @property { boolean } ie7Compat 检测浏览器模式是否为 IE7 兼容模式
@@ -145,7 +149,7 @@ var browser = (UE.browser = (() => {
      * }
      * ```
      */
-    browser.ie7Compat = (version == 7 && !document.documentMode) || document.documentMode == 7;
+    browser.ie7Compat = (version === 7 && !document.documentMode) || document.documentMode === 7;
 
     /**
      * @property { boolean } ie6Compat 检测浏览器模式是否为 IE6 模式 或者怪异模式
