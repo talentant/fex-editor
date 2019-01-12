@@ -174,7 +174,7 @@ var browser = (UE.browser = (() => {
 
   // Gecko.
   if (browser.gecko) {
-    var geckoRelease = agent.match(/rv:([\d\.]+)/);
+    var geckoRelease = agent.match(/rv:([\d.]+)/);
     if (geckoRelease) {
       geckoRelease = geckoRelease[1].split(".");
       version = geckoRelease[0] * 10000 + (geckoRelease[1] || 0) * 100 + (geckoRelease[2] || 0) * 1;
