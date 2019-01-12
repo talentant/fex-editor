@@ -920,9 +920,9 @@ var utils = (UE.utils = {
       ? (key, style, doc) => {
           var indexList;
           var index;
-          if (style === undefined || (style && style.nodeType && style.nodeType == 9)) {
+          if (style === undefined || (style && style.nodeType && style.nodeType === 9)) {
             //获取样式
-            doc = style && style.nodeType && style.nodeType == 9 ? style : doc || document;
+            doc = style && style.nodeType && style.nodeType === 9 ? style : doc || document;
             indexList = doc.indexList || (doc.indexList = {});
             index = indexList[key];
             if (index !== undefined) {
@@ -955,9 +955,9 @@ var utils = (UE.utils = {
       : (key, style, doc) => {
           var head;
           var node;
-          if (style === undefined || (style && style.nodeType && style.nodeType == 9)) {
+          if (style === undefined || (style && style.nodeType && style.nodeType === 9)) {
             //获取样式
-            doc = style && style.nodeType && style.nodeType == 9 ? style : doc || document;
+            doc = style && style.nodeType && style.nodeType === 9 ? style : doc || document;
             node = doc.getElementById(key);
             return node ? node.innerHTML : undefined;
           }

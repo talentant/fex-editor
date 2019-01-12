@@ -81,7 +81,7 @@ UE.plugins["blockquote"] = function() {
         }
       } else {
         var tmpRange = range.cloneRange();
-        var node = tmpRange.startContainer.nodeType == 1 ? tmpRange.startContainer : tmpRange.startContainer.parentNode;
+        var node = tmpRange.startContainer.nodeType === 1 ? tmpRange.startContainer : tmpRange.startContainer.parentNode;
         var preNode = node;
         var doEnd = 1;
 
@@ -116,7 +116,7 @@ UE.plugins["blockquote"] = function() {
 
         //调整结束
         if (doEnd) {
-          preNode = node = node = tmpRange.endContainer.nodeType == 1 ? tmpRange.endContainer : tmpRange.endContainer.parentNode;
+          preNode = node = node = tmpRange.endContainer.nodeType === 1 ? tmpRange.endContainer : tmpRange.endContainer.parentNode;
           while (1) {
             if (domUtils.isBody(node)) {
               if (preNode !== node) {

@@ -13,7 +13,7 @@ UE.plugins["pagebreak"] = function() {
       var firstChild = node.firstChild;
       var tmpNode;
 
-      while (firstChild && firstChild.nodeType == 1 && domUtils.isEmptyBlock(firstChild)) {
+      while (firstChild && firstChild.nodeType === 1 && domUtils.isEmptyBlock(firstChild)) {
         tmpNode = firstChild;
         firstChild = firstChild.firstChild;
       }
@@ -27,7 +27,7 @@ UE.plugins["pagebreak"] = function() {
     utils.cssRule("pagebreak", ".pagebreak{display:block;clear:both !important;cursor:default !important;width: 100% !important;margin:0;}", me.document);
   });
   function isHr(node) {
-    return node && node.nodeType == 1 && node.tagName === "HR" && node.className === "pagebreak";
+    return node && node.nodeType === 1 && node.tagName === "HR" && node.className === "pagebreak";
   }
   me.addInputRule(root => {
     root.traversal(node => {
@@ -85,7 +85,7 @@ UE.plugins["pagebreak"] = function() {
             if (!pN.previousSibling) {
               var table = domUtils.findParentByTagName(pN, "table");
               //                            var tableWrapDiv = table.parentNode;
-              //                            if(tableWrapDiv && tableWrapDiv.nodeType == 1
+              //                            if(tableWrapDiv && tableWrapDiv.nodeType === 1
               //                                && tableWrapDiv.tagName == 'DIV'
               //                                && tableWrapDiv.getAttribute('dropdrag')
               //                                ){

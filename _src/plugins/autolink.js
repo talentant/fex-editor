@@ -29,12 +29,12 @@ UE.plugin.register(
                 var charCode;
 
                 var start = range.startContainer;
-                while (start.nodeType == 1 && range.startOffset > 0) {
+                while (start.nodeType === 1 && range.startOffset > 0) {
                   start = range.startContainer.childNodes[range.startOffset - 1];
                   if (!start) {
                     break;
                   }
-                  range.setStart(start, start.nodeType == 1 ? start.childNodes.length : start.nodeValue.length);
+                  range.setStart(start, start.nodeType === 1 ? start.childNodes.length : start.nodeValue.length);
                   range.collapse(true);
                   start = range.startContainer;
                 }
@@ -43,7 +43,7 @@ UE.plugin.register(
                   if (range.startOffset == 0) {
                     start = range.startContainer.previousSibling;
 
-                    while (start && start.nodeType == 1) {
+                    while (start && start.nodeType === 1) {
                       start = start.lastChild;
                     }
                     if (!start || domUtils.isFillChar(start)) {
@@ -122,7 +122,7 @@ UE.plugin.register(
       32: 1
     };
     function checkIsCludeLink(node) {
-      if (node.nodeType == 3) {
+      if (node.nodeType === 3) {
         return null;
       }
       if (node.nodeName === "A") {
@@ -134,7 +134,7 @@ UE.plugin.register(
         if (lastChild.nodeName === "A") {
           return lastChild;
         }
-        if (lastChild.nodeType == 3) {
+        if (lastChild.nodeType === 3) {
           if (domUtils.isWhitespace(lastChild)) {
             lastChild = lastChild.previousSibling;
             continue;
@@ -158,7 +158,7 @@ UE.plugin.register(
             }
             if (start && !domUtils.isBody(start) && start.nodeName === "P") {
               var pre = start.previousSibling;
-              if (pre && pre.nodeType == 1) {
+              if (pre && pre.nodeType === 1) {
                 var pre = checkIsCludeLink(pre);
                 if (pre && !pre.getAttribute("_href")) {
                   domUtils.remove(pre, true);
@@ -166,7 +166,7 @@ UE.plugin.register(
               }
             }
           } else if (keyCode == 32) {
-            if (start.nodeType == 3 && /^\s$/.test(start.nodeValue)) {
+            if (start.nodeType === 3 && /^\s$/.test(start.nodeValue)) {
               start = start.previousSibling;
               if (start && start.nodeName === "A" && !start.getAttribute("_href")) {
                 domUtils.remove(start, true);

@@ -24,7 +24,7 @@ UE.plugins["elementpath"] = function() {
       var names = [];
       tagNames = parents;
       for (var i = 0, ci; (ci = parents[i]); i++) {
-        if (ci.nodeType == 3) {
+        if (ci.nodeType === 3) {
           continue;
         }
         var name = ci.tagName.toLowerCase();

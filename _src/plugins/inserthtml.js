@@ -65,7 +65,7 @@ UE.commands["inserthtml"] = {
       range.txtToElmBoundary();
       //结束边界可能放到了br的前边，要把br包含进来
       // x[xxx]<br/>
-      if (range.endContainer && range.endContainer.nodeType == 1) {
+      if (range.endContainer && range.endContainer.nodeType === 1) {
         tmpNode = range.endContainer.childNodes[range.endOffset];
         if (tmpNode && domUtils.isBr(tmpNode)) {
           range.setEndAfter(tmpNode);
@@ -75,14 +75,14 @@ UE.commands["inserthtml"] = {
         tmpNode = range.startContainer;
         if (domUtils.isBoundaryNode(tmpNode, "firstChild")) {
           tmpNode = range.endContainer;
-          if (range.endOffset == (tmpNode.nodeType == 3 ? tmpNode.nodeValue.length : tmpNode.childNodes.length) && domUtils.isBoundaryNode(tmpNode, "lastChild")) {
+          if (range.endOffset == (tmpNode.nodeType === 3 ? tmpNode.nodeValue.length : tmpNode.childNodes.length) && domUtils.isBoundaryNode(tmpNode, "lastChild")) {
             me.body.innerHTML = "<p>" + (browser.ie ? "" : "<br/>") + "</p>";
             range.setStart(me.body.firstChild, 0).collapse(true);
           }
         }
       }
       !range.collapsed && range.deleteContents();
-      if (range.startContainer.nodeType == 1) {
+      if (range.startContainer.nodeType === 1) {
         var child = range.startContainer.childNodes[range.startOffset];
         var pre;
         if (child && domUtils.isBlockElm(child) && (pre = child.previousSibling) && domUtils.isBlockElm(pre)) {
@@ -120,7 +120,7 @@ UE.commands["inserthtml"] = {
       var last;
       while ((child = div.firstChild)) {
         //针对hr单独处理一下先
-        while (child && (child.nodeType == 3 || !domUtils.isBlockElm(child) || child.tagName === "HR")) {
+        while (child && (child.nodeType === 3 || !domUtils.isBlockElm(child) || child.tagName === "HR")) {
           next = child.nextSibling;
           range.insertNode(child).collapse();
           last = child;
@@ -160,7 +160,7 @@ UE.commands["inserthtml"] = {
       while ((child = div.firstChild)) {
         if (hadBreak) {
           var p = me.document.createElement("p");
-          while (child && (child.nodeType == 3 || !dtd.$block[child.tagName])) {
+          while (child && (child.nodeType === 3 || !dtd.$block[child.tagName])) {
             nextNode = child.nextSibling;
             p.appendChild(child);
             child = nextNode;
@@ -171,7 +171,7 @@ UE.commands["inserthtml"] = {
         }
         range.insertNode(child);
         nextNode = child.nextSibling;
-        if (!hadBreak && child.nodeType == domUtils.NODE_ELEMENT && domUtils.isBlockElm(child)) {
+        if (!hadBreak && child.nodeType === domUtils.NODE_ELEMENT && domUtils.isBlockElm(child)) {
           parent = domUtils.findParent(child, node => domUtils.isBlockElm(node));
           if (parent && parent.tagName.toLowerCase() !== "body" && !(dtd[parent.tagName][child.nodeName] && child.parentNode === parent)) {
             if (!dtd[parent.tagName][child.nodeName]) {
@@ -216,7 +216,7 @@ UE.commands["inserthtml"] = {
       if (domUtils.isBlockElm(child) && domUtils.isEmptyNode(child)) {
         if ((nextNode = child.nextSibling)) {
           domUtils.remove(child);
-          if (nextNode.nodeType == 1 && dtd.$block[nextNode.tagName]) {
+          if (nextNode.nodeType === 1 && dtd.$block[nextNode.tagName]) {
             range
               .setStart(nextNode, 0)
               .collapse(true)
