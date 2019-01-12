@@ -8,8 +8,10 @@
  */
 var dtd = (dom.dtd = (() => {
   function _(s) {
-    for (var k in s) {
-      s[k.toUpperCase()] = s[k];
+    for (let k in s) {
+      if (s.hasOwnProperty(k)) {
+        s[k.toUpperCase()] = s[k];
+      }
     }
     return s;
   }
