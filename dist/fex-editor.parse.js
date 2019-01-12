@@ -1,7 +1,7 @@
 /*!
  * fex-editor
  * version: 2.2.0
- * build: 2019-01-11
+ * build: 2019-01-12
  */
 (function(){
 
@@ -811,7 +811,7 @@ UE.parse.register("charts", function(utils) {
     var meta = config.meta;
 
     //数据对齐方式为相反的方式， 需要反转数据
-    if (meta.dataFormat != "1") {
+    if (meta.dataFormat !== "1" && meta.dataFormat !== 1) {
       for (var i = 0, len = data.length; i < len; i++) {
         for (var j = 0, jlen = data[i].length; j < jlen; j++) {
           if (!result[j]) {

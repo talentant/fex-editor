@@ -1,7 +1,7 @@
 /*!
  * fex-editor
  * version: 2.2.0
- * build: 2019-01-11
+ * build: 2019-01-12
  */
 
 "use strict";
@@ -42,7 +42,7 @@ function _typeof(e) {
         instants: {},
         I18N: {},
         _customizeUI: {},
-        version: "1.5.0"
+        version: "2.3.0-dev"
     };
     var dom = UE.dom = {}, browser = UE.browser = function() {
         var e = navigator.userAgent.toLowerCase(), t = window.opera, i = {
@@ -57,8 +57,9 @@ function _typeof(e) {
         if (i.ie) {
             var o = e.match(/(?:msie\s([\w.]+))/), r = e.match(/(?:trident.*rv:([\w.]+))/);
             n = o && r && o[1] && r[1] ? Math.max(1 * o[1], 1 * r[1]) : o && o[1] ? 1 * o[1] : r && r[1] ? 1 * r[1] : 0, 
-            i.ie11Compat = 11 == document.documentMode, i.ie9Compat = 9 == document.documentMode, 
-            i.ie8 = !!document.documentMode, i.ie8Compat = 8 == document.documentMode, i.ie7Compat = 7 == n && !document.documentMode || 7 == document.documentMode, 
+            _.isNumber(n) && console.warn("variable `version` is not a number"), i.ie11Compat = 11 === document.documentMode, 
+            i.ie9Compat = 9 === document.documentMode, i.ie8 = !!document.documentMode, i.ie8Compat = 8 === document.documentMode, 
+            i.ie7Compat = 7 === n && !document.documentMode || 7 === document.documentMode, 
             i.ie6Compat = n < 7 || i.quirks, i.ie9above = 8 < n, i.ie9below = n < 9, i.ie11above = 10 < n, 
             i.ie11below = n < 11;
         }
@@ -152,10 +153,10 @@ function _typeof(e) {
                 }[e];
             }) : "";
         },
-        cssStyleToDomStyle: (Ea = document.createElement("div").style, Fa = {
-            float: null != Ea.cssFloat ? "cssFloat" : null != Ea.styleFloat ? "styleFloat" : "float"
+        cssStyleToDomStyle: (Fa = document.createElement("div").style, Ga = {
+            float: null != Fa.cssFloat ? "cssFloat" : null != Fa.styleFloat ? "styleFloat" : "float"
         }, function(e) {
-            return Fa[e] || (Fa[e] = e.toLowerCase().replace(/-./g, function(e) {
+            return Ga[e] || (Ga[e] = e.toLowerCase().replace(/-./g, function(e) {
                 return e.charAt(1).toUpperCase();
             }));
         }),
@@ -388,7 +389,7 @@ function _typeof(e) {
                 var a, s;
             };
         }()
-    }, Ea, Fa;
+    }, Fa, Ga;
     utils.each([ "String", "Function", "Array", "Number", "RegExp", "Object", "Date" ], function(t) {
         UE.utils["is" + t] = function(e) {
             return Object.prototype.toString.apply(e) === "[object " + t + "]";
@@ -401,8 +402,10 @@ function _typeof(e) {
     }
     EventBase.prototype = {
         addListener: function(e, t) {
-            e = utils.trim(e).split(/\s+/);
-            for (var i, n = 0; i = e[n++]; ) getListener(this, i, !0).push(t);
+            var i = this, n = _.trim(e).split(/\s+/);
+            _.forEach(n, function(e) {
+                getListener(i, e, !0).push(t);
+            });
         },
         on: function(e, t) {
             return this.addListener(e, t);
@@ -413,9 +416,12 @@ function _typeof(e) {
         trigger: function() {
             return this.fireEvent.apply(this, arguments);
         },
-        removeListener: function(e, t) {
-            e = utils.trim(e).split(/\s+/);
-            for (var i, n = 0; i = e[n++]; ) utils.removeItem(getListener(this, i) || [], t);
+        removeListener: function(e, i) {
+            var n = this, t = _.trim(e).split(/\s+/);
+            _.forEach(t, function(e) {
+                var t = getListener(n, e, !1);
+                Array.isArray(t) || (t = []), utils.removeItem(t, i);
+            });
         },
         fireEvent: function() {
             for (var e = arguments.length, t = new Array(e), i = 0; i < e; i++) t[i] = arguments[i];
@@ -1188,7 +1194,7 @@ function _typeof(e) {
                         }
                         t.style.cssText += ";" + e.style.cssText, "A" === t.tagName && (t.style.textDecoration = "underline");
                     }
-                    if ("A" != t.tagName) {
+                    if ("A" !== t.tagName) {
                         t === e.parentNode && domUtils.remove(e, !0);
                         break;
                     }
@@ -1663,7 +1669,7 @@ function _typeof(e) {
                     return 1 == e.nodeType && domUtils.isBlockElm(e);
                 }).adjustmentBoundary();
                 for (var n, o, r = this.createBookmark(), a = r.end, s = function(e) {
-                    return 1 == e.nodeType ? "br" != e.tagName.toLowerCase() : !domUtils.isWhitespace(e);
+                    return 1 == e.nodeType ? "br" !== e.tagName.toLowerCase() : !domUtils.isWhitespace(e);
                 }, l = domUtils.getNextDomNode(r.start, !1, s), d = this.cloneRange(); l && domUtils.getPosition(l, a) & domUtils.POSITION_PRECEDING; ) if (3 == l.nodeType || dtd[t][l.tagName]) {
                     for (d.setStartBefore(l), n = l; n && (3 == n.nodeType || dtd[t][n.tagName]) && n !== a; ) o = n, 
                     n = domUtils.getNextDomNode(n, 1 == n.nodeType, null, function(e) {
@@ -2167,7 +2173,7 @@ function _typeof(e) {
                     var i = t.keyCode || t.which;
                     for (var n in c) for (var o, r = c[n].split(","), a = 0; o = r[a++]; ) {
                         var s = (o = o.split(":"))[0], l = o[1];
-                        (/^(ctrl)(\+shift)?\+(\d+)$/.test(s.toLowerCase()) || /^(\d+)$/.test(s)) && ("ctrl" === RegExp.$1 && (t.ctrlKey || t.metaKey) && ("" == RegExp.$2 || t[RegExp.$2.slice(1) + "Key"]) && i == RegExp.$3 || i == RegExp.$1) && (-1 != d.queryCommandState(n, l) && d.execCommand(n, l), 
+                        (/^(ctrl)(\+shift)?\+(\d+)$/.test(s.toLowerCase()) || /^(\d+)$/.test(s)) && ("ctrl" === RegExp.$1 && (t.ctrlKey || t.metaKey) && ("" === RegExp.$2 || t[RegExp.$2.slice(1) + "Key"]) && i == RegExp.$3 || i == RegExp.$1) && (-1 != d.queryCommandState(n, l) && d.execCommand(n, l), 
                         domUtils.preventDefault(t));
                     }
                 });
@@ -2687,11 +2693,11 @@ function _typeof(e) {
                         o = o.join(" ");
                     }
                     t.push("<" + e.tagName + (o ? " " + o : "") + (dtd.$empty[e.tagName] ? "/" : "") + ">"), 
-                    i && !dtd.$inlineWithA[e.tagName] && "pre" != e.tagName && e.children && e.children.length && (n = u(t, n, !0), 
+                    i && !dtd.$inlineWithA[e.tagName] && "pre" !== e.tagName && e.children && e.children.length && (n = u(t, n, !0), 
                     m(t, n));
                     if (e.children && e.children.length) for (var s, l = 0; s = e.children[l++]; ) i && "element" === s.type && !dtd.$inlineWithA[s.tagName] && 1 < l && (u(t, n), 
                     m(t, n)), f(s, t, i, n);
-                    dtd.$empty[e.tagName] || (i && !dtd.$inlineWithA[e.tagName] && "pre" != e.tagName && e.children && e.children.length && (n = u(t, n), 
+                    dtd.$empty[e.tagName] || (i && !dtd.$inlineWithA[e.tagName] && "pre" !== e.tagName && e.children && e.children.length && (n = u(t, n), 
                     m(t, n)), t.push("</" + e.tagName + ">"));
                 }(e, t, i, n);
                 break;
@@ -2727,7 +2733,7 @@ function _typeof(e) {
                 return f(this, t, e, 0), t.join("");
             },
             innerHTML: function(e) {
-                if ("element" != this.type || dtd.$empty[this.tagName]) return this;
+                if ("element" !== this.type || dtd.$empty[this.tagName]) return this;
                 if (utils.isString(e)) {
                     if (this.children) for (var t = 0; i = this.children[t++]; ) i.parentNode = null;
                     this.children = [];
@@ -2741,7 +2747,7 @@ function _typeof(e) {
                 })).toHtml();
             },
             innerText: function(e, t) {
-                if ("element" != this.type || dtd.$empty[this.tagName]) return this;
+                if ("element" !== this.type || dtd.$empty[this.tagName]) return this;
                 if (e) {
                     if (this.children) for (var i, n = 0; i = this.children[n++]; ) i.parentNode = null;
                     return this.children = [], this.appendChild(o.createText(e, t)), this;
@@ -2901,7 +2907,7 @@ function _typeof(e) {
         function f(e, t, i) {
             var n;
             if (n = m[t]) {
-                for (var o, r = e; "root" != r.type; ) {
+                for (var o, r = e; "root" !== r.type; ) {
                     if (utils.isArray(n) ? -1 != utils.indexOf(n, r.tagName) : n == r.tagName) {
                         e = r, o = !0;
                         break;
@@ -2929,7 +2935,7 @@ function _typeof(e) {
             h = o.index;
             try {
                 if (p < h && a(v, e.slice(p, h)), o[3]) dtd.$cdata[v.tagName] ? a(v, o[0]) : v = f(v, o[3].toLowerCase(), o[4]); else if (o[1]) {
-                    if ("root" != v.type) if (dtd.$cdata[v.tagName] && !dtd.$cdata[o[1]]) a(v, o[0]); else {
+                    if ("root" !== v.type) if (dtd.$cdata[v.tagName] && !dtd.$cdata[o[1]]) a(v, o[0]); else {
                         for (var b = v; "element" === v.type && v.tagName != o[1].toLowerCase(); ) if ("root" === (v = v.parentNode).type) throw v = b, 
                         "break";
                         v = v.parentNode;
@@ -2994,17 +3000,17 @@ function _typeof(e) {
             for (var n, o = 0; n = e.children[o]; ) m(n, t), n.parentNode && o++;
             return e;
         };
-    }(), fA;
-    UE.plugin = (fA = {}, {
+    }(), jA;
+    UE.plugin = (jA = {}, {
         register: function(e, t, i, n) {
-            i && utils.isFunction(i) && (n = i, i = null), fA[e] = {
+            i && utils.isFunction(i) && (n = i, i = null), jA[e] = {
                 optionName: i || e,
                 execFn: t,
                 afterDisabled: n
             };
         },
         load: function(i) {
-            utils.each(fA, function(e) {
+            utils.each(jA, function(e) {
                 var t = e.execFn.call(i);
                 !1 !== i.options[e.optionName] ? t && utils.each(t, function(e, t) {
                     switch (t.toLowerCase()) {
@@ -3050,7 +3056,7 @@ function _typeof(e) {
             });
         },
         run: function(e, t) {
-            var i = fA[e];
+            var i = jA[e];
             i && i.exeFn.call(t);
         }
     });
@@ -3086,43 +3092,43 @@ function _typeof(e) {
         x: 88,
         s: 83,
         n: 78
-    }, LocalStorage = UE.LocalStorage = (DA = window.localStorage || ((NA = document.createElement("div")).style.display = "none", 
-    NA.addBehavior ? (NA.addBehavior("#default#userdata"), {
+    }, LocalStorage = UE.LocalStorage = (HA = window.localStorage || ((RA = document.createElement("div")).style.display = "none", 
+    RA.addBehavior ? (RA.addBehavior("#default#userdata"), {
         getItem: function(e) {
             var t = null;
             try {
-                document.body.appendChild(NA), NA.load(EA), t = NA.getAttribute(e), document.body.removeChild(NA);
+                document.body.appendChild(RA), RA.load(IA), t = RA.getAttribute(e), document.body.removeChild(RA);
             } catch (e) {}
             return t;
         },
         setItem: function(e, t) {
-            document.body.appendChild(NA), NA.setAttribute(e, t), NA.save(EA), document.body.removeChild(NA);
+            document.body.appendChild(RA), RA.setAttribute(e, t), RA.save(IA), document.body.removeChild(RA);
         },
         removeItem: function(e) {
-            document.body.appendChild(NA), NA.removeAttribute(e), NA.save(EA), document.body.removeChild(NA);
+            document.body.appendChild(RA), RA.removeAttribute(e), RA.save(IA), document.body.removeChild(RA);
         }
-    }) : null) || null, EA = "localStorage", {
+    }) : null) || null, IA = "localStorage", {
         saveLocalData: function(e, t) {
-            return !(!DA || !t || (DA.setItem(e, t), 0));
+            return !(!HA || !t || (HA.setItem(e, t), 0));
         },
         getLocalData: function(e) {
-            return DA ? DA.getItem(e) : null;
+            return HA ? HA.getItem(e) : null;
         },
         removeItem: function(e) {
-            DA && DA.removeItem(e);
+            HA && HA.removeItem(e);
         }
-    }), NA, DA, EA, XA, EI, FI, kT, LY;
-    XA = "ueditor_preference", UE.Editor.prototype.setPreferences = function(e, t) {
+    }), RA, HA, IA, _A, II, JI, oT, PY;
+    _A = "ueditor_preference", UE.Editor.prototype.setPreferences = function(e, t) {
         var i = {};
         utils.isString(e) ? i[e] = t : i = e;
-        var n = LocalStorage.getLocalData(XA);
-        n && (n = utils.str2json(n)) ? utils.extend(n, i) : n = i, n && LocalStorage.saveLocalData(XA, utils.json2str(n));
+        var n = LocalStorage.getLocalData(_A);
+        n && (n = utils.str2json(n)) ? utils.extend(n, i) : n = i, n && LocalStorage.saveLocalData(_A, utils.json2str(n));
     }, UE.Editor.prototype.getPreferences = function(e) {
-        var t = LocalStorage.getLocalData(XA);
+        var t = LocalStorage.getLocalData(_A);
         return t && (t = utils.str2json(t)) ? e ? t[e] : t : null;
     }, UE.Editor.prototype.removePreferences = function(e) {
-        var t = LocalStorage.getLocalData(XA);
-        t && (t = utils.str2json(t)) && (t[e] = void 0, delete t[e]), t && LocalStorage.saveLocalData(XA, utils.json2str(t));
+        var t = LocalStorage.getLocalData(_A);
+        t && (t = utils.str2json(t)) && (t[e] = void 0, delete t[e]), t && LocalStorage.saveLocalData(_A, utils.json2str(t));
     }, UE.plugins.defaultfilter = function() {
         var s = this;
         s.setOpt({
@@ -3316,7 +3322,7 @@ function _typeof(e) {
                         }
                         if (n.insertNode(l), u = l.nextSibling, !m && l.nodeType == domUtils.NODE_ELEMENT && domUtils.isBlockElm(l) && (d = domUtils.findParent(l, function(e) {
                             return domUtils.isBlockElm(e);
-                        })) && "body" != d.tagName.toLowerCase() && (!dtd[d.tagName][l.nodeName] || l.parentNode !== d)) {
+                        })) && "body" !== d.tagName.toLowerCase() && (!dtd[d.tagName][l.nodeName] || l.parentNode !== d)) {
                             if (dtd[d.tagName][l.nodeName]) for (c = l.parentNode; c !== d; ) c = (v = c).parentNode; else v = d;
                             domUtils.breakParent(l, v || c);
                             var v = l.previousSibling;
@@ -3417,7 +3423,7 @@ function _typeof(e) {
                         continue;
                     }
                 }
-                if (y(o, !0) && "SPAN" != o.tagName && (g.indent && (o.style.textIndent = g.indentValue), 
+                if (y(o, !0) && "SPAN" !== o.tagName && (g.indent && (o.style.textIndent = g.indentValue), 
                 g.textAlign && (o.style.textAlign = g.textAlign)), g.removeClass && o.className && !v[o.className.toLowerCase()]) {
                     if (p && p.contains(o)) continue;
                     domUtils.removeAttributes(o, [ "class" ]);
@@ -3439,7 +3445,7 @@ function _typeof(e) {
                         break;
 
                       case "center":
-                        if ("center" != n.queryCommandValue("imagefloat")) {
+                        if ("center" !== n.queryCommandValue("imagefloat")) {
                             for (f = c.parentNode, domUtils.setStyle(c, "float", "none"), u = c; f && 1 == domUtils.getChildCount(f, function(e) {
                                 return !domUtils.isBr(e) && !domUtils.isWhitespace(e);
                             }) && (dtd.$inline[f.tagName] || "A" === f.tagName); ) f = (u = f).parentNode;
@@ -3514,7 +3520,7 @@ function _typeof(e) {
             bindEvents: {
                 getAllHtml: function(e, t) {
                     var i = this.body, n = domUtils.getComputedStyle(i, "background-image"), o = "";
-                    o = 0 < n.indexOf(l.options.imagePath) ? n.substring(n.indexOf(l.options.imagePath), n.length - 1).replace(/"|\(|\)/gi, "") : "none" != n ? n.replace(/url\("?|"?\)/gi, "") : "";
+                    o = 0 < n.indexOf(l.options.imagePath) ? n.substring(n.indexOf(l.options.imagePath), n.length - 1).replace(/"|\(|\)/gi, "") : "none" !== n ? n.replace(/url\("?|"?\)/gi, "") : "";
                     var r = '<style type="text/css">body{', a = {
                         "background-color": domUtils.getComputedStyle(i, "background-color") || "#ffffff",
                         "background-image": o ? "url(" + o + ")" : "",
@@ -3575,7 +3581,7 @@ function _typeof(e) {
                     break;
 
                   case "center":
-                    if ("center" != i.queryCommandValue("imagefloat")) {
+                    if ("center" !== i.queryCommandValue("imagefloat")) {
                         for (l = o.parentNode, domUtils.setStyle(o, "float", ""), domUtils.removeAttributes(o, "align"), 
                         r = o; l && 1 == domUtils.getChildCount(l, function(e) {
                             return !domUtils.isBr(e) && !domUtils.isWhitespace(e);
@@ -3606,11 +3612,11 @@ function _typeof(e) {
             if ((t = utils.isArray(t) ? t : [ t ]).length) {
                 var i = this, n = i.selection.getRange(), o = n.getClosedNode();
                 if (!0 !== i.fireEvent("beforeinsertimage", t)) {
-                    if (!o || !/img/i.test(o.tagName) || "edui-faked-video" == o.className && -1 == o.className.indexOf("edui-upload-video") || o.getAttribute("word_img")) {
+                    if (!o || !/img/i.test(o.tagName) || "edui-faked-video" === o.className && -1 == o.className.indexOf("edui-upload-video") || o.getAttribute("word_img")) {
                         var r, a = [], s = "";
-                        if (r = t[0], 1 == t.length) s = '<img src="' + r.src + '" ' + (r._src ? ' _src="' + r._src + '" ' : "") + (r.width ? 'width="' + r.width + '" ' : "") + (r.height ? ' height="' + r.height + '" ' : "") + ("left" === r.floatStyle || "right" === r.floatStyle ? ' style="float:' + r.floatStyle + ';"' : "") + (r.title && "" != r.title ? ' title="' + r.title + '"' : "") + (r.border && "0" != r.border ? ' border="' + r.border + '"' : "") + (r.alt && "" != r.alt ? ' alt="' + r.alt + '"' : "") + (r.hspace && "0" != r.hspace ? ' hspace = "' + r.hspace + '"' : "") + (r.vspace && "0" != r.vspace ? ' vspace = "' + r.vspace + '"' : "") + "/>", 
+                        if (r = t[0], 1 == t.length) s = '<img src="' + r.src + '" ' + (r._src ? ' _src="' + r._src + '" ' : "") + (r.width ? 'width="' + r.width + '" ' : "") + (r.height ? ' height="' + r.height + '" ' : "") + ("left" === r.floatStyle || "right" === r.floatStyle ? ' style="float:' + r.floatStyle + ';"' : "") + (r.title && "" !== r.title ? ' title="' + r.title + '"' : "") + (r.border && "0" !== r.border && 0 !== r.border ? ' border="' + r.border + '"' : "") + (r.alt && "" !== r.alt ? ' alt="' + r.alt + '"' : "") + (r.hspace && "0" !== r.hspace && 0 !== r.hspace ? ' hspace = "' + r.hspace + '"' : "") + (r.vspace && "0" !== r.vspace && 0 !== r.vspace ? ' vspace = "' + r.vspace + '"' : "") + "/>", 
                         "center" === r.floatStyle && (s = '<p style="text-align: center">' + s + "</p>"), 
-                        a.push(s); else for (var l = 0; r = t[l++]; ) s = "<p " + ("center" === r.floatStyle ? 'style="text-align: center" ' : "") + '><img src="' + r.src + '" ' + (r.width ? 'width="' + r.width + '" ' : "") + (r._src ? ' _src="' + r._src + '" ' : "") + (r.height ? ' height="' + r.height + '" ' : "") + ' style="' + (r.floatStyle && "center" != r.floatStyle ? "float:" + r.floatStyle + ";" : "") + (r.border || "") + '" ' + (r.title ? ' title="' + r.title + '"' : "") + " /></p>", 
+                        a.push(s); else for (var l = 0; r = t[l++]; ) s = "<p " + ("center" === r.floatStyle ? 'style="text-align: center" ' : "") + '><img src="' + r.src + '" ' + (r.width ? 'width="' + r.width + '" ' : "") + (r._src ? ' _src="' + r._src + '" ' : "") + (r.height ? ' height="' + r.height + '" ' : "") + ' style="' + (r.floatStyle && "center" !== r.floatStyle ? "float:" + r.floatStyle + ";" : "") + (r.border || "") + '" ' + (r.title ? ' title="' + r.title + '"' : "") + " /></p>", 
                         a.push(s);
                         i.execCommand("insertHtml", a.join(""));
                     } else {
@@ -3635,7 +3641,7 @@ function _typeof(e) {
                 return n.collapsed && (i = this.document.createTextNode("p"), n.insertNode(i)), 
                 function(e, t) {
                     var i = e.createBookmark(), n = function(e) {
-                        return 1 == e.nodeType ? "br" != e.tagName.toLowerCase() && !domUtils.isBookmarkNode(e) : !domUtils.isWhitespace(e);
+                        return 1 == e.nodeType ? "br" !== e.tagName.toLowerCase() && !domUtils.isBookmarkNode(e) : !domUtils.isWhitespace(e);
                     };
                     e.enlarge(!0);
                     for (var o, r = e.createBookmark(), a = domUtils.getNextDomNode(r.start, !1, n), s = e.cloneRange(); a && !(domUtils.getPosition(a, r.end) & domUtils.POSITION_FOLLOWING); ) if (3 != a.nodeType && u(a)) a = domUtils.getNextDomNode(a, !0, n); else {
@@ -3834,7 +3840,7 @@ function _typeof(e) {
                     var t = this.selection.getStart();
                     if ("underline" === e || "strikethrough" === e) {
                         for (var i, n = t; n && !domUtils.isBlockElm(n) && !domUtils.isBody(n); ) {
-                            if (1 == n.nodeType && "none" != (i = domUtils.getComputedStyle(n, l))) return i;
+                            if (1 == n.nodeType && "none" !== (i = domUtils.getComputedStyle(n, l))) return i;
                             n = n.parentNode;
                         }
                         return "none";
@@ -3926,7 +3932,7 @@ function _typeof(e) {
                     return 1 == e.nodeType;
                 };
                 function g(e) {
-                    if (3 == e.nodeType || "span" != e.tagName.toLowerCase()) return 0;
+                    if (3 == e.nodeType || "span" !== e.tagName.toLowerCase()) return 0;
                     if (browser.ie) {
                         var t = e.attributes;
                         if (t.length) {
@@ -3949,7 +3955,7 @@ function _typeof(e) {
                         domUtils.clearEmptySibling(s);
                         for (var n, o = domUtils.getNextDomNode(u.start, !1, p); o && o != u.end; ) n = domUtils.getNextDomNode(o, !0, p), 
                         dtd.$empty[o.tagName.toLowerCase()] || domUtils.isBookmarkNode(o) || (f.test(o.tagName) ? d ? (domUtils.removeStyle(o, d), 
-                        g(o) && "text-decoration" != d && domUtils.remove(o, !0)) : domUtils.remove(o, !0) : dtd.$tableContent[o.tagName] || dtd.$list[o.tagName] || (domUtils.removeAttributes(o, h), 
+                        g(o) && "text-decoration" !== d && domUtils.remove(o, !0)) : domUtils.remove(o, !0) : dtd.$tableContent[o.tagName] || dtd.$list[o.tagName] || (domUtils.removeAttributes(o, h), 
                         g(o) && domUtils.remove(o, !0))), o = n;
                     }
                     var r = u.start.parentNode;
@@ -4081,7 +4087,7 @@ function _typeof(e) {
                 }
                 if (o = function(e, t, i, n) {
                     var o, r = e.createBookmark(), a = function(e) {
-                        return 1 == e.nodeType ? "br" != e.tagName.toLowerCase() && !domUtils.isBookmarkNode(e) : !domUtils.isWhitespace(e);
+                        return 1 == e.nodeType ? "br" !== e.tagName.toLowerCase() && !domUtils.isBookmarkNode(e) : !domUtils.isWhitespace(e);
                     };
                     e.enlarge(!0);
                     for (var s, l = e.createBookmark(), d = domUtils.getNextDomNode(l.start, !1, a), c = e.cloneRange(); d && !(domUtils.getPosition(d, l.end) & domUtils.POSITION_FOLLOWING); ) if (3 != d.nodeType && m(d)) d = domUtils.getNextDomNode(d, !0, a); else {
@@ -4115,7 +4121,7 @@ function _typeof(e) {
                 return e ? e.tagName.toLowerCase() : "";
             }
         };
-    }, EI = domUtils.isBlockElm, FI = function(e) {
+    }, II = domUtils.isBlockElm, JI = function(e) {
         return domUtils.filterNodeList(e.selection.getStartElementPath(), function(e) {
             return e && 1 == e.nodeType && e.getAttribute("dir");
         });
@@ -4129,16 +4135,16 @@ function _typeof(e) {
             return function(e, t, i) {
                 var n, o = function(e) {
                     return 1 == e.nodeType ? !domUtils.isBookmarkNode(e) : !domUtils.isWhitespace(e);
-                }, r = FI(t);
+                }, r = JI(t);
                 if (r && e.collapsed) return r.setAttribute("dir", i);
                 n = e.createBookmark(), e.enlarge(!0);
-                for (var a, s = e.createBookmark(), l = domUtils.getNextDomNode(s.start, !1, o), d = e.cloneRange(); l && !(domUtils.getPosition(l, s.end) & domUtils.POSITION_FOLLOWING); ) if (3 != l.nodeType && EI(l)) l = domUtils.getNextDomNode(l, !0, o); else {
-                    for (d.setStartBefore(l); l && l !== s.end && !EI(l); ) a = l, l = domUtils.getNextDomNode(l, !1, null, function(e) {
-                        return !EI(e);
+                for (var a, s = e.createBookmark(), l = domUtils.getNextDomNode(s.start, !1, o), d = e.cloneRange(); l && !(domUtils.getPosition(l, s.end) & domUtils.POSITION_FOLLOWING); ) if (3 != l.nodeType && II(l)) l = domUtils.getNextDomNode(l, !0, o); else {
+                    for (d.setStartBefore(l); l && l !== s.end && !II(l); ) a = l, l = domUtils.getNextDomNode(l, !1, null, function(e) {
+                        return !II(e);
                     });
                     d.setEndAfter(a);
                     var c = d.getCommonAncestor();
-                    if (!domUtils.isBody(c) && EI(c)) c.setAttribute("dir", i), l = c; else {
+                    if (!domUtils.isBody(c) && II(c)) c.setAttribute("dir", i), l = c; else {
                         var u = e.document.createElement("p");
                         u.setAttribute("dir", i);
                         var m = d.extractContents();
@@ -4151,7 +4157,7 @@ function _typeof(e) {
             !0;
         },
         queryCommandValue: function() {
-            var e = FI(this);
+            var e = JI(this);
             return e ? e.getAttribute("dir") : "ltr";
         }
     }, UE.plugins.horizontal = function() {
@@ -4336,9 +4342,9 @@ function _typeof(e) {
                         break;
                     }
                     if (t) {
-                        for (var n = ""; t && "BR" != t.nodeName && new RegExp("^[\\s" + domUtils.fillChar + "]*$").test(t.nodeValue); ) n += t.nodeValue, 
+                        for (var n = ""; t && "BR" !== t.nodeName && new RegExp("^[\\s" + domUtils.fillChar + "]*$").test(t.nodeValue); ) n += t.nodeValue, 
                         t = t.nextSibling;
-                        if ("BR" != t.nodeName) (l = t.nodeValue.match(new RegExp("^([\\s" + domUtils.fillChar + "]+)"))) && l[1] && (n += l[1]);
+                        if ("BR" !== t.nodeName) (l = t.nodeValue.match(new RegExp("^([\\s" + domUtils.fillChar + "]+)"))) && l[1] && (n += l[1]);
                         n && (n = d.document.createTextNode(n), e.insertNode(n).setStartAfter(n));
                     }
                     e.collapse(!0).select(!0);
@@ -4366,9 +4372,9 @@ function _typeof(e) {
                     }
                     if (t) {
                         var l;
-                        for (n = ""; t && "BR" != t.nodeName && new RegExp("^[ " + domUtils.fillChar + "]*$").test(t.nodeValue); ) n += t.nodeValue, 
+                        for (n = ""; t && "BR" !== t.nodeName && new RegExp("^[ " + domUtils.fillChar + "]*$").test(t.nodeValue); ) n += t.nodeValue, 
                         t = t.nextSibling;
-                        if ("BR" != t.nodeName) (l = t.nodeValue.match(new RegExp("^([ " + domUtils.fillChar + "]+)"))) && l[1] && (n += l[1]);
+                        if ("BR" !== t.nodeName) (l = t.nodeValue.match(new RegExp("^([ " + domUtils.fillChar + "]+)"))) && l[1] && (n += l[1]);
                         n = d.document.createTextNode(n), e.insertNode(n).setStartAfter(n);
                     }
                     e.collapse(!0).select();
@@ -4423,7 +4429,7 @@ function _typeof(e) {
                     utils.each(UE.filterNode(UE.htmlparser(t), i.options.filterTxtRules).children, function(t) {
                         "element" === t.type ? "br" === t.tagName ? a.appendChild(i.document.createElement("br")) : dtd.$empty[t.tagName] || (utils.each(t.children, function(e) {
                             "element" === e.type ? "br" === e.tagName ? a.appendChild(i.document.createElement("br")) : dtd.$empty[t.tagName] || a.appendChild(i.document.createTextNode(utils.html(e.innerText().replace(/&nbsp;/g, " ")))) : a.appendChild(i.document.createTextNode(utils.html(e.data.replace(/&nbsp;/g, " "))));
-                        }), "BR" != a.lastChild.nodeName && a.appendChild(i.document.createElement("br"))) : a.appendChild(i.document.createTextNode(utils.html(t.data.replace(/&nbsp;/g, " ")))), 
+                        }), "BR" !== a.lastChild.nodeName && a.appendChild(i.document.createElement("br"))) : a.appendChild(i.document.createTextNode(utils.html(t.data.replace(/&nbsp;/g, " ")))), 
                         t.nextSibling() || "BR" !== a.lastChild.nodeName || a.removeChild(a.lastChild);
                     }), n.insertNode(a).select();
                 }
@@ -4929,7 +4935,7 @@ function _typeof(e) {
             domUtils.on(C.body, "cut", function() {
                 !C.selection.getRange().collapsed && C.undoManger && C.undoManger.save();
             }), domUtils.on(C.body, browser.ie || browser.opera ? "keydown" : "paste", function(e) {
-                (!browser.ie && !browser.opera || (e.ctrlKey || e.metaKey) && "86" == e.keyCode) && t.call(C, function(e) {
+                (browser.ie || browser.opera) && (!e.ctrlKey && !e.metaKey || "86" !== e.keyCode && 86 !== e.keyCode) || t.call(C, function(e) {
                     i(e);
                 });
             });
@@ -5047,7 +5053,7 @@ function _typeof(e) {
             UL: e(C.options.insertunorderedlist)
         }, n = C.options.listiconpath;
         for (var t in d) C.options.insertorderedlist.hasOwnProperty(t) || C.options.insertunorderedlist.hasOwnProperty(t) || delete d[t];
-        function L(e) {
+        function R(e) {
             var t = e.className;
             return domUtils.hasClass(e, /custom_/) ? t.match(/custom_(\w+)/)[1] : domUtils.getStyle(e, "list-style-type");
         }
@@ -5056,8 +5062,8 @@ function _typeof(e) {
                 if (domUtils.inDoc(o, s)) {
                     var e = o.parentNode;
                     if (e.tagName == o.tagName) {
-                        var t = L(o) || ("OL" === o.tagName ? "decimal" : "disc");
-                        if (t == (L(e) || ("OL" === e.tagName ? "decimal" : "disc"))) {
+                        var t = R(o) || ("OL" === o.tagName ? "decimal" : "disc");
+                        if (t == (R(e) || ("OL" === e.tagName ? "decimal" : "disc"))) {
                             var i = utils.indexOf(h[o.tagName], t);
                             i = i + 1 == h[o.tagName].length ? 0 : i + 1, D(o, h[o.tagName][i]);
                         }
@@ -5070,7 +5076,7 @@ function _typeof(e) {
                         if (e.style.cssText && (e.style.cssText = ""), e.firstChild) {
                             if (e.parentNode === o) {
                                 if (r++, domUtils.hasClass(o, /custom_/)) {
-                                    var t = 1, i = L(o);
+                                    var t = 1, i = R(o);
                                     if ("OL" === o.tagName) {
                                         if (i) switch (i) {
                                           case "cn":
@@ -5089,18 +5095,18 @@ function _typeof(e) {
                                 null === n || n.replace(/\s/g, "") || domUtils.removeAttributes(e, "class");
                             }
                         } else domUtils.remove(e);
-                    }), !l && R(o, o.tagName.toLowerCase(), L(o) || domUtils.getStyle(o, "list-style-type"), !0);
+                    }), !l && L(o, o.tagName.toLowerCase(), R(o) || domUtils.getStyle(o, "list-style-type"), !0);
                 }
             });
         }
-        function R(e, t, i, n) {
+        function L(e, t, i, n) {
             var o = e.nextSibling;
-            o && 1 == o.nodeType && o.tagName.toLowerCase() == t && (L(o) || domUtils.getStyle(o, "list-style-type") || ("ol" === t ? "decimal" : "disc")) == i && (domUtils.moveChild(o, e), 
+            o && 1 == o.nodeType && o.tagName.toLowerCase() == t && (R(o) || domUtils.getStyle(o, "list-style-type") || ("ol" === t ? "decimal" : "disc")) == i && (domUtils.moveChild(o, e), 
             0 == o.childNodes.length && domUtils.remove(o)), o && domUtils.isFillChar(o) && domUtils.remove(o);
             var r = e.previousSibling;
-            r && 1 == r.nodeType && r.tagName.toLowerCase() == t && (L(r) || domUtils.getStyle(r, "list-style-type") || ("ol" === t ? "decimal" : "disc")) == i && domUtils.moveChild(e, r), 
+            r && 1 == r.nodeType && r.tagName.toLowerCase() == t && (R(r) || domUtils.getStyle(r, "list-style-type") || ("ol" === t ? "decimal" : "disc")) == i && domUtils.moveChild(e, r), 
             r && domUtils.isFillChar(r) && domUtils.remove(r), !n && domUtils.isEmptyBlock(e) && domUtils.remove(e), 
-            L(e) && a(e.ownerDocument, !0);
+            R(e) && a(e.ownerDocument, !0);
         }
         function D(e, t) {
             d[t] && (e.className = "custom_" + t);
@@ -5112,7 +5118,7 @@ function _typeof(e) {
             var t = e.previousSibling;
             t && domUtils.isEmptyBlock(t) && domUtils.remove(t), (t = e.nextSibling) && domUtils.isEmptyBlock(t) && domUtils.remove(t);
         }
-        function O(e) {
+        function P(e) {
             for (;e && !domUtils.isBody(e); ) {
                 if ("TABLE" === e.nodeName) return null;
                 if ("LI" === e.nodeName) return e;
@@ -5184,7 +5190,7 @@ function _typeof(e) {
             if (t = domUtils.findParentByTagName(i.startContainer, "li", !0)) {
                 var a = t.parentNode, n = "OL" === a.tagName ? "ul" : "ol";
                 utils.each(r.getNodesByTagName(n), function(e) {
-                    if (e.tagName = a.tagName, e.setAttr(), e.parentNode === r) o = L(a) || ("OL" === a.tagName ? "decimal" : "disc"); else {
+                    if (e.tagName = a.tagName, e.setAttr(), e.parentNode === r) o = R(a) || ("OL" === a.tagName ? "decimal" : "disc"); else {
                         var t = e.parentNode.getAttr("class");
                         (o = t && /custom_/.test(t) ? t.match(/custom_(\w+)/)[1] : e.parentNode.getStyle("list-style-type")) || (o = "OL" === a.tagName ? "decimal" : "disc");
                     }
@@ -5201,7 +5207,7 @@ function _typeof(e) {
                 utils.each(n.children, function(e) {
                     if ("p" === e.tagName) {
                         for (var t; t = e.children.pop(); ) o.splice(r, 0, t), t.parentNode = n, lastNode = t;
-                        if (!(t = o[o.length - 1]) || "element" != t.type || "br" != t.tagName) {
+                        if (!(t = o[o.length - 1]) || "element" !== t.type || "br" !== t.tagName) {
                             var i = UE.uNode.createElement("br");
                             i.parentNode = n, o.push(i);
                         }
@@ -5235,12 +5241,12 @@ function _typeof(e) {
                     square: "n"
                 };
                 utils.each(e.getNodesByTagName("p"), function(e) {
-                    if ("MsoListParagraph" == e.getAttr("class")) {
+                    if ("MsoListParagraph" === e.getAttr("class")) {
                         e.setStyle("margin", ""), e.setStyle("margin-left", ""), e.setAttr("class", "");
                         var t, i = e, n = e;
-                        if ("li" != e.parentNode.tagName && (t = s(e.innerText(), e))) {
+                        if ("li" !== e.parentNode.tagName && (t = s(e.innerText(), e))) {
                             var o = UE.uNode.createElement(C.options.insertorderedlist.hasOwnProperty(t) ? "ol" : "ul");
-                            for (d[t] ? o.setAttr("class", "custom_" + t) : o.setStyle("list-style-type", t); e && "li" != e.parentNode.tagName && s(e.innerText(), e); ) (i = e.nextSibling()) || e.parentNode.insertBefore(o, e), 
+                            for (d[t] ? o.setAttr("class", "custom_" + t) : o.setStyle("list-style-type", t); e && "li" !== e.parentNode.tagName && s(e.innerText(), e); ) (i = e.nextSibling()) || e.parentNode.insertBefore(o, e), 
                             a(o, e, t), e = i;
                             !o.parentNode && e && e.parentNode && e.parentNode.insertBefore(o, e);
                         }
@@ -5277,7 +5283,7 @@ function _typeof(e) {
                 var r = C.selection.getRange(), a = domUtils.findParent(r.startContainer, function(e) {
                     return domUtils.isBlockElm(e);
                 }, !0), s = domUtils.findParentByTagName(r.startContainer, "li", !0);
-                if (a && "PRE" != a.tagName && !s) {
+                if (a && "PRE" !== a.tagName && !s) {
                     var l = a.innerHTML.replace(new RegExp(domUtils.fillChar, "g"), "");
                     /^\s*1\s*\.[^\d]/.test(l) && (a.innerHTML = l.replace(/^\s*1\s*\./, ""), r.setStartAtLast(a).collapse(!0).select(), 
                     C.__hasEnterExecCommand = !0, C.execCommand("insertorderedlist"), C.__hasEnterExecCommand = !1);
@@ -5364,7 +5370,7 @@ function _typeof(e) {
         }), C.addListener("keyup", function(e, t) {
             if (8 == (t.keyCode || t.which)) {
                 var i, n = C.selection.getRange();
-                (i = domUtils.findParentByTagName(n.startContainer, [ "ol", "ul" ], !0)) && R(i, i.tagName.toLowerCase(), L(i) || domUtils.getComputedStyle(i, "list-style-type"), !0);
+                (i = domUtils.findParentByTagName(n.startContainer, [ "ol", "ul" ], !0)) && L(i, i.tagName.toLowerCase(), R(i) || domUtils.getComputedStyle(i, "list-style-type"), !0);
             }
         }), C.addListener("tabkeydown", function() {
             var e = C.selection.getRange();
@@ -5388,7 +5394,7 @@ function _typeof(e) {
                         return e !== o;
                     }); else {
                         m = l.parentNode, f = C.document.createElement(m.tagName);
-                        var d = (c = utils.indexOf(h[f.tagName], L(m) || domUtils.getComputedStyle(m, "list-style-type"))) + 1 == h[f.tagName].length ? 0 : c + 1;
+                        var d = (c = utils.indexOf(h[f.tagName], R(m) || domUtils.getComputedStyle(m, "list-style-type"))) + 1 == h[f.tagName].length ? 0 : c + 1;
                         for (D(f, u = h[f.tagName][d]), m.insertBefore(f, l); l && !(domUtils.getPosition(l, n.end) & domUtils.POSITION_FOLLOWING); ) {
                             if (i = l.nextSibling, f.appendChild(l), !i || domUtils.isTagNode(i, "ol ul")) {
                                 if (i) for (;(i = i.firstChild) && "LI" !== i.tagName; ) ; else i = domUtils.getNextDomNode(l, !1, null, function(e) {
@@ -5398,25 +5404,25 @@ function _typeof(e) {
                             }
                             l = i;
                         }
-                        R(f, f.tagName.toLowerCase(), u), l = i;
+                        L(f, f.tagName.toLowerCase(), u), l = i;
                     }
                     return C.fireEvent("contentchange"), e.moveToBookmark(n).select(), !0;
                 }
                 if (t(i)) return !0;
                 var c, u, m = i.parentNode, f = C.document.createElement(m.tagName);
-                if (c = (c = utils.indexOf(h[f.tagName], L(m) || domUtils.getComputedStyle(m, "list-style-type"))) + 1 == h[f.tagName].length ? 0 : c + 1, 
+                if (c = (c = utils.indexOf(h[f.tagName], R(m) || domUtils.getComputedStyle(m, "list-style-type"))) + 1 == h[f.tagName].length ? 0 : c + 1, 
                 D(f, u = h[f.tagName][c]), domUtils.isStartInblock(e)) return C.fireEvent("saveScene"), 
-                n = e.createBookmark(), m.insertBefore(f, i), f.appendChild(i), R(f, f.tagName.toLowerCase(), u), 
+                n = e.createBookmark(), m.insertBefore(f, i), f.appendChild(i), L(f, f.tagName.toLowerCase(), u), 
                 C.fireEvent("contentchange"), e.moveToBookmark(n).select(!0), !0;
             }
         }), C.commands.insertorderedlist = C.commands.insertunorderedlist = {
             execCommand: function(e, t) {
                 t || (t = "insertorderedlist" === e.toLowerCase() ? "decimal" : "disc");
                 var i = this, n = this.selection.getRange(), o = function(e) {
-                    return 1 == e.nodeType ? "br" != e.tagName.toLowerCase() : !domUtils.isWhitespace(e);
+                    return 1 == e.nodeType ? "br" !== e.tagName.toLowerCase() : !domUtils.isWhitespace(e);
                 }, r = "insertorderedlist" === e.toLowerCase() ? "ol" : "ul", a = i.document.createDocumentFragment();
                 n.adjustmentBoundary().shrinkBoundary();
-                var s, l, d, c, u = n.createBookmark(!0), m = O(i.document.getElementById(u.start)), f = 0, h = O(i.document.getElementById(u.end)), p = 0;
+                var s, l, d, c, u = n.createBookmark(!0), m = P(i.document.getElementById(u.start)), f = 0, h = P(i.document.getElementById(u.end)), p = 0;
                 if (m || h) {
                     if (m && (s = m.parentNode), u.end || (h = m), h && (l = h.parentNode), s === l) {
                         for (;m !== h; ) {
@@ -5432,13 +5438,13 @@ function _typeof(e) {
                         }
                         a.appendChild(h), domUtils.breakParent(c, s), domUtils.isEmptyNode(c.previousSibling) && domUtils.remove(c.previousSibling), 
                         domUtils.isEmptyNode(c.nextSibling) && domUtils.remove(c.nextSibling);
-                        var v = L(s) || domUtils.getComputedStyle(s, "list-style-type") || ("insertorderedlist" === e.toLowerCase() ? "decimal" : "disc");
+                        var v = R(s) || domUtils.getComputedStyle(s, "list-style-type") || ("insertorderedlist" === e.toLowerCase() ? "decimal" : "disc");
                         if (s.tagName.toLowerCase() == r && v == t) {
                             for (var b = 0, y = i.document.createDocumentFragment(); A = a.firstChild; ) if (domUtils.isTagNode(A, "ol ul")) y.appendChild(A); else for (;A.firstChild; ) y.appendChild(A.firstChild), 
                             domUtils.remove(A);
                             c.parentNode.insertBefore(y, c);
                         } else D(d = i.document.createElement(r), t), d.appendChild(a), c.parentNode.insertBefore(d, c);
-                        return domUtils.remove(c), d && R(d, r, t), void n.moveToBookmark(u).select();
+                        return domUtils.remove(c), d && L(d, r, t), void n.moveToBookmark(u).select();
                     }
                     if (m) {
                         for (;m; ) {
@@ -5497,7 +5503,7 @@ function _typeof(e) {
                     a.appendChild(k);
                 } else E = domUtils.getNextDomNode(E, !0, o);
                 n.moveToBookmark(U).collapse(!0), D(d = i.document.createElement(r), t), d.appendChild(a), 
-                n.insertNode(d), R(d, r, t);
+                n.insertNode(d), L(d, r, t);
                 b = 0;
                 for (var A, I = domUtils.getElementsByTagName(d, "div"); A = I[b++]; ) A.getAttribute("tmpDiv") && domUtils.remove(A, !0);
                 n.moveToBookmark(u).select();
@@ -5520,10 +5526,10 @@ function _typeof(e) {
                         break;
                     }
                 }
-                return t ? L(t) || domUtils.getComputedStyle(t, "list-style-type") : null;
+                return t ? R(t) || domUtils.getComputedStyle(t, "list-style-type") : null;
             }
         };
-    }, kT = {
+    }, oT = {
         textarea: function(e, t) {
             var i = t.ownerDocument.createElement("textarea");
             return i.style.cssText = "position:absolute;resize:none;width:100%;height:100%;border:0;padding:0;margin:0;overflow-y:auto;", 
@@ -5610,7 +5616,7 @@ function _typeof(e) {
                         }
                     }), f.fireEvent("aftergetcontent");
                     var t = e.toHtml(!0);
-                    r = f.iframe.parentNode, (a = kT["codemirror" === h.sourceEditor && window.CodeMirror ? "codemirror" : "textarea"](f, r)).setContent(t), 
+                    r = f.iframe.parentNode, (a = oT["codemirror" === h.sourceEditor && window.CodeMirror ? "codemirror" : "textarea"](f, r)).setContent(t), 
                     s = f.setContent, f.setContent = function(e) {
                         var t = UE.htmlparser(e);
                         f.filterInputRule(t), e = t.toHtml(), a.setContent(e);
@@ -5804,9 +5810,9 @@ function _typeof(e) {
                 if ((i = this.selection.getRange()).collapsed) {
                     if ((r = domUtils.findParentByTagName(i.startContainer, [ "h1", "h2", "h3", "h4", "h5", "h6" ], !0)) && domUtils.isEmptyBlock(r)) {
                         var n = r.previousSibling;
-                        if (n && "TABLE" != n.nodeName) return domUtils.remove(r), void i.setStartAtLast(n).setCursor(!1, !0);
+                        if (n && "TABLE" !== n.nodeName) return domUtils.remove(r), void i.setStartAtLast(n).setCursor(!1, !0);
                         var o = r.nextSibling;
-                        if (o && "TABLE" != o.nodeName) return domUtils.remove(r), void i.setStartAtFirst(o).setCursor(!1, !0);
+                        if (o && "TABLE" !== o.nodeName) return domUtils.remove(r), void i.setStartAtFirst(o).setCursor(!1, !0);
                     }
                     if (domUtils.isBody(i.startContainer)) {
                         var r = domUtils.createElement(this.document, "p", {
@@ -5955,7 +5961,7 @@ function _typeof(e) {
             var a, s = this;
             s.setOpt("imageScaleEnabled", !0), !browser.ie && s.options.imageScaleEnabled && s.addListener("click", function(e, t) {
                 var i = s.selection.getRange().getClosedNode();
-                if (i && "IMG" === i.tagName && "false" != s.body.contentEditable) {
+                if (i && "IMG" === i.tagName && "false" !== s.body.contentEditable) {
                     if (i.getAttribute("anchorname") || domUtils.hasClass(i, "loadingclass") || domUtils.hasClass(i, "loaderrorclass")) return;
                     if (!a) {
                         (a = new l()).init(s), s.ui.getDom().appendChild(a.resizer);
@@ -5985,9 +5991,9 @@ function _typeof(e) {
                         });
                     }
                     a.show(i);
-                } else a && "none" != a.resizer.style.display && a.hide();
+                } else a && "none" !== a.resizer.style.display && a.hide();
             }), browser.webkit && s.addListener("click", function(e, t) {
-                "IMG" === t.target.tagName && "false" != s.body.contentEditable && new dom.Range(s.document).selectNode(t.target).select();
+                "IMG" === t.target.tagName && "false" !== s.body.contentEditable && new dom.Range(s.document).selectNode(t.target).select();
             });
         };
     }(), UE.plugin.register("autolink", function() {
@@ -6153,10 +6159,10 @@ function _typeof(e) {
             var e, t, i, n = d(r.container), o = r.options.toolbarTopOffset || 0;
             n.top < 0 && n.bottom - s.offsetHeight > o ? (e = domUtils.getXY(s), t = domUtils.getComputedStyle(s, "position"), 
             i = domUtils.getComputedStyle(s, "left"), s.style.width = s.offsetWidth + "px", 
-            s.style.zIndex = 1 * r.options.zIndex + 1, s.parentNode.insertBefore(m, s), c || u && browser.ie ? ("absolute" != s.style.position && (s.style.position = "absolute"), 
+            s.style.zIndex = 1 * r.options.zIndex + 1, s.parentNode.insertBefore(m, s), c || u && browser.ie ? ("absolute" !== s.style.position && (s.style.position = "absolute"), 
             s.style.top = (document.body.scrollTop || document.documentElement.scrollTop) - l + a + "px") : (browser.ie7Compat && f && (f = !1, 
             s.style.left = domUtils.getXY(s).x - document.documentElement.getBoundingClientRect().left + 2 + "px"), 
-            "fixed" != s.style.position && (s.style.position = "fixed", s.style.top = a + "px", 
+            "fixed" !== s.style.position && (s.style.position = "fixed", s.style.top = a + "px", 
             ("absolute" === t || "relative" === t) && parseFloat(i) && (s.style.left = e.x + "px")))) : h();
         }
     }, UE.plugins.video = function() {
@@ -6214,25 +6220,25 @@ function _typeof(e) {
                 return e && ("edui-faked-video" === e.className || -1 != e.className.indexOf("edui-upload-video")) ? 1 : 0;
             }
         };
-    }, LY = UE.UETable = function(e) {
+    }, PY = UE.UETable = function(e) {
         this.table = e, this.indexTable = [], this.selectedTds = [], this.cellsRange = {}, 
         this.update(e);
-    }, LY.removeSelectedClass = function(e) {
+    }, PY.removeSelectedClass = function(e) {
         utils.each(e, function(e) {
             domUtils.removeClasses(e, "selectTdClass");
         });
-    }, LY.addSelectedClass = function(e) {
+    }, PY.addSelectedClass = function(e) {
         utils.each(e, function(e) {
             domUtils.addClass(e, "selectTdClass");
         });
-    }, LY.isEmptyBlock = function(e) {
+    }, PY.isEmptyBlock = function(e) {
         var t = new RegExp(domUtils.fillChar, "g");
         if (0 < e[browser.ie ? "innerText" : "textContent"].replace(/^\s*$/, "").replace(t, "").length) return 0;
         for (var i in dtd.$isNotEmpty) if (dtd.$isNotEmpty.hasOwnProperty(i) && e.getElementsByTagName(i).length) return 0;
         return 1;
-    }, LY.getWidth = function(e) {
+    }, PY.getWidth = function(e) {
         return e ? parseInt(domUtils.getComputedStyle(e, "width"), 10) : 0;
-    }, LY.getTableCellAlignState = function(e) {
+    }, PY.getTableCellAlignState = function(e) {
         !utils.isArray(e) && (e = [ e ]);
         var i = {}, n = [ "align", "valign" ], o = null, r = !0;
         return utils.each(e, function(t) {
@@ -6240,7 +6246,7 @@ function _typeof(e) {
                 if (o = t.getAttribute(e), !i[e] && o) i[e] = o; else if (!i[e] || o !== i[e]) return r = !1;
             }), r;
         }), r ? i : null;
-    }, LY.getTableItemsByRange = function(e) {
+    }, PY.getTableItemsByRange = function(e) {
         var t = e.selection.getStart();
         t && t.id && 0 === t.id.indexOf("_baidu_bookmark_start_") && t.nextSibling && (t = t.nextSibling);
         var i = t && domUtils.findParentByTagName(t, [ "td", "th" ], !0), n = i && i.parentNode, o = n && domUtils.findParentByTagName(n, [ "table" ]), r = o && o.getElementsByTagName("caption")[0];
@@ -6250,10 +6256,10 @@ function _typeof(e) {
             table: o,
             caption: r
         };
-    }, LY.getUETableBySelected = function(e) {
-        var t = LY.getTableItemsByRange(e).table;
+    }, PY.getUETableBySelected = function(e) {
+        var t = PY.getTableItemsByRange(e).table;
         return t && t.ueTable && t.ueTable.selectedTds.length ? t.ueTable : null;
-    }, LY.getDefaultValue = function(e, t) {
+    }, PY.getDefaultValue = function(e, t) {
         var i, n, o, r, a = {
             thin: "0px",
             medium: "1px",
@@ -6276,11 +6282,11 @@ function _typeof(e) {
             tdPadding: n,
             tdBorder: o
         };
-    }, LY.getUETable = function(e) {
+    }, PY.getUETable = function(e) {
         var t = e.tagName.toLowerCase();
-        return (e = "td" === t || "th" === t || "caption" === t ? domUtils.findParentByTagName(e, "table", !0) : e).ueTable || (e.ueTable = new LY(e)), 
+        return (e = "td" === t || "th" === t || "caption" === t ? domUtils.findParentByTagName(e, "table", !0) : e).ueTable || (e.ueTable = new PY(e)), 
         e.ueTable;
-    }, LY.cloneCell = function(e, t, i) {
+    }, PY.cloneCell = function(e, t, i) {
         if (!e || utils.isString(e)) return this.table.ownerDocument.createElement(e || "td");
         var n = domUtils.hasClass(e, "selectTdClass");
         n && domUtils.removeClasses(e, "selectTdClass");
@@ -6290,7 +6296,7 @@ function _typeof(e) {
         o.style.borderLeftColor = e.style.borderRightColor, o.style.borderLeftWidth = e.style.borderRightWidth, 
         o.style.borderTopColor = e.style.borderBottomColor, o.style.borderTopWidth = e.style.borderBottomWidth, 
         n && domUtils.addClass(e, "selectTdClass"), o;
-    }, LY.prototype = {
+    }, PY.prototype = {
         getMaxRows: function() {
             for (var e, t = this.table.rows, i = 1, n = 0; e = t[n]; n++) {
                 for (var o, r = 1, a = 0; o = e.cells[a++]; ) r = Math.max(o.rowSpan || 1, r);
@@ -6348,7 +6354,7 @@ function _typeof(e) {
         setCellContent: function(e, t) {
             e.innerHTML = t || (browser.ie ? domUtils.fillChar : "<br />");
         },
-        cloneCell: LY.cloneCell,
+        cloneCell: PY.cloneCell,
         getSameStartPosXCells: function(e) {
             try {
                 for (var t, i = domUtils.getXY(e).x + e.offsetWidth, n = this.table.rows, o = [], r = 0; r < this.rowsNum; r++) {
@@ -6454,11 +6460,11 @@ function _typeof(e) {
             return d;
         },
         clearSelected: function() {
-            LY.removeSelectedClass(this.selectedTds), this.selectedTds = [], this.cellsRange = {};
+            PY.removeSelectedClass(this.selectedTds), this.selectedTds = [], this.cellsRange = {};
         },
         setSelected: function(e) {
             var t = this.getCells(e);
-            LY.addSelectedClass(t), this.selectedTds = t, this.cellsRange = e;
+            PY.addSelectedClass(t), this.selectedTds = t, this.cellsRange = e;
         },
         isFullRow: function() {
             var e = this.cellsRange;
@@ -6484,7 +6490,7 @@ function _typeof(e) {
             } catch (e) {}
         },
         moveContent: function(e, t) {
-            if (!LY.isEmptyBlock(t)) if (LY.isEmptyBlock(e)) e.innerHTML = t.innerHTML; else {
+            if (!PY.isEmptyBlock(t)) if (PY.isEmptyBlock(e)) e.innerHTML = t.innerHTML; else {
                 var i = e.lastChild;
                 for (3 != i.nodeType && dtd.$block[i.tagName] || e.appendChild(e.ownerDocument.createElement("br")); i = t.firstChild; ) e.appendChild(i);
             }
@@ -6593,7 +6599,7 @@ function _typeof(e) {
             });
         },
         updateWidth: function(t, e) {
-            var i = this.table, n = LY.getWidth(i) - 2 * e.tdPadding - e.tdBorder + t;
+            var i = this.table, n = PY.getWidth(i) - 2 * e.tdPadding - e.tdBorder + t;
             if (n < i.ownerDocument.body.offsetWidth) i.setAttribute("width", n); else {
                 var o = domUtils.getElementsByTagName(this.table, "td th");
                 utils.each(o, function(e) {
@@ -6820,7 +6826,7 @@ function _typeof(e) {
                 var e = u(this).table;
                 if (e) {
                     var t = e.rows[0];
-                    return "th" != t.cells[t.cells.length - 1].tagName.toLowerCase() ? 0 : -1;
+                    return "th" !== t.cells[t.cells.length - 1].tagName.toLowerCase() ? 0 : -1;
                 }
                 return -1;
             },
@@ -7241,7 +7247,7 @@ function _typeof(e) {
             return "TD" === e.tagName || "TH" === e.tagName ? e : (t = domUtils.findParentByTagName(e, "td", !0) || domUtils.findParentByTagName(e, "th", !0)) ? t : null;
             var t;
         }
-        function L(e) {
+        function R(e) {
             var t = new RegExp(domUtils.fillChar, "g");
             if (0 < e[browser.ie ? "innerText" : "textContent"].replace(/^\s*$/, "").replace(t, "").length) return 0;
             for (var i in dtd.$isNotEmpty) if (e.getElementsByTagName(i).length) return 0;
@@ -7260,7 +7266,7 @@ function _typeof(e) {
             if (!$()) try {
                 var t, i = _(e.target || e.srcElement);
                 if (f && (u.body.style.webkitUserSelect = "none", (Math.abs(p.x - e.clientX) > a || Math.abs(p.y - e.clientY) > a) && (E(), 
-                f = !1, h = 0, P(e))), b && N) return h = 0, u.body.style.webkitUserSelect = "none", 
+                f = !1, h = 0, O(e))), b && N) return h = 0, u.body.style.webkitUserSelect = "none", 
                 u.selection.getNative()[browser.ie9below ? "empty" : "removeAllRanges"](), t = w(e), 
                 D(u, !0, b, t, i), void ("h" === b ? C.style.left = function(e, t) {
                     var i = S(e);
@@ -7277,10 +7283,10 @@ function _typeof(e) {
                 if (i) {
                     if (!0 === u.fireEvent("excludetable", i)) return;
                     var n = U(i, t = w(e)), o = domUtils.findParentByTagName(i, "table", !0);
-                    if (R(o, i, e, !0)) {
+                    if (L(o, i, e, !0)) {
                         if (!0 === u.fireEvent("excludetable", o)) return;
                         u.body.style.cursor = "url(" + u.options.cursorpath + "h.png),pointer";
-                    } else if (R(o, i, e)) {
+                    } else if (L(o, i, e)) {
                         if (!0 === u.fireEvent("excludetable", o)) return;
                         u.body.style.cursor = "url(" + u.options.cursorpath + "v.png),pointer";
                     } else {
@@ -7321,7 +7327,7 @@ function _typeof(e) {
                 }, 2e3);
             }
         }
-        function R(e, t, i, n) {
+        function L(e, t, i, n) {
             var o = w(i), r = U(t, o);
             if (n) {
                 var a = e.getElementsByTagName("caption")[0], s = a ? a.offsetHeight : 0;
@@ -7332,14 +7338,14 @@ function _typeof(e) {
         function D(e, t, i, n, o) {
             try {
                 e.body.style.cursor = "h" === i ? "col-resize" : "v" === i ? "row-resize" : "text", 
-                browser.ie && (!i || x || k(e) ? j(e) : (W(e, e.document), Y(i, o))), y = t;
+                browser.ie && (!i || x || k(e) ? W(e) : (j(e, e.document), Y(i, o))), y = t;
             } catch (e) {}
         }
         function U(e, t) {
             var i = domUtils.getXY(e);
             return i ? i.x + e.offsetWidth - t.x < n ? "h" : t.x - i.x < n ? "h1" : i.y + e.offsetHeight - t.y < n ? "v" : t.y - i.y < n ? "v1" : "" : "";
         }
-        function O(e, t) {
+        function P(e, t) {
             if (!$()) if (p = {
                 x: t.clientX,
                 y: t.clientY
@@ -7365,7 +7371,7 @@ function _typeof(e) {
                         return i;
                     }(e));
                     E(), f = !0, r = setTimeout(function() {
-                        P(e);
+                        O(e);
                     }, g);
                 }(e) : (u.document.body.style.webkitUserSelect = "", x = !0, u.addListener("mouseover", H));
             }(t);
@@ -7373,11 +7379,11 @@ function _typeof(e) {
         function E() {
             r && clearTimeout(r), r = null;
         }
-        function P(e) {
+        function O(e) {
             if (f = !1, v = e.target || e.srcElement) {
                 var t = U(v, w(e));
                 /\d/.test(t) && (t = t.replace(/\d/, ""), v = S(v).getPreviewCell(v, "v" === t)), 
-                j(u), W(u, u.document), u.fireEvent("saveScene"), Y(t, v), x = !0, b = t, N = v;
+                W(u), j(u, u.document), u.fireEvent("saveScene"), Y(t, v), x = !0, b = t, N = v;
             }
         }
         function M(e, t) {
@@ -7390,7 +7396,7 @@ function _typeof(e) {
                 }, g), 2 === h)) return h = 0, void function(e) {
                     h = 0;
                     var t, i = _((e = e || u.window.event).target || e.srcElement);
-                    if (i && (t = U(i, w(e))) && (j(u), "h1" === t && (t = "h", R(domUtils.findParentByTagName(i, "table"), i, e) ? u.execCommand("adaptbywindow") : (i = S(i).getPreviewCell(i)) && u.selection.getRange().selectNodeContents(i).setCursor(!0, !0)), 
+                    if (i && (t = U(i, w(e))) && (W(u), "h1" === t && (t = "h", L(domUtils.findParentByTagName(i, "table"), i, e) ? u.execCommand("adaptbywindow") : (i = S(i).getPreviewCell(i)) && u.selection.getRange().selectNodeContents(i).setCursor(!0, !0)), 
                     "h" === t)) {
                         var n = S(i), o = q(i, n.table, !0);
                         o = function(e, t) {
@@ -7453,7 +7459,7 @@ function _typeof(e) {
                                 if (i) for (var n, o = i.getSameEndPosCells(e, "y"), r = o[0] ? o[0].offsetHeight : 0, a = 0; n = o[a++]; ) F(n, t, r);
                             }(N, s.y - a.y - N.offsetHeight);
                         }
-                        return b = "", N = null, j(i), void i.fireEvent("saveScene");
+                        return b = "", N = null, W(i), void i.fireEvent("saveScene");
                     }
                     if (v) {
                         var l = S(v), d = l ? l.selectedTds[0] : null;
@@ -7544,7 +7550,7 @@ function _typeof(e) {
                 return T.tabcellSpace;
             }, T.tabcellSpace;
         }
-        function W(e, t) {
+        function j(e, t) {
             x || (C = e.document.createElement("div"), domUtils.setAttributes(C, {
                 id: "ue_tableDragLine",
                 unselectable: "on",
@@ -7555,7 +7561,7 @@ function _typeof(e) {
                 style: "background-color:blue;position:absolute;padding:0;margin:0;background-image:none;border:0px none;opacity:0;filter:alpha(opacity=0)"
             }), e.body.appendChild(C));
         }
-        function j(e) {
+        function W(e) {
             if (!x) for (var t; t = e.document.getElementById("ue_tableDragLine"); ) domUtils.remove(t);
         }
         function Y(e, t) {
@@ -7602,7 +7608,7 @@ function _typeof(e) {
                     (o = k(i)) && o.selectedTds.length && (o.isFullCol() ? i.execCommand("deletecol") : o.isFullRow() ? i.execCommand("deleterow") : i.fireEvent("delcells"), 
                     domUtils.preventDefault(t));
                     var r = domUtils.findParentByTagName(i.selection.getStart(), "caption", !0), a = i.selection.getRange();
-                    if (a.collapsed && r && L(r)) {
+                    if (a.collapsed && r && R(r)) {
                         i.fireEvent("saveScene");
                         var s = r.parentNode;
                         domUtils.remove(r), s && a.setStart(s.rows[0].cells[0], 0).setCursor(!1, !0), i.fireEvent("saveScene");
@@ -7708,7 +7714,7 @@ function _typeof(e) {
                     domUtils.remove(e);
                 }), domUtils.findParentByTagName(i.selection.getStart(), "caption", !0) && (o.innerHTML = o[browser.ie ? "innerText" : "textContent"])) : utils.each(r, function(e) {
                     I(e, !0), domUtils.removeAttributes(e, [ "style", "border" ]), utils.each(domUtils.getElementsByTagName(e, "td"), function(e) {
-                        L(e) && domUtils.fillNode(i.document, e), I(e, !0);
+                        R(e) && domUtils.fillNode(i.document, e), I(e, !0);
                     });
                 }), t.html = o.innerHTML;
             }), u.addListener("afterpaste", function() {
@@ -7732,7 +7738,7 @@ function _typeof(e) {
                 D(u, !1, "", null);
             }), u.addListener("contentchange", function() {
                 var d = this;
-                if (j(d), !k(d)) {
+                if (W(d), !k(d)) {
                     var e = d.selection.getRange().startContainer;
                     e = domUtils.findParentByTagName(e, [ "td", "th" ], !0), utils.each(domUtils.getElementsByTagName(d.document, "table"), function(e) {
                         !0 !== d.fireEvent("excludetable", e) && (e.ueTable = new T(e), e.onmouseover = function() {
@@ -7742,17 +7748,17 @@ function _typeof(e) {
                                 d.fireEvent("contentchange", 50);
                             }, !0);
                         }, e.onmouseout = function() {
-                            d.fireEvent("tablemouseout", e), D(d, !1, "", null), j(d);
+                            d.fireEvent("tablemouseout", e), D(d, !1, "", null), W(d);
                         }, e.onclick = function(e) {
                             var t = _((e = d.window.event || e).target || e.srcElement);
                             if (t) {
                                 var i, n = S(t), o = n.table, r = n.getCellInfo(t), a = d.selection.getRange();
-                                if (R(o, t, e, !0)) {
+                                if (L(o, t, e, !0)) {
                                     var s = n.getCell(n.indexTable[n.rowsNum - 1][r.colIndex].rowIndex, n.indexTable[n.rowsNum - 1][r.colIndex].cellIndex);
                                     e.shiftKey && n.selectedTds.length ? n.selectedTds[0] !== s ? (i = n.getCellsRange(n.selectedTds[0], s), 
                                     n.setSelected(i)) : a && a.selectNodeContents(s).select() : t !== s ? (i = n.getCellsRange(t, s), 
                                     n.setSelected(i)) : a && a.selectNodeContents(s).select();
-                                } else if (R(o, t, e)) {
+                                } else if (L(o, t, e)) {
                                     var l = n.getCell(n.indexTable[r.rowIndex][n.colsNum - 1].rowIndex, n.indexTable[r.rowIndex][n.colsNum - 1].cellIndex);
                                     e.shiftKey && n.selectedTds.length ? n.selectedTds[0] !== l ? (i = n.getCellsRange(n.selectedTds[0], l), 
                                     n.setSelected(i)) : a && a.selectNodeContents(l).select() : t !== l ? (i = n.getCellsRange(t, l), 
@@ -7769,7 +7775,7 @@ function _typeof(e) {
                 r = !0, n[o = l] ? n[o] : r ? n[o % n.length] : "");
             }), u.addListener("uninterlacetable", function(e, t) {
                 if (t) for (var i = t.rows, n = this.options.classList, o = i.length, r = 0; r < o; r++) domUtils.removeClasses(i[r], n);
-            }), u.addListener("mousedown", O), u.addListener("mouseup", M), domUtils.on(u.body, "dragstart", function(e) {
+            }), u.addListener("mousedown", P), u.addListener("mouseup", M), domUtils.on(u.body, "dragstart", function(e) {
                 M.call(u, "dragstart", e);
             }), u.addOutputRule(function(e) {
                 utils.each(e.getNodesByTagName("div"), function(e) {
@@ -7788,7 +7794,7 @@ function _typeof(e) {
                         var n = domUtils.findParentByTagName(t, [ "td", "th" ], !0), o = S(n);
                         a = 1 < n.rowSpan ? a : o.getCellInfo(n).rowIndex;
                         var r = o.getTabNextCell(n, a);
-                        r ? L(r) ? e.setStart(r, 0).setCursor(!1, !0) : e.selectNodeContents(r).select() : (u.fireEvent("saveScene"), 
+                        r ? R(r) ? e.setStart(r, 0).setCursor(!1, !0) : e.selectNodeContents(r).select() : (u.fireEvent("saveScene"), 
                         u.__hasEnterExecCommand = !0, this.execCommand("insertrownext"), u.__hasEnterExecCommand = !1, 
                         (e = this.selection.getRange()).setStart(i.rows[i.rows.length - 1].cells[0], 0).setCursor(), 
                         u.fireEvent("saveScene"));
@@ -7835,7 +7841,7 @@ function _typeof(e) {
                 if (s) {
                     if (!r || A[e] || s.notNeedUndo || i.__hasEnterExecCommand) o = h.apply(i, arguments); else {
                         i.__hasEnterExecCommand = !0, i.fireEvent("beforeexeccommand", e), n = r.selectedTds;
-                        for (var l, d, c, u = -2, m = -2, f = 0; c = n[f]; f++) L(c) ? a.setStart(c, 0).setCursor(!1, !0) : a.selectNode(c).select(!0), 
+                        for (var l, d, c, u = -2, m = -2, f = 0; c = n[f]; f++) R(c) ? a.setStart(c, 0).setCursor(!1, !0) : a.selectNode(c).select(!0), 
                         d = i.queryCommandState(e), l = i.queryCommandValue(e), -1 != d && (u === d && m === l || (i._ignoreContentChange = !0, 
                         o = h.apply(i, arguments), i._ignoreContentChange = !1), u = i.queryCommandState(e), 
                         m = i.queryCommandValue(e), domUtils.isEmptyBlock(c) && domUtils.fillNode(i.document, c));
@@ -7909,7 +7915,7 @@ function _typeof(e) {
             queryCommandState: function(e) {
                 var t = c(this).table;
                 if (t && "enablesort" === e) for (var i = domUtils.getElementsByTagName(t, "th td"), n = 0; n < i.length; n++) if (1 < i[n].getAttribute("colspan") || 1 < i[n].getAttribute("rowspan")) return -1;
-                return t ? "enablesort" === e ^ "sortEnabled" != t.getAttribute("data-sort") ? -1 : 0 : -1;
+                return t ? "enablesort" === e ^ "sortEnabled" !== t.getAttribute("data-sort") ? -1 : 0 : -1;
             },
             execCommand: function(e) {
                 var t = c(this).table;
@@ -8418,7 +8424,7 @@ function _typeof(e) {
             execCommand: function(e) {
                 if (u) return u = 0, c = [], void d.removeListener("mouseup", m);
                 var t = d.selection.getRange();
-                if (!(l = t.getClosedNode()) || "IMG" != l.tagName) {
+                if (!(l = t.getClosedNode()) || "IMG" !== l.tagName) {
                     t.collapse(!0).shrinkBoundary();
                     var i = t.startContainer;
                     c = domUtils.findParents(i, !0, function(e) {
@@ -8751,7 +8757,7 @@ function _typeof(e) {
                 }), n.moveToBookmark(o).select();
             }), c.execCommand("inserthtml", s), c.getOpt(u + "ActionName")) if (e.size > n) l(c.getLang("autoupload.exceedSizeError")); else {
                 var f = e.name ? e.name.substr(e.name.lastIndexOf(".")) : "";
-                if (f && "image" != u || o && -1 == (o.join("") + ".").indexOf(f.toLowerCase() + ".")) l(c.getLang("autoupload.exceedTypeError")); else {
+                if (f && "image" !== u || o && -1 == (o.join("") + ".").indexOf(f.toLowerCase() + ".")) l(c.getLang("autoupload.exceedTypeError")); else {
                     var h = new XMLHttpRequest(), p = new FormData(), g = utils.serializeParam(c.queryCommandValue("serverparam")) || "", v = utils.formatUrl(a + (-1 == a.indexOf("?") ? "?" : "&") + g);
                     p.append(i, e, e.name || "blob." + e.type.substr("image/".length)), p.append("type", "ajax"), 
                     h.open("post", v, !0), h.setRequestHeader("X-Requested-With", "XMLHttpRequest"), 
@@ -9192,7 +9198,7 @@ function _typeof(e) {
             }
         };
     });
-    var baidu = baidu || {}, Bva, Cva, Dva, Eva, cwa, dwa, ewa, iwa, jwa, kwa, lwa, mwa, eya, fya, gya, hya, Lya, Mya, Nya, Oya, yza, zza, Aza, Bza, Qza, Rza, Tza, Uza, Vza, kAa, lAa, mAa, nAa, oAa, pAa, GAa, HAa, IAa, JAa, KAa, VAa, WAa, XAa, SBa, TBa, UBa, VBa, WBa, lCa, mCa, nCa, oCa, pCa, BCa, CCa, DCa, ECa, cEa, dEa, eEa, fEa, gEa, MEa, NEa, OEa, FEa, GEa, HEa, IEa, JEa, KEa, LEa, sGa, tGa, uGa, vGa, DGa, EGa, FGa, GGa, ZHa, $Ha, _Ha, dIa, eIa, fIa, gIa;
+    var baidu = baidu || {}, Fva, Gva, Hva, Iva, gwa, hwa, iwa, mwa, nwa, owa, pwa, qwa, iya, jya, kya, lya, Pya, Qya, Rya, Sya, Cza, Dza, Eza, Fza, Uza, Vza, Xza, Yza, Zza, oAa, pAa, qAa, rAa, sAa, tAa, KAa, LAa, MAa, NAa, OAa, ZAa, $Aa, _Aa, WBa, XBa, YBa, ZBa, $Ba, pCa, qCa, rCa, sCa, tCa, FCa, GCa, HCa, ICa, gEa, hEa, iEa, jEa, kEa, QEa, REa, SEa, JEa, KEa, LEa, MEa, NEa, OEa, PEa, wGa, xGa, yGa, zGa, HGa, IGa, JGa, KGa, bIa, cIa, dIa, hIa, iIa, jIa, kIa;
     baidu.editor = baidu.editor || {}, UE.ui = baidu.editor.ui = {}, function() {
         var r = baidu.editor.browser, a = baidu.editor.dom.domUtils, i = "$EDITORUI", n = window[i] = {}, t = "ID" + i, o = 0, s = baidu.editor.ui.uiUtils = {
             uid: function(e) {
@@ -9280,7 +9286,7 @@ function _typeof(e) {
             copyAttributes: function(e, t) {
                 for (var i = t.attributes, n = i.length; n--; ) {
                     var o = i[n];
-                    "style" == o.nodeName || "class" == o.nodeName || r.ie && !o.specified || e.setAttribute(o.nodeName, o.nodeValue);
+                    "style" === o.nodeName || "class" === o.nodeName || r.ie && !o.specified || e.setAttribute(o.nodeName, o.nodeValue);
                 }
                 t.className && a.addClass(e, t.className), t.style.cssText && (e.style.cssText += ";" + t.style.cssText);
             },
@@ -9338,23 +9344,23 @@ function _typeof(e) {
                 top: 0
             });
         }
-    }(), Bva = baidu.editor.utils, Cva = baidu.editor.ui.uiUtils, Dva = baidu.editor.EventBase, 
-    Eva = baidu.editor.ui.UIBase = function() {}, Eva.prototype = {
+    }(), Fva = baidu.editor.utils, Gva = baidu.editor.ui.uiUtils, Hva = baidu.editor.EventBase, 
+    Iva = baidu.editor.ui.UIBase = function() {}, Iva.prototype = {
         className: "",
         uiName: "",
         initOptions: function(e) {
             for (var t in e) this[t] = e[t];
-            this.id = this.id || "edui" + Cva.uid();
+            this.id = this.id || "edui" + Gva.uid();
         },
         initUIBase: function() {
-            this._globalKey = Bva.unhtml(Cva.setGlobal(this.id, this));
+            this._globalKey = Fva.unhtml(Gva.setGlobal(this.id, this));
         },
         render: function(e) {
-            for (var t, i = this.renderHtml(), n = Cva.createElementByHtml(i), o = domUtils.getElementsByTagName(n, "*"), r = "edui-" + (this.theme || this.editor.options.theme), a = document.getElementById("edui_fixedlayer"), s = 0; t = o[s++]; ) domUtils.addClass(t, r);
+            for (var t, i = this.renderHtml(), n = Gva.createElementByHtml(i), o = domUtils.getElementsByTagName(n, "*"), r = "edui-" + (this.theme || this.editor.options.theme), a = document.getElementById("edui_fixedlayer"), s = 0; t = o[s++]; ) domUtils.addClass(t, r);
             domUtils.addClass(n, r), a && (a.className = "", domUtils.addClass(a, r));
             var l = this.getDom();
-            null != l ? (l.parentNode.replaceChild(n, l), Cva.copyAttributes(n, l)) : ("string" == typeof e && (e = document.getElementById(e)), 
-            e = e || Cva.getFixedLayer(), domUtils.addClass(e, r), e.appendChild(n)), this.postRender();
+            null != l ? (l.parentNode.replaceChild(n, l), Gva.copyAttributes(n, l)) : ("string" == typeof e && (e = document.getElementById(e)), 
+            e = e || Gva.getFixedLayer(), domUtils.addClass(e, r), e.appendChild(n)), this.postRender();
         },
         getDom: function(e) {
             return e ? document.getElementById(this.id + "_" + e) : document.getElementById(this.id);
@@ -9374,12 +9380,12 @@ function _typeof(e) {
         },
         dispose: function() {
             var e = this.getDom();
-            e && baidu.editor.dom.domUtils.remove(e), Cva.unsetGlobal(this.id);
+            e && baidu.editor.dom.domUtils.remove(e), Gva.unsetGlobal(this.id);
         }
-    }, Bva.inherits(Eva, Dva), cwa = baidu.editor.utils, dwa = baidu.editor.ui.UIBase, 
-    ewa = baidu.editor.ui.Separator = function(e) {
+    }, Fva.inherits(Iva, Hva), gwa = baidu.editor.utils, hwa = baidu.editor.ui.UIBase, 
+    iwa = baidu.editor.ui.Separator = function(e) {
         this.initOptions(e), this.initSeparator();
-    }, ewa.prototype = {
+    }, iwa.prototype = {
         uiName: "separator",
         initSeparator: function() {
             this.initUIBase();
@@ -9387,16 +9393,16 @@ function _typeof(e) {
         getHtmlTpl: function() {
             return '<div id="##" class="edui-box %%"></div>';
         }
-    }, cwa.inherits(ewa, dwa), iwa = baidu.editor.utils, jwa = baidu.editor.dom.domUtils, 
-    kwa = baidu.editor.ui.UIBase, lwa = baidu.editor.ui.uiUtils, mwa = baidu.editor.ui.Mask = function(e) {
+    }, gwa.inherits(iwa, hwa), mwa = baidu.editor.utils, nwa = baidu.editor.dom.domUtils, 
+    owa = baidu.editor.ui.UIBase, pwa = baidu.editor.ui.uiUtils, qwa = baidu.editor.ui.Mask = function(e) {
         this.initOptions(e), this.initUIBase();
-    }, mwa.prototype = {
+    }, qwa.prototype = {
         getHtmlTpl: function() {
             return '<div id="##" class="edui-mask %%" onclick="return $$._onClick(event, this);" onmousedown="return $$._onMouseDown(event, this);"></div>';
         },
         postRender: function() {
             var e = this;
-            jwa.on(window, "resize", function() {
+            nwa.on(window, "resize", function() {
                 setTimeout(function() {
                     e.isHidden() || e._fill();
                 });
@@ -9418,10 +9424,10 @@ function _typeof(e) {
             this.fireEvent("click", e, t);
         },
         _fill: function() {
-            var e = this.getDom(), t = lwa.getViewportRect();
+            var e = this.getDom(), t = pwa.getViewportRect();
             e.style.width = t.width + "px", e.style.height = t.height + "px";
         }
-    }, iwa.inherits(mwa, kwa), function() {
+    }, mwa.inherits(qwa, owa), function() {
         var e = baidu.editor.utils, c = baidu.editor.ui.uiUtils, u = baidu.editor.dom.domUtils, a = baidu.editor.ui.UIBase, t = baidu.editor.ui.Popup = function(e) {
             this.initOptions(e), this.initPopup();
         }, o = [];
@@ -9570,10 +9576,10 @@ function _typeof(e) {
             }
         }, e.inherits(i, t);
         var o = "ffffff,000000,eeece1,1f497d,4f81bd,c0504d,9bbb59,8064a2,4bacc6,f79646,f2f2f2,7f7f7f,ddd9c3,c6d9f0,dbe5f1,f2dcdb,ebf1dd,e5e0ec,dbeef3,fdeada,d8d8d8,595959,c4bd97,8db3e2,b8cce4,e5b9b7,d7e3bc,ccc1d9,b7dde8,fbd5b5,bfbfbf,3f3f3f,938953,548dd4,95b3d7,d99694,c3d69b,b2a2c7,92cddc,fac08f,a5a5a5,262626,494429,17365d,366092,953734,76923c,5f497a,31859b,e36c09,7f7f7f,0c0c0c,1d1b10,0f243e,244061,632423,4f6128,3f3151,205867,974806,c00000,ff0000,ffc000,ffff00,92d050,00b050,00b0f0,0070c0,002060,7030a0,".split(",");
-    }(), eya = baidu.editor.utils, fya = baidu.editor.ui.uiUtils, gya = baidu.editor.ui.UIBase, 
-    hya = baidu.editor.ui.TablePicker = function(e) {
+    }(), iya = baidu.editor.utils, jya = baidu.editor.ui.uiUtils, kya = baidu.editor.ui.UIBase, 
+    lya = baidu.editor.ui.TablePicker = function(e) {
         this.initOptions(e), this.initTablePicker();
-    }, hya.prototype = {
+    }, lya.prototype = {
         defaultNumRows: 10,
         defaultNumCols: 10,
         maxNumRows: 20,
@@ -9587,7 +9593,7 @@ function _typeof(e) {
         getHtmlTpl: function() {
             return '<div id="##" class="edui-tablepicker %%"><div class="edui-tablepicker-body"><div class="edui-infoarea"><span id="##_label" class="edui-label"></span></div><div class="edui-pickarea" onmousemove="$$._onMouseMove(event, this);" onmouseover="$$._onMouseOver(event, this);" onmouseout="$$._onMouseOut(event, this);" onclick="$$._onClick(event, this);"><div id="##_overlay" class="edui-overlay"></div></div></div></div>';
         },
-        _UIBase_render: gya.prototype.render,
+        _UIBase_render: kya.prototype.render,
         render: function(e) {
             this._UIBase_render(e), this.getDom("label").innerHTML = "0" + this.editor.getLang("t_row") + " x 0" + this.editor.getLang("t_col");
         },
@@ -9598,24 +9604,24 @@ function _typeof(e) {
         },
         _onMouseOver: function(e, t) {
             var i = e.relatedTarget || e.fromElement;
-            fya.contains(t, i) || t === i || (this.getDom("label").innerHTML = "0" + this.editor.getLang("t_col") + " x 0" + this.editor.getLang("t_row"), 
+            jya.contains(t, i) || t === i || (this.getDom("label").innerHTML = "0" + this.editor.getLang("t_col") + " x 0" + this.editor.getLang("t_row"), 
             this.getDom("overlay").style.visibility = "");
         },
         _onMouseOut: function(e, t) {
             var i = e.relatedTarget || e.toElement;
-            fya.contains(t, i) || t === i || (this.getDom("label").innerHTML = "0" + this.editor.getLang("t_col") + " x 0" + this.editor.getLang("t_row"), 
+            jya.contains(t, i) || t === i || (this.getDom("label").innerHTML = "0" + this.editor.getLang("t_col") + " x 0" + this.editor.getLang("t_row"), 
             this.getDom("overlay").style.visibility = "hidden");
         },
         _onMouseMove: function(e, t) {
             this.getDom("overlay").style;
-            var i = fya.getEventOffset(e), n = this.lengthOfCellSide, o = Math.ceil(i.left / n), r = Math.ceil(i.top / n);
+            var i = jya.getEventOffset(e), n = this.lengthOfCellSide, o = Math.ceil(i.left / n), r = Math.ceil(i.top / n);
             this._track(o, r);
         },
         _onClick: function() {
             this.fireEvent("picktable", this.numCols, this.numRows);
         }
-    }, eya.inherits(hya, gya), Lya = baidu.editor.browser, Mya = baidu.editor.dom.domUtils, 
-    Nya = baidu.editor.ui.uiUtils, Oya = 'onmousedown="$$.Stateful_onMouseDown(event, this);" onmouseup="$$.Stateful_onMouseUp(event, this);"' + (Lya.ie ? ' onmouseenter="$$.Stateful_onMouseEnter(event, this);" onmouseleave="$$.Stateful_onMouseLeave(event, this);"' : ' onmouseover="$$.Stateful_onMouseOver(event, this);" onmouseout="$$.Stateful_onMouseOut(event, this);"'), 
+    }, iya.inherits(lya, kya), Pya = baidu.editor.browser, Qya = baidu.editor.dom.domUtils, 
+    Rya = baidu.editor.ui.uiUtils, Sya = 'onmousedown="$$.Stateful_onMouseDown(event, this);" onmouseup="$$.Stateful_onMouseUp(event, this);"' + (Pya.ie ? ' onmouseenter="$$.Stateful_onMouseEnter(event, this);" onmouseleave="$$.Stateful_onMouseLeave(event, this);"' : ' onmouseover="$$.Stateful_onMouseOver(event, this);" onmouseout="$$.Stateful_onMouseOut(event, this);"'), 
     baidu.editor.ui.Stateful = {
         alwalysHoverable: !1,
         target: null,
@@ -9624,7 +9630,7 @@ function _typeof(e) {
         },
         Stateful_getHtmlTpl: function() {
             return this._Stateful_dGetHtmlTpl().replace(/stateful/g, function() {
-                return Oya;
+                return Sya;
             });
         },
         Stateful_onMouseEnter: function(e, t) {
@@ -9637,11 +9643,11 @@ function _typeof(e) {
         },
         Stateful_onMouseOver: function(e, t) {
             var i = e.relatedTarget;
-            Nya.contains(t, i) || t === i || this.Stateful_onMouseEnter(e, t);
+            Rya.contains(t, i) || t === i || this.Stateful_onMouseEnter(e, t);
         },
         Stateful_onMouseOut: function(e, t) {
             var i = e.relatedTarget;
-            Nya.contains(t, i) || t === i || this.Stateful_onMouseLeave(e, t);
+            Rya.contains(t, i) || t === i || this.Stateful_onMouseLeave(e, t);
         },
         Stateful_onMouseDown: function(e, t) {
             this.isDisabled() || this.addState("active");
@@ -9653,13 +9659,13 @@ function _typeof(e) {
             this.disabled && !this.hasState("disabled") && this.addState("disabled");
         },
         hasState: function(e) {
-            return Mya.hasClass(this.getStateDom(), "edui-state-" + e);
+            return Qya.hasClass(this.getStateDom(), "edui-state-" + e);
         },
         addState: function(e) {
             this.hasState(e) || (this.getStateDom().className += " edui-state-" + e);
         },
         removeState: function(e) {
-            this.hasState(e) && Mya.removeClasses(this.getStateDom(), [ "edui-state-" + e ]);
+            this.hasState(e) && Qya.removeClasses(this.getStateDom(), [ "edui-state-" + e ]);
         },
         getStateDom: function() {
             return this.getDom("state");
@@ -9677,14 +9683,14 @@ function _typeof(e) {
             e ? (this.removeState("hover"), this.removeState("checked"), this.removeState("active"), 
             this.addState("disabled")) : this.removeState("disabled");
         }
-    }, yza = baidu.editor.utils, zza = baidu.editor.ui.UIBase, Aza = baidu.editor.ui.Stateful, 
-    Bza = baidu.editor.ui.Button = function(e) {
+    }, Cza = baidu.editor.utils, Dza = baidu.editor.ui.UIBase, Eza = baidu.editor.ui.Stateful, 
+    Fza = baidu.editor.ui.Button = function(e) {
         if (e.name) {
             var t = e.name, i = e.cssRules;
             e.className || (e.className = "edui-for-" + t), e.cssRules = ".edui-" + (e.theme || "default") + " .edui-toolbar .edui-button.edui-for-" + t + " .edui-icon {" + i + "}";
         }
         this.initOptions(e), this.initButton();
-    }, Bza.prototype = {
+    }, Fza.prototype = {
         uiName: "button",
         label: "",
         title: "",
@@ -9692,7 +9698,7 @@ function _typeof(e) {
         showText: !0,
         cssRules: "",
         initButton: function() {
-            this.initUIBase(), this.Stateful_init(), this.cssRules && yza.cssRule("edui-customize-" + this.name + "-style", this.cssRules);
+            this.initUIBase(), this.Stateful_init(), this.cssRules && Cza.cssRule("edui-customize-" + this.name + "-style", this.cssRules);
         },
         getHtmlTpl: function() {
             return '<div id="##" class="edui-box %%"><div id="##_state" stateful><div class="%%-wrap"><div id="##_body" unselectable="on" ' + (this.title ? 'title="' + this.title + '"' : "") + ' class="%%-body" onmousedown="return $$._onMouseDown(event, this);" onclick="return $$._onClick(event, this);">' + (this.showIcon ? '<div class="edui-box edui-icon"></div>' : "") + (this.showText ? '<div class="edui-box edui-label">' + this.label + "</div>" : "") + "</div></div></div></div>";
@@ -9710,11 +9716,11 @@ function _typeof(e) {
         setTitle: function(e) {
             this.getDom("label").innerHTML = e;
         }
-    }, yza.inherits(Bza, zza), yza.extend(Bza.prototype, Aza), Qza = baidu.editor.utils, 
-    Rza = baidu.editor.ui.uiUtils, baidu.editor.dom.domUtils, Tza = baidu.editor.ui.UIBase, 
-    Uza = baidu.editor.ui.Stateful, Vza = baidu.editor.ui.SplitButton = function(e) {
+    }, Cza.inherits(Fza, Dza), Cza.extend(Fza.prototype, Eza), Uza = baidu.editor.utils, 
+    Vza = baidu.editor.ui.uiUtils, baidu.editor.dom.domUtils, Xza = baidu.editor.ui.UIBase, 
+    Yza = baidu.editor.ui.Stateful, Zza = baidu.editor.ui.SplitButton = function(e) {
         this.initOptions(e), this.initSplitButton();
-    }, Vza.prototype = {
+    }, Zza.prototype = {
         popup: null,
         uiName: "splitbutton",
         title: "",
@@ -9724,14 +9730,14 @@ function _typeof(e) {
                 this.popup = null, this.setPopup(e);
             }
         },
-        _UIBase_postRender: Tza.prototype.postRender,
+        _UIBase_postRender: Xza.prototype.postRender,
         postRender: function() {
             this.Stateful_postRender(), this._UIBase_postRender();
         },
         setPopup: function(e) {
-            this.popup !== e && (null != this.popup && this.popup.dispose(), e.addListener("show", Qza.bind(this._onPopupShow, this)), 
-            e.addListener("hide", Qza.bind(this._onPopupHide, this)), e.addListener("postrender", Qza.bind(function() {
-                e.getDom("body").appendChild(Rza.createElementByHtml('<div id="' + this.popup.id + '_bordereraser" class="edui-bordereraser edui-background" style="width:' + (Rza.getClientRect(this.getDom()).width + 20) + 'px"></div>')), 
+            this.popup !== e && (null != this.popup && this.popup.dispose(), e.addListener("show", Uza.bind(this._onPopupShow, this)), 
+            e.addListener("hide", Uza.bind(this._onPopupHide, this)), e.addListener("postrender", Uza.bind(function() {
+                e.getDom("body").appendChild(Vza.createElementByHtml('<div id="' + this.popup.id + '_bordereraser" class="edui-bordereraser edui-background" style="width:' + (Vza.getClientRect(this.getDom()).width + 20) + 'px"></div>')), 
                 e.getDom().className += " " + this.className;
             }, this)), this.popup = e);
         },
@@ -9745,7 +9751,7 @@ function _typeof(e) {
             return '<div id="##" class="edui-box %%"><div ' + (this.title ? 'title="' + this.title + '"' : "") + ' id="##_state" stateful><div class="%%-body"><div id="##_button_body" class="edui-box edui-button-body" onclick="$$._onButtonClick(event, this);"><div class="edui-box edui-icon"></div></div><div class="edui-box edui-splitborder"></div><div class="edui-box edui-arrow" onclick="$$._onArrowClick();"></div></div></div></div>';
         },
         showPopup: function() {
-            var e = Rza.getClientRect(this.getDom());
+            var e = Vza.getClientRect(this.getDom());
             e.top -= this.popup.SHADOW_RADIUS, e.height += this.popup.SHADOW_RADIUS, this.popup.showAnchorRect(e);
         },
         _onArrowClick: function(e, t) {
@@ -9754,15 +9760,15 @@ function _typeof(e) {
         _onButtonClick: function() {
             this.isDisabled() || this.fireEvent("buttonclick");
         }
-    }, Qza.inherits(Vza, Tza), Qza.extend(Vza.prototype, Uza, !0), kAa = baidu.editor.utils, 
-    lAa = baidu.editor.ui.uiUtils, mAa = baidu.editor.ui.ColorPicker, nAa = baidu.editor.ui.Popup, 
-    oAa = baidu.editor.ui.SplitButton, pAa = baidu.editor.ui.ColorButton = function(e) {
+    }, Uza.inherits(Zza, Xza), Uza.extend(Zza.prototype, Yza, !0), oAa = baidu.editor.utils, 
+    pAa = baidu.editor.ui.uiUtils, qAa = baidu.editor.ui.ColorPicker, rAa = baidu.editor.ui.Popup, 
+    sAa = baidu.editor.ui.SplitButton, tAa = baidu.editor.ui.ColorButton = function(e) {
         this.initOptions(e), this.initColorButton();
-    }, pAa.prototype = {
+    }, tAa.prototype = {
         initColorButton: function() {
             var i = this;
-            this.popup = new nAa({
-                content: new mAa({
+            this.popup = new rAa({
+                content: new qAa({
                     noColorText: i.editor.getLang("clearColor"),
                     editor: i.editor,
                     onpickcolor: function(e, t) {
@@ -9775,9 +9781,9 @@ function _typeof(e) {
                 editor: i.editor
             }), this.initSplitButton();
         },
-        _SplitButton_postRender: oAa.prototype.postRender,
+        _SplitButton_postRender: sAa.prototype.postRender,
         postRender: function() {
-            this._SplitButton_postRender(), this.getDom("button_body").appendChild(lAa.createElementByHtml('<div id="' + this.id + '_colorlump" class="edui-colorlump"></div>')), 
+            this._SplitButton_postRender(), this.getDom("button_body").appendChild(pAa.createElementByHtml('<div id="' + this.id + '_colorlump" class="edui-colorlump"></div>')), 
             this.getDom().className += " edui-colorbutton";
         },
         setColor: function(e) {
@@ -9789,14 +9795,14 @@ function _typeof(e) {
         _onPickNoColor: function(e) {
             !1 !== this.fireEvent("picknocolor") && this.popup.hide();
         }
-    }, kAa.inherits(pAa, oAa), GAa = baidu.editor.utils, HAa = baidu.editor.ui.Popup, 
-    IAa = baidu.editor.ui.TablePicker, JAa = baidu.editor.ui.SplitButton, KAa = baidu.editor.ui.TableButton = function(e) {
+    }, oAa.inherits(tAa, sAa), KAa = baidu.editor.utils, LAa = baidu.editor.ui.Popup, 
+    MAa = baidu.editor.ui.TablePicker, NAa = baidu.editor.ui.SplitButton, OAa = baidu.editor.ui.TableButton = function(e) {
         this.initOptions(e), this.initTableButton();
-    }, KAa.prototype = {
+    }, OAa.prototype = {
         initTableButton: function() {
             var n = this;
-            this.popup = new HAa({
-                content: new IAa({
+            this.popup = new LAa({
+                content: new MAa({
                     editor: n.editor,
                     onpicktable: function(e, t, i) {
                         n._onPickTable(t, i);
@@ -9808,10 +9814,10 @@ function _typeof(e) {
         _onPickTable: function(e, t) {
             !1 !== this.fireEvent("picktable", e, t) && this.popup.hide();
         }
-    }, GAa.inherits(KAa, JAa), VAa = baidu.editor.utils, WAa = baidu.editor.ui.UIBase, 
-    XAa = baidu.editor.ui.AutoTypeSetPicker = function(e) {
+    }, KAa.inherits(OAa, NAa), ZAa = baidu.editor.utils, $Aa = baidu.editor.ui.UIBase, 
+    _Aa = baidu.editor.ui.AutoTypeSetPicker = function(e) {
         this.initOptions(e), this.initAutoTypeSetPicker();
-    }, XAa.prototype = {
+    }, _Aa.prototype = {
         initAutoTypeSetPicker: function() {
             this.initUIBase();
         },
@@ -9819,8 +9825,8 @@ function _typeof(e) {
             var e = this.editor, t = e.options.autotypeset, i = e.getLang("autoTypeSet"), n = "textAlignValue" + e.uid, o = "imageBlockLineValue" + e.uid, r = "symbolConverValue" + e.uid;
             return '<div id="##" class="edui-autotypesetpicker %%"><div class="edui-autotypesetpicker-body"><table ><tr><td nowrap><input type="checkbox" name="mergeEmptyline" ' + (t.mergeEmptyline ? "checked" : "") + ">" + i.mergeLine + '</td><td colspan="2"><input type="checkbox" name="removeEmptyline" ' + (t.removeEmptyline ? "checked" : "") + ">" + i.delLine + '</td></tr><tr><td nowrap><input type="checkbox" name="removeClass" ' + (t.removeClass ? "checked" : "") + ">" + i.removeFormat + '</td><td colspan="2"><input type="checkbox" name="indent" ' + (t.indent ? "checked" : "") + ">" + i.indent + '</td></tr><tr><td nowrap><input type="checkbox" name="textAlign" ' + (t.textAlign ? "checked" : "") + ">" + i.alignment + '</td><td colspan="2" id="' + n + '"><input type="radio" name="' + n + '" value="left" ' + (t.textAlign && "left" === t.textAlign ? "checked" : "") + ">" + e.getLang("justifyleft") + '<input type="radio" name="' + n + '" value="center" ' + (t.textAlign && "center" === t.textAlign ? "checked" : "") + ">" + e.getLang("justifycenter") + '<input type="radio" name="' + n + '" value="right" ' + (t.textAlign && "right" === t.textAlign ? "checked" : "") + ">" + e.getLang("justifyright") + '</td></tr><tr><td nowrap><input type="checkbox" name="imageBlockLine" ' + (t.imageBlockLine ? "checked" : "") + ">" + i.imageFloat + '</td><td nowrap id="' + o + '"><input type="radio" name="' + o + '" value="none" ' + (t.imageBlockLine && "none" === t.imageBlockLine ? "checked" : "") + ">" + e.getLang("default") + '<input type="radio" name="' + o + '" value="left" ' + (t.imageBlockLine && "left" === t.imageBlockLine ? "checked" : "") + ">" + e.getLang("justifyleft") + '<input type="radio" name="' + o + '" value="center" ' + (t.imageBlockLine && "center" === t.imageBlockLine ? "checked" : "") + ">" + e.getLang("justifycenter") + '<input type="radio" name="' + o + '" value="right" ' + (t.imageBlockLine && "right" === t.imageBlockLine ? "checked" : "") + ">" + e.getLang("justifyright") + '</td></tr><tr><td nowrap><input type="checkbox" name="clearFontSize" ' + (t.clearFontSize ? "checked" : "") + ">" + i.removeFontsize + '</td><td colspan="2"><input type="checkbox" name="clearFontFamily" ' + (t.clearFontFamily ? "checked" : "") + ">" + i.removeFontFamily + '</td></tr><tr><td nowrap colspan="3"><input type="checkbox" name="removeEmptyNode" ' + (t.removeEmptyNode ? "checked" : "") + ">" + i.removeHtml + '</td></tr><tr><td nowrap colspan="3"><input type="checkbox" name="pasteFilter" ' + (t.pasteFilter ? "checked" : "") + ">" + i.pasteFilter + '</td></tr><tr><td nowrap><input type="checkbox" name="symbolConver" ' + (t.bdc2sb || t.tobdc ? "checked" : "") + ">" + i.symbol + '</td><td id="' + r + '"><input type="radio" name="bdc" value="bdc2sb" ' + (t.bdc2sb ? "checked" : "") + ">" + i.bdc2sb + '<input type="radio" name="bdc" value="tobdc" ' + (t.tobdc ? "checked" : "") + ">" + i.tobdc + '</td><td nowrap align="right"><button >' + i.run + "</button></td></tr></table></div></div>";
         },
-        _UIBase_render: WAa.prototype.render
-    }, VAa.inherits(XAa, WAa), function() {
+        _UIBase_render: $Aa.prototype.render
+    }, ZAa.inherits(_Aa, $Aa), function() {
         var p = baidu.editor.utils, e = baidu.editor.ui.Popup, i = baidu.editor.ui.AutoTypeSetPicker, t = baidu.editor.ui.SplitButton, n = baidu.editor.ui.AutoTypeSetButton = function(e) {
             this.initOptions(e), this.initAutoTypeSetButton();
         };
@@ -9881,10 +9887,10 @@ function _typeof(e) {
                 }), this.initSplitButton();
             }
         }, p.inherits(n, t);
-    }(), SBa = baidu.editor.utils, TBa = baidu.editor.ui.Popup, UBa = baidu.editor.ui.Stateful, 
-    VBa = baidu.editor.ui.UIBase, WBa = baidu.editor.ui.CellAlignPicker = function(e) {
+    }(), WBa = baidu.editor.utils, XBa = baidu.editor.ui.Popup, YBa = baidu.editor.ui.Stateful, 
+    ZBa = baidu.editor.ui.UIBase, $Ba = baidu.editor.ui.CellAlignPicker = function(e) {
         this.initOptions(e), this.initSelected(), this.initCellAlignPicker();
-    }, WBa.prototype = {
+    }, $Ba.prototype = {
         initSelected: function() {
             var e = {
                 top: 0,
@@ -9912,14 +9918,14 @@ function _typeof(e) {
         _onClick: function(e) {
             var t = e.target || e.srcElement;
             /icon/.test(t.className) && (this.items[t.parentNode.getAttribute("index")].onclick(), 
-            TBa.postHide(e));
+            XBa.postHide(e));
         },
-        _UIBase_render: VBa.prototype.render
-    }, SBa.inherits(WBa, VBa), SBa.extend(WBa.prototype, UBa, !0), lCa = baidu.editor.utils, 
-    mCa = baidu.editor.ui.Stateful, nCa = baidu.editor.ui.uiUtils, oCa = baidu.editor.ui.UIBase, 
-    pCa = baidu.editor.ui.PastePicker = function(e) {
+        _UIBase_render: ZBa.prototype.render
+    }, WBa.inherits($Ba, ZBa), WBa.extend($Ba.prototype, YBa, !0), pCa = baidu.editor.utils, 
+    qCa = baidu.editor.ui.Stateful, rCa = baidu.editor.ui.uiUtils, sCa = baidu.editor.ui.UIBase, 
+    tCa = baidu.editor.ui.PastePicker = function(e) {
         this.initOptions(e), this.initPastePicker();
-    }, pCa.prototype = {
+    }, tCa.prototype = {
         initPastePicker: function() {
             this.initUIBase(), this.Stateful_init();
         },
@@ -9933,16 +9939,16 @@ function _typeof(e) {
             this.editor.ui._isTransfer = !0, this.editor.fireEvent("pasteTransfer", e);
         },
         _onClick: function(e) {
-            var t = domUtils.getNextDomNode(e), i = nCa.getViewportRect().height, n = nCa.getClientRect(t);
+            var t = domUtils.getNextDomNode(e), i = rCa.getViewportRect().height, n = rCa.getClientRect(t);
             n.top + n.height > i ? t.style.top = -n.height - e.offsetHeight + "px" : t.style.top = "", 
             /hidden/gi.test(domUtils.getComputedStyle(t, "visibility")) ? (t.style.visibility = "visible", 
             domUtils.addClass(e, "edui-state-opened")) : (t.style.visibility = "hidden", domUtils.removeClasses(e, "edui-state-opened"));
         },
-        _UIBase_render: oCa.prototype.render
-    }, lCa.inherits(pCa, oCa), lCa.extend(pCa.prototype, mCa, !0), BCa = baidu.editor.utils, 
-    CCa = baidu.editor.ui.uiUtils, DCa = baidu.editor.ui.UIBase, ECa = baidu.editor.ui.Toolbar = function(e) {
+        _UIBase_render: sCa.prototype.render
+    }, pCa.inherits(tCa, sCa), pCa.extend(tCa.prototype, qCa, !0), FCa = baidu.editor.utils, 
+    GCa = baidu.editor.ui.uiUtils, HCa = baidu.editor.ui.UIBase, ICa = baidu.editor.ui.Toolbar = function(e) {
         this.initOptions(e), this.initToolbar();
-    }, ECa.prototype = {
+    }, ICa.prototype = {
         items: null,
         initToolbar: function() {
             this.items = this.items || [], this.initUIBase();
@@ -9956,13 +9962,13 @@ function _typeof(e) {
         },
         postRender: function() {
             for (var e = this.getDom(), t = 0; t < this.items.length; t++) this.items[t].postRender();
-            CCa.makeUnselectable(e);
+            GCa.makeUnselectable(e);
         },
         _onMouseDown: function(e) {
             var t = e.target || e.srcElement, i = t && t.tagName && t.tagName.toLowerCase();
             if ("input" === i || "object" === i || "object" === i) return !1;
         }
-    }, BCa.inherits(ECa, DCa), function() {
+    }, FCa.inherits(ICa, HCa), function() {
         var e = baidu.editor.utils, i = baidu.editor.dom.domUtils, o = baidu.editor.ui.uiUtils, t = baidu.editor.ui.UIBase, n = baidu.editor.ui.Popup, r = baidu.editor.ui.Stateful, a = baidu.editor.ui.CellAlignPicker, s = baidu.editor.ui.Menu = function(e) {
             this.initOptions(e), this.initMenu();
         }, l = {
@@ -10112,10 +10118,10 @@ function _typeof(e) {
                 this.subMenu.hide();
             }
         }, e.inherits(d, t), e.extend(d.prototype, r, !0);
-    }(), cEa = baidu.editor.utils, dEa = baidu.editor.ui.uiUtils, eEa = baidu.editor.ui.Menu, 
-    fEa = baidu.editor.ui.SplitButton, gEa = baidu.editor.ui.Combox = function(e) {
+    }(), gEa = baidu.editor.utils, hEa = baidu.editor.ui.uiUtils, iEa = baidu.editor.ui.Menu, 
+    jEa = baidu.editor.ui.SplitButton, kEa = baidu.editor.ui.Combox = function(e) {
         this.initOptions(e), this.initCombox();
-    }, gEa.prototype = {
+    }, kEa.prototype = {
         uiName: "combox",
         onbuttonclick: function() {
             this.showPopup();
@@ -10129,7 +10135,7 @@ function _typeof(e) {
                     e.selectByIndex(this.index);
                 };
             }
-            this.popup = new eEa({
+            this.popup = new iEa({
                 items: this.items,
                 uiName: "list",
                 editor: this.editor,
@@ -10137,12 +10143,12 @@ function _typeof(e) {
                 combox: this
             }), this.initSplitButton();
         },
-        _SplitButton_postRender: fEa.prototype.postRender,
+        _SplitButton_postRender: jEa.prototype.postRender,
         postRender: function() {
             this._SplitButton_postRender(), this.setLabel(this.label || ""), this.setValue(this.initValue || "");
         },
         showPopup: function() {
-            var e = dEa.getClientRect(this.getDom());
+            var e = hEa.getClientRect(this.getDom());
             e.top += 1, e.bottom -= 1, e.height -= 2, this.popup.showAnchorRect(e);
         },
         getValue: function() {
@@ -10171,14 +10177,14 @@ function _typeof(e) {
             e < this.items.length && !1 !== this.fireEvent("select", e) && (this.selectedIndex = e, 
             this.value = this.items[e].value, this.setLabel(this.items[e].label));
         }
-    }, cEa.inherits(gEa, fEa), FEa = baidu.editor.utils, GEa = baidu.editor.dom.domUtils, 
-    HEa = baidu.editor.ui.uiUtils, IEa = baidu.editor.ui.Mask, JEa = baidu.editor.ui.UIBase, 
-    KEa = baidu.editor.ui.Button, LEa = baidu.editor.ui.Dialog = function(e) {
+    }, gEa.inherits(kEa, jEa), JEa = baidu.editor.utils, KEa = baidu.editor.dom.domUtils, 
+    LEa = baidu.editor.ui.uiUtils, MEa = baidu.editor.ui.Mask, NEa = baidu.editor.ui.UIBase, 
+    OEa = baidu.editor.ui.Button, PEa = baidu.editor.ui.Dialog = function(e) {
         if (e.name) {
             var t = e.name, i = e.cssRules;
             e.className || (e.className = "edui-for-" + t), i && (e.cssRules = ".edui-for-" + t + " .edui-dialog-content  {" + i + "}");
         }
-        this.initOptions(FEa.extend({
+        this.initOptions(JEa.extend({
             autoReset: !0,
             draggable: !0,
             onok: function() {},
@@ -10188,39 +10194,39 @@ function _typeof(e) {
             },
             holdScroll: !1
         }, e)), this.initDialog();
-    }, LEa.prototype = {
+    }, PEa.prototype = {
         draggable: !1,
         uiName: "dialog",
         initDialog: function() {
             var e = this, t = this.editor.options.theme;
-            if (this.cssRules && (this.cssRules = ".edui-" + t + " " + this.cssRules, FEa.cssRule("edui-customize-" + this.name + "-style", this.cssRules)), 
-            this.initUIBase(), this.modalMask = MEa || (MEa = new IEa({
+            if (this.cssRules && (this.cssRules = ".edui-" + t + " " + this.cssRules, JEa.cssRule("edui-customize-" + this.name + "-style", this.cssRules)), 
+            this.initUIBase(), this.modalMask = QEa || (QEa = new MEa({
                 className: "edui-dialog-modalmask",
                 theme: t,
                 onclick: function() {
-                    OEa && OEa.close(!1);
+                    SEa && SEa.close(!1);
                 }
-            })), this.dragMask = NEa || (NEa = new IEa({
+            })), this.dragMask = REa || (REa = new MEa({
                 className: "edui-dialog-dragmask",
                 theme: t
-            })), this.closeButton = new KEa({
+            })), this.closeButton = new OEa({
                 className: "edui-dialog-closebutton",
                 title: e.closeDialog,
                 theme: t,
                 onclick: function() {
                     e.close(!1);
                 }
-            }), this.fullscreen && this.initResizeEvent(), this.buttons) for (var i = 0; i < this.buttons.length; i++) this.buttons[i] instanceof KEa || (this.buttons[i] = new KEa(FEa.extend(this.buttons[i], {
+            }), this.fullscreen && this.initResizeEvent(), this.buttons) for (var i = 0; i < this.buttons.length; i++) this.buttons[i] instanceof OEa || (this.buttons[i] = new OEa(JEa.extend(this.buttons[i], {
                 editor: this.editor
             }, !0)));
         },
         initResizeEvent: function() {
             var r = this;
-            GEa.on(window, "resize", function() {
+            KEa.on(window, "resize", function() {
                 r._hidden || void 0 === r._hidden || (r.__resizeTimer && window.clearTimeout(r.__resizeTimer), 
                 r.__resizeTimer = window.setTimeout(function() {
                     r.__resizeTimer = null;
-                    var e = r.getDom(), t = r.getDom("content"), i = UE.ui.uiUtils.getClientRect(e), n = UE.ui.uiUtils.getClientRect(t), o = HEa.getViewportRect();
+                    var e = r.getDom(), t = r.getDom("content"), i = UE.ui.uiUtils.getClientRect(e), n = UE.ui.uiUtils.getClientRect(t), o = LEa.getViewportRect();
                     t.style.width = o.width - i.width + n.width + "px", t.style.height = o.height - i.height + n.height + "px", 
                     e.style.width = o.width + "px", e.style.height = o.height + "px", r.fireEvent("resize");
                 }, 100));
@@ -10231,14 +10237,14 @@ function _typeof(e) {
             return e.style.width = t.width + "px", e.style.height = t.height + "px", t;
         },
         safeSetOffset: function(e) {
-            var t = this.getDom(), i = HEa.getViewportRect(), n = HEa.getClientRect(t), o = e.left;
+            var t = this.getDom(), i = LEa.getViewportRect(), n = LEa.getClientRect(t), o = e.left;
             o + n.width > i.right && (o = i.right - n.width);
             var r = e.top;
             r + n.height > i.bottom && (r = i.bottom - n.height), t.style.left = Math.max(o, 0) + "px", 
             t.style.top = Math.max(r, 0) + "px";
         },
         showAtCenter: function() {
-            var e = HEa.getViewportRect();
+            var e = LEa.getViewportRect();
             if (this.fullscreen) {
                 var t = this.getDom(), i = this.getDom("content");
                 t.style.display = "block";
@@ -10262,7 +10268,7 @@ function _typeof(e) {
                 this.safeSetOffset({
                     left: Math.max(0 | s, 0),
                     top: Math.max(0 | l, 0)
-                }), GEa.hasClass(d, "edui-state-centered") || (d.className += " edui-state-centered");
+                }), KEa.hasClass(d, "edui-state-centered") || (d.className += " edui-state-centered");
             }
             this._show();
         },
@@ -10288,23 +10294,23 @@ function _typeof(e) {
             }), this.addListener("hide", function() {
                 e.modalMask.hide();
             }), this.buttons) for (var t = 0; t < this.buttons.length; t++) this.buttons[t].postRender();
-            GEa.on(window, "resize", function() {
+            KEa.on(window, "resize", function() {
                 setTimeout(function() {
-                    e.isHidden() || e.safeSetOffset(HEa.getClientRect(e.getDom()));
+                    e.isHidden() || e.safeSetOffset(LEa.getClientRect(e.getDom()));
                 });
             }), this._hide();
         },
         mesureSize: function() {
-            var e = this.getDom("body"), t = HEa.getClientRect(this.getDom("content")).width;
-            return e.style.width = t, HEa.getClientRect(e);
+            var e = this.getDom("body"), t = LEa.getClientRect(this.getDom("content")).width;
+            return e.style.width = t, LEa.getClientRect(e);
         },
         _onTitlebarMouseDown: function(e, t) {
             if (this.draggable) {
-                HEa.getViewportRect();
+                LEa.getViewportRect();
                 var o, r = this;
-                HEa.startDrag(e, {
+                LEa.startDrag(e, {
                     ondragstart: function() {
-                        o = HEa.getClientRect(r.getDom()), r.getDom("contmask").style.visibility = "visible", 
+                        o = LEa.getClientRect(r.getDom()), r.getDom("contmask").style.visibility = "visible", 
                         r.dragMask.show(r.getDom().style.zIndex - 1);
                     },
                     ondragmove: function(e, t) {
@@ -10315,7 +10321,7 @@ function _typeof(e) {
                         });
                     },
                     ondragstop: function() {
-                        r.getDom("contmask").style.visibility = "hidden", GEa.removeClasses(r.getDom(), [ "edui-state-centered" ]), 
+                        r.getDom("contmask").style.visibility = "hidden", KEa.removeClasses(r.getDom(), [ "edui-state-centered" ]), 
                         r.dragMask.hide();
                     }
                 });
@@ -10347,7 +10353,7 @@ function _typeof(e) {
             if (this.showAtCenter(), this.iframeUrl) try {
                 this.getDom("iframe").focus();
             } catch (e) {}
-            OEa = this;
+            SEa = this;
         },
         _onCloseButtonClick: function(e, t) {
             this.close(!1);
@@ -10361,17 +10367,17 @@ function _typeof(e) {
                 var t = this.getDom("content"), i = this.getDom("iframe");
                 if (t && i) {
                     var n = i.contentDocument || i.contentWindow.document;
-                    n && (n.body.innerHTML = ""), GEa.remove(t);
+                    n && (n.body.innerHTML = ""), KEa.remove(t);
                 }
             }
         }
-    }, FEa.inherits(LEa, JEa), sGa = baidu.editor.utils, tGa = baidu.editor.ui.Menu, 
-    uGa = baidu.editor.ui.SplitButton, vGa = baidu.editor.ui.MenuButton = function(e) {
+    }, JEa.inherits(PEa, NEa), wGa = baidu.editor.utils, xGa = baidu.editor.ui.Menu, 
+    yGa = baidu.editor.ui.SplitButton, zGa = baidu.editor.ui.MenuButton = function(e) {
         this.initOptions(e), this.initMenuButton();
-    }, vGa.prototype = {
+    }, zGa.prototype = {
         initMenuButton: function() {
             var t = this;
-            this.uiName = "menubutton", this.popup = new tGa({
+            this.uiName = "menubutton", this.popup = new xGa({
                 items: t.items,
                 className: t.className,
                 editor: t.editor
@@ -10383,13 +10389,13 @@ function _typeof(e) {
         setValue: function(e) {
             this._value = e;
         }
-    }, sGa.inherits(vGa, uGa), DGa = baidu.editor.utils, EGa = baidu.editor.ui.Popup, 
-    FGa = baidu.editor.ui.SplitButton, GGa = baidu.editor.ui.MultiMenuPop = function(e) {
+    }, wGa.inherits(zGa, yGa), HGa = baidu.editor.utils, IGa = baidu.editor.ui.Popup, 
+    JGa = baidu.editor.ui.SplitButton, KGa = baidu.editor.ui.MultiMenuPop = function(e) {
         this.initOptions(e), this.initMultiMenu();
-    }, GGa.prototype = {
+    }, KGa.prototype = {
         initMultiMenu: function() {
             var e = this;
-            this.popup = new EGa({
+            this.popup = new IGa({
                 content: "",
                 editor: e.editor,
                 iframe_rendered: !1,
@@ -10401,7 +10407,7 @@ function _typeof(e) {
                 this.showPopup();
             }, this.initSplitButton();
         }
-    }, DGa.inherits(GGa, FGa), function() {
+    }, HGa.inherits(KGa, JGa), function() {
         var c, n = baidu.editor.ui, e = n.UIBase, d = n.uiUtils, o = baidu.editor.utils, u = baidu.editor.dom.domUtils, r = [], a = !1, t = n.ShortCutMenu = function(e) {
             this.initOptions(e), this.initShortCutMenu();
         };
@@ -10449,7 +10455,7 @@ function _typeof(e) {
                 a = !1;
                 for (var e, t = d.getFixedLayer(), i = u.getElementsByTagName(t, "div", function(e) {
                     return u.hasClass(e, "edui-shortcutsubmenu edui-popup");
-                }), n = 0; e = i[n++]; ) "none" != e.style.display && (a = !0);
+                }), n = 0; e = i[n++]; ) "none" !== e.style.display && (a = !0);
                 return a;
             },
             show: function(e, t) {
@@ -10491,9 +10497,9 @@ function _typeof(e) {
         }), u.on(window, "scroll", function(e) {
             i(e);
         });
-    }(), ZHa = baidu.editor.utils, $Ha = baidu.editor.ui.UIBase, _Ha = baidu.editor.ui.Breakline = function(e) {
+    }(), bIa = baidu.editor.utils, cIa = baidu.editor.ui.UIBase, dIa = baidu.editor.ui.Breakline = function(e) {
         this.initOptions(e), this.initSeparator();
-    }, _Ha.prototype = {
+    }, dIa.prototype = {
         uiName: "Breakline",
         initSeparator: function() {
             this.initUIBase();
@@ -10501,10 +10507,10 @@ function _typeof(e) {
         getHtmlTpl: function() {
             return "<br/>";
         }
-    }, ZHa.inherits(_Ha, $Ha), dIa = baidu.editor.utils, eIa = baidu.editor.dom.domUtils, 
-    fIa = baidu.editor.ui.UIBase, gIa = baidu.editor.ui.Message = function(e) {
+    }, bIa.inherits(dIa, cIa), hIa = baidu.editor.utils, iIa = baidu.editor.dom.domUtils, 
+    jIa = baidu.editor.ui.UIBase, kIa = baidu.editor.ui.Message = function(e) {
         this.initOptions(e), this.initMessage();
-    }, gIa.prototype = {
+    }, kIa.prototype = {
         initMessage: function() {
             this.initUIBase();
         },
@@ -10520,7 +10526,7 @@ function _typeof(e) {
         },
         postRender: function() {
             var e = this, t = this.getDom("closer");
-            t && eIa.on(t, "click", function() {
+            t && iIa.on(t, "click", function() {
                 e.hide();
             });
         },
@@ -10546,7 +10552,7 @@ function _typeof(e) {
             var e = this.getDom();
             e && (e.style.display = "none", e.parentNode && e.parentNode.removeChild(e));
         }
-    }, dIa.inherits(gIa, fIa), function() {
+    }, hIa.inherits(kIa, jIa), function() {
         var c = baidu.editor.utils, u = baidu.editor.ui, t = u.Dialog;
         u.buttons = {}, u.Dialog = function(e) {
             var n = new t(e);
@@ -11281,7 +11287,7 @@ function _typeof(e) {
                 if (this._fullscreen != e) {
                     if (this._fullscreen = e, this.editor.fireEvent("beforefullscreenchange", e), baidu.editor.browser.gecko) var n = t.selection.getRange().createBookmark();
                     if (e) {
-                        for (;"BODY" != i.tagName; ) {
+                        for (;"BODY" !== i.tagName; ) {
                             var o = baidu.editor.dom.domUtils.getComputedStyle(i, "position");
                             a.push(o), i.style.position = "static", i = i.parentNode;
                         }
@@ -11293,7 +11299,7 @@ function _typeof(e) {
                         this._bakCssText1 = this.getDom("iframeholder").style.cssText, t.iframe.parentNode.style.width = "", 
                         this._updateFullScreen();
                     } else {
-                        for (;"BODY" != i.tagName; ) i.style.position = a.shift(), i = i.parentNode;
+                        for (;"BODY" !== i.tagName; ) i.style.position = a.shift(), i = i.parentNode;
                         this.getDom().style.cssText = this._bakCssText, this.getDom("iframeholder").style.cssText = this._bakCssText1, 
                         this._bakAutoHeight && (t.autoHeightEnabled = !0, this.editor.enableAutoHeight()), 
                         document.documentElement.style.overflow = this._bakHtmlOverflow, document.body.style.overflow = this._bakBodyOverflow, 

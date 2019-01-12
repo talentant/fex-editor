@@ -517,8 +517,8 @@ var ScaleBoy = function() {
       var pos = objStyle.position;
       var size = objStyle.size;
       if (pos) {
-        typeof pos.x != "undefined" && (cur.style.left = pos.x);
-        typeof pos.y != "undefined" && (cur.style.top = pos.y);
+        typeof pos.x !== "undefined" && (cur.style.left = pos.x);
+        typeof pos.y !== "undefined" && (cur.style.top = pos.y);
       }
       if (size) {
         size.w && (cur.style.width = size.w);

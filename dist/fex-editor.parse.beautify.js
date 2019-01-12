@@ -1,7 +1,7 @@
 /*!
  * fex-editor
  * version: 2.2.0
- * build: 2019-01-11
+ * build: 2019-01-12
  */
 
 "use strict";
@@ -377,7 +377,7 @@
     }
     function c(e) {
         var t = [], n = [], i = [], r = e.data, a = e.meta;
-        if ("1" != a.dataFormat) {
+        if ("1" !== a.dataFormat && 1 !== a.dataFormat) {
             for (var s = 0, l = r.length; s < l; s++) for (var o = 0, d = r[s].length; o < d; o++) i[o] || (i[o] = []), 
             i[o][s] = r[s][o];
             r = i;

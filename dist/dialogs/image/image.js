@@ -219,7 +219,7 @@
     },
     setImage(img) {
       /* 不是正常的图片 */
-      if (!img.tagName || (img.tagName.toLowerCase() != "img" && !img.getAttribute("src")) || !img.src) return;
+      if (!img.tagName || (img.tagName.toLowerCase() !== "img" && !img.getAttribute("src")) || !img.src) return;
 
       var wordImgFlag = img.getAttribute("word_img");
 

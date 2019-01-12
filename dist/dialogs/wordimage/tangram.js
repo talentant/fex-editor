@@ -544,7 +544,7 @@ baidu.swf.getMovie = name => {
   var ret;
   return baidu.browser.ie == 9
     ? movie && movie.length
-      ? (ret = baidu.array.remove(baidu.lang.toArray(movie), item => item.tagName.toLowerCase() != "embed")).length == 1
+      ? (ret = baidu.array.remove(baidu.lang.toArray(movie), item => item.tagName.toLowerCase() !== "embed")).length == 1
         ? ret[0]
         : ret
       : movie
